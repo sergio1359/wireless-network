@@ -182,6 +182,7 @@ namespace WirelessNetwork
 
         /*TODO:
          * Detectar cuando un mensaje ha sido recibido y establecer un número de reintentos
+         * Añadir ID a los mensajes (autoincremental e independiente para cada nodo)
          * */
         TimeSpan lastIterationTime = new TimeSpan(DateTime.Now.Ticks);
         void mainLoopTimer_Elapsed(object sender, ElapsedEventArgs e)
