@@ -201,9 +201,16 @@ namespace WirelessNetwork
                     {
                         string search = items[i];
                         var aux = LookTable[search];
-                        int newCount = aux.Value - diff;
+                        if (aux.Value > 0)
+                        {
+                            int newCount = aux.Value - diff;
 
-                        LookTable[search] = new KeyValuePair<string, int>(aux.Key, newCount);
+                            LookTable[search] = new KeyValuePair<string, int>(aux.Key, newCount);
+                        }
+                        else
+                        {
+                            LookTable.Remove(search);
+                        }
                     }
                 }
 
