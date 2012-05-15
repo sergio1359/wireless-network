@@ -1,7 +1,0 @@
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\bin\x86\Release\Content\GameFont.xnb
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\bin\x86\Release\WirelessNetwork.exe
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\bin\x86\Release\WirelessNetwork.pdb
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\obj\x86\Release\ResolveAssemblyReference.cache
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\obj\x86\Release\WirelessNetwork.exe
-D:\Mis documentos\Visual Studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\obj\x86\Release\WirelessNetwork.pdb
