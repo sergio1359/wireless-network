@@ -161,37 +161,27 @@ namespace WirelessNetwork
             rfMsg.Header = 0x80;//DATA HEADER
             rfMsg.Data = message;
 
-            transmitRF(rfMsg);
-            //if (RouteTable.ContainsKey(to))
-            //{
-            //    transmitRF(rfMsg);
-            //}
-            //else
-            //{
-            //    LookFor(to, null);
-            //    outputBuffer.Add(rfMsg, false);
-            //}
+
+            if (RouteTable.ContainsKey(to))
+            {
+                transmitRF(rfMsg);
+            }
+            else
+            {
+                LookFor(to, null);
+                outputBuffer.Add(rfMsg, false);
+            }
         }
 
         private void transmitRF(RFMessage message)
         {
-            if (RouteTable.ContainsKey(message.To))
-            {
-                message.Data += "\n" + Address + " -> ";
-                Node Dest = Program.NodeList.First<Node>(x => x.Address == RouteTable[message.To].Key);
-                Dest.SendMessage(message);
-            }
-            else
-            {
-                LookFor(message.To, null);
-                if (outputBuffer.ContainsKey(message))
-                    outputBuffer.Remove(message);
-                outputBuffer.Add(message, false);
-            }
+            message.Data += "\n" + Address + " -> ";
+            Node Dest = Program.NodeList.First<Node>(x => x.Address == RouteTable[message.To].Key);
+            Dest.SendMessage(message);
         }
 
         /*TODO:
-         * Detectar nodos inalcanzables con TIMEOUT y contador de LOOKSFOR
+         * Detectar cuando un mensaje ha sido recibido y establecer un número de reintentos
          * */
         TimeSpan lastIterationTime = new TimeSpan(DateTime.Now.Ticks);
         void mainLoopTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -224,20 +214,17 @@ namespace WirelessNetwork
 
                     foreach (var outmsg in items)
                     {
-
-                        if (!LookTable.ContainsKey(outmsg.To) && !outputBuffer[outmsg])//Look finished && message not sent
+                        if (!LookTable.ContainsKey(outmsg.To))//Look finished
                         {
                             transmitRF(outmsg);
                             //removeList.Add(outmsg);
-                            //outputBuffer.Remove(outmsg);
-                            outputBuffer[outmsg] = true;
+                            outputBuffer.Remove(outmsg);
                         }
-                        else if (LookTable.ContainsKey(outmsg.To) && LookTable[outmsg.To].Value <= 0)
+                        else if (LookTable[outmsg.To].Value <= 0)
                         {
                             Program.MessageBoxCustom("Timeout superado", "MESSAGE FROM " + outmsg.Root + " TO " + outmsg.To + "           ");
                             //removeList.Add(outmsg);
-                            //outputBuffer.Remove(outmsg);
-                            outputBuffer[outmsg] = true;
+                            outputBuffer.Remove(outmsg);
                             LookTable.Remove(outmsg.To);
                         }
                     }
@@ -301,6 +288,7 @@ namespace WirelessNetwork
                                     routeResponse.From = Address;
                                     routeResponse.Data = message.Data; //Search Node
                                     routeResponse.Header = 0x00; //RouteResponse FAIL
+                                    routeResponse.Root = message.Root;//TRAMPA
 
                                     Node Dest = Program.NodeList.First<Node>(x => x.Address == routeResponse.To);
                                     Dest.SendMessage(routeResponse);
@@ -308,13 +296,13 @@ namespace WirelessNetwork
                             }
 
                             //TODO: Si existen mensajes pendientes para este nodo, se reintenta para trazar una nueva ruta
-                            try
+                            if (message.Root == Address)//outputBuffer.Exists(x => x.To == message.Data))
                             {
-                                RFMessage retry = outputBuffer.First(x => x.Key.To == message.Data).Key;
-                                transmitRF(retry);
+                                //RFMessage retry = outputBuffer.First(x => x.To == message.Data);
                                 //outputBuffer.Remove(retry);
+                                //transmitRF(retry);
+                                Program.MessageBoxCustom("Timeout superado", "MESSAGE FROM " + Address + " TO " + message.Data + "           ");
                             }
-                            catch { }
                         }
 
                         if (LookTable.ContainsKey(message.Data) && LookTable[message.Data].Key != null)
@@ -356,6 +344,7 @@ namespace WirelessNetwork
                             routeResponse.From = Address;
                             routeResponse.Data = message.To; //Search Node
                             routeResponse.Header = 0x00; //RouteResponse FAIL
+                            routeResponse.Root = message.Root;//TRAMPA
 
                             Node Dest = Program.NodeList.First<Node>(x => x.Address == routeResponse.To);
                             Dest.SendMessage(routeResponse);
