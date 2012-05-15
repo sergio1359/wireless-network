@@ -7,8 +7,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
-      <Time>2012-05-11T14:26:57.3512812+02:00</Time>
+      <Output>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Time>2012-05-15T18:12:21.6891365+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -16,10 +16,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
-      <LoggerRootDirectory>d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
-      <IntermediateDirectory>d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
+      <LoggerRootDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
