@@ -1,0 +1,35 @@
+
+**** Build of configuration Release for project Blink ****
+
+make all 
+Building file: ../main.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -I"D:\wireless-Network\Arduino1\ArduinoCore" -w -Os -ffunction-sections -fdata-sections -fno-exceptions -DARDUINO=22 -g -mmcu=atmega328p -DF_CPU=16000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.cpp"
+Finished building: ../main.cpp
+ 
+Building target: Blink.elf
+Invoking: AVR C++ Linker
+avr-g++ -s -Os -Wl,--gc-sections -o"Blink.elf"  ./main.o   -lArduinoCore -lm -Wl,-Map,Blink.map,--cref -L../../ArduinoCore/Release/ -mmcu=atmega328p
+Finished building target: Blink.elf
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -O ihex Blink.elf  "Blink.hex"
+Finished building: Blink.hex
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328p Blink.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:    2390 bytes (7.3% Full)
+(.text + .data + .bootloader)
+
+Data:        184 bytes (9.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+**** Build Finished ****
