@@ -187,15 +187,24 @@ void RF24::BANK0_Init(void) {
 	uint8_t k = 0;
 	uint8_t Rt = 0;
 
+	// Determine if this is a p or non-p RF24 module and then
+	// reset our data rate back to default value. This works
+	// because a non-P variant won't allow the data rate to
+	// be set to 250Kbps.
+	if (setDataRate(RF24_250KBPS)) {
+		p_variant = true;
+	}
+
 	//Config Bank0 Register
 	for (i = 0; i < 21; i++) {
 		write_register(Bank0_Reg_Init[i][0], Bank0_Reg_Init[i][1]);
-		read_register(Bank0_Reg_Init[i][0]);
+		//read_register(Bank0_Reg_Init[i][0]);
 	}
 
 	//Write RX/TX Address
-	write_register(RX_ADDR_P0, &URX_Address[0], 5);
-	write_register(TX_ADDR, &URX_Address[0], 5);
+	write_register(TX_ADDR, reinterpret_cast<const uint8_t*>(&RX_Address_P0), 5);
+	write_register(RX_ADDR_P0, reinterpret_cast<const uint8_t*>(&RX_Address_P0), 5);
+	write_register(RX_ADDR_P1, reinterpret_cast<const uint8_t*>(&RX_Address_P1), 5);
 
 	//Before config DYNPD and FEATURE register, the ACTIVATE command need to be write
 	k = read_register(FEATURE);
@@ -302,8 +311,7 @@ void RF24::print_RFSetup(uint8_t value) {
 		Serial.print(" CONT_WAVE=");
 		Serial.print((value & _BV(CONT_WAVE)) ? 1:0);
 
-		Serial
-		.print(" RF_DR=");
+		Serial.print(" RF_DR=");
 		aux = value & (_BV(RF_DR_LOW) | _BV(RF_DR_HIGH));
 		if (aux == 0)
 			Serial.print("1Mbps");
@@ -319,23 +327,22 @@ void RF24::print_RFSetup(uint8_t value) {
 		Serial.print(" RF_DR=");
 		Serial.print((value & _BV(RF_DR)) ? "2Mbps" : "1Mbps");
 		Serial.print(" LNA_HCURR=");
-		Serial.println((value & _BV(LNA_HCURR)) ? 1:0);}
-Serial	.print(" PLL_LOCK=");
-	Serial.print((value & _BV(PLL_LOCK)) ? 1:0);
+		Serial.print((value & _BV(LNA_HCURR)) ? 1:0);}
+		Serial.print(" PLL_LOCK=");
+		Serial.print((value & _BV(PLL_LOCK)) ? 1:0);
 
-	Serial
-	.print(" RF_PWR=");
-	aux = value & (_BV(RF_PWR_LOW) | _BV(RF_PWR_HIGH));
-	if (aux == 0)
-		Serial.println("-18dBm");
-	else if (aux == 2)
-		Serial.println("-12dBm");
-	else if (aux == 4)
-		Serial.println("-6dBm");
-	else if (aux == 6)
-		Serial.println("0dBm");
-	else
-		Serial.println("ERROR");
+		Serial.print(" RF_PWR=");
+		aux = value & (_BV(RF_PWR_LOW) | _BV(RF_PWR_HIGH));
+		if (aux == 0)
+			Serial.println("-18dBm");
+		else if (aux == 2)
+			Serial.println("-12dBm");
+		else if (aux == 4)
+			Serial.println("-6dBm");
+		else if (aux == 6)
+			Serial.println("0dBm");
+		else
+			Serial.println("ERROR");
 }
 
 /****************************************************************************/
@@ -419,7 +426,7 @@ void RF24::print_byte_register(const char* name, uint8_t reg, uint8_t qty,
 	Serial.print(extra_tab);
 	Serial.print(" =");
 
-	const char* aux = representation == HEX ? " 0x" : " b";
+	const char* aux = representation == HEX ? " 0x" : representation == BIN ?  " b" : " ";
 	while (qty--) {
 		Serial.print(aux);
 		Serial.print(read_register(reg++), representation);
@@ -453,7 +460,7 @@ void RF24::print_address_register(const char* name, uint8_t reg, uint8_t qty) {
 
 RF24::RF24(uint8_t _cepin, uint8_t _cspin) :
 		ce_pin(_cepin), csn_pin(_cspin), wide_band(true), p_variant(false), payload_size(
-				32), ack_payload_available(false), dynamic_payloads_enabled(
+				Bank0_Reg_Init[14][1]), ack_payload_available(false), dynamic_payloads_enabled(
 				false), pipe0_reading_address(0) {
 }
 
@@ -510,7 +517,7 @@ void RF24::printDetails(void) {
 	print_byte_register("RX_ADDR_P2-5", RX_ADDR_P2, 4);
 	print_address_register("TX_ADDR", TX_ADDR);
 
-	print_byte_register("RX_PW_P0-6", RX_PW_P0, 6);
+	print_byte_register("RX_PW_P0-6", RX_PW_P0, 6, DEC);
 
 	print_config(read_register(CONFIG));
 	print_byte_register("EN_AA", EN_AA, 1, BIN);
@@ -537,6 +544,18 @@ void RF24::printDetails(void) {
 
 /****************************************************************************/
 
+void RF24::printFIFOStatus(void) {
+	print_fifo_status(read_register(FIFO_STATUS));
+}
+
+/****************************************************************************/
+
+void RF24::printObserveTX(void) {
+	print_observe_tx(read_register(OBSERVE_TX));
+}
+
+/****************************************************************************/
+
 void RF24::begin(void) {
 	// Initialize pins
 	pinMode(ce_pin, OUTPUT);
@@ -544,6 +563,7 @@ void RF24::begin(void) {
 
 	// Initialize SPI bus
 	SPI.begin();
+
 
 	uint8_t Temp = 0;
 	delay(60); //hardware response time > 50ms;
@@ -605,7 +625,7 @@ void RF24::begin(void) {
 	 if(read_register(FEATURE) == 0)
 	 toggle_features();
 
-	 write_register(DYNPD, 0x01); //Enable pipe 0, Dynamic payload length
+	 write_register(DYNPD, 0x00); //Enable pipe 0, Dynamic payload length
 	 write_register(FEATURE, 0x04); //EN_DPL= 1, EN_ACK_PAY = 0, EN_DYN_ACK = 0
 
 
@@ -624,6 +644,7 @@ void RF24::begin(void) {
 	 flush_rx();
 	 flush_tx();
 	 */
+
 }
 
 /****************************************************************************/
@@ -654,77 +675,6 @@ void RF24::stopListening(void) {
 	ce(LOW);
 	flush_tx();
 	flush_rx();
-}
-
-/****************************************************************************/
-
-void RF24::switchtoRXMode( void )
-{
-	flush_rx();
-	ClearAllIRQFlags();
-
-	ce(LOW);
-
-	write_register(CONFIG, read_register(CONFIG) | _BV(PWR_UP) | _BV(PRIM_RX));
-
-	ce(HIGH);
-}
-
-
-/****************************************************************************/
-
-void RF24::switchtoTXMode( void )
-{
-	flush_tx();
-	ClearAllIRQFlags();
-
-	ce(LOW);
-
-	write_register(CONFIG, read_register(CONFIG) & ~_BV(PRIM_RX));
-}
-
-bool RF24::RF_SendData( const void* pSnd, uint8_t Len )
-{
-	uint8_t i  = 100;
-	switchtoTXMode();
-	ce(LOW);
-
-	write_payload(pSnd, Len);//Writes Data to TX FIFO;
-	ce(HIGH);
-
-	while( i-- );				//Wait Send;Require Maintain Time > 10us;
-
-	ce(LOW);
-
-	//Wait Send complete
-	int timeOut = 0;
-	bool rx, tx, fail;
-	while( 1 )
-	{
-		whatHappened(rx, tx, fail);
-			if( tx || fail )
-			{
-				if( fail )			 		//	send fail?
-				{
-				 	flush_tx(); 		//Clear TX FIFO;
-				}
-
-				ClearIRQFlags(true, false, true);
-
-				break;
-			}
-		else
-			timeOut++;
-
-		if( timeOut >= 5 )                		//Send Timeout >= 5ms;
-		{
-			flush_tx(); 				//Clear TX FIFO;
-			break;
-		}
-	}
-	switchtoRXMode( );
-
-	return tx;
 }
 
 /****************************************************************************/
@@ -761,10 +711,12 @@ bool RF24::write(const void* buf, uint8_t len) {
 	uint8_t observe_tx;
 	uint8_t status;
 	uint32_t sent_at = millis();
-	const uint32_t timeout = 500; //ms to wait for timeout
+	const uint32_t timeout = 1000; //ms to wait for timeout
 	do {
 		status = read_register(OBSERVE_TX, &observe_tx, 1);
-		IF_SERIAL_DEBUG(Serial.print(observe_tx,HEX));
+		delay(1);
+//		printObserveTX();
+//		Serial.println(millis() - sent_at);
 	} while (!(status & (_BV(TX_DS) | _BV(MAX_RT)))
 			&& (millis() - sent_at < timeout));
 
@@ -779,6 +731,7 @@ bool RF24::write(const void* buf, uint8_t len) {
 	// * There is an ack packet waiting (RX_DR)
 	bool tx_ok, tx_fail;
 	whatHappened(tx_ok, tx_fail, ack_payload_available);
+	ClearAllIRQFlags();
 
 	//printf("%u%u%u\r\n",tx_ok,tx_fail,ack_payload_available);
 
@@ -884,8 +837,6 @@ void RF24::whatHappened(bool& tx_ok, bool& tx_fail, bool& rx_ready) {
 	// Read the status & reset the status in one easy call
 	// Or is that such a good idea?
 	uint8_t status = get_status();
-
-	Serial.println(status, HEX);
 
 	// Report to the user what happened
 	tx_ok = status & _BV(TX_DS);

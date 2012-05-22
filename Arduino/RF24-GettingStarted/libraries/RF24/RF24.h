@@ -310,12 +310,6 @@ public:
    */
   void stopListening(void);
 
-  void switchtoRXMode( void );
-
-  void switchtoTXMode( void );
-
-  bool RF_SendData( const void* pSnd, uint8_t Len );
-
   /**
    * Write to the open writing pipe
    *
@@ -595,11 +589,14 @@ public:
   /**@{*/
 
   /**
-   * Print a giant block of debugging information to stdout
+   * Print a giant block of debugging information
    *
-   * @warning Does nothing if stdout is not defined.  See fdevopen in stdio.h
    */
   void printDetails(void);
+
+  void printFIFOStatus(void);
+
+  void printObserveTX(void);
 
   /**
    * Enter low-power mode
@@ -734,5 +731,4 @@ public:
 };
 
 #endif // __RF24_H__
-// vim:ai:cin:sts=2 sw=2 ft=cpp
 

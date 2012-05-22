@@ -2125,3 +2125,730 @@ org.eclipse.cdt.internal.formatter.AbortFormatting: [414/1] Unexpected token typ
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)
+!SESSION 2012-05-22 14:09:01.089 -----------------------------------------------
+eclipse.buildId=I20110613-1736
+java.version=1.7.0_03
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=es_ES
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.core.resources 4 2 2012-05-22 17:16:50.124
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:320)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:194)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:266)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:249)
+	at org.eclipse.cdt.managedbuilder.makegen.gnu.GnuMakefileGenerator.generateDependencies(GnuMakefileGenerator.java:591)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPostbuildGeneration(CommonBuilder.java:847)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:758)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:501)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:450)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:728)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:199)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:239)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:292)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:295)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:351)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:374)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:513)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:432)
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:305)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2012-05-22 17:16:50.124
+!MESSAGE Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2012-05-22 17:16:50.124
+!MESSAGE Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+
+!ENTRY org.eclipse.core.resources 4 75 2012-05-22 17:16:51.044
+!MESSAGE Errors occurred during the build.
+!SUBENTRY 1 org.eclipse.cdt.managedbuilder.core 4 75 2012-05-22 17:16:51.044
+!MESSAGE Errors running builder 'CDT Builder' on project 'RF24-GettingStarted'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:320)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:194)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:266)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:249)
+	at org.eclipse.cdt.managedbuilder.makegen.gnu.GnuMakefileGenerator.generateDependencies(GnuMakefileGenerator.java:591)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.performPostbuildGeneration(CommonBuilder.java:847)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:758)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:501)
+	at org.eclipse.cdt.managedbuilder.internal.core.CommonBuilder.build(CommonBuilder.java:450)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:728)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:199)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:239)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:292)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:295)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:351)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:374)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:513)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:432)
+	at org.eclipse.ui.actions.BuildAction$1.runInWorkspace(BuildAction.java:305)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 2 org.eclipse.core.resources 4 368 2012-05-22 17:16:51.044
+!MESSAGE Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2012-05-22 17:16:51.044
+!MESSAGE Resource '/RF24-GettingStarted/Release DUEMILANOVE/Release/libraries/SPI' does not exist.
+
+!ENTRY org.eclipse.cdt.core 1 0 2012-05-22 20:10:41.751
+!MESSAGE Indexed 'WirelessNet_Module' (3 sources, 36 headers) in 0,84 sec: 1.573 declarations; 2.796 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0,00%)
+!SESSION 2012-05-23 00:17:16.300 -----------------------------------------------
+eclipse.buildId=I20110613-1736
+java.version=1.7.0_03
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=es_ES
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:20.455
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:22.046
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:24.167
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:25.790
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:28.941
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:31.577
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:34.729
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:35.821
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:21:48.238
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:21.248
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:23.354
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:25.023
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:27.644
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:30.265
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:31.871
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:38.579
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:55.116
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:56.691
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:22:59.328
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:23:02.463
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:23:04.616
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:23:10.341
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
+
+!ENTRY org.eclipse.cdt.codan.core 4 1 2012-05-23 00:23:18.126
+!MESSAGE Internal Error
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.isAssignmentToItself(AssignmentToItselfChecker.java:47)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker$1.visit(AssignmentToItselfChecker.java:36)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTBinaryExpression.accept(CPPASTBinaryExpression.java:146)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTExpressionStatement.accept(CPPASTExpressionStatement.java:71)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIfStatement.accept(CPPASTIfStatement.java:137)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompoundStatement.accept(CPPASTCompoundStatement.java:79)
+	at org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition.accept(CPPASTFunctionDefinition.java:187)
+	at org.eclipse.cdt.internal.core.dom.parser.ASTTranslationUnit.accept(ASTTranslationUnit.java:279)
+	at org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfChecker.processAst(AssignmentToItselfChecker.java:29)
+	at org.eclipse.cdt.codan.core.cxx.model.AbstractIndexAstChecker.processModel(AbstractIndexAstChecker.java:103)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.processResource(CodanBuilder.java:149)
+	at org.eclipse.cdt.codan.internal.core.CodanBuilder.runInEditor(CodanBuilder.java:218)
+	at org.eclipse.cdt.codan.core.cxx.internal.model.CxxCodanReconciler.reconciledAst(CxxCodanReconciler.java:38)
+	at org.eclipse.cdt.codan.internal.ui.cxx.CodanCReconciler.reconciled(CodanCReconciler.java:81)
+	at org.eclipse.cdt.internal.ui.editor.CEditor.reconciled(CEditor.java:3145)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:108)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:73)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:84)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:77)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:408)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:206)
