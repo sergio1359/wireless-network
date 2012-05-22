@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="188" key="DIALOG_Y_ORIGIN"/>
+		<item value="267" key="DIALOG_Y_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
-		<item value="731" key="DIALOG_X_ORIGIN"/>
+		<item value="755" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,18 +13,23 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Clear" key="selection"/>
+		<item value="store" key="selection"/>
 		<list key="findhistory">
-			<item value="clear"/>
-			<item value="write"/>
-			<item value="rf_send"/>
-			<item value="rf_se"/>
-			<item value="rf_"/>
-			<item value="rf"/>
-			<item value="rf."/>
-			<item value="send"/>
+			<item value="store"/>
+			<item value="whatHappened"/>
+			<item value="what_h"/>
+			<item value="what"/>
+			<item value="IF_SE"/>
+			<item value="IF_Se"/>
+			<item value="bool read"/>
+			<item value="read(void*"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Radio"/>
 		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="314" key="DIALOG_Y_ORIGIN"/>
+		<item value="489" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>
