@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace WirelessNetwork
 {
@@ -9,6 +10,8 @@ namespace WirelessNetwork
     {
         public static List<Node> NodeList = new List<Node>();
         public static DateTime init { get; set; }
+
+        public static Texture2D circleTexture;
 
         /// <summary>
         /// The main entry point for the application.

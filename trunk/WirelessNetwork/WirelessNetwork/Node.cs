@@ -35,7 +35,7 @@ namespace WirelessNetwork
         public int Range { get; set; }
         public string Address { get; set; }
 
-        List<string> NeigborsTable;
+        List<string> NeighborsTable;
         public Dictionary<string, KeyValuePair<string, int>> RouteTable { get; private set; } //Nodo destino -> Par <Gateway, Length>
         public Dictionary<string, KeyValuePair<string, int>> LookTable { get; private set; } //Nodo buscado -> Par <interesado, cuentaAtrás>
 
@@ -49,11 +49,11 @@ namespace WirelessNetwork
             Size = 40;
             Range = Size * 3;
             Color = Color.DarkBlue;
-            NeigborsTable = new List<string>();
+            NeighborsTable = new List<string>();
             RouteTable = new Dictionary<string, KeyValuePair<string, int>>();
             LookTable = new Dictionary<string, KeyValuePair<string, int>>();
 
-            mainLoopTimer.Interval = 500;
+            mainLoopTimer.Interval = 100;
             mainLoopTimer.AutoReset = true;
             mainLoopTimer.Elapsed += new ElapsedEventHandler(mainLoopTimer_Elapsed);
             mainLoopTimer.Start();
@@ -82,9 +82,8 @@ namespace WirelessNetwork
             Texture2D circleNode = DrawHelper.CreateCircle(Size / 2, graphicsDevice);
             Texture2D circleRange = DrawHelper.CreateCircle(Range / 2, graphicsDevice);
 
-            //spriteBatch.Draw(circleRange, positionRange, Color.LightYellow);
-            spriteBatch.Draw(circleNode, positionNode, Color);
-            //DrawHelper.DrawCircle(graphicsDevice, 50);
+            spriteBatch.Draw(circleRange, positionRange, Color.Orange);
+            spriteBatch.Draw(Program.circleTexture, new Rectangle((int)positionNode.X , (int)positionNode.Y, Size, Size), Color);
             if (ShowAddress)
             {
                 spriteBatch.DrawString(DrawHelper.GameFont, Address, positionString, Color.Red);
@@ -104,9 +103,9 @@ namespace WirelessNetwork
 
             LookTable.Add(search, new KeyValuePair<string, int>(sender, TIMEOUT));
 
-            lock (NeigborsTable)
+            lock (NeighborsTable)
             {
-                foreach (string neigborAddress in NeigborsTable)
+                foreach (string neigborAddress in NeighborsTable)
                 {
                     if (neigborAddress != sender)
                     {
@@ -126,29 +125,30 @@ namespace WirelessNetwork
 
         public void RefreshNeigbors()
         {
-            lock (NeigborsTable)
+            lock (NeighborsTable)
             {
-                NeigborsTable.Clear();
-                List<string> removeList = new List<string>();
-                foreach (var item in RouteTable)
-                {
-                    if (item.Value.Value == 0)//Neigbor
-                        removeList.Add(item.Key);
-                }
-                foreach (string address in removeList)
-                    RouteTable.Remove(address);
-
+                NeighborsTable.Clear();
+                
                 foreach (var node in Program.NodeList)
                 {
                     if (IsNeigbor(node))
                     {
-                        NeigborsTable.Add(node.Address);
+                        NeighborsTable.Add(node.Address);
                         if (RouteTable.ContainsKey(node.Address))
                             RouteTable.Remove(node.Address);
 
                         RouteTable.Add(node.Address, new KeyValuePair<string, int>(node.Address, 0)); //Longitud = 0 -> Camino directo
                     }
                 }
+
+                List<string> removeList = new List<string>();
+                foreach (var item in RouteTable)
+                {
+                    if (!NeighborsTable.Contains(item.Value.Key))//is not a neigbor
+                        removeList.Add(item.Key);
+                }
+                foreach (string address in removeList)
+                    RouteTable.Remove(address);
             }
         }
 
@@ -287,7 +287,7 @@ namespace WirelessNetwork
                         {
                             RouteTable.Remove(message.Data);
                             //Avisar a mis vecinos de que ya no puedo llegar al destinatario del mensaje
-                            foreach (var nodeAddress in NeigborsTable)
+                            foreach (var nodeAddress in NeighborsTable)
                             {
                                 if (message.From != nodeAddress)
                                 {
