@@ -33,7 +33,7 @@ namespace WirelessNetwork
 
                 data[y * outerRadius + x + 1] = Color.White;
             }
-
+            /*
             bool finished = false;
             int firstSkip = 0;
             int lastSkip = 0;
@@ -98,7 +98,7 @@ namespace WirelessNetwork
                     }
                 }
             }
-
+            */
             texture.SetData(data);
             return texture;
         }

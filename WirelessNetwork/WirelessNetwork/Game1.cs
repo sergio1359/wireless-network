@@ -39,7 +39,7 @@ namespace WirelessNetwork
             int height = Window.ClientBounds.Height - 30;
             int width = Window.ClientBounds.Width - 30;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Node node = new Node();
                 int margin = node.Size / 2;
@@ -79,6 +79,8 @@ namespace WirelessNetwork
             DrawHelper.GameFont = Content.Load<SpriteFont>("GameFont");
             blank = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             blank.SetData(new[] { Color.White });
+
+            Program.circleTexture = Content.Load<Texture2D>("circle");
 
             // TODO: use this.Content to load your game content here
         }
