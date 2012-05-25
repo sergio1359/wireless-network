@@ -108,9 +108,9 @@ uint8_t RF24::write_payload(const void* buf, uint8_t len) {
 
 /****************************************************************************/
 
-uint8_t RF24::read_payload(void* buf, uint8_t len) {
+uint8_t RF24::read_payload(void* buf, uint8_t offset, uint8_t len) {
 	uint8_t status;
-	uint8_t* current = reinterpret_cast<uint8_t*>(buf);
+	uint8_t* current = reinterpret_cast<uint8_t*>(buf) + offset;
 
 	uint8_t data_len = min(len,payload_size);
 	uint8_t blank_len = dynamic_payloads_enabled ? 0 : payload_size - data_len;
@@ -729,13 +729,15 @@ bool RF24::write(const void* buf, uint8_t len) {
 	// * The send was successful (TX_DS)
 	// * The send failed, too many retries (MAX_RT)
 	// * There is an ack packet waiting (RX_DR)
-	bool tx_ok, tx_fail;
-	whatHappened(tx_ok, tx_fail, ack_payload_available);
+	//bool tx_ok, tx_fail;
+	ack_payload_available = status & _BV(RX_DR);
+	//whatHappened(tx_ok, tx_fail, ack_payload_available);
+
 	ClearAllIRQFlags();
 
 	//printf("%u%u%u\r\n",tx_ok,tx_fail,ack_payload_available);
 
-	result = tx_ok;
+	result = status & _BV(TX_DS);
 	IF_SERIAL_DEBUG(Serial.print(result?"...OK.":"...Failed"));
 
 	// Handle the ack packet
@@ -823,9 +825,9 @@ bool RF24::available(uint8_t* pipe_num) {
 
 /****************************************************************************/
 
-bool RF24::read(void* buf, uint8_t len) {
+bool RF24::read(void* buf, uint8_t offset, uint8_t len) {
 	// Fetch the payload
-	read_payload(buf, len);
+	read_payload(buf, offset, len);
 
 	// was this the last of the data available?
 	return read_register(FIFO_STATUS) & _BV(RX_EMPTY);
@@ -833,16 +835,30 @@ bool RF24::read(void* buf, uint8_t len) {
 
 /****************************************************************************/
 
-void RF24::whatHappened(bool& tx_ok, bool& tx_fail, bool& rx_ready) {
-	// Read the status & reset the status in one easy call
-	// Or is that such a good idea?
-	uint8_t status = get_status();
+//void RF24::whatHappened(bool& tx_ok, bool& tx_fail, bool& rx_ready) {
+//	// Read the status & reset the status in one easy call
+//	// Or is that such a good idea?
+//	uint8_t status = get_status();
+//
+//	// Report to the user what happened
+//	tx_ok = status & _BV(TX_DS);
+//	tx_fail = status & _BV(MAX_RT);
+//	rx_ready = status & _BV(RX_DR);
+//}
 
-	// Report to the user what happened
-	tx_ok = status & _BV(TX_DS);
-	tx_fail = status & _BV(MAX_RT);
-	rx_ready = status & _BV(RX_DR);
-}
+	STATE RF24::getState()
+	{
+		STATE result;
+		result.raw = get_status();
+		return result;
+	}
+
+	FIFO_STATE RF24::getFifoState()
+		{
+			FIFO_STATE result;
+			result.raw = read_register(FIFO_STATUS);
+			return result;
+		}
 
 /****************************************************************************/
 
