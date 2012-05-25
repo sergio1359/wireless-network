@@ -3,6 +3,97 @@
 #include "libraries/SPI/SPI.h"
 #include <SPI.h>
 #include "libraries/RF24/RF24.h"
+#include "storage.h"
+#include "global.h"
+#include "network.h"
+
+void setup(void) {
+	pinMode(7, OUTPUT);
+
+	digitalWrite(7, LOW);
+
+	if(Storage.check())
+		Storage.load();
+	else
+		Storage.save();
+
+	Serial.begin(57600);
+
+	Network.init();
+}
+
+#define AUTOMODE 0
+
+#if AUTOMODE
+void loop(void) {
+		Serial.print("Sending..");
+		DATA_MSG msg;
+		msg.data[0] = 'H';
+		msg.data[1] = 'O';
+		msg.data[2] = 'L';
+		msg.data[3] = 'A';
+		msg.parent = nodeAddress;
+
+		Serial.println(RF_SendMsg(BROADCAST_ADDRESS, msg.raw_bytes, 8) ? "OK" : "FAIL");
+
+	delay(AUTOMODE);
+}
+#else
+void loop(void){
+
+	if(Serial.available())
+	{
+		int command = Serial.read();
+		if(command>='0' && command<='9')
+		{
+			command -= 48;
+
+			if(command==0)
+				command = 0xFF;
+
+			Serial.print("Sending to ");
+			Serial.print(command, HEX);
+			Serial.print(".. ");
+			DATA_MSG msg;
+			msg.header.type = 1;
+			msg.header.id = 0;
+			msg.from = nodeAddress;
+			msg.to = command;
+			msg.data[0] = 'H';
+			msg.data[1] = 'O';
+			msg.data[2] = 'L';
+			msg.data[3] = 'A';
+			msg.parent = nodeAddress;
+
+			Serial.println(Network.sendMsg(command, msg.raw_bytes, 8) ? "OK" : "FAIL");
+		}else if(command == 'r')
+		{
+			if(Network.available())
+			{
+				uint8_t newMsg[8];
+				uint8_t len;
+				Network.readMsg(newMsg, len);
+
+				for(int i=3;i<7;i++)
+				{
+					Serial.print(newMsg[i]);
+					Serial.print(" ");
+				}
+				Serial.println("");
+			}else
+			{
+				Serial.println("Buffer de entrada vacío");
+			}
+		}else if(command == 'n')
+		{
+			Network.printNeighbors();
+		}
+	}
+	Network.update();
+}
+
+#endif
+
 
 int main(void) {
 	init();
@@ -13,85 +104,4 @@ int main(void) {
 		loop();
 
 	return 0;
-}
-
-//
-// Hardware configuration
-//
-
-// Set up nRF24L01 radio on SPI bus plus pins 9 & 10
-
-RF24 Radio(9, 10);
-
-// Radio pipe addresses for the 2 nodes to communicate.
-#ifdef UNO
-const uint64_t pipes[2] = { 0xF0F0F0F0D2LL, 0xF0F0F0F0E1LL };
-#else
-const uint64_t pipes[2] = {0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL};
-#endif
-
-void setup(void) {
-	pinMode(7, OUTPUT);
-	pinMode(2, INPUT);
-
-	digitalWrite(7, LOW);
-
-	Serial.begin(57600);
-	Radio.begin();
-
-	Radio.setIRQMask(false, true, true);
-
-	Radio.openWritingPipe(pipes[0]);
-	Radio.openReadingPipe(1, pipes[1]);
-
-	cli();
-	EIMSK |= (1 << INT0);  // Enable external interrupt INT0
-	EICRA |= (1 << ISC01); // Trigger INT0 on falling edge
-	sei();				   // Enable global interrupts
-
-	Radio.printDetails();
-	Radio.startListening();
-}
-
-char aux;
-uint8_t sender;
-
-void loop(void) {
-
-	if (Serial.available()) {
-		EIMSK &= ~(1 << INT0); // Enable external interrupt INT0
-		// First, stop listening so we can talk.
-		Radio.stopListening();
-		Serial.print("Sending..");
-
-		// Take the time, and send it.  This will block until complete
-		aux = Serial.read();
-		bool ok = Radio.write(&aux, sizeof(char));
-		Serial.println(ok ? "ok" : "fail");
-
-		// Now, continue listening
-		Radio.startListening();
-		EIMSK |= (1 << INT0); // Enable external interrupt INT0
-	}
-}
-
-ISR(INT0_vect) {
-	digitalWrite(7, HIGH);
-
-	bool tx, fail, rx;
-	Radio.whatHappened(tx, fail, rx);
-
-	if (fail) {
-		Radio.flush_tx();
-	}
-
-	if (rx) {
-		char aux;
-		Radio.read(&aux, sizeof(char));
-		Serial.print(aux);
-	}
-
-	Radio.ClearAllIRQFlags();
-
-	digitalWrite(7, LOW);
 }
