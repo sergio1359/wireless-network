@@ -46,10 +46,10 @@ const uint8_t Bank0_RegAct[2][2] =
 const volatile uint8_t Bank0_Reg_Init[21][2] =
 {
 	{CONFIG,		0x0F},	//PRX,CRC=2,ENCRC,POWRUP;
-	{EN_AA,			0x3F},	//data pipe 0 ACK;
+	{EN_AA,			0x3F},	//all data pipe AUTO ACK;
 	{EN_RXADDR,		0x03},	//RX address data pipe 0 an 1;
 	{SETUP_AW,		0x03},	//RX/TX address width 5B
-	{SETUP_RETR,	0x06},	//auto retransmit count 6,delay 250us;
+	{SETUP_RETR,	0x1F},	//auto retransmit count 15,delay 500us;
 	{RF_CH,			0x4C},  //2400+0x4C = 2476MHz;
 	{RF_SETUP,		0x17},  //CONT_WAVE=0 RF_DR=1Mbps PLL_LOCK=1 RF_PWR=0dBm;
 	{STATUS,		0x70},	//Clear interrupt flag;
