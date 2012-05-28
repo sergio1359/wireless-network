@@ -125,19 +125,22 @@ namespace WirelessNetwork
 
         public void RefreshNeigbors()
         {
-            lock (NeighborsTable)
+            lock (RouteTable)
             {
-                NeighborsTable.Clear();
-                
-                foreach (var node in Program.NodeList)
+                lock (NeighborsTable)
                 {
-                    if (IsNeigbor(node))
-                    {
-                        NeighborsTable.Add(node.Address);
-                        if (RouteTable.ContainsKey(node.Address))
-                            RouteTable.Remove(node.Address);
+                    NeighborsTable.Clear();
 
-                        RouteTable.Add(node.Address, new KeyValuePair<string, int>(node.Address, 0)); //Longitud = 0 -> Camino directo
+                    foreach (var node in Program.NodeList)
+                    {
+                        if (IsNeigbor(node))
+                        {
+                            NeighborsTable.Add(node.Address);
+                            if (RouteTable.ContainsKey(node.Address))
+                                RouteTable.Remove(node.Address);
+
+                            RouteTable.Add(node.Address, new KeyValuePair<string, int>(node.Address, 0)); //Longitud = 0 -> Camino directo
+                        }
                     }
                 }
 
@@ -309,7 +312,7 @@ namespace WirelessNetwork
                                 //RFMessage retry = outputBuffer.First(x => x.To == message.Data);
                                 //outputBuffer.Remove(retry);
                                 //transmitRF(retry);
-                                Program.MessageBoxCustom("Timeout superado", "MESSAGE FROM " + Address + " TO " + message.Data + "           ");
+                                Program.MessageBoxCustom("Ha cambiado la topologia de la red. Reenviar", "MESSAGE FROM " + Address + " TO " + message.Data + "           ");
                             }
                         }
 
