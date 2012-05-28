@@ -56,6 +56,7 @@ void loop(void){
 			Serial.print(".. ");
 			DATA_MSG msg;
 			msg.header.type = 1;
+			msg.header.reserved = 0;
 			msg.header.id = 0;
 			msg.from = nodeAddress;
 			msg.to = command;
