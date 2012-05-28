@@ -12,7 +12,7 @@
 #include "libraries/RF24/RF24.h"
 #include "global.h"
 
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 128
 
 struct ring_buffer;
 
