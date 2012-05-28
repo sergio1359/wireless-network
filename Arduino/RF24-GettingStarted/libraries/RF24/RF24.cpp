@@ -846,19 +846,17 @@ bool RF24::read(void* buf, uint8_t offset, uint8_t len) {
 //	rx_ready = status & _BV(RX_DR);
 //}
 
-	STATE RF24::getState()
-	{
-		STATE result;
-		result.raw = get_status();
-		return result;
-	}
+STATE* RF24::getState()
+{
+	state.raw = get_status();
+	return &state;
+}
 
-	FIFO_STATE RF24::getFifoState()
-		{
-			FIFO_STATE result;
-			result.raw = read_register(FIFO_STATUS);
-			return result;
-		}
+FIFO_STATE* RF24::getFifoState()
+{
+	fifoState.raw = read_register(FIFO_STATUS);
+	return &fifoState;
+}
 
 /****************************************************************************/
 
