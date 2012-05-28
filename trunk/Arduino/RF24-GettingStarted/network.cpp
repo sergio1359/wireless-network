@@ -11,8 +11,8 @@ NETWORK Network;
 
 struct ring_buffer
 {
-  uint8_t readIndex;
-  uint8_t writeIndex;
+  unsigned readIndex : 7;
+  unsigned writeIndex : 7;
   uint8_t buffer[BUFFER_SIZE];
 };
 
@@ -146,65 +146,68 @@ void NETWORK::printNeighbors()
 	}
 }
 
+STATE* state;
+FIFO_STATE* fifoState;
 
 ISR(INT0_vect) {
 	digitalWrite(7, HIGH);
 
-	STATE state = Radio.getState();
+	state = Radio.getState();
 
-	if (state.rx_dr) {
-		do{
+	if (state->rx_dr) {
 		uint8_t auxBuffer[8];
-		Radio.read(&auxBuffer, 0, 8); //TODO: DinamicPayloadSize
+		int aux, i;
+		do{
+			Radio.ClearIRQFlags(false,true, false);
 
-		int aux = (auxBuffer[0] & 0xC0);
-		int i;
+			Radio.read(&auxBuffer, 0, 8); //TODO: DinamicPayloadSize
 
-		for(i=0;i<8;i++)
-		{
-			Serial.print(auxBuffer[i], HEX);
-			Serial.print(" ");
-		}
+			aux = (auxBuffer[0] & 0xC0);
 
-		Serial.print(" -> ");
+			for(i=0;i<8;i++)
+			{
+				Serial.print(auxBuffer[i], HEX);
+				Serial.print(" ");
+			}
 
-		if(aux == DATA)
-		{
-			memcpy((uint8_t*)&dataBuffer.buffer + dataBuffer.writeIndex, (uint8_t*)&auxBuffer, 8);
-			dataBuffer.writeIndex += 8;
-			Serial.print("DATA from ");
-			Serial.println(auxBuffer[7], HEX);
-		}else if (aux == BROADCAST)
-		{
-				aux = auxBuffer[1];
-				Serial.print("Broadcast received from ");
-				Serial.println(aux, HEX);
+			Serial.print(" -> ");
 
-				for(i=0; i<neighborsTable.end; i++)
-				{
-					if(neighborsTable.array[i][0] == aux)
+			if(aux == DATA)
+			{
+				memcpy((uint8_t*)&dataBuffer.buffer + dataBuffer.writeIndex, (uint8_t*)&auxBuffer, 8);
+				dataBuffer.writeIndex += 8;
+				Serial.print("DATA from ");
+				Serial.println(auxBuffer[7], HEX);
+			}else if (aux == BROADCAST)
+			{
+					aux = auxBuffer[1];
+					Serial.print("Broadcast received from ");
+					Serial.println(aux, HEX);
+
+					for(i=0; i<neighborsTable.end; i++)
 					{
-						neighborsTable.array[i][1] = 0;
-						break;
+						if(neighborsTable.array[i][0] == aux)
+						{
+							neighborsTable.array[i][1] = 0; //Reset the counter
+							break;
+						}
 					}
-				}
-				if(i == neighborsTable.end)
-				{
-					neighborsTable.array[neighborsTable.end][0] = aux;
-					neighborsTable.array[neighborsTable.end++][1] = 0;
-				}
-		}
-		else
-		{
-			memcpy((uint8_t*)&routeBuffer.buffer + routeBuffer.writeIndex, (uint8_t*)&auxBuffer, 5);
-			routeBuffer.writeIndex += 5;
-			Serial.print("ROUTE from ");
-			Serial.println(auxBuffer[4], HEX);
-		}
-			state = Radio.getState();
-		}while(state.rx_p_no != 7);//RX FIFO NOT EMPTY
+
+					if(i == neighborsTable.end) //Not exists
+					{
+						neighborsTable.array[neighborsTable.end][0] = aux;
+						neighborsTable.array[neighborsTable.end++][1] = 0;
+					}
+			}
+			else
+			{
+				memcpy((uint8_t*)&routeBuffer.buffer + routeBuffer.writeIndex, (uint8_t*)&auxBuffer, 5);
+				routeBuffer.writeIndex += 5;
+				Serial.print("ROUTE from ");
+				Serial.println(auxBuffer[4], HEX);
+			}
+		}while(!(fifoState = Radio.getFifoState())->rx_empty);//RX FIFO NOT EMPTY
 	}
-	Radio.ClearIRQFlags(false,true, false);
 
 	digitalWrite(7, LOW);
 }
