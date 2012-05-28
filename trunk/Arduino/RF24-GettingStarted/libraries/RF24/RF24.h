@@ -84,6 +84,8 @@ private:
 	bool dynamic_payloads_enabled; /**< Whether dynamic payloads are enabled. */
 	uint8_t ack_payload_length; /**< Dynamic size of pending ack payload. */
 	uint64_t pipe0_reading_address; /**< Last address set on pipe 0 for reading. */
+	STATE state;
+	FIFO_STATE fifoState;
 
 protected:
 	/**
@@ -711,9 +713,9 @@ public:
 	 * @param[out] rx_ready There is a message waiting to be read (RX_DS)
 	 */
 	//void whatHappened(bool& tx_ok,bool& tx_fail,bool& rx_ready);
-	STATE getState(void);
+	STATE* getState(void);
 
-	FIFO_STATE getFifoState(void);
+	FIFO_STATE* getFifoState(void);
 
 	/**
 	 * Clears the state of selected interrupts.
