@@ -65,4 +65,6 @@ extern uint8_t masterAddress;
 #define BROADCAST_ADDRESS 0xFF
 #define GATEWAY_ADDRESS 0x01
 
+#define LED_PIN 7
+
 #endif /* GLOBAL_H_ */

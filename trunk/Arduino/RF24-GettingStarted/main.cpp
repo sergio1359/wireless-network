@@ -7,10 +7,12 @@
 #include "global.h"
 #include "network.h"
 
-void setup(void) {
-	pinMode(7, OUTPUT);
+#define AUTOMODE 0
 
-	digitalWrite(7, LOW);
+void setup(void) {
+	pinMode(LED_PIN, OUTPUT);
+
+	digitalWrite(LED_PIN, HIGH);
 
 	if(Storage.check())
 		Storage.load();
@@ -20,9 +22,9 @@ void setup(void) {
 	Serial.begin(57600);
 
 	Network.init();
-}
 
-#define AUTOMODE 0
+	digitalWrite(LED_PIN, LOW);
+}
 
 #if AUTOMODE
 void loop(void) {
@@ -41,9 +43,6 @@ void loop(void) {
 #else
 int command;
 DATA_MSG data_msg;
-
-uint8_t newMsg[8];
-uint8_t len;
 
 void loop(void){
 
@@ -72,19 +71,23 @@ void loop(void){
 			data_msg.data[2] = 'L';
 			data_msg.data[3] = 'A';
 
-			Serial.println(Network.sendMsg(command, data_msg.raw_bytes, 8) ? "OK" : "FAIL");
+			Serial.println(Network.sendMsg(command, &data_msg) ? "OK" : "FAIL");
 		}else if(command == 'r')
 		{
 			if(Network.available())
 			{
-				Network.readMsg(newMsg, len);
+				Network.readMsg(&data_msg);
 
-				for(int i=4;i<8;i++)
+				Serial.print(data_msg.from, HEX);
+				Serial.print(" says '");
+
+				for(int i=0;i<sizeof(DATA_MSG) - 4;i++)
 				{
-					Serial.print(newMsg[i]);
-					Serial.print(" ");
+					Serial.print(data_msg.data[i]);
 				}
-				Serial.println("");
+
+				Serial.print("' by ");
+				Serial.println(data_msg.parent, HEX);
 			}else
 			{
 				Serial.println("Buffer de entrada vacío");
