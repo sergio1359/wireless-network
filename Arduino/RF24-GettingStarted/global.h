@@ -21,31 +21,24 @@ typedef union DATA_MSG {
 		} header;
 		uint8_t from;
 		uint8_t to;
+		uint8_t parent; //neighbor who has sent the message
 		uint8_t data[4];
-		uint8_t parent;
 	};
 	uint8_t raw_bytes[8];
 };
 
 typedef union ROUTE_MSG {
 	struct {
-		union {
-			struct {
-				uint8_t reserved : 6; //must be 0
-				uint8_t anstype :1; //must be 1
-				uint8_t type :1; //must be 0
-			} answer_header;
-			struct {
-				uint8_t distance :5;
-				uint8_t ok :1;
-				uint8_t restype :1; //must be 0
-				uint8_t type :1; //must be 0
-			} response_header;
+		struct {
+			uint8_t distance :5;
+			uint8_t ok :1; //for response only
+			uint8_t restype :1; // 0 -> response ; 1 -> answer
+			uint8_t type :1; //must be 0
 		} header;
 		uint8_t from;
 		uint8_t to;
-		uint8_t reference;
 		uint8_t parent;
+		uint8_t reference;
 	};
 	uint8_t raw_bytes[5];
 };

@@ -39,11 +39,17 @@ void loop(void) {
 	delay(AUTOMODE);
 }
 #else
+int command;
+DATA_MSG data_msg;
+
+uint8_t newMsg[8];
+uint8_t len;
+
 void loop(void){
 
 	if(Serial.available())
 	{
-		int command = Serial.read();
+		command = Serial.read();
 		if(command>='0' && command<='9')
 		{
 			command -= 48;
@@ -54,28 +60,26 @@ void loop(void){
 			Serial.print("Sending to ");
 			Serial.print(command, HEX);
 			Serial.print(".. ");
-			DATA_MSG msg;
-			msg.header.type = 1;
-			msg.header.reserved = 0;
-			msg.header.id = 0;
-			msg.from = nodeAddress;
-			msg.to = command;
-			msg.data[0] = 'H';
-			msg.data[1] = 'O';
-			msg.data[2] = 'L';
-			msg.data[3] = 'A';
-			msg.parent = nodeAddress;
 
-			Serial.println(Network.sendMsg(command, msg.raw_bytes, 8) ? "OK" : "FAIL");
+			data_msg.header.type = 1;
+			data_msg.header.reserved = 0;
+			data_msg.header.id = 0;
+			data_msg.from = nodeAddress;
+			data_msg.to = command;
+			data_msg.parent = nodeAddress;
+			data_msg.data[0] = 'H';
+			data_msg.data[1] = 'O';
+			data_msg.data[2] = 'L';
+			data_msg.data[3] = 'A';
+
+			Serial.println(Network.sendMsg(command, data_msg.raw_bytes, 8) ? "OK" : "FAIL");
 		}else if(command == 'r')
 		{
 			if(Network.available())
 			{
-				uint8_t newMsg[8];
-				uint8_t len;
 				Network.readMsg(newMsg, len);
 
-				for(int i=3;i<7;i++)
+				for(int i=4;i<8;i++)
 				{
 					Serial.print(newMsg[i]);
 					Serial.print(" ");
