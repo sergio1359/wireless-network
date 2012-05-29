@@ -24,16 +24,36 @@ dictionary neighborsTable = {{0}, 0};
 
 unsigned long lastUpdate = 0;
 
+DATA_MSG broadcast;
+
+bool inline NETWORK::send(uint8_t address, uint8_t* msg, uint8_t len)
+{
+	EIMSK &= ~(1 << INT0); // Disable external interrupt INT0
+		Radio.stopListening(); // Stop listening so we can talk.
+
+		if(lastTXAddress != address)
+		{
+			Radio.openWritingPipe(FULL_ADDRESS(address));
+			lastTXAddress = address;
+		}
+
+		// This will block until complete
+		bool result = Radio.write(msg, len);
+
+		Radio.startListening(); // Now, continue listening
+		EIMSK |= (1 << INT0); // Enable external interrupt INT0
+		return result;
+}
+
 void inline NETWORK::sendPresenceSignal()
 {
-	DATA_MSG broadcast;
 	broadcast.header.type = 1;
 	broadcast.header.reserved = 1; //Broadcast
 	broadcast.header.id = 0;
 	broadcast.from = nodeAddress;
 	broadcast.to = BROADCAST_ADDRESS;
 
-	sendMsg(BROADCAST_ADDRESS, broadcast.raw_bytes, 3);
+	send(BROADCAST_ADDRESS, broadcast.raw_bytes, 3);
 }
 
 void inline NETWORK::updateNeightbors()
@@ -96,32 +116,20 @@ void NETWORK::flush()
 	dataBuffer.readIndex = dataBuffer.writeIndex;
 }
 
-bool NETWORK::sendMsg(uint8_t address, uint8_t* msg, uint8_t len)
+//bool NETWORK::sendMsg(uint8_t address, uint8_t* msg, uint8_t len)
+bool NETWORK::sendMsg(uint8_t address, DATA_MSG* msg)
 {
-	EIMSK &= ~(1 << INT0); // Disable external interrupt INT0
-	Radio.stopListening(); // Stop listening so we can talk.
-
-	if(lastTXAddress != address)
-	{
-		Radio.openWritingPipe(FULL_ADDRESS(address));
-		lastTXAddress = address;
-	}
-
-	// This will block until complete
-	bool result = Radio.write(msg, len);
-
-	Radio.startListening(); // Now, continue listening
-	EIMSK |= (1 << INT0); // Enable external interrupt INT0
-	return result;
+	send(address, msg->raw_bytes, sizeof(DATA_MSG));
 }
 
-bool NETWORK::readMsg(uint8_t* msg, uint8_t& len)
+//bool NETWORK::readMsg(uint8_t* msg, uint8_t& len)
+bool NETWORK::readMsg(DATA_MSG* msg)
 {
 	if(dataBuffer.readIndex == dataBuffer.writeIndex)
 		return false;
 
 	//TODO: DinamicPayloadSize
-	memcpy(msg, (uint8_t*)&dataBuffer.buffer + dataBuffer.readIndex, 8);
+	memcpy(msg->raw_bytes, (uint8_t*)&dataBuffer.buffer + dataBuffer.readIndex, 8);
 	dataBuffer.readIndex += 8;
 	return true;
 }
@@ -151,7 +159,7 @@ uint8_t auxBuffer[8];
 int aux, i;
 
 ISR(INT0_vect) {
-	digitalWrite(7, HIGH);
+	digitalWrite(LED_PIN, HIGH);
 
 	state = Radio.getState();
 
@@ -208,7 +216,7 @@ ISR(INT0_vect) {
 		}while(!(fifoState = Radio.getFifoState())->rx_empty);//RX FIFO NOT EMPTY
 	}
 
-	digitalWrite(7, LOW);
+	digitalWrite(LED_PIN, LOW);
 }
 
 

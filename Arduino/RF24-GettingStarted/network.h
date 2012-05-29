@@ -23,6 +23,8 @@ private:
 	uint8_t lastTXAddress;
 
 protected:
+	bool inline send(uint8_t address, uint8_t* msg, uint8_t len);
+
 	void inline sendPresenceSignal(void);
 
 	void inline updateNeightbors(void);
@@ -36,9 +38,11 @@ public:
 
 	void flush(void);
 
-	bool sendMsg(uint8_t address, uint8_t* msg, uint8_t len);
+	//bool sendMsg(uint8_t address, uint8_t* msg, uint8_t len);
+	bool sendMsg(uint8_t address, DATA_MSG* msg);
 
-	bool readMsg(uint8_t* msg, uint8_t& len);
+	//bool readMsg(uint8_t* msg, uint8_t& len);
+	bool readMsg(DATA_MSG* msg);
 
 	void printNeighbors(void);
 };
