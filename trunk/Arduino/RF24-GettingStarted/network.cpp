@@ -74,14 +74,13 @@ void NETWORK::init()
 }
 
 void NETWORK::update(){
-	unsigned long now = millis();
-
-	if(now - lastUpdate > 5000 || lastUpdate == 0) // Every 5 seconds
+	if(millis() - lastUpdate > 5000 || lastUpdate == 0) // Every 5 seconds
 	{
+		lastUpdate = millis();
+
 		sendPresenceSignal();
 		updateNeightbors();
 		printNeighbors();
-		lastUpdate = now;
 	}
 }
 
@@ -148,6 +147,8 @@ void NETWORK::printNeighbors()
 
 STATE* state;
 FIFO_STATE* fifoState;
+uint8_t auxBuffer[8];
+int aux, i;
 
 ISR(INT0_vect) {
 	digitalWrite(7, HIGH);
@@ -155,8 +156,6 @@ ISR(INT0_vect) {
 	state = Radio.getState();
 
 	if (state->rx_dr) {
-		uint8_t auxBuffer[8];
-		int aux, i;
 		do{
 			Radio.ClearIRQFlags(false,true, false);
 
@@ -177,7 +176,7 @@ ISR(INT0_vect) {
 				memcpy((uint8_t*)&dataBuffer.buffer + dataBuffer.writeIndex, (uint8_t*)&auxBuffer, 8);
 				dataBuffer.writeIndex += 8;
 				Serial.print("DATA from ");
-				Serial.println(auxBuffer[7], HEX);
+				Serial.println(auxBuffer[3], HEX);
 			}else if (aux == BROADCAST)
 			{
 					aux = auxBuffer[1];
@@ -204,7 +203,7 @@ ISR(INT0_vect) {
 				memcpy((uint8_t*)&routeBuffer.buffer + routeBuffer.writeIndex, (uint8_t*)&auxBuffer, 5);
 				routeBuffer.writeIndex += 5;
 				Serial.print("ROUTE from ");
-				Serial.println(auxBuffer[4], HEX);
+				Serial.println(auxBuffer[3], HEX);
 			}
 		}while(!(fifoState = Radio.getFifoState())->rx_empty);//RX FIFO NOT EMPTY
 	}
