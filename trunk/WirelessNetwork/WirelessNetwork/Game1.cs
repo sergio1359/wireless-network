@@ -39,10 +39,9 @@ namespace WirelessNetwork
             int height = Window.ClientBounds.Height - 30;
             int width = Window.ClientBounds.Width - 30;
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 100; i++)
             {
                 NodeuC node = new NodeuC();
-                node.Paused = true;
                 int margin = node.Size / 2;
 
                 if (locations.Length > 2 * i)
