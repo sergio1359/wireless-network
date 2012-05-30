@@ -104,8 +104,8 @@ namespace WirelessNetwork
 
     public class NodeuC
     {
-        const byte TIMEOUT = 5; //In seconds
-        const int SLEEP_TIME = 100; //In milliseconds
+        const byte TIMEOUT = 50; //In seconds
+        const int SLEEP_TIME = 1000; //In milliseconds
 
         #region XNAVars
 
@@ -148,6 +148,8 @@ namespace WirelessNetwork
             NeighborsTable = new List<byte>();
             RouteTable = new Dictionary<byte, byte[]>();
             LookTable = new Dictionary<byte, byte[]>();
+
+            Paused = true;
 
             mainThread = new Thread(mainLoop);
             mainThread.Start();
@@ -318,7 +320,7 @@ namespace WirelessNetwork
                     {
                         ROUTE_MSG routeResponse = new ROUTE_MSG();
                         if (isNeighbor)
-                            routeResponse.header_distance = 0;
+                            routeResponse.header_distance = 1;
                         else
                             routeResponse.header_distance = RouteTable[message.reference][1];
                         routeResponse.header_restype = 0;//RESPONSE
@@ -369,7 +371,7 @@ namespace WirelessNetwork
                             if (interested != 0)
                             {
                                 ROUTE_MSG routeResponse = new ROUTE_MSG();
-                                routeResponse.header_distance = message.header_distance;
+                                routeResponse.header_distance = (byte)(message.header_distance + 1);
                                 routeResponse.header_restype = 0;//RESPONSE
                                 routeResponse.header_type = 0;//ROUTE
                                 routeResponse.header_ok = 1;
@@ -383,6 +385,7 @@ namespace WirelessNetwork
                                 Dest.SendMessage(routeResponse);
                             }
                             LookTable.Remove(message.reference);
+                            Color = Color.Purple;
                         }
                     }
                     //This case is given when it tried to route a message from a node that is no longer able to reach the recipient.
