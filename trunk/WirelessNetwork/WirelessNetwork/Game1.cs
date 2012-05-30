@@ -39,9 +39,10 @@ namespace WirelessNetwork
             int height = Window.ClientBounds.Height - 30;
             int width = Window.ClientBounds.Width - 30;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 200; i++)
             {
-                Node node = new Node();
+                NodeuC node = new NodeuC();
+                node.Paused = true;
                 int margin = node.Size / 2;
 
                 if (locations.Length > 2 * i)
@@ -49,8 +50,9 @@ namespace WirelessNetwork
                 else
                     node.Position = new Vector2(ran.Next(margin, width - margin), ran.Next(margin, height - node.Size));
 
-                node.Address = "NODO" + (i + 1);
-                Program.NodeList.Add(node);
+                //node.Address = "NODO" + (i + 1);
+                node.NodeAddress = (byte)(i + 1);
+                Program.NodeListuC.Add(node);
             }
 
         }
@@ -101,7 +103,7 @@ namespace WirelessNetwork
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         MouseState mouseLast;
         KeyboardState keyboardLast;
-        Node selectedNode;
+        NodeuC selectedNode;
         bool pauseSim = false;
         protected override void Update(GameTime gameTime)
         {
@@ -109,9 +111,16 @@ namespace WirelessNetwork
             KeyboardState keyboard = Keyboard.GetState();
 
             bool PReleased = keyboardLast.GetPressedKeys().Contains(Keys.P) && !keyboard.GetPressedKeys().Contains(Keys.P);
+            bool CReleased = keyboardLast.GetPressedKeys().Contains(Keys.C) && !keyboard.GetPressedKeys().Contains(Keys.C);
 
             if (PReleased)
                 pauseSim = !pauseSim;
+
+            if (CReleased)
+            {
+                foreach (NodeuC node in Program.NodeListuC)
+                    node.Color = Color.DarkBlue;
+            }
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -122,7 +131,7 @@ namespace WirelessNetwork
             Vector2 mousePosition = new Vector2(mouse.X, mouse.Y);
             bool selected = false;
 
-            foreach (var node in Program.NodeList)
+            foreach (var node in Program.NodeListuC)
             {
                 node.ShowAddress = node.ContainsPoint(mousePosition);
                 node.Paused = pauseSim;
@@ -151,7 +160,7 @@ namespace WirelessNetwork
                         {
                             selectedNode.Color = Color.DarkBlue;
                             Program.init = DateTime.Now;
-                            selectedNode.Transmit("Hello world", node.Address);
+                            selectedNode.Transmit(node.NodeAddress, "HOLA");
                         }
                         selectedNode = null;
                     }
@@ -182,22 +191,26 @@ namespace WirelessNetwork
             string lookTable = "";
 
             spriteBatch.Begin();
-            foreach (var node in Program.NodeList)
+            foreach (var node in Program.NodeListuC)
             {
                 node.Draw(spriteBatch, GraphicsDevice);
                 if (node.ShowAddress)
                 {
-                    foreach (var item in node.RouteTable)
+                    foreach (var item in node.NeighborsTable.ToList())
                     {
-                        routeTable += item.Key + "  " + item.Value.Key + "   " + item.Value.Value + "\n";
+                        routeTable += item + "  " + item + "   " + 0 + "\n";
                     }
-                    foreach (var item in node.LookTable)
+                    foreach (var item in node.RouteTable.ToList())
                     {
-                        lookTable += item.Key + "  " + item.Value.Key + "   " + item.Value.Value + "\n";
+                        routeTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
+                    }
+                    foreach (var item in node.LookTable.ToList())
+                    {
+                        lookTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
                     }
                 }
 
-                foreach (var node1 in Program.NodeList)
+                foreach (var node1 in Program.NodeListuC)
                 {
                     if (node.IsNeigbor(node1))
                     {

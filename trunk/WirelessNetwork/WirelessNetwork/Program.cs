@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,7 @@ namespace WirelessNetwork
     static class Program
     {
         public static List<Node> NodeList = new List<Node>();
+        public static List<NodeuC> NodeListuC = new List<NodeuC>();
         public static DateTime init { get; set; }
 
         public static Texture2D circleTexture;
@@ -20,6 +22,12 @@ namespace WirelessNetwork
         {
             using (Game1 game = new Game1())
                 game.Run();
+        }
+
+        public static NodeuC GetNode(byte address)
+        {
+            //Search node in GLOBAL NODELIST
+            return NodeListuC.First<NodeuC>(x => x.NodeAddress == address);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
