@@ -43,9 +43,9 @@ namespace WirelessNetwork
             get{
                 byte[] result = new byte[4 + data.Length];
                 result[0] = header;
-                result[0] = from;
-                result[0] = to;
-                result[0] = parent;
+                result[1] = from;
+                result[2] = to;
+                result[3] = parent;
                 for (int i = 0; i < data.Length; i++)
                     result[4 + i] = (byte)data[i];
 
@@ -104,8 +104,8 @@ namespace WirelessNetwork
 
     public class NodeuC
     {
-        const byte TIMEOUT = 50; //In seconds
-        const int SLEEP_TIME = 1000; //In milliseconds
+        const byte TIMEOUT = 5; //In seconds
+        const int SLEEP_TIME = 500; //In milliseconds
 
         #region XNAVars
 
@@ -131,17 +131,14 @@ namespace WirelessNetwork
         public Dictionary<byte, byte[]> RouteTable { get; private set; } //Nodo destino -> { Gateway, Length }
         public Dictionary<byte, byte[]> LookTable { get; private set; } //Nodo buscado(reference) -> {interesado, contador}
 
-        //List<RFMessage> inputBuffer = new List<RFMessage>();
-        //Dictionary<RFMessage, bool> outputBuffer = new Dictionary<RFMessage, bool>();
         List<ROUTE_MSG> routeBuffer = new List<ROUTE_MSG>();
         List<DATA_MSG> dataInputBuffer = new List<DATA_MSG>();
         List<DATA_MSG> dataOutputBuffer = new List<DATA_MSG>();
-        //Timer mainLoopTimer = new Timer();
         Thread mainThread;
 
-        public NodeuC()
+        public NodeuC(int size)
         {
-            Size = 20;
+            Size = size;
             Range = Size * 3;
             Color = Color.DarkBlue;
 
@@ -192,9 +189,19 @@ namespace WirelessNetwork
         public void SendMessage(MSG message)
         {
             if (message is DATA_MSG)
-                dataInputBuffer.Add((DATA_MSG)message);
+            {
+                DATA_MSG msgCopy = new DATA_MSG();
+                msgCopy.raw_bytes = ((DATA_MSG)message).raw_bytes;
+
+                dataInputBuffer.Add(msgCopy);
+            }
             else
-                routeBuffer.Add((ROUTE_MSG)message);
+            {
+                ROUTE_MSG msgCopy = new ROUTE_MSG();
+                msgCopy.raw_bytes = ((ROUTE_MSG)message).raw_bytes;
+
+                routeBuffer.Add(msgCopy);
+            }
         }
 
         public void Transmit(byte to, string message)
@@ -225,7 +232,7 @@ namespace WirelessNetwork
             if (LookTable.ContainsKey(reference))
                 return;
 
-            LookTable.Add(reference, new byte[]{neighborInterested, 0});
+            LookTable.Add(reference, new byte[]{neighborInterested, 0, (byte)(distance-1)});
 
             //Send RouteAnswer to everyone in NeighborsTable != neighborInterested
             lock (NeighborsTable)
@@ -296,6 +303,22 @@ namespace WirelessNetwork
             Dest.SendMessage(message);
         }
 
+        private void addToRouteTable(byte nodeReference, byte nodeGateway, byte distance)
+        {
+            if (RouteTable.ContainsKey(nodeReference))
+            {
+                if (distance < RouteTable[nodeReference][1])
+                {
+                    RouteTable[nodeReference][0] = nodeGateway;
+                    RouteTable[nodeReference][1] = distance;
+                }
+            }
+            else
+            {
+                RouteTable.Add(nodeReference, new byte[] { nodeGateway, distance });
+            }
+        }
+
         /*TODO:
          * Detectar cuando un mensaje ha sido recibido y establecer un número de reintentos
          * Añadir ID a los mensajes (autoincremental e independiente para cada nodo)
@@ -322,7 +345,7 @@ namespace WirelessNetwork
                         if (isNeighbor)
                             routeResponse.header_distance = 1;
                         else
-                            routeResponse.header_distance = RouteTable[message.reference][1];
+                            routeResponse.header_distance = (byte)(RouteTable[message.reference][1] + 1);
                         routeResponse.header_restype = 0;//RESPONSE
                         routeResponse.header_type = 0;//ROUTE
                         routeResponse.header_ok = 1;
@@ -336,34 +359,27 @@ namespace WirelessNetwork
                         Dest.SendMessage(routeResponse);
 
                         //TODO: Notify the node sought to avoid a possible subsequent search in the opposite
-                        //routeResponse.from = message.from;
-                        //routeResponse.to = message.reference;
-                        //routeResponse.parent = NodeAddress;
-                        //routeResponse.reference = message.from;
-                        //Dest = Program.GetNode(isNeighbor ? message.reference : RouteTable[message.reference][0]);
-                        //Dest.SendMessage(routeResponse);
+                        routeResponse.header_distance = (byte)(message.header_distance + 1);
+                        routeResponse.from = NodeAddress;
+                        routeResponse.to = message.reference;
+                        routeResponse.parent = NodeAddress;
+                        routeResponse.reference = message.from;
+                        Dest = Program.GetNode(isNeighbor ? message.reference : RouteTable[message.reference][0]);
+                        Dest.SendMessage(routeResponse);
+
+                        addToRouteTable(message.from, message.parent, message.header_distance);
                     }
                     else
                     {
                         LookFor(message.reference, message.parent, message.from, (byte)(message.header_distance + 1));
                     }
+                    Color = Color.Yellow;
                 }
                 else //Route Response
                 {
                     if (message.header_ok > 0)
                     {
-                        if (RouteTable.ContainsKey(message.reference))
-                        {
-                            if (message.header_distance < RouteTable[message.reference][1])
-                            {
-                                RouteTable[message.reference][0] = message.parent;
-                                RouteTable[message.reference][1] = message.header_distance;
-                            }
-                        }
-                        else
-                        {
-                            RouteTable.Add(message.reference, new byte[] {message.parent, message.header_distance });
-                        }
+                        addToRouteTable(message.reference, message.parent, message.header_distance);
 
                         if (LookTable.ContainsKey(message.reference))
                         {
@@ -377,12 +393,17 @@ namespace WirelessNetwork
                                 routeResponse.header_ok = 1;
 
                                 routeResponse.from = message.from;
-                                routeResponse.to = interested;
+                                routeResponse.to = message.to;
                                 routeResponse.parent = NodeAddress;
                                 routeResponse.reference = message.reference;
 
                                 NodeuC Dest = Program.GetNode(interested);
                                 Dest.SendMessage(routeResponse);
+
+                                //Store the way back if distance > 0 (message.to is not a neighbor)
+                                byte distance = LookTable[message.reference][2];
+                                if(distance > 0)
+                                    addToRouteTable(message.to, interested, distance);
                             }
                             LookTable.Remove(message.reference);
                             Color = Color.Purple;
