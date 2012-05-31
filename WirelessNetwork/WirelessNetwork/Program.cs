@@ -14,6 +14,9 @@ namespace WirelessNetwork
         public static DateTime init { get; set; }
 
         public static Texture2D circleTexture;
+        public static Texture2D pixelTexture;
+
+        public static int SleepDelay = 500; //In milliseconds
 
         /// <summary>
         /// The main entry point for the application.

@@ -21,6 +21,8 @@ namespace WirelessNetwork
 
         Texture2D blank;
 
+        const int rightMargin = 400;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,8 +41,8 @@ namespace WirelessNetwork
             int height = Window.ClientBounds.Height - 30;
             int width = Window.ClientBounds.Width - 30;
 
-            int numberOfNodes = 6;
-            int size = Math.Min(40, Math.Max((250 / numberOfNodes),20)); 
+            int numberOfNodes = 100;
+            int size = (int)MathHelper.Clamp(29f-0.040f*(float)numberOfNodes, 20, 40);
 
             for (int i = 0; i < numberOfNodes; i++)
             {
@@ -50,13 +52,13 @@ namespace WirelessNetwork
                 if (locations.Length > 2 * i)
                     node.Position = new Vector2(locations[2 * i], locations[(2 * i) + 1]);
                 else
-                    node.Position = new Vector2(ran.Next(margin, width - margin), ran.Next(margin, height - node.Size));
+                    node.Position = new Vector2(ran.Next(margin, width - margin), ran.Next(margin, height - node.Size * 5));
 
-                //node.Address = "NODO" + (i + 1);
                 node.NodeAddress = (byte)(i + 1);
                 Program.NodeListuC.Add(node);
             }
-
+            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width + rightMargin;
+            Window.AllowUserResizing = true;
         }
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace WirelessNetwork
             blank.SetData(new[] { Color.White });
 
             Program.circleTexture = Content.Load<Texture2D>("circle");
+            Program.pixelTexture = Content.Load<Texture2D>("pixel");
 
             // TODO: use this.Content to load your game content here
         }
@@ -98,31 +101,49 @@ namespace WirelessNetwork
             // TODO: Unload any non ContentManager content here
         }
 
+        bool CheckKeyReleased(Keys key, KeyboardState currentState, KeyboardState previousState)
+        {
+            return previousState.GetPressedKeys().Contains(key) && !currentState.GetPressedKeys().Contains(key);
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         MouseState mouseLast;
-        KeyboardState keyboardLast;
+        KeyboardState previousKeyboardState;
         NodeuC selectedNode;
         bool pauseSim = false;
+
         protected override void Update(GameTime gameTime)
         {
             MouseState mouse = Mouse.GetState();
-            KeyboardState keyboard = Keyboard.GetState();
+            KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            bool PReleased = keyboardLast.GetPressedKeys().Contains(Keys.P) && !keyboard.GetPressedKeys().Contains(Keys.P);
-            bool CReleased = keyboardLast.GetPressedKeys().Contains(Keys.C) && !keyboard.GetPressedKeys().Contains(Keys.C);
-
-            if (PReleased)
+            if (CheckKeyReleased(Keys.P, currentKeyboardState, previousKeyboardState))
                 pauseSim = !pauseSim;
 
-            if (CReleased)
+            //Restore color nodes
+            if (CheckKeyReleased(Keys.C, currentKeyboardState, previousKeyboardState))
             {
                 foreach (NodeuC node in Program.NodeListuC)
                     node.Color = Color.DarkBlue;
             }
+
+            //Reset route tables
+            if (CheckKeyReleased(Keys.R, currentKeyboardState, previousKeyboardState))
+            {
+                foreach (NodeuC node in Program.NodeListuC)
+                    node.RouteTable.Clear();
+            }
+
+            if (CheckKeyReleased(Keys.Add, currentKeyboardState, previousKeyboardState))
+                Program.SleepDelay = Math.Max(100, Program.SleepDelay - 100);
+            else if (CheckKeyReleased(Keys.Subtract, currentKeyboardState, previousKeyboardState))
+                Program.SleepDelay = Math.Min(1000, Program.SleepDelay + 100);
+
+            Window.Title = "Simulation delay: " + Program.SleepDelay + "ms";
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -140,7 +161,8 @@ namespace WirelessNetwork
 
                 if (!selected && leftPressed && (node.ContainsPoint(mousePosition) || node.IsSelected))
                 {
-                    node.Position = mousePosition;
+                    if(mouse.X < Window.ClientBounds.Width - rightMargin)
+                        node.Position = mousePosition;
                     node.IsSelected = true;
                     selected = true;
                 }
@@ -172,7 +194,7 @@ namespace WirelessNetwork
             }
 
             mouseLast = mouse;
-            keyboardLast = keyboard;
+            previousKeyboardState = currentKeyboardState;
 
             // TODO: Add your update logic here
 
@@ -187,28 +209,49 @@ namespace WirelessNetwork
         {
             GraphicsDevice.Clear(Color.White);
 
+            spriteBatch.Begin();
+            spriteBatch.Draw(Program.pixelTexture,
+                new Rectangle(Window.ClientBounds.Width - rightMargin, 0, rightMargin, Window.ClientBounds.Height), Color.DarkGray);
 
             // TODO: Add your drawing code here
             string routeTable = "";
             string lookTable = "";
 
-            spriteBatch.Begin();
             foreach (var node in Program.NodeListuC)
             {
                 node.Draw(spriteBatch, GraphicsDevice);
                 if (node.ShowAddress)
                 {
-                    foreach (var item in node.NeighborsTable.ToList())
+                    routeTable = "ROUTE TABLE\n-----------\n";
+                    lookTable = "LOOK TABLE\n----------\n";
+
+
+                    if (node.NeighborsTable.Count > 0 || node.RouteTable.Count > 0)
                     {
-                        routeTable += item + "  " + item + "   " + 0 + "\n";
+                        foreach (var item in node.NeighborsTable.ToList())
+                        {
+                            routeTable += item + "  " + item + "   " + 0 + "\n";
+                        }
+                        foreach (var item in node.RouteTable.ToList())
+                        {
+                            routeTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
+                        }
                     }
-                    foreach (var item in node.RouteTable.ToList())
+                    else
                     {
-                        routeTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
+                        routeTable += "empty";
                     }
-                    foreach (var item in node.LookTable.ToList())
+
+                    if (node.LookTable.Count > 0)
                     {
-                        lookTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
+                        foreach (var item in node.LookTable.ToList())
+                        {
+                            lookTable += item.Key + "  " + item.Value[0] + "   " + item.Value[1] + "\n";
+                        }
+                    }
+                    else
+                    {
+                        lookTable += "empty";
                     }
                 }
 
@@ -222,11 +265,11 @@ namespace WirelessNetwork
             }
 
             spriteBatch.DrawString(DrawHelper.GameFont, routeTable, new Vector2(Window.ClientBounds.Width - 200, 20), Color.Red);
-            spriteBatch.DrawString(DrawHelper.GameFont, lookTable, new Vector2(Window.ClientBounds.Width - 400, 20), Color.Red);
+            spriteBatch.DrawString(DrawHelper.GameFont, lookTable, new Vector2(Window.ClientBounds.Width - 350, 20), Color.Red);
 
             if (pauseSim)
             {
-                Vector2 pos = new Vector2((Window.ClientBounds.Width - DrawHelper.GameFont.MeasureString("PAUSE").X) / 2,
+                Vector2 pos = new Vector2((Window.ClientBounds.Width - DrawHelper.GameFont.MeasureString("PAUSE").X) / 2 + rightMargin,
                                           (Window.ClientBounds.Height - DrawHelper.GameFont.MeasureString("PAUSE").Y) / 2);
                 spriteBatch.DrawString(DrawHelper.GameFont, "PAUSE", pos, Color.Red);
             }
