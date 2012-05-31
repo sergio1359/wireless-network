@@ -141,9 +141,9 @@ namespace WirelessNetwork
             }
 
             if (CheckKeyReleased(Keys.Add, currentKeyboardState, previousKeyboardState))
-                Program.SleepDelay = Math.Max(100, Program.SleepDelay - 100);
-            else if (CheckKeyReleased(Keys.Subtract, currentKeyboardState, previousKeyboardState))
                 Program.SleepDelay = Math.Min(1000, Program.SleepDelay + 100);
+            else if (CheckKeyReleased(Keys.Subtract, currentKeyboardState, previousKeyboardState))
+                Program.SleepDelay = Math.Max(100, Program.SleepDelay - 100);
 
             Window.Title = "Simulation delay: " + Program.SleepDelay + "ms";
 
