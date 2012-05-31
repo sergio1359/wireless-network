@@ -104,8 +104,8 @@ namespace WirelessNetwork
 
     public class NodeuC
     {
-        const byte TIMEOUT = 5; //In seconds
-        const int SLEEP_TIME = 500; //In milliseconds
+        byte TIMEOUT = 10; //In seconds
+        //const int SLEEP_TIME = 500; //In milliseconds
 
         #region XNAVars
 
@@ -169,6 +169,7 @@ namespace WirelessNetwork
 
         public void Update()
         {
+            TIMEOUT = (byte)MathHelper.Clamp(3.75f + 0.02f * Program.SleepDelay, 5, 15);
         }
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -451,6 +452,7 @@ namespace WirelessNetwork
                 bool isNeighbor;
                 if (message.to == NodeAddress) //it's to me?
                 {
+                    Color = Color.Magenta;
                     message.data += NodeAddress;
                     Program.MessageBoxCustom(message.data, "MESSAGE FROM " + message.from + " TO " + message.to + " BY " + message.parent + "           ");
                 }
@@ -524,7 +526,7 @@ namespace WirelessNetwork
                 if (!Paused)
                 {
                     loop();
-                    Thread.Sleep(SLEEP_TIME);
+                    Thread.Sleep(Program.SleepDelay);
                 }
                 else
                 {
