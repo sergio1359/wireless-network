@@ -99,6 +99,8 @@ namespace WirelessNetwork
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            foreach (var node in Program.NodeListuC)
+                node.End();
         }
 
         bool CheckKeyReleased(Keys key, KeyboardState currentState, KeyboardState previousState)

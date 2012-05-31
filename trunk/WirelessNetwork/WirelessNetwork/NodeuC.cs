@@ -154,6 +154,11 @@ namespace WirelessNetwork
 
         #region XNAFunctions
 
+        public void End()
+        {
+            mainThread.Abort();
+        }
+
         public bool ContainsPoint(Vector2 point)
         {
             return (point.X > positionNode.X && point.X < positionNode.X + Size) && (point.Y > positionNode.Y && point.Y < positionNode.Y + Size);
@@ -425,7 +430,7 @@ namespace WirelessNetwork
                                 routeResponse.header_type = 0;//ROUTE
                                 routeResponse.header_ok = 0;//FAIL
                                 routeResponse.from = NodeAddress;
-                                routeResponse.to = message.from;
+                                routeResponse.to = message.to;
                                 routeResponse.parent = NodeAddress;
                                 routeResponse.reference = message.reference;
 
