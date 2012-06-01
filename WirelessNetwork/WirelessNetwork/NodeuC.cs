@@ -131,6 +131,7 @@ namespace WirelessNetwork
         public Dictionary<byte, byte[]> RouteTable { get; private set; } //Nodo destino -> { Gateway, Length }
         public Dictionary<byte, byte[]> LookTable { get; private set; } //Nodo buscado(reference) -> {interesado, contador}
 
+        byte counterId = 0;
         List<ROUTE_MSG> routeBuffer = new List<ROUTE_MSG>();
         List<DATA_MSG> dataInputBuffer = new List<DATA_MSG>();
         List<DATA_MSG> dataOutputBuffer = new List<DATA_MSG>();
@@ -215,7 +216,7 @@ namespace WirelessNetwork
             DATA_MSG data_msg = new DATA_MSG();
             data_msg.header_type = 1;
             data_msg.header_reserved = 0;
-            data_msg.header_id = 0;
+            data_msg.header_id = counterId++;
             data_msg.from = NodeAddress;
             data_msg.to = to;
             data_msg.parent = NodeAddress;
@@ -238,27 +239,31 @@ namespace WirelessNetwork
             if (LookTable.ContainsKey(reference))
                 return;
 
-            LookTable.Add(reference, new byte[]{neighborInterested, 0, (byte)(distance-1)});
-
-            //Send RouteAnswer to everyone in NeighborsTable != neighborInterested
-            lock (NeighborsTable)
+            //This check prevents a node with no neighbors store a search in lookTable
+            if (neighborInterested== 0 || NeighborsTable.Count > 1)
             {
-                foreach (byte neigborAddress in NeighborsTable)
+                LookTable.Add(reference, new byte[] { neighborInterested, 0, (byte)(distance - 1) });
+
+                //Send RouteAnswer to everyone in NeighborsTable != neighborInterested
+                lock (NeighborsTable)
                 {
-                    if (neigborAddress != neighborInterested)
+                    foreach (byte neigborAddress in NeighborsTable)
                     {
-                        NodeuC neigbor = Program.GetNode(neigborAddress);
+                        if (neigborAddress != neighborInterested)
+                        {
+                            NodeuC neigbor = Program.GetNode(neigborAddress);
 
-                        ROUTE_MSG routeAnswer = new ROUTE_MSG();
-                        routeAnswer.header_distance = distance;
-                        routeAnswer.header_restype = 1;//ANSWER
-                        routeAnswer.header_type = 0;//ROUTE
-                        routeAnswer.from = rootInterested;
-                        routeAnswer.to = neigborAddress;
-                        routeAnswer.parent = NodeAddress;
-                        routeAnswer.reference = reference;
+                            ROUTE_MSG routeAnswer = new ROUTE_MSG();
+                            routeAnswer.header_distance = distance;
+                            routeAnswer.header_restype = 1;//ANSWER
+                            routeAnswer.header_type = 0;//ROUTE
+                            routeAnswer.from = rootInterested;
+                            routeAnswer.to = neigborAddress;
+                            routeAnswer.parent = NodeAddress;
+                            routeAnswer.reference = reference;
 
-                        neigbor.SendMessage(routeAnswer);
+                            neigbor.SendMessage(routeAnswer);
+                        }
                     }
                 }
             }
@@ -429,6 +434,7 @@ namespace WirelessNetwork
                                 routeResponse.header_restype = 0;//RESPONSE
                                 routeResponse.header_type = 0;//ROUTE
                                 routeResponse.header_ok = 0;//FAIL
+                                routeResponse.header_distance = message.header_distance;
                                 routeResponse.from = NodeAddress;
                                 routeResponse.to = message.to;
                                 routeResponse.parent = NodeAddress;
@@ -442,7 +448,8 @@ namespace WirelessNetwork
                         //TODO: If there are pending messages for this node, try to trace a new route
                         if (message.to == NodeAddress)
                         {
-                            Program.MessageBoxCustom("Ha cambiado la topología de la red. Reenviar", "MESSAGE FROM " + NodeAddress + " TO " + message.reference + "           ");
+                            Program.MessageBoxCustom("Ha cambiado la topología de la red. Reenviar", "MESSAGE "+message.header_distance+
+                                " FROM " + NodeAddress + " TO " + message.reference + "           ");
                         }
                     }
                 }
@@ -459,7 +466,8 @@ namespace WirelessNetwork
                 {
                     Color = Color.Magenta;
                     message.data += NodeAddress;
-                    Program.MessageBoxCustom(message.data, "MESSAGE FROM " + message.from + " TO " + message.to + " BY " + message.parent + "           ");
+                    Program.MessageBoxCustom(message.data, "MESSAGE " + message.header_id +
+                                " FROM " + message.from + " TO " + message.to + " BY " + message.parent + "           ");
                 }
                 else if ((isNeighbor = NeighborsTable.Contains(message.to)) || RouteTable.ContainsKey(message.to))
                 {
@@ -474,6 +482,7 @@ namespace WirelessNetwork
                     routeResponse.header_restype = 0;//RESPONSE
                     routeResponse.header_type = 0;//ROUTE
                     routeResponse.header_ok = 0;//FAIL
+                    routeResponse.header_distance = message.header_id;//Use the length field to store the id of the failed message
                     routeResponse.from = NodeAddress;
                     routeResponse.to = message.from;
                     routeResponse.parent = NodeAddress;

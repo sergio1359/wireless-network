@@ -31,17 +31,17 @@ namespace WirelessNetwork
 
             Random ran = new Random();
             int[] locations = { 100, 200,
-                                200, 200,
-                                300, 200,
+                                175, 200,
+                                250, 200,
+                                325, 200,
                                 400, 200,
-                                500, 200,
-                                600, 200
+                                475, 200
                               };
 
             int height = Window.ClientBounds.Height - 30;
             int width = Window.ClientBounds.Width - 30;
 
-            int numberOfNodes = 100;
+            int numberOfNodes = 200;//MAX = 255
             int size = (int)MathHelper.Clamp(29f-0.040f*(float)numberOfNodes, 20, 40);
 
             for (int i = 0; i < numberOfNodes; i++)
