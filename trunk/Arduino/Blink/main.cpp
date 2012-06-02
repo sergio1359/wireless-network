@@ -1,5 +1,5 @@
-#include <WProgram.h>
-#include <arduino.h>
+//#include <WProgram.h>
+#include <arduino_lit.h>
 
 /*
   Blink
@@ -23,16 +23,16 @@ int main(void)
 void setup() {                
   // initialize the digital pin as an output.
   // Pin 13 has an LED connected on most Arduino boards:
-  pinMode(13, OUTPUT);     
+  PIN_MODE(13, OUTPUT);
 
-  Serial.begin(57600);
+  //serial_begin(57600);
 }
 
-void loop() {
-  digitalWrite(13, HIGH);   // set the LED on
+inline void loop() {
+  DIGITAL_WRITE(13, HIGH);   // set the LED on
   delay(1000);              // wait for a second
-  digitalWrite(13, LOW);    // set the LED off
+  DIGITAL_WRITE(13, LOW);    // set the LED off
   delay(1000); 				// wait for a second
 
-  Serial.println("Done");
+  //PRINT("Done");
 }
