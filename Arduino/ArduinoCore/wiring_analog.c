@@ -254,6 +254,7 @@ void analogWrite(uint8_t pin, int val)
 				} else {
 					digitalWrite(pin, HIGH);
 				}
+				break;
 		}
 	}
 }
