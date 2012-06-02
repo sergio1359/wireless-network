@@ -10,9 +10,7 @@
 #ifndef __RF24_CONFIG_H__
 #define __RF24_CONFIG_H__
 
-#include <Arduino.h>
-
-#include <stddef.h>
+#include "../../arduino.h"
 
 // Stuff that is normally provided by Arduino
 #include "../SPI/SPI.h"

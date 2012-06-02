@@ -259,201 +259,210 @@ void RF24::BANK1_Init(void) {
 /****************************************************************************/
 
 void RF24::print_status(uint8_t status) {
-	Serial.print("STATUS\t\t = 0x");
-	Serial.print(status, HEX);
-	Serial.print(" RX_DR=");
-	Serial.print((status & _BV(RX_DR)) ? 1:0);Serial
-	.print(" TX_DS=");
-	Serial.print((status & _BV(TX_DS)) ? 1:0);Serial
-	.print(" MAX_RT=");
-	Serial.print((status & _BV(MAX_RT)) ? 1:0);Serial
-	.print(" RX_P_NO=");
+	PRINTF("STATUS\t\t = 0x");
+	PRINTF(status, HEX);
+	PRINTF(" RX_DR=");
+	PRINTF((status & _BV(RX_DR)) ? 1:0);
+	PRINTF(" TX_DS=");
+	PRINTF((status & _BV(TX_DS)) ? 1:0);
+	PRINTF(" MAX_RT=");
+	PRINTF((status & _BV(MAX_RT)) ? 1:0);
+	PRINTF(" RX_P_NO=");
 	int aux = (status >> RX_P_NO) & B111;
 
 	if (aux == 7)
-		Serial.print("RX_FIFO_EMPTY");
+		PRINTF("RX_FIFO_EMPTY");
 	else
-		Serial.print(aux);
+		PRINTF(aux);
 
-	Serial.print(" TX_FULL=");
-	Serial.println((status & _BV(PRIM_RX)) ? 1:0);}
+	PRINTF(" TX_FULL=");
+	PRINTF((status & _BV(PRIM_RX)) ? 1:0);
+	PRINTF("\r\n");
+}
 
 void RF24::print_config(uint8_t value) {
-	Serial.print("CONFIG\t\t = 0x");
-	Serial.print(value, HEX);
-	Serial.print(" MASK_RX_DR=");
-	Serial.print((value & _BV(MASK_RX_DR)) ? 1:0);Serial
-	.print(" MASK_TX_DS=");
-	Serial.print((value & _BV(MASK_TX_DS)) ? 1:0);Serial
-	.print(" MASK_MAX_RT=");
-	Serial.print((value & _BV(MASK_MAX_RT)) ? 1:0);Serial
-	.print(" EN_CRC=");
-	Serial.print((value & _BV(EN_CRC)) ? 1:0);Serial
-	.print(" CRCO=");
-	Serial.print((value & _BV(CRCO)) ? 1:0);Serial
-	.print(" PWR_UP=");
-	Serial.print((value & _BV(PWR_UP)) ? 1:0);Serial
-	.print(" PRIM_RX=");
-	Serial.println((value & _BV(PRIM_RX)) ? 1:0);}
+	PRINTF("CONFIG\t\t = 0x");
+	PRINTF(value, HEX);
+	PRINTF(" MASK_RX_DR=");
+	PRINTF((value & _BV(MASK_RX_DR)) ? 1:0);
+	PRINTF(" MASK_TX_DS=");
+	PRINTF((value & _BV(MASK_TX_DS)) ? 1:0);
+	PRINTF(" MASK_MAX_RT=");
+	PRINTF((value & _BV(MASK_MAX_RT)) ? 1:0);
+	PRINTF(" EN_CRC=");
+	PRINTF((value & _BV(EN_CRC)) ? 1:0);
+	PRINTF(" CRCO=");
+	PRINTF((value & _BV(CRCO)) ? 1:0);
+	PRINTF(" PWR_UP=");
+	PRINTF((value & _BV(PWR_UP)) ? 1:0);
+	PRINTF(" PRIM_RX=");
+	PRINTF((value & _BV(PRIM_RX)) ? 1:0);
+	PRINTF("\r\n");
+}
 
 void RF24::print_RFChannel(uint8_t value) {
-	Serial.print("RF_CH\t\t = ");
-	Serial.print(2400 + value);
-	Serial.println(" MHz");
+	PRINTF("RF_CH\t\t = ");
+	PRINTF(2400 + value);
+	PRINTF(" MHz\r\n");
 }
 
 void RF24::print_RFSetup(uint8_t value) {
 	uint8_t aux;
-	Serial.print("RF_SETUP\t = 0x");
-	Serial.print(value, HEX);
+	PRINTF("RF_SETUP\t = 0x");
+	PRINTF(value, HEX);
 
 	if (isPVariant()) {
-		Serial.print(" CONT_WAVE=");
-		Serial.print((value & _BV(CONT_WAVE)) ? 1:0);
+		PRINTF(" CONT_WAVE=");
+		PRINTF((value & _BV(CONT_WAVE)) ? 1:0);
 
-		Serial.print(" RF_DR=");
+		PRINTF(" RF_DR=");
 		aux = value & (_BV(RF_DR_LOW) | _BV(RF_DR_HIGH));
 		if (aux == 0)
-			Serial.print("1Mbps");
+			PRINTF("1Mbps");
 		else if (aux == _BV(RF_DR_LOW)
 		)
-			Serial.print("250kbps");
+			PRINTF("250kbps");
 		else if (aux == _BV(RF_DR_HIGH)
 		)
-			Serial.print("2Mbps");
+			PRINTF("2Mbps");
 		else
-			Serial.print("ERROR");
+			PRINTF("ERROR");
 	} else {
-		Serial.print(" RF_DR=");
-		Serial.print((value & _BV(RF_DR)) ? "2Mbps" : "1Mbps");
-		Serial.print(" LNA_HCURR=");
-		Serial.print((value & _BV(LNA_HCURR)) ? 1:0);}
-		Serial.print(" PLL_LOCK=");
-		Serial.print((value & _BV(PLL_LOCK)) ? 1:0);
+		PRINTF(" RF_DR=");
+		PRINTF((value & _BV(RF_DR)) ? "2Mbps" : "1Mbps");
+		PRINTF(" LNA_HCURR=");
+		PRINTF((value & _BV(LNA_HCURR)) ? 1:0);}
+		PRINTF(" PLL_LOCK=");
+		PRINTF((value & _BV(PLL_LOCK)) ? 1:0);
 
-		Serial.print(" RF_PWR=");
+		PRINTF(" RF_PWR=");
 		aux = value & (_BV(RF_PWR_LOW) | _BV(RF_PWR_HIGH));
 		if (aux == 0)
-			Serial.println("-18dBm");
+			PRINTF("-18dBm\r\n");
 		else if (aux == 2)
-			Serial.println("-12dBm");
+			PRINTF("-12dBm\r\n");
 		else if (aux == 4)
-			Serial.println("-6dBm");
+			PRINTF("-6dBm\r\n");
 		else if (aux == 6)
-			Serial.println("0dBm");
+			PRINTF("0dBm\r\n");
 		else
-			Serial.println("ERROR");
+			PRINTF("ERROR\r\n");
 }
 
 /****************************************************************************/
 
 void RF24::print_setup_AW(uint8_t value) {
-	Serial.print("SETUP_AW\t = ");
+	PRINTF("SETUP_AW\t = ");
 	uint8_t aux = value & 0x03;
 	if (aux == 1)
-		Serial.println("3 bytes");
+		PRINTF("3 bytes\r\n");
 	else if (aux == 2)
-		Serial.println("4 bytes");
+		PRINTF("4 bytes\r\n");
 	else if (aux == 3)
-		Serial.println("5 bytes");
+		PRINTF("5 bytes\r\n");
 	else
-		Serial.println("ERROR");
+		PRINTF("ERROR\r\n");
 }
 
 /****************************************************************************/
 
 void RF24::print_setup_RETR(uint8_t value) {
-	Serial.print("SETUP_RETR\t = 0x");
-	Serial.print(value, HEX);
+	PRINTF("SETUP_RETR\t = 0x");
+	PRINTF(value, HEX);
 
 	int aux = ((value >> 4) + 1) * 250;
-	Serial.print(" ARD=Wait ");
-	Serial.print(aux, DEC);
-	Serial.print("+86us ");
+	PRINTF(" ARD=Wait ");
+	PRINTF(aux, DEC);
+	PRINTF("+86us ");
 
-	Serial.print(" ARC=");
-	Serial.println(value & 0x0F);
+	PRINTF(" ARC=");
+	PRINTF(value & 0x0F);
+	PRINTF("\r\n");
 }
 
 /****************************************************************************/
 
 void RF24::print_feature(uint8_t value) {
-	Serial.print("FEATURE\t\t = 0x");
-	Serial.print(value, HEX);
-	Serial.print(" EN_DPL=");
-	Serial.print((value & _BV(EN_DPL)) ? 1:0);Serial
-	.print(" EN_ACK_PAY=");
-	Serial.print((value & _BV(EN_ACK_PAY)) ? 1:0);Serial
-	.print(" EN_DYN_ACK=");
-	Serial.println((value & _BV(EN_DYN_ACK)) ? 1:0);}
+	PRINTF("FEATURE\t\t = 0x");
+	PRINTF(value, HEX);
+	PRINTF(" EN_DPL=");
+	PRINTF((value & _BV(EN_DPL)) ? 1:0);
+	PRINTF(" EN_ACK_PAY=");
+	PRINTF((value & _BV(EN_ACK_PAY)) ? 1:0);
+	PRINTF(" EN_DYN_ACK=");
+	PRINTF((value & _BV(EN_DYN_ACK)) ? 1:0);
+	PRINTF("\r\n");
+}
 
 	/****************************************************************************/
 
 void RF24::print_observe_tx(uint8_t value) {
-	Serial.print("OBSERVE_TX\t = 0x");
-	Serial.print(value, HEX);
-	Serial.print(" POLS_CNT=");
-	Serial.print((value >> PLOS_CNT) & B1111);
-	Serial.print(" ARC_CNT=");
-	Serial.println((value >> ARC_CNT) & B1111);
+	PRINTF("OBSERVE_TX\t = 0x");
+	PRINTF(value, HEX);
+	PRINTF(" POLS_CNT=");
+	PRINTF((value >> PLOS_CNT) & B1111);
+	PRINTF(" ARC_CNT=");
+	PRINTF((value >> ARC_CNT) & B1111);
+	PRINTF("\r\n");
 }
 
 /****************************************************************************/
 
 void RF24::print_fifo_status(uint8_t value) {
-	Serial.print("FIFO_STATUS\t = 0x");
-	Serial.print(value, HEX);
-	Serial.print(" TX_REUSE=");
-	Serial.print((value & _BV(TX_REUSE)) ? 1:0);Serial
-	.print(" TX_FULL=");
-	Serial.print((value & _BV(FIFO_FULL)) ? 1:0);Serial
-	.print(" TX_EMPTY=");
-	Serial.print((value & _BV(TX_EMPTY)) ? 1:0);
+	PRINTF("FIFO_STATUS\t = 0x");
+	PRINTF(value, HEX);
+	PRINTF(" TX_REUSE=");
+	PRINTF((value & _BV(TX_REUSE)) ? 1:0);
+	PRINTF(" TX_FULL=");
+	PRINTF((value & _BV(FIFO_FULL)) ? 1:0);
+	PRINTF(" TX_EMPTY=");
+	PRINTF((value & _BV(TX_EMPTY)) ? 1:0);
 
-	Serial
-	.print(" RX_FULL=");
-	Serial.print((value & _BV(RX_FULL)) ? 1:0);Serial
-	.print(" RX_EMPTY=");
-	Serial.println((value & _BV(RX_EMPTY)) ? 1:0);}
+	PRINTF(" RX_FULL=");
+	PRINTF((value & _BV(RX_FULL)) ? 1:0);
+	PRINTF(" RX_EMPTY=");
+	PRINTF((value & _BV(RX_EMPTY)) ? 1:0);
+	PRINTF("\r\n");
+}
 
 	/****************************************************************************/
 
 void RF24::print_byte_register(const char* name, uint8_t reg, uint8_t qty,
 		int representation) {
 	char extra_tab = strlen(name) < 8 ? '\t' : 0;
-	Serial.print(name);
-	Serial.print("\t");
-	Serial.print(extra_tab);
-	Serial.print(" =");
+	PRINTF(name);
+	PRINTF("\t");
+	PRINTF(extra_tab);
+	PRINTF(" =");
 
 	const char* aux = representation == HEX ? " 0x" : representation == BIN ?  " b" : " ";
 	while (qty--) {
-		Serial.print(aux);
-		Serial.print(read_register(reg++), representation);
+		PRINTF(aux);
+		PRINTF(read_register(reg++), representation);
 	}
-	Serial.println("");
+	PRINTF("\r\n");
 }
 
 /****************************************************************************/
 
 void RF24::print_address_register(const char* name, uint8_t reg, uint8_t qty) {
 	char extra_tab = strlen(name) < 8 ? '\t' : 0;
-	Serial.print(name);
-	Serial.print("\t");
-	Serial.print(extra_tab);
-	Serial.print(" =");
+	PRINTF(name);
+	PRINTF("\t");
+	PRINTF(extra_tab);
+	PRINTF(" =");
 
 	while (qty--) {
 		uint8_t buffer[5];
 		read_register(reg++, buffer, sizeof buffer);
 
-		Serial.print(" 0x");
+		PRINTF(" 0x");
 		uint8_t* bufptr = buffer + sizeof buffer;
 		while (--bufptr >= buffer)
-			Serial.print(*bufptr, HEX);
+			PRINTF(*bufptr, HEX);
 	}
 
-	Serial.println("");
+	PRINTF("\r\n");
 }
 
 /****************************************************************************/
@@ -489,11 +498,11 @@ uint8_t RF24::getPayloadSize(void) {
 
 /****************************************************************************/
 
-static const char rf24_datarate_e_str_0[] PROGMEM = "1MBPS";
-static const char rf24_datarate_e_str_1[] PROGMEM = "2MBPS";
-static const char rf24_datarate_e_str_2[] PROGMEM = "250KBPS";
-static const char * const rf24_datarate_e_str_P[] PROGMEM = {
-		rf24_datarate_e_str_0, rf24_datarate_e_str_1, rf24_datarate_e_str_2, };
+//static const char rf24_datarate_e_str_0[] PROGMEM = "1MBPS";
+//static const char rf24_datarate_e_str_1[] PROGMEM = "2MBPS";
+//static const char rf24_datarate_e_str_2[] PROGMEM = "250KBPS";
+//static const char * const rf24_datarate_e_str_P[] PROGMEM = {
+//		rf24_datarate_e_str_0, rf24_datarate_e_str_1, rf24_datarate_e_str_2, };
 static const char rf24_model_e_str_0[] PROGMEM = "nRF24L01";
 static const char rf24_model_e_str_1[] PROGMEM = "nRF24L01+";
 static const char * const rf24_model_e_str_P[] PROGMEM = { rf24_model_e_str_0,
@@ -503,12 +512,12 @@ static const char rf24_crclength_e_str_1[] PROGMEM = "8 bits";
 static const char rf24_crclength_e_str_2[] PROGMEM = "16 bits";
 static const char * const rf24_crclength_e_str_P[] PROGMEM
 = { rf24_crclength_e_str_0, rf24_crclength_e_str_1, rf24_crclength_e_str_2, };
-static const char rf24_pa_dbm_e_str_0[] PROGMEM = "-18dBm";
-static const char rf24_pa_dbm_e_str_1[] PROGMEM = "-12dBm";
-static const char rf24_pa_dbm_e_str_2[] PROGMEM = "-6dBm";
-static const char rf24_pa_dbm_e_str_3[] PROGMEM = "0dBm";
-static const char * const rf24_pa_dbm_e_str_P[] PROGMEM = { rf24_pa_dbm_e_str_0,
-		rf24_pa_dbm_e_str_1, rf24_pa_dbm_e_str_2, rf24_pa_dbm_e_str_3, };
+//static const char rf24_pa_dbm_e_str_0[] PROGMEM = "-18dBm";
+//static const char rf24_pa_dbm_e_str_1[] PROGMEM = "-12dBm";
+//static const char rf24_pa_dbm_e_str_2[] PROGMEM = "-6dBm";
+//static const char rf24_pa_dbm_e_str_3[] PROGMEM = "0dBm";
+//static const char * const rf24_pa_dbm_e_str_P[] PROGMEM = { rf24_pa_dbm_e_str_0,
+//		rf24_pa_dbm_e_str_1, rf24_pa_dbm_e_str_2, rf24_pa_dbm_e_str_3, };
 
 void RF24::printDetails(void) {
 	print_status(get_status());
@@ -529,17 +538,21 @@ void RF24::printDetails(void) {
 	print_byte_register("DYNPD", DYNPD, 1, BIN);
 	print_observe_tx(read_register(OBSERVE_TX));
 
-	Serial.print("CD\t\t = ");
-	Serial.println(testCarrier() ? 1 : 0);
+	PRINTF("CD\t\t = ");
+	PRINTF(testCarrier() ? 1 : 0);
+	PRINTF("\r\n");
 	print_fifo_status(read_register(FIFO_STATUS));
 
 	print_feature(read_register(FEATURE));
 
-	Serial.print("Model\t\t = ");
-	Serial.println(pgm_read_word(&rf24_model_e_str_P[isPVariant()]));
+	/*
+	PRINTF("Model\t\t = ");
+	PRINTF(pgm_read_word(&rf24_model_e_str_P[isPVariant()]));
+	PRINTF("\r\n");
 
-	Serial.print("CRC Length\t = ");
-	Serial.println(pgm_read_word(&rf24_crclength_e_str_P[getCRCLength()]));
+	PRINTF("CRC Length\t = ");
+	PRINTF(pgm_read_word(&rf24_crclength_e_str_P[getCRCLength()]));
+	PRINTF("\r\n");*/
 }
 
 /****************************************************************************/
@@ -716,7 +729,7 @@ bool RF24::write(const void* buf, uint8_t len) {
 		status = read_register(OBSERVE_TX, &observe_tx, 1);
 		delay(1);
 //		printObserveTX();
-//		Serial.println(millis() - sent_at);
+//		PRINTFln(millis() - sent_at);
 	} while (!(status & (_BV(TX_DS) | _BV(MAX_RT)))
 			&& (millis() - sent_at < timeout));
 
@@ -738,12 +751,12 @@ bool RF24::write(const void* buf, uint8_t len) {
 	//printf("%u%u%u\r\n",tx_ok,tx_fail,ack_payload_available);
 
 	result = status & _BV(TX_DS);
-	IF_SERIAL_DEBUG(Serial.print(result?"...OK.":"...Failed"));
+	IF_SERIAL_DEBUG(PRINTF(result?"...OK.":"...Failed"));
 
 	// Handle the ack packet
 	if (ack_payload_available) {
 		ack_payload_length = getDynamicPayloadSize();
-		IF_SERIAL_DEBUG(Serial.print("[AckPacket]/"));IF_SERIAL_DEBUG(Serial.println(ack_payload_length,DEC));
+		IF_SERIAL_DEBUG(PRINTF("[AckPacket]/"));IF_SERIAL_DEBUG(PRINTFln(ack_payload_length,DEC));
 	}
 
 	// Yay, we are done.
