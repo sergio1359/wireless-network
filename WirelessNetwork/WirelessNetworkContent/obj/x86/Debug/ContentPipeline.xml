@@ -7,8 +7,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
-      <Time>2012-05-15T18:12:21.6891365+02:00</Time>
+      <Output>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Time>2012-05-31T20:25:11.9325276+02:00</Time>
     </Item>
     <Item>
       <Source>circle.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\circle.xnb</Output>
-      <Time>2012-05-26T20:54:00.8355616+02:00</Time>
+      <Output>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\circle.xnb</Output>
+      <Time>2012-05-31T20:25:11.835522+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -25,10 +25,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
-      <LoggerRootDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\wireless-network\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
+      <LoggerRootDirectory>D:\wireless-network\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
