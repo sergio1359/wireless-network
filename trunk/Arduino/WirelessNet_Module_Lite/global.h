@@ -57,6 +57,18 @@ struct dictionary
 	uint8_t end;
 };
 
+struct dictionary2
+{
+	uint8_t array[LIST_SIZE][3];
+	uint8_t end;
+};
+
+struct dictionary3
+{
+	uint8_t array[LIST_SIZE][4];
+	uint8_t end;
+};
+
 extern uint32_t NetworkAddress;
 extern uint8_t nodeAddress;
 extern uint8_t masterAddress;

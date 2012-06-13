@@ -83,7 +83,7 @@ void loop(void){
 
 				for(int i=0;i<sizeof(DATA_MSG) - 4;i++)
 				{
-					PRINTF(data_msg.data[i]);
+					SERIAL_WRITE(data_msg.data[i]);
 				}
 
 				PRINTF("' by ");
@@ -94,6 +94,12 @@ void loop(void){
 				PRINTF("Input buffer empty\r\n");
 			}
 		}else if(command == 'n')
+		{
+			Network.printNeighbors();
+		}else if(command == 't')
+		{
+			Network.printRouteTable();
+		}else if(command == 'l')
 		{
 			Network.printNeighbors();
 		}

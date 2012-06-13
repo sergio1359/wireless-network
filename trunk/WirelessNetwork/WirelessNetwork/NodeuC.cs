@@ -21,14 +21,14 @@ namespace WirelessNetwork
     public class DATA_MSG : MSG
     {
         public byte header_id { 
-            get{ return (byte)(header & 0x3F);} 
-            set{ header = (byte)((header & 0xC0) | (value & 0x3F));}
+            get{ return (byte)(header & 0x1F);} 
+            set{ header = (byte)((header & 0xC0) | (value & 0x1F));}
         }
 
         public byte header_reserved
         {
-            get { return (byte)((header >> 6) & 0x01); }
-            set { header = (byte)((header & 0xBF) | (value << 6)); }
+            get { return (byte)((header >> 5) & 0x03); }
+            set { header = (byte)((header & 0x9F) | (value << 5)); }
         }
 
         public byte header_type
