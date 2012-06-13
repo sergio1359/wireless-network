@@ -23,11 +23,14 @@ private:
 	uint8_t lastTXAddress;
 
 protected:
-	bool inline send(uint8_t address, uint8_t* msg, uint8_t len);
+	bool inline sendToNeighbor(uint8_t address, uint8_t* msg, uint8_t len);
 
 	void inline sendPresenceSignal(void);
 
 	void inline updateNeightbors(void);
+
+	 //RootInterested represent the first interesed, who start the interrogation
+	void lookFor(byte reference, byte neighborInterested, byte rootInterested, byte distance);
 
 public:
 	void init(void);
@@ -45,6 +48,10 @@ public:
 	bool readMsg(DATA_MSG* msg);
 
 	void printNeighbors(void);
+
+	void printRouteTable(void);
+
+	void printLookTable(void);
 };
 
 extern NETWORK Network;
