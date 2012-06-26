@@ -42,21 +42,6 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
 [Document2]
-DocumentPath=USB_Board.PcbDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-
-[Document3]
 DocumentPath=Libraries\Con USB.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -71,7 +56,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document4]
+[Document3]
 DocumentPath=Libraries\FTDI_PCB_Public.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -86,7 +71,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document5]
+[Document4]
 DocumentPath=Libraries\LibreriaComponentes.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -101,7 +86,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document6]
+[Document5]
 DocumentPath=Libraries\MLF64-M2.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -116,7 +101,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document7]
+[Document6]
 DocumentPath=Libraries\ATmega128RFA1.Schlib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -131,7 +116,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document8]
+[Document7]
 DocumentPath=Libraries\FTDI_SCH_Public.lib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -146,8 +131,23 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[Document9]
+[Document8]
 DocumentPath=Libraries\LibreriaComponentes.SchLib
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+
+[Document9]
+DocumentPath=USB_Board.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
