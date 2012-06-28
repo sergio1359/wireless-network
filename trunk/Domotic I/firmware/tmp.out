@@ -1,0 +1,14 @@
+
+BL51 BANKED LINKER/LOCATER V6.05 - SN: K1DSC-WHEAEN
+COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2007
+C:\SiLabs\rafaweb\mn_vars.obj,
+C:\SiLabs\rafaweb\main.obj,
+C:\SiLabs\rafaweb\VFILE_DIR\index.obj,
+C:\SiLabs\rafaweb\Startup.obj,
+C:\SiLabs\rafaweb\mn_stack_bank_046.lib,
+C:\SiLabs\rafaweb\mn_stack_common_046.lib,
+C:\SiLabs\rafaweb\mn_callback.obj,
+C:\SiLabs\rafaweb\soft_i2c.obj  TO C:\SiLabs\rafaweb\TCPIP_Project RS(256) PL(68) PW(78) XD(10H) NOOL 
+
+Program Size: data=30.2 xdata=4100 code=37203
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
