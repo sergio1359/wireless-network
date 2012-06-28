@@ -1,0 +1,8 @@
+C:\SiLabs\rafaweb\mn_vars.obj,
+C:\SiLabs\rafaweb\main.obj,
+C:\SiLabs\rafaweb\VFILE_DIR\index.obj,
+C:\SiLabs\rafaweb\Startup.obj,
+C:\SiLabs\rafaweb\mn_stack_bank_046.lib,
+C:\SiLabs\rafaweb\mn_stack_common_046.lib,
+C:\SiLabs\rafaweb\mn_callback.obj,
+C:\SiLabs\rafaweb\soft_i2c.obj  TO C:\SiLabs\rafaweb\TCPIP_Project RS(256) PL(68) PW(78) XD(10H) NOOL 
