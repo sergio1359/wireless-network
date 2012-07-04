@@ -1,0 +1,37 @@
+Output: Gerber Files
+Type  : Gerber
+From  : PCB Document [USB_Board.PcbDoc]
+   Generated File[Gerber Files.GTL]
+   Generated File[Gerber Files.GBL]
+   Generated File[Gerber Files.GPB]
+   Generated File[Gerber Files.GPT]
+   Generated File[Gerber Files.GTO]
+   Generated File[Gerber Files.GBO]
+   Generated File[Gerber Files.GTP]
+   Generated File[Gerber Files.GBP]
+   Generated File[Gerber Files.GTS]
+   Generated File[Gerber Files.GBS]
+   Generated File[Gerber Files.GKO]
+   Generated File[Gerber Files.GM1]
+   Generated File[Gerber Files.GM3]
+   Generated File[Gerber Files.GM13]
+   Generated File[Gerber Files.GM15]
+   Generated File[Gerber Files.RUL]
+   Generated File[Gerber Files.EXTREP]
+   Generated File[Gerber Files.REP]
+
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [USB_Board.PcbDoc]
+   Generated File[NC Drill Files-RoundHoles-Plated.TXT]
+   Generated File[NC Drill Files-RoundHoles-NonPlated.TXT]
+   Generated File[NC Drill Files-SlotHoles-Plated.TXT]
+   Generated File[NC Drill Files.DRL]
+   Generated File[NC Drill Files.LDP]
+   Generated File[NC Drill Files.DRR]
+
+
+Files Generated   : 24
+Documents Printed : 0
+
+Finished Output Generation At 19:17:54 On 04/07/2012
