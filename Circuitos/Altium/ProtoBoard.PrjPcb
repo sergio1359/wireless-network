@@ -181,283 +181,99 @@ DocumentPath=Project Outputs for ProtoBoard\Design Rule Check - USB_Board.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Gerber Output\Gerber Files.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument3]
 DocumentPath=Outputs\Gerber Output\Gerber Files.EXTREP
 DItemRevisionGUID=
 
-[GeneratedDocument4]
-DocumentPath=Gerber Output\Gerber Files.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument5]
+[GeneratedDocument3]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GBL
 DItemRevisionGUID=
 
-[GeneratedDocument6]
-DocumentPath=Gerber Output\Gerber Files.GBO
-DItemRevisionGUID=
-
-[GeneratedDocument7]
+[GeneratedDocument4]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GBO
 DItemRevisionGUID=
 
-[GeneratedDocument8]
-DocumentPath=Gerber Output\Gerber Files.GBP
-DItemRevisionGUID=
-
-[GeneratedDocument9]
+[GeneratedDocument5]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GBP
 DItemRevisionGUID=
 
-[GeneratedDocument10]
-DocumentPath=Gerber Output\Gerber Files.GBS
-DItemRevisionGUID=
-
-[GeneratedDocument11]
+[GeneratedDocument6]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GBS
 DItemRevisionGUID=
 
-[GeneratedDocument12]
-DocumentPath=Gerber Output\Gerber Files.GKO
-DItemRevisionGUID=
-
-[GeneratedDocument13]
+[GeneratedDocument7]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GKO
 DItemRevisionGUID=
 
-[GeneratedDocument14]
-DocumentPath=Gerber Output\Gerber Files.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument15]
+[GeneratedDocument8]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GM1
 DItemRevisionGUID=
 
-[GeneratedDocument16]
-DocumentPath=Gerber Output\Gerber Files.GM3
-DItemRevisionGUID=
-
-[GeneratedDocument17]
+[GeneratedDocument9]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GM3
 DItemRevisionGUID=
 
-[GeneratedDocument18]
-DocumentPath=Gerber Output\Gerber Files.GM13
-DItemRevisionGUID=
-
-[GeneratedDocument19]
+[GeneratedDocument10]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GM13
 DItemRevisionGUID=
 
-[GeneratedDocument20]
-DocumentPath=Gerber Output\Gerber Files.GM15
-DItemRevisionGUID=
-
-[GeneratedDocument21]
+[GeneratedDocument11]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GM15
 DItemRevisionGUID=
 
-[GeneratedDocument22]
-DocumentPath=Gerber Output\Gerber Files.GPB
-DItemRevisionGUID=
-
-[GeneratedDocument23]
+[GeneratedDocument12]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GPB
 DItemRevisionGUID=
 
-[GeneratedDocument24]
-DocumentPath=Gerber Output\Gerber Files.GPT
-DItemRevisionGUID=
-
-[GeneratedDocument25]
+[GeneratedDocument13]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GPT
 DItemRevisionGUID=
 
-[GeneratedDocument26]
-DocumentPath=Gerber Output\Gerber Files.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument27]
+[GeneratedDocument14]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GTL
 DItemRevisionGUID=
 
-[GeneratedDocument28]
-DocumentPath=Gerber Output\Gerber Files.GTO
-DItemRevisionGUID=
-
-[GeneratedDocument29]
+[GeneratedDocument15]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GTO
 DItemRevisionGUID=
 
-[GeneratedDocument30]
-DocumentPath=Gerber Output\Gerber Files.GTP
-DItemRevisionGUID=
-
-[GeneratedDocument31]
+[GeneratedDocument16]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GTP
 DItemRevisionGUID=
 
-[GeneratedDocument32]
-DocumentPath=Gerber Output\Gerber Files.GTS
-DItemRevisionGUID=
-
-[GeneratedDocument33]
+[GeneratedDocument17]
 DocumentPath=Outputs\Gerber Output\Gerber Files.GTS
 DItemRevisionGUID=
 
-[GeneratedDocument34]
-DocumentPath=Gerber Output\Gerber Files.REP
-DItemRevisionGUID=
-
-[GeneratedDocument35]
+[GeneratedDocument18]
 DocumentPath=Outputs\Gerber Output\Gerber Files.REP
 DItemRevisionGUID=
 
-[GeneratedDocument36]
-DocumentPath=Gerber Output\Gerber Files.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument37]
+[GeneratedDocument19]
 DocumentPath=Outputs\Gerber Output\Gerber Files.RUL
 DItemRevisionGUID=
 
-[GeneratedDocument38]
-DocumentPath=NC Drill Output\NC Drill Files-RoundHoles-NonPlated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument39]
+[GeneratedDocument20]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-NonPlated.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument40]
-DocumentPath=NC Drill Output\NC Drill Files-RoundHoles-Plated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument41]
+[GeneratedDocument21]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-Plated.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument42]
-DocumentPath=NC Drill Output\NC Drill Files-SlotHoles-Plated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument43]
+[GeneratedDocument22]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files-SlotHoles-Plated.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument44]
-DocumentPath=NC Drill Output\NC Drill Files.DRL
-DItemRevisionGUID=
-
-[GeneratedDocument45]
+[GeneratedDocument23]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRL
 DItemRevisionGUID=
 
-[GeneratedDocument46]
-DocumentPath=NC Drill Output\NC Drill Files.DRR
-DItemRevisionGUID=
-
-[GeneratedDocument47]
+[GeneratedDocument24]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRR
 DItemRevisionGUID=
 
-[GeneratedDocument48]
-DocumentPath=NC Drill Output\NC Drill Files.LDP
-DItemRevisionGUID=
-
-[GeneratedDocument49]
+[GeneratedDocument25]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files.LDP
-DItemRevisionGUID=
-
-[GeneratedDocument50]
-DocumentPath=USB_Board-RoundHoles-NonPlated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument51]
-DocumentPath=USB_Board-RoundHoles-Plated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument52]
-DocumentPath=USB_Board-SlotHoles-Plated.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument53]
-DocumentPath=USB_Board.DRL
-DItemRevisionGUID=
-
-[GeneratedDocument54]
-DocumentPath=USB_Board.DRR
-DItemRevisionGUID=
-
-[GeneratedDocument55]
-DocumentPath=USB_Board.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument56]
-DocumentPath=USB_Board.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument57]
-DocumentPath=USB_Board.GBO
-DItemRevisionGUID=
-
-[GeneratedDocument58]
-DocumentPath=USB_Board.GBP
-DItemRevisionGUID=
-
-[GeneratedDocument59]
-DocumentPath=USB_Board.GBS
-DItemRevisionGUID=
-
-[GeneratedDocument60]
-DocumentPath=USB_Board.GKO
-DItemRevisionGUID=
-
-[GeneratedDocument61]
-DocumentPath=USB_Board.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument62]
-DocumentPath=USB_Board.GM3
-DItemRevisionGUID=
-
-[GeneratedDocument63]
-DocumentPath=USB_Board.GM13
-DItemRevisionGUID=
-
-[GeneratedDocument64]
-DocumentPath=USB_Board.GM15
-DItemRevisionGUID=
-
-[GeneratedDocument65]
-DocumentPath=USB_Board.GPB
-DItemRevisionGUID=
-
-[GeneratedDocument66]
-DocumentPath=USB_Board.GPT
-DItemRevisionGUID=
-
-[GeneratedDocument67]
-DocumentPath=USB_Board.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument68]
-DocumentPath=USB_Board.GTO
-DItemRevisionGUID=
-
-[GeneratedDocument69]
-DocumentPath=USB_Board.GTP
-DItemRevisionGUID=
-
-[GeneratedDocument70]
-DocumentPath=USB_Board.GTS
-DItemRevisionGUID=
-
-[GeneratedDocument71]
-DocumentPath=USB_Board.RUL
 DItemRevisionGUID=
 
 [OutputGroup1]
@@ -615,7 +431,7 @@ OutputDefault3=0
 [OutputGroup3]
 Name=Documentation Outputs
 Description=
-TargetPrinter=Brother HL-2150N series Printer (Copiar 3)
+TargetPrinter=Enviar a OneNote 2010
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintWhat=1
 OutputType1=Composite
 OutputName1=Composite Drawing

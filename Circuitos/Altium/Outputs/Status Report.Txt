@@ -23,15 +23,13 @@ From  : PCB Document [USB_Board.PcbDoc]
 Output: NC Drill Files
 Type  : NC Drill
 From  : PCB Document [USB_Board.PcbDoc]
-   Generated File[NC Drill Files-RoundHoles-Plated.TXT]
-   Generated File[NC Drill Files-RoundHoles-NonPlated.TXT]
-   Generated File[NC Drill Files-SlotHoles-Plated.TXT]
+   Generated File[NC Drill Files-Plated.TXT]
    Generated File[NC Drill Files.DRL]
    Generated File[NC Drill Files.LDP]
    Generated File[NC Drill Files.DRR]
 
 
-Files Generated   : 24
+Files Generated   : 22
 Documents Printed : 0
 
-Finished Output Generation At 19:30:31 On 04/07/2012
+Finished Output Generation At 13:57:56 On 05/07/2012
