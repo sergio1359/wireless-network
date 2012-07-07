@@ -19,7 +19,8 @@ struct ring_buffer;
 class NETWORK {
 private:
 	//RF24 Radio;
-	unsigned long lastUpdate;
+	unsigned long lastNeighborsUpdate;
+	unsigned long lastLookUpdate;
 	uint8_t lastTXAddress;
 
 protected:
