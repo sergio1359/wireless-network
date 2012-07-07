@@ -252,9 +252,9 @@ void NETWORK::init()
 }
 bool turn = true;
 void NETWORK::update() {
-	if(millis() - lastUpdate > 5000 || lastUpdate == 0) // Every 5 seconds
+	if(millis() - lastNeighborsUpdate > 5000 || lastNeighborsUpdate == 0) // Every 5 seconds
 	{
-		lastUpdate = millis();
+		lastNeighborsUpdate = millis();
 
 		sendPresenceSignal();
 
@@ -461,16 +461,63 @@ void NETWORK::update() {
 
 			dataOutBuffer.readIndex += sizeof(DATA_MSG);
 		}
-		else if(lookTable.array[dataMsg->to][1] == TIMEOUT)
+		else
 		{
-			PRINTF("Timeout superado: MESSAGE FROM ");
-			PRINTF(dataMsg->from);
-			PRINTF(" TO ");
-			PRINTF(dataMsg->to);
-			PRINTF("\r\n");
-			dataOutBuffer.readIndex += sizeof(DATA_MSG);
-			removeFromLookTable(dataMsg->to);
+			int removePointer = -1;
+			for(i = 0; i<lookTable.end; i++)
+			{
+				if(removePointer>=0)
+				{
+					lookTable.array[removePointer][0] = routeTable.array[i][0];
+					lookTable.array[removePointer][1] = routeTable.array[i][1];
+					lookTable.array[removePointer][2] = routeTable.array[i][2];
+					lookTable.array[removePointer++][3] = routeTable.array[i][3];
+				}else if(lookTable.array[i][0] == dataMsg->to && lookTable.array[i][1] == TIMEOUT)
+				{
+					PRINTF("Timeout superado: MESSAGE FROM ");
+					PRINTF(dataMsg->from);
+					PRINTF(" TO ");
+					PRINTF(dataMsg->to);
+					PRINTF("\r\n");
+					//removeFromLookTable(dataMsg->to);
+					removePointer = i;
+					dataOutBuffer.readIndex += sizeof(DATA_MSG);
+				}
+			}
+			if(removePointer == -1)
+				break;
 		}
+	}
+
+	if(millis() - lastLookUpdate > 1000 && lookTable.end != 0) // Every 1 second
+	{
+		lastLookUpdate = millis();
+		int removePointer = -1;
+
+		for(i=0; i<lookTable.end; i++)
+		{
+			uint8_t reference = lookTable.array[i][0];
+			uint8_t counter = lookTable.array[i][2];
+
+			if (counter != TIMEOUT)
+			{
+				lookTable.array[i][2]++;
+				if(removePointer>=0)
+				{
+					lookTable.array[removePointer][0] = routeTable.array[i][0];
+					lookTable.array[removePointer][1] = routeTable.array[i][1];
+					lookTable.array[removePointer][2] = routeTable.array[i][2];
+					lookTable.array[removePointer++][3] = routeTable.array[i][3];
+				}
+			}
+			else if(removePointer<0)//Remove
+			{
+				removePointer = i;
+			}
+		}
+
+		if(removePointer>=0)
+			lookTable.end = removePointer;
 	}
 }
 
@@ -689,10 +736,11 @@ ISR(INT0_vect) {
 				{
 					if(neighborsTable.array[e][0] == aux)
 					{
-//							neighborsTable.array[e][1] &= 0xFC; //Reset the counter
+//						neighborsTable.array[e][1] &= 0xFC; //Reset the counter
 						neighborsTable.array[e][1] &= 0x7F;//Clean flag
 						if(neighborsTable.array[e][1]!=0)
-						neighborsTable.array[e][1]--;
+							neighborsTable.array[e][1]--;
+
 						break;
 					}
 				}
