@@ -150,76 +150,7 @@
 //  C-type: ExtPanId_t (equal to uint64_t)
 //  Can be set: at any time before network start
 //  Persistent: Yes
-#define CS_EXT_PANID 0x00LL
-
-// Enables or disables use of predefined PAN ID. Actual PAN ID is specified via
-// CS_NWK_PANID parameter. If predefined PAN ID is disabled then PAN ID is selected
-// randomly (default).
-// 
-//  Value range: true or false
-//  C-type: bool
-//  Can be set: at any time before network start
-//  Persistent: Yes
-#define CS_NWK_PREDEFINED_PANID false
-//#define CS_NWK_PREDEFINED_PANID true
-
-// Short PAN ID of the network to start or to join to. The parameter holds the
-// short PANID value generated randomly if CS_NWK_PREDEFINED_PANID equals false.
-// Otherwise, the predefined parameter's value is used as the short PANID.
-// 
-//  Value range: 16-bit values from the range 0x0000 - 0xFFFE
-//  C-type: PanId_t (typedef for uint16_t)
-//  Can be set: at any time before network start
-//  Persistent: Yes
-#define CS_NWK_PANID 0x1234
-
-// A period in ms of polling a parent for data by an end device. On a sleeping end
-// device the parameter determines a period with which poll requests are sent to
-// the parent while the end device is awaken. A parent of a sleeping end device
-// uses the parameter to calculate estimates of the time when the next poll request
-// from a child will be received.
-// 
-//  Value range: any value valid for the C-type
-//  C-type: uint32_t
-//  Can be set: at any time
-//  Persistent: No
-#define CS_INDIRECT_POLL_RATE 1000
-
-// ZigBee device type determines network behavior of a given device and functions
-// it can perform. To give a brief overview, each networks contains exacty one
-// coordinator and an arbirtary number of routers and end devices; an end device
-// does not have children, data is passed through the parent, that is, a router or
-// the coordinator.
-// 
-//  Value range:
-//  DEVICE_TYPE_COORDINATOR (0) - the coordinator
-//  DEVICE_TYPE_ROUTER (1) - a router
-//  DEVICE_TYPE_END_DEVICE (2) - an end device
-// 
-//  C-type: DeviceType_t
-//  Can be set: at any time before network start
-//  Persistent: Yes
-#define CS_DEVICE_TYPE DEVICE_TYPE_ROUTER
-//Device is a coordinator.
-//#define CS_DEVICE_TYPE DEVICE_TYPE_COORDINATOR
-//Device is an end device.
-//#define CS_DEVICE_TYPE DEVICE_TYPE_ENDDEVICE
-
-// While scanning channels during network join the node keeps listening to each
-// channel specified by the ::CS_CHANNEL_MASK for a period of time calculated
-// according to the formula that for the 2.4GHz frequency band is: 960 * 16 * (2
-// raised to a power n + 1) microseconds, providing n is a value of this parameter.
-// Note that the formula for the Sub-GHz employs another constant instead of 16.
-#define CS_SCAN_DURATION 5
-
-// Determines the maximum number of attempts to enter a network performed by the
-// stack during network start. Upon each attempt ZDO sends a beacon request and
-// collects beacon responses from nearby devices all over again.
-#define CS_ZDO_JOIN_ATTEMPTS 4
-
-// The parameter specifies the time span in milliseconds between two attempts to
-// join the network.
-#define CS_ZDO_JOIN_INTERVAL 1000
+#define CS_EXT_PANID 0xAAAAAAAAAAAAAAAALL
 
 // 64-bit Unique Identifier (UID) determining the device extended address. If this
 // value is 0 stack will try to read hardware UID from external UID or EEPROM chip.
@@ -269,34 +200,6 @@
   #define CS_NWK_ADDR 0x0001
 #endif
 
-// The method of automatic address assignment.
-// 
-//  If CS_NWK_UNIQUE_ADDR equals 0 this parameter is used to determine the
-// assignment method that is applied when a device enters the network to choose a
-// short address. Otherwise, the parameter is ignored.
-// 
-//  Value range:
-//  NWK_ADDR_ALLOC_DISTRIBUTED (equals 0) - distributed address allocation; the
-// stack applies a special recurrent algorithm to form a kind of a search tree from
-// the network to simplify routing
-//  NWK_ADDR_ALLOC_STOCHASTIC (equals 2) - the address is set to a random value,
-// different from all other short addresses in the network
-//  NWK_ADDR_ALLOC_FROM_UID (equals 3) - two lower bytes of the extended address
-// are used for the short address
-// 
-//  C-type: uint8_t
-//  Can be set: at compile time only
-//  Persistent: No
-#define CS_ADDRESS_ASSIGNMENT_METHOD 2
-//Use 2 octet from IEEE extended address
-//#define CS_ADDRESS_ASSIGNMENT_METHOD 3
-//Use distributed address allocation
-//#define CS_ADDRESS_ASSIGNMENT_METHOD 0
-
-// Specifies whether a user descriptor is available on this device.
-#define CS_USER_DESCRIPTOR_AVAILABLE true
-//#define CS_USER_DESCRIPTOR_AVAILABLE false
-
 // The maximum number of direct children that a given device (the coordinator or a
 // router) can have.
 // 
@@ -313,7 +216,7 @@
 //  C-type: uint8_t
 //  Can be set: at compile time only
 //  Persistent: No
-#define CS_MAX_CHILDREN_AMOUNT 4
+#define CS_MAX_CHILDREN_AMOUNT 8
 
 // The maximum number of routers among the direct children of the device
 // 
@@ -326,89 +229,6 @@
 //  Can be set: at compile time only
 //  Persistent: No
 #define CS_MAX_CHILDREN_ROUTER_AMOUNT 2
-
-// Network depht limits amount of hops that packet may travel in the network.
-// Actual maximum number of hops is network depth multiplied by 2.
-// 
-//  The parameter determines the maximum depth of a network tree formed by
-// child-parent relationships between nodes.
-// 
-//  While joining the network the node receives beacon responses from potential
-// parents containing their actual network depth and declines those which show
-// values not less than the maximum network depth on the joining device. A
-// potential parent will also reject a beacon from the joining device and will not
-// sent a response if the joining device shows the network depth greater than it is
-// allowed on the potential parent. This logic is enabled if the parameter value is
-// not greater than 15. If its value is greater than 15, then device does not
-// perform any checkings of the network depth, neither when joining a network nor
-// when accepting other nodes as children. This allows forming long chains of
-// devices across considerable distances.
-// 
-//  The stack also uses the parameter to calculate several timeouts. Besides, the
-// parameter determines the maximum radius of a data packet, that is, the maximum
-// number of hops that a packet may travel, which is calculated by the following
-// formula:
-// 
-//  maximum radius = 2 * MIN(2 * maxNetworkDepth, 255)
-// 
-// 
-//  These uses of the parameter do not change if its value is greater than 15.
-// Therefore to enable transmitting data over long chains of devices, the parameter
-// should be set to a real desired network depth, rather than to an accidental
-// value over 15.
-// 
-//  The parameter should be the same on all devices in the network.
-// 
-//  Value range: from 0 to 255
-//  C-type: uint8_t
-//  Can be set: at compile time only
-//  Persistent: No
-#define CS_MAX_NETWORK_DEPTH 5
-
-// If the parameter being switched between 0xff and 0x00, determines whether the
-// device accepts or not a child joining the network via MAC association, that is,
-// if the joining device does not possess the PANID value of the network and its
-// PANID parameter is set to 0.
-#define CS_PERMIT_DURATION 0xFF
-//MAC association is off.
-//#define CS_PERMIT_DURATION 0x00
-
-// If the number of consecutive link status frames given by this parameter is
-// missed from a neighbor it is removed from the neighbor table. For all neighbors
-// except for end device children the stack tracks the time of receiving link
-// statuses. If link statuses are not received from a given neighbor for this
-// parameter's value times of link status period (typically 15 seconds), then the
-// neighbor is deleted from the neighbor table.
-#define CS_NWK_MAX_LINK_STATUS_FAILURES 3
-
-// Is used to calculate the length of time after which a not responding end device
-// child is considered lost. A sleeping end device is considered lost and a
-// corresponding notification is raised on the parent, if the end device does not
-// polls for data for the time span which duration is calculated by the following
-// formula: CS_NWK_END_DEVICE_MAX_FAILURES * (CS_END_DEVICE_SLEEP_PERIOD +
-// CS_INDIRECT_POLL_RATE)
-#define CS_NWK_END_DEVICE_MAX_FAILURES 3
-
-// Specifies receiver state (enabled or disabled) during inactive period for an end
-// device. The parameter is taken into account on end devices only. Other devices
-// behave as if the parameter equals true.
-// 
-//  If on an end device the parameter equals true, then the end device can receive
-// data at any time, radio is always on, and its parent, which is informed about
-// the parameter's value during association, sends data to the child immediately
-// upon receiving a frame for the child.
-// 
-//  Switching the parameter to false on an end devices turns on indirect delivery:
-// the end device's parent suspends data delivery to the child until it receives a
-// polling request from the child; on the end device radio is only on when data is
-// being sent.
-// 
-//  Value range: true or false
-//  C-type: bool
-//  Can be set: at any time before network start
-//  Persistent: Yes
-#define CS_RX_ON_WHEN_IDLE false
-//#define CS_RX_ON_WHEN_IDLE true
 
 // End device sleep period given in milliseconds.
 // 
@@ -438,25 +258,6 @@
 //  Can be set: at any time
 //  Persistent: No
 #define CS_END_DEVICE_SLEEP_PERIOD 10000L
-
-// Sleep period of routers and coordinator in ms.
-#define CS_FFD_SLEEP_PERIOD 10000
-
-// The parameter enabled in the high security mode specifies the size of the APS
-// key-pair set. The APS key-pair set stores pairs of corresponding extended
-// address and a link key or a master key. For each node with which the current
-// node is going to communicate it must keep an entry with the remote node extended
-// address and a link key. If the link key is unknown, the node can request the
-// trust center for it via APS_RequestKeyReq(). The trust center must store a link
-// key or a master key depending on the CS_SECURITY_STATUS used for each node it is
-// going to authenticate. Entries can also be added manually by APS_SetLinkKey()
-// and APS_SetMasterKey().
-// 
-//  Value range: 1 - 255
-//  C-type: uint8_t
-//  Can be set: at compile time only
-//  Persistent: No
-#define CS_APS_KEY_PAIR_DESCRIPTORS_AMOUNT 4
 
 //-----------------------------------------------
 //STANDARD_SECURITY_MODE
@@ -551,6 +352,37 @@
 //STDLINK_SECURITY_MODE
 //-----------------------------------------------
 #ifdef STDLINK_SECURITY_MODE
+  // The parameter enabled in the high security mode specifies the size of the APS
+  // key-pair set. The APS key-pair set stores pairs of corresponding extended
+  // address and a link key or a master key. For each node with which the current
+  // node is going to communicate it must keep an entry with the remote node extended
+  // address and a link key. If the link key is unknown, the node can request the
+  // trust center for it via APS_RequestKeyReq(). The trust center must store a link
+  // key or a master key depending on the CS_SECURITY_STATUS used for each node it is
+  // going to authenticate. Entries can also be added manually by APS_SetLinkKey()
+  // and APS_SetMasterKey().
+  // 
+  //  Value range: 1 - 255
+  //  C-type: uint8_t
+  //  Can be set: at compile time only
+  //  Persistent: No
+  #define CS_APS_KEY_PAIR_DESCRIPTORS_AMOUNT 8
+  
+  // Network address of device responsible for authentication and key distribution
+  // (Trust Center).
+  // 
+  //  The parameter specifies the trust center short address. The stack makes use of
+  // the parameter to support various operations in networks with security enabled.
+  // For correct network operation the parameter's value must coincide with the
+  // actual trust center address.
+  // 
+  //  Value range: All 16-bit values except for broadcast addresses, specify a value
+  // in the hex format.
+  //  C-type: ShortAddr_t
+  //  Can be set: at any time before network start
+  //  Persistent: Yes
+  #define CS_SHORT_TRUST_CENTER_ADDRESS 0x0000
+  
   // Address of device responsible for authentication and key distribution (Trust
   // Center).
   // 
@@ -634,32 +466,7 @@
   //  Can be set: at compile time only
   //  Persistent: No
   #define CS_NWK_SECURITY_KEYS_AMOUNT 1
-#endif
-
-// For a trust center, the maximum amount of records in the permission table.
-#define CS_MAX_TC_ALLOWED_DEVICES_AMOUNT 5
-
-// The maximum number of authentication requests that the trust center can process
-// simultaneously. The parameter is used on the trust center to allocate memory for
-// buffers used during joining device authentication. A value of the parameter
-// determines how many authentication request the stack on the trust center can
-// process at once.
-#define CS_MAX_TC_AUTHENTIC_PROCESS_AMOUNT 1
-
-// Keep-alive polling interval
-#define CS_ZDO_TC_KEEP_ALIVE_INTERVAL 20
-
-// Maximum amount of records in the Group Table.
-// 
-//  The Group Table size cannot be 0. The group table stores pairs of a group
-// address and an endpoint. Upon receiving a frame addressed to members of a
-// certain group which include the current node as well the stack fires indications
-// on all endpoints registered with the group address.
-// 
-//  C-type: uint8_t
-//  Can be set: at compile time only
-//  Persistent: No
-#define CS_GROUP_TABLE_SIZE 1
+#endif //
 
 // Maximum amount of records in the Neighbor Table.
 // 
@@ -671,7 +478,7 @@
 //  C-type: uint8_t
 //  Can be set: at compile time only
 //  Persistent: No
-#define CS_NEIB_TABLE_SIZE 7
+#define CS_NEIB_TABLE_SIZE 8
 
 // Maximum amount of records in the network Route Table.
 // 
@@ -688,7 +495,7 @@
 //  C-type: uint8_t
 //  Can be set: at compile time only
 //  Persistent: No
-#define CS_ROUTE_TABLE_SIZE 4
+#define CS_ROUTE_TABLE_SIZE 10
 
 // Maximum amount of records in the network Address Map Table.
 // 
@@ -730,7 +537,7 @@
 //  C-type: uint8_t
 //  Can be set: at compile time only
 //  Persistent: No
-#define CS_DUPLICATE_REJECTION_TABLE_SIZE 10
+#define CS_DUPLICATE_REJECTION_TABLE_SIZE 8
 
 // Maximum amount of records in the Broadcast Transaction Table.
 // 
@@ -743,26 +550,6 @@
 //  Can be set: at compile time only
 //  Persistent: No
 #define CS_NWK_BTT_SIZE 8
-
-// Maximim amount of records in the Binding Table
-// 
-//  The parameter sets the size of the binding table used by APS to store binding
-// links, which are structures containing information about source and destination
-// extended addresses and endpoints for unicast bindings and just group addresses
-// as destinations for group bindings. If the binding is going to be applied to
-// send a data frame, then the corresponding entry shall be first inserted into the
-// table via the APS_BindingReq() function.
-// 
-//  C-type: uint8_t
-//  Can be set: at compile time only
-//  Persistent: No
-#define CS_APS_BINDING_TABLE_SIZE 1
-
-// MAC ban table size
-#define CS_BAN_TABLE_SIZE 1
-
-// Maximum number of records in the route cache.
-#define CS_ROUTE_CACHE_SIZE 1
 
 // The number of buffers for data requests on the APS layer.
 // 
@@ -798,54 +585,6 @@
 // Amount of buffers to keep MAC data indications on network layer.
 #define CS_NWK_BUFFERS_AMOUNT 4
 
-// Amount of ZCL memory buffers
-#define CS_ZCL_MEMORY_BUFFERS_AMOUNT 5
-
-// MAC transaction persistence time.The parameter determines the maximum interval
-// (in ms) a frame addressed to a sleeping end device can be stored on the parent
-// node. If the end device does not poll for data during this time, then the frame
-// is dropped.
-// 
-//  Value range: all unsinged 32-bit integers
-//  C-type: uint32_t
-//  Can be set: at any time
-//  Persistent: No
-#define CS_MAC_TRANSACTION_TIME 7680L
-
-// The maximum number of retries that will be performed by APS layer before
-// reporting failed transmission.
-// 
-//  The parameter sets the number of attempts that will be made by APS layer to
-// transmit a data frame. If all these attempts fail due to underlying layers
-// failures, then APS response with an error status.
-// 
-//  C-type: uint8_t
-//  Can be set: at any time before network start
-//  Persistent: No
-#define CS_APS_MAX_FRAME_RETRIES 3
-
-// The maximum route cost between two nodes for direct delivery.
-// 
-//  A data frame is routed directly to the neighbor only if the route cost, read
-// from the neighbor table, is less than the value of the parameter. If the route
-// cost is greater than the value of the parameter, route discovery will be
-// initiated to find an indirect route to the nighbor.
-// 
-//  Value range: 0 - 8
-//  0 - ignore information in the neighbor table (always start route discovery)
-//  8 - always send data directly to a neighbor
-// 
-//  C-type: NwkLinkCost_t (typedef for uint8_t)
-//  Can be set: at any time before network start
-//  Persistent: No
-#define CS_MAX_NEIGHBOR_ROUTE_COST 8
-
-// If the parameter is set to true multicasting on the NWK level is used,
-// otherwise, multicasting on the APS level is applied. The parameter is
-// recommended to be set to true. For detail refer to ZigBee specification.
-#define CS_NWK_USE_MULTICAST true
-//#define CS_NWK_USE_MULTICAST false
-
 // The parameter specifies the TX power of the transceiver device, is measured in
 // dBm(s). After the node has entered the network the value can only be changed via
 // the ZDO_SetTxPowerReq() function.
@@ -859,40 +598,6 @@
 //  Can be set: at any time
 //  Persistent: Yes
 #define CS_RF_TX_POWER 3
-
-//-----------------------------------------------
-//APP_FRAGMENTATION == 1
-//-----------------------------------------------
-#if (APP_FRAGMENTATION == 1)
-  // This parameter limits the number of pieces to which the data sent with one APS
-  // request can be split i f the fragmentation feature is applied. Thus it also
-  // limits the maximum amount of data sent by the application with a single request:
-  //  maximum data length = CS_APS_MAX_BLOCKS_AMOUNT * CS_APS_BLOCK_SIZE if the
-  // latter parameter is not 0, else
-  //  maximum data length = CS_APS_MAX_BLOCKS_AMOUNT * APS_MAX_ASDU_SIZE.
-  //  C-type: uint8_t
-  //  Can be set: at compile time only
-  //  Persistent: No
-  #define CS_APS_MAX_BLOCKS_AMOUNT 4
-  
-  // Maximim size of a single fragment during fragmented transmission.
-  // 
-  //  If the value is 0, blocks will be of the maximum possilbe size; that is the
-  // size will equal the value of CS_APS_MAX_ASDU_SIZE. The parameter and
-  // CS_APS_MAX_BLOCKS_AMOUNT are also used to determine an amount of memory
-  // allocated for a special buffer that keeps parts of incoming fragmented message
-  // until all of them are received.
-  // 
-  //  C-type: uint16_t
-  //  Can be set: at compile time only
-  //  Persistent: No
-  #define CS_APS_BLOCK_SIZE 0
-#endif
-
-// The parameter determines how many pieces of a fragmented message are sent before
-// waiting for an aknowledgement. After acknowledgement is received another portion
-// of frames are sent and so on.
-#define CS_APS_MAX_TRANSMISSION_WINDOW_SIZE 1
 
 //-----------------------------------------------
 //APP_USE_OTAU == 1

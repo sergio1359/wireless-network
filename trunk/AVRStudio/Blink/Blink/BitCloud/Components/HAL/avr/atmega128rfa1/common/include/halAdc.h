@@ -60,6 +60,14 @@ typedef enum
   HAL_ADC_CHANNEL2 = 2,
   /** \brief channel ADC3 */
   HAL_ADC_CHANNEL3 = 3,
+  /** \brief channel ADC4 */
+  HAL_ADC_CHANNEL4 = 4,
+  /** \brief channel ADC5 */
+  HAL_ADC_CHANNEL5 = 5,
+  /** \brief channel ADC6 */
+  HAL_ADC_CHANNEL6 = 6,
+  /** \brief channel ADC7 */
+  HAL_ADC_CHANNEL7 = 7,
   /** \brief ADC0 - ADC0 with gain 10x */
   HAL_ADC_DIFF_CHANNEL0 = 8,
   /** \brief ADC1 - ADC0 with gain 10x */
@@ -75,7 +83,9 @@ typedef enum
   /** \brief ADC2 - ADC2 with gain 200x */
   HAL_ADC_DIFF_CHANNEL6 = 14,
   /** \brief ADC3 - ADC2 with gain 200x */
-  HAL_ADC_DIFF_CHANNEL7 = 15
+  HAL_ADC_DIFF_CHANNEL7 = 15,
+  /** \brief TEMP Sensor channel */
+  HAL_ADC_TEMP_CHANNEL = 41
 } HAL_AdcChannelNumber_t;
 
 /**************************************************************************//**

@@ -81,7 +81,7 @@ void halStartAdc(HAL_AdcChannelNumber_t channel)
 {
   adcDesc->service.halAdcCurCount = 0;
   /* disable digital buffers */
-  if (HAL_ADC_CHANNEL3 >= channel)
+  if (HAL_ADC_CHANNEL7 >= channel)
   {
     DIDR0 = (1 << channel);
   }
@@ -96,16 +96,21 @@ void halStartAdc(HAL_AdcChannelNumber_t channel)
     else if ((HAL_ADC_DIFF_CHANNEL5 == channel) || (HAL_ADC_DIFF_CHANNEL7 == channel))
       DIDR0 = CHANNEL_MASK_4;
   }
+/*
+  if(HAL_ADC_TEMP_CHANNEL == channel)
+	ADCSRB = (1 << MUX5); //MUX5 = 1
+  else
+	ADCSRB = 0; //MUX5 = 0*/
 
   uint8_t tmp = ADMUX & ALL_CHANNEL_MASK;
-
+  
   /* clear previous channel number */
   ADMUX &= ~ALL_CHANNEL_MASK;
   /* set current channel number */
   ADMUX |= channel;
 
   /* if new differential channel is settled then must make 125 us delay for gain stabilize. */
-  if ((tmp != channel) && (HAL_ADC_CHANNEL3 < channel))
+  if ((tmp != channel) && (HAL_ADC_CHANNEL7 < channel))
     __delay_us(DELAY_FOR_STABILIZE);
 
   if (adcDesc->selectionsAmount > 1)
