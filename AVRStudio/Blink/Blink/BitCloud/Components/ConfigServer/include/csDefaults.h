@@ -67,7 +67,7 @@ the ZDO_SetTxPowerReq() function.
 */
 #ifndef CS_RF_TX_POWER
 /* It was TX_PWR_3_0DBM. */
-#define CS_RF_TX_POWER                        0
+#define CS_RF_TX_POWER                        3
 #endif
 
 //! \brief Determines the device extended address
@@ -206,7 +206,7 @@ over the amount of child devices possible for the node.
 <b>Persistent:</b> No
 */
 #ifndef CS_NEIB_TABLE_SIZE
-  #define CS_NEIB_TABLE_SIZE                  7
+  #define CS_NEIB_TABLE_SIZE                  8
 #elif CS_NEIB_TABLE_SIZE == 0
   #undef  CS_NEIB_TABLE_SIZE
   #define CS_NEIB_TABLE_SIZE                  1
@@ -228,7 +228,7 @@ coordinator will be the only device that can have children and the network will 
 <b>Persistent:</b> No
 */
 #ifndef CS_MAX_CHILDREN_AMOUNT
-#define CS_MAX_CHILDREN_AMOUNT                6
+#define CS_MAX_CHILDREN_AMOUNT                8
 #endif
 //! \brief The maximum number of routers among the direct children of the device
 /*!
@@ -328,7 +328,7 @@ Valid channel numbers for 900 MHz band are 0x00 - 0x0a
 <b>Persistent:</b>  Yes
 */
   #ifndef CS_CHANNEL_MASK
-    #define CS_CHANNEL_MASK                       0x00000002L
+    #define CS_CHANNEL_MASK                       (1L<<0x0f)
   #endif
 //! \brief Number of a channel page to be used
 /*!
@@ -386,7 +386,7 @@ specify a value in the \c 0x123456789ABCDEFLL format. \n
 <b>Persistent:</b>  Yes
 */
 #ifndef CS_EXT_PANID
-#define CS_EXT_PANID                          CS_UID
+#define CS_EXT_PANID                          0xAAAAAAAAAAAAAAAALL
 #endif
 //! \brief An actual value of the extended PANID after network has started
 /*!
@@ -628,7 +628,7 @@ Following ZigBee specification, the parameter should be not less than 1.
 <b>Persistent:</b> No
 */
 #ifndef CS_DUPLICATE_REJECTION_TABLE_SIZE
-#define CS_DUPLICATE_REJECTION_TABLE_SIZE     10
+#define CS_DUPLICATE_REJECTION_TABLE_SIZE     8
 #endif
 
 //! \brief The maximum number of records in the NWK route table.
@@ -648,7 +648,7 @@ should be set to 0.
 */
 #if defined _ROUTER_ || defined _COORDINATOR_
   #if !defined CS_ROUTE_TABLE_SIZE
-    #define CS_ROUTE_TABLE_SIZE               4
+    #define CS_ROUTE_TABLE_SIZE               10
   #endif
   #if CS_ROUTE_TABLE_SIZE == 0
     #undef  CS_ROUTE_TABLE_SIZE
@@ -767,7 +767,7 @@ use and a new data request appears, it is kept in a queue until a buffer is rele
   #ifdef _SECURITY_
     #define CS_APS_DATA_REQ_BUFFERS_AMOUNT       3
   #else // !_SECURITY_
-    #define CS_APS_DATA_REQ_BUFFERS_AMOUNT       2
+    #define CS_APS_DATA_REQ_BUFFERS_AMOUNT       3
   #endif // _SECURITY_
 #endif
 
@@ -1189,7 +1189,7 @@ shall be set to \c true. Otherwise, it shall be set to \c false.
 <b>Persistent:</b> Yes
 */
 #ifndef CS_NWK_PREDEFINED_PANID
-#define CS_NWK_PREDEFINED_PANID false
+#define CS_NWK_PREDEFINED_PANID true
 #endif
 
 //! \brief  A predefined short PANID value
@@ -1204,7 +1204,7 @@ used as the short PANID.
 <b>Persistent:</b> Yes
 */
 #ifndef CS_NWK_PANID
-#define CS_NWK_PANID    0x1234
+#define CS_NWK_PANID    0x1238
 #endif
 // \cond internal
 /*! 16-bit manufacturer code allocated by the ZigBee Alliance.
