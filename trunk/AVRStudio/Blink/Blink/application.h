@@ -9,6 +9,8 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#define APP_DEVICE_TYPE DEVICE_TYPE_ROUTER
+
 typedef enum
 {
 	APP_INITING_STATE,
@@ -17,7 +19,5 @@ typedef enum
 	APP_LEAVING_NETWORK_STATE,
 	APP_STOP_STATE
 } AppState_t;
-
-
 
 #endif /* APPLICATION_H_ */
