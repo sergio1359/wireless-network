@@ -30,111 +30,117 @@
 #define AT45DB041  0x02
 #define AT25DF041A 0x03
 
-// Enables or disables APS Fragmentation support.
-#define APP_FRAGMENTATION 0
-//#define APP_FRAGMENTATION 1
+// Use Persistent Data Server to provide data protection in case of power failure
+#define APP_USE_PDS 0
+//#define APP_USE_PDS 1
 
-// Enables or disables binding support.
-#define APP_USE_BINDING 0
-//#define APP_USE_BINDING 1
+// Defines device role for boards witohut DIP switches. This parameter should not
+// be confused with Library Type parameter. Device role must match library type if
+// library type is not 'all'.
+#define APP_DEVICE_TYPE DEV_TYPE_COORDINATOR
+//Device is End Device
+//#define APP_DEVICE_TYPE DEV_TYPE_ENDDEVICE
+//Device is Router
+//#define APP_DEVICE_TYPE DEV_TYPE_ROUTER
 
-#define APP_BLINK_PERIOD 1000
+// Intervals in which coordinator and routers are sending state of their sensors.
+#define APP_TIMER_SENDING_PERIOD 10000
 
-#define APP_MIN_BLINK_PERIOD 100
+// Maximum amount of failed transmissions before network rejoin procedure is
+// initiated.
+#define APP_THRESHOLD_FAILED_TRANSMISSION 4
 
-#define APP_MAX_BLINK_PERIOD 10000
+// Configuring device caption support. Caption will be shown in WSNMonitor tool
+// window.
+#define APP_USE_DEVICE_CAPTION 1
+//#define APP_USE_DEVICE_CAPTION 0
 
-// Enables or disables request of APS Acknowledgement for outgoing frames.
-#define APP_USE_APS_ACK 0
-//#define APP_USE_APS_ACK 1
+// Support Atmel RCB KeyRemote board
+#define APP_RCB_KEY_REMOTE_SUPPORT 0
+//#define APP_RCB_KEY_REMOTE_SUPPORT 1
+
+//-----------------------------------------------
+//APP_USE_DEVICE_CAPTION == 1
+//-----------------------------------------------
+#if (APP_USE_DEVICE_CAPTION == 1)
+// Device caption, shown in WSNMonitor. Must be less, than 15 characters.
+#define APP_DEVICE_CAPTION "Ghost"
+#endif
 
 //-----------------------------------------------
 //BOARD_RCB
 //-----------------------------------------------
 #ifdef BOARD_RCB
-  // Defines primary serial interface type to be used by application.
-  #define APP_INTERFACE APP_INTERFACE_USART
-  //#define APP_INTERFACE APP_INTERFACE_USBFIFO
-  
-  //-----------------------------------------------
-  //APP_INTERFACE == APP_INTERFACE_USART
-  //-----------------------------------------------
-  #if (APP_INTERFACE == APP_INTERFACE_USART)
-    // Defines USART interface name to be used by application.
-    #define APP_USART_CHANNEL USART_CHANNEL_1
-  #endif
-  
-  //-----------------------------------------------
-  //APP_INTERFACE == APP_INTERFACE_USBFIFO
-  //-----------------------------------------------
-  #if (APP_INTERFACE == APP_INTERFACE_USBFIFO)
-    // Defines USART interface name to be used by application.
-    #undef APP_USART_CHANNEL
-    #define APP_USART_CHANNEL USART_CHANNEL_USBFIFO
-  #endif
-  
-  // Enable this option if target board suports controlling of TTL to RS232 converter
-  // enable pin.
-  #define BSP_ENABLE_RS232_CONTROL 1
-  //#define BSP_ENABLE_RS232_CONTROL 0
+// Defines primary serial interface type to be used by application.
+#define APP_INTERFACE APP_INTERFACE_USART
+//#define APP_INTERFACE APP_INTERFACE_USBFIFO
+
+//-----------------------------------------------
+//APP_INTERFACE == APP_INTERFACE_USART
+//-----------------------------------------------
+#if (APP_INTERFACE == APP_INTERFACE_USART)
+// Defines USART interface name to be used by application.
+#define APP_USART_CHANNEL USART_CHANNEL_1
+#endif
+
+//-----------------------------------------------
+//APP_INTERFACE == APP_INTERFACE_USBFIFO
+//-----------------------------------------------
+#if (APP_INTERFACE == APP_INTERFACE_USBFIFO)
+// Defines USART interface name to be used by application.
+#undef APP_USART_CHANNEL
+#define APP_USART_CHANNEL USART_CHANNEL_USBFIFO
+#endif
+
+// Enable this option if target board suports controlling of TTL to RS232 converter
+// enable pin.
+#define BSP_ENABLE_RS232_CONTROL 1
+//#define BSP_ENABLE_RS232_CONTROL 0
 #endif
 
 //-----------------------------------------------
 //BOARD_STK600
 //-----------------------------------------------
 #ifdef BOARD_STK600
-  // Defines primary serial interface type to be used by application.
-  #define APP_INTERFACE APP_INTERFACE_USART
-  //#define APP_INTERFACE APP_INTERFACE_SPI
-  
-  //-----------------------------------------------
-  //APP_INTERFACE == APP_INTERFACE_USART
-  //-----------------------------------------------
-  #if (APP_INTERFACE == APP_INTERFACE_USART)
-    // Defines USART interface name to be used by application.
-    #define APP_USART_CHANNEL USART_CHANNEL_0
-  #endif
-  
-  //-----------------------------------------------
-  //APP_INTERFACE == APP_INTERFACE_SPI
-  //-----------------------------------------------
-  #if (APP_INTERFACE == APP_INTERFACE_SPI)
-    // Defines SPI interface name to be used by application.
-    #define APP_SPI_CHANNEL SPI_CHANNEL_2
-    
-    // Defines SPI interface mode.
-    #define APP_SPI_MASTER_MODE 1
-    //#define APP_SPI_MASTER_MODE 0
-  #endif
+// Defines primary serial interface type to be used by application.
+#define APP_INTERFACE APP_INTERFACE_USART
+//#define APP_INTERFACE APP_INTERFACE_SPI
+
+//-----------------------------------------------
+//APP_INTERFACE == APP_INTERFACE_USART
+//-----------------------------------------------
+#if (APP_INTERFACE == APP_INTERFACE_USART)
+// Defines USART interface name to be used by application.
+#define APP_USART_CHANNEL USART_CHANNEL_0
 #endif
 
-// ZDP response waiting timeout in milliseconds. To use automatically calculated
-// value set to 0. The parameter determines the length of time for which the reply
-// in response to a ZDP request is waited. if the response is not received before
-// the timeout exceeds the confirmation callback for the ZDP request is called to
-// report a failure status.
-#define CS_ZDP_RESPONSE_TIMEOUT 0
+//-----------------------------------------------
+//APP_INTERFACE == APP_INTERFACE_SPI
+//-----------------------------------------------
+#if (APP_INTERFACE == APP_INTERFACE_SPI)
+// Defines SPI interface name to be used by application.
+#define APP_SPI_CHANNEL SPI_CHANNEL_2
 
-// The time in milliseconds between concentrator route discoveries.
-#define NWK_CONCENTRATOR_DISCOVERY_TIME 20000UL
-
-// Attribute report time
-#define CS_ZCL_ATTRIBUTE_REPORT_TIMER_INTERVAL 4000
+// Defines SPI interface mode.
+#define APP_SPI_MASTER_MODE 1
+//#define APP_SPI_MASTER_MODE 0
+#endif
+#endif
 
 // 32-bit mask of channels to be scanned before network is started. Channels that
 // should be used are marked with logical 1 at corresponding bit location.
 //  Valid channel numbers for 2.4 GHz band are 0x0b - 0x1a
 //  Valid channel numbers for 900 MHz band are 0x00 - 0x0a
-// 
+//
 //  Notes:
 //  1. for small amount of enabled channels it is more convinient to specify list
 // of channels in the form of '(1ul << 0x0b)'
 //  2. For 900 MHz band you also need to specify channel page
-// 
+//
 //  Value range: 32-bit values:
 //  Valid channel numbers for 2.4 GHz band are 0x0b - 0x1a
 //  Valid channel numbers for 900 MHz band are 0x00 - 0x0a
-// 
+//
 //  C-type: uint32_t
 //  Can be set: at any time before network start
 //  Persistent: Yes
@@ -144,7 +150,7 @@
 // formed (for the coordinator) or joined (for a router or an end device). For a
 // router or an end device the parameter can equal 0 allowing them to join the
 // first suitable network that they discover.
-// 
+//
 //  Value range: All 64-bit values except for 0xFFFFFFFFFFFFFFFFLL; specify a value
 // in the 0x123456789ABCDEFLL format.
 //  C-type: ExtPanId_t (equal to uint64_t)
@@ -158,7 +164,7 @@
 // available on all platforms. If the latter case then UID value must be provided
 // by user via this parameter. This parameter must be unique for each device in a
 // network.
-// 
+//
 //  Value range: any 64-bit value except for broadcast extended addresses
 //  C-type: ExtAddr_t
 //  Can be set: at any time before network start
@@ -167,11 +173,11 @@
 
 // Determines whether the static or automatic addressing mode will be used for the
 // short address.
-// 
+//
 //  If set to 1, the CS_NWK_ADDR parameter will be used as the device's short
 // address. Otherwise, the short address is assigned automatically by the stack. An
 // actual assignment method is specified in CS_ADDRESS_ASSIGNMENT_METHOD.
-// 
+//
 //  Value range: 1 or 0
 //  C-type: bool
 //  Can be set: at any time before network start
@@ -183,26 +189,26 @@
 //CS_NWK_UNIQUE_ADDR == 1
 //-----------------------------------------------
 #if (CS_NWK_UNIQUE_ADDR == 1)
-  // Specifies short (network) address if CS_NWK_UNIQUE_ADDR equals 1
-  // 
-  //  If static addressing is applied the stack uses the value of the parameter as a
-  // short address. Otherwise, the stack assigns the parameter to a randomly chosen
-  // value unique within the network. In both cases after the network start the
-  // parameter holds actual short address of the device. While the device is in the
-  // network its value must not be changed.
-  // 
-  //  Note: the coordinator short address always equals 0x0000.
-  // 
-  //  Value range: 0x0000 - 0xFFF8
-  //  C-type: ShortAddr_t
-  //  Can be set: at any time before network start
-  //  Persistent: Yes
-  #define CS_NWK_ADDR 0x0001
+// Specifies short (network) address if CS_NWK_UNIQUE_ADDR equals 1
+//
+//  If static addressing is applied the stack uses the value of the parameter as a
+// short address. Otherwise, the stack assigns the parameter to a randomly chosen
+// value unique within the network. In both cases after the network start the
+// parameter holds actual short address of the device. While the device is in the
+// network its value must not be changed.
+//
+//  Note: the coordinator short address always equals 0x0000.
+//
+//  Value range: 0x0000 - 0xFFF8
+//  C-type: ShortAddr_t
+//  Can be set: at any time before network start
+//  Persistent: Yes
+#define CS_NWK_ADDR 0x0001
 #endif
 
 // The maximum number of direct children that a given device (the coordinator or a
 // router) can have.
-// 
+//
 //  The parameter is only enabled for routers and the coordinator. An end device
 // can not have children. If an actual number of children reaches a parameter's
 // value, the node will have not been able to accept any more children joining the
@@ -211,7 +217,7 @@
 // example, if the parameter is set to 0 on all routers, then the coordinator will
 // be the only device that can have children and the network will have star
 // topology.
-// 
+//
 //  Value range: from 0 to CS_NEIB_TABLE_SIZE
 //  C-type: uint8_t
 //  Can be set: at compile time only
@@ -219,11 +225,11 @@
 #define CS_MAX_CHILDREN_AMOUNT 8
 
 // The maximum number of routers among the direct children of the device
-// 
+//
 //  The parameter determines how many routers the device can have as children. Note
 // that the maximum number of end devices is equal to CS_MAX_CHILDREN_AMOUNT -
 // CS_MAX_CHILDREN_ROUTER_AMOUNT.
-// 
+//
 //  Value range: from 0 to CS_MAX_CHILDREN_AMOUNT
 //  C-type: uint8_t
 //  Can be set: at compile time only
@@ -231,28 +237,28 @@
 #define CS_MAX_CHILDREN_ROUTER_AMOUNT 2
 
 // End device sleep period given in milliseconds.
-// 
+//
 //  On an end device this parameter determines the duration of a sleep period.
 // Falling asleep is performed with the ZDO_SleepReq() request. After sleeping
 // period exceeds the node is awakened and the application receives an indication
 // via ZDO_WakeUpInd(). If the parameter's value is 0, then after the node falls
 // asleep it can only be awakened by a hardware interrupt; a callback for a given
 // IRQ is registered via HAL_RegisterIrq().
-// 
+//
 //  On a router or the coordinator, the parameter is used in two ways:
-// 
+//
 //  1) To remove information about lost child end devices. If a parent receives no
 // data polls or data frames from the child end device for
 // CS_NWK_END_DEVICE_MAX_FAILURES * (CS_END_DEVICE_SLEEP_PERIOD +
 // CS_INDIRECT_POLL_RATE) ms, then it assumes it to be lost and deletes all
 // information about such child.
-// 
+//
 //  2) To determine whether to store or drop a message addressed to a child end
 // device. The parent estimates the time when its child end device will wake up by
 // adding this value to the moment when the last poll request has been received. If
 // the time till end device wake up is greater than CS_MAC_TRANSACTION_TIME the
 // frame is stored. Otherwise, the frame is dropped.
-// 
+//
 //  Value range: any value valid for the C-type; add 'L' after a value
 //  C-type: uint32_t
 //  Can be set: at any time
@@ -263,40 +269,40 @@
 //STANDARD_SECURITY_MODE
 //-----------------------------------------------
 #ifdef STANDARD_SECURITY_MODE
-  // The parameter is used to determine the security type.
-  // 
-  //  Value range: 0,3 - for standard security; 1,2 - for high security.
-  //  0 - network key is preconfigured ;
-  //  1 - network join without master key, but with a trust center link key, which
-  // must be set via APS_SetLinkKey();
-  //  2 - network join employs a master key, which must be set APS_SetMasterKey();
-  //  3 - network key is no preconfigured, but rather received from the trust center
-  // in an unencrypted frame. <br.
-  //  C-type: uint8_t
-  //  Can be set: at any time before network start
-  //  Persistent: Yes
-  #define CS_ZDO_SECURITY_STATUS 0
-  //#define CS_ZDO_SECURITY_STATUS 3
-  
-  // Depending on security key type and security mode this is either network key,
-  // master key, link key or initial link key.
-  // 
-  //  Network key is used to encrypt a part of a data frame occupied by the NWK
-  // payload. This type of encryption is applied in both the standard and high
-  // security mode. The high security mode also enables encryption of the APS payload
-  // with a link key, but if the txOptions.useNwkKey field in APS request parameters
-  // is set to 0, the APS payload is encrypted with the network key.
-  // 
-  //  The network key must be predefined if standard security is used with
-  // CS_ZDO_SECURITY_STATUS set to 0. For all other values of CS_ZDO_SECURITY_STATUS
-  // the network key is received from the trust center during device authentication.
-  // Note that in the standard security mode with CS_ZDO_SECURITY_STATUS equal to 3
-  // the network key is transferred to the joining device in an unencrypted frame.
-  // 
-  //  Value range: all 128-bit values
-  //  C-type: uint8_t[16] or any compatible
-  //  Can be set: at any time before network start
-  //  Persistent: No
+// The parameter is used to determine the security type.
+//
+//  Value range: 0,3 - for standard security; 1,2 - for high security.
+//  0 - network key is preconfigured ;
+//  1 - network join without master key, but with a trust center link key, which
+// must be set via APS_SetLinkKey();
+//  2 - network join employs a master key, which must be set APS_SetMasterKey();
+//  3 - network key is no preconfigured, but rather received from the trust center
+// in an unencrypted frame. <br.
+//  C-type: uint8_t
+//  Can be set: at any time before network start
+//  Persistent: Yes
+#define CS_ZDO_SECURITY_STATUS 0
+//#define CS_ZDO_SECURITY_STATUS 3
+
+// Depending on security key type and security mode this is either network key,
+// master key, link key or initial link key.
+//
+//  Network key is used to encrypt a part of a data frame occupied by the NWK
+// payload. This type of encryption is applied in both the standard and high
+// security mode. The high security mode also enables encryption of the APS payload
+// with a link key, but if the txOptions.useNwkKey field in APS request parameters
+// is set to 0, the APS payload is encrypted with the network key.
+//
+//  The network key must be predefined if standard security is used with
+// CS_ZDO_SECURITY_STATUS set to 0. For all other values of CS_ZDO_SECURITY_STATUS
+// the network key is received from the trust center during device authentication.
+// Note that in the standard security mode with CS_ZDO_SECURITY_STATUS equal to 3
+// the network key is transferred to the joining device in an unencrypted frame.
+//
+//  Value range: all 128-bit values
+//  C-type: uint8_t[16] or any compatible
+//  Can be set: at any time before network start
+//  Persistent: No
   #define CS_NETWORK_KEY {0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC,0xCC}
   
   // The maximum number of network keys that can be stored on the device

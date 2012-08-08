@@ -38,6 +38,8 @@ HAL_UsartDescriptor_t usart;
 static uint8_t Rx_Buffer[RX_BUFFER_SIZE];
 
 static ZDO_StartNetworkReq_t zdoStartReq;
+static APS_RegisterEndpointReq_t endpointParams;
+static SimpleDescriptor_t simpleDescriptor = { 1U, 1U, 1, 1, 0, 0 , NULL, 0, NULL };
 
 static void blinkTimerFired(void);                          // blinkTimer handler.
 
@@ -79,6 +81,16 @@ void Adc_Init()
 	adcDescriptor.callback = NULL;
 	
 	HAL_OpenAdc(&adcDescriptor);
+}
+
+void APS_DataIndication(APS_DataInd_t* indData)
+{
+	//static uint8_t b=60;
+	(void) indData;		/* suppress compiler warnings */
+	// Data received indication
+	GPIO_B4_set();
+	/* usartSendByte(b++); */
+	//usartSendByte(b++);
 }
 
 char buf[20];
@@ -201,12 +213,37 @@ static void appZdoStartNetworkConf(ZDO_StartNetworkConf_t *startInfo)
 	if(startInfo->status == ZDO_SUCCESS_STATUS)
 	{
 		appState = APP_IN_NETWORK_STATE;
+		
 		SYS_PostTask(APL_TASK_ID);
 	}
 }	
 
 void Network_Init()
 {
+	 DeviceType_t deviceType = APP_DEVICE_TYPE;
+	 uint16_t nwkAddr;
+	 ExtAddr_t extAddr;
+
+	 #if deviceType == DEVICE_TYPE_COORDINATOR
+		nwkAddr = 0;
+		extAddr = 0xAAAAAAAAAAAAAAAALL;
+	 #else
+		nwkAddr = 1;
+		extAddr = 0x00LL; 
+	 #endif
+	 
+	// Set the NWK address value to Config Server
+	CS_WriteParameter(CS_NWK_ADDR_ID, &nwkAddr);
+	CS_WriteParameter(CS_NWK_UNIQUE_ADDR_ID, &(bool){true});
+		 
+	CS_WriteParameter(CS_UID_ID, &extAddr);
+		 
+
+	// Set the deviceType value to Config Server
+	CS_WriteParameter(CS_DEVICE_TYPE_ID, &deviceType);
+	
+	
+	/*
 	DeviceType_t type_device = DEVICE_TYPE_COORDINATOR;
 	uint16_t panId;
 	ExtAddr_t extAddr;
@@ -217,7 +254,7 @@ void Network_Init()
 	CS_ReadParameter(CS_UID_ID, &extAddr);
 	
 	sprintf(buf,"DEVICE_TYPE:0x%X PANId:0x%X ExtADDRESS:0x%X\r\n", type_device, panId, extAddr);
-	HAL_WriteUsart(&usart,&buf,strlen(buf));
+	HAL_WriteUsart(&usart,&buf,strlen(buf));*/
 	/*switch (type_device)
 	{
 		case 0:
@@ -236,6 +273,12 @@ void Network_Init()
 		PRINT("DEVICE_TYPE UNKNOWN\r\n");
 		break;
 	}*/
+		
+				// Set application endpoint properties
+				endpointParams.simpleDescriptor = &simpleDescriptor;
+				endpointParams.APS_DataInd = APS_DataIndication;
+				// Register endpoint
+				APS_RegisterEndpointReq(&endpointParams);
 		
 	// Start network
 	zdoStartReq.ZDO_StartNetworkConf = appZdoStartNetworkConf;
