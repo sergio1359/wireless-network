@@ -303,7 +303,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 Components/PersistDataServer/src/pdsEvents.o
  .debug_ranges  0x00000000       0x18 Components/PersistDataServer/src/pdsEvents.o
- .debug_line    0x00000000      0x2a9 Components/PersistDataServer/src/pdsEvents.o
+ .debug_line    0x00000000      0x2b3 Components/PersistDataServer/src/pdsEvents.o
  .debug_str     0x00000000      0xbee Components/PersistDataServer/src/pdsEvents.o
  .debug_frame   0x00000000       0x8c Components/PersistDataServer/src/pdsEvents.o
  .text          0x00000000        0x0 Components/PersistDataServer/src/pdsInit.o
@@ -819,6 +819,7 @@ START GROUP
 LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libm.a
 LOAD ../BitCloud/lib\libHAL_AtmlStk600_Atmega128rfa1_8Mhz_Gcc.a
 LOAD ../BitCloud/lib\libBc_All_Atmega128rfa1_Atmega128rfa1_Gcc.a
+LOAD ../BitCloud/lib\libZcl_All_Atmega128rfa1_Atmega128rfa1_Gcc.a
 END GROUP
 
 .text           0x00000000    0x177cc
@@ -3119,33 +3120,33 @@ LOAD linker stubs
  .debug_ranges  0x000002b0       0x10 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
  .debug_ranges  0x000002c0       0x10 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
 
-.debug_line     0x00000000     0x35a4
- .debug_line    0x00000000      0x4fa Blink.o
- .debug_line    0x000004fa      0x5a8 Components/ConfigServer/src/configServer.o
- .debug_line    0x00000aa2      0x4ec Components/ConfigServer/src/csMem.o
- .debug_line    0x00000f8e      0x512 Components/ConfigServer/src/csPersistentMem.o
- .debug_line    0x000014a0      0x2ac Components/PersistDataServer/src/pdsCrcService.o
- .debug_line    0x0000174c      0x4bf Components/PersistDataServer/src/pdsDataServer.o
- .debug_line    0x00001c0b      0x282 Components/PersistDataServer/src/pdsInit.o
- .debug_line    0x00001e8d      0x21b Components/PersistDataServer/src/pdsMem.o
- .debug_line    0x000020a8      0x310 Components/PersistDataServer/src/pdsMemAccess.o
- .debug_line    0x000023b8      0x282 Components/PersistDataServer/src/pdsTimer.o
- .debug_line    0x0000263a      0x36f Components/PersistDataServer/src/pdsWriteData.o
- .debug_line    0x000029a9       0xa5 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_line    0x00002a4e       0x92 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodqi4.o)
- .debug_line    0x00002ae0       0x9a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_line    0x00002b7a       0xa8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_line    0x00002c22       0xa2 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_prologue.o)
- .debug_line    0x00002cc4       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_epilogue.o)
- .debug_line    0x00002d65       0x8c c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_tablejump.o)
- .debug_line    0x00002df1       0x93 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_line    0x00002e84       0x8e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_line    0x00002f12       0x97 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_ashldi3.o)
- .debug_line    0x00002fa9       0x91 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_line    0x0000303a      0x157 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(sprintf.o)
- .debug_line    0x00003191      0x291 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
- .debug_line    0x00003422       0xe1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
- .debug_line    0x00003503       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+.debug_line     0x00000000     0x3638
+ .debug_line    0x00000000      0x50a Blink.o
+ .debug_line    0x0000050a      0x5c0 Components/ConfigServer/src/configServer.o
+ .debug_line    0x00000aca      0x502 Components/ConfigServer/src/csMem.o
+ .debug_line    0x00000fcc      0x52a Components/ConfigServer/src/csPersistentMem.o
+ .debug_line    0x000014f6      0x2b4 Components/PersistDataServer/src/pdsCrcService.o
+ .debug_line    0x000017aa      0x4cb Components/PersistDataServer/src/pdsDataServer.o
+ .debug_line    0x00001c75      0x28a Components/PersistDataServer/src/pdsInit.o
+ .debug_line    0x00001eff      0x223 Components/PersistDataServer/src/pdsMem.o
+ .debug_line    0x00002122      0x318 Components/PersistDataServer/src/pdsMemAccess.o
+ .debug_line    0x0000243a      0x28a Components/PersistDataServer/src/pdsTimer.o
+ .debug_line    0x000026c4      0x379 Components/PersistDataServer/src/pdsWriteData.o
+ .debug_line    0x00002a3d       0xa5 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_line    0x00002ae2       0x92 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodqi4.o)
+ .debug_line    0x00002b74       0x9a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_line    0x00002c0e       0xa8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_line    0x00002cb6       0xa2 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_prologue.o)
+ .debug_line    0x00002d58       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_epilogue.o)
+ .debug_line    0x00002df9       0x8c c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_tablejump.o)
+ .debug_line    0x00002e85       0x93 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_line    0x00002f18       0x8e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_line    0x00002fa6       0x97 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_ashldi3.o)
+ .debug_line    0x0000303d       0x91 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_line    0x000030ce      0x157 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(sprintf.o)
+ .debug_line    0x00003225      0x291 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
+ .debug_line    0x000034b6       0xe1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_line    0x00003597       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
 .debug_str      0x00000000     0x5ed3
  .debug_str     0x00000000     0x24d2 Blink.o

@@ -37,7 +37,7 @@
 // Defines device role for boards witohut DIP switches. This parameter should not
 // be confused with Library Type parameter. Device role must match library type if
 // library type is not 'all'.
-#define APP_DEVICE_TYPE DEV_TYPE_COORDINATOR
+//#define APP_DEVICE_TYPE DEV_TYPE_COORDINATOR
 //Device is End Device
 //#define APP_DEVICE_TYPE DEV_TYPE_ENDDEVICE
 //Device is Router
