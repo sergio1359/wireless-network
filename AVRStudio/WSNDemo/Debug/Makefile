@@ -52,6 +52,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../otaInterface.c \
+../RTC.c \
 ../stack/hal/src/hal.c \
 ../stack/hal/src/halPhy.c \
 ../stack/hal/src/halSleep.c \
@@ -81,6 +82,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 otaInterface.o \
+RTC.o \
 stack/hal/src/hal.o \
 stack/hal/src/halPhy.o \
 stack/hal/src/halSleep.o \
@@ -104,6 +106,7 @@ WSNDemo.o
 
 OBJS_AS_ARGS +=  \
 otaInterface.o \
+RTC.o \
 stack/hal/src/hal.o \
 stack/hal/src/halPhy.o \
 stack/hal/src/halSleep.o \
@@ -127,6 +130,7 @@ WSNDemo.o
 
 C_DEPS +=  \
 otaInterface.d \
+RTC.d \
 stack/hal/src/hal.d \
 stack/hal/src/halPhy.d \
 stack/hal/src/halSleep.d \
@@ -150,6 +154,7 @@ WSNDemo.d
 
 C_DEPS_AS_ARGS +=  \
 otaInterface.d \
+RTC.d \
 stack/hal/src/hal.d \
 stack/hal/src/halPhy.d \
 stack/hal/src/halSleep.d \
@@ -180,6 +185,8 @@ ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 # AVR32/GNU C Compiler
+
+
 
 
 
