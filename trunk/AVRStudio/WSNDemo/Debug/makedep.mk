@@ -4,6 +4,8 @@
 
 otaInterface.c
 
+RTC.c
+
 stack\hal\src\hal.c
 
 stack\hal\src\halPhy.c

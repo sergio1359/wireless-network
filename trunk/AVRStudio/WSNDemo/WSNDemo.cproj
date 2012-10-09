@@ -154,6 +154,12 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="otaInterface.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="RTC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="RTC.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="stack\hal\inc\hal.h">
       <SubType>compile</SubType>
     </Compile>
