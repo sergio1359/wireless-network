@@ -1,0 +1,4 @@
+Change Component Footprint: Designator=ANT1 Old Footprint=Antennas 2.4G SMD MOLEX New Footprint=U.FL-R-SMT
+Change Component Footprint: Designator=E1 Old Footprint=PIN1 New Footprint=Antennas 2.4G SMD MOLEX
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2

@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=GND Pin=ANT1-2
+Removed Pin From Net: NetName=GND Pin=ANT1-2
+Removed Pin From Net: NetName=GND Pin=ANT1-2
+Removed Pin From Net: NetName=GND Pin=ANT1-2
+Change Component Footprint: Designator=ANT1 Old Footprint=SMB_V-RJ45 New Footprint=Antennas 2.4G SMD MOLEX
+Added Pin To Net: NetName=GND Pin=ANT1-
+Added Pin To Net: NetName=GND Pin=ANT1-
+Added Pin To Net: NetName=GND Pin=ANT1-

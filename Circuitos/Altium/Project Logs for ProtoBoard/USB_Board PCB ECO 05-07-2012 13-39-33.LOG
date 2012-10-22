@@ -1,0 +1,2 @@
+Change Component Footprint: Designator=P1 Old Footprint=USB/SM2.5-4H4A New Footprint=USBA_SMD
+Added Pin To Net: NetName=NC Pin=U2-8

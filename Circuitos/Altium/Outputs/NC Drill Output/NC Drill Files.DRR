@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
-NCDrill File Report For: USB_Board.PcbDoc   05/07/2012  13:57:56
+NCDrill File Report For: USB_Board.PcbDoc   10/10/2012  18:05:47
 ---------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -8,14 +8,14 @@ EIA File   : NC Drill Files.DRL
 
 Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
 ---------------------------------------------------------------------------
-T1        0.71mm (27.953mil)       Round          17               91.28 mm (3.59 Inch)
+T1        0.71mm (27.953mil)       Round          17               121.78 mm (4.79 Inch)
 T2        0.76mm (29.921mil)       Round          2                2.73 mm (0.11 Inch)
 T3        0.8mm (31.496mil)        Round          2                4.88 mm (0.19 Inch)
-T4        0.9mm (35.433mil)        Round          9                20.32 mm (0.80 Inch)
+T4        0.9mm (35.433mil)        Round          10               22.86 mm (0.90 Inch)
 T5        1mm (39.37mil)           Round          8                16.20 mm (0.64 Inch)
 T6        1.5mm (59.055mil)        Round          7                55.53 mm (2.19 Inch)
 T7        3mm (118.11mil)          Round          1                0.00 mm (0.00 Inch)
 ---------------------------------------------------------------------------
-Totals                                            46               190.94 mm (7.52 Inch)
+Totals                                            47               223.98 mm (8.82 Inch)
 
 Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,29 @@
+Removed Pin From Net: NetName=NetC4_2 Pin=S1-1
+Removed Pin From Net: NetName=GND Pin=S1-2
+Removed Member From Class: ClassName=USB_Board Member=S1
+Added Component: Designator=D1(1608[0603])
+Added Component: Designator=P2(HDR1X6)
+Added Component: Designator=R4(1608[0603])
+Added Pin To Net: NetName=VCC Pin=P2-2
+Added Pin To Net: NetName=NetC4_2 Pin=P2-5
+Added Pin To Net: NetName=GND Pin=P2-6
+Added Pin To Net: NetName=GND Pin=R4-2
+Change Net Name : Old Net Name=NetC4_2 New Net Name=RESET
+Added Pin To Net: NetName=MISO Pin=P2-1
+Added Pin To Net: NetName=MISO Pin=U1-39
+Added Net: Name=MISO
+Added Pin To Net: NetName=MOSI Pin=P2-4
+Added Pin To Net: NetName=MOSI Pin=U1-38
+Added Net: Name=MOSI
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=U1-40
+Added Net: Name=NetD1_1
+Added Pin To Net: NetName=NetD1_2 Pin=D1-2
+Added Pin To Net: NetName=NetD1_2 Pin=R4-1
+Added Net: Name=NetD1_2
+Added Pin To Net: NetName=SCK Pin=P2-3
+Added Pin To Net: NetName=SCK Pin=U1-37
+Added Net: Name=SCK
+Added Member To Class: ClassName=USB_Board Member=Component D1 TX
+Added Member To Class: ClassName=USB_Board Member=Component P2 Header 6
+Added Member To Class: ClassName=USB_Board Member=Component R4 Res2

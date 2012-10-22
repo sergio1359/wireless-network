@@ -1,0 +1,166 @@
+Removed Pin From Net: NetName=NetC?_2 Pin=U1-57
+Removed Pin From Net: NetName=NetC?_1 Pin=U1-62
+Change Component Comment : Designator=LM1117 Old Comment=Volt Reg New Comment=LM1117
+Change Component Designator: OldDesignator=ANT NewDesignator=ANT1
+Change Component Designator: OldDesignator=C? NewDesignator=C4
+Change Component Designator: OldDesignator=C? NewDesignator=C5
+Change Component Designator: OldDesignator=C? NewDesignator=C6
+Change Component Designator: OldDesignator=C? NewDesignator=C7
+Change Component Designator: OldDesignator=C? NewDesignator=C8
+Change Component Designator: OldDesignator=C? NewDesignator=C9
+Change Component Designator: OldDesignator=C? NewDesignator=C10
+Change Component Designator: OldDesignator=C? NewDesignator=C11
+Change Component Designator: OldDesignator=C? NewDesignator=C12
+Change Component Designator: OldDesignator=C? NewDesignator=C13
+Change Component Designator: OldDesignator=C? NewDesignator=C14
+Change Component Designator: OldDesignator=C? NewDesignator=C15
+Change Component Designator: OldDesignator=C? NewDesignator=C16
+Change Component Designator: OldDesignator=C? NewDesignator=C17
+Change Component Designator: OldDesignator=C? NewDesignator=C18
+Change Component Designator: OldDesignator=LM1117 NewDesignator=LM1
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=R? NewDesignator=R1
+Change Component Designator: OldDesignator=Y? NewDesignator=Y1
+Change Component Designator: OldDesignator=Y? NewDesignator=Y2
+Change Component Library : Designator=U1 Old Library=Atmel MCU Wireless Library.IntLib New Library=ATmega128RFA1.Schlib
+Added Component: Designator=BAL1(BALUN_SMD)
+Added Component: Designator=C1(RB7.6-15)
+Added Component: Designator=C2(RAD-0.3)
+Added Component: Designator=C19(RAD-0.3)
+Added Component: Designator=C20(RAD-0.3)
+Added Component: Designator=E1(PIN1)
+Added Component: Designator=R2(AXIAL-0.4)
+Added Component: Designator=U2(SSOP-28)
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=BAL1-2
+Added Pin To Net: NetName=GND Pin=BAL1-5
+Added Pin To Net: NetName=5V Pin=C1-1
+Added Pin To Net: NetName=GND Pin=C1-2
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=5V Pin=C2-2
+Added Pin To Net: NetName=DTR Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C5-2
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=GND Pin=C7-2
+Added Pin To Net: NetName=GND Pin=C8-2
+Added Pin To Net: NetName=GND Pin=C9-1
+Added Pin To Net: NetName=VCC Pin=C9-2
+Added Pin To Net: NetName=GND Pin=C10-1
+Added Pin To Net: NetName=GND Pin=C11-1
+Added Pin To Net: NetName=GND Pin=C12-1
+Added Pin To Net: NetName=GND Pin=C13-2
+Added Pin To Net: NetName=GND Pin=C14-2
+Added Pin To Net: NetName=GND Pin=C15-2
+Added Pin To Net: NetName=GND Pin=C16-2
+Added Pin To Net: NetName=5V Pin=C17-1
+Added Pin To Net: NetName=GND Pin=C17-2
+Added Pin To Net: NetName=VCC Pin=C18-1
+Added Pin To Net: NetName=GND Pin=C18-2
+Added Pin To Net: NetName=NetC?_1 Pin=U2-1
+Added Pin To Net: NetName=DTR Pin=U2-2
+Added Pin To Net: NetName=VCC Pin=U2-4
+Added Pin To Net: NetName=NetC?_2 Pin=U2-5
+Added Pin To Net: NetName=GND Pin=U2-7
+Added Pin To Net: NetName=D+ Pin=U2-15
+Added Pin To Net: NetName=D- Pin=U2-16
+Added Pin To Net: NetName=GND Pin=U2-18
+Added Pin To Net: NetName=5V Pin=U2-20
+Added Pin To Net: NetName=GND Pin=U2-21
+Added Pin To Net: NetName=GND Pin=U2-25
+Added Pin To Net: NetName=GND Pin=U2-26
+Change Net Name : Old Net Name=5V New Net Name=VBUS
+Change Net Name : Old Net Name=NetC?_1 New Net Name=TXO
+Change Net Name : Old Net Name=NetC?_2 New Net Name=RXI
+Added Pin To Net: NetName=CTS Pin=U2-11
+Added Net: Name=CTS
+Added Pin To Net: NetName=NC Pin=U2-8
+Added Pin To Net: NetName=NC Pin=U2-24
+Added Net: Name=NC
+Added Pin To Net: NetName=NetANT1_1 Pin=ANT1-1
+Added Pin To Net: NetName=NetANT1_1 Pin=BAL1-1
+Added Pin To Net: NetName=NetANT1_1 Pin=R2-2
+Added Net: Name=NetANT1_1
+Added Pin To Net: NetName=NetBAL1_3 Pin=BAL1-3
+Added Pin To Net: NetName=NetBAL1_3 Pin=C19-2
+Added Net: Name=NetBAL1_3
+Added Pin To Net: NetName=NetBAL1_4 Pin=BAL1-4
+Added Pin To Net: NetName=NetBAL1_4 Pin=C20-2
+Added Net: Name=NetBAL1_4
+Added Pin To Net: NetName=NetC4_2 Pin=C4-2
+Added Pin To Net: NetName=NetC4_2 Pin=R1-1
+Added Pin To Net: NetName=NetC4_2 Pin=S1-1
+Added Pin To Net: NetName=NetC4_2 Pin=U1-12
+Added Net: Name=NetC4_2
+Added Pin To Net: NetName=NetC5_1 Pin=C5-1
+Added Pin To Net: NetName=NetC5_1 Pin=U1-17
+Added Pin To Net: NetName=NetC5_1 Pin=Y1-2
+Added Net: Name=NetC5_1
+Added Pin To Net: NetName=NetC6_1 Pin=C6-1
+Added Pin To Net: NetName=NetC6_1 Pin=U1-62
+Added Net: Name=NetC6_1
+Added Pin To Net: NetName=NetC7_1 Pin=C7-1
+Added Pin To Net: NetName=NetC7_1 Pin=U1-18
+Added Pin To Net: NetName=NetC7_1 Pin=Y1-1
+Added Net: Name=NetC7_1
+Added Pin To Net: NetName=NetC8_1 Pin=C8-1
+Added Pin To Net: NetName=NetC8_1 Pin=U1-60
+Added Net: Name=NetC8_1
+Added Pin To Net: NetName=NetC10_2 Pin=C10-2
+Added Pin To Net: NetName=NetC10_2 Pin=U1-21
+Added Pin To Net: NetName=NetC10_2 Pin=U1-22
+Added Net: Name=NetC10_2
+Added Pin To Net: NetName=NetC11_2 Pin=C11-2
+Added Pin To Net: NetName=NetC11_2 Pin=U1-57
+Added Pin To Net: NetName=NetC11_2 Pin=Y2-2
+Added Net: Name=NetC11_2
+Added Pin To Net: NetName=NetC12_2 Pin=C12-2
+Added Pin To Net: NetName=NetC12_2 Pin=U1-56
+Added Pin To Net: NetName=NetC12_2 Pin=Y2-1
+Added Net: Name=NetC12_2
+Added Pin To Net: NetName=NetC13_1 Pin=C13-1
+Added Pin To Net: NetName=NetC13_1 Pin=U1-23
+Added Net: Name=NetC13_1
+Added Pin To Net: NetName=NetC14_1 Pin=C14-1
+Added Pin To Net: NetName=NetC14_1 Pin=U1-34
+Added Net: Name=NetC14_1
+Added Pin To Net: NetName=NetC15_1 Pin=C15-1
+Added Pin To Net: NetName=NetC15_1 Pin=U1-44
+Added Net: Name=NetC15_1
+Added Pin To Net: NetName=NetC16_1 Pin=C16-1
+Added Pin To Net: NetName=NetC16_1 Pin=U1-54
+Added Net: Name=NetC16_1
+Added Pin To Net: NetName=NetC19_1 Pin=C19-1
+Added Pin To Net: NetName=NetC19_1 Pin=U1-9
+Added Net: Name=NetC19_1
+Added Pin To Net: NetName=NetC20_1 Pin=C20-1
+Added Pin To Net: NetName=NetC20_1 Pin=U1-8
+Added Net: Name=NetC20_1
+Added Pin To Net: NetName=NetE1_1 Pin=E1-1
+Added Pin To Net: NetName=NetE1_1 Pin=R2-1
+Added Net: Name=NetE1_1
+Added Member To Class: ClassName=USB_Board Member=Component BAL1 2.45 GHz
+Added Member To Class: ClassName=USB_Board Member=Component C1 Cap Pol1
+Added Member To Class: ClassName=USB_Board Member=Component C2 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C5 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C6 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C7 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C8 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C9 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C10 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C11 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C12 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C13 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C14 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C15 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C16 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C17 Cap Pol1
+Added Member To Class: ClassName=USB_Board Member=Component C18 Cap Pol1
+Added Member To Class: ClassName=USB_Board Member=Component C19 Cap
+Added Member To Class: ClassName=USB_Board Member=Component C20 Cap
+Added Member To Class: ClassName=USB_Board Member=Component E1 Antenna
+Added Member To Class: ClassName=USB_Board Member=Component R2 Res2
+Added Member To Class: ClassName=USB_Board Member=Component U2 IC_FT232RL
+Added Member To Class: ClassName=USB_Board Member=Component Y1 32.768KHz
