@@ -253,26 +253,30 @@ DocumentPath=Outputs\Gerber Output\Gerber Files.RUL
 DItemRevisionGUID=
 
 [GeneratedDocument20]
-DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-NonPlated.TXT
+DocumentPath=Libraries\MLF64-M2.PcbLib.htm
 DItemRevisionGUID=
 
 [GeneratedDocument21]
-DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-Plated.TXT
+DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-NonPlated.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument22]
-DocumentPath=Outputs\NC Drill Output\NC Drill Files-SlotHoles-Plated.TXT
+DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-Plated.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument23]
-DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRL
+DocumentPath=Outputs\NC Drill Output\NC Drill Files-SlotHoles-Plated.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument24]
-DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRR
+DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRL
 DItemRevisionGUID=
 
 [GeneratedDocument25]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument26]
 DocumentPath=Outputs\NC Drill Output\NC Drill Files.LDP
 DItemRevisionGUID=
 

@@ -32,4 +32,4 @@ From  : PCB Document [USB_Board.PcbDoc]
 Files Generated   : 22
 Documents Printed : 0
 
-Finished Output Generation At 13:57:56 On 05/07/2012
+Finished Output Generation At 18:05:47 On 10/10/2012

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=VBUS Pin=C1-1
+Removed Pin From Net: NetName=GND Pin=C1-2
+Removed Pin From Net: NetName=GND Pin=C2-1
+Removed Pin From Net: NetName=VBUS Pin=C2-2
+Removed Member From Class: ClassName=USB_Board Member=C1
+Removed Member From Class: ClassName=USB_Board Member=C2
+Change Component Footprint: Designator=C17 Old Footprint=RB7.6-15 New Footprint=3015[1206]
+Change Component Footprint: Designator=C18 Old Footprint=RB7.6-15 New Footprint=3015[1206]
+Added Room: Name=USB_Board
