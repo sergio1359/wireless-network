@@ -1,0 +1,7 @@
+Added Component: Designator=BAL1(BALUN_SMD)
+Added Pin To Net: NetName=NetANT1_1 Pin=BAL1-1
+Added Pin To Net: NetName=GND Pin=BAL1-2
+Added Pin To Net: NetName=NetBAL1_3 Pin=BAL1-3
+Added Pin To Net: NetName=NetBAL1_4 Pin=BAL1-4
+Added Pin To Net: NetName=GND Pin=BAL1-5
+Added Member To Class: ClassName=Basic_Board Member=Component BAL1 2.45 GHz

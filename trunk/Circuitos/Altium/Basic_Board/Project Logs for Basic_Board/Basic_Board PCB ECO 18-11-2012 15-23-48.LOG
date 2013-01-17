@@ -1,0 +1,13 @@
+Added Component: Designator=ANT1(U.FL-R-SMT)
+Added Component: Designator=S1(SW/PB-V4/H8)
+Added Component: Designator=Y2(BCY-W2/E4.7)
+Added Pin To Net: NetName=NetANT1_1 Pin=ANT1-1
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=ANT1-2
+Added Pin To Net: NetName=GND Pin=S1-1
+Added Pin To Net: NetName=RESET Pin=S1-2
+Added Pin To Net: NetName=NetC10_2 Pin=Y2-1
+Added Pin To Net: NetName=NetC9_2 Pin=Y2-2
+Added Member To Class: ClassName=Basic_Board Member=Component ANT1 SMB
+Added Member To Class: ClassName=Basic_Board Member=Component S1 SW-PB
+Added Member To Class: ClassName=Basic_Board Member=Component Y2 16MHz
