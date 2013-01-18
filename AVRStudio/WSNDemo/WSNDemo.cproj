@@ -29,15 +29,15 @@
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>62888</port>
+        <port>1352</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
         <InterfaceName>ISP</InterfaceName>
         <InterfaceProperties>
-          <JtagDbgClock>200000</JtagDbgClock>
+          <JtagDbgClock>0</JtagDbgClock>
           <JtagProgClock>1000000</JtagProgClock>
-          <IspClock>2000000</IspClock>
+          <IspClock>250000</IspClock>
           <JtagInChain>false</JtagInChain>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
           <JtagDevicesBefore>0</JtagDevicesBefore>
@@ -80,6 +80,7 @@ C:\"Program Files (x86)"\Atmel\"Atmel Studio 6.0"\extensions\Atmel\AVRGCC\3.4.0.
             <Value>../stack/service/inc</Value>
             <Value>../stack/sys/inc</Value>
             <Value>../</Value>
+            <Value>../libraries/inc</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -148,16 +149,37 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="globals.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="leds.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\ANALOG.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\EEPROM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\ANALOG.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\DIGITAL.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\EEPROM.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\IO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\RTC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\RTC.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="otaInterface.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="RTC.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="RTC.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="stack\hal\inc\hal.h">
@@ -270,6 +292,8 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="libraries" />
+    <Folder Include="libraries\inc" />
     <Folder Include="stack" />
     <Folder Include="stack\hal" />
     <Folder Include="stack\hal\inc" />

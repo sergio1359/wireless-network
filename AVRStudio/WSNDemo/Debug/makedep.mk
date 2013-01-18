@@ -2,9 +2,13 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-otaInterface.c
+libraries\ANALOG.c
 
-RTC.c
+libraries\EEPROM.c
+
+libraries\RTC.c
+
+otaInterface.c
 
 stack\hal\src\hal.c
 

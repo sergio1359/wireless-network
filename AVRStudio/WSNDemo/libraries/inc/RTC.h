@@ -16,9 +16,9 @@ typedef struct{
 	//unsigned char date;
 	//unsigned char month;
 	//unsigned int year;
-}time;
+}TIME;
 
-extern volatile time current_Time;
+extern volatile TIME current_Time;
 
 void RTC_Init();
 
