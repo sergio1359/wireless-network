@@ -5,9 +5,8 @@
  *  Author: Victor
  */ 
 #include "RTC.h"
+#include "globals.h"
 #include <avr/interrupt.h>
-
-time volatile current_Time;
 
 void RTC_Init()
 {
@@ -23,10 +22,29 @@ void RTC_Init()
 	sei();                     //set the Global Interrupt Enable Bit
 }
 
-void numWrite(char num)
+void numWrite(unsigned int num)
 {
-	char aux = num/10;
-	HAL_UartWriteByte(aux+'0');
+	int aux;
+	if(num > 9999)
+	{
+		aux = num/10000;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 999)
+	{
+		aux = num/1000;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 99)
+	{
+		aux = num/100;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 9)
+	{
+		aux = num/10;
+		HAL_UartWriteByte(aux+'0');
+	}	 
 	HAL_UartWriteByte((num%10)+'0');
 }
 

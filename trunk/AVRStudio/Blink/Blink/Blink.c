@@ -224,13 +224,13 @@ void Network_Init()
 	 uint16_t nwkAddr;
 	 ExtAddr_t extAddr;
 
-	 #if deviceType == DEVICE_TYPE_COORDINATOR
-		nwkAddr = 0;
-		extAddr = 0xAAAAAAAAAAAAAAAALL;
-	 #else
+	 //#if deviceType == DEVICE_TYPE_COORDINATOR
+	//	nwkAddr = 0;
+	//	extAddr = 0xAAAAAAAAAAAAAAAALL;
+	 //#else
 		nwkAddr = 1;
 		extAddr = 0x00LL; 
-	 #endif
+	 //#endif
 	 
 	// Set the NWK address value to Config Server
 	CS_WriteParameter(CS_NWK_ADDR_ID, &nwkAddr);
@@ -251,10 +251,10 @@ void Network_Init()
 	
 	CS_ReadParameter(CS_DEVICE_TYPE_ID, &type_device);
 	CS_ReadParameter(CS_NWK_PANID_ID, &panId);
-	CS_ReadParameter(CS_UID_ID, &extAddr);
+	CS_ReadParameter(CS_UID_ID, &extAddr);*/
 	
-	sprintf(buf,"DEVICE_TYPE:0x%X PANId:0x%X ExtADDRESS:0x%X\r\n", type_device, panId, extAddr);
-	HAL_WriteUsart(&usart,&buf,strlen(buf));*/
+	sprintf(buf,"DEVICE_TYPE:0x%X NwkADDRESS:0x%X ExtADDRESS:0x%X\r\n", deviceType, nwkAddr, extAddr);
+	HAL_WriteUsart(&usart,&buf,strlen(buf));
 	/*switch (type_device)
 	{
 		case 0:

@@ -40,7 +40,6 @@
 * $Id: WSNDemo.c 5245 2012-09-10 20:07:02Z ataradov $
 *
 */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,6 +54,12 @@
 #include "leds.h"
 
 #include "RTC.h"
+#include "EEPROM.h"
+#include "ANALOG.h"
+#include "DIGITAL.h"
+
+#define DECLARING_GLOBALS
+#include "globals.h"
 
 #ifdef APP_ENABLE_OTA
 #include "otaClient.h"
@@ -277,6 +282,8 @@ static void appDataConf(NWK_DataReq_t *req)
 
 /*****************************************************************************
 *****************************************************************************/
+unsigned int adcVal;
+char buf[5];
 static void appSendData(void)
 {
 	#ifdef NWK_ENABLE_ROUTING
@@ -305,12 +312,25 @@ static void appSendData(void)
 	ledOn(LED_DATA);
 	
 	NWK_DataReq(&nwkDataReq);
-	//numWrite(current_Time.hour);
-	//HAL_UartWriteByte(':');
-	//numWrite(current_Time.minute);
-	//HAL_UartWriteByte(':');
-	//numWrite(current_Time.second);
-	//HAL_UartWriteByte('\n');
+	numWrite(current_Time.hour);
+	HAL_UartWriteByte(':');
+	numWrite(current_Time.minute);
+	HAL_UartWriteByte(':');
+	numWrite(current_Time.second);
+	HAL_UartWriteByte('\n');
+	
+	ADC_Reference(REF_DEFAULT);
+	adcVal = ADC_Read(ADC4);
+	//ADC_Reference(REF_INTERNAL_16);
+	//adcVal = ADC_Read(INTERNAL_TEMP);
+	//adcVal = 1.13 * adcVal - 272.8;
+	HAL_UartPrint("TEMP: ");
+	//numWrite(adcVal);
+	itoa(adcVal, buf, 10);
+	HAL_UartPrint(buf);
+	HAL_UartWriteByte('º');
+	HAL_UartWriteByte('C');
+	HAL_UartWriteByte('\n');
 
 	appState = APP_STATE_WAIT_CONF;
 	#endif
@@ -471,17 +491,16 @@ int main(void)
 	HAL_UartInit(38400);
 	
 	RTC_Init();
-	current_Time.hour = 22;
-	current_Time.minute = 40;
-	current_Time.second = 0;
+	current_Time.hour = 0;
+	current_Time.minute = 26;
+	current_Time.second = 30;
 	
 	#ifdef APP_ENABLE_OTA
 	OTA_ClientInit();
 	#endif
 
-	HAL_UartWriteByte(MCUSR+'0');
 	while (1)
-	{
+	{		
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		#ifdef APP_ENABLE_OTA

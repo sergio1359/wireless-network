@@ -46,8 +46,8 @@
 
 /*****************************************************************************
 *****************************************************************************/
-#define APP_ADDR                0x0000
-//#define APP_ADDR                0x4000
+//#define APP_ADDR                0x0000
+#define APP_ADDR                0x4002
 #define APP_CHANNEL             0x0f
 #define APP_PANID               0x1234
 #define APP_SENDING_INTERVAL    2000
@@ -57,10 +57,9 @@
 
 //#define APP_ENABLE_OTA
 
-//#define PHY_ENABLE_RANDOM_NUMBER_GENERATOR
+#define PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 
 #define SYS_SECURITY_MODE                   0
-
 #define NWK_BUFFERS_AMOUNT                  3
 #define NWK_MAX_ENDPOINTS_AMOUNT            3
 #define NWK_DUPLICATE_REJECTION_TABLE_SIZE  10
@@ -74,7 +73,7 @@
 
 #define HAL_ENABLE_UART
 #define HAL_UART_CHANNEL                    0
-#define HAL_UART_RX_FIFO_SIZE               1
-#define HAL_UART_TX_FIFO_SIZE               100
+#define HAL_UART_RX_FIFO_SIZE               128
+#define HAL_UART_TX_FIFO_SIZE               128
 
 #endif // _CONFIG_H_

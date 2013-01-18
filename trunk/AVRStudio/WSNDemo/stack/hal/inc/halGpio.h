@@ -46,6 +46,9 @@
 
 #include "sysTypes.h"
 
+#define INPUT 0x0
+#define OUTPUT 0x1
+
 #define HAL_GPIO_PIN(name, port, bit) \
   INLINE void    HAL_GPIO_##name##_set()      { PORT##port |= (1 << bit); } \
   INLINE void    HAL_GPIO_##name##_clr()      { PORT##port &= ~(1 << bit); } \
@@ -55,5 +58,15 @@
   INLINE void    HAL_GPIO_##name##_pullup()   { PORT##port |= (1 << bit); } \
   INLINE uint8_t HAL_GPIO_##name##_read()     { return (PIN##port & (1 << bit)) != 0; } \
   INLINE uint8_t HAL_GPIO_##name##_state()    { return (DDR##port & (1 << bit)) != 0; }
+
+#define HAL_GPIO_PORT(name, port) \
+  INLINE uint8_t HAL_GPIO_##name##_set(uint8_t mask)     { PORT##port |= mask; } \
+  INLINE uint8_t HAL_GPIO_##name##_clr(uint8_t mask)     { PORT##port &= ~mask; } \
+  INLINE void    HAL_GPIO_##name##_toggle(uint8_t mask)	 { PORT##port ^= mask; } \
+  INLINE void    HAL_GPIO_##name##_in(uint8_t mask)      { DDR##port &= ~(mask); PORT##port &= ~(mask); } \
+  INLINE void    HAL_GPIO_##name##_out(uint8_t mask)     { DDR##port |= (mask); } \
+  INLINE void    HAL_GPIO_##name##_pullup(uint8_t mask)  { PORT##port |= (mask); } \
+  INLINE uint8_t HAL_GPIO_##name##_read()				 { return PIN##port; } \
+  INLINE uint8_t HAL_GPIO_##name##_state(uint8_t mask)	 { return (DDR##port & (mask)); }
 
 #endif // _HAL_GPIO_H_

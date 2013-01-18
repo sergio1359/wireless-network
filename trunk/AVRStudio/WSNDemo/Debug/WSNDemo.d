@@ -26,7 +26,8 @@ WSNDemo.d WSNDemo.o: .././WSNDemo.c \
  ../stack/sys/inc/sysConfig.h ../stack/nwk/inc/nwk.h \
  ../stack/hal/inc/halUart.h ../stack/hal/inc/halSleep.h \
  ../stack/sys/inc/sysTimer.h .././leds.h ../stack/hal/inc/halGpio.h \
- .././RTC.h
+ ../libraries/inc/RTC.h ../libraries/inc/EEPROM.h ../libraries/inc/RTC.h \
+ ../libraries/inc/ANALOG.h ../libraries/inc/DIGITAL.h .././globals.h
 
 c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/stdlib.h:
 
@@ -98,4 +99,14 @@ c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.
 
 ../stack/hal/inc/halGpio.h:
 
-.././RTC.h:
+../libraries/inc/RTC.h:
+
+../libraries/inc/EEPROM.h:
+
+../libraries/inc/RTC.h:
+
+../libraries/inc/ANALOG.h:
+
+../libraries/inc/DIGITAL.h:
+
+.././globals.h:
