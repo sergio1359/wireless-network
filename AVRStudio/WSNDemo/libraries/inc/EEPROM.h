@@ -25,7 +25,8 @@ typedef struct{
 typedef struct{
 	uint8_t maskIO;   //0-> inputs		1-> outputs
 	uint8_t maskAD;   //0-> analog		1-> digital
-	uint8_t defaultValue;   //Initial value
+	uint8_t defaultValuesD;		 //Initial value DIGITAL
+	uint8_t defaultValuesA[8];   //Initial value ANALOG
 }PORT_CONFIG;
 
 typedef struct{
