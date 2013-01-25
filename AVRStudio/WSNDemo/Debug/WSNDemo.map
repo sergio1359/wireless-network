@@ -47,13 +47,15 @@ Discarded input sections
  .bss           0x00000000        0x0 libraries/EEPROM.o
  .debug_info    0x00000000       0x62 libraries/EEPROM.o
  .debug_abbrev  0x00000000       0x2c libraries/EEPROM.o
- .debug_line    0x00000000      0x2a0 libraries/EEPROM.o
+ .debug_line    0x00000000      0x2af libraries/EEPROM.o
  .debug_macinfo
-                0x00000000     0xeea9 libraries/EEPROM.o
+                0x00000000     0xf23f libraries/EEPROM.o
  .debug_str     0x00000000       0xb5 libraries/EEPROM.o
  .text          0x00000000        0x0 libraries/RTC.o
  .data          0x00000000        0x0 libraries/RTC.o
  .bss           0x00000000        0x0 libraries/RTC.o
+ .text.compareTimes
+                0x00000000       0x42 libraries/RTC.o
  .text          0x00000000        0x0 otaInterface.o
  .data          0x00000000        0x0 otaInterface.o
  .bss           0x00000000        0x0 otaInterface.o
@@ -63,24 +65,26 @@ Discarded input sections
  .debug_macinfo
                 0x00000000    0x11148 otaInterface.o
  .debug_str     0x00000000       0xb3 otaInterface.o
- .text          0x00000000        0x0 PortMonitor.o
- .data          0x00000000        0x0 PortMonitor.o
- .bss           0x00000000        0x0 PortMonitor.o
+ .text          0x00000000        0x0 portMonitor.o
+ .data          0x00000000        0x0 portMonitor.o
+ .bss           0x00000000        0x0 portMonitor.o
+ .text.launchEvents
+                0x00000000       0xd8 portMonitor.o
  .text.CheckInputs_task
-                0x00000000      0x1dc PortMonitor.o
+                0x00000000      0x1dc portMonitor.o
  .bss.lastValues
-                0x00000000        0x5 PortMonitor.o
- .debug_info    0x00000000      0x408 PortMonitor.o
- .debug_abbrev  0x00000000      0x130 PortMonitor.o
- .debug_loc     0x00000000      0x1b0 PortMonitor.o
+                0x00000000        0x5 portMonitor.o
+ .debug_info    0x00000000      0x62d portMonitor.o
+ .debug_abbrev  0x00000000      0x191 portMonitor.o
+ .debug_loc     0x00000000      0x3dd portMonitor.o
  .debug_aranges
-                0x00000000       0x20 PortMonitor.o
- .debug_ranges  0x00000000       0x70 PortMonitor.o
- .debug_line    0x00000000      0x36d PortMonitor.o
+                0x00000000       0x28 portMonitor.o
+ .debug_ranges  0x00000000       0x78 portMonitor.o
+ .debug_line    0x00000000      0x3ad portMonitor.o
  .debug_macinfo
-                0x00000000    0x11f05 PortMonitor.o
- .debug_str     0x00000000      0x319 PortMonitor.o
- .debug_frame   0x00000000       0x80 PortMonitor.o
+                0x00000000    0x11f56 portMonitor.o
+ .debug_str     0x00000000      0x49b portMonitor.o
+ .debug_frame   0x00000000       0xc4 portMonitor.o
  .text          0x00000000        0x0 stack/hal/src/hal.o
  .data          0x00000000        0x0 stack/hal/src/hal.o
  .bss           0x00000000        0x0 stack/hal/src/hal.o
@@ -226,7 +230,7 @@ LOAD libraries/ANALOG.o
 LOAD libraries/EEPROM.o
 LOAD libraries/RTC.o
 LOAD otaInterface.o
-LOAD PortMonitor.o
+LOAD portMonitor.o
 LOAD stack/hal/src/hal.o
 LOAD stack/hal/src/halPhy.o
 LOAD stack/hal/src/halSleep.o
@@ -934,217 +938,217 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x5a8
+.debug_aranges  0x00000000      0x5b0
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 libraries/ANALOG.o
  .debug_aranges
-                0x00000028       0x30 libraries/RTC.o
+                0x00000028       0x38 libraries/RTC.o
  .debug_aranges
-                0x00000058       0x28 stack/hal/src/hal.o
+                0x00000060       0x28 stack/hal/src/hal.o
  .debug_aranges
-                0x00000080       0x28 stack/hal/src/halSleep.o
+                0x00000088       0x28 stack/hal/src/halSleep.o
  .debug_aranges
-                0x000000a8       0x38 stack/hal/src/halTimer.o
+                0x000000b0       0x38 stack/hal/src/halTimer.o
  .debug_aranges
-                0x000000e0       0x58 stack/hal/src/halUart.o
+                0x000000e8       0x58 stack/hal/src/halUart.o
  .debug_aranges
-                0x00000138       0x58 stack/nwk/src/nwk.o
+                0x00000140       0x58 stack/nwk/src/nwk.o
  .debug_aranges
-                0x00000190       0x40 stack/nwk/src/nwkDataReq.o
+                0x00000198       0x40 stack/nwk/src/nwkDataReq.o
  .debug_aranges
-                0x000001d0       0x40 stack/nwk/src/nwkFrame.o
+                0x000001d8       0x40 stack/nwk/src/nwkFrame.o
  .debug_aranges
-                0x00000210       0x70 stack/nwk/src/nwkRoute.o
+                0x00000218       0x70 stack/nwk/src/nwkRoute.o
  .debug_aranges
-                0x00000280       0x58 stack/nwk/src/nwkRx.o
+                0x00000288       0x58 stack/nwk/src/nwkRx.o
  .debug_aranges
-                0x000002d8       0x60 stack/nwk/src/nwkTx.o
+                0x000002e0       0x60 stack/nwk/src/nwkTx.o
  .debug_aranges
-                0x00000338       0x98 stack/phy/src/phy.o
+                0x00000340       0x98 stack/phy/src/phy.o
  .debug_aranges
-                0x000003d0       0x28 stack/sys/src/sys.o
+                0x000003d8       0x28 stack/sys/src/sys.o
  .debug_aranges
-                0x000003f8       0x48 stack/sys/src/sysTimer.o
+                0x00000400       0x48 stack/sys/src/sysTimer.o
  .debug_aranges
-                0x00000440       0x50 WSNDemo.o
+                0x00000448       0x50 WSNDemo.o
  .debug_aranges
-                0x00000490       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+                0x00000498       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
  .debug_aranges
-                0x000004b0       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+                0x000004b8       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
  .debug_aranges
-                0x000004d0       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+                0x000004d8       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
  .debug_aranges
-                0x000004f0       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                0x000004f8       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
  .debug_aranges
-                0x00000510       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+                0x00000518       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
  .debug_aranges
-                0x00000530       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+                0x00000538       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
  .debug_aranges
-                0x00000550       0x38 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+                0x00000558       0x38 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
  .debug_aranges
-                0x00000588       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+                0x00000590       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x51ee
+.debug_info     0x00000000     0x523b
  *(.debug_info)
  .debug_info    0x00000000      0x11c libraries/ANALOG.o
- .debug_info    0x0000011c      0x1ae libraries/RTC.o
- .debug_info    0x000002ca       0xb5 stack/hal/src/hal.o
- .debug_info    0x0000037f      0x187 stack/hal/src/halSleep.o
- .debug_info    0x00000506      0x118 stack/hal/src/halTimer.o
- .debug_info    0x0000061e      0x3ae stack/hal/src/halUart.o
- .debug_info    0x000009cc      0x2da stack/nwk/src/nwk.o
- .debug_info    0x00000ca6      0x6ea stack/nwk/src/nwkDataReq.o
- .debug_info    0x00001390      0x548 stack/nwk/src/nwkFrame.o
- .debug_info    0x000018d8      0x78c stack/nwk/src/nwkRoute.o
- .debug_info    0x00002064      0x9e6 stack/nwk/src/nwkRx.o
- .debug_info    0x00002a4a      0x815 stack/nwk/src/nwkTx.o
- .debug_info    0x0000325f      0x82c stack/phy/src/phy.o
- .debug_info    0x00003a8b       0x90 stack/sys/src/sys.o
- .debug_info    0x00003b1b      0x339 stack/sys/src/sysTimer.o
- .debug_info    0x00003e54      0xc68 WSNDemo.o
- .debug_info    0x00004abc       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_info    0x00004b9a       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_info    0x00004c78       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_info    0x00004d56       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_info    0x00004e34       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_info    0x00004f12       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_info    0x00004ff0      0x120 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_info    0x00005110       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_info    0x0000011c      0x1fb libraries/RTC.o
+ .debug_info    0x00000317       0xb5 stack/hal/src/hal.o
+ .debug_info    0x000003cc      0x187 stack/hal/src/halSleep.o
+ .debug_info    0x00000553      0x118 stack/hal/src/halTimer.o
+ .debug_info    0x0000066b      0x3ae stack/hal/src/halUart.o
+ .debug_info    0x00000a19      0x2da stack/nwk/src/nwk.o
+ .debug_info    0x00000cf3      0x6ea stack/nwk/src/nwkDataReq.o
+ .debug_info    0x000013dd      0x548 stack/nwk/src/nwkFrame.o
+ .debug_info    0x00001925      0x78c stack/nwk/src/nwkRoute.o
+ .debug_info    0x000020b1      0x9e6 stack/nwk/src/nwkRx.o
+ .debug_info    0x00002a97      0x815 stack/nwk/src/nwkTx.o
+ .debug_info    0x000032ac      0x82c stack/phy/src/phy.o
+ .debug_info    0x00003ad8       0x90 stack/sys/src/sys.o
+ .debug_info    0x00003b68      0x339 stack/sys/src/sysTimer.o
+ .debug_info    0x00003ea1      0xc68 WSNDemo.o
+ .debug_info    0x00004b09       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_info    0x00004be7       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_info    0x00004cc5       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_info    0x00004da3       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_info    0x00004e81       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_info    0x00004f5f       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_info    0x0000503d      0x120 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_info    0x0000515d       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000     0x1b75
+.debug_abbrev   0x00000000     0x1bac
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0xdf libraries/ANALOG.o
- .debug_abbrev  0x000000df      0x107 libraries/RTC.o
- .debug_abbrev  0x000001e6       0x74 stack/hal/src/hal.o
- .debug_abbrev  0x0000025a       0xc4 stack/hal/src/halSleep.o
- .debug_abbrev  0x0000031e       0xc3 stack/hal/src/halTimer.o
- .debug_abbrev  0x000003e1      0x155 stack/hal/src/halUart.o
- .debug_abbrev  0x00000536      0x13f stack/nwk/src/nwk.o
- .debug_abbrev  0x00000675      0x227 stack/nwk/src/nwkDataReq.o
- .debug_abbrev  0x0000089c      0x18e stack/nwk/src/nwkFrame.o
- .debug_abbrev  0x00000a2a      0x263 stack/nwk/src/nwkRoute.o
- .debug_abbrev  0x00000c8d      0x335 stack/nwk/src/nwkRx.o
- .debug_abbrev  0x00000fc2      0x277 stack/nwk/src/nwkTx.o
- .debug_abbrev  0x00001239      0x2a0 stack/phy/src/phy.o
- .debug_abbrev  0x000014d9       0x43 stack/sys/src/sys.o
- .debug_abbrev  0x0000151c      0x1a4 stack/sys/src/sysTimer.o
- .debug_abbrev  0x000016c0      0x35c WSNDemo.o
- .debug_abbrev  0x00001a1c       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_abbrev  0x00001a30       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_abbrev  0x00001a44       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_abbrev  0x00001a58       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_abbrev  0x00001a6c       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_abbrev  0x00001a80       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_abbrev  0x00001a94       0xcd c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_abbrev  0x00001b61       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_abbrev  0x000000df      0x13e libraries/RTC.o
+ .debug_abbrev  0x0000021d       0x74 stack/hal/src/hal.o
+ .debug_abbrev  0x00000291       0xc4 stack/hal/src/halSleep.o
+ .debug_abbrev  0x00000355       0xc3 stack/hal/src/halTimer.o
+ .debug_abbrev  0x00000418      0x155 stack/hal/src/halUart.o
+ .debug_abbrev  0x0000056d      0x13f stack/nwk/src/nwk.o
+ .debug_abbrev  0x000006ac      0x227 stack/nwk/src/nwkDataReq.o
+ .debug_abbrev  0x000008d3      0x18e stack/nwk/src/nwkFrame.o
+ .debug_abbrev  0x00000a61      0x263 stack/nwk/src/nwkRoute.o
+ .debug_abbrev  0x00000cc4      0x335 stack/nwk/src/nwkRx.o
+ .debug_abbrev  0x00000ff9      0x277 stack/nwk/src/nwkTx.o
+ .debug_abbrev  0x00001270      0x2a0 stack/phy/src/phy.o
+ .debug_abbrev  0x00001510       0x43 stack/sys/src/sys.o
+ .debug_abbrev  0x00001553      0x1a4 stack/sys/src/sysTimer.o
+ .debug_abbrev  0x000016f7      0x35c WSNDemo.o
+ .debug_abbrev  0x00001a53       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_abbrev  0x00001a67       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_abbrev  0x00001a7b       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_abbrev  0x00001a8f       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_abbrev  0x00001aa3       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_abbrev  0x00001ab7       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_abbrev  0x00001acb       0xcd c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_abbrev  0x00001b98       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
-.debug_line     0x00000000     0x40de
+.debug_line     0x00000000     0x40f7
  *(.debug_line)
  .debug_line    0x00000000      0x2e0 libraries/ANALOG.o
- .debug_line    0x000002e0      0x2fd libraries/RTC.o
- .debug_line    0x000005dd      0x2e2 stack/hal/src/hal.o
- .debug_line    0x000008bf      0x32f stack/hal/src/halSleep.o
- .debug_line    0x00000bee      0x317 stack/hal/src/halTimer.o
- .debug_line    0x00000f05      0x3e4 stack/hal/src/halUart.o
- .debug_line    0x000012e9      0x3d7 stack/nwk/src/nwk.o
- .debug_line    0x000016c0      0x3a2 stack/nwk/src/nwkDataReq.o
- .debug_line    0x00001a62      0x36c stack/nwk/src/nwkFrame.o
- .debug_line    0x00001dce      0x412 stack/nwk/src/nwkRoute.o
- .debug_line    0x000021e0      0x496 stack/nwk/src/nwkRx.o
- .debug_line    0x00002676      0x45c stack/nwk/src/nwkTx.o
- .debug_line    0x00002ad2      0x4b7 stack/phy/src/phy.o
- .debug_line    0x00002f89      0x356 stack/sys/src/sys.o
- .debug_line    0x000032df      0x3a4 stack/sys/src/sysTimer.o
- .debug_line    0x00003683      0x599 WSNDemo.o
- .debug_line    0x00003c1c       0xa5 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_line    0x00003cc1       0x9a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_line    0x00003d5b       0xa8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_line    0x00003e03       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_line    0x00003e8b       0x93 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_line    0x00003f1e       0x8e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_line    0x00003fac       0x91 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_line    0x0000403d       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_line    0x000002e0      0x316 libraries/RTC.o
+ .debug_line    0x000005f6      0x2e2 stack/hal/src/hal.o
+ .debug_line    0x000008d8      0x32f stack/hal/src/halSleep.o
+ .debug_line    0x00000c07      0x317 stack/hal/src/halTimer.o
+ .debug_line    0x00000f1e      0x3e4 stack/hal/src/halUart.o
+ .debug_line    0x00001302      0x3d7 stack/nwk/src/nwk.o
+ .debug_line    0x000016d9      0x3a2 stack/nwk/src/nwkDataReq.o
+ .debug_line    0x00001a7b      0x36c stack/nwk/src/nwkFrame.o
+ .debug_line    0x00001de7      0x412 stack/nwk/src/nwkRoute.o
+ .debug_line    0x000021f9      0x496 stack/nwk/src/nwkRx.o
+ .debug_line    0x0000268f      0x45c stack/nwk/src/nwkTx.o
+ .debug_line    0x00002aeb      0x4b7 stack/phy/src/phy.o
+ .debug_line    0x00002fa2      0x356 stack/sys/src/sys.o
+ .debug_line    0x000032f8      0x3a4 stack/sys/src/sysTimer.o
+ .debug_line    0x0000369c      0x599 WSNDemo.o
+ .debug_line    0x00003c35       0xa5 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_line    0x00003cda       0x9a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_line    0x00003d74       0xa8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_line    0x00003e1c       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_line    0x00003ea4       0x93 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_line    0x00003f37       0x8e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_line    0x00003fc5       0x91 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_line    0x00004056       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
-.debug_frame    0x00000000      0xb48
+.debug_frame    0x00000000      0xb68
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 libraries/ANALOG.o
- .debug_frame   0x00000034       0x60 libraries/RTC.o
- .debug_frame   0x00000094       0x34 stack/hal/src/hal.o
- .debug_frame   0x000000c8       0x50 stack/hal/src/halSleep.o
- .debug_frame   0x00000118       0x74 stack/hal/src/halTimer.o
- .debug_frame   0x0000018c      0x138 stack/hal/src/halUart.o
- .debug_frame   0x000002c4       0x94 stack/nwk/src/nwk.o
- .debug_frame   0x00000358       0x78 stack/nwk/src/nwkDataReq.o
- .debug_frame   0x000003d0       0x64 stack/nwk/src/nwkFrame.o
- .debug_frame   0x00000434      0x128 stack/nwk/src/nwkRoute.o
- .debug_frame   0x0000055c       0xe0 stack/nwk/src/nwkRx.o
- .debug_frame   0x0000063c      0x118 stack/nwk/src/nwkTx.o
- .debug_frame   0x00000754      0x1b0 stack/phy/src/phy.o
- .debug_frame   0x00000904       0x34 stack/sys/src/sys.o
- .debug_frame   0x00000938       0xc0 stack/sys/src/sysTimer.o
- .debug_frame   0x000009f8       0xc8 WSNDemo.o
- .debug_frame   0x00000ac0       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_frame   0x00000034       0x80 libraries/RTC.o
+ .debug_frame   0x000000b4       0x34 stack/hal/src/hal.o
+ .debug_frame   0x000000e8       0x50 stack/hal/src/halSleep.o
+ .debug_frame   0x00000138       0x74 stack/hal/src/halTimer.o
+ .debug_frame   0x000001ac      0x138 stack/hal/src/halUart.o
+ .debug_frame   0x000002e4       0x94 stack/nwk/src/nwk.o
+ .debug_frame   0x00000378       0x78 stack/nwk/src/nwkDataReq.o
+ .debug_frame   0x000003f0       0x64 stack/nwk/src/nwkFrame.o
+ .debug_frame   0x00000454      0x128 stack/nwk/src/nwkRoute.o
+ .debug_frame   0x0000057c       0xe0 stack/nwk/src/nwkRx.o
+ .debug_frame   0x0000065c      0x118 stack/nwk/src/nwkTx.o
+ .debug_frame   0x00000774      0x1b0 stack/phy/src/phy.o
+ .debug_frame   0x00000924       0x34 stack/sys/src/sys.o
+ .debug_frame   0x00000958       0xc0 stack/sys/src/sysTimer.o
+ .debug_frame   0x00000a18       0xc8 WSNDemo.o
+ .debug_frame   0x00000ae0       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
 
-.debug_str      0x00000000     0x1a60
+.debug_str      0x00000000     0x1a79
  *(.debug_str)
  .debug_str     0x00000000       0xce libraries/ANALOG.o
                                 0x102 (size before relaxing)
- .debug_str     0x000000ce       0x69 libraries/RTC.o
-                                0x110 (size before relaxing)
- .debug_str     0x00000137       0x20 stack/hal/src/hal.o
+ .debug_str     0x000000ce       0x82 libraries/RTC.o
+                                0x130 (size before relaxing)
+ .debug_str     0x00000150       0x20 stack/hal/src/hal.o
                                  0xda (size before relaxing)
- .debug_str     0x00000157       0x99 stack/hal/src/halSleep.o
+ .debug_str     0x00000170       0x99 stack/hal/src/halSleep.o
                                 0x149 (size before relaxing)
- .debug_str     0x000001f0       0x73 stack/hal/src/halTimer.o
+ .debug_str     0x00000209       0x73 stack/hal/src/halTimer.o
                                 0x123 (size before relaxing)
- .debug_str     0x00000263      0x105 stack/hal/src/halUart.o
+ .debug_str     0x0000027c      0x105 stack/hal/src/halUart.o
                                 0x1e4 (size before relaxing)
- .debug_str     0x00000368       0xf7 stack/nwk/src/nwk.o
+ .debug_str     0x00000381       0xf7 stack/nwk/src/nwk.o
                                 0x1be (size before relaxing)
- .debug_str     0x0000045f      0x321 stack/nwk/src/nwkDataReq.o
+ .debug_str     0x00000478      0x321 stack/nwk/src/nwkDataReq.o
                                 0x460 (size before relaxing)
- .debug_str     0x00000780       0x8c stack/nwk/src/nwkFrame.o
+ .debug_str     0x00000799       0x8c stack/nwk/src/nwkFrame.o
                                 0x345 (size before relaxing)
- .debug_str     0x0000080c      0x16e stack/nwk/src/nwkRoute.o
+ .debug_str     0x00000825      0x16e stack/nwk/src/nwkRoute.o
                                 0x435 (size before relaxing)
- .debug_str     0x0000097a      0x316 stack/nwk/src/nwkRx.o
+ .debug_str     0x00000993      0x316 stack/nwk/src/nwkRx.o
                                 0x598 (size before relaxing)
- .debug_str     0x00000c90      0x214 stack/nwk/src/nwkTx.o
+ .debug_str     0x00000ca9      0x214 stack/nwk/src/nwkTx.o
                                 0x592 (size before relaxing)
- .debug_str     0x00000ea4      0x60a stack/phy/src/phy.o
+ .debug_str     0x00000ebd      0x60a stack/phy/src/phy.o
                                 0x6f5 (size before relaxing)
- .debug_str     0x000014ae       0x30 stack/sys/src/sys.o
+ .debug_str     0x000014c7       0x30 stack/sys/src/sys.o
                                  0xcf (size before relaxing)
- .debug_str     0x000014de       0x87 stack/sys/src/sysTimer.o
+ .debug_str     0x000014f7       0x87 stack/sys/src/sysTimer.o
                                 0x1d1 (size before relaxing)
- .debug_str     0x00001565      0x491 WSNDemo.o
+ .debug_str     0x0000157e      0x491 WSNDemo.o
                                 0x77d (size before relaxing)
- .debug_str     0x000019f6       0x6a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_str     0x00001a0f       0x6a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
                                  0xa8 (size before relaxing)
 
-.debug_loc      0x00000000     0x1ef0
+.debug_loc      0x00000000     0x1f9f
  *(.debug_loc)
  .debug_loc     0x00000000       0x44 libraries/ANALOG.o
- .debug_loc     0x00000044       0x93 libraries/RTC.o
- .debug_loc     0x000000d7       0x13 stack/hal/src/hal.o
- .debug_loc     0x000000ea      0x134 stack/hal/src/halSleep.o
- .debug_loc     0x0000021e       0x90 stack/hal/src/halTimer.o
- .debug_loc     0x000002ae      0x358 stack/hal/src/halUart.o
- .debug_loc     0x00000606       0x86 stack/nwk/src/nwk.o
- .debug_loc     0x0000068c      0x15b stack/nwk/src/nwkDataReq.o
- .debug_loc     0x000007e7      0x10a stack/nwk/src/nwkFrame.o
- .debug_loc     0x000008f1      0x441 stack/nwk/src/nwkRoute.o
- .debug_loc     0x00000d32      0x39d stack/nwk/src/nwkRx.o
- .debug_loc     0x000010cf      0x3d3 stack/nwk/src/nwkTx.o
- .debug_loc     0x000014a2      0x2b7 stack/phy/src/phy.o
- .debug_loc     0x00001759      0x3ab stack/sys/src/sysTimer.o
- .debug_loc     0x00001b04      0x285 WSNDemo.o
- .debug_loc     0x00001d89      0x167 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_loc     0x00000044      0x152 libraries/RTC.o
+ .debug_loc     0x00000196       0x13 stack/hal/src/hal.o
+ .debug_loc     0x000001a9      0x134 stack/hal/src/halSleep.o
+ .debug_loc     0x000002dd       0x90 stack/hal/src/halTimer.o
+ .debug_loc     0x0000036d      0x358 stack/hal/src/halUart.o
+ .debug_loc     0x000006c5       0x86 stack/nwk/src/nwk.o
+ .debug_loc     0x0000074b      0x15b stack/nwk/src/nwkDataReq.o
+ .debug_loc     0x000008a6      0x10a stack/nwk/src/nwkFrame.o
+ .debug_loc     0x000009b0      0x441 stack/nwk/src/nwkRoute.o
+ .debug_loc     0x00000df1      0x39d stack/nwk/src/nwkRx.o
+ .debug_loc     0x0000118e      0x3d3 stack/nwk/src/nwkTx.o
+ .debug_loc     0x00001561      0x2b7 stack/phy/src/phy.o
+ .debug_loc     0x00001818      0x3ab stack/sys/src/sysTimer.o
+ .debug_loc     0x00001bc3      0x275 WSNDemo.o
+ .debug_loc     0x00001e38      0x167 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
 
 .debug_macinfo  0x00000000   0x11823f
  *(.debug_macinfo)
@@ -1183,21 +1187,21 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
 OUTPUT(WSNDemo.elf elf32-avr)
 LOAD linker stubs
 
-.debug_ranges   0x00000000      0x4d8
+.debug_ranges   0x00000000      0x4e0
  .debug_ranges  0x00000000       0x18 libraries/ANALOG.o
- .debug_ranges  0x00000018       0x20 libraries/RTC.o
- .debug_ranges  0x00000038       0x18 stack/hal/src/hal.o
- .debug_ranges  0x00000050       0x18 stack/hal/src/halSleep.o
- .debug_ranges  0x00000068       0x28 stack/hal/src/halTimer.o
- .debug_ranges  0x00000090       0x48 stack/hal/src/halUart.o
- .debug_ranges  0x000000d8       0x48 stack/nwk/src/nwk.o
- .debug_ranges  0x00000120       0x30 stack/nwk/src/nwkDataReq.o
- .debug_ranges  0x00000150       0x30 stack/nwk/src/nwkFrame.o
- .debug_ranges  0x00000180       0x60 stack/nwk/src/nwkRoute.o
- .debug_ranges  0x000001e0       0xd8 stack/nwk/src/nwkRx.o
- .debug_ranges  0x000002b8       0x50 stack/nwk/src/nwkTx.o
- .debug_ranges  0x00000308       0xb8 stack/phy/src/phy.o
- .debug_ranges  0x000003c0       0x18 stack/sys/src/sys.o
- .debug_ranges  0x000003d8       0x38 stack/sys/src/sysTimer.o
- .debug_ranges  0x00000410       0xa0 WSNDemo.o
- .debug_ranges  0x000004b0       0x28 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_ranges  0x00000018       0x28 libraries/RTC.o
+ .debug_ranges  0x00000040       0x18 stack/hal/src/hal.o
+ .debug_ranges  0x00000058       0x18 stack/hal/src/halSleep.o
+ .debug_ranges  0x00000070       0x28 stack/hal/src/halTimer.o
+ .debug_ranges  0x00000098       0x48 stack/hal/src/halUart.o
+ .debug_ranges  0x000000e0       0x48 stack/nwk/src/nwk.o
+ .debug_ranges  0x00000128       0x30 stack/nwk/src/nwkDataReq.o
+ .debug_ranges  0x00000158       0x30 stack/nwk/src/nwkFrame.o
+ .debug_ranges  0x00000188       0x60 stack/nwk/src/nwkRoute.o
+ .debug_ranges  0x000001e8       0xd8 stack/nwk/src/nwkRx.o
+ .debug_ranges  0x000002c0       0x50 stack/nwk/src/nwkTx.o
+ .debug_ranges  0x00000310       0xb8 stack/phy/src/phy.o
+ .debug_ranges  0x000003c8       0x18 stack/sys/src/sys.o
+ .debug_ranges  0x000003e0       0x38 stack/sys/src/sysTimer.o
+ .debug_ranges  0x00000418       0xa0 WSNDemo.o
+ .debug_ranges  0x000004b8       0x28 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)

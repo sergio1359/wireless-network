@@ -83,25 +83,32 @@ void launchEvents(uint8_t pinAddress)
 	
 		for(res_ptr = table_restriction_addr; res_ptr < table_enable_addr; res_ptr += sizeof(EVENT_RESTRICTION_t))
 		{
-			EVENT_RESTRICTION_t restric = (EVENT_RESTRICTION_t)runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
+			EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
 			
-			if(restric.eventAddress > pin_event_list_addr) break;
+			if(restric->eventAddress >= pin_event_list_addr) break;
 		}
 	
 	for(uint8_t i=pin_event_list_addr; i < pin_event_list_length;)
 	{
-		EVENT_RESTRICTION_t restric = (EVENT_RESTRICTION_t)runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
-		EVENT_HEADER_t event_header = (EVENT_HEADER_t)runningConfiguration.raw[EVENT_TABLE_END_ADDR + i];//DestAddress AND OP_CODE
+		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr];
+		EVENT_HEADER_t* event_header = (EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + i];//DestAddress AND OP_CODE
 		
-		uint8_t args_length = getCommandArgsLenght(event_header.operation);
+		uint8_t args_length = getCommandArgsLenght(event_header->operation);
 		
-		if( ((runningConfiguration.raw[enable_pin_addr_absolute]>>(8 - pin_ptr)) & 0x01) && //Is Enable? xD
-			((res_ptr < table_enable_addr) && (restric.start) )
+		_Bool restriction_passed = 1;
+		if(restric->eventAddress == (EVENT_TABLE_END_ADDR + i)) //Restriction for the current event?
+		{
+			restriction_passed = (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) > 0);
+			res_ptr += sizeof(EVENT_RESTRICTION_t);
+		}		 
+		
+		
+		if( ((runningConfiguration.raw[enable_pin_addr_absolute] >> (8 - pin_ptr)) & 0x01) && //Is enabled 
+			restriction_passed ) //if time restriction ok
 		{
 			RF_Send_Event(i);
 		}
 		
-		res_ptr += sizeof(EVENT_RESTRICTION_t);
 		pin_ptr++;
 		if(pin_ptr == 8)
 		{

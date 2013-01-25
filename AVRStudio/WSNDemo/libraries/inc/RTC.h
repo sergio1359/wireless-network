@@ -8,6 +8,7 @@
 
 #ifndef RTC_H_
 #define RTC_H_
+#include <avr/interrupt.h>
 
 typedef struct{
 	unsigned char second;   //enter the current time, date, month, and year
@@ -18,9 +19,7 @@ typedef struct{
 	//unsigned int year;
 }TIME_t;
 
-extern volatile TIME_t currentTime;
-
 void RTC_Init();
-void numWrite(unsigned int num);
+int8_t compareTimes(TIME_t time1, TIME_t time2);
 
 #endif /* RTC_H_ */
