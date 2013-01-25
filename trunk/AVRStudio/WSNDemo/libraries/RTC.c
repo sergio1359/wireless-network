@@ -6,7 +6,6 @@
  */ 
 #include "RTC.h"
 #include "globals.h"
-#include <avr/interrupt.h>
 
 void RTC_Init()
 {
@@ -48,7 +47,7 @@ void numWrite(unsigned int num)
 	HAL_UartWriteByte((num%10)+'0');
 }
 
-void compareTimes(TIME_t time1, TIME_t time2)
+int8_t compareTimes(TIME_t time1, TIME_t time2)
 {
 		if (time1.hour > time2.hour) return 1;
 		if (time1.hour < time2.hour) return -1;

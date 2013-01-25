@@ -13,23 +13,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   4 .stabstr      000001af  00000000  00000000  00002d78  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_aranges 000005a8  00000000  00000000  00002f28  2**3
+  5 .debug_aranges 000005b0  00000000  00000000  00002f28  2**3
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000051ee  00000000  00000000  000034d0  2**0
+  6 .debug_info   0000523b  00000000  00000000  000034d8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001b75  00000000  00000000  000086be  2**0
+  7 .debug_abbrev 00001bac  00000000  00000000  00008713  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000040de  00000000  00000000  0000a233  2**0
+  8 .debug_line   000040f7  00000000  00000000  0000a2bf  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000b48  00000000  00000000  0000e314  2**2
+  9 .debug_frame  00000b68  00000000  00000000  0000e3b8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00001a60  00000000  00000000  0000ee5c  2**0
+ 10 .debug_str    00001a79  00000000  00000000  0000ef20  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001ef0  00000000  00000000  000108bc  2**0
+ 11 .debug_loc    00001f9f  00000000  00000000  00010999  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macinfo 0011823f  00000000  00000000  000127ac  2**0
+ 12 .debug_macinfo 0011823f  00000000  00000000  00012938  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000004d8  00000000  00000000  0012a9eb  2**0
+ 13 .debug_ranges 000004e0  00000000  00000000  0012ab77  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -238,8 +238,8 @@ unsigned int ADC_Read(uint8_t pin)
      1c6:	08 95       	ret
 
 000001c8 <RTC_Init>:
+#include "RTC.h"
 #include "globals.h"
-#include <avr/interrupt.h>
 
 void RTC_Init()
 {
@@ -364,6 +364,9 @@ void numWrite(unsigned int num)
      290:	08 95       	ret
 
 00000292 <__vector_15>:
+		if (time1.second < time2.second) return -1;
+		return 0;	
+}
 
 ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 {
