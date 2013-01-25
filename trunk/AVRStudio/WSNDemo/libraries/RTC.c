@@ -48,17 +48,28 @@ void numWrite(unsigned int num)
 	HAL_UartWriteByte((num%10)+'0');
 }
 
+void compareTimes(TIME_t time1, TIME_t time2)
+{
+		if (time1.hour > time2.hour) return 1;
+		if (time1.hour < time2.hour) return -1;
+		if (time1.minute > time2.minute) return 1;
+		if (time1.minute < time2.minute) return -1;
+		if (time1.second > time2.second) return 1;
+		if (time1.second < time2.second) return -1;
+		return 0;	
+}
+
 ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 {
-	if (++current_Time.second==60)        //keep track of time
+	if (++currentTime.second==60)        //keep track of time
 	{
-		current_Time.second=0;
-		if (++current_Time.minute==60)
+		currentTime.second=0;
+		if (++currentTime.minute==60)
 		{
-			current_Time.minute=0;
-			if (++current_Time.hour==24)
+			currentTime.minute=0;
+			if (++currentTime.hour==24)
 			{
-				current_Time.hour=0;
+				currentTime.hour=0;
 				//if (++current_Time.date==32)
 				//{
 					//current_Time.month++;

@@ -44,6 +44,11 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+#define EEPROM_SIZE 1024 * 4 * sizeof(uint8_t)
+#define NUM_PORTS 5
+#define NUM_PINS NUM_PORTS * 8
+
+
 /*****************************************************************************
 *****************************************************************************/
 //#define APP_ADDR                0x0000

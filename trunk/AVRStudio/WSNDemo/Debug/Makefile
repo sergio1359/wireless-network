@@ -57,6 +57,7 @@ C_SRCS +=  \
 ../libraries/EEPROM.c \
 ../libraries/RTC.c \
 ../otaInterface.c \
+../portMonitor.c \
 ../stack/hal/src/hal.c \
 ../stack/hal/src/halPhy.c \
 ../stack/hal/src/halSleep.c \
@@ -89,6 +90,7 @@ libraries/ANALOG.o \
 libraries/EEPROM.o \
 libraries/RTC.o \
 otaInterface.o \
+portMonitor.o \
 stack/hal/src/hal.o \
 stack/hal/src/halPhy.o \
 stack/hal/src/halSleep.o \
@@ -115,6 +117,7 @@ libraries/ANALOG.o \
 libraries/EEPROM.o \
 libraries/RTC.o \
 otaInterface.o \
+portMonitor.o \
 stack/hal/src/hal.o \
 stack/hal/src/halPhy.o \
 stack/hal/src/halSleep.o \
@@ -141,6 +144,7 @@ libraries/ANALOG.d \
 libraries/EEPROM.d \
 libraries/RTC.d \
 otaInterface.d \
+portMonitor.d \
 stack/hal/src/hal.d \
 stack/hal/src/halPhy.d \
 stack/hal/src/halSleep.d \
@@ -167,6 +171,7 @@ libraries/ANALOG.d \
 libraries/EEPROM.d \
 libraries/RTC.d \
 otaInterface.d \
+portMonitor.d \
 stack/hal/src/hal.d \
 stack/hal/src/halPhy.d \
 stack/hal/src/halSleep.d \
@@ -244,46 +249,48 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 
 
 
+
+
 libraries/%.o: ../libraries/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 stack/hal/src/%.o: ../stack/hal/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 stack/nwk/src/%.o: ../stack/nwk/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 stack/phy/src/%.o: ../stack/phy/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 stack/service/src/%.o: ../stack/service/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 stack/sys/src/%.o: ../stack/sys/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DPHY_ATMEGA128RFA1 -DHAL_ATMEGA128RFA1 -DPLATFORM_RCB128RFA1 -DF_CPU=8000000UL  -I"../stack/hal/inc" -I"../stack/nwk/inc" -I"../stack/phy/inc" -I"../stack/service/inc" -I"../stack/sys/inc" -I".." -I"../libraries/inc"  -Os -fdata-sections -ffunction-sections -fpack-struct -fshort-enums -g3 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega128rfa1   -o"$@" "$<" 
 	@echo Finished building: $<
 
 
@@ -311,12 +318,12 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="WSNDemo.map" -Wl,--start-group  -Wl,--end-group -Wl,--gc-sections  -mmcu=atmega128rfa1  
+	$(QUOTE)C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="WSNDemo.map" -Wl,--start-group  -Wl,--end-group -Wl,--gc-sections  -mmcu=atmega128rfa1  
 	@echo Finished building target: $@
-	"C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "WSNDemo.elf" "WSNDemo.hex"
-	"C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "WSNDemo.elf" "WSNDemo.eep" || exit 0
-	"C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objdump.exe" -h -S "WSNDemo.elf" > "WSNDemo.lss"
-	"C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-size.exe" "WSNDemo.elf"
+	"C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "WSNDemo.elf" "WSNDemo.hex"
+	"C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "WSNDemo.elf" "WSNDemo.eep" || exit 0
+	"C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objdump.exe" -h -S "WSNDemo.elf" > "WSNDemo.lss"
+	"C:\Program Files\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-size.exe" "WSNDemo.elf"
 	
 
 
