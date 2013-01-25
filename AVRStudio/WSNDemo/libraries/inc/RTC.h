@@ -16,10 +16,11 @@ typedef struct{
 	//unsigned char date;
 	//unsigned char month;
 	//unsigned int year;
-}TIME;
+}TIME_t;
 
-extern volatile TIME current_Time;
+extern volatile TIME_t currentTime;
 
 void RTC_Init();
+void numWrite(unsigned int num);
 
 #endif /* RTC_H_ */

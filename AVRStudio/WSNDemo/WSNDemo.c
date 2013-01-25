@@ -312,11 +312,11 @@ static void appSendData(void)
 	ledOn(LED_DATA);
 	
 	NWK_DataReq(&nwkDataReq);
-	numWrite(current_Time.hour);
+	numWrite(currentTime.hour);
 	HAL_UartWriteByte(':');
-	numWrite(current_Time.minute);
+	numWrite(currentTime.minute);
 	HAL_UartWriteByte(':');
-	numWrite(current_Time.second);
+	numWrite(currentTime.second);
 	HAL_UartWriteByte('\n');
 	
 	ADC_Reference(REF_DEFAULT);
@@ -491,9 +491,9 @@ int main(void)
 	HAL_UartInit(38400);
 	
 	RTC_Init();
-	current_Time.hour = 0;
-	current_Time.minute = 26;
-	current_Time.second = 30;
+	currentTime.hour = 0;
+	currentTime.minute = 26;
+	currentTime.second = 30;
 	
 	#ifdef APP_ENABLE_OTA
 	OTA_ClientInit();

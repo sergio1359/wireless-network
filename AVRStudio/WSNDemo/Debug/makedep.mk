@@ -10,6 +10,8 @@ libraries\RTC.c
 
 otaInterface.c
 
+portMonitor.c
+
 stack\hal\src\hal.c
 
 stack\hal\src\halPhy.c
