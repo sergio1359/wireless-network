@@ -63,9 +63,9 @@ typedef struct{
 }EVENT_HEADER_t;
 
 typedef struct{
-	TIME_t time;		  //Activation time
-	EVENT_HEADER_t event;   //Events to send on activation
-}TIME_EVENT_t;
+	TIME_t activationTime;		  //Activation time
+	EVENT_HEADER_t eventHeader;   //Header of the event to send on activation
+}TIME_EVENT_HEADER_t;
 
 typedef struct
 {

@@ -48,6 +48,9 @@
 #define NUM_PORTS 5
 #define NUM_PINS NUM_PORTS * 8
 
+#define EVENT_TABLE_ADDR sizeof(TOP_CONFIGURATION)
+#define EVENT_TABLE_END_ADDR EVENT_TABLE_ADDR + NUM_PINS + 3
+
 
 /*****************************************************************************
 *****************************************************************************/
