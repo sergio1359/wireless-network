@@ -7,7 +7,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   1 .text         0000227e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          000016a2  0080028e  0080028e  000023a0  2**0
+  2 .bss          0000174a  0080028e  0080028e  000023a0  2**0
                   ALLOC
   3 .stab         000009d8  00000000  00000000  000023a0  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -15,21 +15,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   5 .debug_aranges 000005b0  00000000  00000000  00002f28  2**3
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000523b  00000000  00000000  000034d8  2**0
+  6 .debug_info   00005307  00000000  00000000  000034d8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001bac  00000000  00000000  00008713  2**0
+  7 .debug_abbrev 00001bac  00000000  00000000  000087df  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000040f7  00000000  00000000  0000a2bf  2**0
+  8 .debug_line   000040f7  00000000  00000000  0000a38b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000b68  00000000  00000000  0000e3b8  2**2
+  9 .debug_frame  00000b68  00000000  00000000  0000e484  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00001a79  00000000  00000000  0000ef20  2**0
+ 10 .debug_str    00001b65  00000000  00000000  0000efec  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001f9f  00000000  00000000  00010999  2**0
+ 11 .debug_loc    00001faf  00000000  00000000  00010b51  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macinfo 0011823f  00000000  00000000  00012938  2**0
+ 12 .debug_macinfo 0011823f  00000000  00000000  00012b00  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000004e0  00000000  00000000  0012ab77  2**0
+ 13 .debug_ranges 000004e0  00000000  00000000  0012ad3f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -141,7 +141,7 @@ Disassembly of section .text:
      14e:	1d 92       	st	X+, r1
 
 00000150 <.do_clear_bss_start>:
-     150:	a0 33       	cpi	r26, 0x30	; 48
+     150:	a8 3d       	cpi	r26, 0xD8	; 216
      152:	b1 07       	cpc	r27, r17
      154:	e1 f7       	brne	.-8      	; 0x14e <.do_clear_bss_loop>
      156:	0e 94 91 0e 	call	0x1d22	; 0x1d22 <main>
@@ -377,32 +377,32 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
      29a:	11 24       	eor	r1, r1
      29c:	8f 93       	push	r24
 	if (++currentTime.second==60)        //keep track of time
-     29e:	80 91 2d 19 	lds	r24, 0x192D
+     29e:	80 91 d5 19 	lds	r24, 0x19D5
      2a2:	8f 5f       	subi	r24, 0xFF	; 255
-     2a4:	80 93 2d 19 	sts	0x192D, r24
+     2a4:	80 93 d5 19 	sts	0x19D5, r24
      2a8:	8c 33       	cpi	r24, 0x3C	; 60
      2aa:	a1 f4       	brne	.+40     	; 0x2d4 <__vector_15+0x42>
 	{
 		currentTime.second=0;
-     2ac:	10 92 2d 19 	sts	0x192D, r1
+     2ac:	10 92 d5 19 	sts	0x19D5, r1
 		if (++currentTime.minute==60)
-     2b0:	80 91 2e 19 	lds	r24, 0x192E
+     2b0:	80 91 d6 19 	lds	r24, 0x19D6
      2b4:	8f 5f       	subi	r24, 0xFF	; 255
-     2b6:	80 93 2e 19 	sts	0x192E, r24
+     2b6:	80 93 d6 19 	sts	0x19D6, r24
      2ba:	8c 33       	cpi	r24, 0x3C	; 60
      2bc:	59 f4       	brne	.+22     	; 0x2d4 <__vector_15+0x42>
 		{
 			currentTime.minute=0;
-     2be:	10 92 2e 19 	sts	0x192E, r1
+     2be:	10 92 d6 19 	sts	0x19D6, r1
 			if (++currentTime.hour==24)
-     2c2:	80 91 2f 19 	lds	r24, 0x192F
+     2c2:	80 91 d7 19 	lds	r24, 0x19D7
      2c6:	8f 5f       	subi	r24, 0xFF	; 255
-     2c8:	80 93 2f 19 	sts	0x192F, r24
+     2c8:	80 93 d7 19 	sts	0x19D7, r24
      2cc:	88 31       	cpi	r24, 0x18	; 24
      2ce:	11 f4       	brne	.+4      	; 0x2d4 <__vector_15+0x42>
 			{
 				currentTime.hour=0;
-     2d0:	10 92 2f 19 	sts	0x192F, r1
+     2d0:	10 92 d7 19 	sts	0x19D7, r1
 					//current_Time.year++;
 				//}
 			}
@@ -5683,13 +5683,13 @@ int main(void)
 	RTC_Init();
     1d32:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <RTC_Init>
 	currentTime.hour = 0;
-    1d36:	10 92 2f 19 	sts	0x192F, r1
+    1d36:	10 92 d7 19 	sts	0x19D7, r1
 	currentTime.minute = 26;
     1d3a:	8a e1       	ldi	r24, 0x1A	; 26
-    1d3c:	80 93 2e 19 	sts	0x192E, r24
+    1d3c:	80 93 d6 19 	sts	0x19D6, r24
 	currentTime.second = 30;
     1d40:	8e e1       	ldi	r24, 0x1E	; 30
-    1d42:	80 93 2d 19 	sts	0x192D, r24
+    1d42:	80 93 d5 19 	sts	0x19D5, r24
 *****************************************************************************/
 static void appInit(void)
 {
@@ -6026,21 +6026,21 @@ static void appSendData(void)
     1f88:	98 e0       	ldi	r25, 0x08	; 8
     1f8a:	0e 94 8c 04 	call	0x918	; 0x918 <NWK_DataReq>
 	numWrite(currentTime.hour);
-    1f8e:	80 91 2f 19 	lds	r24, 0x192F
+    1f8e:	80 91 d7 19 	lds	r24, 0x19D7
     1f92:	90 e0       	ldi	r25, 0x00	; 0
     1f94:	0e 94 06 01 	call	0x20c	; 0x20c <numWrite>
 	HAL_UartWriteByte(':');
     1f98:	8a e3       	ldi	r24, 0x3A	; 58
     1f9a:	0e 94 d4 02 	call	0x5a8	; 0x5a8 <HAL_UartWriteByte>
 	numWrite(currentTime.minute);
-    1f9e:	80 91 2e 19 	lds	r24, 0x192E
+    1f9e:	80 91 d6 19 	lds	r24, 0x19D6
     1fa2:	90 e0       	ldi	r25, 0x00	; 0
     1fa4:	0e 94 06 01 	call	0x20c	; 0x20c <numWrite>
 	HAL_UartWriteByte(':');
     1fa8:	8a e3       	ldi	r24, 0x3A	; 58
     1faa:	0e 94 d4 02 	call	0x5a8	; 0x5a8 <HAL_UartWriteByte>
 	numWrite(currentTime.second);
-    1fae:	80 91 2d 19 	lds	r24, 0x192D
+    1fae:	80 91 d5 19 	lds	r24, 0x19D5
     1fb2:	90 e0       	ldi	r25, 0x00	; 0
     1fb4:	0e 94 06 01 	call	0x20c	; 0x20c <numWrite>
 	HAL_UartWriteByte('\n');

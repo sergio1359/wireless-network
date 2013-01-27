@@ -83,8 +83,22 @@ typedef struct {
 	PORT_CONFIG_t portConfig_PE;
 	PORT_CONFIG_t portConfig_PF;
 	PORT_CONFIG_t portConfig_PG;
-	PWM_CONFIG_t pwmConfig;
-	ANALOG_EVENT_CONFIG_t analogEventConfig;
+	PWM_CONFIG_t pwmConfig_PWM0;
+	PWM_CONFIG_t pwmConfig_PWM1;
+	PWM_CONFIG_t pwmConfig_PWM2;
+	PWM_CONFIG_t pwmConfig_PWM3;
+	PWM_CONFIG_t pwmConfig_PWM4;
+	PWM_CONFIG_t pwmConfig_PWM5;
+	PWM_CONFIG_t pwmConfig_PWM6;
+	PWM_CONFIG_t pwmConfig_PWM7;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC0;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC1;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC2;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC3;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC4;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC5;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC6;
+	ANALOG_EVENT_CONFIG_t analogConfig_ADC7;
 }TOP_CONFIGURATION;
 
 typedef struct

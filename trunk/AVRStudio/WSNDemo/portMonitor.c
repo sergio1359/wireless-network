@@ -8,10 +8,13 @@
 
 #include "EEPROM.h"
 #include "DIGITAL.h"
+#include "ANALOG.h"
 #include "globals.h"
 #include "config.h"
 
-uint8_t lastValues[] = {0,0,0,0,0};//Ha de inicializarse con los valores por defectos
+uint8_t lastValuesD[] = {0,0,0,0,0};//Ha de inicializarse con los valores al iniciar
+uint8_t lastValuesA[] = {0,0,0,0,0,0,0,0};
+uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative
 
 	
 
@@ -21,7 +24,7 @@ void CheckInputs_task()
 	{
 		uint8_t val;
 		PORT_CONFIG_t config;
-
+		_Bool changeOcurred = 0;
 	
 		switch(port)
 		{
@@ -38,27 +41,56 @@ void CheckInputs_task()
 			{
 				if((config.maskAD>>pin) & 0x01) //Digital
 				{
-					_Bool changeOcurred;
-				
 					//Check for valid changes
 					switch((config.changeTypeD>>(pin<<1)))
 					{
-						case FALLING_EDGE: changeOcurred = ( ((lastValues[port]>>pin) & 0x01) & (!((val>>pin) & 0x01)) ); break;
-						case RISIN_EDGE: changeOcurred = ( (!((lastValues[port]>>pin) & 0x01)) & ((val>>pin) & 0x01) ); break;
-						case BOTH_EDGE: changeOcurred = ( ((lastValues[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
-					}
-					//Launch Events if exits
-					if(changeOcurred)
-					{
-						launchEvents((port*8) + pin);
+						case FALLING_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) & (!((val>>pin) & 0x01)) ); break;
+						case RISIN_EDGE: changeOcurred = ( (!((lastValuesD[port]>>pin) & 0x01)) & ((val>>pin) & 0x01) ); break;
+						case BOTH_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
 					}
 				}else //Analog
 				{
+					uint8_t analog_val = ADC_Read(pin);
+					ANALOG_EVENT_CONFIG_t analog_config;
+					
+					switch(pin)
+					{
+						case ADC0: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC0; break;
+						case ADC1: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC1; break;
+						case ADC2: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC2; break;
+						case ADC3: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC3; break;
+						case ADC4: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC4; break;
+						case ADC5: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC5; break;
+						case ADC6: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC6; break;
+						case ADC7: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC7; break;
+					}
+					
+					//int16_t diff = lastValuesA[pin] - analog_val;
+					//if(diff>=0) //positive
+					//{
+						//changeOcurred = diff > analog_config.increment;
+						//lastChangeSign &= !(1<<pin);
+					//}else
+					//{
+						//lastChangeSign |= (1<<pin);						
+					//}
+					
+					if(changeOcurred = (abs(lastValuesA[pin] - analog_val) >= analog_config.increment))
+					{
+						lastValuesA[pin] = analog_val;	
+					}
 				}
 			}
+			
+			//Launch Events if exits
+			if(changeOcurred)
+			{
+				launchEvents((port*8) + pin);
+			}
+			
 		}
-	
-		lastValues[port] = val;
+		
+		lastValuesD[port] = val;
 	}
 }
 
@@ -76,7 +108,7 @@ void launchEvents(uint8_t pinAddress)
 	uint8_t enable_pin_number = runningConfiguration.raw[EVENT_TABLE_END_ADDR + table_enable_addr + pinAddress];
 	uint8_t enable_pin_addr_relative = (enable_pin_number / 8); //Relative to the end of the enable event table
 
-	uint16_t enable_pin_addr_absolute = (table_enable_addr + NUM_PINS + 1) + enable_pin_addr_relative;
+	uint16_t enable_pin_addr_absolute = (table_enable_addr + NUM_PINS + 2) + enable_pin_addr_relative;
 	uint8_t pin_ptr = (enable_pin_number - enable_pin_addr_relative);
 	
 	uint8_t res_ptr;
