@@ -55,8 +55,8 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputFileName>WSNDemo</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
-    <PostBuildEvent>C:\"Program Files"\Atmel\"Atmel Studio 6.0"\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy -O ihex -R .eeprom WSNDemo.elf WSNDemo.hex
-C:\"Program Files"\Atmel\"Atmel Studio 6.0"\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
+    <PostBuildEvent>"$(ToolchainDir)\avr-objcopy" -O ihex -R .eeprom $(Name).elf $(Name).hex
+"$(ToolchainDir)\avr-objcopy" -O binary -R .eeprom $(Name).elf $(Name).bin</PostBuildEvent>
     <ToolchainSettings>
       <AvrGcc>
         <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
@@ -146,6 +146,12 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="command.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="command.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="config.h">
       <SubType>compile</SubType>
     </Compile>

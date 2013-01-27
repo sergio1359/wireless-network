@@ -11,12 +11,11 @@
 #include "ANALOG.h"
 #include "globals.h"
 #include "config.h"
+#include "command.h"
 
 uint8_t lastValuesD[] = {0,0,0,0,0};//Ha de inicializarse con los valores al iniciar
 uint8_t lastValuesA[] = {0,0,0,0,0,0,0,0};
-uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative
-
-	
+//uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative	
 
 void CheckInputs_task()
 {
@@ -37,15 +36,15 @@ void CheckInputs_task()
 	
 		for(uint8_t pin=0; pin<8; pin++)
 		{
-			if((!config.maskIO>>pin) & 0x01) //Input
+			if(((~config.maskIO)>>pin) & 0x01) //Input
 			{
 				if((config.maskAD>>pin) & 0x01) //Digital
 				{
 					//Check for valid changes
 					switch((config.changeTypeD>>(pin<<1)))
 					{
-						case FALLING_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) & (!((val>>pin) & 0x01)) ); break;
-						case RISIN_EDGE: changeOcurred = ( (!((lastValuesD[port]>>pin) & 0x01)) & ((val>>pin) & 0x01) ); break;
+						case FALLING_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) & (~((val>>pin) & 0x01)) ); break;
+						case RISIN_EDGE: changeOcurred = ( (~((lastValuesD[port]>>pin) & 0x01)) & ((val>>pin) & 0x01) ); break;
 						case BOTH_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
 					}
 				}else //Analog
@@ -69,7 +68,7 @@ void CheckInputs_task()
 					//if(diff>=0) //positive
 					//{
 						//changeOcurred = diff > analog_config.increment;
-						//lastChangeSign &= !(1<<pin);
+						//lastChangeSign &= ~(1<<pin);
 					//}else
 					//{
 						//lastChangeSign |= (1<<pin);						
@@ -94,9 +93,6 @@ void CheckInputs_task()
 	}
 }
 
-#define EVENT_TABLE_ADDR 0x1542 //:)
-#define EVENT_TABLE_END_ADDR EVENT_TABLE_ADDR + NUM_PINS + 3
-
 void launchEvents(uint8_t pinAddress)
 {
 	uint8_t pin_event_list_addr = runningConfiguration.raw[EVENT_TABLE_ADDR + pinAddress]; //Event address relative to the end of the event table
@@ -108,17 +104,17 @@ void launchEvents(uint8_t pinAddress)
 	uint8_t enable_pin_number = runningConfiguration.raw[EVENT_TABLE_END_ADDR + table_enable_addr + pinAddress];
 	uint8_t enable_pin_addr_relative = (enable_pin_number / 8); //Relative to the end of the enable event table
 
-	uint16_t enable_pin_addr_absolute = (table_enable_addr + NUM_PINS + 2) + enable_pin_addr_relative;
+	uint16_t enable_pin_addr_absolute = (EVENT_TABLE_END_ADDR + table_enable_addr + NUM_PINS + 2) + enable_pin_addr_relative;
 	uint8_t pin_ptr = (enable_pin_number - enable_pin_addr_relative);
 	
 	uint8_t res_ptr;
 	
-		for(res_ptr = table_restriction_addr; res_ptr < table_enable_addr; res_ptr += sizeof(EVENT_RESTRICTION_t))
-		{
-			EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
+	for(res_ptr = table_restriction_addr; res_ptr < table_enable_addr; res_ptr += sizeof(EVENT_RESTRICTION_t))
+	{
+		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
 			
-			if(restric->eventAddress >= pin_event_list_addr) break;
-		}
+		if(restric->eventAddress >= pin_event_list_addr) break;
+	}
 	
 	for(uint8_t i=pin_event_list_addr; i < pin_event_list_length;)
 	{
@@ -147,6 +143,7 @@ void launchEvents(uint8_t pinAddress)
 			pin_ptr = 0;
 			enable_pin_addr_absolute++;
 		}
+		
 		i += args_length + sizeof(EVENT_HEADER_t);
 	}
 }
