@@ -9,19 +9,18 @@ namespace ConfigGenerator.EEPROM
     class ConfigDevice
     {
         //Device Info
-        Byte DeviceType;
-        Byte FirmVersion;
-        UInt16 DeviceID;
+        public Byte DeviceType { get; set; }
+        public UInt16 DeviceID { get; set; }
 
         //NetworkConfig
-        NetworkConfig Network;
+        public NetworkConfig Network { get; set; }
 
         //PortConfig
-        List<Port> Ports;
+        public List<Port> Ports { get; set; }
 
         //Events
-        List<PortEvent> PortEvents;
-        List<TimeEvent> TimeEvents;
+        public List<PortEvent> PortEvents { get; set; }
+        public List<TimeEvent> TimeEvents { get; set; }
 
         public ConfigDevice(Byte device)
         {

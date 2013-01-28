@@ -8,7 +8,9 @@ namespace ConfigGenerator.EEPROM
 {
     class Generator
     {
-        ConfigDevice Device;
+        public ConfigDevice Device { get; set; }
+        public Byte FirmVersion { get; set; }
+        
 
         public Generator(ConfigDevice device)
         {

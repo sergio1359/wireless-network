@@ -8,10 +8,13 @@ namespace ConfigGenerator.EEPROM
 {
     class NetworkConfig
     {
-        UInt16 deviceAddress;
-        Byte channel;
-        UInt16 panId;
-        Byte[] securityKey;
+        //aunque cada uno tiene una direccion asociada despues hay cosas que si que no cambian por ejemplo ¿todos los dispositivos trabajan en el mismo canal?
+        //bajo la misma contraseña?
+        //esto hay que sacarlo fuera
+        public UInt16 DeviceAddress { set; get; }
+        public Byte Channel { set; get; }
+        public UInt16 PanId { set; get; }
+        public Byte[] SecurityKey { set; get; }
 
         public void GenerateKey(String key)
         {
@@ -21,14 +24,14 @@ namespace ConfigGenerator.EEPROM
         public Byte[] ToBinary()
         {
             Byte[] result = new Byte[5 + 16];
-            result[0] = (byte)deviceAddress;
-            result[1] = (byte)(deviceAddress >> 8);
-            result[2] = channel;
-            result[3] = (byte)panId;
-            result[4] = (byte)(panId >> 8);
-            for (int i = 0; i < securityKey.Length; i++)
+            result[0] = (byte)DeviceAddress;
+            result[1] = (byte)(DeviceAddress >> 8);
+            result[2] = Channel;
+            result[3] = (byte)PanId;
+            result[4] = (byte)(PanId >> 8);
+            for (int i = 0; i < SecurityKey.Length; i++)
             {
-                result[i + 5] = securityKey[i];
+                result[i + 5] = SecurityKey[i];
             }
             return result;
         }

@@ -8,28 +8,38 @@ namespace ConfigGenerator.EEPROM
 {
     class Event
     {
-        //no definido aun
+        public UInt16 Address;
+        public Byte OPCode;
+        //[TODO]Argumentos
+
+
+
+        public Byte[] ToBinary() 
+        { 
+            //Byte[] result = new Byte[3 + ]
+            throw new NotImplementedException();
+        }
     }
 
     //Port Events
     class PortEvent
     {
-        Event Event { get; set; }
-        TimeRestriction TimeRestriction { get; set; } //If not exist time restriction then null
-        Boolean Enable { get; set; }
+        public Event Event { get; set; }
+        public TimeRestriction TimeRestriction { get; set; } //If not exist time restriction then null
+        public Boolean Enable { get; set; }
     }
 
     class TimeRestriction
     {
-        DateTime Start;
-        DateTime End;
+        public DateTime Start;
+        public DateTime End;
     }
 
     //Time Events
     class TimeEvent
     {
-        Event Event { get; set; }
-        DateTime Time { get; set; }
-        Boolean Enable { get; set; }
+        public Event Event { get; set; }
+        public DateTime Time { get; set; }
+        public Boolean Enable { get; set; }
     }
 }
