@@ -15,7 +15,7 @@ namespace ConfigGenerator.EEPROM
             Pins = new Pin[8]; //suponemos 8 pines por puerto
         }
 
-        public Byte[] PortIOToBinary()
+        public Byte[] PortIOToBinary(bool littleEndian)
         {
             //Si no esta definido suponemos Entrada digital
             Byte[] result = new Byte[5];
@@ -56,8 +56,17 @@ namespace ConfigGenerator.EEPROM
             {
                 if (Pins[i] != null) ctd = (byte)(ctd | ((byte)Pins[i].changeTypeD) << (i * 2));
             }
-            result[3] = (byte)ctd;
-            result[4] = (byte)(ctd >> 8);
+
+            if (littleEndian)
+            {
+                result[3] = (byte)ctd;
+                result[4] = (byte)(ctd >> 8);
+            }
+            else
+            {
+                result[3] = (byte)(ctd >> 8);
+                result[4] = (byte)ctd;
+            }
 
             return result;
         }
@@ -106,7 +115,7 @@ namespace ConfigGenerator.EEPROM
     {
         public Boolean Output { get; set; }
         public Boolean Digital { get; set; }
-        public enum Trigger : byte { None = 0x00, RisingEdge = 0x10, FallingEdge = 0x01, Both = 0x11 }
+        public enum Trigger : byte { None = 0x00, FallingEdge = 0x01, RisingEdge = 0x10, Both = 0x11 }
 
         //Digital-------------------------------------
         //output
