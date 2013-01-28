@@ -49,12 +49,12 @@ typedef struct{
 }PORT_CONFIG_t;
 
 typedef struct{
-	uint8_t defaultValuesA[8];   //Initial values ANALOG outputs (PWM)
+	uint8_t defaultValueA;   //Initial value ANALOG output (PWM)
 }PWM_CONFIG_t;
 
 typedef struct{
-	uint8_t increment[8];   //Difference between the last and current value
-	uint8_t threshold[8];	 //hysteresis value to exceed
+	uint8_t increment;   //Difference between the last and current value
+	uint8_t threshold;	 //hysteresis value to exceed
 }ANALOG_EVENT_CONFIG_t;
 
 typedef struct{
@@ -69,7 +69,7 @@ typedef struct{
 
 typedef struct
 {
-	uint8_t eventAddress; //Relative
+	uint16_t eventAddress; //Relative to the end of event table
 	TIME_t start;
 	TIME_t end;
 }EVENT_RESTRICTION_t;
@@ -101,13 +101,13 @@ typedef struct {
 	ANALOG_EVENT_CONFIG_t analogConfig_ADC7;
 }TOP_CONFIGURATION;
 
-typedef struct
+typedef union
 {
 	TOP_CONFIGURATION  topConfiguration;
 	uint8_t raw[EEPROM_SIZE];
 }RUNNING_CONFIGURATION_t;
 
-void inline EEPROM_Init();
+void EEPROM_Init(void);
 
 uint8_t inline EEPROM_Read_Byte(int address);
 void inline  EEPROM_Read_Block(void * buffer, const void * address, size_t length);

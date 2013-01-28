@@ -41,7 +41,7 @@ void Validate_Time(TIME_t *receivedTime)
 
 void searchFirstTimeEvent()
 {
-	uint8_t event_ptr;
+	uint16_t event_ptr;
 	
 	for(event_ptr = TIME_EVENT_LIST_START_ADDRESS; event_ptr < TIME_EVENT_LIST_END_ADDRESS;)
 	{
@@ -159,10 +159,11 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 			//launch
 			if( ((runningConfiguration.raw[enable_pin_addr_absolute] >> (8 - enable_flag_prt)) & 0x01) ) //Is enabled
 			{
-				RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
+				//RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
+				RF_Send_Event(time_event_header);
 			}
 			
-			time_event_header += getCommandArgsLenght(time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);
+			time_event_header += getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);
 			enable_flag_prt++;
 			
 			if( (time_event_header - EVENT_TABLE_END_ADDR) >= TIME_EVENT_LIST_END_ADDRESS)

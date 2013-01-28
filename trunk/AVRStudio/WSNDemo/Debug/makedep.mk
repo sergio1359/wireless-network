@@ -2,7 +2,11 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-command.c
+components\command.c
+
+components\portMonitor.c
+
+components\radio.c
 
 libraries\ANALOG.c
 
@@ -11,8 +15,6 @@ libraries\EEPROM.c
 libraries\RTC.c
 
 otaInterface.c
-
-portMonitor.c
 
 stack\hal\src\hal.c
 
