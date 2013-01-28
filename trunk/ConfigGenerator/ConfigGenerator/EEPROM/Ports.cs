@@ -9,11 +9,9 @@ namespace ConfigGenerator.EEPROM
     class Port
     {
         public Pin[] Pins { get; set; }
-        public Byte PortNumber;
 
-        public Port(Byte number)
+        public Port()
         {
-            PortNumber = number;
             Pins = new Pin[8]; //suponemos 8 pines por puerto
         }
 
@@ -21,12 +19,12 @@ namespace ConfigGenerator.EEPROM
         {
             //Si no esta definido suponemos Entrada digital
             Byte[] result = new Byte[5];
-            
+
             //Input:0 - Output:1, default=0
             result[0] = 0x00;
             for (byte i = 0; i < Pins.Length; i++)
             {
-                if (Pins[i] != null && Pins[i].Output==true)
+                if (Pins[i] != null && Pins[i].Output == true)
                 {
                     result[0] = (byte)(result[0] | (0x01 << i));
                 }
@@ -56,18 +54,10 @@ namespace ConfigGenerator.EEPROM
             UInt16 ctd = 0x00; //change type digital
             for (byte i = 0; i < Pins.Length; i++)
             {
-                if (Pins[i] != null)
-                {
-                    if(Pins[i].changeTypeD == Pin.Trigger.RisingEdge)
-                        ctd = (byte)(ctd | (0x10 << i * 2));
-                    if (Pins[i].changeTypeD == Pin.Trigger.FallingEdge)
-                        ctd = (byte)(ctd | (0x01 << i * 2));
-                    if (Pins[i].changeTypeD == Pin.Trigger.Both)
-                        ctd = (byte)(ctd | (0x11 << i * 2));
-                }
+                if (Pins[i] != null) ctd = (byte)(ctd | ((byte)Pins[i].changeTypeD) << (i * 2));
             }
-            result[3]= (byte) ctd;
-            result[4] = (byte) (ctd >> 8);
+            result[3] = (byte)ctd;
+            result[4] = (byte)(ctd >> 8);
 
             return result;
         }
@@ -89,7 +79,7 @@ namespace ConfigGenerator.EEPROM
         public Byte[] AnalogInputToBinary()
         {
             Byte[] result = new Byte[16];
-            
+
             for (int i = 0; i < Pins.Length; i++)
             {
                 if (Pins[i] != null)
@@ -101,35 +91,35 @@ namespace ConfigGenerator.EEPROM
             for (int i = 0; i < Pins.Length; i++)
             {
                 if (Pins[i] != null)
-                    result[i+8] = this.Pins[i].Threshold;
+                    result[i + 8] = this.Pins[i].Threshold;
                 else
-                    result[i+8] = 0x00;
+                    result[i + 8] = 0x00;
             }
 
             return result;
         }
 
     }
-    
+
 
     class Pin
     {
         public Boolean Output { get; set; }
         public Boolean Digital { get; set; }
-        public enum Trigger { None, RisingEdge, FallingEdge, Both}
+        public enum Trigger : byte { None = 0x00, RisingEdge = 0x10, FallingEdge = 0x01, Both = 0x11 }
 
         //Digital-------------------------------------
         //output
         public Boolean DefaultValueD { get; set; }
-        
+
         //input
         public Trigger changeTypeD { get; set; }
-        
-        
+
+
         //Analog-------------------------------------
         //output
         public Byte DefaultValueA { get; set; }
-        
+
         //input
         public Byte Increment { get; set; }
         public Byte Threshold { get; set; }

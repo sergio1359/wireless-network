@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Extensions;
 
 namespace ConfigGenerator.EEPROM
 {
@@ -10,14 +11,20 @@ namespace ConfigGenerator.EEPROM
     {
         public UInt16 Address;
         public Byte OPCode;
-        //[TODO]Argumentos
+        public Byte[] Args;
 
-
-
-        public Byte[] ToBinary() 
-        { 
-            //Byte[] result = new Byte[3 + ]
-            throw new NotImplementedException();
+        public Byte[] ToBinary()
+        {
+            Byte[] result = new Byte[3 + Args.Length];
+            //OJO! BIG LITTLE!            
+            result[0] = (byte)Address;
+            result[1] = (byte)(Address >> 8);
+            result[2] = OPCode;
+            for (int i = 0; i < Args.Length; i++)
+            {
+                result[i + 3] = Args[i];
+            }
+            return result;
         }
     }
 
@@ -33,6 +40,14 @@ namespace ConfigGenerator.EEPROM
     {
         public DateTime Start;
         public DateTime End;
+
+        public Byte[] ToBinary()
+        {
+            List<Byte> result = new List<Byte>();
+            result.AddRange(Start.ToBinaryEEPROM());
+            result.AddRange(End.ToBinaryEEPROM());
+            return result.ToArray();
+        }
     }
 
     //Time Events
