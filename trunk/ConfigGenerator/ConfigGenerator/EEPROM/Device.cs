@@ -41,18 +41,51 @@ namespace ConfigGenerator.EEPROM
             TimeEvents = new List<TimeEvent>();
         }
 
-        public void AddPort(Port port)
+        public void AddPin(Pin pin, String direction)
         {
-            throw new NotImplementedException();
+            direction = CheckDirection(direction);
+            if ((!pin.Digital && !DeviceInfo.IsAnalog(direction)) || !DeviceInfo.IsAvailabe(direction))
+                throw new Exception();
+            else
+            {
+                int por = direction[0] - 'A';
+                Ports[por].Pins[Convert.ToByte(direction[1])] = pin;
+            }
+        }
 
-
+        public void AddPortEvent(PortEvent pe)
+        {
 
         }
 
-        public Boolean TryAddPort(Port port)
+        public void AddTimeEvent(TimeEvent te)
+        {
+
+        }
+
+        //public Boolean TryAddPort(Port port)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private string CheckDirection(string direction)
+        {
+            if (direction.Length == 3)
+            {
+                direction = direction.Substring(1);
+            }
+            if (direction[0] - 'A' >= 0 && direction[0] - 'A' <= 7)
+                throw new ArgumentException();
+
+            return direction;
+        }
+
+        public Byte[] ToBinary()
         {
             throw new NotImplementedException();
         }
+
+
 
     }
 
@@ -77,27 +110,44 @@ namespace ConfigGenerator.EEPROM
             DeviceID = 128;
             NumPorts = 6;
 
-            AnalogPorts = new String[8] { "PF0", "PF1", "PF2", "PF3", "PF4", "PF5", "PF6", "PF7" };
+            AnalogPorts = new String[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
             //PWMPorts = 
             //UnavailablePorts ==
 
             LittleEndian = true;
         }
 
-        //ESTO TENEMOS QUE VER COMO LO VAMOS A HACER
+        /// <summary>
+        /// Return true if IsAnalog
+        /// </summary>
+        /// <param name="portPin">Name of port and number of pin, Example: F3, A1</param>
+        /// <returns></returns>
         public bool IsAnalog(String portPin)
         {
             return AnalogPorts.Any(x => x == portPin);
         }
 
+        /// <summary>
+        /// Return true if IsAnalog
+        /// </summary>
+        /// <param name="portPin">Name of port and number of pin, Example: F3, A1</param>
+        /// <returns></returns>
         public bool IsPWM(String portPin)
         {
             return PWMPorts.Any(x => x == portPin);
         }
 
+        /// <summary>
+        /// Return true if available this pin
+        /// </summary>
+        /// <param name="portPin">Name of port and number of pin, Example: F3, A1</param>
+        /// <returns></returns>
         public bool IsAvailabe(String portPin)
         {
-            //ojo!! num ports!
+            if (Convert.ToByte(portPin[1]) > 7)
+                return false;
+            if (portPin[0] - 'A' + 1 > NumPorts)
+                return false;
             return !UnavailablePorts.Any(x => x == portPin);
         }
     }

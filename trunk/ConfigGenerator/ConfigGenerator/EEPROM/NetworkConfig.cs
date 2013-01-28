@@ -21,19 +21,36 @@ namespace ConfigGenerator.EEPROM
         }
 
 
-        public Byte[] ToBinary()
+        public Byte[] ToBinary(bool littleEndian)
         {
-            Byte[] result = new Byte[5 + SecurityKey.Length];
-            result[0] = (byte)DeviceAddress;
-            result[1] = (byte)(DeviceAddress >> 8);
-            result[2] = Channel;
-            result[3] = (byte)PanId;
-            result[4] = (byte)(PanId >> 8);
-            for (int i = 0; i < SecurityKey.Length; i++)
+            List<Byte> result = new List<Byte>();
+            if (littleEndian)
             {
-                result[i + 5] = SecurityKey[i];
+                result.Add((byte)DeviceAddress);
+                result.Add((byte)(DeviceAddress >> 8));
             }
-            return result;
+            else
+            {
+                result.Add((byte)(DeviceAddress >> 8));
+                result.Add((byte)DeviceAddress);
+            }
+
+            result.Add(Channel);
+
+            if (littleEndian)
+            {
+                result.Add((byte)PanId);
+                result.Add((byte)(PanId >> 8));
+            }
+            else
+            {
+                result.Add((byte)(PanId >> 8));
+                result.Add((byte)PanId);
+            }
+
+            result.AddRange(SecurityKey);
+
+            return result.ToArray();
         }
     }
 }

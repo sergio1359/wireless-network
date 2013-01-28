@@ -13,12 +13,21 @@ namespace ConfigGenerator.EEPROM
         public Byte OPCode;
         public Byte[] Args;
 
-        public Byte[] ToBinary()
+        public Byte[] ToBinary(bool littleEndian)
         {
             Byte[] result = new Byte[3 + Args.Length];
-            //OJO! BIG LITTLE!            
-            result[0] = (byte)Address;
-            result[1] = (byte)(Address >> 8);
+
+            if (littleEndian)
+            {
+                result[0] = (byte)Address;
+                result[1] = (byte)(Address >> 8);
+            }
+            else
+            {
+                result[0] = (byte)(Address >> 8);
+                result[1] = (byte)Address;
+            }
+
             result[2] = OPCode;
             for (int i = 0; i < Args.Length; i++)
             {
@@ -34,6 +43,11 @@ namespace ConfigGenerator.EEPROM
         public Event Event { get; set; }
         public TimeRestriction TimeRestriction { get; set; } //If not exist time restriction then null
         public Boolean Enable { get; set; }
+
+        public PortEvent(Event e, Boolean enable)
+        {
+
+        }
     }
 
     class TimeRestriction
