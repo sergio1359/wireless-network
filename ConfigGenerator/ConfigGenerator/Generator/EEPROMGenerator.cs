@@ -8,25 +8,42 @@ namespace ConfigGenerator.EEPROM
 {
     class Generator
     {
-        public ConfigDevice Device { get; set; }
+        public Device Device { get; set; }
         public Byte FirmVersion { get; set; }
         
 
-        public Generator(ConfigDevice device)
+        public Generator(Device device)
         {
             Device = device;
         }
 
-        public UInt16 CRCGenetator()
-        {
-
-        }
 
         public Byte[] GenerateEEPROM() 
         {
+            throw new NotImplementedException();
+
+
+
+
+
+
+            //Generar toda la memoria (la memoria se genera con CRC16 a "00 00"
+
+
+
+
+
+            //Generar el CRC
+
+
+
+
+            //devolvemos el valor con el CRC sustituido
 
         }
 
-
     }
+
+
+
 }

@@ -41,11 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EEPROM\ConfigDevice.cs" />
+    <Compile Include="EEPROM\Device.cs" />
     <Compile Include="EEPROM\Events.cs" />
     <Compile Include="EEPROM\NetworkConfig.cs" />
     <Compile Include="EEPROM\Ports.cs" />
-    <Compile Include="Generator\ConverterFirmware1.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Generator\Converter.cs" />
+    <Compile Include="Generator\CRC16.cs" />
     <Compile Include="Generator\EEPROMGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

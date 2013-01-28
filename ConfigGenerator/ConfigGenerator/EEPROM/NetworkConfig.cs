@@ -23,7 +23,7 @@ namespace ConfigGenerator.EEPROM
 
         public Byte[] ToBinary()
         {
-            Byte[] result = new Byte[5 + 16];
+            Byte[] result = new Byte[5 + SecurityKey.Length];
             result[0] = (byte)DeviceAddress;
             result[1] = (byte)(DeviceAddress >> 8);
             result[2] = Channel;
