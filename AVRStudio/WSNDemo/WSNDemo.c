@@ -495,17 +495,20 @@ int main(void)
 	currentTime.minute = 26;
 	currentTime.second = 30;
 	
+	//EEPROM_Init();
+	
 	#ifdef APP_ENABLE_OTA
 	OTA_ClientInit();
 	#endif
 
 	while (1)
-	{		
+	{
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		#ifdef APP_ENABLE_OTA
 		OTA_ClientTaskHandler();
 		#endif
+		//PortMonitor_TaskHandler();
 		APP_TaskHandler();
 	}
 }

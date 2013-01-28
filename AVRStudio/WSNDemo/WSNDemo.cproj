@@ -18,7 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <AsfVersion>2.11.1</AsfVersion>
     <avrtool>com.atmel.avrdbg.tool.jtagicemkii</avrtool>
-    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtoolinterface>JTAG</avrtoolinterface>
     <com_atmel_avrdbg_tool_jtagicemkii>
       <ToolType>com.atmel.avrdbg.tool.jtagicemkii</ToolType>
       <ToolName>JTAGICE mkII</ToolName>
@@ -29,15 +29,15 @@
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>1352</port>
+        <port>16312</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
-        <InterfaceName>ISP</InterfaceName>
+        <InterfaceName>JTAG</InterfaceName>
         <InterfaceProperties>
-          <JtagDbgClock>0</JtagDbgClock>
+          <JtagDbgClock>200000</JtagDbgClock>
           <JtagProgClock>1000000</JtagProgClock>
-          <IspClock>250000</IspClock>
+          <IspClock>150000</IspClock>
           <JtagInChain>false</JtagInChain>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
           <JtagDevicesBefore>0</JtagDevicesBefore>
@@ -51,6 +51,7 @@
     <OverrideVtor>false</OverrideVtor>
     <OverrideVtorValue />
     <eraseonlaunchrule>0</eraseonlaunchrule>
+    <preserveEEPROM>True</preserveEEPROM>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputFileName>WSNDemo</OutputFileName>
@@ -81,6 +82,7 @@
             <Value>../stack/sys/inc</Value>
             <Value>../</Value>
             <Value>../libraries/inc</Value>
+            <Value>../components/inc</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -146,10 +148,22 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="command.c">
+    <Compile Include="components\command.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="command.h">
+    <Compile Include="components\inc\command.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\portMonitor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\radio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\portMonitor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\radio.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="config.h">
@@ -186,9 +200,6 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="otaInterface.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="portMonitor.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="stack\hal\inc\hal.h">
@@ -301,8 +312,10 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="components\inc" />
     <Folder Include="libraries" />
     <Folder Include="libraries\inc" />
+    <Folder Include="components" />
     <Folder Include="stack" />
     <Folder Include="stack\hal" />
     <Folder Include="stack\hal\inc" />

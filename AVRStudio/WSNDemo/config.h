@@ -44,7 +44,7 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#define EEPROM_SIZE 1024 * 4 * sizeof(uint8_t)
+#define EEPROM_SIZE 4096 * sizeof(uint8_t)
 #define NUM_PORTS 5
 #define NUM_PINS NUM_PORTS * 8
 
