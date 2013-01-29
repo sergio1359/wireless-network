@@ -43,7 +43,10 @@ namespace ConfigGenerator.EEPROM
 
         public void AddPin(Pin pin, String direction)
         {
-            direction = CheckDirection(direction);
+            if (direction.Length == 3)
+            {
+                direction = direction.Substring(1);
+            }
             if ((!pin.Digital && !DeviceInfo.IsAnalog(direction)) || !DeviceInfo.IsAvailabe(direction))
                 throw new Exception();
             else
@@ -53,40 +56,10 @@ namespace ConfigGenerator.EEPROM
             }
         }
 
-        public void AddPortEvent(PortEvent pe)
-        {
-
-        }
-
-        public void AddTimeEvent(TimeEvent te)
-        {
-
-        }
-
-        //public Boolean TryAddPort(Port port)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        private string CheckDirection(string direction)
-        {
-            if (direction.Length == 3)
-            {
-                direction = direction.Substring(1);
-            }
-            if (direction[0] - 'A' >= 0 && direction[0] - 'A' <= 7)
-                throw new ArgumentException();
-
-            return direction;
-        }
-
         public Byte[] ToBinary()
         {
             throw new NotImplementedException();
         }
-
-
-
     }
 
 
@@ -111,8 +84,8 @@ namespace ConfigGenerator.EEPROM
             NumPorts = 6;
 
             AnalogPorts = new String[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
-            //PWMPorts = 
-            //UnavailablePorts ==
+            PWMPorts = new String[3] { "B7", "PG5", "B4" };
+            UnavailablePorts = new String[0];
 
             LittleEndian = true;
         }
@@ -146,7 +119,7 @@ namespace ConfigGenerator.EEPROM
         {
             if (Convert.ToByte(portPin[1]) > 7)
                 return false;
-            if (portPin[0] - 'A' + 1 > NumPorts)
+            if (portPin[0] - 'A' + 1 < NumPorts  || portPin[0] - 'A' >= 0)
                 return false;
             return !UnavailablePorts.Any(x => x == portPin);
         }
