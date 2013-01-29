@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConfigGenerator.Generator
+namespace ConfigGenerator.EEPROMGenerator
 {
     public class Crc16
     {

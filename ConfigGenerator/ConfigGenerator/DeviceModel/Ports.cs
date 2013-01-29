@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConfigGenerator.EEPROM
+namespace ConfigGenerator.DeviceModel
 {
     class Port
     {
@@ -71,7 +71,7 @@ namespace ConfigGenerator.EEPROM
             return result;
         }
 
-        public Byte[] PWMToBinary()
+        public Byte[] AllPWMToBinary()
         {
             Byte[] result = new Byte[8];
             for (int i = 0; i < Pins.Length; i++)
@@ -85,7 +85,7 @@ namespace ConfigGenerator.EEPROM
             return result;
         }
 
-        public Byte[] AnalogInputToBinary()
+        public Byte[] AllAnalogInputToBinary()
         {
             Byte[] result = new Byte[16];
 
@@ -132,6 +132,24 @@ namespace ConfigGenerator.EEPROM
         //input
         public Byte Increment { get; set; }
         public Byte Threshold { get; set; }
+
+
+
+
+        public Byte PWMToBinary()
+        {
+            return DefaultValueA;
+        }
+
+        public Byte[] AnalogInputToBinary()
+        {
+            Byte[] result = new Byte[2];
+            
+            result[0] = Increment;
+            result[1] = Threshold;
+
+            return result;
+        }
 
     }
 }
