@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConfigGenerator.EEPROM
+namespace ConfigGenerator.DeviceModel
 {
     class NetworkConfig
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Extensions;
 
-namespace ConfigGenerator.EEPROM
+namespace ConfigGenerator.DeviceModel
 {
     class Event
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConfigGenerator;
 
-namespace ConfigGenerator.EEPROM
+namespace ConfigGenerator.DeviceModel
 {
     class Device
     {
@@ -17,7 +17,7 @@ namespace ConfigGenerator.EEPROM
         public NetworkConfig Network { get; set; }
 
         //PortConfig: 0=A, 1=B, 2=C....
-        Port[] Ports { get; set; }
+        public Port[] Ports { get; set; }
 
         //Events
         public List<PortEvent> PortEvents { get; set; }
@@ -56,6 +56,23 @@ namespace ConfigGenerator.EEPROM
             }
         }
 
+        public Pin GetPin(String direction)
+        {
+            if (direction.Length == 3)
+            {
+                direction = direction.Substring(1);
+            }
+
+            if(!DeviceInfo.IsAvailabe(direction))
+            {
+                return null;
+            }
+            else
+            {
+                return Ports[direction[0] - 'A'].Pins[Convert.ToByte(direction[1])];
+            }
+        }
+
         public Byte[] ToBinary()
         {
             throw new NotImplementedException();
@@ -70,7 +87,7 @@ namespace ConfigGenerator.EEPROM
 
         //numero de puertos que tiene el micro, cada puerto tiene 8 pines
         public UInt16 NumPorts { set; get; }
-
+        //Esta informacion debe de estar organizada por orden Alfabetico
         public String[] AnalogPorts { set; get; }
         public String[] PWMPorts { set; get; }
         public String[] UnavailablePorts { set; get; }
@@ -84,7 +101,7 @@ namespace ConfigGenerator.EEPROM
             NumPorts = 6;
 
             AnalogPorts = new String[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
-            PWMPorts = new String[3] { "B7", "PG5", "B4" };
+            PWMPorts = new String[3] {"B4", "B7", "G5"};  //el B7 y el G5 estan compartidos con el mismo timer
             UnavailablePorts = new String[0];
 
             LittleEndian = true;
