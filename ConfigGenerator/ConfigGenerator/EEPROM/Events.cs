@@ -46,7 +46,16 @@ namespace ConfigGenerator.EEPROM
 
         public PortEvent(Event e, Boolean enable)
         {
+            Event = e;
+            TimeRestriction = null;
+            Enable = enable;
+        }
 
+        public PortEvent(Event e, int startHour, int startMinute, int endHour, int endMinute, Boolean enable)
+        {
+            Event = e;
+            TimeRestriction = new TimeRestriction(startHour, startMinute, endHour, endMinute);
+            Enable = enable;
         }
     }
 
@@ -54,6 +63,12 @@ namespace ConfigGenerator.EEPROM
     {
         public DateTime Start;
         public DateTime End;
+
+        public TimeRestriction(int startHour, int startMinute, int endHour, int endMinute)
+        {
+            Start = new DateTime(0, 0, 0, startHour, startMinute, 0);
+            End = new DateTime(0, 0, 0, endHour, endMinute, 0);
+        }
 
         public Byte[] ToBinary()
         {
@@ -70,5 +85,12 @@ namespace ConfigGenerator.EEPROM
         public Event Event { get; set; }
         public DateTime Time { get; set; }
         public Boolean Enable { get; set; }
+
+        public TimeEvent(Event e, int hour, int minute, Boolean enable)
+        {
+            Event = e;
+            Time = new DateTime(0, 0, 0, hour, minute, 0);
+            Enable = enable;
+        }
     }
 }

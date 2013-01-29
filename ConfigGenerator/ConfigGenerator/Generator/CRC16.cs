@@ -46,10 +46,21 @@ namespace ConfigGenerator.Generator
             return crc;
         }
 
-        public byte[] ComputeChecksumBytes(byte[] bytes)
+        public byte[] ComputeChecksumBytes(byte[] bytes, bool littleEndian)
         {
+            Byte[] result = new Byte[2];
             ushort crc = ComputeChecksum(bytes);
-            return BitConverter.GetBytes(crc);
+            if (littleEndian)
+            {
+                result[0] = (byte)crc;
+                result[1] = (byte)(crc >> 8);
+            }
+            else
+            {
+                result[0] = (byte)(crc >> 8);
+                result[1] = (byte)crc;
+            }
+            return result;
         }
 
         
