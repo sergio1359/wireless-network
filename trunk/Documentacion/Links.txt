@@ -1,3 +1,13 @@
 http://code.google.com/p/wireless-sensor-thesis/
 
 http://www.pablin.com.ar/
+
+
+XBee RF Smart Energy Compliant Power Meter:
+http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/s2011/kjb79_ajm232/pmeter/index.html
+
+Reading a Elser A100C electricity meter:
+http://openenergymonitor.blogspot.co.uk/2012/08/reading-watt-hour-data-from-elster.html
+
+Interfacing a Current Transformer sensor:
+http://openenergymonitor.org/emon/buildingblocks/ct-sensors-interface
