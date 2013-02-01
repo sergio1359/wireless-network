@@ -18,8 +18,8 @@
 #define BOTH_EDGE 3
 
 typedef struct{
-	uint8_t deviceType;
-	uint16_t model;
+	uint8_t shieldModel;  
+	uint16_t length; //Size of the current config
 	uint16_t checkSum; //crc16
 }DEVICE_INFO_t;
 

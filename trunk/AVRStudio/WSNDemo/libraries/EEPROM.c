@@ -10,15 +10,15 @@
 
 void EEPROM_Init(void)
 {
-	//for (uint8_t i = 0; i< 10; i++)
-	//{
-		//EEPROM_Write_Byte(i,i);
-	//}
-	
+	//Get the header only
+	EEPROM_Read_Block(runningConfiguration, 0x00, sizeof(DEVICE_INFO_t));
+	uint8_t eeprom_size = 50;//runningConfiguration.topConfiguration.deviceInfo.length;
 	
 	//Copy Startup-configuration to Running-configuration
-	//EEPROM_Read_Block(runningConfiguration.raw, 0x00, EEPROM_SIZE);
-	EEPROM_Read_Block(runningConfiguration.raw, 0x00, 50);
+	if(eeprom_size != 0xFF && eeprom_size != 0x00)
+	{
+		EEPROM_Read_Block(runningConfiguration.raw, 0x00, eeprom_size);	
+	}
 }
 
 uint8_t inline EEPROM_Read_Byte(int address)

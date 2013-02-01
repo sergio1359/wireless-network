@@ -11,3 +11,6 @@ http://openenergymonitor.blogspot.co.uk/2012/08/reading-watt-hour-data-from-elst
 
 Interfacing a Current Transformer sensor:
 http://openenergymonitor.org/emon/buildingblocks/ct-sensors-interface
+
+Simple Current Transformer:
+http://www.kerrywong.com/2011/07/16/simple-current-transformer/
