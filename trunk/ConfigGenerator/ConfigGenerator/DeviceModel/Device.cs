@@ -11,7 +11,7 @@ namespace ConfigGenerator.DeviceModel
     {
         //Device Info
         public DeviceInfo DeviceInfo { get; set; }
-        public Enums.DeviceType Type { get; set; }
+        public Enums.Shields ShieldModel { get; set; }
 
         //NetworkConfig
         public NetworkConfig Network { get; set; }
@@ -20,13 +20,12 @@ namespace ConfigGenerator.DeviceModel
         public Port[] Ports { get; set; }
 
         //Events
-        public List<PortEvent> PortEvents { get; set; }
         public List<TimeEvent> TimeEvents { get; set; }
 
-        public Device(DeviceInfo device, Enums.DeviceType type)
+        public Device(DeviceInfo device, Enums.Shields type)
         {
             DeviceInfo = device;
-            Type = type;
+            ShieldModel = type;
 
             //NetworkConfig (sera una configuracion generica)
 
@@ -37,7 +36,6 @@ namespace ConfigGenerator.DeviceModel
                 Ports[i] = new Port();
             }
 
-            PortEvents = new List<PortEvent>();
             TimeEvents = new List<TimeEvent>();
         }
 
@@ -54,6 +52,11 @@ namespace ConfigGenerator.DeviceModel
                 int por = direction[0] - 'A';
                 Ports[por].Pins[Convert.ToByte(direction[1])] = pin;
             }
+        }
+
+        public List<PortEvent> GetPortsEvents(String direction)
+        {
+            throw new NotImplementedException();
         }
 
         public Pin GetPin(String direction)
@@ -83,10 +86,12 @@ namespace ConfigGenerator.DeviceModel
     class DeviceInfo
     {
         //Identificador de micro
-        public UInt16 DeviceID { set; get; }
+        public UInt32 DeviceSignature { set; get; }
 
-        //numero de puertos que tiene el micro, cada puerto tiene 8 pines
+        //numero de puertos que tiene el micro, y cada puerto tiene NumPins pines
         public UInt16 NumPorts { set; get; }
+        public Byte NumPins { set; get; }
+
         //Esta informacion debe de estar organizada por orden Alfabetico
         public String[] AnalogPorts { set; get; }
         public String[] PWMPorts { set; get; }
@@ -97,8 +102,9 @@ namespace ConfigGenerator.DeviceModel
         public DeviceInfo()
         {
             //Ejemplo generado con el ATmega128FRA1
-            DeviceID = 128;
+            DeviceSignature = 128;
             NumPorts = 6;
+            NumPins = 8;
 
             AnalogPorts = new String[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
             PWMPorts = new String[3] {"B4", "B7", "G5"};  //el B7 y el G5 estan compartidos con el mismo timer

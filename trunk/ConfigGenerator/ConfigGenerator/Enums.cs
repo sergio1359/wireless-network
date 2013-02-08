@@ -12,6 +12,6 @@ namespace ConfigGenerator
         //Tipo Roseta: 0x01
         //Tipo Regleta: 0x02
         //Tipo Lampara: 0x03
-        public enum DeviceType: byte{Central=0x00, Roseta=0x01, Regleta=0x02, Lampara=0x03};
+        public enum Shields: byte{Central=0x00, Roseta=0x01, Regleta=0x02, Lampara=0x03};
     }
 }

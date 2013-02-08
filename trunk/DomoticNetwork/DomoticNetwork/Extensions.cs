@@ -40,5 +40,23 @@ namespace Extensions
 
             return result;
         }
+
+        public static Byte[] Uint16ToByte(this int b, bool litteEndian)
+        {
+            Byte[] result = new Byte[2];
+
+            if (litteEndian)
+            {
+                result[0] = (byte)b;
+                result[1] = (byte)(b >> 8);
+            }
+            else
+            {
+                result[0] = (byte)(b >> 8);
+                result[1] = (byte)b;
+            }
+
+            return result;
+        }
     }
 }
