@@ -59,7 +59,7 @@ namespace ConfigGenerator.DeviceModel
 
             if (littleEndian)
             {
-                result[3] = (byte)ctd;
+                result[3] = ctd.
                 result[4] = (byte)(ctd >> 8);
             }
             else
@@ -133,8 +133,13 @@ namespace ConfigGenerator.DeviceModel
         public Byte Increment { get; set; }
         public Byte Threshold { get; set; }
 
+        //events
+        public List<PortEvent> PortEvents { get; set; }
 
-
+        public Pin()
+        {
+            PortEvents = new List<PortEvent>();
+        }
 
         public Byte PWMToBinary()
         {
@@ -149,6 +154,20 @@ namespace ConfigGenerator.DeviceModel
             result[1] = Threshold;
 
             return result;
+        }
+
+        /// <summary>
+        /// Size of all Port Events without timeRestriction
+        /// </summary>
+        /// <returns></returns>
+        public UInt16 SizePortEvents()
+        {
+            UInt16 size = 0;
+            foreach (PortEvent pe in PortEvents)
+            {
+                size += pe.Event.Size();
+            }
+            return size;
         }
 
     }

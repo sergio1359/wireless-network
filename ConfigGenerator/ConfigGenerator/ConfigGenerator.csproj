@@ -45,6 +45,7 @@
     <Compile Include="DeviceModel\Events.cs" />
     <Compile Include="DeviceModel\NetworkConfig.cs" />
     <Compile Include="DeviceModel\Ports.cs" />
+    <Compile Include="EEPROMGenerator\BinToHex.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="EEPROMGenerator\CRC16.cs" />

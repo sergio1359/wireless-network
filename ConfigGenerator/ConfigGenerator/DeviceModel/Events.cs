@@ -35,6 +35,15 @@ namespace ConfigGenerator.DeviceModel
             }
             return result;
         }
+
+        /// <summary>
+        /// Size of Event in Bytes
+        /// </summary>
+        /// <returns></returns>
+        public UInt16 Size()
+        {
+            return (UInt16) ToBinary(true).Length;
+        }
     }
 
     //Port Events
@@ -57,6 +66,7 @@ namespace ConfigGenerator.DeviceModel
             TimeRestriction = new TimeRestriction(startHour, startMinute, endHour, endMinute);
             Enable = enable;
         }
+
     }
 
     class TimeRestriction

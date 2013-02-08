@@ -9,9 +9,9 @@ namespace DomoticNetwork.NetworkModel
 {
     class Event
     {
-        public UInt16 Address;
-        public Byte OPCode;
-        public Byte[] Args;
+        public UInt16 Address { get; set; }
+        public Byte OPCode { get; set; }
+        public Byte[] Args { get; set; }
 
         public Byte[] ToBinary(bool littleEndian)
         {
@@ -80,7 +80,7 @@ namespace DomoticNetwork.NetworkModel
     }
 
     //Time Events
-    class TimeEvent
+    class TimeEvent : IComparable<TimeEvent>
     {
         public Event Event { get; set; }
         public DateTime Time { get; set; }
@@ -91,6 +91,13 @@ namespace DomoticNetwork.NetworkModel
             Event = e;
             Time = new DateTime(0, 0, 0, hour, minute, 0);
             Enable = enable;
+        }
+
+
+
+        public int CompareTo(TimeEvent other)
+        {
+            return Time.CompareTo(other);
         }
     }
 }
