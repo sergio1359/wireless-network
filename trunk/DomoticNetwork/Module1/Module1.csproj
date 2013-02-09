@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5758375B-7E2D-4FF7-ABD2-36C5D0617CB8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{7D0BF36C-05D5-41F8-B8A2-2E9442BE508E}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomoticNetwork</RootNamespace>
-    <AssemblyName>DomoticNetwork</AssemblyName>
+    <RootNamespace>Module1</RootNamespace>
+    <AssemblyName>Module1</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,27 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="EEPROM\Binary.cs" />
-    <Compile Include="EEPROM\CRC16.cs" />
-    <Compile Include="EEPROM\Generator.cs" />
-    <Compile Include="EEPROM\Reader.cs" />
-    <Compile Include="HomeModel\Home.cs" />
-    <Compile Include="Module\IModule.cs" />
-    <Compile Include="Module\ModuleLoader.cs" />
-    <Compile Include="NetworkModel\Events.cs" />
-    <Compile Include="NetworkModel\HomeDevice.cs" />
-    <Compile Include="NetworkModel\Network.cs" />
-    <Compile Include="NetworkModel\Node.cs" />
-    <Compile Include="NetworkModel\Shield.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\DomoticNetwork\DomoticNetwork.csproj">
+      <Project>{5758375b-7e2d-4ff7-abd2-36c5d0617cb8}</Project>
+      <Name>DomoticNetwork</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
