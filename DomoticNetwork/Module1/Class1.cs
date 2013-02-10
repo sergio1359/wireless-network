@@ -7,7 +7,7 @@ using DomoticNetwork.Module;
 
 namespace Module1
 {
-    public class SampleModule2 : IModule
+    public class SampleModule : IModule
     {
 
         public void method()
@@ -15,4 +15,14 @@ namespace Module1
             Console.WriteLine("Hello Module 1 :D Miau miauuuuuu");
         }
     }
+
+    public class SampleModule2 : IModule
+    {
+
+        public void method()
+        {
+            Console.WriteLine("Hello Module 2");
+        }
+    }
 }
+
