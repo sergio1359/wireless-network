@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Extensions
 {
-    public static class Extension
+    public static class BinaryExtension
     {
         /// <summary>
         /// Transform a DateTime in a Byte[] sort in Hours, Minutes and Seconds
