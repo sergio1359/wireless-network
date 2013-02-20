@@ -33,7 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Actions.cs" />
+    <Compile Include="Core\Programmer.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Data\Serializer.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="EEPROM\Binary.cs" />
@@ -48,18 +54,23 @@
     <Compile Include="EEPROM\Generator.cs" />
     <Compile Include="EEPROM\Reader.cs" />
     <Compile Include="HomeModel\Home.cs" />
-    <Compile Include="Module\IModule.cs" />
-    <Compile Include="Module\ModuleLoader.cs" />
+    <Compile Include="IOC\c.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\PluginLoader.cs" />
     <Compile Include="NetworkModel\Events.cs" />
     <Compile Include="NetworkModel\HomeDevice.cs" />
     <Compile Include="NetworkModel\Network.cs" />
     <Compile Include="NetworkModel\Node.cs" />
     <Compile Include="NetworkModel\Shield.cs" />
+    <Compile Include="Plugin\PluginsContainer.cs" />
+    <Compile Include="Plugin\PluginsController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

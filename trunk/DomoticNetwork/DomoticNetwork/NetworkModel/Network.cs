@@ -8,15 +8,8 @@ namespace DomoticNetwork.NetworkModel
 {
     class Network
     {
-        public Byte Channel { set; get; }
-        public UInt16 PanId { set; get; }
-        public Byte[] SecurityKey { set; get; }
-
+        SecurityNetwork Security { set; get; }
         List<Node> Nodes { set; get; }
-
-        public void GenerateKey(String key)
-        {
-        }
 
         public Node GetNode(UInt16 Address)
         {
@@ -24,9 +17,16 @@ namespace DomoticNetwork.NetworkModel
         }
 
 
-        public void GenerateEEPROM(UInt16 direction)
+        public void UpdateNetwork(UInt16 direction)
         {
             //Algoritmo para generar la EEPROM de este nodoB
         }
+    }
+
+    class SecurityNetwork
+    {
+        public Byte Channel { set; get; }
+        public UInt16 PanId { set; get; }
+        public String SecurityKey { set; get; }
     }
 }

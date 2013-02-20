@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DomoticNetwork.Module;
+using DomoticNetwork.Plugin;
 
 namespace Module1
 {
-    public class SampleModule : IModule
+    public class SampleModule : IPlugin
     {
 
         public void method()
         {
             Console.WriteLine("Hello Module 1 :D Miau miauuuuuu");
-        }
-    }
-
-    public class SampleModule2 : IModule
-    {
-
-        public void method()
-        {
-            Console.WriteLine("Hello Module 2");
         }
     }
 }

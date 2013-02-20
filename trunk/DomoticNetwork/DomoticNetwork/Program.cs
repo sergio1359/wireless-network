@@ -1,4 +1,5 @@
-﻿using DomoticNetwork.Module;
+﻿using DomoticNetwork.NetworkModel;
+using DomoticNetwork.Plugin;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,31 +18,18 @@ namespace DomoticNetwork
 
 
 
+            //MODULE
+            PluginLoader ml = new PluginLoader();
 
+            
 
+            //Llamo al método "method" de cada módulo
+            foreach (IPlugin m in ml.Modules)
+            {
+                m.method();
+            }
 
-
-
-
-
-
-
-            ////MODULE
-            //ModuleLoader ml = new ModuleLoader();
-
-            ////recorro cada fichero del directorio en el que se encuentra esta aplicacion e intento cargarlo como módulo.
-            //foreach (string file in Directory.GetFiles(Directory.GetCurrentDirectory()+"//Modules"))
-            //{
-            //    ml.LoadModule(file);
-            //}
-
-            ////Llamo al método "method" de cada módulo
-            //foreach (IModule m in ml.Modules)
-            //{
-            //    m.method();
-            //}
-
-            ////END MODULE
+            //END MODULE
 
             Console.WriteLine("End");
             Console.ReadLine();

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomoticNetwork.Module
+namespace DomoticNetwork.Core
 {
-    public interface IModule
+    class Actions
     {
-        void method();
     }
 }

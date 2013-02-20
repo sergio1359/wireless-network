@@ -9,12 +9,10 @@ namespace DomoticNetwork.NetworkModel
     class Node
     {
         public UInt16 NodeAddress { set; get; }
-        public String Pseudonimo { set; get; }
+        public String ID { set; get; }
 
-        //Direction in the node
-        public Byte Channel { set; get; }
-        public UInt16 PanId { set; get; }
-        public Byte[] SecurityKey { set; get; }
+        //Security information in node
+        SecurityNetwork SecureNode { set; get; }
 
         //Position
         public Position NodePosition { set; get; }
