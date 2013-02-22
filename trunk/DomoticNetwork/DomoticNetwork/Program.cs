@@ -1,12 +1,7 @@
 ﻿using DomoticNetwork.EEPROM;
 using DomoticNetwork.NetworkModel;
-using DomoticNetwork.Plugin;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomoticNetwork
 {

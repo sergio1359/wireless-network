@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 //http://www.ht-lab.com/freeutils/bin2hex/bin2hex.html
 
