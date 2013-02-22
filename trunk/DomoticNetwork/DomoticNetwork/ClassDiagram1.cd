@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="DomoticNetwork.NetworkModel.Event">
+    <Position X="14" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAgAAEAAAAAAAAAAAAAAACAAAAAAAEAAA=</HashCode>
+      <FileName>NetworkModel\Events.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.PortEvent">
+    <Position X="14.75" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAgAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>NetworkModel\Events.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.TimeRestriction">
+    <Position X="15.5" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAIAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NetworkModel\Events.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.TimeEvent" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAACAAAAgAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>NetworkModel\Events.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.HomeDevice">
+    <Position X="10.5" Y="5.25" Width="2" />
+    <NestedTypes>
+      <Enum Name="DomoticNetwork.NetworkModel.HomeDevice.HomeDeviceType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NetworkModel\HomeDevice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>NetworkModel\HomeDevice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Network">
+    <Position X="7.75" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAgAAAAAAAAAAAAEAAAEAAAAAAAAAAgAAAQAAA=</HashCode>
+      <FileName>NetworkModel\Network.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Node">
+    <Position X="8.25" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAgAAACAABAAAAAEAAAAAAAAACAAAAgAAAQAgE=</HashCode>
+      <FileName>NetworkModel\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Position">
+    <Position X="6.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>NetworkModel\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Shield">
+    <Position X="6.5" Y="8" Width="3" />
+    <NestedTypes>
+      <Enum Name="DomoticNetwork.NetworkModel.Shield.ShieldType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NetworkModel\Shield.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAgAAAAAAAAAAAAAAAAAARAAAAIAAgA=</HashCode>
+      <FileName>NetworkModel\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Base">
+    <Position X="7.25" Y="11" Width="2.25" />
+    <NestedTypes>
+      <Enum Name="DomoticNetwork.NetworkModel.Base.UControllerType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NetworkModel\Shield.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>OAAAAAAAAABAAAAACgAAEAAAAAAEAAAAAgAhAAACAAA=</HashCode>
+      <FileName>NetworkModel\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.Connector">
+    <Position X="10.25" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgACAgAAAAAAAAAAAAAAABQAAAAAAAAA=</HashCode>
+      <FileName>NetworkModel\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DomoticNetwork.NetworkModel.PinPort">
+    <Position X="13.25" Y="7.75" Width="2" />
+    <NestedTypes>
+      <Enum Name="DomoticNetwork.NetworkModel.PinPort.Trigger" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NetworkModel\Shield.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAQAAAAgAAAIAAKAAAASAIAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>NetworkModel\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
