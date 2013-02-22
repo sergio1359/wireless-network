@@ -7,12 +7,11 @@
 #include "EEPROM.h"
 #include "globals.h"
 
-
 void EEPROM_Init(void)
 {
 	//Get the header only
-	EEPROM_Read_Block(runningConfiguration, 0x00, sizeof(DEVICE_INFO_t));
-	uint8_t eeprom_size = 50;//runningConfiguration.topConfiguration.deviceInfo.length;
+	EEPROM_Read_Block(runningConfiguration.raw, 0x00, sizeof(DEVICE_INFO_t));
+	uint16_t eeprom_size = 204;//runningConfiguration.topConfiguration.deviceInfo.length;
 	
 	//Copy Startup-configuration to Running-configuration
 	if(eeprom_size != 0xFF && eeprom_size != 0x00)

@@ -45,7 +45,7 @@
 #define _CONFIG_H_
 
 #define EEPROM_SIZE 4096 * sizeof(uint8_t)
-#define NUM_PORTS 5
+#define NUM_PORTS 7
 #define NUM_PINS NUM_PORTS * 8
 
 #define EVENT_TABLE_ADDR sizeof(TOP_CONFIGURATION)

@@ -149,28 +149,11 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 	{
 		while(compareTimes(time_event_header->activationTime, currentTime) == 0)
 		{
-			uint8_t enable_flag_number = runningConfiguration.raw[EVENT_TABLE_END_ADDR + ENABLE_EVENT_TABLE_START_ADDRESS + NUM_PINS + 1] + enable_flag_prt;
 			
-			uint8_t enable_flag_addr_relative = (enable_flag_number / 8); //Relative to the end of the enable event table
-			uint8_t bit_ptr = (enable_flag_number - enable_flag_addr_relative);
+			//RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
+			RF_Send_Event(time_event_header);
 			
-			uint16_t enable_pin_addr_absolute = (EVENT_TABLE_END_ADDR + ENABLE_EVENT_TABLE_START_ADDRESS + NUM_PINS + 2) + enable_flag_addr_relative;
-			
-			//launch
-			if( ((runningConfiguration.raw[enable_pin_addr_absolute] >> (8 - enable_flag_prt)) & 0x01) ) //Is enabled
-			{
-				//RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
-				RF_Send_Event(time_event_header);
-			}
-			
-			time_event_header += getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);
-			enable_flag_prt++;
-			
-			if( (time_event_header - EVENT_TABLE_END_ADDR) >= TIME_EVENT_LIST_END_ADDRESS)
-			{
-				time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[TIME_EVENT_LIST_START_ADDRESS + EVENT_TABLE_END_ADDR];
-				enable_flag_prt = 0;
-			}				
+			time_event_header += getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);			
 		}
 	}
 }
