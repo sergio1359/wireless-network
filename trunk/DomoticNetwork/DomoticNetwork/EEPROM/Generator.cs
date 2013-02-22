@@ -17,14 +17,16 @@ namespace DomoticNetwork.EEPROM
         public UInt16 PanId { set; get; }
         public Byte[] SecurityKey { set; get; }
         private Dictionary<UInt16, BasicEvent> PortEventTimeRestrictionDictionary;
+        private DateTime CompileTime { set; get; }
 
         public Generator(Network Network, UInt16 Address)
         {
             ShieldNode = Network.GetNode(Address).NodeShield;
             NodeAddress = Address;
-            Channel = Network.Channel;
-            PanId = Network.PanId;
-            //SecurityKey = Network.SecurityKey.ToArray<Byte>();
+            Channel = Network.Security.Channel;
+            PanId = Network.Security.PanId;
+            SecurityKey = new Byte[1] { 0x00 };
+            CompileTime = DateTime.Now;
             PortEventTimeRestrictionDictionary = new Dictionary<ushort, BasicEvent>();
         }
 
@@ -66,19 +68,25 @@ namespace DomoticNetwork.EEPROM
 
         private Byte[] DeviceInfo()
         {
-            Byte[] result = new Byte[5];
+            List<Byte> result = new List<Byte>();
 
-            result[0] = (byte)ShieldNode.Type;
+            result.Add((byte)ShieldNode.Type);
 
             //Default Lenght (unknow at the moment)
-            result[1] = 0x00;
-            result[2] = 0x00;
+            result.Add(0x00);
+            result.Add(0x00);
 
             //Default CRC16 to 00 00
-            result[3] = 0x00;
-            result[4] = 0x00;
+            result.Add(0x00);
+            result.Add(0x00);
 
-            return result;
+            //updateDate
+            result.AddRange(CompileTime.ToBinaryDate(ShieldNode.ShieldBase.LittleEndian));
+
+            //updateTime
+            result.AddRange(CompileTime.ToBinaryTime());
+
+            return result.ToArray();
         }
 
         private Byte[] NetworkConfig()
@@ -111,13 +119,13 @@ namespace DomoticNetwork.EEPROM
         {
             //Si no esta definido suponemos Entrada digital
             Byte[] result = new Byte[5];
-            Connector c = null;
+            PinPort p = null;
             //Input:0 - Output:1, default=0
             result[0] = 0x00;
             for (byte i = 0; i < ShieldNode.ShieldBase.NumPins; i++)
             {
-                c = ShieldNode.GetConector(port, i);
-                if (c != null && c.Output == true)
+                p = ShieldNode.GetPinPort(port, i);
+                if (p != null && p.Output == true)
                 {
                     result[0] = (byte)(result[0] | (0x01 << i));
                 }
@@ -127,8 +135,8 @@ namespace DomoticNetwork.EEPROM
             result[1] = 0xFF;
             for (byte i = 0; i < ShieldNode.ShieldBase.NumPins; i++)
             {
-                c = ShieldNode.GetConector(port, i);
-                if (c != null && c.Digital == false)
+                p = ShieldNode.GetPinPort(port, i);
+                if (p != null && p.Digital == false)
                 {
                     result[1] = (byte)(result[1] & ~(0x01 << i));
                 }
@@ -138,8 +146,8 @@ namespace DomoticNetwork.EEPROM
             result[2] = 0x00;
             for (byte i = 0; i < ShieldNode.ShieldBase.NumPins; i++)
             {
-                c = ShieldNode.GetConector(port, i);
-                if (c != null && c.DefaultValueD == true)
+                p = ShieldNode.GetPinPort(port, i);
+                if (p != null && p.DefaultValueD == true)
                 {
                     result[2] = (byte)(result[2] | (0x01 << i));
                 }
@@ -149,8 +157,8 @@ namespace DomoticNetwork.EEPROM
             UInt16 ctd = 0x00; //change type digital
             for (byte i = 0; i < ShieldNode.ShieldBase.NumPins; i++)
             {
-                c = ShieldNode.GetConector(port, i);
-                if (c != null) ctd = (byte)(ctd | ((byte)c.changeTypeD) << (i * 2));
+                p = ShieldNode.GetPinPort(port, i);
+                if (p != null) ctd = (byte)(ctd | ((byte)p.changeTypeD) << (i * 2));
             }
 
             result[3] = ctd.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
@@ -165,8 +173,8 @@ namespace DomoticNetwork.EEPROM
 
             foreach (String pin in ShieldNode.ShieldBase.PWMPorts)
             {
-                if (ShieldNode.GetConector(pin[0], Convert.ToByte(pin[1])) != null)
-                    result.Add(ShieldNode.GetConector(pin[0], Convert.ToByte(pin[1])).DefaultValueA);
+                if (ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1])) != null)
+                    result.Add(ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1])).DefaultValueA);
                 else
                 {
                     result.Add(0x00);
@@ -178,16 +186,16 @@ namespace DomoticNetwork.EEPROM
         private Byte[] AnalogInputsConfig()
         {
             List<Byte> result = new List<Byte>();
-            Connector c = null;
+            PinPort p = null;
 
             foreach (String pin in ShieldNode.ShieldBase.AnalogPorts)
             {
-                c = ShieldNode.GetConector(pin[0], Convert.ToByte(pin[1]));
-                if (c != null)
+                p = ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1]));
+                if (p != null)
                 {
                     //Analog Input To Binary
-                    result.Add(c.Increment);
-                    result.Add(c.Threshold);
+                    result.Add(p.Increment);
+                    result.Add(p.Threshold);
                 }
                 else
                 {
@@ -206,7 +214,7 @@ namespace DomoticNetwork.EEPROM
 
             result.AddRange(TableEventList());
             UInt16 PortEventTimeRestrictionPointer = (UInt16)(result.Count - 4); //4 posiciones de memoria que tenemos en 0x00
-            UInt16 TableEnableEventsFlagPointer = (UInt16)(result.Count - 2);
+            UInt16 FreeRegionPointer = (UInt16)(result.Count - 2);
 
             result.AddRange(PortsEvents());
 
@@ -217,8 +225,8 @@ namespace DomoticNetwork.EEPROM
 
             result.AddRange(PortEventTimeRestriction());
 
-            result[TableEnableEventsFlagPointer] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
-            result[TableEnableEventsFlagPointer + 1] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
+            result[FreeRegionPointer] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
+            result[FreeRegionPointer + 1] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
             
             return result.ToArray();
         }
@@ -229,7 +237,7 @@ namespace DomoticNetwork.EEPROM
         {
             List<Byte> result = new List<Byte>();
             UInt16 pointer = 0;
-            Connector c = null;
+            PinPort p = null;
 
             //añadimos la primera direccion, que siempre será 0x00
             result.Add(0x00);
@@ -238,10 +246,10 @@ namespace DomoticNetwork.EEPROM
             {
                 for (byte j = 0; j < ShieldNode.ShieldBase.NumPins; j++)
                 {
-                    c = ShieldNode.GetConector(i, j);
-                    if (c != null)
+                    p = ShieldNode.GetPinPort(i, j);
+                    if (p != null)
                     {
-                        pointer += c.SizePortEvents();
+                        pointer += SizePinEvents(p);
                     }
                     result.AddRange(pointer.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
                 }
@@ -253,7 +261,7 @@ namespace DomoticNetwork.EEPROM
             result.Add(0x00);
             result.Add(0x00);
 
-            //direccion banderas de habilitación de eventos
+            //direccion region libre
             result.Add(0x00);
             result.Add(0x00);
 
@@ -277,7 +285,7 @@ namespace DomoticNetwork.EEPROM
                             {
                                 PortEventTimeRestrictionDictionary.Add((UInt16)result.Count, pe); //rellenamos el diccionario para el metodo port event time restriction
                             }
-                            result.AddRange(pe.Event.ToBinary(ShieldNode.ShieldBase.LittleEndian));
+                            result.AddRange(ToBinaryEvent(pe.Event,ShieldNode.ShieldBase.LittleEndian));
                         }
                     }
                 }
@@ -286,18 +294,27 @@ namespace DomoticNetwork.EEPROM
             return result.ToArray();
         }
 
-        //hay relacionarlo con el metodo de arriba, tambien tenemos que tener el size
-        public Byte[] ToBinaryEvent(bool littleEndian)
+        private Byte[] ToBinaryEvent(Event e, bool littleEndian)
         {
             List<Byte> result = new List<byte>();
 
-            result.AddRange(Address.Uint16ToByte(littleEndian));
+            result.AddRange(NodeAddress.Uint16ToByte(littleEndian));
 
-            result.Add(OPCode);
+            result.Add(e.OPCode);
 
-            result.AddRange(Args);
+            result.AddRange(e.Args);
 
             return result.ToArray();
+        }
+
+        private UInt16 SizePinEvents(PinPort pin)
+        {
+            UInt16 size = 0;
+            foreach (BasicEvent pe in pin.PinEvents)
+            {
+                size += (UInt16)ToBinaryEvent(pe.Event, true).Length;
+            }
+            return size;
         }
 
         private Byte[] TimeEvents()
@@ -307,19 +324,18 @@ namespace DomoticNetwork.EEPROM
             ShieldNode.TimeEvents.Sort();
             foreach (TimeEvent te in ShieldNode.TimeEvents)
             {
-                result.AddRange(te.Time.ToBinaryEEPROM());
-                result.AddRange(te.Event.ToBinary(ShieldNode.ShieldBase.LittleEndian));
+                result.AddRange(te.Time.ToBinaryTime());
+                result.AddRange(ToBinaryEvent(te.Event, ShieldNode.ShieldBase.LittleEndian));
             }
 
             return result.ToArray();
         }
 
-        //Hay que ponerlo en el codigo tambien
-        public Byte[] ToBinaryTimeEventRestriction()
+        private Byte[] ToBinaryTimeEventRestriction(TimeRestriction tr)
         {
             List<Byte> result = new List<Byte>();
-            result.AddRange(Start.ToBinaryEEPROM());
-            result.AddRange(End.ToBinaryEEPROM());
+            result.AddRange(tr.Start.ToBinaryTime());
+            result.AddRange(tr.End.ToBinaryTime());
             return result.ToArray();
         }
 
@@ -335,96 +351,11 @@ namespace DomoticNetwork.EEPROM
             foreach (KeyValuePair<UInt16, BasicEvent> pe in PortEventTimeRestrictionDictionary)
             {
                 result.AddRange(pe.Key.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
-                result.AddRange(pe.Value.TimeRestriction.Start.ToBinaryEEPROM());
-                result.AddRange(pe.Value.TimeRestriction.End.ToBinaryEEPROM());
+                result.AddRange(pe.Value.TimeRestriction.Start.ToBinaryTime());
+                result.AddRange(pe.Value.TimeRestriction.End.ToBinaryTime());
             }
             return result.ToArray();
         }
 
-        //private Byte[] TableEnableEventsFlags()
-        //{
-        //    List<Byte> result = new List<Byte>();
-        //    byte pointer = 0x00;
-        //    Connector c = null;
-
-        //    result.Add(pointer); //el primero siempre es 00
-
-        //    for (byte i = 0; i < ShieldNode.ShieldBase.NumPorts; i++)
-        //    {
-        //        for (byte j = 0; j < ShieldNode.ShieldBase.NumPins; j++)
-        //        {
-        //            c = ShieldNode.GetConector(i, j);
-        //            if (c != null)
-        //            {
-        //                pointer += (byte)(c.ConnectorEvent.Count / 8);
-        //            }
-        //            else
-        //            {
-        //                pointer++;
-        //                result.Add(pointer);
-        //            }
-        //        }
-        //    }
-
-        //    //Add free region
-        //    pointer += (byte)(ShieldNode.TimeEvents.Count / 8);
-        //    result.Add(pointer);
-
-        //    return result.ToArray();
-        //}
-
-        ////OJO REVISAR
-        //private Byte[] TableEventsFlags()
-        //{
-        //    List<Byte> result = new List<Byte>();
-        //    Connector c = null;
-        //    for (byte i = 0; i < ShieldNode.ShieldBase.NumPorts; i++)
-        //    {
-        //        for (byte j = 0; j < ShieldNode.ShieldBase.NumPins; j++)
-        //        {
-        //            c = ShieldNode.GetConector(i, j);
-        //            if (c != null)
-        //            {
-        //                byte toResult = 0x00; //el byte que añadiremos a la memoria
-
-        //                for (int k = 0; k < c.ConnectorEvent.Count; k++)
-        //                {
-
-        //                    if (c.ConnectorEvent[k].Enable == true)
-        //                    {
-        //                        toResult = (byte)(toResult | (0x01 << Math.Abs((k % 8) - 8)));  //NOTA MENTAL: Math.Abs((k % 8) - 8)) es la posicion que ocupa el enable en ese momento
-        //                    }
-
-        //                    if (Math.Abs((k % 8) - 8) == 0 || k + 1 == c.ConnectorEvent.Count) // Si hemos agotado la capacidad del byte o estamos en la ultima iteracion del for
-        //                    {
-        //                        result.Add(toResult);
-        //                        toResult = 0x00;
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                result.Add(0x00);
-        //            }
-        //        }
-        //    }
-
-        //    for (int i = 0; i < ShieldNode.TimeEvents.Count; i++)
-        //    {
-        //        byte toResult = 0x00; //el byte que añadiremos a la memoria
-
-        //        if (ShieldNode.TimeEvents[i].Enable == true)
-        //        {
-        //            toResult = (byte)(toResult | (0x01 << Math.Abs((i % 8) - 8)));  //NOTA MENTAL: Math.Abs((i % 8) - 8)) es la posicion que ocupa el enable en ese momento
-        //        }
-
-        //        if (Math.Abs((i % 8) - 8) == 0 || i + 1 == ShieldNode.TimeEvents.Count) // Si hemos agotado la capacidad del byte o estamos en la ultima iteracion del for
-        //        {
-        //            result.Add(toResult);
-        //            toResult = 0x00;
-        //        }
-        //    }
-        //    return result.ToArray();
-        //}
     }
 }

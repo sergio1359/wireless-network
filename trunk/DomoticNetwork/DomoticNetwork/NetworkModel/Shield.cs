@@ -11,12 +11,12 @@ namespace DomoticNetwork.NetworkModel
         public ShieldType Type { set; get; }
         public enum ShieldType : byte { Central = 0x00, Roseta = 0x01, Regleta = 0x02, Lampara = 0x03 };
 
-        public Shield(ShieldType type, Base shieldBase)
+        public Shield(ShieldType shieldtype, Base.UControllerType basetype)
         {
-            Type = type;
-            ShieldBase = shieldBase;
+            Type = shieldtype;
+            ShieldBase = new Base(basetype);
 
-            switch (type)
+            switch (shieldtype)
             {
                 case ShieldType.Central:
                     break;
@@ -64,6 +64,15 @@ namespace DomoticNetwork.NetworkModel
             return Conectors.First<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port - 'A' == port));
         }
 
+        public PinPort GetPinPort(Char port, Byte pin)
+        {
+            return GetConector(port, pin).Directions.First<PinPort>(x => x.Port == port && x.Pin == pin);
+        }
+
+        public PinPort GetPinPort(Byte port, Byte pin)
+        {
+            return GetConector(port, pin).Directions.First<PinPort>(x => x.Port - 'A' == port && x.Pin == pin);
+        }
     }
 
     class Base
@@ -157,7 +166,7 @@ namespace DomoticNetwork.NetworkModel
     {
         public Enums.ConnectorType Type { set; get; }
 
-        public String ID { set; get; }
+        public String Name { set; get; }
 
         public List<PinPort> Directions { set; get; }
 
@@ -166,7 +175,7 @@ namespace DomoticNetwork.NetworkModel
 
         public Connector (String name, Enums.ConnectorType type, String[] directions)
         {
-            ID = name;
+            Name = name;
             Type = type;
             for (int i = 0; i < directions.Length; i++)
 			{
@@ -174,22 +183,12 @@ namespace DomoticNetwork.NetworkModel
 			}
             ConnectorEvent = new List<BasicEvent>();
         }
-
-        public UInt16 SizePortEvents()
-        {
-            UInt16 size = 0;
-            foreach (BasicEvent pe in ConnectorEvent)
-            {
-                size += pe.Event.Size();
-            }
-            return size;
-        }
     }
 
     class PinPort
     {
         //Direction
-        public String ID { set; get; }
+        public String Name { set; get; }
         public Char Port { set; get; }
         public Byte Pin { set; get; }
 
@@ -219,7 +218,7 @@ namespace DomoticNetwork.NetworkModel
 
         public PinPort (String id, String direction, Enums.ConnectorType type)
         {
-            ID = id;
+            Name = id;
             Port = direction[0];
             Pin = Convert.ToByte(direction[1]);
 

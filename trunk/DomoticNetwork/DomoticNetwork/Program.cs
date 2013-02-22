@@ -1,4 +1,5 @@
-﻿using DomoticNetwork.NetworkModel;
+﻿using DomoticNetwork.EEPROM;
+using DomoticNetwork.NetworkModel;
 using DomoticNetwork.Plugin;
 using System;
 using System.Collections.Generic;
@@ -13,27 +14,30 @@ namespace DomoticNetwork
     {
         static void Main(string[] args)
         {
-
-
-
-
-
-            //MODULE
-            PluginLoader ml = new PluginLoader();
-
+            //EEPROMEXAMPLE
+            Network network = new Network();
+            network.AddNode();
+            var add = network.Nodes[0].NodeAddress;
+            Generator generatorEEPROM = new Generator(network, add);
+            byte[] EEPROM = generatorEEPROM.GenerateEEPROM();
+            //guardamos el bin
+            File.WriteAllBytes("ex.bin", EEPROM);
+            //guardamos el hex
+            Binary.SaveBin2Hex(EEPROM);
+            Console.ReadLine();
             
 
-            //Llamo al método "method" de cada módulo
-            foreach (IPlugin m in ml.Modules)
-            {
-                m.method();
-            }
 
-            //END MODULE
-
-            Console.WriteLine("End");
-            Console.ReadLine();
-
+            ////MODULE EXAMPLE
+            //PluginLoader ml = new PluginLoader();
+            ////Llamo al método "method" de cada módulo
+            //foreach (IPlugin m in ml.Modules)
+            //{
+            //    m.method();
+            //}
+            ////END MODULE
+            //Console.WriteLine("End");
+            //Console.ReadLine();
         }
     }
 }
