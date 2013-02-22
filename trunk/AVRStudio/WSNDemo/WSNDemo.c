@@ -495,7 +495,7 @@ int main(void)
 	currentTime.minute = 26;
 	currentTime.second = 30;
 	
-	//EEPROM_Init();
+	EEPROM_Init();
 	
 	#ifdef APP_ENABLE_OTA
 	OTA_ClientInit();

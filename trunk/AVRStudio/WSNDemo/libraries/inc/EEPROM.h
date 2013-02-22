@@ -21,6 +21,8 @@ typedef struct{
 	uint8_t shieldModel;  
 	uint16_t length; //Size of the current config
 	uint16_t checkSum; //crc16
+	DATE_t updateDate;
+	TIME_t updateTime;
 }DEVICE_INFO_t;
 
 typedef struct{
@@ -78,7 +80,9 @@ typedef struct
 typedef struct {
 	DEVICE_INFO_t deviceInfo;
 	NETWORK_CONFIG_t networkConfig;
+	PORT_CONFIG_t portConfig_PA;
 	PORT_CONFIG_t portConfig_PB;
+	PORT_CONFIG_t portConfig_PC;
 	PORT_CONFIG_t portConfig_PD;
 	PORT_CONFIG_t portConfig_PE;
 	PORT_CONFIG_t portConfig_PF;

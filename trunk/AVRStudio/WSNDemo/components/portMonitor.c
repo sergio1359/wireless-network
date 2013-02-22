@@ -15,7 +15,7 @@ uint8_t lastValuesA[] = {0,0,0,0,0,0,0,0};
 
 void PortMonitor_TaskHandler()
 {
-	for(uint8_t port=0; port<5; port++)
+	for(uint8_t port=0; port<NUM_PORTS; port++)
 	{
 		uint8_t val;
 		PORT_CONFIG_t config;
@@ -23,11 +23,13 @@ void PortMonitor_TaskHandler()
 	
 		switch(port)
 		{
-			case 0: val = HAL_GPIO_PORTB_read(); config = runningConfiguration.topConfiguration.portConfig_PB; break;
-			case 1: val = HAL_GPIO_PORTD_read(); config = runningConfiguration.topConfiguration.portConfig_PD; break;
-			case 2: val = HAL_GPIO_PORTE_read(); config = runningConfiguration.topConfiguration.portConfig_PE; break;
-			case 3: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
-			case 4: val = HAL_GPIO_PORTG_read(); config = runningConfiguration.topConfiguration.portConfig_PG; break;
+			case 0: val = HAL_GPIO_PORTA_read(); config = runningConfiguration.topConfiguration.portConfig_PA; break;
+			case 1: val = HAL_GPIO_PORTB_read(); config = runningConfiguration.topConfiguration.portConfig_PB; break;
+			case 2: val = HAL_GPIO_PORTC_read(); config = runningConfiguration.topConfiguration.portConfig_PC; break;
+			case 3: val = HAL_GPIO_PORTD_read(); config = runningConfiguration.topConfiguration.portConfig_PD; break;
+			case 4: val = HAL_GPIO_PORTE_read(); config = runningConfiguration.topConfiguration.portConfig_PE; break;
+			case 5: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
+			case 6: val = HAL_GPIO_PORTG_read(); config = runningConfiguration.topConfiguration.portConfig_PG; break;
 		}
 
 		for(uint8_t pin=0; pin<8; pin++)
@@ -97,16 +99,11 @@ void launchEvents(uint8_t pinAddress)
 	
 	uint16_t table_restriction_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + (2 * 2)];//Relative
 	
-	uint16_t table_enable_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + (3 * 2)];//Event flags address relative to the end of the event table
-	uint8_t enable_pin_number_rel = runningConfiguration.raw[EVENT_TABLE_END_ADDR + table_enable_addr_rel + pinAddress];
-	uint8_t enable_pin_addr_rel = (enable_pin_number_rel / 8); //Relative to the end of the enable event table
-
-	uint16_t enable_pin_addr_absolute = (EVENT_TABLE_END_ADDR + table_enable_addr_rel + NUM_PINS + 2) + enable_pin_addr_rel;
-	uint8_t pin_ptr = (enable_pin_number_rel - (enable_pin_addr_rel * 8)); //Rest of division
+	uint16_t table_restriction_end_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + (3 * 2)];//End of the restriction table
 	
 	uint16_t res_ptr;
 	//Looks for the first temporary restriction applicable to the current list of events. (Address greater or equal than the first event in the list to be processed)
-	for(res_ptr = table_restriction_addr_rel; res_ptr < table_enable_addr_rel; res_ptr += sizeof(EVENT_RESTRICTION_t))
+	for(res_ptr = table_restriction_addr_rel; res_ptr < table_restriction_end_addr_rel; res_ptr += sizeof(EVENT_RESTRICTION_t))
 	{
 		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
 			
@@ -131,17 +128,9 @@ void launchEvents(uint8_t pinAddress)
 		}		 
 		
 		
-		if( ((runningConfiguration.raw[enable_pin_addr_absolute] >> (8 - pin_ptr)) & 0x01) && //Is enabled 
-			restriction_passed ) //if time restriction ok
+		if( restriction_passed ) //if time restriction ok
 		{
 			RF_Send_Event(event_header);
-		}
-		
-		pin_ptr++;
-		if(pin_ptr == 8)
-		{
-			pin_ptr = 0;
-			enable_pin_addr_absolute++;
 		}
 		
 		event_ptr += args_length + sizeof(EVENT_HEADER_t);
