@@ -9,6 +9,12 @@ namespace DomoticNetwork.NetworkModel
         public SecurityNetwork Security { set; get; }
         public List<Node> Nodes { set; get; }
 
+        public Network()
+        {
+            Security = new SecurityNetwork();
+            Nodes = new List<Node>();
+        }
+
         public Node GetNode(UInt16 Address)
         {
             return Nodes.First<Node>(x => x.NodeAddress == Address);

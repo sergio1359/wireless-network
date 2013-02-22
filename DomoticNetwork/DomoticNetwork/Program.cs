@@ -19,6 +19,7 @@ namespace DomoticNetwork
             File.WriteAllBytes("ex.bin", EEPROM);
             //guardamos el hex
             Binary.SaveBin2Hex(EEPROM);
+            Console.WriteLine("DONE");
             Console.ReadLine();
             
 

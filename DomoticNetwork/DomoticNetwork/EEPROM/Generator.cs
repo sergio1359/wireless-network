@@ -22,7 +22,7 @@ namespace DomoticNetwork.EEPROM
             NodeAddress = Address;
             Channel = Network.Security.Channel;
             PanId = Network.Security.PanId;
-            SecurityKey = new Byte[1] { 0x00 };
+            SecurityKey = new Byte[16];
             CompileTime = DateTime.Now;
             PortEventTimeRestrictionDictionary = new Dictionary<ushort, BasicEvent>();
         }
@@ -170,8 +170,8 @@ namespace DomoticNetwork.EEPROM
 
             foreach (String pin in ShieldNode.ShieldBase.PWMPorts)
             {
-                if (ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1])) != null)
-                    result.Add(ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1])).DefaultValueA);
+                if (ShieldNode.GetPinPort(pin[0], Byte.Parse(pin[1].ToString())) != null)
+                    result.Add(ShieldNode.GetPinPort(pin[0], Byte.Parse(pin[1].ToString())).DefaultValueA);
                 else
                 {
                     result.Add(0x00);
@@ -187,7 +187,7 @@ namespace DomoticNetwork.EEPROM
 
             foreach (String pin in ShieldNode.ShieldBase.AnalogPorts)
             {
-                p = ShieldNode.GetPinPort(pin[0], Convert.ToByte(pin[1]));
+                p = ShieldNode.GetPinPort(pin[0], Byte.Parse(pin[1].ToString()));
                 if (p != null)
                 {
                     //Analog Input To Binary
