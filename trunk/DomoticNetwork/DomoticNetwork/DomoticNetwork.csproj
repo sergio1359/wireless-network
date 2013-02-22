@@ -47,7 +47,6 @@
     <Compile Include="Core\Programmer.cs" />
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Data\Serializer.cs" />
-    <Compile Include="DisasterBox.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="EEPROM\Binary.cs" />

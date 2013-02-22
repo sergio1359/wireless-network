@@ -9,11 +9,15 @@ namespace DomoticNetwork.NetworkModel
         public Base ShieldBase { set; get; }
         public ShieldType Type { set; get; }
         public enum ShieldType : byte { Central = 0x00, Roseta = 0x01, Regleta = 0x02, Lampara = 0x03 };
+        public List<Connector> Connectors { set; get; }
+        public List<TimeEvent> TimeEvents { set; get; }
 
         public Shield(ShieldType shieldtype, Base.UControllerType basetype)
         {
             Type = shieldtype;
             ShieldBase = new Base(basetype);
+            Connectors = new List<Connector>();
+            TimeEvents = new List<TimeEvent>();
 
             switch (shieldtype)
             {
@@ -26,7 +30,7 @@ namespace DomoticNetwork.NetworkModel
                     AddConnector("Analog0", Enums.ConnectorType.Analog, new String[] { "F0" });
                     AddConnector("Analog1", Enums.ConnectorType.Analog, new String[] { "F1" });
                     AddConnector("Analog2", Enums.ConnectorType.Analog, new String[] { "F2" });
-                    AddConnector("PWM", Enums.ConnectorType.IODigital, new String[] { "B4" ,"B7", "G5" });
+                    AddConnector("PWM", Enums.ConnectorType.IODigital, new String[] { "B4", "B7", "G5" });
                     AddConnector("Dimmer0", Enums.ConnectorType.Dimmer, new String[] { "A0" });
                     break;
                 case ShieldType.Regleta:
@@ -38,9 +42,7 @@ namespace DomoticNetwork.NetworkModel
             }
         }
 
-        public Connector[] Conectors { set; get; }
 
-        public List<TimeEvent> TimeEvents { set; get; }
 
         public void AddConnector(String name, Enums.ConnectorType type, String[] directions)
         {
@@ -50,34 +52,40 @@ namespace DomoticNetwork.NetworkModel
                     throw new Exception("El tipo de conector no es compatible en esa direccion del micro");
             }
 
-            Connector c = new Connector(name, type, directions);
+            Connectors.Add(new Connector(name, type, directions));
         }
 
         public Connector GetConector(Char port, Byte pin)
         {
-            return Conectors.First<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port == port));
+            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port - 'A' == port));
         }
 
         public Connector GetConector(Byte port, Byte pin)
         {
-            return Conectors.First<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port - 'A' == port));
+            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port == port));
         }
 
         public PinPort GetPinPort(Char port, Byte pin)
         {
-            return GetConector(port, pin).Directions.First<PinPort>(x => x.Port == port && x.Pin == pin);
+            if (GetConector(port, pin) == null)
+                return null;
+            else
+                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port - 'A' == port && x.Pin == pin);
         }
 
         public PinPort GetPinPort(Byte port, Byte pin)
         {
-            return GetConector(port, pin).Directions.First<PinPort>(x => x.Port - 'A' == port && x.Pin == pin);
+            if (GetConector(port, pin) == null)
+                return null;
+            else
+                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port == port && x.Pin == pin);
         }
     }
 
     class Base
     {
         //Identificador de micro
-        public UInt32 DeviceSignature {private set; get; }
+        public UInt32 DeviceSignature { private set; get; }
         public enum UControllerType { ATMega128RFA1 };
         public UControllerType UController { set; get; }
 
@@ -101,12 +109,12 @@ namespace DomoticNetwork.NetworkModel
             {
                 case UControllerType.ATMega128RFA1:
                     DeviceSignature = 128;
-                    NumPorts = 6;
+                    NumPorts = 7;
                     NumPins = 8;
 
                     AnalogPorts = new String[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
-                    PWMPorts = new String[3] { "B4", "B7", "G5" };  //el B7 y el G5 estan compartidos con el mismo timer
-                    UnavailablePorts = new String[0];
+                    PWMPorts = new String[8] { "B4", "B5", "B6", "B7", "E3", "E4", "E5", "G5" };  //VERSION MINOLO:{ "B4", "B7", "G5" } el B7 y el G5 estan compartidos con el mismo timer
+                    UnavailablePorts = new String[2] { "G3", "G4" };  //TODO: de momento estos pero hay que chequear
 
                     LittleEndian = true;
                     break;
@@ -153,9 +161,9 @@ namespace DomoticNetwork.NetworkModel
         /// <returns></returns>
         public bool IsAvailabe(String portPin)
         {
-            if (Convert.ToByte(portPin[1]) > 7)
+            if (Int16.Parse(portPin[1].ToString()) > 7)
                 return false;
-            if (portPin[0] - 'A' + 1 < NumPorts || portPin[0] - 'A' >= 0)
+            if (portPin[0] - 'A' + 1 > NumPorts || portPin[0] - 'A' < 0)
                 return false;
             return !UnavailablePorts.Any(x => x == portPin);
         }
@@ -172,14 +180,15 @@ namespace DomoticNetwork.NetworkModel
         //Events
         public List<BasicEvent> ConnectorEvent { set; get; }
 
-        public Connector (String name, Enums.ConnectorType type, String[] directions)
+        public Connector(String name, Enums.ConnectorType type, String[] directions)
         {
             Name = name;
             Type = type;
+            Directions = new List<PinPort>();
             for (int i = 0; i < directions.Length; i++)
-			{
-			    Directions.Add(new PinPort(i.ToString(), directions[i], type));
-			}
+            {
+                Directions.Add(new PinPort(i.ToString(), directions[i], type));
+            }
             ConnectorEvent = new List<BasicEvent>();
         }
     }
@@ -215,33 +224,36 @@ namespace DomoticNetwork.NetworkModel
         //pin events
         public List<BasicEvent> PinEvents { get; set; }
 
-        public PinPort (String id, String direction, Enums.ConnectorType type)
+        public PinPort(String id, String direction, Enums.ConnectorType type)
         {
             Name = id;
             Port = direction[0];
-            Pin = Convert.ToByte(direction[1]);
+            Pin = Byte.Parse(direction[1].ToString());
 
             switch (type)
-	            {
-                    case Enums.ConnectorType.SwitchHI | Enums.ConnectorType.SwitchLOW | Enums.ConnectorType.IODigital | Enums.ConnectorType.Dimmer:
-                        Output = true;
-                        Digital = true;
-                        DefaultValueD = true;
-                        break;
-                    case Enums.ConnectorType.PWMTTL:
-                        Output = true;
-                        Digital = false;
-                        DefaultValueA = 255;
-                        break;
-                    case Enums.ConnectorType.Analog:
-                        Output = false;
-                        Digital = false;
-                        Increment = 24;
-                        Threshold = 128;
-                        break;
-                    default:
-                        throw new Exception ("no implementado este tipo de conector");
-	         }
+            {
+                case Enums.ConnectorType.SwitchHI:
+                case Enums.ConnectorType.SwitchLOW:
+                case Enums.ConnectorType.IODigital:
+                case Enums.ConnectorType.Dimmer:
+                    Output = true;
+                    Digital = true;
+                    DefaultValueD = true;
+                    break;
+                case Enums.ConnectorType.PWMTTL:
+                    Output = true;
+                    Digital = false;
+                    DefaultValueA = 255;
+                    break;
+                case Enums.ConnectorType.Analog:
+                    Output = false;
+                    Digital = false;
+                    Increment = 24;
+                    Threshold = 128;
+                    break;
+                default:
+                    throw new Exception("no implementado este tipo de conector");
+            }
         }
     }
 }
