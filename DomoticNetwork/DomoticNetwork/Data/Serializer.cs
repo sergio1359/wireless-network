@@ -13,18 +13,18 @@ namespace DomoticNetwork.Data
     {
         public const String DIRECTORY = "//DATA";
         
-        public static object Deserialize(string nameFile)
-        {
-            if (Directory.Exists(Directory.GetCurrentDirectory() + DIRECTORY + "//" + nameFile))
-            {
-                XmlSerializer serialize = new XmlSerializer(o.GetType());
-                XmlReader xml = XmlReader.Create(Directory.GetCurrentDirectory() + DIRECTORY + "//" + nameFile);
-                if (serialize.CanDeserialize(xml))
-                {
-                    return serialize.Deserialize(xml);
-                }
-            }
-        }
+        //public static object Deserialize(string nameFile)
+        //{
+        //    if (Directory.Exists(Directory.GetCurrentDirectory() + DIRECTORY + "//" + nameFile))
+        //    {
+        //        XmlSerializer serialize = new XmlSerializer(o.GetType());
+        //        XmlReader xml = XmlReader.Create(Directory.GetCurrentDirectory() + DIRECTORY + "//" + nameFile);
+        //        if (serialize.CanDeserialize(xml))
+        //        {
+        //            return serialize.Deserialize(xml);
+        //        }
+        //    }
+        //}
 
         public static void Serialize(object o, String nameFile)
         {

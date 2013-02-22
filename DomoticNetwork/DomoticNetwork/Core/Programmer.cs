@@ -48,7 +48,7 @@ namespace DomoticNetwork.Core
 
         public void AddTask(string command, int day, int month, int year, int hour, int minute)
         {
-            tasks.Add(new Task(command, year, month, day, hour, minute));
+            //tasks.Add(new Task(command, year, month, day, hour, minute));
         }
 
         public void AddTask(string command, int hour, int minute)
@@ -57,7 +57,7 @@ namespace DomoticNetwork.Core
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
 
-            tasks.Add(new Task(command, day, month, year, hour, minute));
+            //tasks.Add(new Task(command, day, month, year, hour, minute));
         }
 
         public void AddTask(string command, int remainMinutes)

@@ -8,14 +8,18 @@ namespace DomoticNetwork.NetworkModel
 {
     class Network
     {
-        SecurityNetwork Security { set; get; }
-        List<Node> Nodes { set; get; }
+        public SecurityNetwork Security { set; get; }
+        public List<Node> Nodes { set; get; }
 
         public Node GetNode(UInt16 Address)
         {
             return Nodes.First<Node>(x => x.NodeAddress == Address);
         }
 
+        public void AddNode()
+        {
+            Nodes.Add(new Node("example", false, Shield.ShieldType.Roseta, Base.UControllerType.ATMega128RFA1));
+        }
 
         public void UpdateNetwork(UInt16 direction)
         {
@@ -25,6 +29,9 @@ namespace DomoticNetwork.NetworkModel
 
     class SecurityNetwork
     {
+        public const Byte CHANNEL = 0x00;
+        public const UInt16 PANID = 0x00;
+
         public Byte Channel { set; get; }
         public UInt16 PanId { set; get; }
         public String SecurityKey { set; get; }

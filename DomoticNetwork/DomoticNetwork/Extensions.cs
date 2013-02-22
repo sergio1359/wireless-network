@@ -13,7 +13,7 @@ namespace Extensions
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public static Byte[] ToBinaryEEPROM(this DateTime time)
+        public static Byte[] ToBinaryTime(this DateTime time)
         {
             Byte[] result = new Byte[3];
             result[0] = (byte)time.Hour;
@@ -21,6 +21,18 @@ namespace Extensions
             result[2] = (byte)time.Second;
 
             return result;
+        }
+
+        public static Byte[] ToBinaryDate(this DateTime time, bool littleEndian)
+        {
+
+            List<Byte> result = new List<Byte>();
+
+            result.Add((byte)time.Day);
+            result.Add((byte)time.Month);
+            result.AddRange(time.Year.Uint16ToByte(littleEndian));
+
+            return result.ToArray();
         }
 
         public static Byte[] Uint16ToByte(this UInt16 b, bool litteEndian)
