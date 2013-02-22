@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DomoticNetwork.NetworkModel;
 using Extensions;
-using DomoticNetwork.NetworkModel;
+using System;
+using System.Collections.Generic;
 
 namespace DomoticNetwork.EEPROM
 {
