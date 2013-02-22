@@ -80,6 +80,11 @@ namespace DomoticNetwork.NetworkModel
             else
                 return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port == port && x.Pin == pin);
         }
+
+        public void AddTimeEvent(TimeEvent te)
+        {
+            TimeEvents.Add(te);
+        }
     }
 
     class Base

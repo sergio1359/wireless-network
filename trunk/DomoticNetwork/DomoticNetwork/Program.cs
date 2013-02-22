@@ -12,6 +12,7 @@ namespace DomoticNetwork
             //EEPROMEXAMPLE
             Network network = new Network();
             network.AddNode();
+            network.Nodes[0].NodeShield.AddTimeEvent(new TimeEvent(new Event(), 11, 11, 11, true));
             var add = network.Nodes[0].NodeAddress;
             Generator generatorEEPROM = new Generator(network, add);
             byte[] EEPROM = generatorEEPROM.GenerateEEPROM();
@@ -21,7 +22,7 @@ namespace DomoticNetwork
             Binary.SaveBin2Hex(EEPROM);
             Console.WriteLine("DONE");
             Console.ReadLine();
-            
+
 
 
             ////MODULE EXAMPLE
