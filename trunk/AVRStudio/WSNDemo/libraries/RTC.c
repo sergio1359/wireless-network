@@ -8,12 +8,10 @@
 #include "globals.h"
 #include "command.h"
 
-#define TIME_EVENT_LIST_START_ADDRESS runningConfiguration.raw[EVENT_TABLE_ADDR + NUM_PINS + 1] //Time event list address relative to the end of the event table
-#define TIME_EVENT_LIST_END_ADDRESS runningConfiguration.raw[EVENT_TABLE_ADDR + NUM_PINS + 2]
-#define ENABLE_EVENT_TABLE_START_ADDRESS runningConfiguration.raw[EVENT_TABLE_ADDR + NUM_PINS + 3]
+#define TIME_EVENT_LIST_START_ADDRESS		runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2)] //Time event list address relative to the end of the event table
+#define TIME_EVENT_LIST_END_ADDRESS			runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 2]
 
 TIME_EVENT_HEADER_t* time_event_header;
-uint8_t enable_flag_prt = 0;
 
 void RTC_Init()
 {
@@ -42,13 +40,12 @@ void Validate_Time(TIME_t *receivedTime)
 void searchFirstTimeEvent()
 {
 	uint16_t event_ptr;
-	
 	for(event_ptr = TIME_EVENT_LIST_START_ADDRESS; event_ptr < TIME_EVENT_LIST_END_ADDRESS;)
 	{
 		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[event_ptr + EVENT_TABLE_END_ADDR];
-		uint8_t args_length = getCommandArgsLenght(time_event_header->eventHeader.operation);
+		uint8_t args_length = getCommandArgsLenght(&time_event_header->eventHeader.operation);
 		
-		if(compareTimes(time_event_header->activationTime, currentTime) <= 0) break;
+		if(compareTimes(time_event_header->activationTime, currentTime) >= 0) break;
 		event_ptr += args_length + sizeof(TIME_EVENT_HEADER_t);
 	}
 	
@@ -63,22 +60,26 @@ void numWrite(unsigned int num)
 	int aux;
 	if(num > 9999)
 	{
-		aux = num/10000;
+		aux = num / 10000;
+		num = num % 10000;
 		HAL_UartWriteByte(aux+'0');
 	}
 	if(num > 999)
 	{
 		aux = num/1000;
+		num = num % 1000;
 		HAL_UartWriteByte(aux+'0');
 	}
 	if(num > 99)
 	{
 		aux = num/100;
+		num = num % 100;
 		HAL_UartWriteByte(aux+'0');
 	}
 	if(num > 9)
 	{
 		aux = num/10;
+		num = num % 10;
 		HAL_UartWriteByte(aux+'0');
 	}	 
 	HAL_UartWriteByte((num%10)+'0');
@@ -151,9 +152,15 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 		{
 			
 			//RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
-			RF_Send_Event(time_event_header);
+			RF_Send_Event(&time_event_header->eventHeader);
 			
-			time_event_header += getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);			
+			time_event_header = (uint16_t)time_event_header + getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);
+			
+			if(time_event_header >= ((uint16_t)&runningConfiguration) + TIME_EVENT_LIST_END_ADDRESS + EVENT_TABLE_END_ADDR )
+			{
+				time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[TIME_EVENT_LIST_START_ADDRESS + EVENT_TABLE_END_ADDR];
+				break;
+			}		
 		}
 	}
 }

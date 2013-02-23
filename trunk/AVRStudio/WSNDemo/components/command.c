@@ -22,6 +22,10 @@ uint8_t getCommandArgsLenght(uint8_t* opcode)
 			return DIGITAL_SWITCH_LENGHT;
 			break;
 		
+		case 0xFF: //REPRODUCIR BACHATA
+			return 4;
+			break;
+		
 		default:
 			return 0xFF;
 			break;
