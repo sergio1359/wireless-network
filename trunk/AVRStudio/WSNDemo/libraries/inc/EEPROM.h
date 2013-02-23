@@ -13,9 +13,18 @@
 #include <avr/eeprom.h>
 #include "config.h"
 
-#define FALLING_EDGE 1
-#define RISIN_EDGE 2
-#define BOTH_EDGE 3
+
+#define TIME_EVENT_LIST_START_ADDRESS				runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2)]		//Time event list address relative to the end of the event table
+#define EVENT_RESTRIC_LIST_START_ADDRESS			runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 2]
+#define FREE_REGION_START_ADDRESS					runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 4]
+
+#define TIME_EVENT_LIST_END_ADDRESS					EVENT_RESTRIC_LIST_START_ADDRESS		//Renowned for greater understanding
+#define EVENT_RESTRIC_LIST_END_ADDRESS				FREE_REGION_START_ADDRESS
+
+#define NO_EDGE			0
+#define FALLING_EDGE	1
+#define RISIN_EDGE		2
+#define BOTH_EDGE		3
 
 typedef struct{
 	uint8_t shieldModel;  

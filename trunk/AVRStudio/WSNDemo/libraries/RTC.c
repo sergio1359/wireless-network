@@ -8,9 +8,6 @@
 #include "globals.h"
 #include "command.h"
 
-#define TIME_EVENT_LIST_START_ADDRESS		runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2)] //Time event list address relative to the end of the event table
-#define TIME_EVENT_LIST_END_ADDRESS			runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 2]
-
 TIME_EVENT_HEADER_t* time_event_header;
 
 void RTC_Init()
@@ -82,7 +79,7 @@ void numWrite(unsigned int num)
 		num = num % 10;
 		HAL_UartWriteByte(aux+'0');
 	}	 
-	HAL_UartWriteByte((num%10)+'0');
+	HAL_UartWriteByte(num+'0');
 }
 
 int8_t compareTimes(TIME_t time1, TIME_t time2)

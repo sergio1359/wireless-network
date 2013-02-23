@@ -1,35 +1,36 @@
 Archive member included because of file (symbol)
 
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
                               stack/sys/src/sysTimer.o (__mulsi3)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
                               libraries/RTC.o (__udivmodhi4)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
                               stack/hal/src/halSleep.o (__udivmodsi4)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
-                              c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o (exit)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                              c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o (exit)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
                               components/command.o (__do_copy_data)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
                               components/command.o (__do_clear_bss)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
                               WSNDemo.o (rand)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
                               stack/nwk/src/nwkDataReq.o (memcpy)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
                               WSNDemo.o (itoa)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
                               libraries/EEPROM.o (__eerd_block_m128rfa1)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
-                              c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o) (strrev)
-c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
-                              c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o) (__divmodsi4)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+                              c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o) (strrev)
+c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+                              c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o) (__divmodsi4)
 
 Allocating common symbols
 Common symbol       size              file
 
 validTime           0x1               WSNDemo.o
 eoeoe               0x2               components/radio.o
+debounceBuffer      0x18              components/portMonitor.o
 nwkIb               0xc               stack/nwk/src/nwk.o
 adcVal              0x2               WSNDemo.o
 buf                 0x5               WSNDemo.o
@@ -41,35 +42,38 @@ time_event_header   0x2               libraries/RTC.o
 
 Discarded input sections
 
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
  .text          0x00000000        0x0 components/command.o
  .data          0x00000000        0x0 components/command.o
  .bss           0x00000000        0x0 components/command.o
  .text          0x00000000        0x0 components/portMonitor.o
- .data          0x00000000        0x0 components/portMonitor.o
+ .data          0x00000000       0x18 components/portMonitor.o
  .bss           0x00000000        0x0 components/portMonitor.o
  .text.launchEvents
-                0x00000000      0x120 components/portMonitor.o
+                0x00000000      0x12c components/portMonitor.o
  .text.PortMonitor_TaskHandler
-                0x00000000      0x2ba components/portMonitor.o
+                0x00000000      0x368 components/portMonitor.o
+ .bss.debounce_prt
+                0x00000000        0x1 components/portMonitor.o
  .bss.lastValuesA
                 0x00000000        0x8 components/portMonitor.o
  .bss.lastValuesD
                 0x00000000        0x5 components/portMonitor.o
  .data.firstTime
                 0x00000000        0x1 components/portMonitor.o
- .debug_info    0x00000000      0x7aa components/portMonitor.o
- .debug_abbrev  0x00000000      0x1a9 components/portMonitor.o
- .debug_loc     0x00000000      0x44f components/portMonitor.o
+ .debug_info    0x00000000      0x833 components/portMonitor.o
+ .debug_abbrev  0x00000000      0x1af components/portMonitor.o
+ .debug_loc     0x00000000      0x430 components/portMonitor.o
  .debug_aranges
                 0x00000000       0x28 components/portMonitor.o
- .debug_ranges  0x00000000       0xa0 components/portMonitor.o
- .debug_line    0x00000000      0x435 components/portMonitor.o
+ .debug_ranges  0x00000000       0x70 components/portMonitor.o
+ .debug_line    0x00000000      0x461 components/portMonitor.o
  .debug_macinfo
-                0x00000000    0x1283d components/portMonitor.o
- .debug_str     0x00000000      0x5f5 components/portMonitor.o
+                0x00000000    0x129f7 components/portMonitor.o
+ .debug_str     0x00000000      0x600 components/portMonitor.o
  .debug_frame   0x00000000       0xd0 components/portMonitor.o
+ COMMON         0x00000000       0x18 components/portMonitor.o
  .text          0x00000000        0x0 components/radio.o
  .bss           0x00000000        0x0 components/radio.o
  .text          0x00000000        0x0 libraries/ANALOG.o
@@ -86,9 +90,9 @@ Discarded input sections
  .bss           0x00000000        0x0 otaInterface.o
  .debug_info    0x00000000       0x62 otaInterface.o
  .debug_abbrev  0x00000000       0x2c otaInterface.o
- .debug_line    0x00000000      0x30a otaInterface.o
+ .debug_line    0x00000000      0x31c otaInterface.o
  .debug_macinfo
-                0x00000000    0x111b8 otaInterface.o
+                0x00000000    0x111d1 otaInterface.o
  .debug_str     0x00000000       0xb3 otaInterface.o
  .text          0x00000000        0x0 stack/hal/src/hal.o
  .data          0x00000000        0x0 stack/hal/src/hal.o
@@ -135,9 +139,9 @@ Discarded input sections
  .bss           0x00000000        0x0 stack/nwk/src/nwkSecurity.o
  .debug_info    0x00000000       0x69 stack/nwk/src/nwkSecurity.o
  .debug_abbrev  0x00000000       0x2c stack/nwk/src/nwkSecurity.o
- .debug_line    0x00000000      0x31a stack/nwk/src/nwkSecurity.o
+ .debug_line    0x00000000      0x32c stack/nwk/src/nwkSecurity.o
  .debug_macinfo
-                0x00000000    0x11667 stack/nwk/src/nwkSecurity.o
+                0x00000000    0x11680 stack/nwk/src/nwkSecurity.o
  .debug_str     0x00000000       0xc4 stack/nwk/src/nwkSecurity.o
  .text          0x00000000        0x0 stack/nwk/src/nwkTx.o
  .data          0x00000000        0x0 stack/nwk/src/nwkTx.o
@@ -150,18 +154,18 @@ Discarded input sections
  .bss           0x00000000        0x0 stack/service/src/otaClient.o
  .debug_info    0x00000000       0x62 stack/service/src/otaClient.o
  .debug_abbrev  0x00000000       0x2c stack/service/src/otaClient.o
- .debug_line    0x00000000      0x20f stack/service/src/otaClient.o
+ .debug_line    0x00000000      0x21b stack/service/src/otaClient.o
  .debug_macinfo
-                0x00000000     0x3412 stack/service/src/otaClient.o
+                0x00000000     0x342b stack/service/src/otaClient.o
  .debug_str     0x00000000       0xc0 stack/service/src/otaClient.o
  .text          0x00000000        0x0 stack/service/src/otaServer.o
  .data          0x00000000        0x0 stack/service/src/otaServer.o
  .bss           0x00000000        0x0 stack/service/src/otaServer.o
  .debug_info    0x00000000       0x62 stack/service/src/otaServer.o
  .debug_abbrev  0x00000000       0x2c stack/service/src/otaServer.o
- .debug_line    0x00000000      0x20f stack/service/src/otaServer.o
+ .debug_line    0x00000000      0x21b stack/service/src/otaServer.o
  .debug_macinfo
-                0x00000000     0x3412 stack/service/src/otaServer.o
+                0x00000000     0x342b stack/service/src/otaServer.o
  .debug_str     0x00000000       0xc0 stack/service/src/otaServer.o
  .text          0x00000000        0x0 stack/sys/src/sys.o
  .data          0x00000000        0x0 stack/sys/src/sys.o
@@ -171,53 +175,53 @@ Discarded input sections
  .bss           0x00000000        0x0 stack/sys/src/sysEncrypt.o
  .debug_info    0x00000000       0x62 stack/sys/src/sysEncrypt.o
  .debug_abbrev  0x00000000       0x2c stack/sys/src/sysEncrypt.o
- .debug_line    0x00000000      0x310 stack/sys/src/sysEncrypt.o
+ .debug_line    0x00000000      0x322 stack/sys/src/sysEncrypt.o
  .debug_macinfo
-                0x00000000    0x121ac stack/sys/src/sysEncrypt.o
+                0x00000000    0x121c5 stack/sys/src/sysEncrypt.o
  .debug_str     0x00000000       0xbd stack/sys/src/sysEncrypt.o
  .text          0x00000000        0x0 stack/sys/src/sysTimer.o
  .data          0x00000000        0x0 stack/sys/src/sysTimer.o
  .bss           0x00000000        0x0 stack/sys/src/sysTimer.o
  .text          0x00000000        0x0 WSNDemo.o
  .bss           0x00000000        0x0 WSNDemo.o
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .text.libgcc   0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .text.libgcc   0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .text.libgcc   0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
- .text          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
- .data          0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
- .bss           0x00000000        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
 Memory Configuration
 
@@ -233,7 +237,7 @@ signature        0x00840000         0x00000400         rw !x
 Linker script and memory map
 
 Address of section .data set to 0x800200
-LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
 LOAD components/command.o
 LOAD components/portMonitor.o
 LOAD components/radio.o
@@ -262,9 +266,9 @@ LOAD stack/sys/src/sysTimer.o
 LOAD WSNDemo.o
 START GROUP
 END GROUP
-LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a
-LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a
-LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a
+LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a
+LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a
+LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a
 
 .hash
  *(.hash)
@@ -356,9 +360,9 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x2548
+.text           0x00000000     0x2540
  *(.vectors)
- .vectors       0x00000000      0x120 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .vectors       0x00000000      0x120 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
                 0x00000000                __vector_default
                 0x00000000                __vectors
  *(.vectors)
@@ -383,20 +387,20 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000120        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .init0         0x00000120        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
                 0x00000120                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000120        0xc c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .init2         0x00000120        0xc c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x0000012c       0x1a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .init4         0x0000012c       0x1a c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
                 0x0000012c                __do_copy_data
- .init4         0x00000146       0x10 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .init4         0x00000146       0x10 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
                 0x00000146                __do_clear_bss
  *(.init4)
  *(.init5)
@@ -408,10 +412,10 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000156        0x8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .init9         0x00000156        0x8 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
  *(.init9)
  *(.text)
- .text          0x0000015e        0x4 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .text          0x0000015e        0x4 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
                 0x0000015e                __vector_38
                 0x0000015e                __vector_22
                 0x0000015e                __vector_28
@@ -500,304 +504,304 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
                 0x00000314       0x1c libraries/RTC.o
                 0x00000314                Validate_Time
  .text.numWrite
-                0x00000330       0x88 libraries/RTC.o
+                0x00000330       0x80 libraries/RTC.o
                 0x00000330                numWrite
  .text.compareTimes
-                0x000003b8       0x42 libraries/RTC.o
-                0x000003b8                compareTimes
+                0x000003b0       0x42 libraries/RTC.o
+                0x000003b0                compareTimes
  .text.searchFirstTimeEvent
-                0x000003fa       0x82 libraries/RTC.o
-                0x000003fa                searchFirstTimeEvent
+                0x000003f2       0x82 libraries/RTC.o
+                0x000003f2                searchFirstTimeEvent
  .text.__vector_15
-                0x0000047c      0x100 libraries/RTC.o
-                0x0000047c                __vector_15
+                0x00000474      0x100 libraries/RTC.o
+                0x00000474                __vector_15
  .text.HAL_Init
-                0x0000057c       0x1a stack/hal/src/hal.o
-                0x0000057c                HAL_Init
+                0x00000574       0x1a stack/hal/src/hal.o
+                0x00000574                HAL_Init
  .text.HAL_Delay
-                0x00000596        0x8 stack/hal/src/hal.o
-                0x00000596                HAL_Delay
+                0x0000058e        0x8 stack/hal/src/hal.o
+                0x0000058e                HAL_Delay
  .text.HAL_Sleep
-                0x0000059e       0xfe stack/hal/src/halSleep.o
-                0x0000059e                HAL_Sleep
+                0x00000596       0xfe stack/hal/src/halSleep.o
+                0x00000596                HAL_Sleep
  .text.__vector_13
-                0x0000069c       0x1e stack/hal/src/halSleep.o
-                0x0000069c                __vector_13
+                0x00000694       0x1e stack/hal/src/halSleep.o
+                0x00000694                __vector_13
  .text.HAL_TimerInit
-                0x000006ba       0x2a stack/hal/src/halTimer.o
-                0x000006ba                HAL_TimerInit
+                0x000006b2       0x2a stack/hal/src/halTimer.o
+                0x000006b2                HAL_TimerInit
  .text.HAL_TimerDelay
-                0x000006e4       0x68 stack/hal/src/halTimer.o
-                0x000006e4                HAL_TimerDelay
+                0x000006dc       0x68 stack/hal/src/halTimer.o
+                0x000006dc                HAL_TimerDelay
  .text.__vector_42
-                0x0000074c       0x22 stack/hal/src/halTimer.o
-                0x0000074c                __vector_42
+                0x00000744       0x22 stack/hal/src/halTimer.o
+                0x00000744                __vector_42
  .text.__vector_43
-                0x0000076e       0x1e stack/hal/src/halTimer.o
-                0x0000076e                __vector_43
+                0x00000766       0x1e stack/hal/src/halTimer.o
+                0x00000766                __vector_43
  .text.HAL_UartInit
-                0x0000078c       0xb8 stack/hal/src/halUart.o
-                0x0000078c                HAL_UartInit
+                0x00000784       0xb8 stack/hal/src/halUart.o
+                0x00000784                HAL_UartInit
  .text.HAL_UartWriteByte
-                0x00000844       0x54 stack/hal/src/halUart.o
-                0x00000844                HAL_UartWriteByte
+                0x0000083c       0x54 stack/hal/src/halUart.o
+                0x0000083c                HAL_UartWriteByte
  .text.HAL_UartPrint
-                0x00000898       0x5e stack/hal/src/halUart.o
-                0x00000898                HAL_UartPrint
+                0x00000890       0x5e stack/hal/src/halUart.o
+                0x00000890                HAL_UartPrint
  .text.HAL_UartReadByte
-                0x000008f6       0x5c stack/hal/src/halUart.o
-                0x000008f6                HAL_UartReadByte
+                0x000008ee       0x5c stack/hal/src/halUart.o
+                0x000008ee                HAL_UartReadByte
  .text.__vector_26
-                0x00000952       0x38 stack/hal/src/halUart.o
-                0x00000952                __vector_26
+                0x0000094a       0x38 stack/hal/src/halUart.o
+                0x0000094a                __vector_26
  .text.__vector_25
-                0x0000098a       0xb0 stack/hal/src/halUart.o
-                0x0000098a                __vector_25
+                0x00000982       0xb0 stack/hal/src/halUart.o
+                0x00000982                __vector_25
  .text.HAL_UartTaskHandler
-                0x00000a3a       0x8e stack/hal/src/halUart.o
-                0x00000a3a                HAL_UartTaskHandler
+                0x00000a32       0x8e stack/hal/src/halUart.o
+                0x00000a32                HAL_UartTaskHandler
  .text.NWK_Init
-                0x00000ac8       0x32 stack/nwk/src/nwk.o
-                0x00000ac8                NWK_Init
+                0x00000ac0       0x32 stack/nwk/src/nwk.o
+                0x00000ac0                NWK_Init
  .text.NWK_SetAddr
-                0x00000afa        0xe stack/nwk/src/nwk.o
-                0x00000afa                NWK_SetAddr
+                0x00000af2        0xe stack/nwk/src/nwk.o
+                0x00000af2                NWK_SetAddr
  .text.NWK_SetPanId
-                0x00000b08        0xe stack/nwk/src/nwk.o
-                0x00000b08                NWK_SetPanId
+                0x00000b00        0xe stack/nwk/src/nwk.o
+                0x00000b00                NWK_SetPanId
  .text.NWK_OpenEndpoint
-                0x00000b16       0x12 stack/nwk/src/nwk.o
-                0x00000b16                NWK_OpenEndpoint
+                0x00000b0e       0x12 stack/nwk/src/nwk.o
+                0x00000b0e                NWK_OpenEndpoint
  .text.NWK_Busy
-                0x00000b28       0x2a stack/nwk/src/nwk.o
-                0x00000b28                NWK_Busy
+                0x00000b20       0x2a stack/nwk/src/nwk.o
+                0x00000b20                NWK_Busy
  .text.NWK_SleepReq
-                0x00000b52        0x6 stack/nwk/src/nwk.o
-                0x00000b52                NWK_SleepReq
+                0x00000b4a        0x6 stack/nwk/src/nwk.o
+                0x00000b4a                NWK_SleepReq
  .text.NWK_WakeupReq
-                0x00000b58        0x6 stack/nwk/src/nwk.o
-                0x00000b58                NWK_WakeupReq
+                0x00000b50        0x6 stack/nwk/src/nwk.o
+                0x00000b50                NWK_WakeupReq
  .text.NWK_TaskHandler
-                0x00000b5e        0xe stack/nwk/src/nwk.o
-                0x00000b5e                NWK_TaskHandler
+                0x00000b56        0xe stack/nwk/src/nwk.o
+                0x00000b56                NWK_TaskHandler
  .text.nwkDataReqTxConf
-                0x00000b6c       0x3e stack/nwk/src/nwkDataReq.o
+                0x00000b64       0x3e stack/nwk/src/nwkDataReq.o
  .text.nwkDataReqInit
-                0x00000baa        0xa stack/nwk/src/nwkDataReq.o
-                0x00000baa                nwkDataReqInit
+                0x00000ba2        0xa stack/nwk/src/nwkDataReq.o
+                0x00000ba2                nwkDataReqInit
  .text.NWK_DataReq
-                0x00000bb4       0x2a stack/nwk/src/nwkDataReq.o
-                0x00000bb4                NWK_DataReq
+                0x00000bac       0x2a stack/nwk/src/nwkDataReq.o
+                0x00000bac                NWK_DataReq
  .text.nwkDataReqBusy
-                0x00000bde       0x14 stack/nwk/src/nwkDataReq.o
-                0x00000bde                nwkDataReqBusy
+                0x00000bd6       0x14 stack/nwk/src/nwkDataReq.o
+                0x00000bd6                nwkDataReqBusy
  .text.nwkDataReqTaskHandler
-                0x00000bf2      0x11a stack/nwk/src/nwkDataReq.o
-                0x00000bf2                nwkDataReqTaskHandler
+                0x00000bea      0x11a stack/nwk/src/nwkDataReq.o
+                0x00000bea                nwkDataReqTaskHandler
  .text.nwkFrameInit
-                0x00000d0c        0xe stack/nwk/src/nwkFrame.o
-                0x00000d0c                nwkFrameInit
+                0x00000d04        0xe stack/nwk/src/nwkFrame.o
+                0x00000d04                nwkFrameInit
  .text.nwkFrameAlloc
-                0x00000d1a       0x4c stack/nwk/src/nwkFrame.o
-                0x00000d1a                nwkFrameAlloc
+                0x00000d12       0x4c stack/nwk/src/nwkFrame.o
+                0x00000d12                nwkFrameAlloc
  .text.nwkFrameFree
-                0x00000d66        0x6 stack/nwk/src/nwkFrame.o
-                0x00000d66                nwkFrameFree
+                0x00000d5e        0x6 stack/nwk/src/nwkFrame.o
+                0x00000d5e                nwkFrameFree
  .text.nwkFrameByIndex
-                0x00000d6c       0x1c stack/nwk/src/nwkFrame.o
-                0x00000d6c                nwkFrameByIndex
+                0x00000d64       0x1c stack/nwk/src/nwkFrame.o
+                0x00000d64                nwkFrameByIndex
  .text.nwkFrameCommandInit
-                0x00000d88       0x4a stack/nwk/src/nwkFrame.o
-                0x00000d88                nwkFrameCommandInit
+                0x00000d80       0x4a stack/nwk/src/nwkFrame.o
+                0x00000d80                nwkFrameCommandInit
  .text.nwkRouteFindRecord
-                0x00000dd2       0x42 stack/nwk/src/nwkRoute.o
+                0x00000dca       0x42 stack/nwk/src/nwkRoute.o
  .text.nwkRouteErrorConf
-                0x00000e14        0x6 stack/nwk/src/nwkRoute.o
+                0x00000e0c        0x6 stack/nwk/src/nwkRoute.o
  .text.nwkRouteTxFrameConf
-                0x00000e1a        0x6 stack/nwk/src/nwkRoute.o
+                0x00000e12        0x6 stack/nwk/src/nwkRoute.o
  .text.nwkRouteInit
-                0x00000e20       0x18 stack/nwk/src/nwkRoute.o
-                0x00000e20                nwkRouteInit
+                0x00000e18       0x18 stack/nwk/src/nwkRoute.o
+                0x00000e18                nwkRouteInit
  .text.nwkRouteRemove
-                0x00000e38       0x14 stack/nwk/src/nwkRoute.o
-                0x00000e38                nwkRouteRemove
+                0x00000e30       0x14 stack/nwk/src/nwkRoute.o
+                0x00000e30                nwkRouteRemove
  .text.nwkRouteFrameReceived
-                0x00000e4c       0x82 stack/nwk/src/nwkRoute.o
-                0x00000e4c                nwkRouteFrameReceived
+                0x00000e44       0x82 stack/nwk/src/nwkRoute.o
+                0x00000e44                nwkRouteFrameReceived
  .text.nwkRouteFrameSent
-                0x00000ece       0xb2 stack/nwk/src/nwkRoute.o
-                0x00000ece                nwkRouteFrameSent
+                0x00000ec6       0xb2 stack/nwk/src/nwkRoute.o
+                0x00000ec6                nwkRouteFrameSent
  .text.nwkRouteNextHop
-                0x00000f80       0x4a stack/nwk/src/nwkRoute.o
-                0x00000f80                nwkRouteNextHop
+                0x00000f78       0x4a stack/nwk/src/nwkRoute.o
+                0x00000f78                nwkRouteNextHop
  .text.nwkRouteFrame
-                0x00000fca       0x98 stack/nwk/src/nwkRoute.o
-                0x00000fca                nwkRouteFrame
+                0x00000fc2       0x98 stack/nwk/src/nwkRoute.o
+                0x00000fc2                nwkRouteFrame
  .text.nwkRouteErrorReceived
-                0x00001062       0x14 stack/nwk/src/nwkRoute.o
-                0x00001062                nwkRouteErrorReceived
+                0x0000105a       0x14 stack/nwk/src/nwkRoute.o
+                0x0000105a                nwkRouteErrorReceived
  .text.NWK_RouteNextHop
-                0x00001076        0x6 stack/nwk/src/nwkRoute.o
-                0x00001076                NWK_RouteNextHop
+                0x0000106e        0x6 stack/nwk/src/nwkRoute.o
+                0x0000106e                NWK_RouteNextHop
  .text.nwkRxSendAckConf
-                0x0000107c        0x6 stack/nwk/src/nwkRx.o
+                0x00001074        0x6 stack/nwk/src/nwkRx.o
  .text.nwkRxDuplicateRejectionTimerHandler
-                0x00001082       0x2e stack/nwk/src/nwkRx.o
+                0x0000107a       0x2e stack/nwk/src/nwkRx.o
  .text.nwkRxSeriveDataInd
-                0x000010b0       0x26 stack/nwk/src/nwkRx.o
+                0x000010a8       0x26 stack/nwk/src/nwkRx.o
  .text.nwkRxInit
-                0x000010d6       0x4a stack/nwk/src/nwkRx.o
-                0x000010d6                nwkRxInit
+                0x000010ce       0x4a stack/nwk/src/nwkRx.o
+                0x000010ce                nwkRxInit
  .text.PHY_DataInd
-                0x00001120       0x60 stack/nwk/src/nwkRx.o
-                0x00001120                PHY_DataInd
+                0x00001118       0x60 stack/nwk/src/nwkRx.o
+                0x00001118                PHY_DataInd
  .text.nwkRxBusy
-                0x00001180        0xe stack/nwk/src/nwkRx.o
-                0x00001180                nwkRxBusy
+                0x00001178        0xe stack/nwk/src/nwkRx.o
+                0x00001178                nwkRxBusy
  .text.nwkRxTaskHandler
-                0x0000118e      0x3b2 stack/nwk/src/nwkRx.o
-                0x0000118e                nwkRxTaskHandler
+                0x00001186      0x3b2 stack/nwk/src/nwkRx.o
+                0x00001186                nwkRxTaskHandler
  .text.nwkTxBroadcastConf
-                0x00001540        0x6 stack/nwk/src/nwkTx.o
+                0x00001538        0x6 stack/nwk/src/nwkTx.o
  .text.nwkTxAckWaitTimerHandler
-                0x00001546       0x60 stack/nwk/src/nwkTx.o
+                0x0000153e       0x60 stack/nwk/src/nwkTx.o
  .text.nwkTxInit
-                0x000015a6       0x36 stack/nwk/src/nwkTx.o
-                0x000015a6                nwkTxInit
+                0x0000159e       0x36 stack/nwk/src/nwkTx.o
+                0x0000159e                nwkTxInit
  .text.nwkTxFrame
-                0x000015dc       0x7a stack/nwk/src/nwkTx.o
-                0x000015dc                nwkTxFrame
+                0x000015d4       0x7a stack/nwk/src/nwkTx.o
+                0x000015d4                nwkTxFrame
  .text.nwkTxBroadcastFrame
-                0x00001656       0x90 stack/nwk/src/nwkTx.o
-                0x00001656                nwkTxBroadcastFrame
+                0x0000164e       0x90 stack/nwk/src/nwkTx.o
+                0x0000164e                nwkTxBroadcastFrame
  .text.nwkTxAckReceived
-                0x000016e6       0x48 stack/nwk/src/nwkTx.o
-                0x000016e6                nwkTxAckReceived
+                0x000016de       0x48 stack/nwk/src/nwkTx.o
+                0x000016de                nwkTxAckReceived
  .text.nwkTxBusy
-                0x0000172e        0xe stack/nwk/src/nwkTx.o
-                0x0000172e                nwkTxBusy
+                0x00001726        0xe stack/nwk/src/nwkTx.o
+                0x00001726                nwkTxBusy
  .text.PHY_DataConf
-                0x0000173c       0x38 stack/nwk/src/nwkTx.o
-                0x0000173c                PHY_DataConf
+                0x00001734       0x38 stack/nwk/src/nwkTx.o
+                0x00001734                PHY_DataConf
  .text.nwkTxTaskHandler
-                0x00001774       0xd6 stack/nwk/src/nwkTx.o
-                0x00001774                nwkTxTaskHandler
+                0x0000176c       0xd6 stack/nwk/src/nwkTx.o
+                0x0000176c                nwkTxTaskHandler
  .text.phyTrxSetState
-                0x0000184a       0x16 stack/phy/src/phy.o
+                0x00001842       0x16 stack/phy/src/phy.o
  .text.phySetRxState
-                0x00001860       0x14 stack/phy/src/phy.o
+                0x00001858       0x14 stack/phy/src/phy.o
  .text.phyGetRandomNumber
-                0x00001874       0x70 stack/phy/src/phy.o
+                0x0000186c       0x70 stack/phy/src/phy.o
  .text.PHY_Init
-                0x000018e4       0x58 stack/phy/src/phy.o
-                0x000018e4                PHY_Init
+                0x000018dc       0x58 stack/phy/src/phy.o
+                0x000018dc                PHY_Init
  .text.PHY_SetRxState
-                0x0000193c       0x10 stack/phy/src/phy.o
-                0x0000193c                PHY_SetRxState
+                0x00001934       0x10 stack/phy/src/phy.o
+                0x00001934                PHY_SetRxState
  .text.PHY_SetChannel
-                0x0000194c       0x10 stack/phy/src/phy.o
-                0x0000194c                PHY_SetChannel
+                0x00001944       0x10 stack/phy/src/phy.o
+                0x00001944                PHY_SetChannel
  .text.PHY_SetPanId
-                0x0000195c       0x14 stack/phy/src/phy.o
-                0x0000195c                PHY_SetPanId
+                0x00001954       0x14 stack/phy/src/phy.o
+                0x00001954                PHY_SetPanId
  .text.PHY_SetShortAddr
-                0x00001970       0x14 stack/phy/src/phy.o
-                0x00001970                PHY_SetShortAddr
+                0x00001968       0x14 stack/phy/src/phy.o
+                0x00001968                PHY_SetShortAddr
  .text.PHY_Busy
-                0x00001984       0x20 stack/phy/src/phy.o
-                0x00001984                PHY_Busy
+                0x0000197c       0x20 stack/phy/src/phy.o
+                0x0000197c                PHY_Busy
  .text.PHY_Sleep
-                0x000019a4       0x18 stack/phy/src/phy.o
-                0x000019a4                PHY_Sleep
+                0x0000199c       0x18 stack/phy/src/phy.o
+                0x0000199c                PHY_Sleep
  .text.PHY_Wakeup
-                0x000019bc       0x16 stack/phy/src/phy.o
-                0x000019bc                PHY_Wakeup
+                0x000019b4       0x16 stack/phy/src/phy.o
+                0x000019b4                PHY_Wakeup
  .text.PHY_DataReq
-                0x000019d2       0x52 stack/phy/src/phy.o
-                0x000019d2                PHY_DataReq
+                0x000019ca       0x52 stack/phy/src/phy.o
+                0x000019ca                PHY_DataReq
  .text.PHY_RandomReq
-                0x00001a24        0xc stack/phy/src/phy.o
-                0x00001a24                PHY_RandomReq
+                0x00001a1c        0xc stack/phy/src/phy.o
+                0x00001a1c                PHY_RandomReq
  .text.__vector_63
-                0x00001a30       0x70 stack/phy/src/phy.o
-                0x00001a30                __vector_63
+                0x00001a28       0x70 stack/phy/src/phy.o
+                0x00001a28                __vector_63
  .text.__vector_60
-                0x00001aa0       0x34 stack/phy/src/phy.o
-                0x00001aa0                __vector_60
+                0x00001a98       0x34 stack/phy/src/phy.o
+                0x00001a98                __vector_60
  .text.PHY_TaskHandler
-                0x00001ad4      0x122 stack/phy/src/phy.o
-                0x00001ad4                PHY_TaskHandler
+                0x00001acc      0x122 stack/phy/src/phy.o
+                0x00001acc                PHY_TaskHandler
  .text.SYS_Init
-                0x00001bf6       0x12 stack/sys/src/sys.o
-                0x00001bf6                SYS_Init
+                0x00001bee       0x12 stack/sys/src/sys.o
+                0x00001bee                SYS_Init
  .text.SYS_TaskHandler
-                0x00001c08        0xe stack/sys/src/sys.o
-                0x00001c08                SYS_TaskHandler
+                0x00001c00        0xe stack/sys/src/sys.o
+                0x00001c00                SYS_TaskHandler
  .text.placeTimer
-                0x00001c16       0xae stack/sys/src/sysTimer.o
+                0x00001c0e       0xae stack/sys/src/sysTimer.o
  .text.SYS_TimerInit
-                0x00001cc4        0xa stack/sys/src/sysTimer.o
-                0x00001cc4                SYS_TimerInit
+                0x00001cbc        0xa stack/sys/src/sysTimer.o
+                0x00001cbc                SYS_TimerInit
  .text.SYS_TimerStop
-                0x00001cce       0x72 stack/sys/src/sysTimer.o
-                0x00001cce                SYS_TimerStop
+                0x00001cc6       0x72 stack/sys/src/sysTimer.o
+                0x00001cc6                SYS_TimerStop
  .text.SYS_TimerStarted
-                0x00001d40       0x22 stack/sys/src/sysTimer.o
-                0x00001d40                SYS_TimerStarted
+                0x00001d38       0x22 stack/sys/src/sysTimer.o
+                0x00001d38                SYS_TimerStarted
  .text.SYS_TimerStart
-                0x00001d62       0x1a stack/sys/src/sysTimer.o
-                0x00001d62                SYS_TimerStart
+                0x00001d5a       0x1a stack/sys/src/sysTimer.o
+                0x00001d5a                SYS_TimerStart
  .text.SYS_TimerTaskHandler
-                0x00001d7c       0xa0 stack/sys/src/sysTimer.o
-                0x00001d7c                SYS_TimerTaskHandler
+                0x00001d74       0xa0 stack/sys/src/sysTimer.o
+                0x00001d74                SYS_TimerTaskHandler
  .text.appNetworkStatusTimerHandler
-                0x00001e1c        0xa WSNDemo.o
+                0x00001e14        0xa WSNDemo.o
  .text.appDataSendingTimerHandler
-                0x00001e26       0x1a WSNDemo.o
+                0x00001e1e       0x1a WSNDemo.o
  .text.appDataInd
-                0x00001e40       0x90 WSNDemo.o
+                0x00001e38       0x90 WSNDemo.o
  .text.appDataConf
-                0x00001ed0       0xba WSNDemo.o
+                0x00001ec8       0xba WSNDemo.o
  .text.HAL_UartBytesReceived
-                0x00001f8a       0x2e WSNDemo.o
-                0x00001f8a                HAL_UartBytesReceived
+                0x00001f82       0x2e WSNDemo.o
+                0x00001f82                HAL_UartBytesReceived
  .text.PHY_RandomConf
-                0x00001fb8        0x6 WSNDemo.o
-                0x00001fb8                PHY_RandomConf
+                0x00001fb0        0x6 WSNDemo.o
+                0x00001fb0                PHY_RandomConf
  .text.startup.main
-                0x00001fbe      0x348 WSNDemo.o
-                0x00001fbe                main
- .text.libgcc   0x00002306       0x3e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
-                0x00002306                __mulsi3
- .text.libgcc   0x00002344       0x28 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
-                0x00002344                __udivmodhi4
- .text.libgcc   0x0000236c       0x44 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
-                0x0000236c                __udivmodsi4
+                0x00001fb6      0x348 WSNDemo.o
+                0x00001fb6                main
+ .text.libgcc   0x000022fe       0x3e c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+                0x000022fe                __mulsi3
+ .text.libgcc   0x0000233c       0x28 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+                0x0000233c                __udivmodhi4
+ .text.libgcc   0x00002364       0x44 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+                0x00002364                __udivmodsi4
  .text.avr-libc
-                0x000023b0       0xca c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
-                0x00002454                rand_r
-                0x0000245a                rand
-                0x00002464                srand
+                0x000023a8       0xca c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+                0x0000244c                rand_r
+                0x00002452                rand
+                0x0000245c                srand
  .text.avr-libc
-                0x0000247a       0x12 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
-                0x0000247a                memcpy
+                0x00002472       0x12 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+                0x00002472                memcpy
  .text.avr-libc
-                0x0000248c       0x42 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
-                0x0000248c                itoa
+                0x00002484       0x42 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+                0x00002484                itoa
  .text.avr-libc
-                0x000024ce       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
-                0x000024ce                __eerd_block_m128rfa1
-                0x000024d2                __eerd_blraw_m128rfa1
+                0x000024c6       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+                0x000024c6                __eerd_block_m128rfa1
+                0x000024ca                __eerd_blraw_m128rfa1
  .text.avr-libc
-                0x000024ee       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
-                0x000024ee                strrev
- .text.libgcc   0x0000250e       0x36 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
-                0x0000250e                __divmodsi4
-                0x00002544                . = ALIGN (0x2)
+                0x000024e6       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+                0x000024e6                strrev
+ .text.libgcc   0x00002506       0x36 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+                0x00002506                __divmodsi4
+                0x0000253c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00002544        0x0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
-                0x00002544                _exit
-                0x00002544                exit
+ .fini9         0x0000253c        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                0x0000253c                _exit
+                0x0000253c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -816,16 +820,16 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00002544        0x4 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x0000253c        0x4 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00002548                _etext = .
+                0x00002540                _etext = .
 
-.data           0x00800200       0xb6 load address 0x00002548
+.data           0x00800200       0xb6 load address 0x00002540
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800200       0x1d components/radio.o
  .data          0x0080021d       0x94 WSNDemo.o
- .data          0x008002b1        0x4 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .data          0x008002b1        0x4 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
  *(.data*)
  .data.analog_reference
                 0x008002b5        0x1 libraries/ANALOG.o
@@ -908,8 +912,8 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
                 0x0080090e                runningConfiguration
                 0x0080190e                currentTime
                 0x00801911                PROVIDE (__bss_end, .)
-                0x00002548                __data_load_start = LOADADDR (.data)
-                0x000025fe                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00002540                __data_load_start = LOADADDR (.data)
+                0x000025f6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00801911        0x0
                 0x00801911                PROVIDE (__noinit_start, .)
@@ -936,19 +940,19 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
 
 .stab           0x00000000      0xae0
  *(.stab)
- .stab          0x00000000      0x6cc c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
- .stab          0x000006cc       0x84 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
+ .stab          0x00000000      0x6cc c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .stab          0x000006cc       0x84 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(memcpy.o)
                                  0x90 (size before relaxing)
- .stab          0x00000750      0x1b0 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
+ .stab          0x00000750      0x1b0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(itoa.o)
                                 0x1bc (size before relaxing)
- .stab          0x00000900      0x108 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
+ .stab          0x00000900      0x108 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128rfa1.o)
                                 0x114 (size before relaxing)
- .stab          0x00000a08       0xd8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
+ .stab          0x00000a08       0xd8 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(strrev.o)
                                  0xe4 (size before relaxing)
 
 .stabstr        0x00000000      0x213
  *(.stabstr)
- .stabstr       0x00000000      0x213 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
+ .stabstr       0x00000000      0x213 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm128rfa1.o
 
 .stab.excl
  *(.stab.excl)
@@ -1018,21 +1022,21 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  .debug_aranges
                 0x000004b8       0x50 WSNDemo.o
  .debug_aranges
-                0x00000508       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+                0x00000508       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
  .debug_aranges
-                0x00000528       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+                0x00000528       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
  .debug_aranges
-                0x00000548       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+                0x00000548       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
  .debug_aranges
-                0x00000568       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                0x00000568       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
  .debug_aranges
-                0x00000588       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+                0x00000588       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
  .debug_aranges
-                0x000005a8       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+                0x000005a8       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
  .debug_aranges
-                0x000005c8       0x38 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+                0x000005c8       0x38 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
  .debug_aranges
-                0x00000600       0x20 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+                0x00000600       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
 .debug_pubnames
  *(.debug_pubnames)
@@ -1058,14 +1062,14 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  .debug_info    0x000046ac       0x90 stack/sys/src/sys.o
  .debug_info    0x0000473c      0x339 stack/sys/src/sysTimer.o
  .debug_info    0x00004a75      0xda0 WSNDemo.o
- .debug_info    0x00005815       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_info    0x000058f3       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_info    0x000059d1       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_info    0x00005aaf       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_info    0x00005b8d       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_info    0x00005c6b       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_info    0x00005d49      0x120 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_info    0x00005e69       0xde c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_info    0x00005815       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_info    0x000058f3       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_info    0x000059d1       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_info    0x00005aaf       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_info    0x00005b8d       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_info    0x00005c6b       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_info    0x00005d49      0x120 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_info    0x00005e69       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000     0x1f3f
@@ -1089,44 +1093,44 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  .debug_abbrev  0x00001876       0x43 stack/sys/src/sys.o
  .debug_abbrev  0x000018b9      0x1a4 stack/sys/src/sysTimer.o
  .debug_abbrev  0x00001a5d      0x389 WSNDemo.o
- .debug_abbrev  0x00001de6       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_abbrev  0x00001dfa       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_abbrev  0x00001e0e       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_abbrev  0x00001e22       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_abbrev  0x00001e36       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_abbrev  0x00001e4a       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_abbrev  0x00001e5e       0xcd c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_abbrev  0x00001f2b       0x14 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_abbrev  0x00001de6       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_abbrev  0x00001dfa       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_abbrev  0x00001e0e       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_abbrev  0x00001e22       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_abbrev  0x00001e36       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_abbrev  0x00001e4a       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_abbrev  0x00001e5e       0xcd c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_abbrev  0x00001f2b       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
-.debug_line     0x00000000     0x489d
+.debug_line     0x00000000     0x49ed
  *(.debug_line)
- .debug_line    0x00000000      0x184 components/command.o
- .debug_line    0x00000184      0x2e5 components/radio.o
- .debug_line    0x00000469      0x2e0 libraries/ANALOG.o
- .debug_line    0x00000749      0x2c8 libraries/EEPROM.o
- .debug_line    0x00000a11      0x389 libraries/RTC.o
- .debug_line    0x00000d9a      0x2e2 stack/hal/src/hal.o
- .debug_line    0x0000107c      0x32f stack/hal/src/halSleep.o
- .debug_line    0x000013ab      0x317 stack/hal/src/halTimer.o
- .debug_line    0x000016c2      0x3e4 stack/hal/src/halUart.o
- .debug_line    0x00001aa6      0x3d7 stack/nwk/src/nwk.o
- .debug_line    0x00001e7d      0x3a2 stack/nwk/src/nwkDataReq.o
- .debug_line    0x0000221f      0x36c stack/nwk/src/nwkFrame.o
- .debug_line    0x0000258b      0x412 stack/nwk/src/nwkRoute.o
- .debug_line    0x0000299d      0x496 stack/nwk/src/nwkRx.o
- .debug_line    0x00002e33      0x45c stack/nwk/src/nwkTx.o
- .debug_line    0x0000328f      0x4b7 stack/phy/src/phy.o
- .debug_line    0x00003746      0x356 stack/sys/src/sys.o
- .debug_line    0x00003a9c      0x3a4 stack/sys/src/sysTimer.o
- .debug_line    0x00003e40      0x59b WSNDemo.o
- .debug_line    0x000043db       0xa5 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
- .debug_line    0x00004480       0x9a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
- .debug_line    0x0000451a       0xa8 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
- .debug_line    0x000045c2       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_line    0x0000464a       0x93 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_line    0x000046dd       0x8e c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_line    0x0000476b       0x91 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
- .debug_line    0x000047fc       0xa1 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
+ .debug_line    0x00000000      0x190 components/command.o
+ .debug_line    0x00000190      0x2f7 components/radio.o
+ .debug_line    0x00000487      0x2f2 libraries/ANALOG.o
+ .debug_line    0x00000779      0x2da libraries/EEPROM.o
+ .debug_line    0x00000a53      0x39b libraries/RTC.o
+ .debug_line    0x00000dee      0x2f4 stack/hal/src/hal.o
+ .debug_line    0x000010e2      0x341 stack/hal/src/halSleep.o
+ .debug_line    0x00001423      0x329 stack/hal/src/halTimer.o
+ .debug_line    0x0000174c      0x3f6 stack/hal/src/halUart.o
+ .debug_line    0x00001b42      0x3e9 stack/nwk/src/nwk.o
+ .debug_line    0x00001f2b      0x3b4 stack/nwk/src/nwkDataReq.o
+ .debug_line    0x000022df      0x37e stack/nwk/src/nwkFrame.o
+ .debug_line    0x0000265d      0x424 stack/nwk/src/nwkRoute.o
+ .debug_line    0x00002a81      0x4a8 stack/nwk/src/nwkRx.o
+ .debug_line    0x00002f29      0x46e stack/nwk/src/nwkTx.o
+ .debug_line    0x00003397      0x4c9 stack/phy/src/phy.o
+ .debug_line    0x00003860      0x368 stack/sys/src/sys.o
+ .debug_line    0x00003bc8      0x3b6 stack/sys/src/sysTimer.o
+ .debug_line    0x00003f7e      0x5ad WSNDemo.o
+ .debug_line    0x0000452b       0xa5 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_mulsi3.o)
+ .debug_line    0x000045d0       0x9a c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodhi4.o)
+ .debug_line    0x0000466a       0xa8 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_udivmodsi4.o)
+ .debug_line    0x00004712       0x88 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_line    0x0000479a       0x93 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_line    0x0000482d       0x8e c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+ .debug_line    0x000048bb       0x91 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_line    0x0000494c       0xa1 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_divmodsi4.o)
 
 .debug_frame    0x00000000      0xc70
  *(.debug_frame)
@@ -1149,7 +1153,7 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  .debug_frame   0x00000a2c       0x34 stack/sys/src/sys.o
  .debug_frame   0x00000a60       0xc0 stack/sys/src/sysTimer.o
  .debug_frame   0x00000b20       0xc8 WSNDemo.o
- .debug_frame   0x00000be8       0x88 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_frame   0x00000be8       0x88 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
 
 .debug_str      0x00000000     0x1cf4
  *(.debug_str)
@@ -1191,7 +1195,7 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
                                 0x1d1 (size before relaxing)
  .debug_str     0x0000199e      0x2ec WSNDemo.o
                                 0x8c1 (size before relaxing)
- .debug_str     0x00001c8a       0x6a c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_str     0x00001c8a       0x6a c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
                                  0xa8 (size before relaxing)
 
 .debug_loc      0x00000000     0x227d
@@ -1214,48 +1218,48 @@ LOAD c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/av
  .debug_loc     0x0000182f      0x2b7 stack/phy/src/phy.o
  .debug_loc     0x00001ae6      0x3ab stack/sys/src/sysTimer.o
  .debug_loc     0x00001e91      0x285 WSNDemo.o
- .debug_loc     0x00002116      0x167 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_loc     0x00002116      0x167 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
 
-.debug_macinfo  0x00000000   0x1397c3
+.debug_macinfo  0x00000000   0x139ed2
  *(.debug_macinfo)
  .debug_macinfo
                 0x00000000     0x2a39 components/command.o
  .debug_macinfo
-                0x00002a39     0xf27b components/radio.o
+                0x00002a39     0xf435 components/radio.o
  .debug_macinfo
-                0x00011cb4    0x11558 libraries/ANALOG.o
+                0x00011e6e    0x11558 libraries/ANALOG.o
  .debug_macinfo
-                0x0002320c     0xf295 libraries/EEPROM.o
+                0x000233c6     0xf44f libraries/EEPROM.o
  .debug_macinfo
-                0x000324a1     0xf400 libraries/RTC.o
+                0x00032815     0xf500 libraries/RTC.o
  .debug_macinfo
-                0x000418a1    0x10da5 stack/hal/src/hal.o
+                0x00041d15    0x10da5 stack/hal/src/hal.o
  .debug_macinfo
-                0x00052646    0x10e22 stack/hal/src/halSleep.o
+                0x00052aba    0x10e22 stack/hal/src/halSleep.o
  .debug_macinfo
-                0x00063468    0x10db9 stack/hal/src/halTimer.o
+                0x000638dc    0x10db9 stack/hal/src/halTimer.o
  .debug_macinfo
-                0x00074221    0x11187 stack/hal/src/halUart.o
+                0x00074695    0x111a0 stack/hal/src/halUart.o
  .debug_macinfo
-                0x000853a8    0x12537 stack/nwk/src/nwk.o
+                0x00085835    0x12550 stack/nwk/src/nwk.o
  .debug_macinfo
-                0x000978df    0x1164c stack/nwk/src/nwkDataReq.o
+                0x00097d85    0x11665 stack/nwk/src/nwkDataReq.o
  .debug_macinfo
-                0x000a8f2b    0x1164c stack/nwk/src/nwkFrame.o
+                0x000a93ea    0x11665 stack/nwk/src/nwkFrame.o
  .debug_macinfo
-                0x000ba577    0x114a5 stack/nwk/src/nwkRoute.o
+                0x000baa4f    0x114be stack/nwk/src/nwkRoute.o
  .debug_macinfo
-                0x000cba1c    0x12605 stack/nwk/src/nwkRx.o
+                0x000cbf0d    0x1261e stack/nwk/src/nwkRx.o
  .debug_macinfo
-                0x000de021    0x12574 stack/nwk/src/nwkTx.o
+                0x000de52b    0x1258d stack/nwk/src/nwkTx.o
  .debug_macinfo
-                0x000f0595    0x12002 stack/phy/src/phy.o
+                0x000f0ab8    0x1201b stack/phy/src/phy.o
  .debug_macinfo
-                0x00102597    0x1203c stack/sys/src/sys.o
+                0x00102ad3    0x12055 stack/sys/src/sys.o
  .debug_macinfo
-                0x001145d3    0x110de stack/sys/src/sysTimer.o
+                0x00114b28    0x110de stack/sys/src/sysTimer.o
  .debug_macinfo
-                0x001256b1    0x14112 WSNDemo.o
+                0x00125c06    0x142cc WSNDemo.o
 OUTPUT(WSNDemo.elf elf32-avr)
 LOAD linker stubs
 
@@ -1279,4 +1283,4 @@ LOAD linker stubs
  .debug_ranges  0x00000408       0x18 stack/sys/src/sys.o
  .debug_ranges  0x00000420       0x38 stack/sys/src/sysTimer.o
  .debug_ranges  0x00000458       0xa0 WSNDemo.o
- .debug_ranges  0x000004f8       0x28 c:/program files/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)
+ .debug_ranges  0x000004f8       0x28 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(rand.o)

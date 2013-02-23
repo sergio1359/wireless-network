@@ -8,10 +8,13 @@
 
 #include "portMonitor.h"
 
-_Bool firstTime = 1;
-uint8_t lastValuesD[] = {0,0,0,0,0};//Ha de inicializarse con los valores al iniciar
+_Bool firstTime = 1; //Avoid launch events on the first iteration
+uint8_t lastValuesD[] = {0,0,0,0,0};
 uint8_t lastValuesA[] = {0,0,0,0,0,0,0,0};
 //uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative	
+
+uint8_t debounceBuffer[DEBOUNCED_PINS];
+uint8_t debounce_prt = 0;
 
 void PortMonitor_TaskHandler()
 {
@@ -38,12 +41,37 @@ void PortMonitor_TaskHandler()
 			{
 				if((config.maskAD>>pin) & 0x01) //Digital
 				{
+					//Debouncer
+					debounceBuffer[debounce_prt] = debounceBuffer[debounce_prt]<<1 | ((val>>pin) & 0x01);
+					if(debounceBuffer[debounce_prt] == 0xFF)
+					{
+						HAL_UartPrint("BUTTON PIN P");
+						switch(port)
+						{
+							case 0: HAL_UartWriteByte('A');break;
+							case 1: HAL_UartWriteByte('B');break;
+							case 2: HAL_UartWriteByte('C');break;
+							case 3: HAL_UartWriteByte('D');break;
+							case 4: HAL_UartWriteByte('E');break;
+							case 5: HAL_UartWriteByte('F');break;
+							case 6: HAL_UartWriteByte('G');break;
+						}
+						numWrite(pin);
+						HAL_UartPrint(" PRESSED\r\n");
+						
+						//TODO: UPDATE CURRENT VALUE!
+					}
+					debounce_prt++;
+					
+					
+					
 					//Check for valid changes
 					switch((config.changeTypeD>>(pin<<1)))
 					{
-						case FALLING_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) & (~((val>>pin) & 0x01)) ); break;
-						case RISIN_EDGE: changeOcurred = ( (~((lastValuesD[port]>>pin) & 0x01)) & ((val>>pin) & 0x01) ); break;
-						case BOTH_EDGE: changeOcurred = ( ((lastValuesD[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
+						case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) ); break;
+						case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &  ((val>>pin) & 0x01) ); break;
+						case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
+						case NO_EDGE :		changeOcurred = 0; break;
 					}
 				}else //Analog
 				{
@@ -89,6 +117,7 @@ void PortMonitor_TaskHandler()
 		lastValuesD[port] = val;
 	}
 	firstTime = 0;
+	debounce_prt = 0;
 }
 
 void launchEvents(uint8_t pinAddress)
@@ -97,18 +126,14 @@ void launchEvents(uint8_t pinAddress)
 	uint16_t pin_event_list_start_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2)]; //Event address relative to the end of the event table
 	uint16_t pin_event_list_end_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2) + 2];
 	
-	uint16_t table_restriction_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + (2 * 2)];//Relative
-	
-	uint16_t table_restriction_end_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + (3 * 2)];//End of the restriction table
-	
 	uint16_t res_ptr;
-	//Looks for the first temporary restriction applicable to the current list of events. (Address greater or equal than the first event in the list to be processed)
-	for(res_ptr = table_restriction_addr_rel; res_ptr < table_restriction_end_addr_rel; res_ptr += sizeof(EVENT_RESTRICTION_t))
+	//Looks for the first temporary restriction applicable to the current list of events. (Event address greater or equal than the list start address to process)
+	for(res_ptr = EVENT_RESTRIC_LIST_START_ADDRESS; res_ptr < EVENT_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(EVENT_RESTRICTION_t))
 	{
-		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[res_ptr + EVENT_TABLE_END_ADDR];
-			
+		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr];
+		
 		if(restric->eventAddress >= pin_event_list_start_addr_rel) break;
-	}
+	}			
 	
 	//Iterate the list of events for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
 	for(uint16_t event_ptr=pin_event_list_start_addr_rel; event_ptr < pin_event_list_end_addr_rel;)
@@ -120,15 +145,15 @@ void launchEvents(uint8_t pinAddress)
 		
 		_Bool restriction_passed = !(restric->eventAddress == event_ptr);
 		
-		if( restric->eventAddress == event_ptr ) //Restriction for the current event?
+		while( restric->eventAddress == event_ptr ) //Restriction for the current event?
 		{
 			restriction_passed |= ( (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) >= 0) ); //In time
 			res_ptr += sizeof(EVENT_RESTRICTION_t);
-			restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr];
+			restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr]; //Next restriction
 		}		 
 		
 		
-		if( restriction_passed ) //if time restriction ok
+		if( restriction_passed ) //If all restrictions are met
 		{
 			RF_Send_Event(event_header);
 		}
