@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 11.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Registro de generación de código/transformación de texto">
+  <MessageClass Name="Message" Label="Mensaje" Option="Mostrar mensajes informativos" />
+  <MessageClass Name="Warning" Label="Advertencia" Option="Mostrar advertencias" />
+  <MessageClass Name="Error" Label="Error" Option="Mostrar errores" />
+  <MessageClass Name="Property" Label="Propiedad" Option="Mostrar metadatos" />
+  <MessageClass Name="Diagnostic" Label="Mensaje" Option="Mostrar mensajes de diagnóstico" />
+  <Message Timestamp="2013-02-23T01:45:06" Importance="High" Text="Se inició la ingeniería inversa." />
+  <Error Timestamp="2013-02-23T01:45:07" Importance="High" Text="El proceso de ingeniería inversa de La longitud no puede ser inferior a cero.&#xD;&#xA;Nombre del parámetro: length se detuvo." />
+  <Message Timestamp="2013-02-23T01:45:07" Importance="Diagnostic" Text="Se realizó ingeniería inversa del elemento en el modelo UML: 'ModelingProject::DomoticNetwork' -  (Package)" />
+  <Message Timestamp="2013-02-23T01:45:07" Importance="Diagnostic" Text="Se realizó ingeniería inversa del elemento en el modelo UML: 'ModelingProject::DomoticNetwork::NetworkModel' -  (Package)" />
+  <Message Timestamp="2013-02-23T01:45:07" Importance="High" Text="Se realizó ingeniería inversa total de los siguientes tipos: (0)." />
+  <Message Timestamp="2013-02-23T01:45:07" Importance="High" Text="La operación de ingeniería inversa se completó con (1) errores y (0) advertencias." />
+</Log>
