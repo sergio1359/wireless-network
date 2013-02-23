@@ -227,31 +227,31 @@ static void appDataConf(NWK_DataReq_t *req)
 	switch (req->status)
 	{
 		case NWK_SUCCESS_STATUS:
-		HAL_UartPrint("NWK_SUCCESS\n");
+		HAL_UartPrint("NWK_SUCCESS\r\n");
 		break;
 		
 		case NWK_ERROR_STATUS:
-		HAL_UartPrint("NWK_ERROR\n");
+		HAL_UartPrint("NWK_ERROR\r\n");
 		break;
 		
 		case NWK_OUT_OF_MEMORY_STATUS:
-		HAL_UartPrint("NWK_OUT_OF_MEMORY\n");
+		HAL_UartPrint("NWK_OUT_OF_MEMORY\r\n");
 		break;
 		
 		case NWK_NO_ACK_STATUS:
-		HAL_UartPrint("NWK_NO_ACK\n");
+		HAL_UartPrint("NWK_NO_ACK\r\n");
 		break;
 		
 		case NWK_PHY_CHANNEL_ACCESS_FAILURE_STATUS:
-		HAL_UartPrint("PHY_CHANNEL_ACCESS_FAILURE\n");
+		HAL_UartPrint("PHY_CHANNEL_ACCESS_FAILURE\r\n");
 		break;
 		
 		case NWK_PHY_NO_ACK_STATUS:
-		HAL_UartPrint("PHY_NO_ACK_STATUS\n");
+		HAL_UartPrint("PHY_NO_ACK_STATUS\r\n");
 		break;
 		
 		default:
-		HAL_UartPrint("NOT SPECTED\n");
+		HAL_UartPrint("NOT SPECTED\r\n");
 		break;
 	}
 
@@ -317,7 +317,7 @@ static void appSendData(void)
 	numWrite(currentTime.minute);
 	HAL_UartWriteByte(':');
 	numWrite(currentTime.second);
-	HAL_UartWriteByte('\n');
+	HAL_UartPrint("\r\n");
 	
 	ADC_Reference(REF_DEFAULT);
 	adcVal = ADC_Read(ADC4);
@@ -330,7 +330,7 @@ static void appSendData(void)
 	HAL_UartPrint(buf);
 	HAL_UartWriteByte('º');
 	HAL_UartWriteByte('C');
-	HAL_UartWriteByte('\n');
+	HAL_UartPrint("\r\n");
 
 	appState = APP_STATE_WAIT_CONF;
 	#endif
@@ -408,7 +408,7 @@ static void appInit(void)
 	appNetworkStatusTimer.handler = appNetworkStatusTimerHandler;
 	SYS_TimerStart(&appNetworkStatusTimer);
 	
-	HAL_UartPrint("ROUTER\n");
+	HAL_UartPrint("ROUTER\r\n");
 	#else
 	ledOn(LED_NETWORK);
 	#endif
@@ -491,11 +491,13 @@ int main(void)
 	HAL_UartInit(38400);
 	
 	RTC_Init();
-	currentTime.hour = 0;
-	currentTime.minute = 26;
-	currentTime.second = 30;
+	currentTime.hour = 11;
+	currentTime.minute = 11;
+	currentTime.second = 00;
 	
 	EEPROM_Init();
+	
+	Validate_Time(&currentTime);
 	
 	#ifdef APP_ENABLE_OTA
 	OTA_ClientInit();
