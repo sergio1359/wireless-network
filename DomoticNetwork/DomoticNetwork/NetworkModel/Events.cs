@@ -13,6 +13,18 @@ namespace DomoticNetwork.NetworkModel
             Args = new Byte[4] { 0x01, 0x02, 0x03, 0x04 };
         }
 
+        public Event(Byte op, Byte[] args)
+        {
+            OPCode = op;
+            Args = args;
+        }
+
+        public Event(Enums.OPCodeType type, Byte[] args)
+        {
+            OPCode = (byte)type;
+            Args = args;
+        }
+
     }
 
     //Port Events and Internals Events
@@ -54,7 +66,8 @@ namespace DomoticNetwork.NetworkModel
         public Event Event { get; set; }
         public DateTime Time { get; set; }
 
-        public TimeEvent(Event e, int hour, int minute, int second, Boolean enable)
+
+        public TimeEvent(Event e, int hour, int minute, int second)
         {
             Event = e;
             Time = new DateTime(1, 1, 1, hour, minute, second);
@@ -62,7 +75,7 @@ namespace DomoticNetwork.NetworkModel
 
         public int CompareTo(TimeEvent other)
         {
-            return Time.CompareTo(other);
+            return Time.CompareTo(other.Time);
         }
     }
 }

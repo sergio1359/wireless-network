@@ -213,18 +213,23 @@ namespace DomoticNetwork.EEPROM
             UInt16 PortEventTimeRestrictionPointer = (UInt16)(result.Count - 4); //4 posiciones de memoria que tenemos en 0x00
             UInt16 FreeRegionPointer = (UInt16)(result.Count - 2);
 
-            result.AddRange(PortsEvents());
+            List<Byte> resultPortEvents = new List<byte>();
 
-            result.AddRange(TimeEvents());
+            resultPortEvents.AddRange(PortsEvents());
+            resultPortEvents.AddRange(TimeEvents());
 
-            result[PortEventTimeRestrictionPointer] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
-            result[PortEventTimeRestrictionPointer + 1] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
+            //port event time restriction
+            result[PortEventTimeRestrictionPointer] = resultPortEvents.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
+            result[PortEventTimeRestrictionPointer + 1] = resultPortEvents.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
 
-            result.AddRange(PortEventTimeRestriction());
+            resultPortEvents.AddRange(PortEventTimeRestriction());
 
-            result[FreeRegionPointer] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
-            result[FreeRegionPointer + 1] = result.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
-            
+            //free region
+            result[FreeRegionPointer] = resultPortEvents.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[0];
+            result[FreeRegionPointer + 1] = resultPortEvents.Count.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian)[1];
+
+            result.AddRange(resultPortEvents);
+
             return result.ToArray();
         }
 
@@ -236,23 +241,22 @@ namespace DomoticNetwork.EEPROM
             UInt16 pointer = 0;
             PinPort p = null;
 
-            //añadimos la primera direccion, que siempre será 0x00
-            result.Add(0x00);
-
             for (byte i = 0; i < ShieldNode.ShieldBase.NumPorts; i++)
             {
                 for (byte j = 0; j < ShieldNode.ShieldBase.NumPins; j++)
                 {
+                    result.AddRange(pointer.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
                     p = ShieldNode.GetPinPort(i, j);
                     if (p != null)
                     {
                         pointer += SizePinEvents(p);
                     }
-                    result.AddRange(pointer.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
+
                 }
             }
 
-            //direccion lista de eventos de tiempo, ya esta introducida por que basicamente, es la ulitma iteracion del for
+            //direccion lista de eventos de tiempo
+            result.AddRange(pointer.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
 
             //direccion restricciones temporales de los eventos de puertos OJO!!!
             result.Add(0x00);
@@ -282,7 +286,7 @@ namespace DomoticNetwork.EEPROM
                             {
                                 PortEventTimeRestrictionDictionary.Add((UInt16)result.Count, pe); //rellenamos el diccionario para el metodo port event time restriction
                             }
-                            result.AddRange(ToBinaryEvent(pe.Event,ShieldNode.ShieldBase.LittleEndian));
+                            result.AddRange(ToBinaryEvent(pe.Event, ShieldNode.ShieldBase.LittleEndian));
                         }
                     }
                 }
@@ -339,12 +343,7 @@ namespace DomoticNetwork.EEPROM
         private Byte[] PortEventTimeRestriction()
         {
             List<Byte> result = new List<Byte>();
-
-            //for (int i = 0; i < PortEventTimeRestrictionDictionary.Count; i++)
-            //{
-            //    result.AddRange(PortEventTimeRestrictionDictionary.Keys
-            //}
-
+        
             foreach (KeyValuePair<UInt16, BasicEvent> pe in PortEventTimeRestrictionDictionary)
             {
                 result.AddRange(pe.Key.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
