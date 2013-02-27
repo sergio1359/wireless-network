@@ -39,7 +39,7 @@ void searchFirstTimeEvent()
 	uint16_t event_ptr;
 	for(event_ptr = TIME_EVENT_LIST_START_ADDRESS; event_ptr < TIME_EVENT_LIST_END_ADDRESS;)
 	{
-		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[event_ptr + EVENT_TABLE_END_ADDR];
+		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + event_ptr];
 		uint8_t args_length = getCommandArgsLenght(&time_event_header->eventHeader.operation);
 		
 		if(compareTimes(time_event_header->activationTime, currentTime) >= 0) break;
@@ -48,7 +48,7 @@ void searchFirstTimeEvent()
 	
 	if(event_ptr >= TIME_EVENT_LIST_END_ADDRESS)
 	{
-		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[TIME_EVENT_LIST_START_ADDRESS + EVENT_TABLE_END_ADDR];
+		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + TIME_EVENT_LIST_START_ADDRESS];
 	}
 }
 

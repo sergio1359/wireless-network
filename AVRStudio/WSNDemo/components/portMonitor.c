@@ -9,12 +9,14 @@
 #include "portMonitor.h"
 
 _Bool firstTime = 1; //Avoid launch events on the first iteration
-uint8_t lastValuesD[] = {0,0,0,0,0};
-uint8_t lastValuesA[] = {0,0,0,0,0,0,0,0};
+uint8_t lastValuesD[NUM_PORTS];
+uint8_t lastValuesA[ANALOG_PINS];
 //uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative	
 
 uint8_t debounceBuffer[DEBOUNCED_PINS];
 uint8_t debounce_prt = 0;
+
+uint8_t port_tst = 0, pin_tst = 0;
 
 void PortMonitor_TaskHandler()
 {
@@ -31,12 +33,15 @@ void PortMonitor_TaskHandler()
 			case 2: val = HAL_GPIO_PORTC_read(); config = runningConfiguration.topConfiguration.portConfig_PC; break;
 			case 3: val = HAL_GPIO_PORTD_read(); config = runningConfiguration.topConfiguration.portConfig_PD; break;
 			case 4: val = HAL_GPIO_PORTE_read(); config = runningConfiguration.topConfiguration.portConfig_PE; break;
-			case 5: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
+			//case 5: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
+			case 5: val = HAL_GPIO_PORTF_read(); config.maskAD = 0; break;
 			case 6: val = HAL_GPIO_PORTG_read(); config = runningConfiguration.topConfiguration.portConfig_PG; break;
 		}
 
 		for(uint8_t pin=0; pin<8; pin++)
 		{
+			port_tst = port;
+			pin_tst = pin;
 			if(((~config.maskIO)>>pin) & 0x01) //Input
 			{
 				if((config.maskAD>>pin) & 0x01) //Digital
@@ -44,6 +49,15 @@ void PortMonitor_TaskHandler()
 					//Debouncer
 					debounceBuffer[debounce_prt] = debounceBuffer[debounce_prt]<<1 | ((val>>pin) & 0x01);
 					if(debounceBuffer[debounce_prt] == 0xFF)
+					{
+						val |=  (1 << pin);	//Set pin value
+					}else
+					{
+						val &= ~(1 << pin);	//Clear pin value
+					}
+					debounce_prt++;
+					/*
+					if( ~((lastValuesD[port]>>pin) & 0x01) & ((val>>pin) & 0x01) )
 					{
 						HAL_UartPrint("BUTTON PIN P");
 						switch(port)
@@ -58,19 +72,14 @@ void PortMonitor_TaskHandler()
 						}
 						numWrite(pin);
 						HAL_UartPrint(" PRESSED\r\n");
-						
-						//TODO: UPDATE CURRENT VALUE!
-					}
-					debounce_prt++;
-					
-					
+					}*/
 					
 					//Check for valid changes
 					switch((config.changeTypeD>>(pin<<1)))
 					{
-						case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) ); break;
-						case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &  ((val>>pin) & 0x01) ); break;
-						case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) != ((val>>pin) & 0x01) ); break;
+						case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) && ~((val>>pin) & 0x01) ); break;
+						case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &&  ((val>>pin) & 0x01) ); break;
+						case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) !=  ((val>>pin) & 0x01) ); break;
 						case NO_EDGE :		changeOcurred = 0; break;
 					}
 				}else //Analog
@@ -90,15 +99,15 @@ void PortMonitor_TaskHandler()
 						case ADC7: analog_config = runningConfiguration.topConfiguration.analogConfig_ADC7; break;
 					}
 					
-					//int16_t diff = lastValuesA[pin] - analog_val;
-					//if(diff>=0) //positive
-					//{
-						//changeOcurred = diff > analog_config.increment;
-						//lastChangeSign &= ~(1<<pin);
-					//}else
-					//{
-						//lastChangeSign |= (1<<pin);						
-					//}
+					/*int16_t diff = lastValuesA[pin] - analog_val;
+					if(diff>=0) //positive
+					{
+						changeOcurred = diff > analog_config.increment;
+						lastChangeSign &= ~(1<<pin);
+					}else
+					{
+						lastChangeSign |= (1<<pin);						
+					}*/
 					
 					if(firstTime || (changeOcurred = (abs(lastValuesA[pin] - analog_val) >= analog_config.increment)))
 					{
@@ -110,7 +119,7 @@ void PortMonitor_TaskHandler()
 			//Launch Events if exits
 			if(!firstTime && changeOcurred)
 			{
-				launchEvents((port*8) + pin);
+				//launchEvents((port*8) + pin);
 			}
 		}
 			
@@ -122,9 +131,11 @@ void PortMonitor_TaskHandler()
 
 void launchEvents(uint8_t pinAddress)
 {
-	//TODO: Update from uint8_t to uint16_t!!
 	uint16_t pin_event_list_start_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2)]; //Event address relative to the end of the event table
 	uint16_t pin_event_list_end_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2) + 2];
+	
+	if(pin_event_list_start_addr_rel - pin_event_list_end_addr_rel == 0) //Events
+		return;
 	
 	uint16_t res_ptr;
 	//Looks for the first temporary restriction applicable to the current list of events. (Event address greater or equal than the list start address to process)
@@ -143,9 +154,9 @@ void launchEvents(uint8_t pinAddress)
 		
 		uint8_t args_length = getCommandArgsLenght(&event_header->operation);
 		
-		_Bool restriction_passed = !(restric->eventAddress == event_ptr);
+		_Bool restriction_passed = (restric->eventAddress != event_ptr);
 		
-		while( restric->eventAddress == event_ptr ) //Restriction for the current event?
+		while( (restric->eventAddress == event_ptr) && (event_ptr < EVENT_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current event? && Restrictions events available
 		{
 			restriction_passed |= ( (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) >= 0) ); //In time
 			res_ptr += sizeof(EVENT_RESTRICTION_t);
