@@ -30,7 +30,7 @@ namespace DomoticNetwork.EEPROM
                 result.Append(":" + lineLength.ToString("X2") + i.ToString("X4") + "00");
 
                 byte checksum = (byte)input.Skip(i).Take(lineLength).Select(x => (int)x).Sum();
-                checksum += (byte)(lineLength + i);
+                checksum += (byte)(lineLength + (byte)(i>>8) + (byte)i);
                 checksum = (byte)((checksum ^ 0xFF) + 1);//two's complement
 
                 result.Append(stringArray, i * 2, lineLength * 2);
