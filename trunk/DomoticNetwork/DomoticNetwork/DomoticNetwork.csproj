@@ -52,7 +52,6 @@
     <Compile Include="EEPROM\Binary.cs" />
     <Compile Include="EEPROM\CRC16.cs" />
     <Compile Include="EEPROM\Generator.cs" />
-    <Compile Include="EEPROM\Reader.cs" />
     <Compile Include="HomeModel\Home.cs" />
     <Compile Include="IOC\c.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
