@@ -510,7 +510,7 @@ int main(void)
 		#ifdef APP_ENABLE_OTA
 		OTA_ClientTaskHandler();
 		#endif
-		//PortMonitor_TaskHandler();
 		APP_TaskHandler();
+		PortMonitor_TaskHandler();
 	}
 }
