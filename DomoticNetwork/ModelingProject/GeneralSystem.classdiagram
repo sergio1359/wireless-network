@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="1d98eb55-7b72-45d4-9d53-8c78f9b427ad" name="GeneralSystem" linkedPackageId="bdb7d029-3a71-4f3a-a78a-2a981b0b2117" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="b507654a-9343-40e4-94dd-274c134c04d0">
+      <profileInstance Id="e0d63976-f9fe-4ea7-a16a-93280ee2e9a7" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="e0cecb18-cdc2-4ad6-bf36-ec591a82dae5">
+      <profileInstance Id="b6ab7615-8713-42a5-b6ce-9c1aa381d33e" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="321db5d2-f2d3-4181-8ec1-fb40b9898d26">
+      <profileInstance Id="ac5e91e0-843e-414a-9c9a-6f9313844da4" name="CSharpProfile">
+        <elementDefinition Id="9b88aad7-7139-4040-a9be-29dc35b194af" />
+      </profileInstance>
+      <elementDefinition Id="fa96943b-3c3e-419f-8bc7-a6be4ef5d167" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4b97203f-ecdf-4bb1-b47b-b6603661bb1e" name="System" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3cc7f6db-cb26-4814-9eb9-b5381f4db77f" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="1ec85757-b09e-4731-b91d-0364a972e9e9" name="Network" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8ff2ff70-9a32-4ab0-b185-173876601996" />
+        <ownedAttributesInternal>
+          <property Id="09782e38-d782-45b7-91ed-b9830cd381d9" name="SecurityNetwork" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="eda307e2-8313-45f7-b727-5bd773b85eeb" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="37a55e02-0e07-4168-b6ec-8df9c7bdbf21" name="Node" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d9790794-2b70-4f9f-a8df-c908e39db9c5" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7d768131-d493-43d3-ab64-311fa3239240" name="Shield/Base" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="adfb27d7-4643-4065-9c18-21746590865c" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a0ea0f24-874c-4e92-be30-a47e355c5d2e" name="Services" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a8be6507-05db-4030-87e6-0391e0d35c22" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d0425206-c2ce-42fb-861c-34a8d77a87fe" name="Connector" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8ba01478-0527-41c2-b986-179ea753542f" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="52cb1f1e-bc21-49c3-9699-667c4e71455a" name="TimeEvent" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e95a9001-8ebe-4104-8333-3e964eec0c30" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4e642f25-faf2-4f2b-8fa5-be1e6a37322e" name="BasicEvent" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ce52f8c7-f85c-4fdb-bab8-ee0ef2cdd099" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a0ec4ff6-98ea-4e95-9289-468b5cba20f3" name="TimeRestriction" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="204888e4-d104-456c-93fe-72d725a76956" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="89500c05-a5db-4478-bef4-a4c8ca0fa19a" name="HomeDevices" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="86bc2935-40b2-4f0a-a291-ed8ae8e398b8" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f8658873-f57f-4fc5-9a46-6272c70d1720" name="Module" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7131425d-88d2-42ca-8c23-0e01a2eef9d7" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="73cede1b-0d4e-4944-8439-cc165eb7d4a5" name="Functions" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c002df1f-0289-4da5-8b3b-45d0e7d82e87" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c1ac5ecf-3253-4e18-906d-0e40d9dd12bc" name="Plugings" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9e60e238-30ab-48a0-832a-6f3f2cac49f9" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="bf95ff2d-191f-407d-b5a7-0286bdd01cd9" name="API" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f86f0ae9-63fc-4f46-9c22-b9d7ef363d9f" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f14d055a-6d77-476b-a7f9-000afac8a80d" name="Logs" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="342b6bbe-c1be-4ef0-a85b-e55eb3f44749" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="bdb7d029-3a71-4f3a-a78a-2a981b0b2117" name="ModelingProject">
+    <elementDefinition Id="de6b69e0-e3a1-47cb-b8eb-0bfbb8c44d0d" />
+  </package>
+</logicalClassDesignerModel>

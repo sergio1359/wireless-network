@@ -23,6 +23,148 @@
         name="CSharpProfile" />
     </packageHasProfileInstances>
   </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="a8747e2c-010a-44e1-9fa1-81ae0c43f22e"
+        LastKnownName="Package1"
+        LastKnownLocation="Package_1254.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3cc7f6db-cb26-4814-9eb9-b5381f4db77f"
+        name="System"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="8ff2ff70-9a32-4ab0-b185-173876601996"
+        name="Network"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="eda307e2-8313-45f7-b727-5bd773b85eeb"
+            name="SecurityNetwork"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d9790794-2b70-4f9f-a8df-c908e39db9c5"
+        name="Node"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="adfb27d7-4643-4065-9c18-21746590865c"
+        name="Shield/Base"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a8be6507-05db-4030-87e6-0391e0d35c22"
+        name="Services"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="8ba01478-0527-41c2-b986-179ea753542f"
+        name="Connector"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e95a9001-8ebe-4104-8333-3e964eec0c30"
+        name="TimeEvent"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ce52f8c7-f85c-4fdb-bab8-ee0ef2cdd099"
+        name="BasicEvent"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="204888e4-d104-456c-93fe-72d725a76956"
+        name="TimeRestriction"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="86bc2935-40b2-4f0a-a291-ed8ae8e398b8"
+        name="HomeDevices"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7131425d-88d2-42ca-8c23-0e01a2eef9d7"
+        name="Module"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c002df1f-0289-4da5-8b3b-45d0e7d82e87"
+        name="Functions"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9e60e238-30ab-48a0-832a-6f3f2cac49f9"
+        name="Plugings"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f86f0ae9-63fc-4f46-9c22-b9d7ef363d9f"
+        name="API"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="342b6bbe-c1be-4ef0-a85b-e55eb3f44749"
+        name="Logs"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+  </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"
     name="Integer"

@@ -6,7 +6,9 @@ namespace DomoticNetwork.NetworkModel
     {
         public UInt16 NodeAddress { set; get; }
         public String Name { set; get; }
-        
+
+        public SecurityNetwork Security { set; get; }
+
         //Position
         public Position NodePosition { set; get; }
         public bool Movil { set; get; }
