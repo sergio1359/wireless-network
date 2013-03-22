@@ -31,7 +31,7 @@ namespace DomoticNetwork.NetworkModel
                     AddConnector("Analog1", Enums.ConnectorType.Analog, new String[] { "F1" });
                     AddConnector("Analog2", Enums.ConnectorType.Analog, new String[] { "F2" });
                     AddConnector("PWM", Enums.ConnectorType.IODigital, new String[] { "B4", "B7", "G5" });
-                    AddConnector("Dimmer0", Enums.ConnectorType.Dimmer, new String[] { "A0" });
+                    AddConnector("Dimmer0", Enums.ConnectorType.Dimmer, new String[] { "G0" });
                     break;
                 case ShieldType.Regleta:
                     break;
@@ -57,12 +57,12 @@ namespace DomoticNetwork.NetworkModel
 
         public Connector GetConector(Char port, Byte pin)
         {
-            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port - 'A' == port));
+            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port == port));
         }
 
         public Connector GetConector(Byte port, Byte pin)
         {
-            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port == port));
+            return Connectors.FirstOrDefault<Connector>(x => x.Directions.Exists(y => y.Pin == pin && y.Port - 'A' == port));
         }
 
         public PinPort GetPinPort(Char port, Byte pin)
@@ -70,7 +70,7 @@ namespace DomoticNetwork.NetworkModel
             if (GetConector(port, pin) == null)
                 return null;
             else
-                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port - 'A' == port && x.Pin == pin);
+                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port == port && x.Pin == pin);
         }
 
         public PinPort GetPinPort(Byte port, Byte pin)
@@ -78,7 +78,7 @@ namespace DomoticNetwork.NetworkModel
             if (GetConector(port, pin) == null)
                 return null;
             else
-                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port == port && x.Pin == pin);
+                return GetConector(port, pin).Directions.FirstOrDefault<PinPort>(x => x.Port - 'A' == port && x.Pin == pin);
         }
 
         public void AddTimeEvent(TimeEvent te)
@@ -200,6 +200,9 @@ namespace DomoticNetwork.NetworkModel
 
     class PinPort
     {
+        public const bool DEFAULT_OUTPUT = false; //Entrada
+        public const bool DEFAULT_DIGITAL = true; //Digital
+
         //Direction
         public String Name { set; get; }
         public Char Port { set; get; }
@@ -234,6 +237,9 @@ namespace DomoticNetwork.NetworkModel
             Name = id;
             Port = direction[0];
             Pin = Byte.Parse(direction[1].ToString());
+            PinEvents = new List<BasicEvent>();
+            Output = DEFAULT_OUTPUT;
+            Digital = DEFAULT_DIGITAL;
 
             switch (type)
             {
@@ -248,7 +254,7 @@ namespace DomoticNetwork.NetworkModel
                 case Enums.ConnectorType.PWMTTL:
                     Output = true;
                     Digital = false;
-                    DefaultValueA = 255;
+                    DefaultValueA = 123;
                     break;
                 case Enums.ConnectorType.Analog:
                     Output = false;

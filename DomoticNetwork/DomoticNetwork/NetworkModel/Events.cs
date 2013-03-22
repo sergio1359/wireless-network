@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DomoticNetwork.NetworkModel
 {
@@ -31,18 +32,12 @@ namespace DomoticNetwork.NetworkModel
     class BasicEvent
     {
         public Event Event { get; set; }
-        public TimeRestriction TimeRestriction { get; set; } //If not exist time restriction then null
+        public List<TimeRestriction> TimeRestrictions { get; set; }
 
-        public BasicEvent(Event e, Boolean enable)
+        public BasicEvent(Event e)
         {
             Event = e;
-            TimeRestriction = null;
-        }
-
-        public BasicEvent(Event e, int startHour, int startMinute, int endHour, int endMinute, Boolean enable)
-        {
-            Event = e;
-            TimeRestriction = new TimeRestriction(startHour, startMinute, endHour, endMinute);
+            TimeRestrictions = new List<TimeRestriction>();
         }
 
     }
@@ -52,10 +47,10 @@ namespace DomoticNetwork.NetworkModel
         public DateTime Start;
         public DateTime End;
 
-        public TimeRestriction(int startHour, int startMinute, int endHour, int endMinute)
+        public TimeRestriction(int startHour, int startMinute, int startSecond, int endHour, int endMinute, int endSecond)
         {
-            Start = new DateTime(0, 0, 0, startHour, startMinute, 0);
-            End = new DateTime(0, 0, 0, endHour, endMinute, 0);
+            Start = new DateTime(1, 1, 1, startHour, startMinute, startSecond);
+            End = new DateTime(1, 1, 1, endHour, endMinute, endSecond);
         }
 
     }

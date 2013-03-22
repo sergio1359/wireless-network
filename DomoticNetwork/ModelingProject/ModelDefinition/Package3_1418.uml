@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+  dslVersion="1.0.0.0"
+  Id="013adec3-f77c-40a1-ad48-fa89eff1f452"
+  name="Enums" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="fbeb3677-be6b-4110-9543-794205db9530"
+        name="TypeBase1"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="f1cde950-59c7-4109-9ed7-89622632b9e5"
+            name="ATMega128RFA1" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="c12b2d9f-ab2d-4880-b2d1-e64b0d27dc2f"
+        name="TypeShield1"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="418d1562-dd06-4790-925e-14a37336612f"
+            name="Roseta" />
+          <enumerationLiteral
+            Id="eddbe414-e838-4a23-b193-f9c556e72591"
+            name="Central" />
+          <enumerationLiteral
+            Id="d7a45e94-f5f7-43d9-9a45-3d022787c7f8"
+            name="Lampara" />
+          <enumerationLiteral
+            Id="fc7d1d0f-4c01-42aa-88fb-c1e2564f7ea0"
+            name="Regleta" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="88149666-9d8f-478f-997d-9d9aaa8387ad"
+        name="TypeConnector1"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="63cdbab7-066f-41bf-ad7f-d287e11e9896"
+            name="SwitchLOW" />
+          <enumerationLiteral
+            Id="4ba40220-0214-4905-9062-055427e35005"
+            name="SwitchHI" />
+          <enumerationLiteral
+            Id="ad63b0dc-e5c3-44df-85ab-b325f4c699f9"
+            name="PWMTTL" />
+          <enumerationLiteral
+            Id="a538bef0-ca30-4ba7-a6fc-33a78ea3fe0f"
+            name="Dimmer" />
+          <enumerationLiteral
+            Id="5c4aa302-9ff3-4d4e-a379-e33e6786e27e"
+            name="IOLogic" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="f1ec4cc6-ed9c-4162-8d55-ccc912254ed8"
+        name="TypePlugState"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

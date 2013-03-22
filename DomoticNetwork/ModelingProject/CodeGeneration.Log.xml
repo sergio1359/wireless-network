@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 11.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Registro de generación de código/transformación de texto">
+  <MessageClass Name="Message" Label="Mensaje" Option="Mostrar mensajes informativos" />
+  <MessageClass Name="Warning" Label="Advertencia" Option="Mostrar advertencias" />
+  <MessageClass Name="Error" Label="Error" Option="Mostrar errores" />
+  <MessageClass Name="Property" Label="Propiedad" Option="Mostrar metadatos" />
+  <MessageClass Name="Diagnostic" Label="Mensaje" Option="Mostrar mensajes de diagnóstico" />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="High" Text="Se inició la generación de código o la transformación de texto." />
+  <Error Timestamp="2013-03-16T11:39:43" Importance="High" Text="No se encontraron plantillas para procesar. Para configurar plantillas, elija &quot;Configuración predeterminada de generación de código...&quot; en el menú &quot;Arquitectura&quot; o cambie la selección para la que se inicia la generación de código." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="La selección incluía 50 elementos que no estaban enlazados a una plantilla." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Position' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TypeBase' -  (Enumeration): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TypeShield' -  (Enumeration): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TypeConnector' -  (Enumeration): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::ActionAbstrract' -  (Interface): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Security' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Node' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Connector' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::HomeDeviceAbstract' -  (Interface): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Action' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TimeAction' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (Association): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Network' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TimeRestriction' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Buttom' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Switch' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::WallPlug' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="Diagnostic" Text="'ModelingProject::' -  (InterfaceRealization): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::Light' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::DimmerLight' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::RGBLight' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::PresenceSensor' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::PowerSensor' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::TemperatureSensor' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::HumiditySensor' -  (Class): sin plantilla enlazada." />
+  <Warning Timestamp="2013-03-16T11:39:43" Importance="Medium" Text="'ModelingProject::LightSensor' -  (Class): sin plantilla enlazada." />
+  <Message Timestamp="2013-03-16T11:39:43" Importance="High" Text="Generación de código completa. Errores: 1. Advertencias: 24." />
+</Log>
