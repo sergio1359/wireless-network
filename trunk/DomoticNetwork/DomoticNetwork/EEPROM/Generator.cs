@@ -13,7 +13,7 @@ namespace DomoticNetwork.EEPROM
         public Byte Channel { set; get; }
         public UInt16 PanId { set; get; }
         public Byte[] SecurityKey { set; get; }
-        private Dictionary<UInt16, BasicEvent> PortEventTimeRestrictionDictionary;
+        private Dictionary<UInt16, List<TimeRestriction>> PortEventTimeRestrictionDictionary;
         private DateTime CompileTime { set; get; }
 
         public Generator(Network Network, UInt16 Address)
@@ -24,7 +24,7 @@ namespace DomoticNetwork.EEPROM
             PanId = Network.Security.PanId;
             SecurityKey = new Byte[16];
             CompileTime = DateTime.Now;
-            PortEventTimeRestrictionDictionary = new Dictionary<ushort, BasicEvent>();
+            PortEventTimeRestrictionDictionary = new Dictionary<ushort, List<TimeRestriction>>();
         }
 
         public Byte[] GenerateEEPROM()
@@ -280,13 +280,17 @@ namespace DomoticNetwork.EEPROM
                     c = ShieldNode.GetConector(i, j);
                     if (c != null)
                     {
-                        foreach (BasicEvent pe in c.ConnectorEvent)
+                        foreach (PinPort pin in c.Directions)
                         {
-                            if (pe.TimeRestriction != null)
+                            foreach (BasicEvent e in pin.PinEvents)
                             {
-                                PortEventTimeRestrictionDictionary.Add((UInt16)result.Count, pe); //rellenamos el diccionario para el metodo port event time restriction
+                                if(e.TimeRestrictions.Count>0)
+                                {
+                                    PortEventTimeRestrictionDictionary.Add((UInt16)result.Count, e.TimeRestrictions);
+                                }
+                                result.AddRange(ToBinaryEvent(e.Event, ShieldNode.ShieldBase.LittleEndian)); 
                             }
-                            result.AddRange(ToBinaryEvent(pe.Event, ShieldNode.ShieldBase.LittleEndian));
+                            
                         }
                     }
                 }
@@ -332,23 +336,27 @@ namespace DomoticNetwork.EEPROM
             return result.ToArray();
         }
 
-        private Byte[] ToBinaryTimeEventRestriction(TimeRestriction tr)
-        {
-            List<Byte> result = new List<Byte>();
-            result.AddRange(tr.Start.ToBinaryTime());
-            result.AddRange(tr.End.ToBinaryTime());
-            return result.ToArray();
-        }
+        //private Byte[] ToBinaryTimeEventRestriction(TimeRestriction tr)
+        //{
+        //    List<Byte> result = new List<Byte>();
+        //    result.AddRange(tr.Start.ToBinaryTime());
+        //    result.AddRange(tr.End.ToBinaryTime());
+        //    return result.ToArray();
+        //}
 
         private Byte[] PortEventTimeRestriction()
         {
             List<Byte> result = new List<Byte>();
-        
-            foreach (KeyValuePair<UInt16, BasicEvent> pe in PortEventTimeRestrictionDictionary)
+
+            foreach (KeyValuePair<UInt16, List<TimeRestriction>> pe in PortEventTimeRestrictionDictionary)
             {
-                result.AddRange(pe.Key.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
-                result.AddRange(pe.Value.TimeRestriction.Start.ToBinaryTime());
-                result.AddRange(pe.Value.TimeRestriction.End.ToBinaryTime());
+                foreach (TimeRestriction tr in pe.Value)
+                {
+                    result.AddRange(pe.Key.Uint16ToByte(ShieldNode.ShieldBase.LittleEndian));
+                    result.AddRange(tr.Start.ToBinaryTime());
+                    result.AddRange(tr.End.ToBinaryTime());
+                }
+                
             }
             return result.ToArray();
         }
