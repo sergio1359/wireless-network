@@ -43,8 +43,18 @@
 
 #include "sysTypes.h"
 #include "otaClient.h"
+#include "otaServer.h"
 
-#ifdef APP_ENABLE_OTA
+
+#if defined(APP_ENABLE_OTA_SERVER) || defined(APP_ENABLE_OTA_CLIENT)
+/*****************************************************************************
+*****************************************************************************/
+static bool appUpgradeInProgress = false;
+static uint16_t appOtaSize;
+#endif 
+
+
+#ifdef APP_ENABLE_OTA_CLIENT
 
 /*****************************************************************************
 *****************************************************************************/
@@ -59,10 +69,8 @@ typedef void (*IapSwitch_t)(void);
 
 /*****************************************************************************
 *****************************************************************************/
-static bool appUpgradeInProgress = false;
 static uint32_t appOtaAddr;
 static uint8_t appOtaPage[SYS_PAGE_SIZE];
-static uint16_t appOtaSize;
 
 /*****************************************************************************
 *****************************************************************************/
@@ -159,4 +167,58 @@ void OTA_ClientBlockIndication(uint8_t size, uint8_t *data)
   }
 }
 
-#endif // APP_ENABLE_OTA
+#endif // APP_ENABLE_OTA_CLIENT
+
+
+#ifdef APP_ENABLE_OTA_SERVER
+static uint8_t* data_ptr;
+static uint8_t progressPercent;
+static uint8_t progressDiv;
+
+void OTA_Server_Start(uint16_t deviceAddr, uint8_t* dataBuffer, uint32_t size)
+{
+	data_ptr = dataBuffer;
+	progressPercent = 0;
+	appOtaSize = size;
+	progressDiv = (appOtaSize / SYS_PAGE_SIZE) * 100;
+	
+	OTA_ServerStartUpdrade(deviceAddr, size);
+}
+
+/*****************************************************************************
+*****************************************************************************/
+void OTA_ServerNotification(OTA_Status_t status)
+{
+	if (OTA_CLIENT_READY_STATUS == status) //Ready to send
+	{
+		if (appUpgradeInProgress)//Continue
+		{
+			data_ptr += SYS_PAGE_SIZE;
+			appOtaSize -= SYS_PAGE_SIZE;
+			progressPercent += progressDiv;
+		}
+		
+		appUpgradeInProgress = true;
+
+		OTA_ServerSendBlock(data_ptr);
+	}
+	else if (OTA_UPGRADE_COMPLETED_STATUS == status)//FINISH
+	{
+		if(appOtaSize == 0) //Upgrade success!
+		{
+			//Show Success message
+			progressPercent = 100;
+		}
+		
+		appUpgradeInProgress = false;
+	}else //OTA_NO_RESPONSE_STATUS || OTA_CRC_ERROR_STATUS || OTA_SW_FAIL_STATUS
+	{
+		//Show Error message
+		
+		// Some error happened, upgrade will be stopped.
+		appUpgradeInProgress = false;
+	}
+}
+
+#endif // APP_ENABLE_OTA_SERVER
+
