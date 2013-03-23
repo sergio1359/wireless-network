@@ -61,7 +61,11 @@
 #define DECLARING_GLOBALS
 #include "globals.h"
 
-#ifdef APP_ENABLE_OTA
+#ifdef APP_ENABLE_OTA_SERVER
+#include "otaServer.h"
+#endif
+
+#ifdef APP_ENABLE_OTA_CLIENT
 #include "otaClient.h"
 #endif
 
@@ -499,7 +503,10 @@ int main(void)
 	
 	Validate_Time(&currentTime);
 	
-	#ifdef APP_ENABLE_OTA
+	#ifdef APP_ENABLE_OTA_SERVER
+	OTA_ServerInit();
+	#endif
+	#ifdef APP_ENABLE_OTA_CLIENT
 	OTA_ClientInit();
 	#endif
 
@@ -507,8 +514,11 @@ int main(void)
 	{
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
-		#ifdef APP_ENABLE_OTA
-		OTA_ClientTaskHandler();
+		#ifdef APP_ENABLE_OTA_SERVER
+			OTA_ServerTaskHandler();
+		#endif
+		#ifdef APP_ENABLE_OTA_CLIENT
+			OTA_ClientTaskHandler();
 		#endif
 		APP_TaskHandler();
 		PortMonitor_TaskHandler();

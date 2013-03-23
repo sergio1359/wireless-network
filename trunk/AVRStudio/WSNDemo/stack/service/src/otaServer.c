@@ -48,7 +48,7 @@
 #include "otaCommon.h"
 #include "otaServer.h"
 
-#ifdef APP_ENABLE_OTA
+#ifdef APP_ENABLE_OTA_SERVER
 
 /*****************************************************************************
 *****************************************************************************/
@@ -310,4 +310,4 @@ void OTA_ServerTaskHandler(void)
   // empty
 }
 
-#endif // APP_ENABLE_OTA
+#endif // APP_ENABLE_OTA_SERVICE

@@ -66,7 +66,8 @@
 #define APP_OTA_ENDPOINT        2
 #define APP_SECURITY_KEY        "TestSecurityKey0"
 
-//#define APP_ENABLE_OTA
+#define APP_ENABLE_OTA_SERVER
+#define APP_ENABLE_OTA_CLIENT
 
 #define PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 
