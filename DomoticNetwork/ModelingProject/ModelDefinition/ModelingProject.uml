@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="de6b69e0-e3a1-47cb-b8eb-0bfbb8c44d0d"
   name="ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -16,6 +16,19 @@ Configurator</body>
           LastKnownName="Conexion"
           LastKnownLocation="ModelingProject.uml" />
       </annotatedElements>
+    </comment>
+    <comment
+      Id="5ff05c1a-cbc2-4c71-a737-023ec0febc3e">
+      <body>Los valores deben de estar monitorizados para ser cambiados en la interfaz
+Faltan las notificaciones en el diagrama</body>
+    </comment>
+    <comment
+      Id="e618e983-5e90-465c-977b-5b6289421cba">
+      <body>Todos los metodos tambien tienen la opcion de no poner time que basicamente es un renombrado con el time en default</body>
+    </comment>
+    <comment
+      Id="e8d44e9c-09fa-4398-8029-ba721a6cb262">
+      <body>Creo que esta entidad es prescindible, se podria hacer algo diferente con los nodes y los home devices con consultas para navegar con ellos. Todos tendrias su objeto security y el principal tambien tendria su Security</body>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -36,6 +49,12 @@ Configurator</body>
       <profileInstance
         Id="9b88aad7-7139-4040-a9be-29dc35b194af"
         name="CSharpProfile" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="6de18f5a-d98a-4319-87d9-b79a0d767197">
+      <profileInstance
+        Id="10ec1a37-6d7d-495b-8e64-17a514383405"
+        name="TextTemplateBindings" />
     </packageHasProfileInstances>
   </profileInstances>
   <packagedElements>
@@ -1373,8 +1392,8 @@ Configurator</body>
             concurrency="Sequential"
             isQuery="false" />
           <operation
-            Id="36bf521d-a523-4c19-af35-1a258e56b34d"
-            name="RefreshValue"
+            Id="cf29397a-f5a8-44fa-8b07-61c3c9e96ffe"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1469,20 +1488,20 @@ Configurator</body>
             </relationshipOwnedElementsInternal>
           </association>
           <association
-            Id="e796b21e-14fc-4a55-9b6b-f3117063f7f8"
+            Id="81dca72c-e213-4f23-abaa-8e46b9555d85"
             isDerived="false"
             sourceEndRoleName="HomeDeviceAbstract"
-            targetEndRoleName="ActionAbstrract"
+            targetEndRoleName="Action"
             isLeaf="false"
             isAbstract="false">
-            <interfaceMoniker
-              Id="c006fd08-cc42-4f82-9192-9d1d8aa28cae"
-              LastKnownName="ActionAbstrract"
+            <classMoniker
+              Id="3b62bd20-f8e8-4809-a392-dd42305d839f"
+              LastKnownName="Action"
               LastKnownLocation="ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="47d02786-38d1-4609-aa82-9b769d6127ac"
+                  Id="d657c9b3-cef0-4089-9572-9cd32585571e"
                   name="HomeDeviceAbstract"
                   isLeaf="false"
                   isStatic="false"
@@ -1495,28 +1514,15 @@ Configurator</body>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="0cbc739b-5b2a-4f68-93f6-e87e2643c143"
-                  name="ActionAbstrract"
+                  Id="f2966228-f67a-4ab2-84a6-7e4f04752a1a"
+                  name="Action"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="d9924376-f8dc-45eb-85ec-956275c76318"
-                      name="Lower"
-                      value="n" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="e323a79a-3507-4746-96c8-610bcc4cac0d"
-                      name="Upper"
-                      value="n" />
-                  </upperValueInternal>
-                </memberEnd>
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -1547,8 +1553,8 @@ Configurator</body>
         </ownedAttributes>
         <ownedOperations>
           <operation
-            Id="3ad301ce-2488-472a-9f53-4dd6b303bc85"
-            name="RefreshValue"
+            Id="6be19c70-235d-4c29-83d8-9a0108d9453d"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="true"
@@ -1576,7 +1582,7 @@ Configurator</body>
         <ownedAttributesInternal>
           <property
             Id="a1abfefe-09a2-4405-8581-c61fa62d84aa"
-            name="Activate"
+            name="Open"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1596,8 +1602,8 @@ Configurator</body>
             concurrency="Sequential"
             isQuery="false" />
           <operation
-            Id="a97f2228-3aeb-4889-91dd-c49e76904e43"
-            name="RefreshValue"
+            Id="8ea4c8ca-ccb5-4d2e-9933-8175fd91f81d"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1622,6 +1628,47 @@ Configurator</body>
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <targetEnds>
+          <association
+            Id="3d8033db-d749-4281-891b-673b80a45b1a"
+            isDerived="false"
+            sourceEndRoleName="WallPlug"
+            targetEndRoleName="WallPlugSubtype"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="97fc4fb7-6a38-4fd9-963c-f915cbaa5633"
+              LastKnownName="WallPlugSubtype"
+              LastKnownLocation="ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2ae7f26f-a21e-4683-a3b1-c50b60c876ad"
+                  name="WallPlug"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="92e3902b-5d35-43ae-a93b-892d664867de"
+                  name="WallPlugSubtype"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="e55b9b7e-1b69-46c1-9d4e-2fd780923b29"
@@ -1679,8 +1726,8 @@ Configurator</body>
             </ownedParameters>
           </operation>
           <operation
-            Id="59df8939-8cfe-4548-a234-e0a36532f3ed"
-            name="RefreshValue"
+            Id="5fa25fa7-3117-405f-a719-2e9571694528"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1762,8 +1809,8 @@ Configurator</body>
             </ownedParameters>
           </operation>
           <operation
-            Id="a388c51c-4bea-4be6-8978-a6541bc1c582"
-            name="RefreshValue"
+            Id="15b26506-49f1-4051-a70a-ba83383de8d4"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1775,7 +1822,7 @@ Configurator</body>
     <packageHasNamedElement>
       <class
         Id="ce0a69b8-0b1c-47b0-9b02-f6919665a68b"
-        name="DimmerLight"
+        name="Dimmable"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -1788,6 +1835,47 @@ Configurator</body>
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <targetEnds>
+          <association
+            Id="ac25a6ec-af9f-49cc-a9f7-9f39b1f8da38"
+            isDerived="false"
+            sourceEndRoleName="Dimmable"
+            targetEndRoleName="DimmableSubtype"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="06357b2d-5714-4e38-b385-0bcdd111ab40"
+              LastKnownName="DimmableSubtype"
+              LastKnownLocation="ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="86bdee6c-dc9a-47f8-bf19-306e3f5da552"
+                  name="Dimmable"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ee1230a5-67e3-46f5-8fc5-3eea26e52ae1"
+                  name="DimmableSubtype"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="cba0af9e-a2ed-4d36-bb51-dfaecd2f1c9f"
@@ -1854,8 +1942,8 @@ Configurator</body>
             concurrency="Sequential"
             isQuery="false" />
           <operation
-            Id="481adb26-d9e5-4b65-9bf0-fd316831d178"
-            name="RefreshValue"
+            Id="d027f4dd-8270-44cc-8787-c385338e402a"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1905,7 +1993,7 @@ Configurator</body>
             isComposite="false" />
           <property
             Id="8cbf0be8-2d36-4d3b-afc7-1f8b43e8b4cb"
-            name="DegradeTime"
+            name="DefaultDegradeTime"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1923,15 +2011,35 @@ Configurator</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c3e5052e-fa5c-409c-afbd-fde16983a29f"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="05bc2bf1-72af-4792-ac71-903037da56bf"
-            name="Black"
+            name="TurnOff"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="98d0fff2-3524-42c9-84f4-a6baabc4ae07"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="d5bc5d81-4f5c-4404-9bdc-7f19f6fd0f0b"
             name="Invert"
@@ -1939,7 +2047,17 @@ Configurator</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="16379c0c-a5fa-4c10-86e8-0b56635efa77"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="21d4917e-3477-4e1c-a4a2-c051b413e378"
             name="ToColor"
@@ -1947,7 +2065,24 @@ Configurator</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5bacfff4-20c5-42c0-8be6-e1a0ab66e271"
+                  name="Color"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8586fad2-15a4-4b05-acc8-8450f7b219bc"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="419cc88a-73dc-40af-a16d-6b3a7ad2c194"
             name="Random"
@@ -1955,7 +2090,17 @@ Configurator</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="91dfea99-097a-4487-a07a-44654efaec6c"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="cc625244-0a14-4c1d-b9e0-0a0ce846f892"
             name="Secuence"
@@ -1967,8 +2112,15 @@ Configurator</body>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="ebf5bea6-9aa0-40c4-8c02-234e5fe53fcc"
+                  Id="b956f65f-62e9-47a8-8a30-8e2f71580a3f"
                   name="Color[]"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0bad1eb8-58da-4b18-aa13-f4abe376f41a"
+                  name="time"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
@@ -1985,16 +2137,23 @@ Configurator</body>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="5c951f59-308c-4914-9e6b-98c257ee6068"
-                  name="Color[])"
+                  Id="94a3e1d4-b322-4612-a938-dc38bdf265e1"
+                  name="Color[]"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e79a4aff-157f-4db9-b424-0bf8986ea21f"
+                  name="time"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
           <operation
-            Id="b09bca3f-b2ff-4b08-a993-cc4ebd109607"
-            name="RefreshValue"
+            Id="ded71634-c4ea-4c99-932a-585e5b0079fd"
+            name="RefreshState"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -2031,7 +2190,28 @@ Configurator</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="84d721dc-45f1-40f2-8a13-fe1b980a8f24"
+            name="Sensibility"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="889cf662-5b9f-4712-be82-a9052da6ba3c"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2053,7 +2233,18 @@ Configurator</body>
         <ownedAttributesInternal>
           <property
             Id="e7faed11-a2c9-4bb5-b036-cabf4b767924"
-            name="PowerConsumption"
+            name="CurrentConsumption"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="a2021bce-23ed-4fcd-8ba2-67364758aeb8"
+            name="Sensibility"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -2063,6 +2254,16 @@ Configurator</body>
             aggregation="None"
             isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b025f5ca-e7c7-43a1-9acb-405ac8309fcc"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2093,7 +2294,28 @@ Configurator</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="98543c3f-0510-450e-a6ce-7924454496cc"
+            name="Sensibility"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="c2a91afc-1ec8-45ac-9e16-3dffab7d95d6"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2124,7 +2346,28 @@ Configurator</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="3a254afc-9658-4424-91b0-73548df412a1"
+            name="Sensibility"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="774223d9-2d8e-4398-9d27-16343bba7682"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2155,7 +2398,28 @@ Configurator</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="2f6bd8bb-0a40-40aa-a2c7-dce07e8fe121"
+            name="Sensibility"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6f6c7295-20fc-460f-bcec-72182f29fe05"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2171,6 +2435,57 @@ Configurator</body>
         name="TypeConnector"
         isAbstract="false"
         isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="451eef32-b1d4-4056-afe7-1540f9b54f1f"
+            name="TextTemplateBindings"
+            profile="TextTemplateBindings">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f834b58c-111d-416a-8b6b-0a4bc73895b9">
+                <propertyInstance
+                  Id="82c09272-decf-4464-9271-7dd2bb813556"
+                  name="Alias" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6a66805f-2809-42aa-b093-0875228dcc6e">
+                <propertyInstance
+                  Id="3db3a126-50f5-4503-ac23-0f083e7fd206"
+                  name="TemplateFilePath" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="471a28e7-cac5-43f9-93ee-92ed33d57ac1">
+                <propertyInstance
+                  Id="35bfd595-9c35-4586-810f-bcd1ceef4fdd"
+                  name="ProjectPath" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d05ad3d4-df9d-4ef6-bf83-640de041b035">
+                <propertyInstance
+                  Id="3a431c52-3224-482a-9f08-7b57f2d61ca5"
+                  name="TargetDirectory" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="88f790e6-afa1-421c-8d77-354132a73f84">
+                <propertyInstance
+                  Id="d1b0632c-dedb-4667-bcd4-9d367e2d5ddb"
+                  name="TargetName" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="950c9556-4db2-4a49-852d-724e57e32972">
+                <propertyInstance
+                  Id="2a583889-3b65-47d9-9c11-c548337f3f9b"
+                  name="Overwrite" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8ac295a3-cfd4-4c6d-abd3-3a98922035dc">
+                <propertyInstance
+                  Id="e90fc3f4-87e5-487f-a511-8209165012be"
+                  name="Parameters" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
         <ownedLiterals>
           <enumerationLiteral
             Id="24d9eb04-7b2e-468c-8e64-f1ca24991b77"
@@ -2851,6 +3166,167 @@ Configurator</body>
         Id="013adec3-f77c-40a1-ad48-fa89eff1f452"
         LastKnownName="Enums"
         LastKnownLocation="Package3_1418.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="179ff33a-8c5e-4ee8-98b5-637df74cf662"
+        name="DoorLock"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="893f470d-8500-429f-880a-bdaeb0f7598d">
+            <interfaceMoniker
+              Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
+              LastKnownName="HomeDeviceAbstract"
+              LastKnownLocation="ModelingProject.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="c56ca9ef-a1f9-4a69-9c11-ee9c37346906"
+            name="RefreshState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="600c0269-94ea-48cf-8b9d-5069d664a747"
+        LastKnownName="Logs"
+        LastKnownLocation="Package_0641.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="51cf5bef-db1d-46cd-a9c2-9e179eb87285"
+        name="Class1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="79efe14e-bd3b-4ef8-ac45-42dfda7defc9"
+        LastKnownName="MessageSystem"
+        LastKnownLocation="Package_0648.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c3e21002-229c-4c56-adbf-6c6d556d258b"
+        name="HID"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="82959c04-ff86-4020-8369-f534b9d6c2c8"
+        name="Shield"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="2dcb5717-d1b4-4336-8317-8b7480f98b1e"
+            name="Dictionary&lt;name, List&lt;PinPort&gt;&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="98d19c4c-1c31-4a45-93bd-49fb6122a030"
+        LastKnownName="HomeModel"
+        LastKnownLocation="Package_0706.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="06357b2d-5714-4e38-b385-0bcdd111ab40"
+        name="DimmableSubtype"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="409a4a05-37a8-4a0f-9fe2-23d6493059a2"
+            name="Fan" />
+          <enumerationLiteral
+            Id="c195ac0b-c513-421a-a56a-d05c23973fde"
+            name="DimmerLight" />
+          <enumerationLiteral
+            Id="1fdaa7ae-f46c-4c1c-a9e5-c5b518997d6f"
+            name="Other" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="97fc4fb7-6a38-4fd9-963c-f915cbaa5633"
+        name="WallPlugSubtype"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="710dfa5a-81b5-4254-9980-4b45c708ef7b"
+            name="AirFreshener" />
+          <enumerationLiteral
+            Id="6a8c2cc6-ac20-419e-8f56-1c4b57dc3662"
+            name="LightPoint" />
+          <enumerationLiteral
+            Id="dc43a35b-eb64-4859-bd58-87881086ea3c"
+            name="Matamosquitos" />
+          <enumerationLiteral
+            Id="1e5e4453-1637-4e17-bb61-076e93fcacca"
+            name="Fan" />
+          <enumerationLiteral
+            Id="62f5afb3-3357-4309-a743-7b72fc6a1baa"
+            name="Heater" />
+          <enumerationLiteral
+            Id="5fdc3aef-609f-4d6d-b977-1feb7aab7172"
+            name="Speaker" />
+          <enumerationLiteral
+            Id="ada5d1df-174d-43c3-8221-1f2b623cdef1"
+            name="Other" />
+          <enumerationLiteral
+            Id="32070329-db83-4dfd-a61f-3c16eff2f2d8"
+            name="LightPoint" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="14c3819b-b2db-4723-87aa-b072da0dea46"
+        name="Scheduler o Programmer"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="bfbe2346-da8e-48f3-991d-d226cf0beec7"
+        name="Themer"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="1ac0ac64-cf5a-4114-b35d-4665e1791b42"
+        name="ConditionalActions"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

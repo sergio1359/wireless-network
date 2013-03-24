@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="600c0269-94ea-48cf-8b9d-5069d664a747"
+  name="Logs" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="3a143e58-88c3-42df-9454-23e8353f2189"
+        name="TypeLog"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="eaf553cf-c6a1-4bf6-a81a-fb3b71ae9a47"
+            name="All" />
+          <enumerationLiteral
+            Id="f1670faa-5bb4-4496-8943-06b93ba88dc8"
+            name="Info" />
+          <enumerationLiteral
+            Id="3f3b7fa4-e15c-4811-bec5-13319187f6fd"
+            name="Error" />
+          <enumerationLiteral
+            Id="b729c9d0-4623-406d-8b40-e15709e35cce"
+            name="Config" />
+          <enumerationLiteral
+            Id="db98c427-1172-46c4-aa56-702e530a4c1d"
+            name="Network" />
+          <enumerationLiteral
+            Id="6f576eea-c4a3-45d2-8129-7b52516a87a2"
+            name="Other" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="49c55230-43f3-4c44-8c66-70e7f70028c3"
+        name="Log"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="ab193cb1-0a24-4704-add9-b8c3f00057a1"
+            name="TypeHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="2bbfb484-f48d-4dab-88cf-a6777e05caaf"
+            name="TypeLog"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="cd75e8ae-5a20-4431-82e2-ce2d860aeb95"
+            name="Date"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="6b56128a-0bff-4523-90c0-c60205a26d9f"
+            name="Log"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="cd1b43f2-7ccd-4829-a354-46ac5da45c03"
+            name="ToString"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d76b533d-d081-46b8-969d-535f9dd3fa04"
+        name="LogManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="903a2c30-3a4c-458a-91dd-7b047adc40e5"
+            isDerived="false"
+            sourceEndRoleName="LogManager"
+            targetEndRoleName="Log"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="49c55230-43f3-4c44-8c66-70e7f70028c3"
+              LastKnownName="Log"
+              LastKnownLocation="Package_0641.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="58695577-9c42-4849-9dcf-0241eeb48c87"
+                  name="LogManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="efcd1a47-b36b-486a-b66b-38ee9783ec30"
+                  name="Log"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ed3b9948-82c0-46c9-b706-7f3b9802112e"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="ce74cae1-38e8-4480-a5cc-4249a4734999"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="68628239-c7c3-4b19-a338-b8c050e6680c"
+            name="GetLogs"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="09177443-72e2-4b1b-aad8-9227c34ced7c"
+                  name="TypeLog"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="0649ef4c-d4cd-49f2-829f-7a51b55b44b8"
+            name="GetLogs"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1b6e8608-1e32-4f7e-b5f6-a25055a25b4d"
+                  name="TypeHomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="7dc29936-0e96-488d-a72e-79c1d5338188"
+            name="GetLogs"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4fde56ce-e0aa-4843-a0b4-7ffd189575eb"
+                  name="Date"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
