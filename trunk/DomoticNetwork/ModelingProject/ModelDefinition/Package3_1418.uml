@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="013adec3-f77c-40a1-ad48-fa89eff1f452"
   name="Enums" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -70,6 +70,107 @@
         name="TypePlugState"
         isAbstract="false"
         isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="28baa527-604f-4a76-b7bc-4ae92e915ff5"
+        name="TypeCodeOP"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="659a5465-d57a-49e1-b008-e36356e1eae5"
+            name="DigitalWrite" />
+          <enumerationLiteral
+            Id="c90f588f-3a3a-467a-80ce-acefa45ed879"
+            name="DigitalSwitch" />
+          <enumerationLiteral
+            Id="282fd743-0ad4-4945-92d1-4437030593fb"
+            name="DigitalWriteTime" />
+          <enumerationLiteral
+            Id="76afd0dd-0ded-4909-82a8-8add8445186c"
+            name="DigitalSwitchTime" />
+          <enumerationLiteral
+            Id="a1fb70ce-b643-47a6-896a-f880aeb050e0"
+            name="DigitalRead" />
+          <enumerationLiteral
+            Id="15d25d88-2b59-48b2-9dac-a44accd2e433"
+            name="DigitalReadResponse" />
+          <enumerationLiteral
+            Id="8a3481f9-7a52-49cc-b64c-abf62b5ddea1"
+            name="AnalogWrite" />
+          <enumerationLiteral
+            Id="ca6122ad-2215-4ecf-b2e1-e1eb198597af"
+            name="AnalogWriteTime" />
+          <enumerationLiteral
+            Id="5d6bd4c3-2fbb-4d46-8640-9f3f410f57bc"
+            name="AnalogRead" />
+          <enumerationLiteral
+            Id="eb6458bc-f2dd-443f-bae4-51cb81264f4e"
+            name="AnalogReadResponse" />
+          <enumerationLiteral
+            Id="0606a05a-2671-478a-90cd-61f453c43912"
+            name="Reset" />
+          <enumerationLiteral
+            Id="dc79f8dd-6c18-4620-97c7-62197943539d"
+            name="RouteTableRead" />
+          <enumerationLiteral
+            Id="95f76d6b-ae57-496e-9b6a-7233332c336b"
+            name="RouteTableReadResponse" />
+          <enumerationLiteral
+            Id="df5ae50d-d6bd-42ac-abea-5fb2fd246f05"
+            name="TimeWrite" />
+          <enumerationLiteral
+            Id="6ff6025e-8f51-4bdf-8eea-4a1242eb382d"
+            name="TimeRead" />
+          <enumerationLiteral
+            Id="3660e510-3568-4076-9a97-41fdc74c3726"
+            name="TimeReponse" />
+          <enumerationLiteral
+            Id="cd0af8c4-b10b-4045-8d08-84a94d551ba9"
+            name="Warning" />
+          <enumerationLiteral
+            Id="403c34b5-48b6-4cb0-b84f-8def7f030424"
+            name="Error" />
+          <enumerationLiteral
+            Id="884f8cc8-2422-4394-82d5-da699c3a2bbd"
+            name="ColorWrite" />
+          <enumerationLiteral
+            Id="8c513ad5-bfe2-4573-a097-cef023d38078"
+            name="ColorWhiteRandom" />
+          <enumerationLiteral
+            Id="5dc9d1c2-5b99-4ed5-bf52-c63ff735d22b"
+            name="ColorSecuenceWrite" />
+          <enumerationLiteral
+            Id="645c76fe-ec39-4a52-8163-3939a75ff835"
+            name="ColorSortedSecuenceWrite" />
+          <enumerationLiteral
+            Id="de84fbd8-bd3b-4345-bfaa-29760d7920b5"
+            name="ColorReadResponse" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="053263d2-6f09-4d61-b843-c9e9bf6f67cc"
+        name="TypeModeRGBLight"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="2372d422-3b10-421e-b356-0b2a94abc353"
+            name="Solid" />
+          <enumerationLiteral
+            Id="1af8bbbe-46eb-431f-adb0-ee0d7545b4b1"
+            name="RandomSecuence" />
+          <enumerationLiteral
+            Id="ac9eed3b-8b97-45af-a6d0-c0d150b25ab4"
+            name="SortedSecuence" />
+          <enumerationLiteral
+            Id="6d7d88cb-1791-40a5-ad51-a1c27f974727"
+            name="None" />
+        </ownedLiterals>
+      </enumeration>
     </packageHasNamedElement>
   </packagedElements>
 </package>

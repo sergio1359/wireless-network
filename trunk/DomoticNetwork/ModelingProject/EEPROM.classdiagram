@@ -1,23 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="b89ee584-556b-473b-a186-961f2df13338" name="EEPROM" linkedPackageId="93401a04-dec6-4b7d-927b-50721aedefc2" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <profileInstances>
-    <packageHasProfileInstances Id="7c9eab25-d351-4a43-8c7d-875f857d9b10">
-      <profileInstance Id="b0c769d6-d383-4bbb-99ef-70c5ce92d22f" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+    <packageHasProfileInstances Id="fc69fbf1-e75b-47bc-af2c-6771105678fa">
+      <profileInstance Id="6def1662-d935-459e-b904-654936d4cdcb" name="TextTemplateBindings">
+        <elementDefinition Id="10ec1a37-6d7d-495b-8e64-17a514383405" />
       </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="399f56bf-193e-4d73-aa3a-e8b0f9d75931">
-      <profileInstance Id="e8b20000-01f7-4e0f-bc7c-4ba3a7833e00" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="3197e4d1-0809-4467-b691-20127c9e80e4">
-      <profileInstance Id="49a47f61-c9ff-4c62-818e-15503b0cd6e5" name="CSharpProfile">
-        <elementDefinition Id="9b88aad7-7139-4040-a9be-29dc35b194af" />
-      </profileInstance>
-      <elementDefinition Id="fa96943b-3c3e-419f-8bc7-a6be4ef5d167" />
+      <elementDefinition Id="6de18f5a-d98a-4319-87d9-b79a0d767197" />
     </packageHasProfileInstances>
   </profileInstances>
   <packagedElements>
@@ -67,8 +55,43 @@
         <elementDefinition Id="1bff2105-71de-4f76-91ed-ca464fe47ef4" />
       </class>
     </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="86db2806-78cb-4f74-934f-a2df67633cee" name="HID" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c3e21002-229c-4c56-adbf-6c6d556d258b" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e5ffb241-a9d3-4de9-8ebd-9b5cba729fe6" name="Shield" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="82959c04-ff86-4020-8369-f534b9d6c2c8" />
+        <ownedAttributesInternal>
+          <property Id="3259a227-c8bb-4701-9c40-d0890c6af836" name="Dictionary&lt;name, List&lt;PinPort&gt;&gt;" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2dcb5717-d1b4-4336-8317-8b7480f98b1e" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="93401a04-dec6-4b7d-927b-50721aedefc2" name="ModelingProject">
     <elementDefinition Id="de6b69e0-e3a1-47cb-b8eb-0bfbb8c44d0d" />
+    <profileInstances>
+      <packageHasProfileInstances Id="7c9eab25-d351-4a43-8c7d-875f857d9b10">
+        <profileInstance Id="b0c769d6-d383-4bbb-99ef-70c5ce92d22f" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="399f56bf-193e-4d73-aa3a-e8b0f9d75931">
+        <profileInstance Id="e8b20000-01f7-4e0f-bc7c-4ba3a7833e00" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="3197e4d1-0809-4467-b691-20127c9e80e4">
+        <profileInstance Id="49a47f61-c9ff-4c62-818e-15503b0cd6e5" name="CSharpProfile">
+          <elementDefinition Id="9b88aad7-7139-4040-a9be-29dc35b194af" />
+        </profileInstance>
+        <elementDefinition Id="fa96943b-3c3e-419f-8bc7-a6be4ef5d167" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

@@ -6,14 +6,14 @@ namespace DomoticNetwork.HomeModel
     class Home
     {
         public String Name { get; set; }
-        public List<Floor> Floors { get; set; }
+        public List<Zone> Zones { get; set; }
     }
 
-    class Floor
+    class Zone
     {
-        public String Name { get; set; }
-        public int height { get; set; }
-        public int weight { get; set; }
+        public String NameZone { get; set; }
+        public int Height { get; set; }
+        public int Weight { get; set; }
         //public Image map  { get; set; }
     }
 }

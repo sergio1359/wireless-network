@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="ca2e3d42-1431-477c-97b5-35f05f3e3ab3" name="System v2" linkedPackageId="4d4a7309-1775-46a5-bdc1-af9179c42c40" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="ca2e3d42-1431-477c-97b5-35f05f3e3ab3" name="System v2" linkedPackageId="4d4a7309-1775-46a5-bdc1-af9179c42c40" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="5eaadd38-5fd5-41a3-80d4-0c8bb6f35b98">
+      <elementDefinition Id="5ff05c1a-cbc2-4c71-a737-023ec0febc3e" />
+      <body>Los valores deben de estar monitorizados para ser cambiados en la interfaz
+Faltan las notificaciones en el diagrama</body>
+    </comment>
+    <comment Id="b495eaea-dbed-4fe6-aac4-7a64c921bddd">
+      <elementDefinition Id="e618e983-5e90-465c-977b-5b6289421cba" />
+      <body>Todos los metodos tambien tienen la opcion de no poner time que basicamente es un renombrado con el time en default</body>
+    </comment>
+    <comment Id="a14d3a52-f507-4ea8-815a-3495a906c965">
+      <elementDefinition Id="e8d44e9c-09fa-4398-8029-ba721a6cb262" />
+      <body>Creo que esta entidad es prescindible, se podria hacer algo diferente con los nodes y los home devices con consultas para navegar con ellos. Todos tendrias su objeto security y el principal tambien tendria su Security</body>
+    </comment>
+  </ownedCommentsInternal>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="3dcd5119-7315-4f22-a4d5-16b09a90884f" name="Node" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -294,8 +309,8 @@
           <operation Id="971e7f96-0d3f-4587-afee-f6a058a28e8f" name="Push" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="11b4ea9e-160c-4fb1-975b-49a78b5459ed" />
           </operation>
-          <operation Id="d7d9fa08-900d-4382-8242-a74ed07e7ed5" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="36bf521d-a523-4c19-af35-1a258e56b34d" />
+          <operation Id="ba83ec8a-47b7-4574-be08-3de45804c155" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="cf29397a-f5a8-44fa-8b07-61c3c9e96ffe" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -336,31 +351,21 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="ef726565-afee-4ca0-8e76-911fa1e2a1be" />
           </association>
-          <association Id="541f9d21-7304-40e4-982f-ac510e97baa2" isDerived="false" sourceEndRoleName="HomeDeviceAbstract" targetEndRoleName="ActionAbstrract" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstrract" />
+          <association Id="27910a11-f773-4b87-8c09-c6dade53b615" isDerived="false" sourceEndRoleName="HomeDeviceAbstract" targetEndRoleName="Action" isLeaf="false" isAbstract="false">
+            <classMoniker Id="ac538616-2b1d-4657-a2e0-79ea33da7c38" LastKnownName="Action" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="b228fcbd-acf6-47f3-b0f1-37c2f978f4c4" name="HomeDeviceAbstract" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="47d02786-38d1-4609-aa82-9b769d6127ac" />
+                <memberEnd Id="51247946-6bdd-4f93-8458-88b543a7d985" name="HomeDeviceAbstract" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d657c9b3-cef0-4089-9572-9cd32585571e" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="3fa38d80-1318-4f8f-aa49-433c8f6e711f" name="ActionAbstrract" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <lowerValueInternal>
-                    <literalString Id="cc17392f-f7e0-4738-997d-df54a8d023db" name="Lower" value="n">
-                      <elementDefinition Id="d9924376-f8dc-45eb-85ec-956275c76318" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="b2f47b99-33f0-425c-8904-397e57193e5a" name="Upper" value="n">
-                      <elementDefinition Id="e323a79a-3507-4746-96c8-610bcc4cac0d" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="0cbc739b-5b2a-4f68-93f6-e87e2643c143" />
+                <memberEnd Id="d57775a3-808b-4aae-bbbc-37a18911ba3e" name="Action" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="f2966228-f67a-4ab2-84a6-7e4f04752a1a" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
-            <elementDefinition Id="e796b21e-14fc-4a55-9b6b-f3117063f7f8" />
+            <elementDefinition Id="81dca72c-e213-4f23-abaa-8e46b9555d85" />
           </association>
         </targetEnds>
         <ownedAttributes>
@@ -372,8 +377,8 @@
           </property>
         </ownedAttributes>
         <ownedOperations>
-          <operation Id="b7a21746-035e-4ab7-be98-489aa0e95e6d" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="3ad301ce-2488-472a-9f53-4dd6b303bc85" />
+          <operation Id="32c984c3-c9b4-410e-b38a-ce210237426a" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6be19c70-235d-4c29-83d8-9a0108d9453d" />
           </operation>
         </ownedOperations>
       </Interface>
@@ -388,7 +393,7 @@
           </interfaceRealization>
         </suppliersInternal>
         <ownedAttributesInternal>
-          <property Id="d7760a04-4cbc-4a35-92bf-24e8ab6ab689" name="Activate" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="d7760a04-4cbc-4a35-92bf-24e8ab6ab689" name="Open" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="a1abfefe-09a2-4405-8581-c61fa62d84aa" />
           </property>
         </ownedAttributesInternal>
@@ -396,8 +401,8 @@
           <operation Id="dae98ed6-3d33-4943-9927-744b9f8e8b46" name="Switch" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="bfdec2b5-c004-411e-ba06-24a5fc81d7e7" />
           </operation>
-          <operation Id="b00d2ec9-c32e-426f-9510-6c5797585821" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="a97f2228-3aeb-4889-91dd-c49e76904e43" />
+          <operation Id="594d73f8-3702-47d5-95ac-cfff9509b0eb" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8ea4c8ca-ccb5-4d2e-9933-8175fd91f81d" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -411,6 +416,24 @@
             <elementDefinition Id="5bb4d7fa-a576-437f-ae89-6c7c5bd3a89e" />
           </interfaceRealization>
         </suppliersInternal>
+        <targetEnds>
+          <association Id="1d4d4d43-d724-4a43-80ec-f1c7d01eaa1e" isDerived="false" sourceEndRoleName="WallPlug" targetEndRoleName="WallPlugSubtype" isLeaf="false" isAbstract="false">
+            <enumerationMoniker Id="4d7245ba-0ab6-41fd-a5ab-9c01eeb4fe44" LastKnownName="WallPlugSubtype" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e9e88635-4c39-4e43-9934-75b92c967973" name="WallPlug" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="2ae7f26f-a21e-4683-a3b1-c50b60c876ad" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="cee64b99-550f-4ced-91e1-03ee30fba19b" name="WallPlugSubtype" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="92e3902b-5d35-43ae-a93b-892d664867de" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="3d8033db-d749-4281-891b-673b80a45b1a" />
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property Id="be4c0694-6d34-4671-825c-c7ebc2fe293e" name="Activate" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="e55b9b7e-1b69-46c1-9d4e-2fd780923b29" />
@@ -436,8 +459,8 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="05072137-580e-48c1-ae71-db6c8565cf44" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="59df8939-8cfe-4548-a234-e0a36532f3ed" />
+          <operation Id="1f21c2a5-0654-4b88-8d8a-c7dee49e2a89" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5fa25fa7-3117-405f-a719-2e9571694528" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -476,14 +499,14 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="90eda698-a256-4736-b3b0-d6f1262cfdd1" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="a388c51c-4bea-4be6-8978-a6541bc1c582" />
+          <operation Id="e5cea154-86c4-4fcc-bfa6-5cdb28ea1f24" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="15b26506-49f1-4051-a70a-ba83383de8d4" />
           </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="09aca6f9-37bc-4c11-b81f-79f7332d334f" name="DimmerLight" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="09aca6f9-37bc-4c11-b81f-79f7332d334f" name="Dimmable" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="ce0a69b8-0b1c-47b0-9b02-f6919665a68b" />
         <suppliersInternal>
           <interfaceRealization Id="f7d5bb9b-ef3c-4c33-bf86-f0d083181e27">
@@ -491,6 +514,24 @@
             <elementDefinition Id="f3f1243d-7a8f-4146-aac9-515fd1a70397" />
           </interfaceRealization>
         </suppliersInternal>
+        <targetEnds>
+          <association Id="b23c3610-371e-453f-99c2-972dcb551e33" isDerived="false" sourceEndRoleName="Dimmable" targetEndRoleName="DimmableSubtype" isLeaf="false" isAbstract="false">
+            <enumerationMoniker Id="5c3c39c4-3c76-4df2-9c97-dc32e67e03e5" LastKnownName="DimmableSubtype" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e223d9d5-c9ec-4b95-b8b2-995503845748" name="Dimmable" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="86bdee6c-dc9a-47f8-bf19-306e3f5da552" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="05e0b44c-edd1-469b-bbf9-ad2019664a36" name="DimmableSubtype" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ee1230a5-67e3-46f5-8fc5-3eea26e52ae1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ac25a6ec-af9f-49cc-a9f7-9f39b1f8da38" />
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property Id="65c88a8f-a032-46ee-8423-9770b79262f3" name="LastValue" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="cba0af9e-a2ed-4d36-bb51-dfaecd2f1c9f" />
@@ -515,8 +556,8 @@
           <operation Id="6af62e7f-4f76-45dc-8bff-6771e14eecfc" name="%" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="623f7ffe-ddb6-4970-a200-3f40a3b9ee5b" />
           </operation>
-          <operation Id="e80dbcf4-de82-4299-8551-fd39ab57ae5c" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="481adb26-d9e5-4b65-9bf0-fd316831d178" />
+          <operation Id="4668b479-c650-4557-a5b8-0015ed12fec3" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d027f4dd-8270-44cc-8787-c385338e402a" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -537,32 +578,77 @@
           <property Id="b0dbf261-668b-47ec-88e2-de223f6ba2ab" name="Mode" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="cc936666-c8c3-44ca-9dad-608b14dfcf97" />
           </property>
-          <property Id="d3ff5b19-dfc6-4f97-82ae-1c63964e63ba" name="DegradeTime" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="d3ff5b19-dfc6-4f97-82ae-1c63964e63ba" name="DefaultDegradeTime" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="8cbf0be8-2d36-4d3b-afc7-1f8b43e8b4cb" />
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="d7798c75-d7d5-429a-b07a-a3acf02b1721" name="White" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="e3495ece-ca2f-4f47-b7d4-33824e6b4b0c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="afc9ebca-d24a-4c2c-8016-2fa198ce1f99" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="c3e5052e-fa5c-409c-afbd-fde16983a29f" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
-          <operation Id="60121f1f-5ee0-4e0c-9923-0ccb1a42226a" name="Black" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="60121f1f-5ee0-4e0c-9923-0ccb1a42226a" name="TurnOff" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="05bc2bf1-72af-4792-ac71-903037da56bf" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="983555dd-73ee-434c-b3a6-9e059249a178" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="98d0fff2-3524-42c9-84f4-a6baabc4ae07" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
           <operation Id="04a77234-25a3-4f45-a0a2-e8b6b7be1449" name="Invert" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="d5bc5d81-4f5c-4404-9bdc-7f19f6fd0f0b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7aa9f3d0-1a67-403c-a0da-5b8bee2d1665" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="16379c0c-a5fa-4c10-86e8-0b56635efa77" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
           <operation Id="1326ad57-5c45-42c6-890a-5f3b53eef1cf" name="ToColor" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="21d4917e-3477-4e1c-a4a2-c051b413e378" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="269d08f3-e953-4ca3-9ac7-e672d5b037e7" name="Color" direction="In" isUnique="false">
+                  <elementDefinition Id="5bacfff4-20c5-42c0-8be6-e1a0ab66e271" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="cfce75c7-3d57-4c63-98bb-3eddb44ba3af" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="8586fad2-15a4-4b05-acc8-8450f7b219bc" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
           <operation Id="f6c6f96f-9f81-4f48-9ad0-019b8687b554" name="Random" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="419cc88a-73dc-40af-a16d-6b3a7ad2c194" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="783f706d-1c22-4ecc-995a-b2499930c912" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="91dfea99-097a-4487-a07a-44654efaec6c" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
           <operation Id="52e81a7a-66f4-4bcf-b1e5-386a7c65280b" name="Secuence" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="cc625244-0a14-4c1d-b9e0-0a0ce846f892" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="052559bb-8deb-4e5a-b0da-f3762b32ff9b" name="Color[]" direction="In" isUnique="false">
-                  <elementDefinition Id="ebf5bea6-9aa0-40c4-8c02-234e5fe53fcc" />
+                <parameter Id="74d36640-ff71-4293-b30b-1853e04f8cd5" name="Color[]" direction="In" isUnique="false">
+                  <elementDefinition Id="b956f65f-62e9-47a8-8a30-8e2f71580a3f" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="760469b8-c6ce-4c2d-bac7-8c689d713a80" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="0bad1eb8-58da-4b18-aa13-f4abe376f41a" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -571,14 +657,19 @@
             <elementDefinition Id="794246b4-8abd-4138-9177-357f0035997f" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="a4c59ec8-969a-4e48-ace9-413d4402f4c7" name="Color[])" direction="In" isUnique="false">
-                  <elementDefinition Id="5c951f59-308c-4914-9e6b-98c257ee6068" />
+                <parameter Id="0fccb2af-ff19-4c46-a924-302da360edce" name="Color[]" direction="In" isUnique="false">
+                  <elementDefinition Id="94a3e1d4-b322-4612-a938-dc38bdf265e1" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b7cb78f3-7610-4572-9878-2354fd6467fc" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="e79a4aff-157f-4db9-b424-0bf8986ea21f" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="369822b2-c830-4dd5-9140-027f8dc43289" name="RefreshValue" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="b09bca3f-b2ff-4b08-a993-cc4ebd109607" />
+          <operation Id="2873b818-1aae-4c81-8ae3-d1d9474e0dd5" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ded71634-c4ea-4c99-932a-585e5b0079fd" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -596,7 +687,15 @@
           <property Id="5b84aee4-295d-4bbc-a31a-e1c7bc219c4f" name="LastPresence" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="28c3be2f-ce1a-427f-893e-a3983bd01e32" />
           </property>
+          <property Id="43c80396-1c00-495b-9d34-33c025049788" name="Sensibility" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="84d721dc-45f1-40f2-8a13-fe1b980a8f24" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="83860b97-b337-4890-9a5f-b3c738f5b902" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="889cf662-5b9f-4712-be82-a9052da6ba3c" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -609,10 +708,18 @@
           </interfaceRealization>
         </suppliersInternal>
         <ownedAttributesInternal>
-          <property Id="83d40f2c-cb5d-4b7a-a584-c0eefd39f812" name="PowerConsumption" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="83d40f2c-cb5d-4b7a-a584-c0eefd39f812" name="CurrentConsumption" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="e7faed11-a2c9-4bb5-b036-cabf4b767924" />
           </property>
+          <property Id="622251d9-a3e3-4308-b4c0-21d1e9e4bb1f" name="Sensibility" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a2021bce-23ed-4fcd-8ba2-67364758aeb8" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="e756bf08-fb61-4c1b-8847-37eb968d58cf" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b025f5ca-e7c7-43a1-9acb-405ac8309fcc" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -628,7 +735,15 @@
           <property Id="b7825e34-b724-48d9-b118-51dde2235b9d" name="Temperature" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="1a728a7d-9b29-4163-b1ef-2af295f79d0c" />
           </property>
+          <property Id="9ed12701-a35c-42b4-a3f7-bd0b0d9bc394" name="Sensibility" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="98543c3f-0510-450e-a6ce-7924454496cc" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="d3c486ad-4580-42de-9650-7941324f00a5" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c2a91afc-1ec8-45ac-9e16-3dffab7d95d6" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -644,7 +759,15 @@
           <property Id="4df6fe8a-e70c-4377-a3b3-6d1e62f813a1" name="Humidity" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="f6183f42-b7ac-4cc4-854d-c81e71fcb4f2" />
           </property>
+          <property Id="3d1274e9-ce88-41a2-9666-333f2057226e" name="Sensibility" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3a254afc-9658-4424-91b0-73548df412a1" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="7c78bfa2-a5df-4af5-b185-b5f67232d1e4" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="774223d9-2d8e-4398-9d27-16343bba7682" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -660,11 +783,68 @@
           <property Id="e66654d9-d6ed-43db-a8bd-1613eae1841b" name="Light" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="d652275f-5d8e-40a0-bb7c-1b129b0e8dfe" />
           </property>
+          <property Id="1b0029ca-1646-485c-aaa4-c06338529d35" name="Sensibility" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2f6bd8bb-0a40-40aa-a2c7-dce07e8fe121" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="588850e7-e9c2-4e99-9984-1fbd86b2956f" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6f6c7295-20fc-460f-bcec-72182f29fe05" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
       <enumeration Id="420dc96d-5bf3-42a2-9626-3cf154ab19d2" name="TypeConnector" isAbstract="false" isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance Id="33c1b41b-0b15-40b4-94e9-c2ab3a91c1c4" name="TextTemplateBindings" profile="TextTemplateBindings">
+            <elementDefinition Id="451eef32-b1d4-4056-afe7-1540f9b54f1f" />
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="3d37a494-6d3c-40ec-8918-2e6e24c686dc">
+                <propertyInstance Id="e2a9f1e6-83bc-4d00-9a67-ace7ef3565ae" name="Alias">
+                  <elementDefinition Id="82c09272-decf-4464-9271-7dd2bb813556" />
+                </propertyInstance>
+                <elementDefinition Id="f834b58c-111d-416a-8b6b-0a4bc73895b9" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="e4472c96-73cd-4db2-b95a-9392a3be6780">
+                <propertyInstance Id="04a1a938-c750-4ca1-ac04-35cde0ee6074" name="TemplateFilePath">
+                  <elementDefinition Id="3db3a126-50f5-4503-ac23-0f083e7fd206" />
+                </propertyInstance>
+                <elementDefinition Id="6a66805f-2809-42aa-b093-0875228dcc6e" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="a00b0930-35f7-4d7c-8ae3-df6098278bdd">
+                <propertyInstance Id="6bd5bbb8-9b5b-4f8d-b60e-ef685f29cfe2" name="ProjectPath">
+                  <elementDefinition Id="35bfd595-9c35-4586-810f-bcd1ceef4fdd" />
+                </propertyInstance>
+                <elementDefinition Id="471a28e7-cac5-43f9-93ee-92ed33d57ac1" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="4c4c2cab-9017-47c2-aced-99df5b006b61">
+                <propertyInstance Id="c59b97b2-ad4d-41b8-bd28-b13cfd112310" name="TargetDirectory">
+                  <elementDefinition Id="3a431c52-3224-482a-9f08-7b57f2d61ca5" />
+                </propertyInstance>
+                <elementDefinition Id="d05ad3d4-df9d-4ef6-bf83-640de041b035" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="87096aa4-33d2-41b4-9b0c-a0b5f400be8d">
+                <propertyInstance Id="d24e39a1-9d6c-4705-8ed5-43822073b07a" name="TargetName">
+                  <elementDefinition Id="d1b0632c-dedb-4667-bcd4-9d367e2d5ddb" />
+                </propertyInstance>
+                <elementDefinition Id="88f790e6-afa1-421c-8d77-354132a73f84" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="0764880d-d73c-4515-a959-c3e2ad54eb0c">
+                <propertyInstance Id="6a48d423-9f2a-4439-bc36-a4e17eb2b981" name="Overwrite">
+                  <elementDefinition Id="2a583889-3b65-47d9-9c11-c548337f3f9b" />
+                </propertyInstance>
+                <elementDefinition Id="950c9556-4db2-4a49-852d-724e57e32972" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances Id="74f5f1fb-74e1-4ebc-bea9-332d25e0998a">
+                <propertyInstance Id="f1a4f12d-d580-442c-8ae1-482691155b58" name="Parameters">
+                  <elementDefinition Id="e90fc3f4-87e5-487f-a511-8209165012be" />
+                </propertyInstance>
+                <elementDefinition Id="8ac295a3-cfd4-4c6d-abd3-3a98922035dc" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
         <elementDefinition Id="30d2e610-083f-4cc9-b465-82f58aac0bad" />
         <ownedLiterals>
           <enumerationLiteral Id="6461cad0-2db2-45a8-b4c5-7cc8022548c8" name="SwitchLOW">
@@ -804,6 +984,201 @@
         </ownedAttributes>
       </Interface>
     </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ae1b0bad-fd4c-4903-8460-22852f0b104e" name="DoorLock" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="179ff33a-8c5e-4ee8-98b5-637df74cf662" />
+        <suppliersInternal>
+          <interfaceRealization Id="630ad730-ea6a-4c9c-92dd-98751a36ef29">
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <elementDefinition Id="893f470d-8500-429f-880a-bdaeb0f7598d" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="69ebb28f-261e-43bb-ad72-bc048a20e643" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c56ca9ef-a1f9-4a69-9c11-ee9c37346906" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="c745c7d4-7f31-4862-9558-c26c58986f46" name="MessageSystem">
+        <ownedCommentsInternal>
+          <comment Id="d9e2d633-67c1-411f-bb49-61c9e63b695a">
+            <elementDefinition Id="c24d9051-7329-4e28-bee5-a1209ec4cbb6" />
+            <body>El cometido sera la interpretacion de mensajes por parte de los nodos y el envio de peticiones y acciones</body>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="79efe14e-bd3b-4ef8-ac45-42dfda7defc9" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="a17503fa-2837-4e11-9fc9-261e9805f354" name="ToNetwork" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="92526bb3-7fe7-4cf3-8b8c-37611ee74e4c" />
+              <ownedOperationsInternal>
+                <operation Id="b9452caf-577c-4155-ab52-10cf0e8041ce" name="ToMessage" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="3aac30e0-a33a-439c-90e3-6c88ca547531" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="8fbe7b4f-cc88-4759-a002-3ff5172604f0" name="AbstractAction" direction="In" isUnique="false">
+                        <elementDefinition Id="acdafaf9-8d5d-4e65-9269-05b67df79334" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="7799963c-f91c-4e57-b040-35108205ddf1" name="ToSystem" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="f43c7d5b-7a4f-4225-a0dc-986ae3a9b7b9" />
+              <ownedOperationsInternal>
+                <operation Id="3006e8cc-7781-4731-8cc0-80cde1cd6744" name="ToMessage" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="d7509a71-f124-4cc8-a2a1-fd5b633849ae" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="e2db47c7-3bd5-468d-8ee5-99a62c428e03" name="Byte[]" direction="In" isUnique="false">
+                        <elementDefinition Id="faab570c-1a5b-4878-8840-71ab72f7bc08" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="2edd727f-af01-4aa9-b199-feeeaaaef111" name="HomeModel">
+        <ownedCommentsInternal>
+          <comment Id="2d48c63b-3ec5-4b58-8ef8-1535872552a4">
+            <elementDefinition Id="f5d87804-a427-4216-b3b1-5c1e723de54a" />
+            <body>El mapa lo ponemos como una imagen ¿no?</body>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="98d19c4c-1c31-4a45-93bd-49fb6122a030" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="91b7290b-14e7-45ed-ab18-c6f5c2ca60a4" name="Home" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="cf3bd842-f08c-4203-979b-efec30bab886" />
+              <targetEnds>
+                <association Id="6d281ba4-80d0-4593-9233-d0697ca796c2" isDerived="false" sourceEndRoleName="Home" targetEndRoleName="Zone" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="b0075f15-3d45-4d07-810e-83f5c6fee159" LastKnownName="Zone" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="2682208e-9d92-451f-b19e-4e60fcf3d5b1" name="Home" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="b9383f37-13fd-4cd2-bc3a-f8202014f3dc" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="3c94c11e-7efe-4470-853a-4140dbf3fa6b" name="Zone" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                        <lowerValueInternal>
+                          <literalString Id="55095386-b876-4233-8b9c-8fa617cdaab0" name="Lower" value="n">
+                            <elementDefinition Id="35f6e3c7-e78f-49e6-8fdb-26a9cc513948" />
+                          </literalString>
+                        </lowerValueInternal>
+                        <upperValueInternal>
+                          <literalString Id="88c26aa5-b063-478a-bd6a-49140056d83c" name="Upper" value="n">
+                            <elementDefinition Id="2dd78357-29b8-40b9-811f-cc5bf9787bf0" />
+                          </literalString>
+                        </upperValueInternal>
+                        <elementDefinition Id="4441b1c5-05ff-43b8-b2ec-6d160c04a340" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="963f1690-7dee-42bb-a723-c5476fd5337b" />
+                </association>
+              </targetEnds>
+              <ownedAttributesInternal>
+                <property Id="d99f395d-d680-4641-85e4-44f975911859" name="Name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bae5d284-f9dc-46d3-91f7-f7fa5595f569" />
+                </property>
+              </ownedAttributesInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="b0075f15-3d45-4d07-810e-83f5c6fee159" name="Zone" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="4b2323d7-992d-4dde-966d-299bcbfb0936" />
+              <ownedAttributesInternal>
+                <property Id="d7b5e664-438b-43d0-8ce7-1292f55c93f2" name="Name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7a5cfc2f-7d96-4946-80c4-2cd6d1a578a7" />
+                </property>
+                <property Id="4e76b906-5017-4e41-8c47-47385660da57" name="Height" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3c997a17-477a-4917-90da-d69df1453093" />
+                </property>
+                <property Id="cddf39d8-cd39-4e6b-b5ba-aa71dc7c440a" name="Weight" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="b75a04f3-f720-443b-8844-88b22fa6d40b" />
+                </property>
+                <property Id="775068b7-89d9-4c08-b04c-f607996c83f5" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="802675c6-b479-4a1d-966a-9fc7affac669" />
+                </property>
+              </ownedAttributesInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <logicalClassDesignerModelHasTypes>
+      <enumeration Id="5c3c39c4-3c76-4df2-9c97-dc32e67e03e5" name="DimmableSubtype" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="06357b2d-5714-4e38-b385-0bcdd111ab40" />
+        <ownedLiterals>
+          <enumerationLiteral Id="6bca274a-38c4-427d-9844-d2a06525a4da" name="Fan">
+            <elementDefinition Id="409a4a05-37a8-4a0f-9fe2-23d6493059a2" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="aca470cb-f64f-4033-8914-5120412d23cf" name="DimmerLight">
+            <elementDefinition Id="c195ac0b-c513-421a-a56a-d05c23973fde" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="469a7e9e-2793-4087-b432-5759fd20d3cb" name="Other">
+            <elementDefinition Id="1fdaa7ae-f46c-4c1c-a9e5-c5b518997d6f" />
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <enumeration Id="4d7245ba-0ab6-41fd-a5ab-9c01eeb4fe44" name="WallPlugSubtype" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="97fc4fb7-6a38-4fd9-963c-f915cbaa5633" />
+        <ownedLiterals>
+          <enumerationLiteral Id="485584d3-5f0d-43d8-b5a5-0aa890e9f6c5" name="AirFreshener">
+            <elementDefinition Id="710dfa5a-81b5-4254-9980-4b45c708ef7b" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="6ae17612-0eb1-49a1-9a23-59a59e2fa3f3" name="LightPoint">
+            <elementDefinition Id="6a8c2cc6-ac20-419e-8f56-1c4b57dc3662" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="9ed21d57-740a-4c63-ab12-47391218185a" name="Matamosquitos">
+            <elementDefinition Id="dc43a35b-eb64-4859-bd58-87881086ea3c" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="39c79a93-b693-4557-a9dd-e6c66d78acbf" name="Fan">
+            <elementDefinition Id="1e5e4453-1637-4e17-bb61-076e93fcacca" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="7e830215-d8fd-426a-b571-9481cdad6d22" name="Heater">
+            <elementDefinition Id="62f5afb3-3357-4309-a743-7b72fc6a1baa" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="603ec6b6-4726-458c-94d0-a1721c5d2700" name="Speaker">
+            <elementDefinition Id="5fdc3aef-609f-4d6d-b977-1feb7aab7172" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="27284c84-429c-4503-8eda-2539f01fe401" name="Other">
+            <elementDefinition Id="ada5d1df-174d-43c3-8221-1f2b623cdef1" />
+          </enumerationLiteral>
+          <enumerationLiteral Id="5869dfd4-87b5-4196-a3e9-11a8549c22d7" name="LightPoint">
+            <elementDefinition Id="32070329-db83-4dfd-a61f-3c16eff2f2d8" />
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="bbae65e9-8a9e-4d72-9cb5-330c3858c25e" name="Scheduler o Programmer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="14c3819b-b2db-4723-87aa-b072da0dea46" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b006a323-f42c-4388-baa3-634001b68093" name="Themer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="bfbe2346-da8e-48f3-991d-d226cf0beec7" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="af9448ce-ba6d-4cdb-b5a4-7c5477968cff" name="ConditionalActions" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1ac0ac64-cf5a-4114-b35d-4665e1791b42" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="4d4a7309-1775-46a5-bdc1-af9179c42c40" name="ModelingProject">
     <elementDefinition Id="de6b69e0-e3a1-47cb-b8eb-0bfbb8c44d0d" />
@@ -825,6 +1200,12 @@
           <elementDefinition Id="9b88aad7-7139-4040-a9be-29dc35b194af" />
         </profileInstance>
         <elementDefinition Id="fa96943b-3c3e-419f-8bc7-a6be4ef5d167" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="d54540cd-8c82-4b44-b944-a2f87e787a03">
+        <profileInstance Id="6a116ed0-b1c5-41ea-98c2-09c6634288b1" name="TextTemplateBindings">
+          <elementDefinition Id="10ec1a37-6d7d-495b-8e64-17a514383405" />
+        </profileInstance>
+        <elementDefinition Id="6de18f5a-d98a-4319-87d9-b79a0d767197" />
       </packageHasProfileInstances>
     </profileInstances>
   </package>

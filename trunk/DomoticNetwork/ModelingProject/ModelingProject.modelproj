@@ -45,6 +45,15 @@
     <Content Include="ModelDefinition\Package3_1418.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="ModelDefinition\Package_0641.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0648.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_0706.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package_1254.uml">
       <SubType>Content</SubType>
     </Content>
@@ -54,13 +63,6 @@
     <Content Include="ModelDefinition\Package_1418.uml">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Plugins.classdiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Plugins.classdiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>Plugins.classdiagram</DependentUpon>
-    </Content>
     <Content Include="System.classdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -68,12 +70,12 @@
       <SubType>Content</SubType>
       <DependentUpon>System.classdiagram</DependentUpon>
     </Content>
-    <Content Include="Imports.classdiagram">
+    <Content Include="Plugs.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Imports.classdiagram.layout">
+    <Content Include="Plugs.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Imports.classdiagram</DependentUpon>
+      <DependentUpon>Plugs.classdiagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\ModelingProject.uml">
