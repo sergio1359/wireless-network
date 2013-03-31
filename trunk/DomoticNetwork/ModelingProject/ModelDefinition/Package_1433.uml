@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="44fcbe48-3eb5-4b80-b9d8-ed2edc443ec8"
+  name="Conexion" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="d63f10d5-24a0-4b67-a328-bc09bfc33af3"
+        LastKnownName="Memory"
+        LastKnownLocation="Package_1217.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="79efe14e-bd3b-4ef8-ac45-42dfda7defc9"
+        LastKnownName="Messages"
+        LastKnownLocation="Package_0648.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="e67e1a9b-2a1e-417b-af33-037c02446f9e"
+        LastKnownName="Products"
+        LastKnownLocation="Package_1219.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

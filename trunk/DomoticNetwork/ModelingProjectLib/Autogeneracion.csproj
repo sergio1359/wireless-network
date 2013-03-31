@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E509829-9736-44BB-AD7F-D35EA98F2BCC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ModelingProjectLib</RootNamespace>
+    <AssemblyName>ModelingProjectLib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GeneratedCode\Action.cs" />
+    <Compile Include="GeneratedCode\ActionAbstrract.cs" />
+    <Compile Include="GeneratedCode\Buttom.cs" />
+    <Compile Include="GeneratedCode\Conexion\Memory\CRC.cs" />
+    <Compile Include="GeneratedCode\Conexion\Memory\Hex.cs" />
+    <Compile Include="GeneratedCode\Conexion\Memory\MemoryConverter.cs" />
+    <Compile Include="GeneratedCode\Conexion\Messages\HID.cs" />
+    <Compile Include="GeneratedCode\Conexion\Messages\ToNetwork.cs" />
+    <Compile Include="GeneratedCode\Conexion\Messages\ToSystem.cs" />
+    <Compile Include="GeneratedCode\Conexion\Products\Base.cs" />
+    <Compile Include="GeneratedCode\Conexion\Products\PinPort.cs" />
+    <Compile Include="GeneratedCode\Conexion\Products\Shield.cs" />
+    <Compile Include="GeneratedCode\Connector.cs" />
+    <Compile Include="GeneratedCode\Dimmable.cs" />
+    <Compile Include="GeneratedCode\DimmableSubtype.cs" />
+    <Compile Include="GeneratedCode\DoorLock.cs" />
+    <Compile Include="GeneratedCode\Enums\TypeBase.cs" />
+    <Compile Include="GeneratedCode\Enums\TypeCodeOP.cs" />
+    <Compile Include="GeneratedCode\Enums\TypeConnector1.cs" />
+    <Compile Include="GeneratedCode\Enums\TypeLog.cs" />
+    <Compile Include="GeneratedCode\Enums\TypePlugState.cs" />
+    <Compile Include="GeneratedCode\Enums\TypeShield.cs" />
+    <Compile Include="GeneratedCode\HomeDeviceAbstract.cs" />
+    <Compile Include="GeneratedCode\HomeModel\Home.cs" />
+    <Compile Include="GeneratedCode\HomeModel\Zone.cs" />
+    <Compile Include="GeneratedCode\HumiditySensor.cs" />
+    <Compile Include="GeneratedCode\Light.cs" />
+    <Compile Include="GeneratedCode\LightSensor.cs" />
+    <Compile Include="GeneratedCode\Logs\Log.cs" />
+    <Compile Include="GeneratedCode\Logs\LogManager.cs" />
+    <Compile Include="GeneratedCode\ModeRGBLight.cs" />
+    <Compile Include="GeneratedCode\NetworkManager.cs" />
+    <Compile Include="GeneratedCode\Node.cs" />
+    <Compile Include="GeneratedCode\Package2\ConditionalAction.cs" />
+    <Compile Include="GeneratedCode\Package2\IExecutable.cs" />
+    <Compile Include="GeneratedCode\Package2\Scheduler.cs" />
+    <Compile Include="GeneratedCode\Package2\Theme.cs" />
+    <Compile Include="GeneratedCode\Package2\ThemeManager.cs" />
+    <Compile Include="GeneratedCode\Plugs\AbstractPlug.cs" />
+    <Compile Include="GeneratedCode\Plugs\IConfigurator.cs" />
+    <Compile Include="GeneratedCode\Plugs\ILocalization.cs" />
+    <Compile Include="GeneratedCode\Plugs\IMedia.cs" />
+    <Compile Include="GeneratedCode\Plugs\IRecognizer.cs" />
+    <Compile Include="GeneratedCode\Plugs\ISong.cs" />
+    <Compile Include="GeneratedCode\Plugs\ITextToSpeech.cs" />
+    <Compile Include="GeneratedCode\Position.cs" />
+    <Compile Include="GeneratedCode\PowerSensor.cs" />
+    <Compile Include="GeneratedCode\PresenceSensor.cs" />
+    <Compile Include="GeneratedCode\RGBLight.cs" />
+    <Compile Include="GeneratedCode\Security.cs" />
+    <Compile Include="GeneratedCode\Switch.cs" />
+    <Compile Include="GeneratedCode\TemperatureSensor.cs" />
+    <Compile Include="GeneratedCode\TimeAction.cs" />
+    <Compile Include="GeneratedCode\TimeRestriction.cs" />
+    <Compile Include="GeneratedCode\WallPlug.cs" />
+    <Compile Include="GeneratedCode\WallPlugSubtype.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
