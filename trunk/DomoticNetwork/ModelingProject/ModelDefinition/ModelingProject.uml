@@ -953,7 +953,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <enumerationMoniker
               Id="4050fc68-0914-4794-8e3a-51b95b5e1eeb"
-              LastKnownName="TypeBase"
+              LastKnownName="BaseType"
               LastKnownLocation="Package_1432.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -992,7 +992,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <enumerationMoniker
               Id="618b1d1c-3763-49b4-ad39-f7d154e18b09"
-              LastKnownName="TypeShield"
+              LastKnownName="ShieldType"
               LastKnownLocation="Package_1432.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2280,7 +2280,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2558,7 +2558,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2686,7 +2686,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <enumerationMoniker
               Id="1b805fcc-2afe-432f-b4a6-c08fed4e44ba"
-              LastKnownName="TypeConnector1"
+              LastKnownName="ConnectorType"
               LastKnownLocation="Package_1432.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2914,7 +2914,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="79822dee-bc61-4d59-87ed-62acec1c7630">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3043,7 +3043,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <Interface
         Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-        name="HomeDeviceAbstract"
+        name="HomeDevice"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -3196,7 +3196,20 @@ Faltan las notificaciones en el diagrama</body>
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false" />
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="addd7f00-51ee-49c8-8d5c-76f492782950"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="51df2b8b-674c-4610-9878-0f312b5777b3"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -3209,7 +3222,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <enumerationMoniker
               Id="1b805fcc-2afe-432f-b4a6-c08fed4e44ba"
-              LastKnownName="TypeConnector1"
+              LastKnownName="ConnectorType"
               LastKnownLocation="Package_1432.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -3498,7 +3511,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="0a2e5928-6f20-4266-869b-811a43ee2fc4">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3750,7 +3763,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="5bb4d7fa-a576-437f-ae89-6c7c5bd3a89e">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4229,7 +4242,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="a927b73c-6f3c-4174-99a4-f620bb919a1f">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4667,7 +4680,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="f3f1243d-7a8f-4146-aac9-515fd1a70397">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -5283,7 +5296,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="04dab7ce-95ce-4b7a-a880-0c5ba44fea06">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -6191,7 +6204,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="532cc720-4f54-42ea-979f-9418033859ab">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -6453,7 +6466,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="920305c3-6429-4bd2-8a5e-a8644a0e429c">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -6784,7 +6797,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="9bbef574-c125-420b-9653-6132ea46a9a5">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -7046,7 +7059,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="c47773a4-7c79-46de-b816-8d09434b8335">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -7308,7 +7321,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="75a7cd00-61bb-4c3e-b7b1-f38af11738b8">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -7661,7 +7674,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="a7100c73-1fc7-4a93-8e16-e7930361778b">
             <interfaceMoniker
               Id="c006fd08-cc42-4f82-9192-9d1d8aa28cae"
-              LastKnownName="ActionAbstrract"
+              LastKnownName="ActionAbstract"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -7896,7 +7909,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="28382db1-7231-4c22-9ff7-e3c6cf6e1712">
             <interfaceMoniker
               Id="c006fd08-cc42-4f82-9192-9d1d8aa28cae"
-              LastKnownName="ActionAbstrract"
+              LastKnownName="ActionAbstract"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -8364,7 +8377,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <Interface
         Id="c006fd08-cc42-4f82-9192-9d1d8aa28cae"
-        name="ActionAbstrract"
+        name="ActionAbstract"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -8406,7 +8419,7 @@ Faltan las notificaciones en el diagrama</body>
         <ownedAttributes>
           <property
             Id="2e4c9aed-6264-44f3-9733-5a8c073334ec"
-            name="HomeDeviceTo"
+            name="ToHomeDevice"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -9304,7 +9317,7 @@ Faltan las notificaciones en el diagrama</body>
             Id="893f470d-8500-429f-880a-bdaeb0f7598d">
             <interfaceMoniker
               Id="39ba80ba-a4e9-4645-8375-9fe8cc7e2684"
-              LastKnownName="HomeDeviceAbstract"
+              LastKnownName="HomeDevice"
               LastKnownLocation="ModelingProject.uml" />
           </interfaceRealization>
         </suppliersInternal>
