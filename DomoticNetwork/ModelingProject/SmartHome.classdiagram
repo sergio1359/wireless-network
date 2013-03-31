@@ -162,7 +162,7 @@ Faltan las notificaciones en el diagrama</body>
             <elementDefinition Id="dd91b2fd-9035-48dc-9157-4475b2c96841" />
           </association>
           <association Id="d1a37ae0-3510-448d-943c-0662d5cf1991" isDerived="false" sourceEndRoleName="Node" targetEndRoleName="TypeBase1" isLeaf="false" isAbstract="false">
-            <enumerationMoniker Id="4c122a66-aceb-45dc-8bdc-f48bc5389638" LastKnownName="TypeBase" />
+            <enumerationMoniker Id="4c122a66-aceb-45dc-8bdc-f48bc5389638" LastKnownName="BaseType" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="7e98a0e3-5465-47ec-a395-55178354b42d" name="Node" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -178,7 +178,7 @@ Faltan las notificaciones en el diagrama</body>
             <elementDefinition Id="3ba0878b-5053-4f54-ab51-6b4c4a3aadae" />
           </association>
           <association Id="29cff4ad-4335-4ac7-8401-45644b3b8644" isDerived="false" sourceEndRoleName="Node" targetEndRoleName="TypeShield1" isLeaf="false" isAbstract="false">
-            <enumerationMoniker Id="23c44329-09f3-4178-9312-50589581668a" LastKnownName="TypeShield" />
+            <enumerationMoniker Id="23c44329-09f3-4178-9312-50589581668a" LastKnownName="ShieldType" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="6c6c5a3f-83dd-41a8-8ce8-fb3d0b145873" name="Node" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -1110,7 +1110,7 @@ Faltan las notificaciones en el diagrama</body>
             <elementDefinition Id="9904d96f-e602-4f92-8796-2fcde7aa9302" />
           </association>
           <association Id="865b6b6c-991b-46ca-8816-cbb846cf0e26" isDerived="false" sourceEndRoleName="NetworkManager" targetEndRoleName="HomeDeviceAbstract" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="a64f9992-9da2-4c4d-b891-284f60dc9d42" name="NetworkManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -1274,7 +1274,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="41aeab04-1555-4935-8264-501b918ff8b9" />
         <targetEnds>
           <association Id="a0ed3c45-9fed-466d-9016-d60eb466b32c" isDerived="false" sourceEndRoleName="Connector" targetEndRoleName="HomeDevice" isLeaf="false" isAbstract="false">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="51475825-013a-4070-8cec-780b7c7d17eb" name="Connector" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1316,7 +1316,7 @@ Faltan las notificaciones en el diagrama</body>
             <elementDefinition Id="ebf147db-3563-44f6-98c9-e95acc133f7e" />
           </association>
           <association Id="7de78eec-5915-4b62-9fef-ec5a256d7e81" isDerived="false" sourceEndRoleName="Connector" targetEndRoleName="TypeConnector1" isLeaf="false" isAbstract="false">
-            <enumerationMoniker Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" LastKnownName="TypeConnector1" />
+            <enumerationMoniker Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" LastKnownName="ConnectorType" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="5ac067ea-0a1f-4f86-8af0-f0c8046e4ce0" name="Connector" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -1482,7 +1482,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="35336520-79c9-4a25-981f-636ee2cdbeea" />
         <suppliersInternal>
           <interfaceRealization Id="a1285b59-a447-44f1-86dd-afa9343b124b">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="79822dee-bc61-4d59-87ed-62acec1c7630" />
           </interfaceRealization>
         </suppliersInternal>
@@ -1583,7 +1583,7 @@ Faltan las notificaciones en el diagrama</body>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" name="HomeDeviceAbstract" isAbstract="false" isLeaf="false">
+      <Interface Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" name="HomeDevice" isAbstract="false" isLeaf="false">
         <appliedStereotypesInternal>
           <stereotypeInstance Id="841a9d15-2bed-435f-a528-80bb8736fda9" name="interface" profile="CSharpProfile">
             <elementDefinition Id="79844dff-d1a1-4695-9394-20b2233a9e80" />
@@ -1643,6 +1643,16 @@ Faltan las notificaciones en el diagrama</body>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd Id="d57775a3-808b-4aae-bbbc-37a18911ba3e" name="Action" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="420caaf3-655a-4efb-89b6-2808aa97e0d7" name="Lower" value="n">
+                      <elementDefinition Id="addd7f00-51ee-49c8-8d5c-76f492782950" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="69c08ec2-45bc-465b-a69e-f0320717b665" name="Upper" value="n">
+                      <elementDefinition Id="51df2b8b-674c-4610-9878-0f312b5777b3" />
+                    </literalString>
+                  </upperValueInternal>
                   <elementDefinition Id="f2966228-f67a-4ab2-84a6-7e4f04752a1a" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -1650,7 +1660,7 @@ Faltan las notificaciones en el diagrama</body>
             <elementDefinition Id="81dca72c-e213-4f23-abaa-8e46b9555d85" />
           </association>
           <association Id="024644c6-6e95-4ec4-b101-0af9b8048e1c" isDerived="false" sourceEndRoleName="HomeDeviceAbstract" targetEndRoleName="TypeConnector1" isLeaf="false" isAbstract="false">
-            <enumerationMoniker Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" LastKnownName="TypeConnector1" />
+            <enumerationMoniker Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" LastKnownName="ConnectorType" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="ff3a3c97-ad8b-4e50-a1d2-7dabfdf08078" name="HomeDeviceAbstract" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -1864,7 +1874,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="dd0e515a-28b7-4cca-9c32-8aac0dd21121" />
         <suppliersInternal>
           <interfaceRealization Id="581a2484-f0b2-4af7-b8b1-a348419a5596">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="0a2e5928-6f20-4266-869b-811a43ee2fc4" />
           </interfaceRealization>
         </suppliersInternal>
@@ -2060,7 +2070,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="d1b7997b-3c1d-4d59-83ea-0d4fa3ba0dba" />
         <suppliersInternal>
           <interfaceRealization Id="1c613ae6-ddd1-49a9-a0cb-9ee6541caf6f">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="5bb4d7fa-a576-437f-ae89-6c7c5bd3a89e" />
           </interfaceRealization>
         </suppliersInternal>
@@ -2419,7 +2429,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="254ba10d-3c81-4156-bca0-bdb3c230fcdf" />
         <suppliersInternal>
           <interfaceRealization Id="68025cc7-9dab-493b-9e38-0c0e6a0ffe2e">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="a927b73c-6f3c-4174-99a4-f620bb919a1f" />
           </interfaceRealization>
         </suppliersInternal>
@@ -2760,7 +2770,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="ce0a69b8-0b1c-47b0-9b02-f6919665a68b" />
         <suppliersInternal>
           <interfaceRealization Id="f7d5bb9b-ef3c-4c33-bf86-f0d083181e27">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="f3f1243d-7a8f-4146-aac9-515fd1a70397" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3224,7 +3234,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="d59187fd-ee41-4b48-81cd-4f7324ebc0a8" />
         <suppliersInternal>
           <interfaceRealization Id="9f8d9b98-e0c0-446c-9b70-8a7f719b9dbe">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="04dab7ce-95ce-4b7a-a880-0c5ba44fea06" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3882,7 +3892,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="b3b1603c-7206-4ac2-a807-b3e4e81ad9cd" />
         <suppliersInternal>
           <interfaceRealization Id="c12603ed-bd9c-4a50-8a28-c2bdef072f56">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="532cc720-4f54-42ea-979f-9418033859ab" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4084,7 +4094,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="1b81eeb7-66a7-41dd-b87e-c187660e024d" />
         <suppliersInternal>
           <interfaceRealization Id="5b34e398-f745-45fc-99a7-7801ea322718">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="920305c3-6429-4bd2-8a5e-a8644a0e429c" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4338,7 +4348,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="74d8b2ea-ee59-4031-b43e-fc256fb446de" />
         <suppliersInternal>
           <interfaceRealization Id="efa4cff4-1c94-4c37-960c-260b248465b5">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="9bbef574-c125-420b-9653-6132ea46a9a5" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4540,7 +4550,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="a87cd111-d3c4-4607-93cb-ce90ea7dce21" />
         <suppliersInternal>
           <interfaceRealization Id="0cf3e137-f810-459f-a400-ae85cde00e1d">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="c47773a4-7c79-46de-b816-8d09434b8335" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4742,7 +4752,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="35d0d610-8c09-4751-ba19-7170ddc338de" />
         <suppliersInternal>
           <interfaceRealization Id="489a90d3-3890-41de-ac3d-433676def109">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="75a7cd00-61bb-4c3e-b7b1-f38af11738b8" />
           </interfaceRealization>
         </suppliersInternal>
@@ -4944,7 +4954,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="3b62bd20-f8e8-4809-a392-dd42305d839f" />
         <suppliersInternal>
           <interfaceRealization Id="b67b5ac9-4e91-4979-ab22-9c0040c97748">
-            <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstrract" />
+            <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstract" />
             <elementDefinition Id="a7100c73-1fc7-4a93-8e16-e7930361778b" />
           </interfaceRealization>
         </suppliersInternal>
@@ -5114,7 +5124,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="b157836b-3fa8-4946-a9be-a22b0b3f7232" />
         <suppliersInternal>
           <interfaceRealization Id="7cfa7ee6-4e7a-4125-9b45-8845d7532461">
-            <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstrract" />
+            <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstract" />
             <elementDefinition Id="28382db1-7231-4c22-9ff7-e3c6cf6e1712" />
           </interfaceRealization>
         </suppliersInternal>
@@ -5417,7 +5427,7 @@ Faltan las notificaciones en el diagrama</body>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" name="ActionAbstrract" isAbstract="false" isLeaf="false">
+      <Interface Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" name="ActionAbstract" isAbstract="false" isLeaf="false">
         <appliedStereotypesInternal>
           <stereotypeInstance Id="3f7c2552-9cc1-432a-876c-7e99fe6ac473" name="interface" profile="CSharpProfile">
             <elementDefinition Id="d4a48259-065b-4d83-9e4e-83d106f72cd3" />
@@ -5451,7 +5461,7 @@ Faltan las notificaciones en el diagrama</body>
         </appliedStereotypesInternal>
         <elementDefinition Id="c006fd08-cc42-4f82-9192-9d1d8aa28cae" />
         <ownedAttributes>
-          <property Id="ef03d6e8-d536-4ee5-bd92-e1c9539f0117" name="HomeDeviceTo" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="ef03d6e8-d536-4ee5-bd92-e1c9539f0117" name="ToHomeDevice" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <appliedStereotypesInternal>
               <stereotypeInstance Id="807b1778-d1d4-4865-aeef-4bb2a694e7c5" name="property" profile="CSharpProfile">
                 <elementDefinition Id="5adb2909-7659-499d-9f2c-2b8f19a8b98b" />
@@ -5850,7 +5860,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="179ff33a-8c5e-4ee8-98b5-637df74cf662" />
         <suppliersInternal>
           <interfaceRealization Id="630ad730-ea6a-4c9c-92dd-98751a36ef29">
-            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDeviceAbstract" />
+            <interfaceMoniker Id="68b8a14b-a36a-4cee-87a3-45f388fdec8d" LastKnownName="HomeDevice" />
             <elementDefinition Id="893f470d-8500-429f-880a-bdaeb0f7598d" />
           </interfaceRealization>
         </suppliersInternal>
@@ -7590,7 +7600,7 @@ Faltan las notificaciones en el diagrama</body>
         <elementDefinition Id="10d5652e-1908-40c8-ad96-667ab3a42174" />
         <packagedElements>
           <packageHasNamedElement>
-            <enumeration Id="4c122a66-aceb-45dc-8bdc-f48bc5389638" name="TypeBase" isAbstract="false" isLeaf="false">
+            <enumeration Id="4c122a66-aceb-45dc-8bdc-f48bc5389638" name="BaseType" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="bf744496-93e1-4a5c-829e-7e54c9d3022f" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="56a33314-5e66-483b-a648-8bfb08f3f3ba" />
@@ -7625,7 +7635,7 @@ Faltan las notificaciones en el diagrama</body>
             </enumeration>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <enumeration Id="23c44329-09f3-4178-9312-50589581668a" name="TypeShield" isAbstract="false" isLeaf="false">
+            <enumeration Id="23c44329-09f3-4178-9312-50589581668a" name="ShieldType" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="bebfab9f-398a-4ad8-888e-dc7392254335" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="a093383a-ba19-4b05-b933-6caf7789e8d3" />
@@ -7669,7 +7679,7 @@ Faltan las notificaciones en el diagrama</body>
             </enumeration>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <enumeration Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" name="TypeConnector1" isAbstract="false" isLeaf="false">
+            <enumeration Id="c53e58cf-e603-4b4b-83f6-ccb2cb5ca10c" name="ConnectorType" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="7cc2f3a1-9e5e-4855-b02c-1ee975bc8827" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="0f187cb1-cc89-453c-9d78-a05e7eab87e0" />
@@ -7716,7 +7726,7 @@ Faltan las notificaciones en el diagrama</body>
             </enumeration>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <enumeration Id="3a3f8f7c-36b8-429f-981c-533e6a3a80bc" name="TypePlugState" isAbstract="false" isLeaf="false">
+            <enumeration Id="3a3f8f7c-36b8-429f-981c-533e6a3a80bc" name="PlugState" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="a9e0b7df-4250-4d97-a0b3-a32e6825f9f2" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="ada14212-6cd6-4509-bfc7-ae12beecd5c9" />
@@ -7746,7 +7756,7 @@ Faltan las notificaciones en el diagrama</body>
             </enumeration>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <enumeration Id="671d640f-b8de-41c5-b875-fddd2dd4b0c9" name="TypeCodeOP" isAbstract="false" isLeaf="false">
+            <enumeration Id="671d640f-b8de-41c5-b875-fddd2dd4b0c9" name="OPCode" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="04be334f-a2e4-47d9-9e8d-943782d20ef1" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="8e0abb0c-7375-44a3-9451-79c8deff843c" />
@@ -7847,7 +7857,7 @@ Faltan las notificaciones en el diagrama</body>
             </enumeration>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <enumeration Id="32655c53-0153-450a-a4d0-1c788dd7218b" name="TypeLog" isAbstract="false" isLeaf="false">
+            <enumeration Id="32655c53-0153-450a-a4d0-1c788dd7218b" name="LogCategory" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>
                 <stereotypeInstance Id="de6f9bee-b10f-4625-9f99-60d0cfa730fd" name="enum" profile="CSharpProfile">
                   <elementDefinition Id="d278f29d-d44a-4e3a-a8b6-23a93e3a6b67" />
@@ -7951,7 +7961,7 @@ Faltan las notificaciones en el diagrama</body>
               <elementDefinition Id="d535fd5e-bce1-4230-ae0a-6c342aa9dcb6" />
               <targetEnds>
                 <association Id="2ce02b10-d5f2-4713-b496-9ad7ec678a7f" isDerived="false" sourceEndRoleName="Log" targetEndRoleName="TypeLog" isLeaf="false" isAbstract="false">
-                  <enumerationMoniker Id="32655c53-0153-450a-a4d0-1c788dd7218b" LastKnownName="TypeLog" />
+                  <enumerationMoniker Id="32655c53-0153-450a-a4d0-1c788dd7218b" LastKnownName="LogCategory" />
                   <relationshipOwnedElementsInternal>
                     <associationHasOwnedEnds>
                       <memberEnd Id="1da3c603-e728-4005-aa9d-819626491d2b" name="Log" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -9613,7 +9623,7 @@ Faltan las notificaciones en el diagrama</body>
               <elementDefinition Id="1ac0ac64-cf5a-4114-b35d-4665e1791b42" />
               <targetEnds>
                 <association Id="a6a0ba5b-d75b-45a5-b7a8-85793e399edd" isDerived="false" sourceEndRoleName="ConditionalActions" targetEndRoleName="ActionAbstrract" isLeaf="false" isAbstract="false">
-                  <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstrract" />
+                  <interfaceMoniker Id="8ffe93a6-53b8-4d8b-bd91-4bda262646fc" LastKnownName="ActionAbstract" />
                   <relationshipOwnedElementsInternal>
                     <associationHasOwnedEnds>
                       <memberEnd Id="c80817bf-e88f-406f-852f-4161b8c43388" name="ConditionalActions" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">

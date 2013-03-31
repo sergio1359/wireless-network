@@ -7,7 +7,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="4050fc68-0914-4794-8e3a-51b95b5e1eeb"
-        name="TypeBase"
+        name="BaseType"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -49,7 +49,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="618b1d1c-3763-49b4-ad39-f7d154e18b09"
-        name="TypeShield"
+        name="ShieldType"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -100,7 +100,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="1b805fcc-2afe-432f-b4a6-c08fed4e44ba"
-        name="TypeConnector1"
+        name="ConnectorType"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -154,7 +154,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="b7835b8d-02dc-483a-9762-d14b5eefb709"
-        name="TypePlugState"
+        name="PlugState"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -191,7 +191,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="b78ef16a-8d53-499c-9cf6-3441bc5505d6"
-        name="TypeCodeOP"
+        name="OPCode"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
@@ -321,7 +321,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="bf750a43-38b3-47c1-a0d9-7a7f6270a736"
-        name="TypeLog"
+        name="LogCategory"
         isAbstract="false"
         isLeaf="false">
         <appliedStereotypesInternal>
