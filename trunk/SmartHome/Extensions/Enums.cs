@@ -71,13 +71,24 @@ namespace Extensions.Enums
 
         public enum ShieldType
         {
-            Roseta,
-            Central,
-            Lampara,
-            Regleta,
+            Example,
         }
 
 
+        public enum HomeDeviceType
+        {
+            Buttom,
+            Dimmable,
+            DoorLock,
+            HumiditySensor,
+            LightSensor,
+            PowerSensor,
+            PresenceSensor,
+            RGBLight,
+            Switch,
+            TemperatureSensor,
+            WallPlug,
+        }
 
     }
 }

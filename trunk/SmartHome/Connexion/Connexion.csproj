@@ -39,8 +39,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Memory\Hex.cs" />
+    <Compile Include="Memory\CRC.cs" />
+    <Compile Include="Memory\MemoryConverter.cs" />
+    <Compile Include="Products\Base.cs" />
+    <Compile Include="Products\PinPort.cs" />
+    <Compile Include="Products\Shield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj">
+      <Project>{9926ad62-e520-4ce4-81d6-ca6817ecdcca}</Project>
+      <Name>Extensions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Messages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

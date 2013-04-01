@@ -83,17 +83,8 @@
         </appliedStereotypesInternal>
         <ownedLiterals>
           <enumerationLiteral
-            Id="a0014e46-8a26-4de8-9e9f-4438fe53aa95"
-            name="Roseta" />
-          <enumerationLiteral
-            Id="1b2f07ed-4deb-4f5c-bf1c-78f73cc37df0"
-            name="Central" />
-          <enumerationLiteral
-            Id="51040ead-f969-4066-a9c3-8892b00888de"
-            name="Lampara" />
-          <enumerationLiteral
-            Id="464e4308-09a1-417f-986d-d8d9d02ced5c"
-            name="Regleta" />
+            Id="3273fa09-aa45-4c96-b3c5-dfbb20d036fd"
+            name="Example" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
@@ -148,6 +139,9 @@
           <enumerationLiteral
             Id="aa0aa4b4-f6dc-4aa2-955e-a9e2a7588cde"
             name="IOLogic" />
+          <enumerationLiteral
+            Id="2f102eb1-350e-47fa-a25a-a8225a343148"
+            name="RGB" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
@@ -372,6 +366,78 @@
           <enumerationLiteral
             Id="652e5406-e465-4842-94b3-c7aefc9c2753"
             name="Other" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="10b33640-036a-4b9d-9bb8-f1e75d75dff2"
+        name="HomeDeviceType"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="81ccec91-240d-404f-b742-99275fc8ec29"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="51002fcf-b9c3-4423-b4ca-0fed3ff0d4cd">
+                <propertyInstance
+                  Id="9afc9752-9523-4f23-ad6a-93948e600343"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="97a6f10e-90bd-4730-9c3d-baf7390b425a">
+                <propertyInstance
+                  Id="33d74ccc-8daa-4812-b8fe-36798d942791"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7a5e94b3-45c7-447a-aa60-747bbcea87d9">
+                <propertyInstance
+                  Id="40f693f1-3516-4131-bb8e-eb0d25320dd1"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="87a39b4d-e9c1-4159-a294-91527b38c3ed"
+            name="Buttom" />
+          <enumerationLiteral
+            Id="8df3a516-6d0a-4bc0-8dd0-ec461332469d"
+            name="Switch" />
+          <enumerationLiteral
+            Id="a7b3094f-831a-4d84-8479-9fbcf64ce960"
+            name="WallPlug" />
+          <enumerationLiteral
+            Id="1731b413-ff44-46e9-9cdc-0d53baed71cc"
+            name="Dimmable" />
+          <enumerationLiteral
+            Id="3e465f8e-d770-46b6-ae17-7357cab675cd"
+            name="DoorLock" />
+          <enumerationLiteral
+            Id="88e5bb08-683e-4298-afdc-99cfbd89b3ec"
+            name="RGBLight" />
+          <enumerationLiteral
+            Id="2ffb68af-e697-4c77-8c17-6c6d41fbcd6c"
+            name="PresenceSensor" />
+          <enumerationLiteral
+            Id="c9fa74b6-4161-4175-b3e1-a367382947e5"
+            name="PowerSensor" />
+          <enumerationLiteral
+            Id="b493749b-6ca4-49f4-8b7c-0a2e5666e8c2"
+            name="TemperatureSensor" />
+          <enumerationLiteral
+            Id="5a62ea13-aa3d-485b-8386-c66cd3cffab2"
+            name="HumiditySensor" />
+          <enumerationLiteral
+            Id="afd88175-eb0c-4de8-8f8c-34446ec1f7bc"
+            name="LightSensor" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
