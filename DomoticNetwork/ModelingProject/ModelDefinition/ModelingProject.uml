@@ -1629,7 +1629,7 @@ Faltan las notificaciones en el diagrama</body>
         <ownedAttributesInternal>
           <property
             Id="917f27a0-b907-4eeb-a427-6a50388566c7"
-            name="zone"
+            name="Zone"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -2231,134 +2231,6 @@ Faltan las notificaciones en el diagrama</body>
             </relationshipOwnedElementsInternal>
           </association>
         </targetEnds>
-        <ownedOperationsInternal>
-          <operation
-            Id="a789226d-a5ed-4085-a8bf-4637b79a3755"
-            name="AddNewNode"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="4a54c5f6-08c0-479b-9ea6-391508d8bab6"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="aec2f9c6-5497-4fae-904a-a71a0fceb382">
-                    <propertyInstance
-                      Id="122f619f-e392-4c6e-88ad-f295448c4da8"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="7df7c3a6-47e0-438d-811b-92f183931642">
-                    <propertyInstance
-                      Id="481a70e1-fe65-45bb-9862-927d730b72fd"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="eae26c58-8dda-4062-af1e-aba1f810e7a6">
-                    <propertyInstance
-                      Id="48b2cbb6-57b1-4a20-a1f2-d8042d9d65d0"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6cf768d5-65d2-4cbc-8c70-6c19a0121d24">
-                    <propertyInstance
-                      Id="0279de57-ed20-42e0-80f7-1bdda18bb460"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6a0d57ca-4035-42c2-b99c-d63cda5bf0b2">
-                    <propertyInstance
-                      Id="861911c4-0118-4772-88ef-9b4c13819b26"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="9d2fe00b-df57-4f67-8a98-0c2d0c34d7ab">
-                    <propertyInstance
-                      Id="70365eec-cfb0-4491-bbee-7fa0b28432b9"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
-            Id="3a2924bd-a061-420f-9b7a-ddb0bd49dbaa"
-            name="AddNewHomeDevice"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="ee8a6e5a-ddd6-4d1c-ae22-d0f10769a486"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="4e897c1c-ab94-4a55-9c9b-b74272d5d3a0">
-                    <propertyInstance
-                      Id="0ebca67a-097d-4764-95ba-734aedb6a91f"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="18727c27-63f2-41a9-b069-723a2e29d99e">
-                    <propertyInstance
-                      Id="45d15e0d-36b7-42f8-86a7-bdf4cfa14ebc"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="426677bd-6d3d-4add-ae2e-19a415e5906d">
-                    <propertyInstance
-                      Id="6ed6a3e3-8362-49a7-a3d3-b6dcfb9b9f06"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="0120c282-8809-48a3-a6a2-d5557bfab625">
-                    <propertyInstance
-                      Id="a898b981-aca9-4ae8-a7a0-ac58500cdc22"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="baf3191c-de6b-4b28-801f-7a504dc6a05d">
-                    <propertyInstance
-                      Id="111aee11-5b64-49d6-8f25-482dd80359c1"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="4e33399f-23bc-4bb0-bb0a-b87142b25cce">
-                    <propertyInstance
-                      Id="5cc89e44-90eb-46bd-89ee-ab128b6ae99b"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
-            Id="4175473f-5980-414d-9ae2-2c80f8569021"
-            name="GetNotConnectedHomeDevices"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2781,6 +2653,56 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="08f770e1-d45d-43ba-b51a-552e87c9b5ab"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6cb6b2a0-e93d-4544-a842-11d0afce585c">
+                    <propertyInstance
+                      Id="6d4af422-f96b-4954-a42d-a3ba7d0abfc4"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c42778a-0851-4da6-8c46-2274852e0093">
+                    <propertyInstance
+                      Id="a702a90e-221a-4e3b-a5ce-32b8800d395a"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="96cf6e82-9b83-4dce-9ca9-f81eaeac18ec">
+                    <propertyInstance
+                      Id="7810b966-7829-474f-b3ea-d82b8054ca64"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2de827bc-1fd2-425e-b1aa-f34870948967">
+                    <propertyInstance
+                      Id="f5dcd368-2b48-427f-b0d7-f4ffdc4d8eed"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="13c9ef9e-6c60-46ef-aafb-2fd7cd8ed62c">
+                    <propertyInstance
+                      Id="88cc32b4-1c4c-4b52-9fcf-7ad088044d74"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="552af103-0ad4-4979-8884-94d58ea4c427">
+                    <propertyInstance
+                      Id="a97a5cfd-1ec3-43e6-979d-4062fd2b1ef8"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
@@ -2798,7 +2720,58 @@ Faltan las notificaciones en el diagrama</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="88e9aa65-660a-4a65-8947-43385ebd9f41"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6346ee8f-e0f9-453f-92e0-c6e73b4b6772">
+                    <propertyInstance
+                      Id="3da3f4bf-13eb-421c-a57f-65dfd2c7f10b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7cac9530-c324-4041-b5e1-73cfe0f5bd52">
+                    <propertyInstance
+                      Id="f06cce08-fb75-42d3-9eb1-f170b1392f70"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ed011f58-1242-45a9-a3fa-443808706df4">
+                    <propertyInstance
+                      Id="243336b6-9674-45f1-a6d1-13fef5638385"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6b315117-b96c-4b8c-9c3f-bd9701b6dd74">
+                    <propertyInstance
+                      Id="4cf1035f-cbbe-40ea-a7ab-d32dacae7dc2"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1b2ec2b7-422e-4efa-a242-46858f63b14a">
+                    <propertyInstance
+                      Id="e9ee485f-4a66-4808-927d-4a3414b5719f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9c18017c-a984-4ccf-af89-34a96a90439f">
+                    <propertyInstance
+                      Id="dceb65a0-a6ee-46af-8b69-db32c750cb07"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -2921,32 +2894,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="eb4e235c-529d-4124-8ba6-7237bd915747"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="5bf5b5d6-8348-42b1-b1f8-e51b934c972e"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="33e8c3b2-5590-4cfc-85f2-6e9a7ce45704"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -3371,6 +3318,56 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="true"
             concurrency="Sequential"
             isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="31fa6b48-893e-4b37-9005-45fd68256554"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7045aa3f-a393-470c-a6bb-0a2eb062b2d6">
+                    <propertyInstance
+                      Id="3fe65f3c-de5d-44ae-a8e8-a54326558741"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5653c94a-81de-41ce-988c-bc48901c5c4a">
+                    <propertyInstance
+                      Id="8517ba1a-ea6e-4e66-958b-75dd78c0c7f7"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="63acd797-cb40-44d6-9886-bd133161070d">
+                    <propertyInstance
+                      Id="55a67b65-c1b1-475d-a322-ccb6befed59d"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f598d6bb-0398-425e-afa1-eb9a82e7ad49">
+                    <propertyInstance
+                      Id="4a689f33-9e8c-4c1c-82b3-63888584e2dc"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="72450684-c02c-4077-ad91-2779a7f3c8ad">
+                    <propertyInstance
+                      Id="7c85b85d-ff4c-45e2-8d4a-7f6d0d19deab"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2863dac4-7c02-454f-a817-b831461a57cc">
+                    <propertyInstance
+                      Id="8afa7d5d-cb9c-401f-931d-d678f297df59"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
@@ -3388,7 +3385,58 @@ Faltan las notificaciones en el diagrama</body>
             isStatic="false"
             isAbstract="true"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="cc7fb31b-8a3f-49dd-9ed4-8734bd51798e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cfb3d088-9d97-4768-9ed6-1275e1b14322">
+                    <propertyInstance
+                      Id="6481d280-c939-42c4-87f9-56ca4a9f0076"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2aba9486-9b8e-4d58-a47b-41e9a4810f5e">
+                    <propertyInstance
+                      Id="132bd4aa-ab9b-4445-8bcd-70a6e9709a08"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="739a4992-a30b-4863-aaf2-c4ce1c1716e2">
+                    <propertyInstance
+                      Id="9beb4f21-8a6d-4b21-9071-c453b0dfca85"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0b1aa2ac-ff44-4230-9541-97412c9e4720">
+                    <propertyInstance
+                      Id="b1e83d1e-8b90-404f-b15f-4930d92d5472"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a3fe9cfd-d0c9-4937-95d7-323be71e4881">
+                    <propertyInstance
+                      Id="6c0460a2-0095-4961-891e-da10b2f54121"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8b47e4d8-384e-4cc5-a20b-beb912f2736f">
+                    <propertyInstance
+                      Id="f3574d5d-7c9f-47c3-b909-d1a064711383"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
         </ownedOperations>
       </Interface>
     </packageHasNamedElement>
@@ -3641,32 +3689,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="bd7c0d29-e488-4d3f-9d4d-692e672775e2"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="5fc3a0de-b2fe-428d-ace9-8dd764a2634c"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="9b82f368-eaf7-40d7-97b5-026fdcf33d00"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -4146,32 +4168,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="26bcc471-df97-4d2b-8065-1654b0a03451"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="6e88a3f6-9acb-4bee-b018-f623f1873598"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="520daace-570a-47d3-aa07-4d2d4d99464a"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -4610,32 +4606,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="f62fd257-8964-4427-b5e5-a93de6bb68ed"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="1ece1511-76fe-46a0-b5a8-087f74632ccb"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="fb402ed1-d8eb-4807-9822-348bfc7b398b"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5252,32 +5222,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="f5e2c5d3-7ebb-4f5f-a5fc-df35d620bd5d"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="75fd2637-8c48-4f94-8d60-2ddcad3b57dc"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="3f2f22bd-1789-471d-996f-43f42d533cb0"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6186,32 +6130,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="4e74e6d4-ac0a-4b64-8813-45284c262e9c"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="cc354c97-0fcd-4c81-a853-0b9deb7376a6"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="24597e43-7ab3-45e9-be9a-04a5480492ec"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6474,32 +6392,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="8fd3294a-5613-431a-9969-99a7fbf49d42"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="3046f047-abdc-47b5-aec1-4068132ff79a"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="0f647beb-fe7e-416b-b946-b1a156ee8e82"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6831,32 +6723,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="a5b5cd37-88b8-40af-a119-324874a80b2a"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="2a59246b-3e77-474b-a377-9fee391cbd62"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="f2db0d38-acb9-4cc6-a29d-74699b06042f"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -7119,32 +6985,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="f310483b-13c7-441c-a6cc-60f12eff480a"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="f9d716d8-6a5a-4191-8983-a1d491675f70"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="0ec24b68-a054-420f-be95-3de44bf18f83"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -7407,32 +7247,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="a3f665d9-9c4f-4ef7-bef9-ae666ac02006"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="4ececb8d-04fd-4d32-b6f2-67e9ef859985"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="9b1848ff-cfe1-46aa-9af6-3faf8061b54e"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -7695,32 +7509,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="7a0a8401-ab73-4b06-9ac2-9bab8e8ab340"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="8ad70a02-306d-40c4-a649-2aceb3ae0cbb"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="bd97017d-0bf5-4a34-8573-1bcf4e30f04f"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -7995,7 +7783,58 @@ Faltan las notificaciones en el diagrama</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="2e48631b-180d-4287-a9eb-99b56dc6a174"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3a543eb1-37f7-4b0b-bfec-11dcaefc4787">
+                    <propertyInstance
+                      Id="d09aa064-7da9-46a7-9502-646fc2340318"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="36f666ae-4d53-4840-b51b-f1169ffd2470">
+                    <propertyInstance
+                      Id="d3593772-f170-4314-84f1-36f5bb7f3a93"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b70abe85-f07e-4cfe-81c4-a593f70e761a">
+                    <propertyInstance
+                      Id="4d1d8a64-91df-4c71-94f4-66b11a6f87db"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="13376426-a6e3-4444-9e77-851dc5ef6b8e">
+                    <propertyInstance
+                      Id="e25948ef-4afa-4a3e-b328-aafee56ac9d1"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4eaf9970-071e-4837-9ba5-db011dd6aeda">
+                    <propertyInstance
+                      Id="85d5fbf0-a04a-4bf6-a725-93dd6fcd5bb8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b1159bd6-5960-41a6-bc06-3891f508cce5">
+                    <propertyInstance
+                      Id="62cb1af2-f705-4aee-9eb4-c842382d1ad2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -8196,7 +8035,58 @@ Faltan las notificaciones en el diagrama</body>
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5cfad36c-e2c5-4e75-8922-989adbe13157"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b30d45f-876f-4f33-a617-406d1b12d566">
+                    <propertyInstance
+                      Id="6b412b81-1b63-4267-98bd-fa39bb2addef"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2ee829d1-9497-45fd-8667-b2a1df5d7466">
+                    <propertyInstance
+                      Id="c65aceff-aaca-4b42-b8a0-09eda074751f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2f573898-6131-437c-8ae9-bd0064b0e835">
+                    <propertyInstance
+                      Id="4385e917-7b03-4705-a755-cce762e05ddb"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c23e3cfd-32d0-4da0-8ada-677ae9d10734">
+                    <propertyInstance
+                      Id="5415920c-5c73-4672-9695-19e866a5bd05"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e054b119-5c4e-4146-86ac-765416ee8f2c">
+                    <propertyInstance
+                      Id="3087b8d2-afa5-433e-99c2-a6baf3bc19c6"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="164c4766-5c06-456e-a5a5-e7191cb4e682">
+                    <propertyInstance
+                      Id="42562646-0545-4237-a4ba-683cf7281525"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -9367,7 +9257,65 @@ Faltan las notificaciones en el diagrama</body>
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="8f03da9c-b5a2-4da2-a031-9c65f492d667"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f2a49dd3-945e-4bef-bc9c-245bb9f741bf">
+                    <propertyInstance
+                      Id="0a3b2b79-bb39-4ac0-8575-a6bd134fd134"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4faf8bc8-fb63-4789-aa25-31957bfaf09a">
+                    <propertyInstance
+                      Id="65384590-e5c2-408b-acc1-a3a2ed1d9317"
+                      name="Get"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c5f40cfb-7711-45a7-b86b-c6ee8c4d6ca8">
+                    <propertyInstance
+                      Id="a3a33d7a-efb3-4669-9dd0-07cbf9cdfe82"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8e60e05b-0671-4345-83ce-fb0e50dbc90e">
+                    <propertyInstance
+                      Id="688f0ac4-9aa5-464f-9485-c73204e65348"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0d8b31bc-d138-441d-bbc4-0be7fdb01d45">
+                    <propertyInstance
+                      Id="522b6962-e74d-4141-bd7c-c1d8a19cbd05"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="358c26e0-3865-49ca-afe6-66851eeaa894">
+                    <propertyInstance
+                      Id="478c537c-1c00-49ef-b87d-91e5cb12341c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f7f1dfa2-1c68-433a-abaa-4affcded2cc0">
+                    <propertyInstance
+                      Id="06e63bc8-7b9b-43d2-bad0-78420901ed06"
+                      name="Set"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -9429,32 +9377,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="c3626a8e-ae96-484d-98b6-41084a4ed006"
-            name="Link"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="84ee8ae7-2499-4858-b8b4-9190e6b69926"
-                  name="Connector"
-                  direction="In"
-                  isUnique="false" />
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="cd083921-1fed-4abc-ad7c-e02a301ebb4c"
-            name="Unlink"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -9646,7 +9568,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <packageMoniker
         Id="44fcbe48-3eb5-4b80-b9d8-ed2edc443ec8"
-        LastKnownName="Conexion"
+        LastKnownName="Connexion"
         LastKnownLocation="Package_1433.uml" />
     </packageHasNamedElement>
     <packageHasNamedElement>
