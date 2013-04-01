@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{94262822-08EA-4E58-B93D-03CB19A41D22}</ProjectGuid>
+    <ProjectGuid>{DDC4754A-EF71-4D1B-A676-E0AEDC53B850}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartHome</RootNamespace>
-    <AssemblyName>SmartHome</AssemblyName>
+    <RootNamespace>Connexion</RootNamespace>
+    <AssemblyName>Connexion</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,24 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Network\Actions.cs" />
-    <Compile Include="Network\HomeDevices\Buttom.cs" />
-    <Compile Include="Network\HomeDevices\WallPlug.cs" />
-    <Compile Include="Network\HomeDevices\Dimmable.cs" />
-    <Compile Include="Network\HomeDevices\Switch.cs" />
-    <Compile Include="Network\HomeDevices\HomeDevices.cs" />
-    <Compile Include="Network\Connector.cs" />
-    <Compile Include="Network\NetworkManager.cs" />
-    <Compile Include="Network\Node.cs" />
-    <Compile Include="Network\Position.cs" />
-    <Compile Include="Network\Security.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Extensions\Extensions.csproj">
-      <Project>{9926ad62-e520-4ce4-81d6-ca6817ecdcca}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
