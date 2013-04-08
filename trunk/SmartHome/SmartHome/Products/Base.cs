@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Extensions.Enums;
+using SmartHome.Enums;
 
-namespace Connexion.Products
+namespace SmartHome.Products
 {
     class Base
     {

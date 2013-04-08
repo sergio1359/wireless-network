@@ -277,7 +277,7 @@
             name="ColorWrite" />
           <enumerationLiteral
             Id="16ba6eb2-a263-4e40-b5bf-7f861088ef5d"
-            name="ColorWhiteRandom" />
+            name="ColorWriteRandom" />
           <enumerationLiteral
             Id="bc3effde-8054-410e-8998-f7600c647e71"
             name="ColorSecuenceWrite" />
@@ -287,6 +287,54 @@
           <enumerationLiteral
             Id="6b132697-28aa-407a-ab5c-7f1410ab0b1a"
             name="ColorReadResponse" />
+          <enumerationLiteral
+            Id="29824edd-e564-4770-9dea-2c5767192409"
+            name="ConfigWrite" />
+          <enumerationLiteral
+            Id="fe27b8db-f9e2-43f3-af17-62bffdbd5576"
+            name="ConfigRead" />
+          <enumerationLiteral
+            Id="20a4a212-2ac2-44a4-a053-934d1f54cb01"
+            name="ConfigReadResponse" />
+          <enumerationLiteral
+            Id="1edac1bd-99ca-40fe-a520-ee17425dc42f"
+            name="ConfigChecksum" />
+          <enumerationLiteral
+            Id="e91d1b4a-5abb-47d5-ad5d-92797399bec4"
+            name="ConfigChecksumResponse" />
+          <enumerationLiteral
+            Id="6adaba16-28be-414b-b483-92635bc51677"
+            name="ColorRead" />
+          <enumerationLiteral
+            Id="33dd52a6-ef1e-4c6d-ac79-f553f2bedf6f"
+            name="PresenceRead" />
+          <enumerationLiteral
+            Id="9efa6638-de85-452e-8bfb-08840f48c7e4"
+            name="PresenceReadResponse" />
+          <enumerationLiteral
+            Id="3d560132-49d5-4213-add4-a99a7c4892f5"
+            name="TemperatureRead" />
+          <enumerationLiteral
+            Id="5010d184-aa28-4d01-8af4-3b3fedebf2b4"
+            name="TemperatureReadResponse" />
+          <enumerationLiteral
+            Id="4d7d27f7-bae7-4fc2-b2c8-fa28f1eed633"
+            name="HumidityRead" />
+          <enumerationLiteral
+            Id="16a57bc1-fcd2-47ce-b27d-b1facbd6a4ca"
+            name="HumidityReadResponse" />
+          <enumerationLiteral
+            Id="4fa4488c-20d6-486c-baee-02ad9efc3877"
+            name="PowerRead" />
+          <enumerationLiteral
+            Id="6de450c1-2251-4b15-be54-e4b5bc6238f6"
+            name="PowerReadResponse" />
+          <enumerationLiteral
+            Id="0e96db68-4bcc-45c2-a101-c7032b48ee75"
+            name="LuminosityRead" />
+          <enumerationLiteral
+            Id="7c07ab9a-25ac-4b9f-b016-c2896f6f0a17"
+            name="LuminosityReadResponse" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

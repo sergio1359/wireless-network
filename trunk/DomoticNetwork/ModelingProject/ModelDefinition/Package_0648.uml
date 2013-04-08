@@ -306,5 +306,57 @@
         </appliedStereotypesInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4b9af39c-7ba1-4025-873b-6afe14bd307a"
+        name="SerialPort"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ecc47332-1d8a-4a48-aec3-1562c61edba1"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="75e6e991-45a6-49f0-894e-517d7d01cb80">
+                <propertyInstance
+                  Id="cd262407-8c5c-4743-9fbb-cbf6e6738cf6"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="65366400-6a44-40da-a401-a3ca89e45579">
+                <propertyInstance
+                  Id="81f8937d-3975-42c0-af62-a2699a3b0f2c"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="aed4350c-4296-41cc-826e-e7550bb87588">
+                <propertyInstance
+                  Id="bd83159a-5142-4799-b168-cf48e6c60269"
+                  name="IsStatic"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a925ebee-e5d5-4166-a7dc-2a4a6d35f5cc">
+                <propertyInstance
+                  Id="833adbe7-96f5-487b-b8a5-372cd423f7a4"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="23e31672-ec4c-44f6-af38-64eb70e486ef">
+                <propertyInstance
+                  Id="643b1bac-7b29-42ec-9cd5-7aae3368c25a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
 </package>

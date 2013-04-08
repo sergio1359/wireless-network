@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Extensions.Enums;
+using SmartHome.Enums;
 using SmartHome.Network.HomeDevices;
 
 namespace SmartHome.Network
@@ -13,6 +13,15 @@ namespace SmartHome.Network
         public string Name { get; set; }
         public Enums.ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
-        public HomeDevice HomeDevice { get; set; }
+        public HomeDevice HomeDevice { get;
+            set 
+            {
+                if (value == null)
+                    HomeDevice.Connector = null;
+                else
+                    HomeDevice.Connector = this;
+                HomeDevice = value;                
+            }
+        }
     }
 }
