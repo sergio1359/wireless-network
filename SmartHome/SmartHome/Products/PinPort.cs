@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Extensions.Enums;
+using SmartHome.Enums;
 
-namespace Connexion.Products
+namespace SmartHome.Products
 {
     class PinPort
     {
@@ -24,42 +24,10 @@ namespace Connexion.Products
             Port = direction[0];
             Pin = Byte.Parse(direction[1].ToString());
         }
-
-        public static PinPortConfiguration GetPinPortConfiguration(Enums.HomeDeviceType HomeDeviceType)
-        {
-            switch (HomeDeviceType)
-	        {
-		        case Enums.HomeDeviceType.Buttom:
-                 break;
-                case Enums.HomeDeviceType.Dimmable:
-                 break;
-                case Enums.HomeDeviceType.DoorLock:
-                 break;
-                case Enums.HomeDeviceType.HumiditySensor:
-                 break;
-                case Enums.HomeDeviceType.LightSensor:
-                 break;
-                case Enums.HomeDeviceType.PowerSensor:
-                 break;
-                case Enums.HomeDeviceType.PresenceSensor:
-                 break;
-                case Enums.HomeDeviceType.RGBLight:
-                 break;
-                case Enums.HomeDeviceType.Switch:
-                 break;
-                case Enums.HomeDeviceType.TemperatureSensor:
-                 break;
-                case Enums.HomeDeviceType.WallPlug:
-                 break;
-                default:
-                 break;
-	        }
-        }
     }
 
-    class PinPortConfiguration 
+    class PinPortConfiguration
     {
-
         public const bool DEFAULT_OUTPUT = false; //Entrada
         public const bool DEFAULT_DIGITAL = true; //Digital
 
@@ -84,5 +52,36 @@ namespace Connexion.Products
         //input
         public Byte Increment { get; set; }
         public Byte Threshold { get; set; }
+
+        public PinPortConfiguration(Enums.HomeDeviceType HomeDeviceType)
+        {
+            switch (Enums.HomeDeviceType)
+            {
+                case Enums.HomeDeviceType.Buttom:
+                    break;
+                case Enums.HomeDeviceType.Dimmable:
+                    break;
+                case Enums.HomeDeviceType.DoorLock:
+                    break;
+                case Enums.HomeDeviceType.HumiditySensor:
+                    break;
+                case Enums.HomeDeviceType.LightSensor:
+                    break;
+                case Enums.HomeDeviceType.PowerSensor:
+                    break;
+                case Enums.HomeDeviceType.PresenceSensor:
+                    break;
+                case Enums.HomeDeviceType.RGBLight:
+                    break;
+                case Enums.HomeDeviceType.Switch:
+                    break;
+                case Enums.HomeDeviceType.TemperatureSensor:
+                    break;
+                case Enums.HomeDeviceType.WallPlug:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

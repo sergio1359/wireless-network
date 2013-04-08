@@ -39,23 +39,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Memory\ATMega.cs" />
+    <Compile Include="Memory\ATMegaExtensions.cs" />
     <Compile Include="Memory\Hex.cs" />
     <Compile Include="Memory\CRC.cs" />
     <Compile Include="Memory\MemoryConverter.cs" />
-    <Compile Include="Products\Base.cs" />
-    <Compile Include="Products\PinPort.cs" />
-    <Compile Include="Products\Shield.cs" />
+    <Compile Include="Messages\HID.cs" />
+    <Compile Include="Messages\Serial.cs" />
+    <Compile Include="Messages\ToNetwork.cs" />
+    <Compile Include="Messages\ToSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Extensions\Extensions.csproj">
+    <ProjectReference Include="..\Extensions\ExtensionsLayer.csproj">
       <Project>{9926ad62-e520-4ce4-81d6-ca6817ecdcca}</Project>
-      <Name>Extensions</Name>
+      <Name>ExtensionsLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmartHome\SmartHome.csproj">
+      <Project>{94262822-08ea-4e58-b93d-03cb19a41d22}</Project>
+      <Name>SmartHome</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Messages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

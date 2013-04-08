@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Extensions.Enums;
+using SmartHome.Enums;
 
 namespace SmartHome.Network
 {

@@ -39,6 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ConnectorType.cs" />
+    <Compile Include="Enums\BaseType.cs" />
+    <Compile Include="Enums\OPCode.cs" />
+    <Compile Include="Enums\PlugState.cs" />
+    <Compile Include="Enums\ShieldType.cs" />
+    <Compile Include="Enums\HomeDeviceType.cs" />
+    <Compile Include="HomeModel\Home.cs" />
+    <Compile Include="HomeModel\Zone.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\LogCategory.cs" />
+    <Compile Include="Logs\LogManager.cs" />
+    <Compile Include="Memory\ATMega.cs" />
+    <Compile Include="Memory\ATMegaExtensions.cs" />
+    <Compile Include="Memory\CRC.cs" />
+    <Compile Include="Memory\Hex.cs" />
+    <Compile Include="Memory\MemoryConverter.cs" />
+    <Compile Include="Messages\HID.cs" />
+    <Compile Include="Messages\Serial.cs" />
+    <Compile Include="Messages\ToNetwork.cs" />
+    <Compile Include="Messages\ToSystem.cs" />
     <Compile Include="Network\Actions.cs" />
     <Compile Include="Network\HomeDevices\Buttom.cs" />
     <Compile Include="Network\HomeDevices\WallPlug.cs" />
@@ -50,13 +70,14 @@
     <Compile Include="Network\Node.cs" />
     <Compile Include="Network\Position.cs" />
     <Compile Include="Network\Security.cs" />
+    <Compile Include="Products\Base.cs" />
+    <Compile Include="Products\PinPort.cs" />
+    <Compile Include="Products\Shield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Extensions\Extensions.csproj">
-      <Project>{9926ad62-e520-4ce4-81d6-ca6817ecdcca}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
+    <Folder Include="Plugs\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="8cb5e561-d2ea-444e-aa3e-2b836a42b2a5"
+  name="Enums" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="cbfe8127-3824-4e89-b933-f1058eb9bd9f"
+        name="BaseType"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="70dec0a9-9b9e-4e83-984e-5cd58d875982"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="555cb956-0e84-48f9-9d51-c60951e0bef8">
+                <propertyInstance
+                  Id="103b5016-9712-4ad5-88f7-4e626dd825fd"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e73f57dc-252e-4b5e-ae07-ab6987a0b0c6">
+                <propertyInstance
+                  Id="d19e7c83-6743-4b73-b810-7c6ed746f301"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b17806fb-c001-4d89-ae41-8c89366328c9">
+                <propertyInstance
+                  Id="bde27b42-0dd1-4f0f-8783-04d29c70ac4d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="9cdc865e-5316-4cd8-90cd-6d58a42394c8"
+            name="ATMega128RFA1" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="dc0e929d-c3df-48da-9d3d-0b806e85ef45"
+        name="ShieldType"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="91afd03b-ca10-4a47-9c3c-b79273149e07"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3a9b8709-c55f-4c0e-8993-b9732112f865">
+                <propertyInstance
+                  Id="ef5f0b54-fac9-45ac-b6f6-8096d24161ad"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d25c5859-6344-4bf9-9859-370d9c3c3774">
+                <propertyInstance
+                  Id="7dd25244-9cf8-4f8b-a64a-8d8985b650d8"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3d16b956-a352-44bc-a684-e775ad1aa730">
+                <propertyInstance
+                  Id="37d070f9-011e-4250-bea2-b1c80e42627d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="ee7dc915-1223-4976-8d96-8191eb75cae1"
+            name="Example" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="7da02200-38ac-486f-8c5d-61178953c001"
+        name="ConnectorType"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="15f47246-b1ed-403b-b8a6-c56d53640e6b"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="02da3eb4-7630-425e-a337-d87a8bc07be8">
+                <propertyInstance
+                  Id="b2a1ad55-864d-494f-a6a2-64586b34adf1"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="009246a0-360a-48f7-af30-cbdb116f4aff">
+                <propertyInstance
+                  Id="4cbe7608-5200-499d-ad5d-4bad0ed988e2"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="908ff967-12c7-418b-9e3f-05ad764cf022">
+                <propertyInstance
+                  Id="e83bae03-b173-4790-87f3-ad75b57b7734"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="cbd13d81-79a2-44ea-ae2c-a0de6cc9cc0a"
+            name="SwitchLOW" />
+          <enumerationLiteral
+            Id="4adca60a-da56-48e2-ac80-68269b39cc0e"
+            name="SwitchHI" />
+          <enumerationLiteral
+            Id="db5e47da-9024-4762-8aa7-bfbca89b3e05"
+            name="PWMTTL" />
+          <enumerationLiteral
+            Id="3742cdb3-a60f-4082-b018-3e49b1611017"
+            name="Dimmer" />
+          <enumerationLiteral
+            Id="b25811b3-664b-42a0-904d-8e27dff69331"
+            name="IOLogic" />
+          <enumerationLiteral
+            Id="66129c25-2a78-401a-b285-0e592e8be6ea"
+            name="RGB" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="0689aae7-d948-46e0-8de1-e4cf597deef3"
+        name="PlugState"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d1e72d05-d647-4ac8-a514-fb7e31803c18"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="392303e5-ef0a-4ea3-81c1-3b82cd15773e">
+                <propertyInstance
+                  Id="20be68ec-4be4-4cdc-bb95-59397e53ec3d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="315e4961-65c3-4d56-87ff-389633bc61b9">
+                <propertyInstance
+                  Id="4cc74931-103f-4727-86fa-ad87e0501dbf"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4eca87e4-8345-4bec-a78b-0da729b362d1">
+                <propertyInstance
+                  Id="4736da01-3e57-4c96-9e99-773d714be6e9"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="b157f39c-53c1-454b-a19b-a1b82a5fcf26"
+        name="OPCode"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="f8a52204-4fb5-4a14-9f5b-d6b64598db12"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ce70c21e-16ba-4c7a-9756-b7cd38ee8830">
+                <propertyInstance
+                  Id="8e91f390-8ffd-4e44-8904-e5dfe668fb5c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0e2014cb-2771-4f97-b587-a53044b37ac4">
+                <propertyInstance
+                  Id="fbb16df2-1a3c-4847-b44b-ed8659bdc854"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c3ac14ed-db06-40f9-a40f-0afa18e84703">
+                <propertyInstance
+                  Id="d441b691-59e0-4971-a834-53153c41551e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="d71ac7e1-beb8-4950-a84d-8da36e247c26"
+            name="DigitalWrite" />
+          <enumerationLiteral
+            Id="5a13fe92-5b68-443d-838c-3e0417a8b355"
+            name="DigitalSwitch" />
+          <enumerationLiteral
+            Id="76a96b5e-fd2c-48b3-a48c-2883937c774c"
+            name="DigitalWriteTime" />
+          <enumerationLiteral
+            Id="e1aef9a3-e30a-4f0e-9ae1-ca8130198886"
+            name="DigitalSwitchTime" />
+          <enumerationLiteral
+            Id="f2027044-30bf-466d-be00-b3a6f96073f8"
+            name="DigitalRead" />
+          <enumerationLiteral
+            Id="0a13065f-2564-4e50-bcbd-7af17a3c0b00"
+            name="DigitalReadResponse" />
+          <enumerationLiteral
+            Id="03247653-0acf-4e9d-b68f-5b4b6de89566"
+            name="AnalogWrite" />
+          <enumerationLiteral
+            Id="cfadedee-baee-4d46-949d-0b1891b6e636"
+            name="AnalogWriteTime" />
+          <enumerationLiteral
+            Id="880b2358-c9f9-4249-9e47-d8e6c8e4e5d5"
+            name="AnalogRead" />
+          <enumerationLiteral
+            Id="57613b9b-1d7e-444c-b394-91ffb72ee133"
+            name="AnalogReadResponse" />
+          <enumerationLiteral
+            Id="dbb70e67-31ae-4bd8-82bc-a1207d9a9195"
+            name="Reset" />
+          <enumerationLiteral
+            Id="a3302825-411e-4fc9-8ac9-240057d91c44"
+            name="RouteTableRead" />
+          <enumerationLiteral
+            Id="36ad5aa9-3297-417d-931d-afc79de0503b"
+            name="RouteTableReadResponse" />
+          <enumerationLiteral
+            Id="cbd9e535-5f65-495f-95e6-227e642ff283"
+            name="TimeWrite" />
+          <enumerationLiteral
+            Id="df460d9e-fbf8-465d-a886-a5a504ae02f5"
+            name="TimeRead" />
+          <enumerationLiteral
+            Id="6f1ac4bf-8384-4b89-9451-e3a5de30f585"
+            name="TimeReponse" />
+          <enumerationLiteral
+            Id="c5016177-fcb0-43c2-bcaa-a56941362480"
+            name="Warning" />
+          <enumerationLiteral
+            Id="614ed91e-7768-4852-a8dc-472a77c25fbe"
+            name="Error" />
+          <enumerationLiteral
+            Id="eb57a514-2c8f-476a-a7a1-a864cd75d202"
+            name="ColorWrite" />
+          <enumerationLiteral
+            Id="d8c1364d-251b-433b-bae1-4b40d7023a63"
+            name="ColorWriteRandom" />
+          <enumerationLiteral
+            Id="b0a22739-c49d-485c-8608-ef9f6e49c479"
+            name="ColorSecuenceWrite" />
+          <enumerationLiteral
+            Id="37ab3edf-c984-48a1-81f1-44444991a6ba"
+            name="ColorSortedSecuenceWrite" />
+          <enumerationLiteral
+            Id="1805b476-ef31-46dd-83d9-9b4ff0a4d7da"
+            name="ColorReadResponse" />
+          <enumerationLiteral
+            Id="7abfe25c-9f00-43c0-ad0e-9f20487790f2"
+            name="ConfigWrite" />
+          <enumerationLiteral
+            Id="6d54652f-3eaa-4010-a178-d6cbb40d8158"
+            name="ConfigRead" />
+          <enumerationLiteral
+            Id="88624b8f-4003-45d2-8ab7-f136a908f346"
+            name="ConfigReadResponse" />
+          <enumerationLiteral
+            Id="cf6c5c95-e4ea-4d22-8551-a053bee0a790"
+            name="ConfigChecksum" />
+          <enumerationLiteral
+            Id="0d5bb7de-5da4-4cb2-898f-a2cb209a9978"
+            name="ConfigChecksumResponse" />
+          <enumerationLiteral
+            Id="680425d5-fc33-4f4a-a6f0-66cc5381ad07"
+            name="ColorRead" />
+          <enumerationLiteral
+            Id="c2d95d4c-5aad-46fb-8522-fac583c38882"
+            name="PresenceRead" />
+          <enumerationLiteral
+            Id="125b084a-8aa0-4145-8c42-72d801417f96"
+            name="PresenceReadResponse" />
+          <enumerationLiteral
+            Id="1836a481-5739-460a-9b68-4efe49895217"
+            name="TemperatureRead" />
+          <enumerationLiteral
+            Id="2a66cf92-4d0d-4565-9d6f-850a96c27c46"
+            name="TemperatureReadResponse" />
+          <enumerationLiteral
+            Id="38c50cf0-40c2-4ead-8916-78aaa43bd180"
+            name="HumidityRead" />
+          <enumerationLiteral
+            Id="797f0861-e7e8-4107-8813-f3b86f0069a5"
+            name="HumidityReadResponse" />
+          <enumerationLiteral
+            Id="7f4569ab-e5e3-4476-8638-8b773b3dce0e"
+            name="PowerRead" />
+          <enumerationLiteral
+            Id="01d0d353-b5c3-4ac4-9aa4-790705ed9a16"
+            name="PowerReadResponse" />
+          <enumerationLiteral
+            Id="7af93998-3a53-4d1d-9caa-94b7f60ad235"
+            name="LuminosityRead" />
+          <enumerationLiteral
+            Id="8bb0b0fa-5b8f-4695-a954-7fcbc9bd1a55"
+            name="LuminosityReadResponse" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="c20363bf-f1de-4c90-8336-dcb184ecefda"
+        name="LogCategory"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="22009846-ef1a-406b-8744-263b390292a4"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a077454b-c710-40cd-9fbe-4646cfc7b175">
+                <propertyInstance
+                  Id="660f77ac-18d8-4485-ae36-5f369e7bda4c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4dca8b02-3fe3-4c5e-89e8-cb920e516ff1">
+                <propertyInstance
+                  Id="f655b27c-4c47-4f56-a8ff-86602303bc2f"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="369a4d33-708b-4ac9-9a35-7df40fe8e272">
+                <propertyInstance
+                  Id="1478f813-567d-4578-9cdb-96a1df26249f"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="db8018cb-27cc-4a08-97a4-561b8b60b3b0"
+            name="All" />
+          <enumerationLiteral
+            Id="71ddeef1-a2de-4da5-b1f0-26bb93bf006f"
+            name="Info" />
+          <enumerationLiteral
+            Id="d9ceb0be-5d56-4309-8776-5a29cb90c3b8"
+            name="Error" />
+          <enumerationLiteral
+            Id="7549b82d-a418-4df2-a3c4-6ad6a11b0b51"
+            name="Config" />
+          <enumerationLiteral
+            Id="7bf55749-63b5-49db-b368-20f35447ae43"
+            name="Network" />
+          <enumerationLiteral
+            Id="08768f0c-10be-41f7-98b7-7608a3461fe0"
+            name="Other" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="1d4a5f93-b724-4b6e-bc49-4d38cc0921da"
+        name="HomeDeviceType"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="8a99ae5e-b871-4d41-9a09-7a4404b3123d"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d586a459-957b-42b2-b042-1359375a7480">
+                <propertyInstance
+                  Id="68071e08-2ba6-49ed-989a-5d31add5f3ae"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a2753045-eb0a-4908-b21c-fad80ab3415a">
+                <propertyInstance
+                  Id="d65d184d-723f-4430-8165-06f7e730afa9"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5425364d-d996-4217-bff4-6ad48c178bb7">
+                <propertyInstance
+                  Id="d1715cd4-4f34-4166-822f-f00dea85c5fd"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="a6e106cc-6adc-4365-8895-2d7b7dc47143"
+            name="Buttom" />
+          <enumerationLiteral
+            Id="7504503f-7973-43c3-b24c-7b23be5d10e0"
+            name="Switch" />
+          <enumerationLiteral
+            Id="698e34ad-67de-48de-a4dc-7c3852f79721"
+            name="WallPlug" />
+          <enumerationLiteral
+            Id="8cb77739-4c97-43fc-9b1f-c3cc8b24a466"
+            name="Dimmable" />
+          <enumerationLiteral
+            Id="1d8705f4-7a44-4d9f-814a-fffd1ba79021"
+            name="DoorLock" />
+          <enumerationLiteral
+            Id="18f77324-e6b2-4c23-9350-9418da36ff63"
+            name="RGBLight" />
+          <enumerationLiteral
+            Id="13326617-b0a6-41f5-9c90-cf527fc4936d"
+            name="PresenceSensor" />
+          <enumerationLiteral
+            Id="862c05e3-b6cd-4220-b1dd-71c1617d1187"
+            name="PowerSensor" />
+          <enumerationLiteral
+            Id="8903dd64-6587-4363-a404-6f60e44ec959"
+            name="TemperatureSensor" />
+          <enumerationLiteral
+            Id="82c06ae0-8c8a-4137-9ea7-55814ba55ea2"
+            name="HumiditySensor" />
+          <enumerationLiteral
+            Id="5ff3ae72-290e-45bf-a2e2-b6c884187c1f"
+            name="LightSensor" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

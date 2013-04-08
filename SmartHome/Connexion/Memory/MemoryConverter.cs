@@ -1,7 +1,7 @@
-﻿using DomoticNetwork.NetworkModel;
-using Extensions;
+﻿using Extensions;
 using System;
 using System.Collections.Generic;
+using SmartHome.Network;
 
 namespace Connexion.Memory
 {
