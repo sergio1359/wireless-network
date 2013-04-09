@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Buttom: HomeDevice
+    class PresenceSensor: HomeDevice
     {
-        public void Push()
+        public int Sensibility { get; set; }
+        public override void RefreshState()
         {
+            base.RefreshState();
         }
     }
 }

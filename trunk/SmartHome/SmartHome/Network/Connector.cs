@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartHome.Enums;
+using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
 
 namespace SmartHome.Network
@@ -11,7 +11,7 @@ namespace SmartHome.Network
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Enums.ConnectorType ConnectorType { get; set; }
+        public Plugins.ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
         public HomeDevice HomeDevice { get;
             set 

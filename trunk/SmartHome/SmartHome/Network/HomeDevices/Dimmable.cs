@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    public class Dimmable: HomeDevice
+    class Dimmable: HomeDevice
     {
         public enum DimmableType
         {

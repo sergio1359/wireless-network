@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Buttom: HomeDevice
+    class DoorLock : HomeDevice
     {
-        public void Push()
+        public const int DEFAULT_OPEN_TIME = 1; //1 segundo
+        public int OpenTime { get; set; }
+
+        public void OpenDoor()
         {
+
         }
     }
 }
