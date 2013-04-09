@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Enums
+namespace SmartHome.Plugins
 {
-    public enum PlugState
+    public enum PluginState
     {
+        Available,
+        Unavailable,
+        Active,
     }
 }

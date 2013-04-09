@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Switch: HomeDevice
+    class PowerSensor: HomeDevice
     {
-        public bool Open { get; set; }
+        public int Sensibility { set; get; }
+        public int MaximumConsumption { set; get; }
+        public int CurrentConsumption { set; get; }
 
         public override void RefreshState()
         {

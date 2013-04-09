@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Switch: HomeDevice
+    class Light: HomeDevice
     {
-        public bool Open { get; set; }
+        public bool TurnOn { get; set; }
 
+        public void Off() { }
+        public void On() { }
+        public void OnTime(DateTime time) { }
+        public void Switch() { }
         public override void RefreshState()
         {
             base.RefreshState();
         }
+        
     }
 }

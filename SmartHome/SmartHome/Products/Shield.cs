@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SmartHome.Enums;
+using SmartHome.Plugins;
 
 namespace SmartHome.Products
 {
     class Shield
     {
 
-        public Enums.ShieldType ShieldType { set; get; }
+        public Plugins.ShieldType ShieldType { set; get; }
         public Dictionary<string, List<PinPort>> PinPorts { set; get; }
 
-        public Shield(Enums.ShieldType shieldtype)
+        public Shield(Plugins.ShieldType shieldtype)
         {
             ShieldType = shieldtype;
             
             switch (shieldtype)
             {
                 case ShieldType.Example:
-                    AddConnector("Digital0", Enums.ConnectorType.IODigital, new String[] { "A0" });
-                    AddConnector("Digital1", Enums.ConnectorType.IODigital, new String[] { "A1" });
-                    AddConnector("Analog0", Enums.ConnectorType.Analog, new String[] { "F0" });
-                    AddConnector("Analog1", Enums.ConnectorType.Analog, new String[] { "F1" });
-                    AddConnector("Analog2", Enums.ConnectorType.Analog, new String[] { "F2" });
-                    AddConnector("PWM", Enums.ConnectorType.IODigital, new String[] { "B4", "B7", "G5" });
-                    AddConnector("Dimmer0", Enums.ConnectorType.Dimmer, new String[] { "G0" });
+                    AddConnector("Digital0", Plugins.ConnectorType.IODigital, new String[] { "A0" });
+                    AddConnector("Digital1", Plugins.ConnectorType.IODigital, new String[] { "A1" });
+                    AddConnector("Analog0", Plugins.ConnectorType.Analog, new String[] { "F0" });
+                    AddConnector("Analog1", Plugins.ConnectorType.Analog, new String[] { "F1" });
+                    AddConnector("Analog2", Plugins.ConnectorType.Analog, new String[] { "F2" });
+                    AddConnector("PWM", Plugins.ConnectorType.IODigital, new String[] { "B4", "B7", "G5" });
+                    AddConnector("Dimmer0", Plugins.ConnectorType.Dimmer, new String[] { "G0" });
                 default:
                     throw new Exception();
             }
@@ -32,7 +32,7 @@ namespace SmartHome.Products
 
 
 
-        public void AddConnector(String name, Enums.ConnectorType type, String[] directions)
+        public void AddConnector(String name, Plugins.ConnectorType type, String[] directions)
         {
             foreach (String dir in directions)
             {

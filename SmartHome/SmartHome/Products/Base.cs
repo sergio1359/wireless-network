@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Enums;
+using SmartHome.Plugins;
 
 namespace SmartHome.Products
 {
@@ -11,7 +11,7 @@ namespace SmartHome.Products
     {
         //Identificador de micro
         public UInt32 DeviceSignature { private set; get; }
-        public Enums.BaseType UController { set; get; }
+        public Plugins.BaseType UController { set; get; }
 
         //numero de puertos que tiene el micro, y cada puerto tiene NumPins pines
         public UInt16 NumPorts { set; get; }
@@ -26,12 +26,12 @@ namespace SmartHome.Products
         public Boolean LittleEndian { set; get; }
 
 
-        public Base(Enums.BaseType controller)
+        public Base(Plugins.BaseType controller)
         {
             UController = controller;
             switch (controller)
             {
-                case Enums.BaseType.ATMega128RFA1:
+                case Plugins.BaseType.ATMega128RFA1:
                     DeviceSignature = 128;
                     NumPorts = 7;
                     NumPins = 8;

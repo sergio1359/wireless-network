@@ -15,7 +15,7 @@ namespace SmartHome.Messages
 
         public static Serial Serial
         {
-            get 
+            get
             {
                 if (serial == null)
                 {
@@ -26,13 +26,13 @@ namespace SmartHome.Messages
         }
     }
 
-    public class Serial
+    public class Serial : IConnexion
     {
         private SerialPort serial;
         public event EventHandler<SerialDataReceivedEventArgs> serialReceived;
         public object WriteMonitor = new Object();
 
-        public Serial ()
+        public Serial()
         {
             GetSerialArduino();
             if (serial != null)
@@ -106,9 +106,9 @@ namespace SmartHome.Messages
             }
         }
 
-        void  serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        void serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
- 	        serialReceived(sender,e);
+            serialReceived(sender, e);
         }
 
         public void Write(string data)

@@ -39,10 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ConnectorType.cs" />
+    <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Enums\BaseType.cs" />
     <Compile Include="Enums\OPCode.cs" />
-    <Compile Include="Enums\PlugState.cs" />
+    <Compile Include="Messages\IConnexion.cs" />
+    <Compile Include="Network\HomeDevices\DoorLock.cs" />
+    <Compile Include="Network\HomeDevices\HumiditySensor.cs" />
+    <Compile Include="Network\HomeDevices\Light.cs" />
+    <Compile Include="Network\HomeDevices\LuminositySensor.cs" />
+    <Compile Include="Network\HomeDevices\PowerSensor.cs" />
+    <Compile Include="Network\HomeDevices\PresenceSensor.cs" />
+    <Compile Include="Network\HomeDevices\RGBLight.cs" />
+    <Compile Include="Network\HomeDevices\TemperatureSensor.cs" />
+    <Compile Include="Plugins\PluginState.cs" />
     <Compile Include="Enums\ShieldType.cs" />
     <Compile Include="Enums\HomeDeviceType.cs" />
     <Compile Include="HomeModel\Home.cs" />
@@ -64,19 +73,24 @@
     <Compile Include="Network\HomeDevices\WallPlug.cs" />
     <Compile Include="Network\HomeDevices\Dimmable.cs" />
     <Compile Include="Network\HomeDevices\Switch.cs" />
-    <Compile Include="Network\HomeDevices\HomeDevices.cs" />
+    <Compile Include="Network\HomeDevices\HomeDevice.cs" />
     <Compile Include="Network\Connector.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\Node.cs" />
     <Compile Include="Network\Position.cs" />
     <Compile Include="Network\Security.cs" />
+    <Compile Include="Plugins\AbstractPlugin.cs" />
+    <Compile Include="Plugins\IConfigurator.cs" />
+    <Compile Include="Plugins\PluginLoader.cs" />
+    <Compile Include="Plugins\PluginsContainer.cs" />
+    <Compile Include="Plugins\PluginsController.cs" />
     <Compile Include="Products\Base.cs" />
     <Compile Include="Products\PinPort.cs" />
+    <Compile Include="Products\PinPortConfiguration.cs" />
     <Compile Include="Products\Shield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Plugs\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
