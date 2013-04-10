@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Products
 {
-    class PinPortConfiguration
+    public class PinPortConfiguration
     {
         public const bool DEFAULT_OUTPUT = false; //Entrada
         public const bool DEFAULT_DIGITAL = true; //Digital
@@ -33,31 +34,37 @@ namespace SmartHome.Products
         public Byte Increment { get; set; }
         public Byte Threshold { get; set; }
 
-        public PinPortConfiguration(Plugins.HomeDeviceType HomeDeviceType)
+        public PinPortConfiguration(HomeDeviceType HomeDeviceType)
         {
-            switch (Plugins.HomeDeviceType)
+            switch (HomeDeviceType)
             {
-                case Plugins.HomeDeviceType.Buttom:
+                case HomeDeviceType.User:
                     break;
-                case Plugins.HomeDeviceType.Dimmable:
+                case HomeDeviceType.Central:
                     break;
-                case Plugins.HomeDeviceType.DoorLock:
+                case HomeDeviceType.Buttom:
                     break;
-                case Plugins.HomeDeviceType.HumiditySensor:
+                case HomeDeviceType.Switch:
                     break;
-                case Plugins.HomeDeviceType.LightSensor:
+                case HomeDeviceType.WallPlug:
                     break;
-                case Plugins.HomeDeviceType.PowerSensor:
+                case HomeDeviceType.Light:
                     break;
-                case Plugins.HomeDeviceType.PresenceSensor:
+                case HomeDeviceType.Dimmable:
                     break;
-                case Plugins.HomeDeviceType.RGBLight:
+                case HomeDeviceType.PresenceSensor:
                     break;
-                case Plugins.HomeDeviceType.Switch:
+                case HomeDeviceType.PowerSensor:
                     break;
-                case Plugins.HomeDeviceType.TemperatureSensor:
+                case HomeDeviceType.TemperatureSensor:
                     break;
-                case Plugins.HomeDeviceType.WallPlug:
+                case HomeDeviceType.HumiditySensor:
+                    break;
+                case HomeDeviceType.LightSensor:
+                    break;
+                case HomeDeviceType.DoorLock:
+                    break;
+                case HomeDeviceType.RGBLight:
                     break;
                 default:
                     break;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
+using SmartHome.Products;
 
 namespace SmartHome.Network
 {
@@ -11,7 +12,7 @@ namespace SmartHome.Network
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Plugins.ConnectorType ConnectorType { get; set; }
+        public ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
         public HomeDevice HomeDevice { get;
             set 
@@ -22,6 +23,16 @@ namespace SmartHome.Network
                     HomeDevice.Connector = this;
                 HomeDevice = value;                
             }
+        }
+
+        public List<PinPort> GetPinPort()
+        {
+            return new Shield(Node.Shield).PinPorts.Values[Name];
+        }
+
+        public PinPortConfiguration GetPinPortConfiguration()
+        {
+            return new PinPortConfiguration(HomeDevice.HomeDeviceType);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace SmartHome.Network.HomeDevices
             } //if null then isn't connected
 
         public ConnectorType ConnectorType { get; set; }
+        public HomeDeviceType HomeDeviceType { get; set; }
         public Position Position { get; set; }
         public List<Action> Actions { get; set; }
 
