@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Network\ConnectorType.cs" />
-    <Compile Include="Enums\BaseType.cs" />
-    <Compile Include="Enums\OPCode.cs" />
+    <Compile Include="Network\BaseType.cs" />
+    <Compile Include="Messages\OPCode.cs" />
     <Compile Include="Messages\IConnexion.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />
     <Compile Include="Network\HomeDevices\HumiditySensor.cs" />
@@ -52,8 +52,8 @@
     <Compile Include="Network\HomeDevices\RGBLight.cs" />
     <Compile Include="Network\HomeDevices\TemperatureSensor.cs" />
     <Compile Include="Plugins\PluginState.cs" />
-    <Compile Include="Enums\ShieldType.cs" />
-    <Compile Include="Enums\HomeDeviceType.cs" />
+    <Compile Include="Network\ShieldType.cs" />
+    <Compile Include="Network\HomeDeviceType.cs" />
     <Compile Include="HomeModel\Home.cs" />
     <Compile Include="HomeModel\Zone.cs" />
     <Compile Include="Logs\Log.cs" />

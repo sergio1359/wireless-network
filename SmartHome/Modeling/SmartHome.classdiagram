@@ -10838,6 +10838,9 @@ checkCentralNode</body>
                 <enumerationLiteral Id="604939e4-0be5-434d-96bb-0e84206ceb18" name="LuminosityReadResponse">
                   <elementDefinition Id="8bb0b0fa-5b8f-4695-a954-7fcbc9bd1a55" />
                 </enumerationLiteral>
+                <enumerationLiteral Id="98edece0-4901-42ac-8ade-e7c192785cae" name="Extension">
+                  <elementDefinition Id="8a930f8c-5da4-4f1f-ad75-0d9bb3017e62" />
+                </enumerationLiteral>
               </ownedLiterals>
             </enumeration>
           </packageHasNamedElement>

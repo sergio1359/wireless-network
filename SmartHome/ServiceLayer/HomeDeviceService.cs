@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Enums
+namespace ServiceLayer
 {
-    public enum ShieldType
+    class NetworkService
     {
-        Example,
     }
 }
