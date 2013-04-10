@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="ddffd40b-f1f3-42a3-80c8-1dbc8085db27"
   name="Messages" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -7,6 +7,12 @@
     <comment
       Id="1da7f046-02f7-4e3e-a72f-89465f1665ff">
       <body>El cometido sera la interpretacion de mensajes por parte de los nodos y el envio de peticiones y acciones</body>
+    </comment>
+    <comment
+      Id="99a7a610-0eb8-4ba5-af71-ffbb380a0752">
+      <body>send
+receive
+checkCentralNode</body>
     </comment>
   </ownedCommentsInternal>
   <packagedElements>
@@ -304,6 +310,15 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="cb48feb2-fd75-41ce-911d-a9a3f7103b2f">
+            <interfaceMoniker
+              Id="17fb3da7-804e-4580-90a8-f671e53d2b4b"
+              LastKnownName="IConnexion"
+              LastKnownLocation="Package6_1423.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -356,7 +371,179 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="72e46870-d12c-44e3-a8e3-41b75ad94365">
+            <interfaceMoniker
+              Id="17fb3da7-804e-4580-90a8-f671e53d2b4b"
+              LastKnownName="IConnexion"
+              LastKnownLocation="Package6_1423.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="17fb3da7-804e-4580-90a8-f671e53d2b4b"
+        name="IConnexion"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="b157f39c-53c1-454b-a19b-a1b82a5fcf26"
+        name="OPCode"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="f8a52204-4fb5-4a14-9f5b-d6b64598db12"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ce70c21e-16ba-4c7a-9756-b7cd38ee8830">
+                <propertyInstance
+                  Id="8e91f390-8ffd-4e44-8904-e5dfe668fb5c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0e2014cb-2771-4f97-b587-a53044b37ac4">
+                <propertyInstance
+                  Id="fbb16df2-1a3c-4847-b44b-ed8659bdc854"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c3ac14ed-db06-40f9-a40f-0afa18e84703">
+                <propertyInstance
+                  Id="d441b691-59e0-4971-a834-53153c41551e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="d71ac7e1-beb8-4950-a84d-8da36e247c26"
+            name="DigitalWrite" />
+          <enumerationLiteral
+            Id="5a13fe92-5b68-443d-838c-3e0417a8b355"
+            name="DigitalSwitch" />
+          <enumerationLiteral
+            Id="76a96b5e-fd2c-48b3-a48c-2883937c774c"
+            name="DigitalWriteTime" />
+          <enumerationLiteral
+            Id="e1aef9a3-e30a-4f0e-9ae1-ca8130198886"
+            name="DigitalSwitchTime" />
+          <enumerationLiteral
+            Id="f2027044-30bf-466d-be00-b3a6f96073f8"
+            name="DigitalRead" />
+          <enumerationLiteral
+            Id="0a13065f-2564-4e50-bcbd-7af17a3c0b00"
+            name="DigitalReadResponse" />
+          <enumerationLiteral
+            Id="03247653-0acf-4e9d-b68f-5b4b6de89566"
+            name="AnalogWrite" />
+          <enumerationLiteral
+            Id="cfadedee-baee-4d46-949d-0b1891b6e636"
+            name="AnalogWriteTime" />
+          <enumerationLiteral
+            Id="880b2358-c9f9-4249-9e47-d8e6c8e4e5d5"
+            name="AnalogRead" />
+          <enumerationLiteral
+            Id="57613b9b-1d7e-444c-b394-91ffb72ee133"
+            name="AnalogReadResponse" />
+          <enumerationLiteral
+            Id="dbb70e67-31ae-4bd8-82bc-a1207d9a9195"
+            name="Reset" />
+          <enumerationLiteral
+            Id="a3302825-411e-4fc9-8ac9-240057d91c44"
+            name="RouteTableRead" />
+          <enumerationLiteral
+            Id="36ad5aa9-3297-417d-931d-afc79de0503b"
+            name="RouteTableReadResponse" />
+          <enumerationLiteral
+            Id="cbd9e535-5f65-495f-95e6-227e642ff283"
+            name="TimeWrite" />
+          <enumerationLiteral
+            Id="df460d9e-fbf8-465d-a886-a5a504ae02f5"
+            name="TimeRead" />
+          <enumerationLiteral
+            Id="6f1ac4bf-8384-4b89-9451-e3a5de30f585"
+            name="TimeReponse" />
+          <enumerationLiteral
+            Id="c5016177-fcb0-43c2-bcaa-a56941362480"
+            name="Warning" />
+          <enumerationLiteral
+            Id="614ed91e-7768-4852-a8dc-472a77c25fbe"
+            name="Error" />
+          <enumerationLiteral
+            Id="eb57a514-2c8f-476a-a7a1-a864cd75d202"
+            name="ColorWrite" />
+          <enumerationLiteral
+            Id="d8c1364d-251b-433b-bae1-4b40d7023a63"
+            name="ColorWriteRandom" />
+          <enumerationLiteral
+            Id="b0a22739-c49d-485c-8608-ef9f6e49c479"
+            name="ColorSecuenceWrite" />
+          <enumerationLiteral
+            Id="37ab3edf-c984-48a1-81f1-44444991a6ba"
+            name="ColorSortedSecuenceWrite" />
+          <enumerationLiteral
+            Id="1805b476-ef31-46dd-83d9-9b4ff0a4d7da"
+            name="ColorReadResponse" />
+          <enumerationLiteral
+            Id="7abfe25c-9f00-43c0-ad0e-9f20487790f2"
+            name="ConfigWrite" />
+          <enumerationLiteral
+            Id="6d54652f-3eaa-4010-a178-d6cbb40d8158"
+            name="ConfigRead" />
+          <enumerationLiteral
+            Id="88624b8f-4003-45d2-8ab7-f136a908f346"
+            name="ConfigReadResponse" />
+          <enumerationLiteral
+            Id="cf6c5c95-e4ea-4d22-8551-a053bee0a790"
+            name="ConfigChecksum" />
+          <enumerationLiteral
+            Id="0d5bb7de-5da4-4cb2-898f-a2cb209a9978"
+            name="ConfigChecksumResponse" />
+          <enumerationLiteral
+            Id="680425d5-fc33-4f4a-a6f0-66cc5381ad07"
+            name="ColorRead" />
+          <enumerationLiteral
+            Id="c2d95d4c-5aad-46fb-8522-fac583c38882"
+            name="PresenceRead" />
+          <enumerationLiteral
+            Id="125b084a-8aa0-4145-8c42-72d801417f96"
+            name="PresenceReadResponse" />
+          <enumerationLiteral
+            Id="1836a481-5739-460a-9b68-4efe49895217"
+            name="TemperatureRead" />
+          <enumerationLiteral
+            Id="2a66cf92-4d0d-4565-9d6f-850a96c27c46"
+            name="TemperatureReadResponse" />
+          <enumerationLiteral
+            Id="38c50cf0-40c2-4ead-8916-78aaa43bd180"
+            name="HumidityRead" />
+          <enumerationLiteral
+            Id="797f0861-e7e8-4107-8813-f3b86f0069a5"
+            name="HumidityReadResponse" />
+          <enumerationLiteral
+            Id="7f4569ab-e5e3-4476-8638-8b773b3dce0e"
+            name="PowerRead" />
+          <enumerationLiteral
+            Id="01d0d353-b5c3-4ac4-9aa4-790705ed9a16"
+            name="PowerReadResponse" />
+          <enumerationLiteral
+            Id="7af93998-3a53-4d1d-9caa-94b7f60ad235"
+            name="LuminosityRead" />
+          <enumerationLiteral
+            Id="8bb0b0fa-5b8f-4695-a954-7fcbc9bd1a55"
+            name="LuminosityReadResponse" />
+        </ownedLiterals>
+      </enumeration>
     </packageHasNamedElement>
   </packagedElements>
 </package>

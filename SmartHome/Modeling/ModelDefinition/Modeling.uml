@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="71b37836-2507-4dac-832d-dacddb522f64"
   name="Modeling" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -8,10 +8,6 @@
       Id="cda1a2de-7e44-445f-9867-dc4418d9c87d">
       <body>Los valores deben de estar monitorizados para ser cambiados en la interfaz
 Faltan las notificaciones en el diagrama</body>
-    </comment>
-    <comment
-      Id="b3a9ae2c-11ad-450d-a241-996f6df0769f">
-      <body>Todos los metodos tambien tienen la opcion de no poner time que basicamente es un renombrado con el time en default</body>
     </comment>
   </ownedCommentsInternal>
   <packagedElements>
@@ -1419,6 +1415,19 @@ Faltan las notificaciones en el diagrama</body>
             </relationshipOwnedElementsInternal>
           </association>
         </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="724b8626-ebfa-4109-ab96-ec87ab787b9a"
+            name="City"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="4e5cd1d9-c544-4105-8226-cc542bd31a6a"
@@ -2097,6 +2106,45 @@ Faltan las notificaciones en el diagrama</body>
                 <memberEnd
                   Id="4cf187e4-0b51-4c82-92a6-72380b9c528f"
                   name="TypeConnector1"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="608d0b45-214b-47c0-a801-a9a78cffad79"
+            isDerived="false"
+            sourceEndRoleName="HomeDevice"
+            targetEndRoleName="HomeDeviceType"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="1d4a5f93-b724-4b6e-bc49-4d38cc0921da"
+              LastKnownName="HomeDeviceType"
+              LastKnownLocation="Package2_1423.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="74921916-5c4c-4e02-8ee4-fbf0fb3210ec"
+                  name="HomeDevice"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fffae9a6-e9b0-46bf-ae70-d332a0173e33"
+                  name="HomeDeviceType"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -5687,75 +5735,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
-          <property
-            Id="eff11aa7-6cfe-408f-8946-49f2939dcb86"
-            name="Sensibility"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="e4964b08-269e-4eb8-9c55-2d1d0f234968"
-                name="property"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6702e4b8-644c-4148-8fd2-336c1b75c5b7">
-                    <propertyInstance
-                      Id="b256a008-85ed-4e54-88c3-79d96192c191"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d5f13f9a-182a-4ab9-8101-c5f036630477">
-                    <propertyInstance
-                      Id="939f9747-ea4d-48d1-9bf5-76908b938fcf"
-                      name="Get"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="c7952e76-8a99-4748-bdc8-2d24fafc728a">
-                    <propertyInstance
-                      Id="5d62df03-c9ef-4adf-a201-1b5f494924ff"
-                      name="HasBody"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="07e19c16-79b3-4683-a6fa-3309ca2669be">
-                    <propertyInstance
-                      Id="c039fd9f-7ede-446a-ac10-94a64322f74f"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="7dabcfcd-2f57-4b21-a195-1290ddc7d19f">
-                    <propertyInstance
-                      Id="c484d899-eba7-4d44-aed7-3bd1a47d2fd7"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="85066e63-9eaf-4729-b3c2-65480bb3b3c6">
-                    <propertyInstance
-                      Id="87339983-eac1-4a21-9661-d68772f153da"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="e9f67c2e-3d7f-458b-8b8b-8dfae43d793b">
-                    <propertyInstance
-                      Id="66bc8998-1aff-4947-b71e-862d2e422690"
-                      name="Set"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -5949,75 +5928,6 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
-          <property
-            Id="53464e97-9fca-4b0f-8cd4-4ec6e45b7c00"
-            name="Sensibility"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="c942259e-62aa-4eb1-a334-814abbf92cc2"
-                name="property"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d6ea2cb2-747f-473b-b004-b73991dded1f">
-                    <propertyInstance
-                      Id="cc02d5d6-1c78-46e2-8216-4e3976b9ac8c"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="a5e869b0-6ae7-45cb-b11f-2ee0ba33cd62">
-                    <propertyInstance
-                      Id="c4dd85fc-62f4-48b8-9813-dd756f58e167"
-                      name="Get"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d7107e90-55fd-4424-b453-465d8a3a23ce">
-                    <propertyInstance
-                      Id="844f64c9-543c-4b3e-ab8e-dc50289ac855"
-                      name="HasBody"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="2bdc189d-45ac-49cb-9cc7-02e23aad2422">
-                    <propertyInstance
-                      Id="e6963b1a-17c1-4ae8-92f3-710e61a78d76"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="c3666679-26c5-4ef8-ae0d-8cc023268296">
-                    <propertyInstance
-                      Id="67faea1a-f0b3-4348-8e76-e844243083d7"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="164ac47b-4106-44cc-9f13-f5242135fe48">
-                    <propertyInstance
-                      Id="0fb1e824-5cb1-42aa-8332-a11fed5787d9"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="03bdc060-31c0-431f-b861-b65a4f8472f9">
-                    <propertyInstance
-                      Id="8eda7910-61c6-49f0-8ede-ad8cbe717bdb"
-                      name="Set"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -6085,7 +5995,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <class
         Id="e3724eb2-b2ba-4bbb-a063-1b74498777b0"
-        name="LightSensor"
+        name="LuminositySensor"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -6144,7 +6054,7 @@ Faltan las notificaciones en el diagrama</body>
         <ownedAttributesInternal>
           <property
             Id="f2eeceda-d37e-48af-9c2d-000422ebd7fd"
-            name="Light"
+            name="Luminosity"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -7871,7 +7781,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <packageMoniker
         Id="097ba324-39cf-4f64-8317-b7053a0edef7"
-        LastKnownName="Package2"
+        LastKnownName="Tools"
         LastKnownLocation="Package8_1423.uml" />
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -7879,6 +7789,12 @@ Faltan las notificaciones en el diagrama</body>
         Id="98cd862f-a870-445a-8b73-0b18a515d438"
         LastKnownName="Service"
         LastKnownLocation="Package9_1423.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="9b09ed85-a30b-4e76-ab9a-a0c84445e154"
+        LastKnownName="HomeDevicesUtils"
+        LastKnownLocation="Package_0022.uml" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
