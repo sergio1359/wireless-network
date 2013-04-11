@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Memory
+namespace SmartHome.Network
 {
-    class ATMegaExtensions
+    public enum ShieldType
     {
+        Example,
     }
 }

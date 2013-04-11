@@ -8,7 +8,7 @@ namespace SmartHome.Network.HomeDevices
 {
     class TemperatureSensor: HomeDevice
     {
-        public int Sensibility { get; set; }
+        public int CelciusTemperature { get; set; }
 
         public override void RefreshState()
         {

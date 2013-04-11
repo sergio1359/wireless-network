@@ -9,9 +9,9 @@ namespace SmartHome.Network
 {
     public class NetworkManager
     {
-        public Security Security { get; set; }
-        public List<Node> Nodes { get; set; }
+        public static Security Security { get; set; }
+        public static List<Node> Nodes { get; set; }
 
-        public List<HomeDevice> HomeDevices {get; set;}
+        public static List<HomeDevice> HomeDevices {get; set;}
     }
 }

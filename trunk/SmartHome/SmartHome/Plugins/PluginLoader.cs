@@ -11,14 +11,14 @@ namespace SmartHome.Plugins
     class PluginLoader
     {
 
-        public List<IConfiguration> Modules { get; private set; }
+        public List<AbstractPlug> Modules { get; private set; }
         public const String DIRECTORY_PLUGIN = "//Plugins";
         public const String EXTENSION = ".dll";
 
 
         public PluginLoader()
         {
-            Modules = new List<IConfiguration>();
+            Modules = new List<AbstractPlug>();
 
             //recorro cada fichero del directorio en el que se encuentra esta aplicacion e intento cargarlo como módulo.
             foreach (string file in Directory.GetFiles(Directory.GetCurrentDirectory() + DIRECTORY_PLUGIN))
@@ -43,9 +43,9 @@ namespace SmartHome.Plugins
                         if (moduleType.IsPublic && !moduleType.IsAbstract && moduleType.IsClass)
                         {
                             //Implementa la interfaz IModule.
-                            if (moduleType.GetInterface(typeof(IConfiguration).FullName, true) != null)
+                            if (moduleType.GetInterface(typeof(AbstractPlug).FullName, true) != null)
                             {
-                                IConfiguration i = (IConfiguration)Activator.CreateInstance(moduleAssembly.GetType(moduleType.ToString()));
+                                AbstractPlug i = (AbstractPlug)Activator.CreateInstance(moduleAssembly.GetType(moduleType.ToString()));
                                 Modules.Add(i);
                                 //break;
                             }

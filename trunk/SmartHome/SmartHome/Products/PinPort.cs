@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Plugins;
+using SmartHome.Network;
 
 namespace SmartHome.Products
 {
@@ -19,7 +20,7 @@ namespace SmartHome.Products
             this.Pin = Pin;
         }
 
-        public PinPort(String direction)
+        public PinPort(string direction)
         {
             Port = direction[0];
             Pin = Byte.Parse(direction[1].ToString());

@@ -27,12 +27,12 @@ namespace SmartHome.Network
 
         public List<PinPort> GetPinPort()
         {
-            return new Shield(Node.Shield).PinPorts.Values[Name];
+            return ProductConfiguration.GetShieldDictionary(Node.Shield)[Name];
         }
 
         public PinPortConfiguration GetPinPortConfiguration()
         {
-            return new PinPortConfiguration(HomeDevice.HomeDeviceType);
+            return ProductConfiguration.GetPinPortConfiguration(HomeDevice.HomeDeviceType);
         }
     }
 }

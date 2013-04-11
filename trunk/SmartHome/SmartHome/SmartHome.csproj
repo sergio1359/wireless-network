@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,11 +60,10 @@
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\LogCategory.cs" />
     <Compile Include="Logs\LogManager.cs" />
-    <Compile Include="Memory\ATMega.cs" />
-    <Compile Include="Memory\ATMegaExtensions.cs" />
-    <Compile Include="Memory\CRC.cs" />
+    <Compile Include="Memory\FirmwareUno.cs" />
+    <Compile Include="Memory\Conversors.cs" />
+    <Compile Include="Memory\Crc16.cs" />
     <Compile Include="Memory\Hex.cs" />
-    <Compile Include="Memory\MemoryConverter.cs" />
     <Compile Include="Messages\HID.cs" />
     <Compile Include="Messages\Serial.cs" />
     <Compile Include="Messages\ToNetwork.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="Products\Base.cs" />
     <Compile Include="Products\PinPort.cs" />
     <Compile Include="Products\PinPortConfiguration.cs" />
-    <Compile Include="Products\Shield.cs" />
+    <Compile Include="Products\Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
