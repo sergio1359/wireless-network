@@ -1,11 +1,11 @@
 ﻿
 namespace SmartHome.Plugins
 {
-    public interface IConfiguration
+    public interface IConfigurator
     {
-        public void GetParameters();
-        public void GetType();
-        public void SaveChanges();
-        public void SetValues();
+        void GetParameters();
+        void GetType();
+        void SaveChanges();
+        void SetValues();
     }
 }

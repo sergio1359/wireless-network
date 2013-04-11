@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer
+namespace SmartHome.Network
 {
-    internal class DataContext
+    public enum BaseType
     {
+        ATMega128RFA1,
     }
 }

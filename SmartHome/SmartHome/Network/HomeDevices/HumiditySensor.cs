@@ -8,11 +8,11 @@ namespace SmartHome.Network.HomeDevices
 {
     class HumiditySensor: HomeDevice
     {
-        public int Sensibility { get; set; }
-    }
+        public int Humidity { get; set; }
 
-    public override void RefreshState()
-    {
-        base.RefreshState();
+        public override void RefreshState()
+        {
+            base.RefreshState();
+        }
     }
 }

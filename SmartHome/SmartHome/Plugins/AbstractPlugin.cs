@@ -1,7 +1,7 @@
 ﻿
 namespace SmartHome.Plugins
 {
-    public abstract class IConfiguration
+    public abstract class AbstractPlug
     {
         public string Name;
         public string Author;

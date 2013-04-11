@@ -9,6 +9,7 @@ namespace SmartHome.Network.HomeDevices
     class DoorLock : HomeDevice
     {
         public const int DEFAULT_OPEN_TIME = 1; //1 segundo
+
         public int OpenTime { get; set; }
 
         public void OpenDoor()
