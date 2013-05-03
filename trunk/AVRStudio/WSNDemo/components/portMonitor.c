@@ -18,6 +18,13 @@ uint8_t debounce_prt = 0;
 
 uint8_t port_tst = 0, pin_tst = 0;
 
+/* WRITE PORTS*/
+void PortManager_TaskHandler()
+{
+	
+}	
+
+/* READ PORTS*/
 void PortMonitor_TaskHandler()
 {
 	for(uint8_t port=0; port<NUM_PORTS; port++)
