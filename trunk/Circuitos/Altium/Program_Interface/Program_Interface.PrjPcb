@@ -192,7 +192,7 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
 [Document12]
-DocumentPath=Program_Iterface.PcbDoc
+DocumentPath=Program_Interface.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
