@@ -207,6 +207,10 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
 [GeneratedDocument1]
+DocumentPath=Project Outputs for USB_Charger\Design Rule Check - USB_Charger.html
+DItemRevisionGUID=
+
+[GeneratedDocument2]
 DocumentPath=..\Libraries\U.FL-R-SMT.PcbLib.htm
 DItemRevisionGUID=
 
