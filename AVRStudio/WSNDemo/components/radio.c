@@ -8,20 +8,20 @@
 #include "radio.h"
 
 uint16_t eoeoe;
-void RF_Send_Event(EVENT_HEADER_t* eventHeader)
+void RF_Send_Message(OPERATION_HEADER_t* operationHeader)
 {
 	//For testing purposes just send throw UART port
-	HAL_UartPrint("RF Send Event Request: ");
-	numWrite(eventHeader->destinationAddress);
+	HAL_UartPrint("RF Send Message Request: ");
+	numWrite(operationHeader->destinationAddress);
 	HAL_UartPrint("\t");
-	numWrite(eventHeader->operation);
+	numWrite(operationHeader->opCode);
 	HAL_UartPrint("\t");
 	
-	uint8_t length = getCommandArgsLenght(&eventHeader->operation);
+	uint8_t length = getCommandArgsLength(&operationHeader->opCode);
 	for (uint8_t i = 0; i < length; i++)
 	{
-		eoeoe = &eventHeader;
-		numWrite(*((uint8_t*)eventHeader + 3 + i));
+		eoeoe = &operationHeader;
+		numWrite(*((uint8_t*)operationHeader + 3 + i));
 	}
 	
 	HAL_UartPrint("\r\n");

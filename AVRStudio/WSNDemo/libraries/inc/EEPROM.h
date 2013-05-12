@@ -14,12 +14,12 @@
 #include "config.h"
 
 
-#define TIME_EVENT_LIST_START_ADDRESS				runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2)]		//Time event list address relative to the end of the event table
-#define EVENT_RESTRIC_LIST_START_ADDRESS			runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 2]
-#define FREE_REGION_START_ADDRESS					runningConfiguration.raw[EVENT_TABLE_ADDR + (NUM_PINS * 2) + 4]
+#define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2)]		//Time OPERATION list address relative to the end of the OPERATION table
+#define OPERATION_RESTRIC_LIST_START_ADDRESS			runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2) + 2]
+#define FREE_REGION_START_ADDRESS					runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2) + 4]
 
-#define TIME_EVENT_LIST_END_ADDRESS					EVENT_RESTRIC_LIST_START_ADDRESS		//Renowned for greater understanding
-#define EVENT_RESTRIC_LIST_END_ADDRESS				FREE_REGION_START_ADDRESS
+#define TIME_OPERATION_LIST_END_ADDRESS					OPERATION_RESTRIC_LIST_START_ADDRESS		//Renowned for greater understanding
+#define OPERATION_RESTRIC_LIST_END_ADDRESS				FREE_REGION_START_ADDRESS
 
 #define NO_EDGE			0
 #define FALLING_EDGE	1
@@ -70,20 +70,20 @@ typedef struct{
 
 typedef struct{
 	uint16_t destinationAddress;
-	uint8_t operation;
-}EVENT_HEADER_t;
+	uint8_t opCode;
+}OPERATION_HEADER_t;
 
 typedef struct{
 	TIME_t activationTime;		  //Activation time
-	EVENT_HEADER_t eventHeader;   //Header of the event to send on activation
-}TIME_EVENT_HEADER_t;
+	OPERATION_HEADER_t operationHeader;   //Header of the operation to send on activation
+}TIME_OPERATION_HEADER_t;
 
 typedef struct
 {
-	uint16_t eventAddress; //Relative to the end of event table
+	uint16_t operationAddress; //Relative to the end of operation table
 	TIME_t start;
 	TIME_t end;
-}EVENT_RESTRICTION_t;
+}OPERATION_RESTRICTION_t;
 
 
 typedef struct {

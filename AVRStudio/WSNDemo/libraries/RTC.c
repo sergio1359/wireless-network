@@ -8,7 +8,7 @@
 #include "globals.h"
 #include "command.h"
 
-TIME_EVENT_HEADER_t* time_event_header;
+TIME_OPERATION_HEADER_t* time_operation_header;
 
 void RTC_Init()
 {
@@ -30,25 +30,25 @@ void Validate_Time(TIME_t *receivedTime)
 {
 	memcpy((uint8_t*)receivedTime,(uint8_t*)&currentTime, sizeof(TIME_t));
 	
-	searchFirstTimeEvent();
+	searchFirstTimeOperation();
 	validTime = 1;
 }
 
-void searchFirstTimeEvent()
+void searchFirstTimeOperation()
 {
-	uint16_t event_ptr;
-	for(event_ptr = TIME_EVENT_LIST_START_ADDRESS; event_ptr < TIME_EVENT_LIST_END_ADDRESS;)
+	uint16_t operation_ptr;
+	for(operation_ptr = TIME_OPERATION_LIST_START_ADDRESS; operation_ptr < TIME_OPERATION_LIST_END_ADDRESS;)
 	{
-		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + event_ptr];
-		uint8_t args_length = getCommandArgsLenght(&time_event_header->eventHeader.operation);
+		time_operation_header = (TIME_OPERATION_HEADER_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + operation_ptr];
+		uint8_t args_length = getCommandArgsLength(&time_operation_header->operationHeader.opCode);
 		
-		if(compareTimes(time_event_header->activationTime, currentTime) >= 0) break;
-		event_ptr += args_length + sizeof(TIME_EVENT_HEADER_t);
+		if(compareTimes(time_operation_header->activationTime, currentTime) >= 0) break;
+		operation_ptr += args_length + sizeof(TIME_OPERATION_HEADER_t);
 	}
 	
-	if(event_ptr >= TIME_EVENT_LIST_END_ADDRESS)
+	if(operation_ptr >= TIME_OPERATION_LIST_END_ADDRESS)
 	{
-		time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + TIME_EVENT_LIST_START_ADDRESS];
+		time_operation_header = (TIME_OPERATION_HEADER_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + TIME_OPERATION_LIST_START_ADDRESS];
 	}
 }
 
@@ -142,20 +142,20 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 		}
 	}
 	
-	//Check Time Events
+	//Check Time Operations
 	if(validTime)
 	{
-		while(compareTimes(time_event_header->activationTime, currentTime) == 0)
+		while(compareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
 			
-			//RF_Send_Event(time_event_header - EVENT_TABLE_END_ADDR);//Relative address
-			RF_Send_Event(&time_event_header->eventHeader);
+			//RF_Send_Message(time_operation_header - OPERATION_TABLE_END_ADDR);//Relative address
+			RF_Send_Message(&time_operation_header->operationHeader);
 			
-			time_event_header = (uint16_t)time_event_header + getCommandArgsLenght(&time_event_header->eventHeader.operation) + sizeof(TIME_EVENT_HEADER_t);
+			time_operation_header = (uint16_t)time_operation_header + getCommandArgsLength(&time_operation_header->operationHeader.opCode) + sizeof(TIME_OPERATION_HEADER_t);
 			
-			if(time_event_header >= ((uint16_t)&runningConfiguration) + TIME_EVENT_LIST_END_ADDRESS + EVENT_TABLE_END_ADDR )
+			if(time_operation_header >= ((uint16_t)&runningConfiguration) + TIME_OPERATION_LIST_END_ADDRESS + OPERATION_TABLE_END_ADDR )
 			{
-				time_event_header = (TIME_EVENT_HEADER_t*)&runningConfiguration.raw[TIME_EVENT_LIST_START_ADDRESS + EVENT_TABLE_END_ADDR];
+				time_operation_header = (TIME_OPERATION_HEADER_t*)&runningConfiguration.raw[TIME_OPERATION_LIST_START_ADDRESS + OPERATION_TABLE_END_ADDR];
 				break;
 			}		
 		}

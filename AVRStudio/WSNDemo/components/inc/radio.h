@@ -11,6 +11,6 @@
 
 #include "EEPROM.h"
 
-void RF_Send_Event(EVENT_HEADER_t* eventHeader);
+void RF_Send_Message(OPERATION_HEADER_t* operationHeader);
 
 #endif /* RADIO_H_ */
