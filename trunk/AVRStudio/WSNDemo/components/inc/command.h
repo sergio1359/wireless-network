@@ -10,8 +10,30 @@
 #define COMMAND_H_
 
 #include <stdint.h>
-#include "RTC.h"
+#include <stdbool.h>
+#include "native_module.h"
 
+#define EXTENSION_OPCODE 0xFF
+
+#define FUNCTION(function)  function
+
+#define COMMANDS_TABLE \
+X(DigitalWrite,	0x05, nativeHandler, DIGITAL_WRITE_MESSAGE_t,	false)	\
+X(DigitalSwitch,	0x06, nativeHandler, DIGITAL_SWITCH_MESSAGE_t,	false)	\
+X(DigitalRead,		0x07, nativeHandler, DIGITAL_READ_MESSAGE_t,	false)	\
+
+
+#define X(a, b, c, d, e) a = b,
+typedef enum COMMAND_OPCODES1 {
+	COMMANDS_TABLE
+};
+#undef X
+
+
+uint8_t getCommandArgsLenght(uint8_t* opcode);
+void handleCommand(uint8_t* opcode);
+
+/*
 typedef enum COMMAND_OPCODES
 {
 	Reset = 0x00,
@@ -62,120 +84,7 @@ typedef enum COMMAND_OPCODES
 	LuminosityReadResponse = 0x64,
 
 	Extension = 0xFF,
-}COMMAND_OPCODES;
-
-//DIGITAL PORT MESSAGES
-typedef struct
-{
-	uint8_t dir;
-	uint8_t mask;
-	uint8_t value;
-	TIME_t time;
-}DIGITAL_WRITE_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t dir;
-	uint8_t mask;
-	TIME_t time;
-}DIGITAL_SWITCH_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t dir;
-}DIGITAL_READ_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t dir;
-	uint8_t value;
-}DIGITAL_READ_RESPONSE_MESSAGE_t;
-
-
-
-//ANALOG PORT MESSAGES
-typedef struct
-{
-	uint8_t dir;
-	uint8_t value;
-	TIME_t time;
-}ANALOG_WRITE_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t dir;
-}ANALOG_READ_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t dir;
-	uint8_t value;
-}ANALOG_READ_RESPONSE_MESSAGE_t;
-
-
-
-// CONTROL
-typedef struct
-{
-}RESET_MESSAGE_t;
-
-typedef struct
-{
-}ROUTE_TABLE_READ_t;
-
-typedef struct
-{
-	uint16_t length;
-}ROUTE_TABLE_READ_RESPONSE_HEADER_t;
-
-
-
-// CONFIGURATION
-typedef struct
-{
-	uint16_t length;
-}CONFIG_WRITE_HEADER_MESSAGE_t;
-
-typedef struct
-{
-}CONFIG_READ_MESSAGE_t;
-
-typedef struct
-{
-	uint16_t length;
-}CONFIG_READ_RESPONSE_HEADER_MESSAGE_t;
-
-typedef struct
-{
-}CONFIG_CHECKSUM_MESSAGE_t;
-
-typedef struct
-{
-	uint16_t checksum;
-}CONFIG_CHECKSUM_RESPONSE_MESSAGE_t;
-
-
-
-//TIEMPO
-typedef struct
-{
-	TIME_t time;
-}TIME_WRITE_MESSAGE_t;
-
-typedef struct
-{
-}TIME_READ_MESSAGE_t;
-
-typedef struct
-{
-	TIME_t time;
-}TIME_READ_RESPONSE_MESSAGE_t;
-
-
-
-
-
-uint8_t getCommandArgsLenght(uint8_t* opcode);
+}COMMAND_OPCODES;*/
 
 
 #endif /* COMMAND_H_ */

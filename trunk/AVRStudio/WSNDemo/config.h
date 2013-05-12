@@ -51,8 +51,8 @@
 #define PWM_PINS (8)
 #define DEBOUNCED_PINS NUM_PINS
 
-#define EVENT_TABLE_ADDR (sizeof(TOP_CONFIGURATION))
-#define EVENT_TABLE_END_ADDR (EVENT_TABLE_ADDR + (NUM_PINS * 2) + 6)
+#define OPERATION_TABLE_ADDR (sizeof(TOP_CONFIGURATION))
+#define OPERATION_TABLE_END_ADDR (OPERATION_TABLE_ADDR + (NUM_PINS * 2) + 6)
 
 
 /*****************************************************************************

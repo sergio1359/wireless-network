@@ -60,41 +60,42 @@
 "$(ToolchainDir)\avr-objcopy" -O binary -R .eeprom $(Name).elf $(Name).bin</PostBuildEvent>
     <ToolchainSettings>
       <AvrGcc>
-        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-        <avrgcc.compiler.symbols.DefSymbols>
-          <ListValues>
-            <Value>PHY_ATMEGA128RFA1</Value>
-            <Value>HAL_ATMEGA128RFA1</Value>
-            <Value>PLATFORM_RCB128RFA1</Value>
-            <Value>F_CPU=8000000UL</Value>
-          </ListValues>
-        </avrgcc.compiler.symbols.DefSymbols>
-        <avrgcc.compiler.directories.IncludePaths>
-          <ListValues>
-            <Value>../stack/hal/inc</Value>
-            <Value>../stack/nwk/inc</Value>
-            <Value>../stack/phy/inc</Value>
-            <Value>../stack/service/inc</Value>
-            <Value>../stack/sys/inc</Value>
-            <Value>../</Value>
-            <Value>../libraries/inc</Value>
-            <Value>../components/inc</Value>
-          </ListValues>
-        </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
-        <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
-        <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
-        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-        <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
-        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-        <avrgcc.linker.optimization.GarbageCollectUnusedSections>True</avrgcc.linker.optimization.GarbageCollectUnusedSections>
-        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
-      </AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>PHY_ATMEGA128RFA1</Value>
+      <Value>HAL_ATMEGA128RFA1</Value>
+      <Value>PLATFORM_RCB128RFA1</Value>
+      <Value>F_CPU=8000000UL</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../stack/hal/inc</Value>
+      <Value>../stack/nwk/inc</Value>
+      <Value>../stack/phy/inc</Value>
+      <Value>../stack/service/inc</Value>
+      <Value>../stack/sys/inc</Value>
+      <Value>../</Value>
+      <Value>../libraries/inc</Value>
+      <Value>../components/inc</Value>
+      <Value>../modules/inc</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+  <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.optimization.GarbageCollectUnusedSections>True</avrgcc.linker.optimization.GarbageCollectUnusedSections>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -154,10 +155,16 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="components\inc\command.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="components\inc\operationsManager.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="components\inc\portMonitor.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="components\inc\radio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\operationsManager.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="components\portMonitor.c">
@@ -203,6 +210,12 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\RTC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\native_module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\native_module.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="otaInterface.c">
@@ -322,6 +335,8 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Folder Include="libraries" />
     <Folder Include="libraries\inc" />
     <Folder Include="components" />
+    <Folder Include="modules" />
+    <Folder Include="modules\inc" />
     <Folder Include="stack" />
     <Folder Include="stack\hal" />
     <Folder Include="stack\hal\inc" />

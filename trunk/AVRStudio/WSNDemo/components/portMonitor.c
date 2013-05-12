@@ -123,10 +123,10 @@ void PortMonitor_TaskHandler()
 				}
 			}
 			
-			//Launch Events if exits
+			//Launch Operations if exits
 			if(!firstTime && changeOcurred)
 			{
-				//launchEvents((port*8) + pin);
+				//launchOperations((port*8) + pin);
 			}
 		}
 			
@@ -136,46 +136,48 @@ void PortMonitor_TaskHandler()
 	debounce_prt = 0;
 }
 
-void launchEvents(uint8_t pinAddress)
+void launchOperations(uint8_t pinAddress)
 {
-	uint16_t pin_event_list_start_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2)]; //Event address relative to the end of the event table
-	uint16_t pin_event_list_end_addr_rel = runningConfiguration.raw[EVENT_TABLE_ADDR + (pinAddress * 2) + 2];
+	uint16_t pin_operation_list_start_addr_rel = runningConfiguration.raw[OPERATION_TABLE_ADDR + (pinAddress * 2)]; //Operation address relative to the end of the operation table
+	uint16_t pin_operation_list_end_addr_rel = runningConfiguration.raw[OPERATION_TABLE_ADDR + (pinAddress * 2) + 2];
 	
-	if(pin_event_list_start_addr_rel - pin_event_list_end_addr_rel == 0) //Events
+	if(pin_operation_list_start_addr_rel - pin_operation_list_end_addr_rel == 0) //Operations
 		return;
 	
 	uint16_t res_ptr;
-	//Looks for the first temporary restriction applicable to the current list of events. (Event address greater or equal than the list start address to process)
-	for(res_ptr = EVENT_RESTRIC_LIST_START_ADDRESS; res_ptr < EVENT_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(EVENT_RESTRICTION_t))
+	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
+	for(res_ptr = OPERATION_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_RESTRICTION_t))
 	{
-		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr];
+		OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr];
 		
-		if(restric->eventAddress >= pin_event_list_start_addr_rel) break;
+		if(restric->operationAddress >= pin_operation_list_start_addr_rel) break;
 	}			
 	
-	//Iterate the list of events for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
-	for(uint16_t event_ptr=pin_event_list_start_addr_rel; event_ptr < pin_event_list_end_addr_rel;)
+	//Iterate the list of operations for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
+	for(uint16_t operation_ptr=pin_operation_list_start_addr_rel; operation_ptr < pin_operation_list_end_addr_rel;)
 	{
-		EVENT_RESTRICTION_t* restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr];
-		EVENT_HEADER_t* event_header = (EVENT_HEADER_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + event_ptr];//DestAddress AND OP_CODE
+		OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr];
+		OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + operation_ptr];//DestAddress AND OP_CODE
 		
-		uint8_t args_length = getCommandArgsLenght(&event_header->operation);
+		uint8_t args_length = getCommandArgsLenght(&operation_header->opCode);
 		
-		_Bool restriction_passed = (restric->eventAddress != event_ptr);
+		_Bool restriction_passed = (restric->operationAddress != operation_ptr);
 		
-		while( (restric->eventAddress == event_ptr) && (event_ptr < EVENT_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current event? && Restrictions events available
+		while( (restric->operationAddress == operation_ptr) && (operation_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current operation? && Restrictions operations available
 		{
 			restriction_passed |= ( (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) >= 0) ); //In time
-			res_ptr += sizeof(EVENT_RESTRICTION_t);
-			restric = (EVENT_RESTRICTION_t*)&runningConfiguration.raw[EVENT_TABLE_END_ADDR + res_ptr]; //Next restriction
+			res_ptr += sizeof(OPERATION_RESTRICTION_t);
+			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr]; //Next restriction
 		}		 
 		
 		
 		if( restriction_passed ) //If all restrictions are met
 		{
-			RF_Send_Event(event_header);
+			RF_Send_Message(operation_header);
+			// TODO: Instead of this. Send action operation pointer to Operations Manager!
+			//OM_Proccess_Operation(operation_header)
 		}
 		
-		event_ptr += args_length + sizeof(EVENT_HEADER_t);
+		operation_ptr += args_length + sizeof(OPERATION_HEADER_t);
 	}
 }
