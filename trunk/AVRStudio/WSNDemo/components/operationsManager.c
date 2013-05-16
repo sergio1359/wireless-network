@@ -11,7 +11,7 @@ void OM_Proccess_Operation(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->destinationAddress == 0) //MINE
 	{
-		handleCommand((operation_header->opCode));
+		handleCommand(operation_header);
 	}else
 	{
 		RF_Send_Message(operation_header);

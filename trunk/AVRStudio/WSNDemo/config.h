@@ -58,7 +58,7 @@
 /*****************************************************************************
 *****************************************************************************/
 //#define APP_ADDR                0x0000
-#define APP_ADDR                0x4002
+#define APP_ADDR                0x4003
 #define APP_CHANNEL             0x0f
 #define APP_PANID               0x1234
 #define APP_SENDING_INTERVAL    2000
@@ -66,8 +66,8 @@
 #define APP_OTA_ENDPOINT        2
 #define APP_SECURITY_KEY        "TestSecurityKey0"
 
-#define APP_ENABLE_OTA_SERVER
-#define APP_ENABLE_OTA_CLIENT
+//#define APP_ENABLE_OTA_SERVER
+//#define APP_ENABLE_OTA_CLIENT
 
 #define PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 

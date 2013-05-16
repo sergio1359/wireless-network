@@ -57,6 +57,7 @@
 #include "EEPROM.h"
 #include "ANALOG.h"
 #include "DIGITAL.h"
+#include "DS2401.h"
 
 #define DECLARING_GLOBALS
 #include "globals.h"
@@ -153,7 +154,9 @@ static SYS_Timer_t appDataSendingTimer;
 void HAL_UartBytesReceived(uint16_t bytes)
 {
 	for (uint16_t i = 0; i < bytes; i++)
-	HAL_UartReadByte();
+	{
+		HAL_UartWriteByte(HAL_UartReadByte());
+	}
 	ledToggle(2);
 }
 
@@ -323,11 +326,11 @@ static void appSendData(void)
 	numWrite(currentTime.second);
 	HAL_UartPrint("\r\n");
 	
-	ADC_Reference(REF_DEFAULT);
-	adcVal = ADC_Read(ADC4);
-	//ADC_Reference(REF_INTERNAL_16);
-	//adcVal = ADC_Read(INTERNAL_TEMP);
-	//adcVal = 1.13 * adcVal - 272.8;
+	//ADC_Reference(REF_DEFAULT);
+	//adcVal = ADC_Read(ADC4);
+	ADC_Reference(REF_INTERNAL_16);
+	adcVal = ADC_Read(INTERNAL_TEMP);
+	adcVal = 1.13 * adcVal - 272.8;
 	HAL_UartPrint("TEMP: ");
 	//numWrite(adcVal);
 	itoa(adcVal, buf, 10);
@@ -502,6 +505,21 @@ int main(void)
 	EEPROM_Init();
 	
 	Validate_Time(&currentTime);
+	
+	if(DS2401_Init())
+	{
+		HAL_UartPrint("SERIAL NUMBER: ");
+		for(int i = 0; i < SERIAL_NUMBER_SIZE - 1; i++)
+		{
+			numWriteHEX(serialNumber[i]);
+			HAL_UartWriteByte('-');
+		}	
+		numWriteHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);		
+		HAL_UartPrint("\r\n\r\n");
+	}else
+	{
+		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");
+	}		
 	
 	#ifdef APP_ENABLE_OTA_SERVER
 	OTA_ServerInit();

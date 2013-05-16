@@ -7,7 +7,7 @@
 #include "command.h"
 
 #define X(a, b, c, d, e) [b] = c,
-void (*command_handlers[]) (uint8_t*) = {
+void (*command_handlers[]) (OPERATION_HEADER_t*) = {
 	COMMANDS_TABLE
 };
 #undef X
@@ -27,10 +27,7 @@ bool command_is_dinamic[] = {
 uint8_t getCommandArgsLength(uint8_t* opcode)
 {
 	if(*opcode == EXTENSION_OPCODE)
-		return 4;// JUST FOR TRIALS!
-	
-	//if(*opcode == EXTENSION_OPCODE)
-	//	return getCommandArgsLength(opcode+1);
+		return 4;// JUST FOR TRIALS! In final version, we need to decode the next byte. *(opcode + 1)
 	
 	if(command_is_dinamic[*opcode])
 		return command_lengths[*opcode] + *(opcode+1); //CHECK!!!!!!!!! LENGTH READ
@@ -38,7 +35,7 @@ uint8_t getCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode];
 }	
 
-void handleCommand(uint8_t* opcode)
+void handleCommand(OPERATION_HEADER_t* header)
 {
-	(*command_handlers[*opcode]) (opcode);
+	(*command_handlers[header->opCode]) (header);
 }

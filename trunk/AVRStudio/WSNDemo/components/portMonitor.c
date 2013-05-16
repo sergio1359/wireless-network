@@ -11,18 +11,18 @@
 _Bool firstTime = 1; //Avoid launch events on the first iteration
 uint8_t lastValuesD[NUM_PORTS];
 uint8_t lastValuesA[ANALOG_PINS];
-//uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative	
+//uint8_t lastChangeSign = 0; //0 -> positive  1 -> negative
 
 uint8_t debounceBuffer[DEBOUNCED_PINS];
 uint8_t debounce_prt = 0;
 
-uint8_t port_tst = 0, pin_tst = 0;
+uint8_t port_tst = 0, pin_tst = 0, val_tst = 0;
 
 /* WRITE PORTS*/
 void PortManager_TaskHandler()
 {
 	
-}	
+}
 
 /* READ PORTS*/
 void PortMonitor_TaskHandler()
@@ -32,7 +32,7 @@ void PortMonitor_TaskHandler()
 		uint8_t val;
 		PORT_CONFIG_t config;
 		_Bool changeOcurred = 0;
-	
+		
 		switch(port)
 		{
 			case 0: val = HAL_GPIO_PORTA_read(); config = runningConfiguration.topConfiguration.portConfig_PA; break;
@@ -49,6 +49,8 @@ void PortMonitor_TaskHandler()
 		{
 			port_tst = port;
 			pin_tst = pin;
+			val_tst = val;
+			
 			if(((~config.maskIO)>>pin) & 0x01) //Input
 			{
 				if((config.maskAD>>pin) & 0x01) //Digital
@@ -80,6 +82,9 @@ void PortMonitor_TaskHandler()
 						numWrite(pin);
 						HAL_UartPrint(" PRESSED\r\n");
 					}*/
+					
+					if( ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) & (port == 3 & pin == 7))
+						HAL_UartPrint("BUTTON PRESSED\r\n");
 					
 					//Check for valid changes
 					switch((config.changeTypeD>>(pin<<1)))
@@ -113,12 +118,12 @@ void PortMonitor_TaskHandler()
 						lastChangeSign &= ~(1<<pin);
 					}else
 					{
-						lastChangeSign |= (1<<pin);						
+						lastChangeSign |= (1<<pin);
 					}*/
 					
 					if(firstTime || (changeOcurred = (abs(lastValuesA[pin] - analog_val) >= analog_config.increment)))
 					{
-						lastValuesA[pin] = analog_val;	
+						lastValuesA[pin] = analog_val;
 					}
 				}
 			}
@@ -129,7 +134,7 @@ void PortMonitor_TaskHandler()
 				//launchOperations((port*8) + pin);
 			}
 		}
-			
+		
 		lastValuesD[port] = val;
 	}
 	firstTime = 0;
@@ -142,7 +147,7 @@ void launchOperations(uint8_t pinAddress)
 	uint16_t pin_operation_list_end_addr_rel = runningConfiguration.raw[OPERATION_TABLE_ADDR + (pinAddress * 2) + 2];
 	
 	if(pin_operation_list_start_addr_rel - pin_operation_list_end_addr_rel == 0) //Operations
-		return;
+	return;
 	
 	uint16_t res_ptr;
 	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
@@ -151,7 +156,7 @@ void launchOperations(uint8_t pinAddress)
 		OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr];
 		
 		if(restric->operationAddress >= pin_operation_list_start_addr_rel) break;
-	}			
+	}
 	
 	//Iterate the list of operations for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
 	for(uint16_t operation_ptr=pin_operation_list_start_addr_rel; operation_ptr < pin_operation_list_end_addr_rel;)
@@ -168,7 +173,7 @@ void launchOperations(uint8_t pinAddress)
 			restriction_passed |= ( (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) >= 0) ); //In time
 			res_ptr += sizeof(OPERATION_RESTRICTION_t);
 			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr]; //Next restriction
-		}		 
+		}
 		
 		
 		if( restriction_passed ) //If all restrictions are met

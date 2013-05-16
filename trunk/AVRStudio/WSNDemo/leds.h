@@ -49,7 +49,10 @@
 #include "hal.h"
 #include "halGpio.h"
 
-HAL_GPIO_PIN(LED0, B, 4);
+//HAL_GPIO_PIN(LED0, B, 4);
+
+HAL_GPIO_PIN(LED0, D, 6);
+
 //HAL_GPIO_PIN(LED1, B, 4);
 //HAL_GPIO_PIN(LED2, B, 4);
 

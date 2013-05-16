@@ -11,11 +11,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "EEPROM.h"
+
 #include "native_module.h"
 
 #define EXTENSION_OPCODE 0xFF
-
-#define FUNCTION(function)  function
 
 #define COMMANDS_TABLE \
 X(DigitalWrite,	0x05, nativeHandler, DIGITAL_WRITE_MESSAGE_t,	false)	\
@@ -24,14 +24,14 @@ X(DigitalRead,		0x07, nativeHandler, DIGITAL_READ_MESSAGE_t,	false)	\
 
 
 #define X(a, b, c, d, e) a = b,
-typedef enum COMMAND_OPCODES1 {
+typedef enum COMMAND_OPCODES {
 	COMMANDS_TABLE
 };
 #undef X
 
 
 uint8_t getCommandArgsLenght(uint8_t* opcode);
-void handleCommand(uint8_t* opcode);
+void handleCommand(OPERATION_HEADER_t* header);
 
 /*
 typedef enum COMMAND_OPCODES
