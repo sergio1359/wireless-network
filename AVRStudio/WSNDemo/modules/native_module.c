@@ -6,17 +6,16 @@
 */
 #include "native_module.h"
 #include "command.h"
-#include "EEPROM.h"
 #include "globals.h"
 
 bool validatePortAction(uint8_t dir, uint8_t mask, bool read, bool digital);
 bool doPortAction(uint8_t dir, uint8_t mask, bool read, bool digital, uint8_t value);
 
-void nativeHandler(uint8_t* opcode)
+void nativeHandler(OPERATION_HEADER_t* operation_header)
 {
-	if(*opcode  == DigitalWrite)
+	if(operation_header->opCode == DigitalWrite)
 	{
-		DIGITAL_WRITE_MESSAGE_t* msg = (opcode + 1);
+		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header->opCode + 1);
 		doPortAction(msg->dir, msg->mask, false, true, msg->value);
 	}
 }

@@ -88,7 +88,7 @@ void APS_DataIndication(APS_DataInd_t* indData)
 	//static uint8_t b=60;
 	(void) indData;		/* suppress compiler warnings */
 	// Data received indication
-	GPIO_B4_set();
+	GPIO_D6_set();
 	/* usartSendByte(b++); */
 	//usartSendByte(b++);
 }
@@ -299,8 +299,8 @@ void APL_TaskHandler(void)
 {
 	if(appState == APP_INITING_STATE)
 	{
-		GPIO_B4_make_out();
-		GPIO_B4_clr();
+		GPIO_D6_make_out();
+		GPIO_D6_clr();
 	
 		Usart_Init();	
 		//PRINT("Hello\n");
@@ -319,7 +319,7 @@ void APL_TaskHandler(void)
 	}else if(appState == APP_IN_NETWORK_STATE)
 	{
 		HAL_StopAppTimer(&blinkTimer);
-		GPIO_B4_set();
+		GPIO_D6_set();
 	}
 }
 
@@ -347,7 +347,7 @@ uint16_t adc_meastemp (void)
 static void blinkTimerFired()
 {
 	//Toggle the led
-	GPIO_B4_toggle();
+	GPIO_D6_toggle();
 	/*
 	HAL_ReadAdc(&adcDescriptor, HAL_ADC_CHANNEL7);
 	sprintf(buf,"ADC:%u\r\n", adcBuffer);
@@ -430,10 +430,12 @@ int main(void)
 {
   SYS_SysInit();
 	
+	GPIO_D6_make_out();	
+	GPIO_D6_clr();
 	
   for(;;)
   {
-    SYS_RunTask();
+    //SYS_RunTask();
   }
 }
 

@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "RTC.h"
+#include "EEPROM.h"
 
 //DIGITAL PORT MESSAGES
 typedef struct
@@ -121,6 +122,6 @@ typedef struct
 }TIME_READ_RESPONSE_MESSAGE_t;
 
 
-void nativeHandler(uint8_t* opcode);
+void nativeHandler(OPERATION_HEADER_t* operation_header);
 
 #endif /* NATIVE_MODULE_H_ */
