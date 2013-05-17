@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.0</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8</ToolchainName>
+    <ProjectGuid>{9C6D381A-B905-4711-8F74-AC761E6046EB}</ProjectGuid>
+    <avrdevice>ATmega128RFA1</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>WSNDemo</AssemblyName>
+    <Name>SmartHomeFirm</Name>
+    <RootNamespace>WSNDemo</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <AsfVersion>2.11.1</AsfVersion>
+    <avrtool>com.atmel.avrdbg.tool.jtagicemkii</avrtool>
+    <avrtoolinterface>JTAG</avrtoolinterface>
+    <com_atmel_avrdbg_tool_jtagicemkii>
+      <ToolType>com.atmel.avrdbg.tool.jtagicemkii</ToolType>
+      <ToolName>JTAGICE mkII</ToolName>
+      <ToolNumber>00B00000275F</ToolNumber>
+      <KeepTimersRunning>true</KeepTimersRunning>
+      <OverrideVtor>false</OverrideVtor>
+      <OverrideVtorValue>
+      </OverrideVtorValue>
+      <Channel>
+        <host>127.0.0.1</host>
+        <port>1841</port>
+        <ssl>False</ssl>
+      </Channel>
+      <ToolOptions>
+        <InterfaceName>JTAG</InterfaceName>
+        <InterfaceProperties>
+          <JtagDbgClock>150000</JtagDbgClock>
+          <JtagProgClock>1000000</JtagProgClock>
+          <IspClock>150000</IspClock>
+          <JtagInChain>false</JtagInChain>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <JtagDevicesBefore>0</JtagDevicesBefore>
+          <JtagDevicesAfter>0</JtagDevicesAfter>
+          <JtagInstrBitsBefore>0</JtagInstrBitsBefore>
+          <JtagInstrBitsAfter>0</JtagInstrBitsAfter>
+        </InterfaceProperties>
+      </ToolOptions>
+    </com_atmel_avrdbg_tool_jtagicemkii>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue />
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <preserveEEPROM>True</preserveEEPROM>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputFileName>SmartHomeFirm</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <PostBuildEvent>"$(ToolchainDir)\avr-objcopy" -O ihex -R .eeprom $(Name).elf $(Name).hex
+"$(ToolchainDir)\avr-objcopy" -O binary -R .eeprom $(Name).elf $(Name).bin</PostBuildEvent>
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>PHY_ATMEGA128RFA1</Value>
+            <Value>HAL_ATMEGA128RFA1</Value>
+            <Value>PLATFORM_RCB128RFA1</Value>
+            <Value>F_CPU=8000000UL</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../stack/hal/inc</Value>
+            <Value>../stack/nwk/inc</Value>
+            <Value>../stack/phy/inc</Value>
+            <Value>../stack/service/inc</Value>
+            <Value>../stack/sys/inc</Value>
+            <Value>../</Value>
+            <Value>../libraries/inc</Value>
+            <Value>../components/inc</Value>
+            <Value>../modules/inc</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+        <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.optimization.GarbageCollectUnusedSections>True</avrgcc.linker.optimization.GarbageCollectUnusedSections>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputFileName>WSNDemo</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <PostBuildEvent>avr-objcopy -O ihex -R .eeprom WSNDemo.elf WSNDemo.hex
+avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
+    <ToolchainSettings>
+      <AvrGcc xmlns="">
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>PHY_ATMEGA128RFA1</Value>
+            <Value>HAL_ATMEGA128RFA1</Value>
+            <Value>PLATFORM_RCB128RFA1</Value>
+            <Value>F_CPU=8000000</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../../../../hal/atmega128rfa1/inc</Value>
+            <Value>../../../../phy/atmega128rfa1/inc</Value>
+            <Value>../../../../nwk/inc</Value>
+            <Value>../../../../sys/inc</Value>
+            <Value>../../../../service/inc</Value>
+            <Value>../..</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.OtherFlags>-fdata-sections</avrgcc.compiler.optimization.OtherFlags>
+        <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.optimization.GarbageCollectUnusedSections>True</avrgcc.linker.optimization.GarbageCollectUnusedSections>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>../../../../hal/atmega128rfa1/inc</Value>
+            <Value>../../../../phy/atmega128rfa1/inc</Value>
+            <Value>../../../../nwk/inc</Value>
+            <Value>../../../../sys/inc</Value>
+            <Value>../../../../service/inc</Value>
+            <Value>../..</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="components\modules.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\modules.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\operationsManager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\portMonitor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\radio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\operationsManager.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\portMonitor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\radio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="globals.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="leds.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\DS2401.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\ANALOG.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\EEPROM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\ANALOG.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\DIGITAL.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\DS2401.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\EEPROM.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\IO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\RTC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\RTC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\ports_module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\network_module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\ports_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\network_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="otaInterface.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\inc\hal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\inc\halGpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\inc\halSleep.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\inc\halTimer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\inc\halUart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\src\hal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\src\halPhy.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\src\halSleep.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\src\halTimer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\hal\src\halUart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\inc\nwk.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\inc\nwkPrivate.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwk.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkDataReq.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkFrame.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkRoute.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkRx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkSecurity.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkTx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\phy\inc\atmega128rfa1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\phy\inc\phy.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\phy\src\phy.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\service\inc\otaClient.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\service\inc\otaCommon.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\service\inc\otaServer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\service\src\otaClient.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\service\src\otaServer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\inc\sys.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\inc\sysConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\inc\sysEncrypt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\inc\sysTimer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\inc\sysTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\src\sys.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\src\sysEncrypt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\sys\src\sysTimer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="components\inc" />
+    <Folder Include="libraries" />
+    <Folder Include="libraries\inc" />
+    <Folder Include="components" />
+    <Folder Include="modules" />
+    <Folder Include="modules\inc" />
+    <Folder Include="stack" />
+    <Folder Include="stack\hal" />
+    <Folder Include="stack\hal\inc" />
+    <Folder Include="stack\hal\src" />
+    <Folder Include="stack\nwk\inc" />
+    <Folder Include="stack\nwk\src" />
+    <Folder Include="stack\phy\inc" />
+    <Folder Include="stack\phy\src" />
+    <Folder Include="stack\service\inc" />
+    <Folder Include="stack\service\src" />
+    <Folder Include="stack\sys" />
+    <Folder Include="stack\service" />
+    <Folder Include="stack\phy" />
+    <Folder Include="stack\nwk" />
+    <Folder Include="stack\sys\inc" />
+    <Folder Include="stack\sys\src" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>
