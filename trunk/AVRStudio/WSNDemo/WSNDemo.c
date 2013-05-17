@@ -506,6 +506,7 @@ int main(void)
 	
 	RTC_ValidateTime(&currentTime);
 	
+	#if APP_ROUTER || APP_ENDDEVICE
 	if(DS2401_Init())
 	{
 		HAL_UartPrint("SERIAL NUMBER: ");
@@ -519,7 +520,8 @@ int main(void)
 	}else
 	{
 		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");
-	}		
+	}	
+	#endif	
 	
 	#ifdef APP_ENABLE_OTA_SERVER
 	OTA_ServerInit();
