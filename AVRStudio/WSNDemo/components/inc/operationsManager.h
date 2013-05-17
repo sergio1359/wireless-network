@@ -11,7 +11,7 @@
 
 #include "EEPROM.h"
 
-void OM_Proccess_Operation(OPERATION_HEADER_t* operation_header);
+void OM_ProccessOperation(OPERATION_HEADER_t* operation_header);
 
 
 #endif /* OPERATIONSMANAGER_H_ */

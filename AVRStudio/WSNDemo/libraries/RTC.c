@@ -6,7 +6,8 @@
  */ 
 #include "RTC.h"
 #include "globals.h"
-#include "command.h"
+#include "modules.h"
+#include "operationsManager.h"
 
 TIME_OPERATION_HEADER_t* time_operation_header;
 
@@ -26,7 +27,7 @@ void RTC_Init()
 	validTime = 0;
 }
 
-void Validate_Time(TIME_t *receivedTime)
+void RTC_ValidateTime(TIME_t *receivedTime)
 {
 	memcpy((uint8_t*)receivedTime,(uint8_t*)&currentTime, sizeof(TIME_t));
 	
@@ -117,9 +118,7 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 	{
 		while(compareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
-			
-			//RF_Send_Message(time_operation_header - OPERATION_TABLE_END_ADDR);//Relative address
-			RF_Send_Message(&time_operation_header->operationHeader);
+			OM_ProccessOperation(&time_operation_header->operationHeader);
 			
 			time_operation_header = (uint16_t)time_operation_header + getCommandArgsLength(&time_operation_header->operationHeader.opCode) + sizeof(TIME_OPERATION_HEADER_t);
 			

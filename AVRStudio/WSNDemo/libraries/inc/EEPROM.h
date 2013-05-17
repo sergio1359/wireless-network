@@ -122,9 +122,9 @@ typedef union
 
 void EEPROM_Init(void);
 
-uint8_t inline EEPROM_Read_Byte(int address);
-void inline  EEPROM_Read_Block(void * buffer, const void * address, size_t length);
-void inline EEPROM_Write_Byte(int address, uint8_t value);
-void inline EEPROM_Write_Block(const void * buffer, const void * address, size_t length);
+extern inline uint8_t EEPROM_Read_Byte(int address);
+extern inline void EEPROM_Read_Block(void * buffer, const void * address, size_t length);
+extern inline void EEPROM_Write_Byte(int address, uint8_t value);
+extern inline void EEPROM_Write_Block(void * buffer, const void * address, size_t length);
 
 #endif /* EEPROM_H_ */

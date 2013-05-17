@@ -20,7 +20,15 @@
 #include "RTC.h"
 #include "EEPROM.h"
 
+#define CREATE_CIRCULARBUFFER(elemsType, bufferSize)										\
+struct {																					\
+	int				start;					   /* index of oldest element              */	\
+	int				end;					   /* index at which to write new element  */	\
+	elemsType		buffer[bufferSize];		   /* vector of elements                   */	\
+}
+
 GLOBAL RUNNING_CONFIGURATION_t runningConfiguration;
+GLOBAL volatile _Bool validConfiguration;
 
 /*	Time vars	4 bytes  */
 GLOBAL volatile TIME_t currentTime;
