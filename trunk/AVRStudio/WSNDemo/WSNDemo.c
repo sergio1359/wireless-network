@@ -504,7 +504,7 @@ int main(void)
 	
 	EEPROM_Init();
 	
-	Validate_Time(&currentTime);
+	RTC_ValidateTime(&currentTime);
 	
 	if(DS2401_Init())
 	{

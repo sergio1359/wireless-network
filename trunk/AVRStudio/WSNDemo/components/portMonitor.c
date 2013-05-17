@@ -65,23 +65,6 @@ void PortMonitor_TaskHandler()
 						val &= ~(1 << pin);	//Clear pin value
 					}
 					debounce_prt++;
-					/*
-					if( ~((lastValuesD[port]>>pin) & 0x01) & ((val>>pin) & 0x01) )
-					{
-						HAL_UartPrint("BUTTON PIN P");
-						switch(port)
-						{
-							case 0: HAL_UartWriteByte('A');break;
-							case 1: HAL_UartWriteByte('B');break;
-							case 2: HAL_UartWriteByte('C');break;
-							case 3: HAL_UartWriteByte('D');break;
-							case 4: HAL_UartWriteByte('E');break;
-							case 5: HAL_UartWriteByte('F');break;
-							case 6: HAL_UartWriteByte('G');break;
-						}
-						numWrite(pin);
-						HAL_UartPrint(" PRESSED\r\n");
-					}*/
 					
 					if( ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) & (port == 3 & pin == 7))
 						HAL_UartPrint("BUTTON PRESSED\r\n");
@@ -178,9 +161,7 @@ void launchOperations(uint8_t pinAddress)
 		
 		if( restriction_passed ) //If all restrictions are met
 		{
-			RF_Send_Message(operation_header);
-			// TODO: Instead of this. Send action operation pointer to Operations Manager!
-			//OM_Proccess_Operation(operation_header)
+			OM_ProccessOperation(operation_header);
 		}
 		
 		operation_ptr += args_length + sizeof(OPERATION_HEADER_t);

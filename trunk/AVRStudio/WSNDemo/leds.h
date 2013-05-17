@@ -49,9 +49,11 @@
 #include "hal.h"
 #include "halGpio.h"
 
-//HAL_GPIO_PIN(LED0, B, 4);
-
+#if APP_ADDR < 0x4003
+HAL_GPIO_PIN(LED0, B, 4);
+#else
 HAL_GPIO_PIN(LED0, D, 6);
+#endif
 
 //HAL_GPIO_PIN(LED1, B, 4);
 //HAL_GPIO_PIN(LED2, B, 4);

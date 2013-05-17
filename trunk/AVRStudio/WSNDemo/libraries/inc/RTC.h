@@ -23,6 +23,7 @@ typedef struct{
 }DATE_t;
 
 void RTC_Init();
+void RTC_ValidateTime(TIME_t *receivedTime);
 int8_t compareTimes(TIME_t time1, TIME_t time2);
 
 #endif /* RTC_H_ */
