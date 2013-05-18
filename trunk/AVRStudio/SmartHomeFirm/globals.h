@@ -22,8 +22,8 @@
 
 #define CREATE_CIRCULARBUFFER(elemsType, bufferSize)										\
 struct {																					\
-	int				start;					   /* index of oldest element              */	\
-	int				end;					   /* index at which to write new element  */	\
+	unsigned int	start;					   /* index of oldest element              */	\
+	unsigned int	end;					   /* index at which to write new element  */	\
 	elemsType		buffer[bufferSize];		   /* vector of elements                   */	\
 }
 
