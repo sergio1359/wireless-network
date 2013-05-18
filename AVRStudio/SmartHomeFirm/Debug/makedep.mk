@@ -10,11 +10,15 @@ components\portMonitor.c
 
 components\radio.c
 
+libraries\DHT11.c
+
 libraries\DS2401.c
 
 libraries\ANALOG.c
 
 libraries\EEPROM.c
+
+libraries\LCD_4BITS.c
 
 libraries\RTC.c
 

@@ -182,6 +182,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="leds.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\DHT11.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\DS2401.c">
       <SubType>compile</SubType>
     </Compile>
@@ -192,6 +195,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\inc\ANALOG.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\inc\DHT11.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\inc\DIGITAL.h">
@@ -206,7 +212,13 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\inc\IO.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\inc\LCD_4BITS.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\inc\RTC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="libraries\LCD_4BITS.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\RTC.c">

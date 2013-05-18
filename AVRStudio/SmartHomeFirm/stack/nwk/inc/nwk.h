@@ -126,6 +126,17 @@ typedef struct NWK_DataInd_t
   int8_t       rssi;
 } NWK_DataInd_t;
 
+
+/*****************************************************************************
+*****************************************************************************/
+typedef struct NwkRouteTableRecord_t
+{
+	uint16_t   dst;
+	uint16_t   nextHop;
+	uint8_t    score;
+	uint8_t    lqi;
+} NwkRouteTableRecord_t;
+
 /*****************************************************************************
 *****************************************************************************/
 void NWK_Init(void);
@@ -144,6 +155,7 @@ void NWK_TaskHandler(void);
 
 #ifdef NWK_ENABLE_ROUTING
 uint16_t NWK_RouteNextHop(uint16_t dst);
+NwkRouteTableRecord_t* NWK_RouteTable(void);
 #endif
 
 #endif // _NWK_H_

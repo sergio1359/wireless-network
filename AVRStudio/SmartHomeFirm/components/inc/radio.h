@@ -22,13 +22,6 @@ typedef enum RadioState_t
 	RF_STATE_WAKEUP,
 } RadioState_t;
 
-typedef enum BufferType_t
-{
-	RF_BUFFER_NONE,
-	RF_BUFFER_REFERENCES,
-	RF_BUFFER_COPIES
-} BufferType_t;
-
 _Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message);
 _Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message);
 

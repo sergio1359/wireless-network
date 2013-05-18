@@ -57,16 +57,6 @@
 
 /*****************************************************************************
 *****************************************************************************/
-typedef struct NwkRouteTableRecord_t
-{
-  uint16_t   dst;
-  uint16_t   nextHop;
-  uint8_t    score;
-  uint8_t    lqi;
-} NwkRouteTableRecord_t;
-
-/*****************************************************************************
-*****************************************************************************/
 static void nwkRouteTxFrameConf(NwkFrame_t *frame);
 static void nwkRouteSendRouteError(uint16_t src, uint16_t dst);
 static void nwkRouteErrorConf(NwkFrame_t *frame);
@@ -262,6 +252,13 @@ void nwkRouteErrorReceived(NWK_DataInd_t *ind)
 uint16_t NWK_RouteNextHop(uint16_t dst)
 {
   return nwkRouteNextHop(dst);
+}
+
+/*****************************************************************************
+*****************************************************************************/
+NwkRouteTableRecord_t* NWK_RouteTable()
+{
+	return nwkRouteTable;
 }
 
 #endif // NWK_ENABLE_ROUTING
