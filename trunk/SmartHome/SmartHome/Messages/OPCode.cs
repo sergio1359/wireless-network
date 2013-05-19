@@ -14,22 +14,25 @@ namespace SmartHome.Messages
 
         DigitalWrite = 0x05,
         DigitalSwitch = 0x06,
-        DigitalWriteTime = 0x07,
-        DigitalSwitchTime = 0x08,
-        DigitalRead = 0x09,
-        DigitalReadResponse = 0x0A,
+        DigitalRead = 0x07,
+        DigitalReadResponse = 0x08,
 
         AnalogWrite = 0x10,
-        AnalogWriteTime = 0x11,
-        AnalogRead = 0x12,
-        AnalogReadResponse = 0x13,
+        AnalogRead = 0x11,
+        AnalogReadResponse = 0x12,
 
         TimeWrite = 0x20,
         TimeRead = 0x21,
-        TimeReponse = 0x22,
+        TimeReadResponse = 0x22,
 
         Warning = 0x30,
         Error = 0x31,
+
+        ConfigWrite = 0x40,
+        ConfigRead = 0x41,
+        ConfigReadResponse = 0x42,
+        ConfigChecksum = 0x43,
+        ConfigChecksumResponse = 0x44,
 
         ColorWrite = 0x50,
         ColorWriteRandom = 0x51,
@@ -38,7 +41,7 @@ namespace SmartHome.Messages
         ColorRead = 0x54,
         ColorReadResponse = 0x55,
 
-        PresenceRead = 0x57, // util? ya esta hablado con victor
+        PresenceRead = 0x57,
         PresenceReadResponse = 0x58,
 
         TemperatureRead = 0x5A,

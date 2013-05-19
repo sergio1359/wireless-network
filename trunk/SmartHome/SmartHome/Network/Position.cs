@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SmartHome.Network
 {
-    class Position
+    public class Position
     {
         public int ID { get; set; }
         public int X { get; set; }

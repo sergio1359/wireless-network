@@ -10,15 +10,15 @@ namespace SmartHome.Logs
     public class Log : IComparable<Log>
     {
         public DateTime Date { get; set; }
-        public string Log { get; set; }
+        public string Message { get; set; }
         public LogCategory Category {get; set;}
         public HomeDevice HomeDevice {get; set;}
 
 
-        public Log(string log, LogCategory category, HomeDevice homeDevice)
+        public Log(string msg, LogCategory category, HomeDevice homeDevice)
         {
             Date = DateTime.Now;
-            Log = log;
+            Message = msg;
             Category = category;
             HomeDevice = homeDevice;
         }

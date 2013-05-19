@@ -9,6 +9,7 @@ namespace SmartHome.Network.HomeDevices
     class PresenceSensor: HomeDevice
     {
         public int Sensibility { get; set; }
+        public const int DEFAULT_SENSIBILITY = 10;
 
         public override void RefreshState()
         {

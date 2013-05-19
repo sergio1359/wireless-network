@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network
 {
-    class Security
+    public class Security
     {
         public const byte CHANNEL = 0x00;
         public const UInt16 PANID = 0x00;
