@@ -101,4 +101,13 @@ HAL_GPIO_PIN(PG2, G, 2);
 HAL_GPIO_PIN(PG5, G, 5); //OC0B
 
 
+INLINE void		HAL_GPIO_PORT_set(uint8_t* portPtr, uint8_t mask);
+INLINE void		HAL_GPIO_PORT_clr(uint8_t* portPtr, uint8_t mask);
+INLINE void		HAL_GPIO_PORT_toggle(uint8_t* portPtr, uint8_t mask);
+INLINE void		HAL_GPIO_PORT_in(uint8_t* portPtr, uint8_t mask);
+INLINE void		HAL_GPIO_PORT_out(uint8_t* portPtr, uint8_t mask);
+INLINE void		HAL_GPIO_PORT_pullup(uint8_t* portPtr, uint8_t mask);
+INLINE uint8_t	HAL_GPIO_PORT_read(uint8_t* portPtr, uint8_t mask);
+INLINE uint8_t	HAL_GPIO_PORT_state(uint8_t* portPtr, uint8_t mask);
+
 #endif /* DIGITAL_H_ */

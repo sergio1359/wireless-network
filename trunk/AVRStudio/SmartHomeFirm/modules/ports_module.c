@@ -21,6 +21,7 @@ void portModule_Init(void)
 
 void portModule_TaskHandler(void)
 {
+	//TODO: Check the programed off pins
 }
 
 void digitalPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress)
