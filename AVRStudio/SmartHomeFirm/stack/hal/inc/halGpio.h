@@ -61,7 +61,7 @@
 
 #define HAL_GPIO_PORT(name, port) \
   INLINE uint8_t HAL_GPIO_##name##_set(uint8_t mask)     { PORT##port |= mask; } \
-  INLINE uint8_t HAL_GPIO_##name##_clr(uint8_t mask)     { PORT##port &= ~mask; } \
+  INLINE uint8_t HAL_GPIO_##name##_clr(uint8_t mask)     { PORT##port &= ~(mask); } \
   INLINE void    HAL_GPIO_##name##_toggle(uint8_t mask)	 { PORT##port ^= mask; } \
   INLINE void    HAL_GPIO_##name##_in(uint8_t mask)      { DDR##port &= ~(mask); PORT##port &= ~(mask); } \
   INLINE void    HAL_GPIO_##name##_out(uint8_t mask)     { DDR##port |= (mask); } \
