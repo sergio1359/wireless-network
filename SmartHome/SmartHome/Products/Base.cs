@@ -8,7 +8,7 @@ using SmartHome.Network;
 
 namespace SmartHome.Products
 {
-    class Base
+    public class Base
     {
         //Identificador de micro
         public UInt32 DeviceSignature { set; get; }

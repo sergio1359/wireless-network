@@ -37,5 +37,11 @@ namespace DataLayer.Repositories
         {
             return _Connectors.Find(id);
         }
+
+
+        public IQueryable<T> SearchFor(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Products
 {
-    class PinPortConfiguration
+    public class PinPortConfiguration
     {
         public const bool DEFAULT_OUTPUT = false; //Entrada
         public const bool DEFAULT_DIGITAL = true; //Digital

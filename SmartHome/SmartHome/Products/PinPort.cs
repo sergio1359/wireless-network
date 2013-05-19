@@ -8,7 +8,7 @@ using SmartHome.Network;
 
 namespace SmartHome.Products
 {
-    class PinPort
+    public class PinPort
     {
         //Direction
         public Char Port { set; get; }
