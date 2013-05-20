@@ -10,10 +10,10 @@
 #include <util/delay.h>
 #include "DIGITAL.h"
 
-#define D0 _PB0
-#define D1 _PB1
-#define D2 _PB2
-#define D3 _PB3
+#define D4 _PB0
+#define D5 _PB1
+#define D6 _PB2
+#define D7 _PB3
 #define EE _PB4
 #define RS _PB5
 //#define RW _PB6 NOT CONNECTED
@@ -42,10 +42,10 @@ void initializeLCD(void)
 	position = 0;
 	
 	//	Set the proper data direction for output
-	OUT(D0);
-	OUT(D1);
-	OUT(D2);
-	OUT(D3);
+	OUT(D4);
+	OUT(D5);
+	OUT(D6);
+	OUT(D7);
 	OUT(EE);
 	OUT(RS);
 
@@ -116,28 +116,28 @@ void writeNibbleToLCD(unsigned char selectedRegister, unsigned char nibble)
 	//DigitalOut_SetValue(RW,0);
 
 	//	Pull the enable line high
-	
 	SET(EE);
+	
 	//	Output the nibble to the LCD
 	if((nibble>>3) & 0x01)
-		SET(D3);
+		SET(D7);
 	else
-		CLR(D3);
+		CLR(D7);
 		
 	if((nibble>>2) & 0x01)
-		SET(D2);
+		SET(D6);
 	else
-		CLR(D2);
+		CLR(D6);
 	
 	if((nibble>>1) & 0x01)
-		SET(D1);
+		SET(D5);
 	else
-		CLR(D1);
+		CLR(D5);
 	
 	if(nibble & 0x01)
-		SET(D0);
+		SET(D4);
 	else
-		CLR(D0);
+		CLR(D4);
 	
 	//	Determine if the register select bit needs to be set
 	if(selectedRegister == DATA_REGISTER)
@@ -175,7 +175,7 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte)
 	if(selectedRegister == DATA_REGISTER && position == 16)
 	{
 		writeByteToLCD(COMMAND_REGISTER, 0xC0);
-		//_delay_us(2);
+		//_delay_ms(2);
 		_delay_us(1250);
 	}
 	
@@ -192,7 +192,7 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte)
 	if(selectedRegister == DATA_REGISTER && ++position == 32)
 	{
 		writeByteToLCD(COMMAND_REGISTER, 0x80);
-		//_delay_us(2);
+		//_delay_ms(2);
 		_delay_us(1250);
 		position = 0;
 	}

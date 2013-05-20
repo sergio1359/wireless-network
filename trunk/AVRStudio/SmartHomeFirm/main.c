@@ -16,6 +16,7 @@
 #include "ANALOG.h"
 #include "DIGITAL.h"
 #include "DS2401.h"
+#include "DHT11.h"
 
 #define DECLARING_GLOBALS
 #include "globals.h"
@@ -48,6 +49,9 @@
 
 static SYS_Timer_t appNetworkStatusTimer;
 
+_Bool initialized = false;
+_Bool sendFlag = false;
+
 /*****************************************************************************
 *****************************************************************************/
 //TODO: MOVE TO THE RIGHT FILE (UART_MANAGER COMPONENT)
@@ -65,6 +69,8 @@ void HAL_UartBytesReceived(uint16_t bytes)
 *****************************************************************************/
 static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
+	sendFlag = true;
+		
 	ledToggle(0);
 	(void)timer;
 }
@@ -72,9 +78,11 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 
 /*****************************************************************************
 *****************************************************************************/
-unsigned int adcVal;
+uint16_t adcVal;
+uint8_t temp;
 static void appSendData(void)
 {
+	
 	numWrite(currentTime.hour);
 	HAL_UartWriteByte(':');
 	numWrite(currentTime.minute);
@@ -82,16 +90,32 @@ static void appSendData(void)
 	numWrite(currentTime.second);
 	HAL_UartPrint("\r\n");
 	
-	//ADC_Reference(REF_DEFAULT);
-	//adcVal = ADC_Read(ADC4);
-	ADC_Reference(REF_INTERNAL_16);
-	adcVal = ADC_Read(INTERNAL_TEMP);
-	adcVal = 1.13 * adcVal - 272.8;
-	HAL_UartPrint("TEMP: ");
+	ADC_Reference(REF_DEFAULT);
+	adcVal = ADC_Read(ADC4);
+	//ADC_Reference(REF_INTERNAL_16);
+	//adcVal = ADC_Read(INTERNAL_TEMP);
+	//adcVal = 1.13 * adcVal - 272.8;
+	HAL_UartPrint("ADC4: ");
 	numWrite(adcVal);
-	//itoa(adcVal, buf, 10);
-	//HAL_UartPrint(buf);
-	HAL_UartPrint("ºC\r\n");
+	HAL_UartPrint("\r\n");
+	
+	temp = DHT11_ReadTemperature();
+	if(temp != DHT11_ERROR)
+	{
+		HAL_UartPrint("TEMP: ");
+		numWrite(temp);
+		HAL_UartPrint("ºC\t");
+		
+		temp = DHT11_ReadHumidity();
+		HAL_UartPrint("HUM: ");
+		numWrite(temp);
+		HAL_UartPrint("%\r\n");
+	}else
+	{
+		HAL_UartPrint("DHT11 not detected\r\n");
+	}
+	
+	sendFlag = false;
 }
 
 #ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
@@ -110,7 +134,7 @@ static void appInit(void)
 	ledsInit();
 
 	#if APP_ROUTER || APP_ENDDEVICE
-	appNetworkStatusTimer.interval = 500;
+	appNetworkStatusTimer.interval = 1000;//500
 	appNetworkStatusTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	appNetworkStatusTimer.handler = appNetworkStatusTimerHandler;
 	SYS_TimerStart(&appNetworkStatusTimer);
@@ -124,18 +148,18 @@ static void appInit(void)
 	#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 	PHY_RandomReq();
 	#endif
+	
+	initialized = true;
 }
 
 /*****************************************************************************
 *****************************************************************************/
-#define ITERATIONS_BW_SEND 1
-_Bool counter = ITERATIONS_BW_SEND + 1;
 static void APP_TaskHandler(void)
 {
-	if(counter>ITERATIONS_BW_SEND)
+	if(!initialized)
 	{
 		appInit();
-	}else if(counter==ITERATIONS_BW_SEND){
+	}else if(sendFlag){
 		appSendData();
 	}
 }
@@ -179,9 +203,10 @@ int main(void)
 	OTA_ClientInit();
 	#endif
 	
-	Radio_Init();
+	//Radio_Init();
 	
-	initializeLCD();
+	//initializeLCD();
+	HAL_Delay(1000000);
 
 	while (1)
 	{

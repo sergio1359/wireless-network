@@ -8,8 +8,7 @@
 #include <util/delay.h>
 
 #include "dht11.h"
-
-#define DHT11_ERROR 255
+#include "DIGITAL.h"
 
 #define DATA _PD0
 
@@ -32,15 +31,17 @@ uint8_t getdata(uint8_t select) {
 	//reset port
 	OUT(DATA); //output
 	SET(DATA); //high
-	_delay_ms(100);
+	_delay_ms(200);
 
 	//send request
 	CLR(DATA); //low
 	_delay_ms(18);
+	_delay_ms(5);
 	SET(DATA); //high
 	_delay_us(1);
 	INP(DATA); //input
-	_delay_us(39);
+	SET(DATA); //high
+	_delay_us(40);
 
 	//check start condition 1
 	if(READ(DATA)) {
@@ -48,7 +49,7 @@ uint8_t getdata(uint8_t select) {
 	}
 	_delay_us(80);
 	//check start condition 2
-	if(READ(DATA)) {
+	if(!READ(DATA)) {
 		return DHT11_ERROR;
 	}
 	_delay_us(80);
@@ -69,7 +70,6 @@ uint8_t getdata(uint8_t select) {
 	//reset port
 	OUT(DATA); //output
 	CLR(DATA); //low
-	_delay_ms(100);
 
 	//check checksum
 	if (bits[0] + bits[1] + bits[2] + bits[3] == bits[4]) {
@@ -87,20 +87,12 @@ uint8_t getdata(uint8_t select) {
  * get temperature (0..50C)
  */
 uint8_t DHT11_ReadTemperature() {
-	uint8_t ret = getdata(0);
-	if(ret == DHT11_ERROR)
-		return -1;
-	else
-		return ret;
+	return getdata(0);
 }
 
 /*
  * get humidity (20..90%)
  */
 uint8_t DHT11_ReadHumidity() {
-	uint8_t ret = getdata(1);
-	if(ret == DHT11_ERROR)
-		return -1;
-	else
-		return ret;
+	return getdata(1);
 }

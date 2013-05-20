@@ -11,6 +11,8 @@
 
 #include <sysTypes.h>
 
+#define DHT11_ERROR 255
+
 uint8_t DHT11_ReadTemperature();
 uint8_t DHT11_ReadHumidity();
 
