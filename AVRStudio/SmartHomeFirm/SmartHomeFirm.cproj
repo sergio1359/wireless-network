@@ -200,9 +200,6 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\inc\DHT11.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\inc\DIGITAL.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="libraries\inc\DIGITAL.h">
       <SubType>compile</SubType>
     </Compile>
