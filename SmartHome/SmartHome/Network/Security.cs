@@ -15,5 +15,11 @@ namespace SmartHome.Network
         public byte Channel { set; get; }
         public UInt16 PanId { set; get; }
         public string SecurityKey { set; get; }
+
+
+        public byte[] GetSecurityKey()
+        {
+            return new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        }
     }
 }

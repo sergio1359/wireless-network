@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLaye
 EndProject
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Modeling", "Modeling\Modeling.modelproj", "{3D37A0A9-00F3-4D7B-926E-BE9248F3793C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debug WF", "Debug WF\Debug WF.csproj", "{2C83EF5E-5946-451A-94F1-46E3BE3950DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generate Simple EEPROM", "Generate Simple EEPROM\Generate Simple EEPROM.csproj", "{D4AC1D58-91CF-42FF-A243-3AC7362F475F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{3D37A0A9-00F3-4D7B-926E-BE9248F3793C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D37A0A9-00F3-4D7B-926E-BE9248F3793C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D37A0A9-00F3-4D7B-926E-BE9248F3793C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C83EF5E-5946-451A-94F1-46E3BE3950DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C83EF5E-5946-451A-94F1-46E3BE3950DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C83EF5E-5946-451A-94F1-46E3BE3950DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C83EF5E-5946-451A-94F1-46E3BE3950DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4AC1D58-91CF-42FF-A243-3AC7362F475F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4AC1D58-91CF-42FF-A243-3AC7362F475F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4AC1D58-91CF-42FF-A243-3AC7362F475F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4AC1D58-91CF-42FF-A243-3AC7362F475F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

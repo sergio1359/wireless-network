@@ -9,5 +9,7 @@ namespace SmartHome.Network
     public enum ShieldType
     {
         Example,
+        Debug,
+        PinPortMap,
     }
 }

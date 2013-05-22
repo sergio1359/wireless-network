@@ -15,7 +15,7 @@ namespace SmartHome.Network
         public String Name { get; set; }
         public HomeDevice ToHomeDevice { get; set; }
         public OPCode OPCode { get; set; }
-        public Object Args { get; set; }
+        public byte[] Args { get; set; }
         public Boolean Enable { get; set; }
 
         public virtual void Execute(){}

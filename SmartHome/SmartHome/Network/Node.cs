@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SmartHome.Plugins;
 using SmartHome.Products;
+using SmartHome.Tools;
 
 namespace SmartHome.Network
 {
@@ -21,6 +22,11 @@ namespace SmartHome.Network
         public Base GetBaseConfiguration()
         {
             return ProductConfiguration.GetBaseConfiguration(Base);
+        }
+
+        public TimeAction[] GetTimeActions()
+        {
+            return Sheduler.TimeActions.Where(x => x.ToHomeDevice.Connector.Node.Address == Address).ToArray();
         }
     }
 }

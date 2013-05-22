@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network
 {
-    public enum BaseType
+    public enum BaseType: byte
     {
-        ATMega128RFA1,
+        ATMega128RFA1_V1 = 0,
+        ATMega128RFA1_V2 = 1,
     }
 }

@@ -11,25 +11,27 @@ namespace SmartHome.Products
         public const bool DEFAULT_OUTPUT = false; //Entrada
         public const bool DEFAULT_DIGITAL = true; //Digital
 
-        public Boolean Output { get; set; }
-        public Boolean Digital { get; set; }
+        public bool Output { get; set; }
+        public bool Digital { get; set; }
 
         public enum Trigger : byte { None = 0x00, FallingEdge = 0x01, RisingEdge = 0x10, Both = 0x11 }
 
         //Digital-------------------------------------
         //output
-        public Boolean DefaultValueD { get; set; }
+        public bool DefaultValueD { get; set; }
 
         //input
-        public Trigger changeTypeD { get; set; }
+        public Trigger ChangeTypeD { get; set; }
 
 
         //Analog-------------------------------------
         //output
-        public Byte DefaultValueA { get; set; }
+        public byte DefaultValueA { get; set; }
 
         //input
-        public Byte Increment { get; set; }
-        public Byte Threshold { get; set; }
+        public byte Increment { get; set; }
+        public byte Threshold { get; set; }
+
+
     }
 }
