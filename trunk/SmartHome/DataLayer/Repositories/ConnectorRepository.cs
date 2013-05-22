@@ -9,6 +9,7 @@ namespace DataLayer.Repositories
 {
     public class ConnectorRepository : Repository<Connector>
     {
+        
         public IQueryable<Connector> GetAllWithHomeDevice()
         {
             return _Connectors.Include("HomeDevice");

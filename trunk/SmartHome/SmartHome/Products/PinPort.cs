@@ -11,10 +11,10 @@ namespace SmartHome.Products
     public class PinPort
     {
         //Direction
-        public Char Port { set; get; }
-        public Byte Pin { set; get; }
+        public char Port { set; get; }
+        public byte Pin { set; get; }
 
-        public PinPort(Char Port, Byte Pin)
+        public PinPort(char Port, byte Pin)
         {
             this.Port = Port;
             this.Pin = Pin;
@@ -23,7 +23,19 @@ namespace SmartHome.Products
         public PinPort(string direction)
         {
             Port = direction[0];
-            Pin = Byte.Parse(direction[1].ToString());
+            Pin = byte.Parse(direction[1].ToString());
+        }
+
+        public PinPort(int pinPortNumber)
+        {
+            Port = (char)((pinPortNumber/8) + 'A');
+            Pin = (byte)(pinPortNumber % 8);
+        }
+
+        public PinPort(byte port, byte pin)
+        {
+            Port = (char)(port + 'A');
+            Pin = pin;
         }
     }
 }

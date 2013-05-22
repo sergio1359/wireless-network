@@ -19,7 +19,7 @@ namespace ServiceLayer
 
         public Connector AddConnector(Connector c)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

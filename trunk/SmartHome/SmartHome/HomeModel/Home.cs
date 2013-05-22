@@ -5,7 +5,7 @@ namespace SmartHome.HomeModel
 {
     class Home
     {
-        public String Name { get; set; }
+        public string Name { get; set; }
         public List<Zone> Zones { get; set; }
     }
 }

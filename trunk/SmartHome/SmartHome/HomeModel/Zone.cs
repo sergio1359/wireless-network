@@ -9,7 +9,7 @@ namespace SmartHome.HomeModel
 {
     class Zone
     {
-        public String NameZone { get; set; }
+        public string NameZone { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }
         public Image Map  { get; set; }

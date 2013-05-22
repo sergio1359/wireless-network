@@ -11,16 +11,18 @@ namespace SmartHome.Network.HomeDevices
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Connector Connector { get;
-                set
-                {
-                    if(value == null)
-                        this.Connector.HomeDevice = null;
-                    else
-                        this.Connector.HomeDevice = this;
-                    this.Connector = value;
-                }
-            } //if null then isn't connected
+        public Connector Connector
+        {
+            get { return this.Connector; } //while true?
+            set
+            {
+                if (value == null)
+                    this.Connector.HomeDevice = null;
+                else
+                    this.Connector.HomeDevice = this;
+                this.Connector = value;
+            }
+        } //if null then isn't connected
 
         public ConnectorType ConnectorType { get; set; }
         public HomeDeviceType HomeDeviceType { get; set; }

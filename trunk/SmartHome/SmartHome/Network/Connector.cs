@@ -14,16 +14,20 @@ namespace SmartHome.Network
         public string Name { get; set; }
         public ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
-        public HomeDevice HomeDevice { get;
-            set 
+        public HomeDevice HomeDevice
+        {
+            set
             {
                 if (value == null)
                     HomeDevice.Connector = null;
                 else
                     HomeDevice.Connector = this;
-                HomeDevice = value;                
+                HomeDevice = value;
             }
+            get { return this.HomeDevice; } //while true?
         }
+
+        public Connector() { }
 
         public List<PinPort> GetPinPort()
         {
@@ -33,6 +37,19 @@ namespace SmartHome.Network
         public PinPortConfiguration GetPinPortConfiguration()
         {
             return ProductConfiguration.GetPinPortConfiguration(HomeDevice.HomeDeviceType);
+        }
+
+        public Action[] GetActionsConnector()
+        {
+            if (HomeDevice == null)
+            {
+                return new Action[0];
+            }
+            else
+            {
+                return HomeDevice.Actions.ToArray();
+            }
+
         }
     }
 }

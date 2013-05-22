@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartHome.Network;
+using SmartHome.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,7 @@ namespace SmartHome.Memory
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public static Byte[] ToBinaryTime(this DateTime time)
+        public static byte[] ToBinaryTime(this DateTime time)
         {
             Byte[] result = new Byte[3];
             result[0] = (byte)time.Hour;
@@ -23,7 +25,7 @@ namespace SmartHome.Memory
             return result;
         }
 
-        public static Byte[] ToBinaryDate(this DateTime time, bool littleEndian)
+        public static byte[] ToBinaryDate(this DateTime time, bool littleEndian)
         {
 
             List<Byte> result = new List<Byte>();
@@ -35,7 +37,7 @@ namespace SmartHome.Memory
             return result.ToArray();
         }
 
-        public static Byte[] Uint16ToByte(this UInt16 b, bool litteEndian)
+        public static byte[] Uint16ToByte(this UInt16 b, bool litteEndian)
         {
             Byte[] result = new Byte[2];
 
@@ -53,7 +55,7 @@ namespace SmartHome.Memory
             return result;
         }
 
-        public static Byte[] Uint16ToByte(this int b, bool litteEndian)
+        public static byte[] Uint16ToByte(this int b, bool litteEndian)
         {
             Byte[] result = new Byte[2];
 
@@ -69,55 +71,104 @@ namespace SmartHome.Memory
             }
 
             return result;
+        }
+
+        //Some adds to easy the conversion
+        public static List<PinPort> GetPinPortList(this Node node)
+        {
+            var dic = ProductConfiguration.GetShieldDictionary(node.Shield);
+            List<PinPort> result = new List<PinPort>();
+
+            foreach (var item in dic.Values)
+            {
+                result.AddRange(item);
+            }
+
+            return result;
+        }
+
+        //esto es para generar la memoria. Devuelve NULL si no tiene configuracion
+        public static PinPortConfiguration GetPinPortConfiguration(this Node node, PinPort pinport)
+        {
+            Connector con = node.GetConnector(pinport);
+            if (con == null)
+            {
+                return ProductConfiguration.DefaultPinPortConfiguration();
+            }
+            else
+            {
+                if (con.HomeDevice != null)
+                {
+                    return ProductConfiguration.GetPinPortConfiguration(con.HomeDevice.HomeDeviceType);
+                }
+            }
+
+            return ProductConfiguration.DefaultPinPortConfiguration();
+        }
+
+
+        /// <summary>
+        /// Devuelve el Connector que tiene el pinPort Asociado, si no existe ningun conector entonces null
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="pinPort"></param>
+        /// <returns></returns>
+        public static Connector GetConnector(this Node node, PinPort pinPort)
+        {
+            if (!node.GetPinPortList().Contains(pinPort))
+            {
+                return null;
+            }
+            else
+            {
+                foreach (Connector connector in node.Connectors)
+                {
+                    if (connector.GetPinPort().Contains(pinPort))
+                        return connector;
+                }
+            }
+            return null;
         }
     }
 
-    public class FirmwareUnoExtension
+    public partial class FirmwareUno
     {
-        public static Byte[] PinIOConfig(Byte port)
+        private byte[] PinIOConfig(char port)
         {
-            //Si no esta definido suponemos Entrada digital
-            Byte[] result = new Byte[5];
-            PinPort p = null;
-            //Input:0 - Output:1, default=0
+            byte[] result = new Byte[5];
+            PinPortConfiguration p = null;
+            
             result[0] = 0x00;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
+            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
             {
-                p = ShieldNode.GetPinPort(port, i);
-                if (p != null && p.Output == true)
-                {
+                p = node.GetPinPortConfiguration(new PinPort(port, i));
+                if (p.Output == true)
                     result[0] = (byte)(result[0] | (0x01 << i));
-                }
             }
 
-            //Analog:0 - Digital:1 default: 1
+            
             result[1] = 0xFF;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
+            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Analog:0 - Digital:1 default: 1
             {
-                p = ShieldNode.GetPinPort(port, i);
-                if (p != null && p.Digital == false)
-                {
+                p = node.GetPinPortConfiguration(new PinPort(port, i));
+                if (p.Digital == false)
                     result[1] = (byte)(result[1] & ~(0x01 << i));
-                }
             }
 
-            //Input:0 - Output:1, default=0
             result[2] = 0x00;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
+            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
             {
-                p = ShieldNode.GetPinPort(port, i);
-                if (p != null && p.DefaultValueD == true)
-                {
+                p = node.GetPinPortConfiguration(new PinPort(port, i));
+                if (p.DefaultValueD == true)
                     result[2] = (byte)(result[2] | (0x01 << i));
-                }
             }
 
             //ChangetypeD None:00 Rising:10, Fall:01, Both:11
             UInt16 ctd = 0x00; //change type digital
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
             {
-                p = ShieldNode.GetPinPort(port, i);
-                if (p != null) ctd = (byte)(ctd | ((byte)p.changeTypeD) << (i * 2));
+                p = node.GetPinPortConfiguration(new PinPort(port, i));
+                ctd = (byte)(ctd | ((byte)p.ChangeTypeD) << (i * 2));
             }
 
             result[3] = ctd.Uint16ToByte(node.GetBaseConfiguration().LittleEndian)[0];
@@ -126,36 +177,25 @@ namespace SmartHome.Memory
             return result;
         }
 
-        private Byte[] ToBinaryEvent(Event e, bool littleEndian)
+        private byte[] ToBinaryEvent(ActionAbstract act, bool littleEndian)
         {
-            List<Byte> result = new List<byte>();
+            List<byte> result = new List<byte>();
 
-            result.AddRange(node.Address.Uint16ToByte(littleEndian));
-
-            result.Add(e.OPCode);
-
-            result.AddRange(e.Args);
+            result.AddRange(act.ToHomeDevice.Connector.Node.Address.Uint16ToByte(littleEndian));
+            result.Add((byte)act.OPCode);
+            result.AddRange(act.Args);
 
             return result.ToArray();
         }
 
-        private UInt16 SizePinEvents(PinPort pin)
+        private UInt16 SizePinEvents(SmartHome.Network.Action[] actions)
         {
             UInt16 size = 0;
-            foreach (BasicEvent pe in pin.PinEvents)
-            {
-                size += (UInt16)ToBinaryEvent(pe.Event, true).Length;
-            }
+
+            foreach (SmartHome.Network.Action act in actions)
+                size += (UInt16)ToBinaryEvent(act, true).Length;
+
             return size;
         }
-
-
-        //private Byte[] ToBinaryTimeEventRestriction(TimeRestriction tr)
-        //{
-        //    List<Byte> result = new List<Byte>();
-        //    result.AddRange(tr.Start.ToBinaryTime());
-        //    result.AddRange(tr.End.ToBinaryTime());
-        //    return result.ToArray();
-        //}
     }
 }
