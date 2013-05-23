@@ -24,13 +24,13 @@ void portModule_TaskHandler(void)
 	//TODO: Check the programed off pins
 }
 
-void digitalPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress)
+void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == DigitalWrite)
 	{
 		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header->opCode + 1);
 		//TODO: Handle the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
@@ -38,34 +38,27 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAd
 	{
 		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header->opCode + 1);
 		//TODO: Handle the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  ~lastValuesD[msg->dir], sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  ~lastValuesD[msg->dir],  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
 	}else if(operation_header->opCode == DigitalRead)
 	{
 		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header->opCode + 1);
-		if(!proccessDigitalPortAction(msg->dir, 0, true,  0, sourceAddress))
-		{
-			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
-		}
-	}else if(operation_header->opCode == DigitalReadResponse) //As action
-	{
-		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header->opCode + 1);
-		if(!proccessDigitalPortAction(msg->dir, 0, true,  0, sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, 0, true,  0,  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
 	}
 }
 
-void analogPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress)
+void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == AnalogWrite)
 	{
 		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header->opCode + 1);
 		//TODO: To consider the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value,  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
 		}
@@ -73,14 +66,7 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAdd
 	{
 		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header->opCode + 1);
 		//TODO: To consider the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir], sourceAddress))
-		{
-			//TODO:SEND ERROR MESSAGE
-		}
-	}else if(operation_header->opCode == AnalogReadResponse)
-	{
-		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header->opCode + 1);
-		if(!proccessDigitalPortAction(msg->dir, 0, true,  0, sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir],  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
 		}

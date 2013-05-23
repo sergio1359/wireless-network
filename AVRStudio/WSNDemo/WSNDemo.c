@@ -155,9 +155,9 @@ void HAL_UartBytesReceived(uint16_t bytes)
 {
 	for (uint16_t i = 0; i < bytes; i++)
 	{
-		HAL_UartWriteByte(HAL_UartReadByte());
+		HAL_UartReadByte();
 	}
-	ledToggle(2);
+	ledToggle(0);
 }
 
 /*****************************************************************************

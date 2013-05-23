@@ -118,7 +118,7 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 	{
 		while(compareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
-			OM_ProccessOperation(&time_operation_header->operationHeader);
+			OM_ProccessOperation(&time_operation_header->operationHeader, false);
 			
 			time_operation_header = (uint16_t)time_operation_header + getCommandArgsLength(&time_operation_header->operationHeader.opCode) + sizeof(TIME_OPERATION_HEADER_t);
 			

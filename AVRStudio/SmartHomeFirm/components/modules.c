@@ -7,7 +7,7 @@
 #include "modules.h"
 
 #define X(a, b, c, d, e) [b] = c,
-void (*command_handlers[]) (OPERATION_HEADER_t*, uint16_t) = {
+void (*command_handlers[]) (OPERATION_HEADER_t*) = {
 	COMMANDS_TABLE
 };
 #undef X
@@ -35,7 +35,7 @@ uint8_t getCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode];
 }	
 
-void handleCommand(OPERATION_HEADER_t* header, uint16_t sourceAddress)
+void handleCommand(OPERATION_HEADER_t* header)
 {
-	(*command_handlers[header->opCode]) (header, sourceAddress);
+	(*command_handlers[header->opCode]) (header);
 }

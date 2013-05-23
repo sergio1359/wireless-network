@@ -27,11 +27,20 @@
 #define BOTH_EDGE		3
 
 typedef struct{
-	uint8_t shieldModel;  
+	unsigned LedDebug : 1; //LSB
+	unsigned UARTDebug : 1;
+	unsigned BatteryInstalled : 1;
+	unsigned Reserved : 5; //MSB
+}SYSTEM_FLAGS_t;
+
+typedef struct{
+	uint8_t baseModel;  
 	uint16_t length; //Size of the current config
 	uint16_t checkSum; //crc16
 	DATE_t updateDate;
 	TIME_t updateTime;
+	SYSTEM_FLAGS_t systemFlags;
+	uint8_t networkRetriesLimit;
 }DEVICE_INFO_t;
 
 typedef struct{
@@ -69,6 +78,7 @@ typedef struct{
 }ANALOG_EVENT_CONFIG_t;
 
 typedef struct{
+	uint16_t sourceAddress;
 	uint16_t destinationAddress;
 	uint8_t opCode;
 }OPERATION_HEADER_t;

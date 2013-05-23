@@ -133,7 +133,7 @@ _Bool DS2401_Init() {
     _delay_us(50000);
     if (owreset()) return 0; // fail
 
-	cli();
+	ATOMIC_SECTION_ENTER
     owwriteb(0x33);     /* Read ROM command. */
     buffer[0] = owreadb(); //family byte (0x01)
 	
@@ -142,7 +142,7 @@ _Bool DS2401_Init() {
         buffer[i] = owreadb();
     }
     crc = owreadb();
-	sei();
+	ATOMIC_SECTION_LEAVE
 	
 	acc = crc8(buffer, SERIAL_NUMBER_SIZE + 1);
 

@@ -12,7 +12,7 @@ void networkInit(void)
 {
 }
 
-void networkHandler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress)
+void networkHandler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == RouteTableRead)
 	{

@@ -8,7 +8,7 @@
 #include "operationsManager.h"
 #include "modules.h"
 
-void OM_ProccessOperation(OPERATION_HEADER_t* operation_header)
+void OM_ProccessOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
 {
 	/* TESTING REGION */
 	//For testing purposes just send throw UART port
@@ -32,13 +32,14 @@ void OM_ProccessOperation(OPERATION_HEADER_t* operation_header)
 	/* END OF TESTING REGION */
 	
 	
-	
-	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
 	{
-		handleCommand(operation_header, 0); //sourceAddress = 0x00
+		handleCommand(operation_header);
 	}else
 	{
-		Radio_AddMessageByReference(operation_header);
+		if(byCopy)
+			Radio_AddMessageByCopy(operation_header);
+		else
+			Radio_AddMessageByReference(operation_header);
 	}
 }
