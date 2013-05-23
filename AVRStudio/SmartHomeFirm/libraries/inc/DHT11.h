@@ -13,7 +13,7 @@
 
 #define DHT11_ERROR 255
 
-uint8_t DHT11_ReadTemperature();
-uint8_t DHT11_ReadHumidity();
+uint8_t DHT11_ReadTemperature(uint16_t pinAddress);
+uint8_t DHT11_ReadHumidity(uint16_t pinAddress);
 
 #endif /* DHT11_H_ */

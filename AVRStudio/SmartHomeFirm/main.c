@@ -18,11 +18,14 @@
 #include "DIGITAL.h"
 #include "DS2401.h"
 #include "DHT11.h"
+#include "LCD_4BITS.h"
 
 #define DECLARING_GLOBALS
 #include "globals.h"
 
 //COMPONENTS
+#include "uartManager.h"
+
 #ifdef APP_ENABLE_OTA_SERVER
 #include "otaServer.h"
 #endif
@@ -30,8 +33,6 @@
 #ifdef APP_ENABLE_OTA_CLIENT
 #include "otaClient.h"
 #endif
-
-#include "uartManager.h"
 
 /*****************************************************************************
 *****************************************************************************/
@@ -64,6 +65,9 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 	sendFlag = true;
 		
 	ledToggle(0);
+	writeIntegerToLCD(199);
+	//if(!HAL_GPIO_PORT_read(&PORTD, 1 << 7))
+		//HAL_GPIO_PORT_toggle(&PORTD, 1 << 6);
 	(void)timer;
 }
 #endif
@@ -91,14 +95,14 @@ static void appSendData(void)
 	numWrite(adcVal);
 	HAL_UartPrint("\r\n");
 	
-	temp = DHT11_ReadTemperature();
+	temp = DHT11_ReadTemperature(PINADDRESS('D', 0));
 	if(temp != DHT11_ERROR)
 	{
 		HAL_UartPrint("TEMP: ");
 		numWrite(temp);
 		HAL_UartPrint("ºC\t");
 		
-		temp = DHT11_ReadHumidity();
+		temp = DHT11_ReadHumidity(PINADDRESS('D', 0));//D0
 		HAL_UartPrint("HUM: ");
 		numWrite(temp);
 		HAL_UartPrint("%\r\n");
@@ -169,7 +173,7 @@ int main(void)
 	currentTime.minute = 11;
 	currentTime.second = 00;
 	
-	EEPROM_Init();
+	//EEPROM_Init();
 	
 	RTC_ValidateTime(&currentTime);
 	
@@ -197,7 +201,7 @@ int main(void)
 	
 	Radio_Init();
 	
-	//initializeLCD();
+	initializeLCD();
 	HAL_Delay(1000000);
 
 	while (1)
@@ -211,6 +215,6 @@ int main(void)
 		OTA_ClientTaskHandler();
 		#endif
 		APP_TaskHandler();
-		PortMonitor_TaskHandler();
+		//PortMonitor_TaskHandler();
 	}
 }
