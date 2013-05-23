@@ -105,6 +105,8 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte);
 */
 void writeStringToLCD(char* stringPointer);
 
+void writeLineToLCD(char* stringPointer, char * DbgLine);
+
 /*
 **	Function:		writeIntegerToLCD
 **	Parameters:		integer - the integer that will be written to the LCD

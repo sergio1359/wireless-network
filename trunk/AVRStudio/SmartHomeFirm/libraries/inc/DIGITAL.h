@@ -11,6 +11,26 @@
 
 #include "halGpio.h"
 
+#define PINADDRESS(port, pin) (((port-'A')<<3)+pin)
+
+#define PORT_FROM_PINADDRESS(address) &_SFR_IO8(3 * (address >> 3) + 2 )
+#define MASK_FROM_PINADDRESS(address) (1<<(address %  8))
+
+#define VARPIN(x) \
+uint8_t* portPrt_##x; \
+uint8_t portMask_##x
+
+#define VARPIN_UPDATE(x, pinAddress) \
+portPrt_##x = PORT_FROM_PINADDRESS(pinAddress); \
+portMask_##x = MASK_FROM_PINADDRESS(pinAddress) \
+
+#define CCAT(a, b) a ## b
+#define VARPIN_SET(x) HAL_GPIO_PORT_set(CCAT(portPrt_,x), CCAT(portMask_,x))
+#define VARPIN_CLR(x) HAL_GPIO_PORT_clr(CCAT(portPrt_,x), CCAT(portMask_,x))
+#define VARPIN_OUT(x) HAL_GPIO_PORT_out(CCAT(portPrt_,x), CCAT(portMask_,x))
+#define VARPIN_INP(x) HAL_GPIO_PORT_in(CCAT(portPrt_,x), CCAT(portMask_,x))
+#define VARPIN_READ(x) HAL_GPIO_PORT_read(CCAT(portPrt_,x), CCAT(portMask_,x))
+
 // DEFINES FOR DIGITAL PORTSACCESS
 
 /* PIN ACCESS
@@ -101,13 +121,13 @@ HAL_GPIO_PIN(PG2, G, 2);
 HAL_GPIO_PIN(PG5, G, 5); //OC0B
 
 
-INLINE void		HAL_GPIO_PORT_set(uint8_t* portPtr, uint8_t mask);
-INLINE void		HAL_GPIO_PORT_clr(uint8_t* portPtr, uint8_t mask);
-INLINE void		HAL_GPIO_PORT_toggle(uint8_t* portPtr, uint8_t mask);
-INLINE void		HAL_GPIO_PORT_in(uint8_t* portPtr, uint8_t mask);
-INLINE void		HAL_GPIO_PORT_out(uint8_t* portPtr, uint8_t mask);
-INLINE void		HAL_GPIO_PORT_pullup(uint8_t* portPtr, uint8_t mask);
-INLINE uint8_t	HAL_GPIO_PORT_read(uint8_t* portPtr, uint8_t mask);
-INLINE uint8_t	HAL_GPIO_PORT_state(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_set(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_clr(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_toggle(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_in(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_out(uint8_t* portPtr, uint8_t mask);
+inline void		HAL_GPIO_PORT_pullup(uint8_t* portPtr, uint8_t mask);
+inline uint8_t	HAL_GPIO_PORT_read(uint8_t* portPtr, uint8_t mask);
+inline uint8_t	HAL_GPIO_PORT_state(uint8_t* portPtr, uint8_t mask);
 
 #endif /* DIGITAL_H_ */

@@ -10,24 +10,37 @@
 #include <util/delay.h>
 #include "DIGITAL.h"
 
-#define D4 _PB0
-#define D5 _PB1
-#define D6 _PB2
-#define D7 _PB3
-#define EE _PB4
-#define RS _PB5
+/*
+#define D4 _PB1
+#define D5 _PB3
+#define D6 _PB5
+#define D7 _PB7
+#define EE _PD1
+#define RS _PF5
 //#define RW _PB6 NOT CONNECTED
 
 #define CCAT(a, b, c) a ## b ## c
-#define SET(x) CCAT(HAL_GPIO, x, _set())
-#define CLR(x) CCAT(HAL_GPIO, x, _clr())
-#define OUT(x) CCAT(HAL_GPIO, x, _out())
+#define VARPIN_SET(x) CCAT(HAL_GPIO, x, _set())
+#define VARPIN_CLR(x) CCAT(HAL_GPIO, x, _clr())
+#define VARPIN_OUT(x) CCAT(HAL_GPIO, x, _out())
+*/
+
+#define LCD_LINE_SIZE (16+1)
+#define LCD_LINES 2
+// Line size including '\0' and '\n' (used for string allocation)
+#define LCD_STRING_SIZE (LCD_LINE_SIZE*2+1
 
 #define	DATA_REGISTER		0
 #define	COMMAND_REGISTER	1
 
 unsigned char position;
 
+VARPIN(D4);
+VARPIN(D5);
+VARPIN(D6);
+VARPIN(D7);
+VARPIN(EE);
+VARPIN(RS);
 
 /*
 **	Function:		initializeLCD
@@ -41,13 +54,20 @@ void initializeLCD(void)
 	//	Set the position counter to 0
 	position = 0;
 	
+	VARPIN_UPDATE(D4, PINADDRESS('B',1));
+	VARPIN_UPDATE(D5, PINADDRESS('B',3));
+	VARPIN_UPDATE(D6, PINADDRESS('B',5));
+	VARPIN_UPDATE(D7, PINADDRESS('B',7));
+	VARPIN_UPDATE(EE, PINADDRESS('D',1));
+	VARPIN_UPDATE(RS, PINADDRESS('F',5));
+	
 	//	Set the proper data direction for output
-	OUT(D4);
-	OUT(D5);
-	OUT(D6);
-	OUT(D7);
-	OUT(EE);
-	OUT(RS);
+	VARPIN_OUT(EE);
+	VARPIN_OUT(RS);
+	VARPIN_OUT(D4);
+	VARPIN_OUT(D5);
+	VARPIN_OUT(D6);
+	VARPIN_OUT(D7);
 
 	//	First, delay for at least 15ms after power on
 	_delay_ms(15);
@@ -77,7 +97,7 @@ void initializeLCD(void)
 	writeByteToLCD(COMMAND_REGISTER, 0x01);
 	_delay_ms(13);
 	
-	//	Turn on display, turn off cursor and blink
+	//writeByteToLCD(COMMAND_REGISTER, 0x0c); // not blinking cursor
 	writeByteToLCD(COMMAND_REGISTER, 0x0f);   // blinking cursor
 	_delay_ms(13);
 }
@@ -98,7 +118,7 @@ void waitForLCD(void)
 	//while((readByteFromLCD(COMMAND_REGISTER) & 0x80) == 0x80);
 	
 	//	Or.... delay 50us
-	_delay_us(50);
+	_delay_ms(1);
 }
 
 
@@ -116,43 +136,43 @@ void writeNibbleToLCD(unsigned char selectedRegister, unsigned char nibble)
 	//DigitalOut_SetValue(RW,0);
 
 	//	Pull the enable line high
-	SET(EE);
+	VARPIN_SET(EE);
 	
 	//	Output the nibble to the LCD
 	if((nibble>>3) & 0x01)
-		SET(D7);
+		VARPIN_SET(D7);
 	else
-		CLR(D7);
+		VARPIN_CLR(D7);
 		
 	if((nibble>>2) & 0x01)
-		SET(D6);
+		VARPIN_SET(D6);
 	else
-		CLR(D6);
+		VARPIN_CLR(D6);
 	
 	if((nibble>>1) & 0x01)
-		SET(D5);
+		VARPIN_SET(D5);
 	else
-		CLR(D5);
+		VARPIN_CLR(D5);
 	
 	if(nibble & 0x01)
-		SET(D4);
+		VARPIN_SET(D4);
 	else
-		CLR(D4);
+		VARPIN_CLR(D4);
 	
 	//	Determine if the register select bit needs to be set
 	if(selectedRegister == DATA_REGISTER)
 	{
 		//	If so, then set it
-		SET(RS);
+		VARPIN_SET(RS);
 	}
 	else
 	{
 		//	Otherwise, clear the register select bit
-		CLR(RS);
+		VARPIN_CLR(RS);
 	}
 	
 	//	Toggle the enable line to latch the nibble
-	CLR(EE);
+	VARPIN_CLR(EE);
 }
 
 /*
@@ -175,8 +195,8 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte)
 	if(selectedRegister == DATA_REGISTER && position == 16)
 	{
 		writeByteToLCD(COMMAND_REGISTER, 0xC0);
-		//_delay_ms(2);
-		_delay_us(1250);
+		_delay_ms(2);
+		//_delay_us(1250);
 	}
 	
 	//	Wait for the LCD to become ready
@@ -192,8 +212,8 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte)
 	if(selectedRegister == DATA_REGISTER && ++position == 32)
 	{
 		writeByteToLCD(COMMAND_REGISTER, 0x80);
-		//_delay_ms(2);
-		_delay_us(1250);
+		_delay_ms(2);
+		//_delay_us(1250);
 		position = 0;
 	}
 }
@@ -213,6 +233,24 @@ void writeStringToLCD(char* stringPointer)
 	//	to the LCD
 	while (*stringPointer)
 		writeByteToLCD(DATA_REGISTER, *stringPointer++);
+}
+
+void writeLineToLCD(char* stringPointer, char * DbgLine)
+{
+	int i=0;
+	while (*stringPointer) {
+		*DbgLine= *stringPointer;
+		DbgLine++;
+		writeByteToLCD(DATA_REGISTER, *stringPointer++);
+
+		i++;
+	}
+	while (i<LCD_LINE_SIZE-1) {
+		*DbgLine= ' ';
+		DbgLine++;
+		writeByteToLCD(DATA_REGISTER, ' ');
+		i++;
+	}
 }
 
 /*
@@ -275,6 +313,10 @@ void moveToXY(unsigned char row, unsigned char column)
 	//	Send the correct commands to the command register of the LCD
 	if(position < 16)
 		writeByteToLCD(COMMAND_REGISTER, 0x80 | position);
-	else
+	else if(position >= 16 && position < 32)
 		writeByteToLCD(COMMAND_REGISTER, 0x80 | (position % 16 + 0x40));
+	else if(position >= 41 && position < 60)
+		writeByteToLCD(COMMAND_REGISTER, 0x80 | (position % 40 + 0x14));
+	else if(position >= 20 && position < 40)
+		writeByteToLCD(COMMAND_REGISTER, 0x80 | (position % 60 + 0x54));
 }
