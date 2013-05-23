@@ -11,6 +11,7 @@
 #include "sysTimer.h"
 #include "leds.h"
 
+//LIBRARIES
 #include "RTC.h"
 #include "EEPROM.h"
 #include "ANALOG.h"
@@ -21,6 +22,7 @@
 #define DECLARING_GLOBALS
 #include "globals.h"
 
+//COMPONENTS
 #ifdef APP_ENABLE_OTA_SERVER
 #include "otaServer.h"
 #endif
@@ -28,6 +30,8 @@
 #ifdef APP_ENABLE_OTA_CLIENT
 #include "otaClient.h"
 #endif
+
+#include "uartManager.h"
 
 /*****************************************************************************
 *****************************************************************************/
@@ -51,18 +55,6 @@ static SYS_Timer_t appNetworkStatusTimer;
 
 _Bool initialized = false;
 _Bool sendFlag = false;
-
-/*****************************************************************************
-*****************************************************************************/
-//TODO: MOVE TO THE RIGHT FILE (UART_MANAGER COMPONENT)
-void HAL_UartBytesReceived(uint16_t bytes)
-{
-	for (uint16_t i = 0; i < bytes; i++)
-	{
-		HAL_UartWriteByte(HAL_UartReadByte());
-	}
-	ledToggle(2);
-}
 
 #if APP_ROUTER || APP_ENDDEVICE
 /*****************************************************************************
@@ -203,7 +195,7 @@ int main(void)
 	OTA_ClientInit();
 	#endif
 	
-	//Radio_Init();
+	Radio_Init();
 	
 	//initializeLCD();
 	HAL_Delay(1000000);

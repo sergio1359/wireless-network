@@ -23,7 +23,7 @@
  
 /* Circular buffer object */
 CREATE_CIRCULARBUFFER(OPERATION_HEADER_t*, REFERENCES_BUFFER_SIZE)	referencesMessages_Buffer;
-CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)		copiesMessages_Buffer;
+CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)					copiesMessages_Buffer;
 
 RadioState_t currentState = RF_STATE_INITIAL;
 NWK_DataReq_t nwkDataReq;
@@ -165,9 +165,6 @@ static void rfDataConf(NWK_DataReq_t *req)
 	{
 		failRetries++;
 		
-		//Retry
-		SYS_TimerStart(&retriesTimer);
-		
 		if(failRetries == RETRIES_LIMIT)
 		{
 			failRetries = 0;
@@ -177,6 +174,10 @@ static void rfDataConf(NWK_DataReq_t *req)
 			sendNextMessage();
 			
 			//TODO: Send or log ERROR (LIMIT_EXCEDED)
+		}else
+		{
+			//Retry
+			SYS_TimerStart(&retriesTimer);
 		}
 		
 	}//TODO: Check and log for non expected network status

@@ -31,7 +31,7 @@ typedef enum COMMAND_OPCODES {
 
 
 uint8_t getCommandArgsLength(uint8_t* opcode);
-extern inline void handleCommand(OPERATION_HEADER_t* header, uint16_t sourceAddress);
+extern inline void handleCommand(OPERATION_HEADER_t* header);
 
 /*
 typedef enum COMMAND_OPCODES

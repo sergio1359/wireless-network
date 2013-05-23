@@ -161,7 +161,7 @@ void launchOperations(uint8_t pinAddress)
 		
 		if( restriction_passed ) //If all restrictions are met
 		{
-			OM_ProccessOperation(operation_header);
+			OM_ProccessOperation(operation_header, false);
 		}
 		
 		operation_ptr += args_length + sizeof(OPERATION_HEADER_t);

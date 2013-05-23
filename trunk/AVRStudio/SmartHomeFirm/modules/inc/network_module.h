@@ -25,11 +25,13 @@ typedef struct
 
 typedef struct
 {
-	uint16_t length;
+	uint8_t fragment:4; //LSB
+	uint8_t fragmentTotal:4;//MSB
+	uint8_t length;
 }ROUTE_TABLE_READ_RESPONSE_HEADER_t;
 
 
 void networkInit(void);
-void networkHandler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress);
+void networkHandler(OPERATION_HEADER_t* operation_header);
 
 #endif /* NETWORK_MODULE_H_ */

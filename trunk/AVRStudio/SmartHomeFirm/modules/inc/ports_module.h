@@ -83,7 +83,9 @@ typedef struct
 // CONFIGURATION
 typedef struct
 {
-	uint16_t length;
+	uint8_t fragment:4; //LSB
+	uint8_t fragmentTotal:4;//MSB
+	uint8_t length;
 }CONFIG_WRITE_HEADER_MESSAGE_t;
 
 typedef struct
@@ -92,7 +94,9 @@ typedef struct
 
 typedef struct
 {
-	uint16_t length;
+	uint8_t fragment:4; //LSB
+	uint8_t fragmentTotal:4;//MSB
+	uint8_t length;
 }CONFIG_READ_RESPONSE_HEADER_MESSAGE_t;
 
 typedef struct
@@ -123,7 +127,7 @@ typedef struct
 
 void portModule_Init(void);
 void portModule_TaskHandler(void);
-void digitalPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress);
-void analogPort_Handler(OPERATION_HEADER_t* operation_header, uint16_t sourceAddress);
+void digitalPort_Handler(OPERATION_HEADER_t* operation_header);
+void analogPort_Handler(OPERATION_HEADER_t* operation_header);
 
 #endif /* PORTS_MODULE_H_ */
