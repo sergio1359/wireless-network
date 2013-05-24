@@ -18,7 +18,7 @@
 #include "DIGITAL.h"
 #include "DS2401.h"
 #include "DHT11.h"
-#include "LCD_4BITS.h"
+#include "DISPLAY.h"
 
 #define DECLARING_GLOBALS
 #include "globals.h"
@@ -65,9 +65,6 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 	sendFlag = true;
 		
 	ledToggle(0);
-	writeIntegerToLCD(199);
-	//if(!HAL_GPIO_PORT_read(&PORTD, 1 << 7))
-		//HAL_GPIO_PORT_toggle(&PORTD, 1 << 6);
 	(void)timer;
 }
 #endif
@@ -85,6 +82,16 @@ static void appSendData(void)
 	HAL_UartWriteByte(':');
 	numWrite(currentTime.second);
 	HAL_UartPrint("\r\n");
+	
+	DISPLAY_Clear();
+	DISPLAY_SetCursor(0,0);
+	DISPLAY_WriteString("TIME: ");
+	DISPLAY_SetCursor(0,1);
+	DISPLAY_WriteNumber(currentTime.hour,2);
+	DISPLAY_WriteByte(':');
+	DISPLAY_WriteNumber(currentTime.minute,2);
+	DISPLAY_WriteByte(':');
+	DISPLAY_WriteNumber(currentTime.second,2);
 	
 	ADC_Reference(REF_DEFAULT);
 	adcVal = ADC_Read(ADC4);
@@ -159,7 +166,7 @@ static void APP_TaskHandler(void)
 		appSendData();
 	}
 }
-
+#include <util/delay.h>
 /*****************************************************************************
 *****************************************************************************/
 int main(void)
@@ -201,8 +208,9 @@ int main(void)
 	
 	Radio_Init();
 	
-	initializeLCD();
-	HAL_Delay(1000000);
+	ledsInit();
+	DISPLAY_Init(PINADDRESS('D',1), PINADDRESS('D',0), PINADDRESS('B',1), PINADDRESS('B',3), PINADDRESS('B',5), PINADDRESS('B',7));
+	DISPLAY_WriteString("HELLO!");
 
 	while (1)
 	{

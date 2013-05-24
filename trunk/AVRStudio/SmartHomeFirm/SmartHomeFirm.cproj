@@ -29,7 +29,7 @@
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>1841</port>
+        <port>31420</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
@@ -221,13 +221,13 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\inc\IO.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\inc\LCD_4BITS.h">
+    <Compile Include="libraries\inc\DISPLAY.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\inc\RTC.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="libraries\LCD_4BITS.c">
+    <Compile Include="libraries\DISPLAY.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="libraries\RTC.c">
