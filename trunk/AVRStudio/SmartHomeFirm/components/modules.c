@@ -30,7 +30,7 @@ uint8_t getCommandArgsLength(uint8_t* opcode)
 		return 4;// JUST FOR TRIALS! In final version, we need to decode the next byte. *(opcode + 1)
 	
 	if(command_is_dinamic[*opcode])
-		return command_lengths[*opcode] + *(opcode+1); //CHECK!!!!!!!!! LENGTH READ
+		return command_lengths[*opcode] + *(opcode+2) + 1; //TODO: CHECK!!!!!!!!! LENGTH READ
 	else
 		return command_lengths[*opcode];
 }	

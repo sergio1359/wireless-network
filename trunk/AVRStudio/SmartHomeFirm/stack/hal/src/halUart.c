@@ -138,6 +138,63 @@ void HAL_UartInit(uint32_t baudrate)
 
 /*****************************************************************************
 *****************************************************************************/
+void HAL_UartWriteNumberDEC(unsigned int num)
+{
+	int aux;
+	if(num > 9999)
+	{
+		aux = num / 10000;
+		num = num % 10000;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 999)
+	{
+		aux = num/1000;
+		num = num % 1000;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 99)
+	{
+		aux = num/100;
+		num = num % 100;
+		HAL_UartWriteByte(aux+'0');
+	}
+	if(num > 9)
+	{
+		aux = num/10;
+		num = num % 10;
+		HAL_UartWriteByte(aux+'0');
+	}
+	HAL_UartWriteByte(num+'0');
+}
+
+/*****************************************************************************
+*****************************************************************************/
+void HAL_UartWriteNumberHEX(unsigned int num)
+{
+	HAL_UartPrint("0x");
+	int aux = num;
+	char c;
+	do
+	{
+		c = (aux & 0xF0)>>4;
+		if(c <= 9)
+		HAL_UartWriteByte(c + '0');
+		else
+		HAL_UartWriteByte((c - 10) + 'A');
+		
+		c = (aux & 0xF);
+		if(c <= 9)
+		HAL_UartWriteByte(c + '0');
+		else
+		HAL_UartWriteByte((c - 10) + 'A');
+		
+		aux >>= 8;
+	} while (aux != 0);
+}
+
+/*****************************************************************************
+*****************************************************************************/
 void HAL_UartWriteByte(uint8_t byte)
 {
   if (txFifo.bytes == txFifo.size)

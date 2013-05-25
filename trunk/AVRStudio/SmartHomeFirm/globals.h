@@ -32,7 +32,8 @@ GLOBAL volatile _Bool validConfiguration;
 
 /*	Time vars	4 bytes  */
 GLOBAL volatile TIME_t currentTime;
-GLOBAL volatile _Bool validTime;
+GLOBAL volatile DATE_t currentDate;
+GLOBAL volatile _Bool validDateTime;
 
 
 
