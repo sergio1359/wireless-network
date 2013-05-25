@@ -14,12 +14,18 @@
 #include "config.h"
 
 
-#define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2)]		//Time OPERATION list address relative to the end of the OPERATION table
-#define OPERATION_RESTRIC_LIST_START_ADDRESS			runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2) + 2]
-#define FREE_REGION_START_ADDRESS					runningConfiguration.raw[OPERATION_TABLE_ADDR + (NUM_PINS * 2) + 4]
+#define OPERATION_INDEX_ADDR							runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
+#define OPERATION_LIST_ADDR								runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
 
-#define TIME_OPERATION_LIST_END_ADDRESS					OPERATION_RESTRIC_LIST_START_ADDRESS		//Renowned for greater understanding
-#define OPERATION_RESTRIC_LIST_END_ADDRESS				FREE_REGION_START_ADDRESS
+#define OPERATION_RESTRIC_LIST_START_ADDRESS			runningConfiguration.topConfiguration.dinamicIndex.portOperationTimeRestrictionList
+#define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.topConfiguration.dinamicIndex.timeOperationList
+#define MODULE_RGB_CONFIG_ADDRESS						runningConfiguration.topConfiguration.dinamicIndex.configModule_RGB
+#define MODULE_PRESENCE_CONFIG_ADDRESS					runningConfiguration.topConfiguration.dinamicIndex.configModule_Presence
+#define FREE_REGION_START_ADDRESS						runningConfiguration.topConfiguration.dinamicIndex.freeRegion
+
+#define OPERATION_INDEX_END_ADDR						OPERATION_LIST_ADDR						//Renowned for greater understanding
+#define OPERATION_RESTRIC_LIST_END_ADDRESS				TIME_OPERATION_LIST_START_ADDRESS				
+#define TIME_OPERATION_LIST_END_ADDRESS					MODULE_RGB_CONFIG_ADDRESS		
 
 #define NO_EDGE			0
 #define FALLING_EDGE	1
@@ -78,19 +84,33 @@ typedef struct{
 }ANALOG_EVENT_CONFIG_t;
 
 typedef struct{
+	uint16_t portOperationIndex;
+	uint16_t portOperationList;
+	uint16_t portOperationTimeRestrictionList;
+	uint16_t timeOperationList;
+	uint16_t configModule_RGB;
+	uint16_t configModule_Presence;
+	uint16_t configModule_TempHum;
+	uint16_t configModule_Power;
+	uint16_t configModule_LightSensor;
+	uint16_t freeRegion;
+}DINAMIC_INDEX_t;
+
+typedef struct{
 	uint16_t sourceAddress;
 	uint16_t destinationAddress;
 	uint8_t opCode;
 }OPERATION_HEADER_t;
 
 typedef struct{
-	TIME_t activationTime;		  //Activation time
+	TIME_t activationTime;				  //Activation time
 	OPERATION_HEADER_t operationHeader;   //Header of the operation to send on activation
 }TIME_OPERATION_HEADER_t;
 
 typedef struct
 {
-	uint16_t operationAddress; //Relative to the end of operation table
+	uint16_t operationAddress; //Relative to the end dinamic index
+	WEEKDAYS_FLAG_t weekDays;
 	TIME_t start;
 	TIME_t end;
 }OPERATION_RESTRICTION_t;
@@ -122,11 +142,12 @@ typedef struct {
 	ANALOG_EVENT_CONFIG_t analogConfig_ADC5;
 	ANALOG_EVENT_CONFIG_t analogConfig_ADC6;
 	ANALOG_EVENT_CONFIG_t analogConfig_ADC7;
-}TOP_CONFIGURATION;
+	DINAMIC_INDEX_t dinamicIndex;
+}TOP_CONFIGURATION_t;
 
 typedef union
 {
-	TOP_CONFIGURATION  topConfiguration;
+	TOP_CONFIGURATION_t  topConfiguration;
 	uint8_t raw[EEPROM_SIZE];
 }RUNNING_CONFIGURATION_t;
 

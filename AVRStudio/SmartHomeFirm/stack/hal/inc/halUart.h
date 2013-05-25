@@ -52,6 +52,8 @@
 /*****************************************************************************
 *****************************************************************************/
 void HAL_UartInit(uint32_t baudrate);
+void HAL_UartWriteNumberDEC(unsigned int num);
+void HAL_UartWriteNumberHEX(unsigned int num);
 void HAL_UartWriteByte(uint8_t byte);
 void HAL_UartWriteBuffer(uint8_t* buffer, uint8_t lenght);
 void HAL_UartPrint(const uint8_t* buffer);

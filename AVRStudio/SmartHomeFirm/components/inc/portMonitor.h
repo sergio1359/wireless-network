@@ -15,7 +15,7 @@
 #include "globals.h"
 #include "config.h"
 #include "modules.h"
-#include "radio.h"
+#include "timeManager.h"
 
 void PortMonitor_TaskHandler();
 

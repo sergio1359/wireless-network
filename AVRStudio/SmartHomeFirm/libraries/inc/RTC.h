@@ -11,19 +11,35 @@
 #include <avr/interrupt.h>
 
 typedef struct{
+	unsigned Sunday : 1; //LSB
+	unsigned Saturday : 1;
+	unsigned Friday : 1;
+	unsigned Thursday : 1;
+	unsigned Wednesday : 1;
+	unsigned Tuesday : 1;
+	unsigned Monday : 1;
+	unsigned Reserved : 1; //MSB
+}WEEKDAYS_FLAG_t;
+
+typedef union
+{
+	WEEKDAYS_FLAG_t flags;
+	uint8_t raw;
+}WEEKDAY_t;	
+
+typedef struct{
 	unsigned char hour;
 	unsigned char minute;
 	unsigned char second; 
 }TIME_t;
 
 typedef struct{
-	unsigned char date;
+	WEEKDAY_t weekDay;
+	unsigned char day;
 	unsigned char month;
 	unsigned int year;
 }DATE_t;
 
 void RTC_Init();
-void RTC_ValidateTime(TIME_t *receivedTime);
-int8_t compareTimes(TIME_t time1, TIME_t time2);
 
 #endif /* RTC_H_ */

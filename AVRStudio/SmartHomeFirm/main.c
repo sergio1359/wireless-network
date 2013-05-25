@@ -75,23 +75,36 @@ uint16_t adcVal;
 uint8_t temp;
 static void appSendData(void)
 {
+	HAL_UartWriteNumberDEC(currentDate.day);
+	HAL_UartWriteByte('/');
+	HAL_UartWriteNumberDEC(currentDate.month);
+	HAL_UartWriteByte('/');
+	HAL_UartWriteNumberDEC(currentDate.year);
+	HAL_UartPrint("\t");
 	
-	numWrite(currentTime.hour);
+	HAL_UartWriteNumberDEC(currentTime.hour);
 	HAL_UartWriteByte(':');
-	numWrite(currentTime.minute);
+	HAL_UartWriteNumberDEC(currentTime.minute);
 	HAL_UartWriteByte(':');
-	numWrite(currentTime.second);
+	HAL_UartWriteNumberDEC(currentTime.second);
 	HAL_UartPrint("\r\n");
 	
 	DISPLAY_Clear();
 	DISPLAY_SetCursor(0,0);
-	DISPLAY_WriteString("TIME: ");
+	DISPLAY_WriteString("DATE: ");
+	DISPLAY_WriteNumber(currentDate.day,2);
+	DISPLAY_WriteByte('/');
+	DISPLAY_WriteNumber(currentDate.month,2);
+	DISPLAY_WriteByte('/');
+	DISPLAY_WriteNumber(currentDate.year,4);
 	DISPLAY_SetCursor(0,1);
+	DISPLAY_WriteString("TIME: ");
 	DISPLAY_WriteNumber(currentTime.hour,2);
 	DISPLAY_WriteByte(':');
 	DISPLAY_WriteNumber(currentTime.minute,2);
 	DISPLAY_WriteByte(':');
 	DISPLAY_WriteNumber(currentTime.second,2);
+
 	
 	ADC_Reference(REF_DEFAULT);
 	adcVal = ADC_Read(ADC4);
@@ -99,19 +112,19 @@ static void appSendData(void)
 	//adcVal = ADC_Read(INTERNAL_TEMP);
 	//adcVal = 1.13 * adcVal - 272.8;
 	HAL_UartPrint("ADC4: ");
-	numWrite(adcVal);
+	HAL_UartWriteNumberDEC(adcVal);
 	HAL_UartPrint("\r\n");
 	
 	temp = DHT11_ReadTemperature(PINADDRESS('D', 0));
 	if(temp != DHT11_ERROR)
 	{
 		HAL_UartPrint("TEMP: ");
-		numWrite(temp);
+		HAL_UartWriteNumberDEC(temp);
 		HAL_UartPrint("ºC\t");
 		
 		temp = DHT11_ReadHumidity(PINADDRESS('D', 0));//D0
 		HAL_UartPrint("HUM: ");
-		numWrite(temp);
+		HAL_UartWriteNumberDEC(temp);
 		HAL_UartPrint("%\r\n");
 	}else
 	{
@@ -176,23 +189,28 @@ int main(void)
 	HAL_UartInit(38400);
 	
 	RTC_Init();
-	currentTime.hour = 11;
-	currentTime.minute = 11;
-	currentTime.second = 00;
 	
-	//EEPROM_Init();
+	EEPROM_Init();
 	
-	RTC_ValidateTime(&currentTime);
+	TIME_t debugTime;
+	debugTime.hour = 11;
+	debugTime.minute = 11;
+	debugTime.second = 00;
+	DATE_t debugDate;
+	debugDate.day = 25;
+	debugDate.month = 5;
+	debugDate.year = 2013;
+	TIME_Validate(&debugTime);
 	
 	if(DS2401_Init())
 	{
 		HAL_UartPrint("SERIAL NUMBER: ");
 		for(int i = 0; i < SERIAL_NUMBER_SIZE - 1; i++)
 		{
-			numWriteHEX(serialNumber[i]);
+			HAL_UartWriteNumberHEX(serialNumber[i]);
 			HAL_UartWriteByte('-');
 		}
-		numWriteHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);
+		HAL_UartWriteNumberHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);
 		HAL_UartPrint("\r\n\r\n");
 	}else
 	{
@@ -223,6 +241,6 @@ int main(void)
 		OTA_ClientTaskHandler();
 		#endif
 		APP_TaskHandler();
-		//PortMonitor_TaskHandler();
+		PortMonitor_TaskHandler();
 	}
 }

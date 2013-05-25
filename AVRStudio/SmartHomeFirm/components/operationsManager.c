@@ -13,16 +13,16 @@ void OM_ProccessOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
 	/* TESTING REGION */
 	//For testing purposes just send throw UART port
 	HAL_UartPrint("PROCESSIG OPERATION >> TO:");
-	numWriteHEX(operation_header->destinationAddress);
+	HAL_UartWriteNumberHEX(operation_header->destinationAddress);
 	HAL_UartPrint("\t CODE:");
-	numWriteHEX(operation_header->opCode);
+	HAL_UartWriteNumberHEX(operation_header->opCode);
 	HAL_UartPrint("\t ARGS:");
 	
 	uint8_t length = getCommandArgsLength(&operation_header->opCode);
 	
 	for (uint8_t i = 0; i < length; i++)
 	{
-		numWriteHEX(*((uint8_t*)operation_header + sizeof(OPERATION_HEADER_t) + i));
+		HAL_UartWriteNumberHEX(*((uint8_t*)operation_header + sizeof(OPERATION_HEADER_t) + i));
 		HAL_UartWriteByte(' ');
 	}
 	
