@@ -29,6 +29,7 @@ UARTReceiverState_t uartState = USART_RECEIVER_IDLE_RX_STATE;
 
 uint8_t* rxBuffer[RX_BUFFER_SIZE];
 uint8_t index;
+uint8_t checkSum;
 
 void HAL_UartBytesReceived(uint16_t bytes)
 {
@@ -49,6 +50,7 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			{
 				uartState = USART_RECEIVER_SOF_RX_STATE;
 				index = 0;
+				checkSum = 0;
 			}
 			break;
 
@@ -82,9 +84,7 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			}
 			else if (eof[1] == byte)
 			{
-				uartState = USART_RECEIVER_IDLE_RX_STATE;
-				//TODO: PROCCESS MESAGE!!
-				OM_ProccessOperation((OPERATION_HEADER_t*)rxBuffer, true);
+				uartState = USART_RECEIVER_EOF_RX_STATE;
 			}				
 			else
 			{
@@ -93,9 +93,25 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			}				
 			break;
 			
+			case USART_RECEIVER_EOF_RX_STATE:
+			if (checkSum == byte)
+			{
+				uartState = USART_RECEIVER_IDLE_RX_STATE;
+				//TODO: PROCCESS MESAGE!!
+				OM_ProccessOperation((OPERATION_HEADER_t*)rxBuffer, true);
+			}
+			else
+			{
+				uartState = USART_RECEIVER_ERROR_RX_STATE;
+				//TODO: Send or log ERROR (UART_CHECKSUM_ERROR)
+			}
+			break;
+			
 			default:
 			break;
 		}
+
+		checkSum += byte;
 
 		if (acceptByte)
 		{
@@ -115,23 +131,23 @@ static void sendData(uint8_t *data, uint8_t size)
 {
 	uint8_t cs = 0;
 
-	HAL_UartWriteByte(0x10);
-	HAL_UartWriteByte(0x02);
+	HAL_UartWriteByte(sof[0]);
+	HAL_UartWriteByte(sof[1]);
 
 	for (uint8_t i = 0; i < size; i++)
 	{
-		if (data[i] == 0x10)
+		if (data[i] == APP_MAGIC_SYMBOL)
 		{
-			HAL_UartWriteByte(0x10);
-			cs += 0x10;
+			HAL_UartWriteByte(APP_MAGIC_SYMBOL);
+			cs += APP_MAGIC_SYMBOL;
 		}
 		HAL_UartWriteByte(data[i]);
 		cs += data[i];
 	}
 
-	HAL_UartWriteByte(0x10);
-	HAL_UartWriteByte(0x03);
-	cs += 0x10 + 0x02 + 0x10 + 0x03;
+	HAL_UartWriteByte(eof[0]);
+	HAL_UartWriteByte(eof[1]);
+	cs += sof[0] + sof[1] + eof[0] + eof[1];
 
 	HAL_UartWriteByte(cs);
 }
