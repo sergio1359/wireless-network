@@ -103,14 +103,15 @@ typedef struct{
 }OPERATION_HEADER_t;
 
 typedef struct{
+	WEEKDAY_t weekDays;
 	TIME_t activationTime;				  //Activation time
 	OPERATION_HEADER_t operationHeader;   //Header of the operation to send on activation
 }TIME_OPERATION_HEADER_t;
 
 typedef struct
 {
-	uint16_t operationAddress; //Relative to the end dinamic index
-	WEEKDAYS_FLAG_t weekDays;
+	uint16_t operationAddress;
+	WEEKDAY_t weekDays;
 	TIME_t start;
 	TIME_t end;
 }OPERATION_RESTRICTION_t;

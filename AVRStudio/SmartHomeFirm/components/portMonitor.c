@@ -155,15 +155,15 @@ void launchOperations(uint8_t pinAddress)
 	{
 		OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)&runningConfiguration.raw[operation_ptr];
 		
-		_Bool restriction_passed = (restric->operationAddress != operation_ptr);
+		_Bool restriction_passed = true;
 		
 		while( (restric->operationAddress == operation_ptr) && (res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current operation? && Restrictions operations available
 		{
-			restriction_passed |= ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
+			restriction_passed = ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
+			restriction_passed &= (currentDate.weekDay.raw & restric->weekDays.raw != 0); //Day of the week
 			res_ptr += sizeof(OPERATION_RESTRICTION_t);
 			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[res_ptr]; //Next restriction
 		}
-		
 		
 		if( restriction_passed ) //If all restrictions are met
 		{

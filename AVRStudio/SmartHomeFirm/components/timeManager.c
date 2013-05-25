@@ -40,7 +40,8 @@ void TIME_CheckTimeOperation()
 	{
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
-			OM_ProccessOperation(&time_operation_header->operationHeader, false);
+			if(currentDate.weekDay.raw & time_operation_header->weekDays.raw != 0)
+				OM_ProccessOperation(&time_operation_header->operationHeader, false);
 			
 			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
 			
