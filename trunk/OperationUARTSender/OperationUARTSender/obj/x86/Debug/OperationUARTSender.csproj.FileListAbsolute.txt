@@ -1,0 +1,9 @@
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\bin\Debug\OperationUARTSender.exe
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\bin\Debug\OperationUARTSender.pdb
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.Form1.resources
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.Properties.Resources.resources
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.exe
+c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.pdb
