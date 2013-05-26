@@ -20,7 +20,7 @@ namespace SmartHome.Network
         PowerSensor = 0x11,
         TemperatureSensor = 0x12,
         HumiditySensor = 0x13,
-        LightSensor = 0x14,
+        LuminositySensor = 0x14,
 
         DoorLock = 0x20,
         RGBLight = 0x21,

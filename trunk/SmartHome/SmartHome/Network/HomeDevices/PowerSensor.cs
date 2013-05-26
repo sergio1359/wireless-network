@@ -10,7 +10,7 @@ namespace SmartHome.Network.HomeDevices
     {
         public const int DEFAULT_SENSIBILITY = 29; //AQUI PONEMOS ALGUNA REGLA ¿800 kw/h blabalbalbla?
 
-        public int Sensibility { set; get; }
+        public byte Sensibility { set; get; }
         public int Consumption { set; get; }
 
         public override void RefreshState()

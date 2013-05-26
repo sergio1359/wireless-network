@@ -32,32 +32,14 @@ namespace SmartHome.Memory
 
             result.Add((byte)time.Day);
             result.Add((byte)time.Month);
-            result.AddRange(time.Year.Uint16ToByte(littleEndian));
+            result.AddRange(((ushort)time.Year).UshortToByte(littleEndian));
 
             return result.ToArray();
         }
 
-        public static byte[] Uint16ToByte(this UInt16 b, bool litteEndian)
+        public static byte[] UshortToByte(this ushort b, bool litteEndian)
         {
-            Byte[] result = new Byte[2];
-
-            if (litteEndian)
-            {
-                result[0] = (byte)b;
-                result[1] = (byte)(b >> 8);
-            }
-            else
-            {
-                result[0] = (byte)(b >> 8);
-                result[1] = (byte)b;
-            }
-
-            return result;
-        }
-
-        public static byte[] Uint16ToByte(this int b, bool litteEndian)
-        {
-            Byte[] result = new Byte[2];
+            byte[] result = new Byte[2];
 
             if (litteEndian)
             {
@@ -171,17 +153,26 @@ namespace SmartHome.Memory
                 ctd = (byte)(ctd | ((byte)p.ChangeTypeD) << (i * 2));
             }
 
-            result[3] = ctd.Uint16ToByte(node.GetBaseConfiguration().LittleEndian)[0];
-            result[4] = ctd.Uint16ToByte(node.GetBaseConfiguration().LittleEndian)[1];
+            result[3] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
+            result[4] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
 
             return result;
         }
 
-        private byte[] ToBinaryEvent(ActionAbstract act, bool littleEndian)
+        private byte[] ToBinaryOperation(ActionAbstract act, bool littleEndian)
         {
             List<byte> result = new List<byte>();
 
-            result.AddRange(act.ToHomeDevice.Connector.Node.Address.Uint16ToByte(littleEndian));
+            if (act.ToHomeDevice.Connector != null && act.ToHomeDevice.Connector.Node.Address == node.Address)
+            {
+                result.Add(0x00);
+                result.Add(0x00);
+            }
+            else
+            {
+                result.AddRange(act.ToHomeDevice.Connector.Node.Address.UshortToByte(littleEndian));
+            }
+
             result.Add((byte)act.OPCode);
             result.AddRange(act.Args);
 
@@ -193,7 +184,7 @@ namespace SmartHome.Memory
             UInt16 size = 0;
 
             foreach (SmartHome.Network.Action act in actions)
-                size += (UInt16)ToBinaryEvent(act, true).Length;
+                size += (UInt16)ToBinaryOperation(act, true).Length;
 
             return size;
         }

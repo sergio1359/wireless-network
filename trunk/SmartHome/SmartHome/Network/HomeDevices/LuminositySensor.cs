@@ -8,7 +8,7 @@ namespace SmartHome.Network.HomeDevices
 {
     class LuminositySensor: HomeDevice
     {
-        public int Sensibility { get; set; }
+        public byte Sensibility { get; set; }
 
         public override void RefreshState()
         {

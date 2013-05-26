@@ -23,42 +23,59 @@ namespace SmartHome.Network
 
     public class Action : ActionAbstract
     {
-        
+        public List<TimeRestriction> TimeRestrictions { get; set; }
         public override string ToString()
         {
-            return base.ToString();
+            throw new NotImplementedException();
         }
     }
 
     public class TimeAction : ActionAbstract
     {
+        public byte MascWeekDays { get; set; }
         public DateTime Time;
+
 
         public override string ToString()
         {
-            return base.ToString();
+            throw new NotImplementedException();
         }
     }
 
     public class TimeRestriction
     {
+        public byte MaskWeekDays { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public TimeRestriction(int fromHour, int fromMin, int FromSeg, int ToHour, int ToMin, int ToSeg)
+        public enum WeekDays : byte
         {
+            Monday = 0x01,
+            Tuesday = 0x02,
+            Wednesday = 0x04,
+            Thursday = 0x08,
+            Friday = 0x10,
+            Saturday = 0x20,
+            Sunday = 0x40,
+        }
+
+        public TimeRestriction(byte maskWeekDays, int fromHour, int fromMin, int FromSeg, int ToHour, int ToMin, int ToSeg)
+        {
+            MaskWeekDays = maskWeekDays;
             Start = new DateTime(1, 1, 1, fromHour, fromMin, FromSeg);
             End = new DateTime(1, 1, 1, ToHour, ToMin, ToSeg);
         }
 
-        public TimeRestriction(int fromHour, int fromMin, int ToHour, int ToMin)
+        public TimeRestriction(byte maskWeekDays, int fromHour, int fromMin, int ToHour, int ToMin)
         {
+            MaskWeekDays = maskWeekDays;
             Start = new DateTime(1, 1, 1, fromHour, fromMin, 0);
             End = new DateTime(1, 1, 1, ToHour, ToMin, 0);
         }
 
-        public TimeRestriction(DateTime fromTime, DateTime toTime)
+        public TimeRestriction(byte maskWeekDays, DateTime fromTime, DateTime toTime)
         {
+            MaskWeekDays = maskWeekDays;
             Start = fromTime;
             End = toTime;
         }
