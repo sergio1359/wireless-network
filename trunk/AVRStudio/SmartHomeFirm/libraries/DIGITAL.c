@@ -34,7 +34,7 @@ void HAL_GPIO_PORT_toggle(uint8_t* portPtr, uint8_t mask)
 
 void HAL_GPIO_PORT_in(uint8_t* portPtr, uint8_t mask)
 {
-	PORT_REG(portPtr) &= ~mask;
+	DDR_REG(portPtr) &= ~mask;
 	PORT_REG(portPtr) &= ~mask;
 }
 

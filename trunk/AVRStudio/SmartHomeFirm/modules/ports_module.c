@@ -17,6 +17,22 @@ bool proccessDigitalPortAction(uint8_t dir, uint8_t mask, bool read, uint8_t val
 void portModule_Init(void)
 {
 	//TODO: Read and set configuration
+	PORT_CONFIG_t* configPtr = &runningConfiguration.topConfiguration.portConfig_PA;
+	
+	uint8_t* portPtr;
+	
+	for(uint8_t port=0; port<NUM_PORTS; port++)
+	{
+		portPtr = PORT_FROM_PINADDRESS(port<<3);
+		
+		HAL_GPIO_PORT_out(portPtr,configPtr->maskIO);
+		HAL_GPIO_PORT_in(portPtr,~(configPtr->maskIO));
+		
+		HAL_GPIO_PORT_set(portPtr,(configPtr->defaultValuesD & ~(configPtr->maskIO)));
+		HAL_GPIO_PORT_clr(portPtr,(~(configPtr->defaultValuesD) & ~(configPtr->maskIO)));
+		
+		configPtr+= sizeof(PORT_CONFIG_t);			
+	}
 }
 
 void portModule_TaskHandler(void)

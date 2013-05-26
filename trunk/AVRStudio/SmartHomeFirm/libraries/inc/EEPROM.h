@@ -14,8 +14,8 @@
 #include "config.h"
 
 
-#define OPERATION_INDEX_ADDR							runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
-#define OPERATION_LIST_ADDR								runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
+#define OPERATION_INDEX_START_ADDR							runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
+#define OPERATION_LIST_START_ADDR								runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
 
 #define OPERATION_RESTRIC_LIST_START_ADDRESS			runningConfiguration.topConfiguration.dinamicIndex.portOperationTimeRestrictionList
 #define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.topConfiguration.dinamicIndex.timeOperationList
@@ -23,7 +23,8 @@
 #define MODULE_PRESENCE_CONFIG_ADDRESS					runningConfiguration.topConfiguration.dinamicIndex.configModule_Presence
 #define FREE_REGION_START_ADDRESS						runningConfiguration.topConfiguration.dinamicIndex.freeRegion
 
-#define OPERATION_INDEX_END_ADDR						OPERATION_LIST_ADDR						//Renowned for greater understanding
+#define OPERATION_INDEX_END_ADDR						OPERATION_LIST_START_ADDR						//Renowned for greater understanding
+#define OPERATION_LIST_END_ADDR							OPERATION_RESTRIC_LIST_START_ADDRESS
 #define OPERATION_RESTRIC_LIST_END_ADDRESS				TIME_OPERATION_LIST_START_ADDRESS				
 #define TIME_OPERATION_LIST_END_ADDRESS					MODULE_RGB_CONFIG_ADDRESS		
 
@@ -57,7 +58,7 @@ typedef struct{
 }NETWORK_CONFIG_t;
 
 typedef struct{
-	unsigned pin0_ChangeType : 2;	//Two for pin	10-> risingEdge		01-> fallingEdge	11->both
+	unsigned pin0_ChangeType : 2;	//Two for pin 00-> noEdge	10-> risingEdge		01-> fallingEdge	11->both
 	unsigned pin1_ChangeType : 2;
 	unsigned pin2_ChangeType : 2;
 	unsigned pin3_ChangeType : 2;
