@@ -37,5 +37,10 @@ namespace SmartHome.Products
             Port = (char)(port + 'A');
             Pin = pin;
         }
+
+        public byte GetPinPortNumber()
+        {
+            return (byte)(Port * 8 + Pin);
+        }
     }
 }

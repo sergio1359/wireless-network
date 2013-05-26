@@ -13,5 +13,6 @@ namespace SmartHome.Network
         PWMTTL,
         Dimmer,
         IOLogic,
+        RGB,
     }
 }

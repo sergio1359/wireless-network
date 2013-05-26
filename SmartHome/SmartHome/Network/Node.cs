@@ -11,8 +11,10 @@ namespace SmartHome.Network
     public class Node
     {
         public int ID { get; set; }
+        public uint Mac { get; set; }
         public string Name { get; set; }
-        public UInt16 Address { get; set; }
+        public byte NetworkRetries = 3;
+        public ushort Address { get; set; }
         public List<Connector> Connectors { get; set; }
         public Position Position { get; set; }
         public BaseType Base { get; set; }

@@ -107,7 +107,7 @@ namespace SmartHome.Products
                     break;
                 case HomeDeviceType.HumiditySensor:
                     break;
-                case HomeDeviceType.LightSensor:
+                case HomeDeviceType.LuminositySensor:
                     break;
                 case HomeDeviceType.DoorLock:
                     configuration.Output = true;
