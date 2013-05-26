@@ -134,11 +134,16 @@ void PortMonitor_TaskHandler()
 
 void launchOperations(uint8_t pinAddress)
 {
-	uint16_t pin_operation_list_start_addr = runningConfiguration.raw[OPERATION_INDEX_ADDR + (pinAddress * sizeof(uint16_t))];
-	uint16_t pin_operation_list_end_addr = runningConfiguration.raw[OPERATION_INDEX_ADDR + (pinAddress * sizeof(uint16_t)) + sizeof(uint16_t)];
+	uint16_t pin_operation_list_start_addr = runningConfiguration.raw[OPERATION_INDEX_START_ADDR + (pinAddress * sizeof(uint16_t))];
+	uint16_t pin_operation_list_end_addr;
 	
-	if(pin_operation_list_start_addr - pin_operation_list_end_addr == 0) //Operations
-	return;
+	if(pinAddress == (NUM_PINS - 1)) //Last pin
+		pin_operation_list_end_addr = OPERATION_LIST_END_ADDR;
+	else
+		pin_operation_list_end_addr = runningConfiguration.raw[OPERATION_INDEX_START_ADDR + (pinAddress * sizeof(uint16_t)) + sizeof(uint16_t)];
+	
+	if(pin_operation_list_end_addr - pin_operation_list_start_addr == 0) //Operations
+		return;
 	
 	uint16_t res_ptr;
 	OPERATION_RESTRICTION_t* restric;
