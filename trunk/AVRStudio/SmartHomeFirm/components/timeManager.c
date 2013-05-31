@@ -36,7 +36,7 @@ int8_t TIME_CompareTimes(TIME_t time1, TIME_t time2)
 
 void TIME_CheckTimeOperation()
 {
-	if(validDateTime)
+	if(validDateTime && (TIME_OPERATION_LIST_START_ADDRESS != TIME_OPERATION_LIST_END_ADDRESS))
 	{
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{

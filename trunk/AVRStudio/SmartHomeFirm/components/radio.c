@@ -12,13 +12,16 @@
 #include "radio.h"
 #include "modules.h"
 
+
+#include "leds.h"
+
 #define REFERENCES_BUFFER_SIZE 64
 #define COPIES_BUFFER_SIZE 256
 
 #define REFERENCES_BUFFER_SIZE_MASK REFERENCES_BUFFER_SIZE-1
 #define COPIES_BUFFER_SIZE_MASK COPIES_BUFFER_SIZE-1
 
-#define RETRIES_LIMIT 5
+#define DEFAULT_RETRIES_LIMIT 6
 #define TIME_BW_RETRIES 500 //milliseconds
  
 /* Circular buffer object */
@@ -45,14 +48,29 @@ void Radio_Init()
 	retriesTimer.handler = retriesTimerHandler;
 	
 	//TODO: Initialize network
-	NWK_SetAddr(APP_ADDR);
-	NWK_SetPanId(APP_PANID);
-	PHY_SetChannel(APP_CHANNEL);
+	if(validConfiguration)
+	{
+		NWK_SetAddr(runningConfiguration.topConfiguration.networkConfig.deviceAddress);
+		NWK_SetPanId(runningConfiguration.topConfiguration.networkConfig.panId);
+		PHY_SetChannel(runningConfiguration.topConfiguration.networkConfig.channel);
+		
+		#ifdef NWK_ENABLE_SECURITY
+		NWK_SetSecurityKey(runningConfiguration.topConfiguration.networkConfig.securityKey);
+		#endif
+	}else
+	{
+		NWK_SetAddr(APP_ADDR);
+		NWK_SetPanId(APP_PANID);
+		PHY_SetChannel(APP_CHANNEL);
+		
+		runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit = DEFAULT_RETRIES_LIMIT;
+		
+		#ifdef NWK_ENABLE_SECURITY
+		NWK_SetSecurityKey((uint8_t *)APP_SECURITY_KEY);
+		#endif
+	}
+	
 	PHY_SetRxState(true);
-
-	#ifdef NWK_ENABLE_SECURITY
-	NWK_SetSecurityKey((uint8_t *)APP_SECURITY_KEY);
-	#endif
 
 	NWK_OpenEndpoint(APP_ENDPOINT, rfDataInd);
 	
@@ -111,8 +129,9 @@ inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int
 *****************************************************************************/
 void sendNextMessage()
 {
-	while(currentState != RF_STATE_READY_TO_SEND)
-	;
+	//TODO: Avoid this situation
+	if(currentState != RF_STATE_READY_TO_SEND)
+		return;
 	
 	OPERATION_HEADER_t* currentOP;
 	uint8_t length;
@@ -125,7 +144,7 @@ void sendNextMessage()
 		referencesMessages_Buffer.start &= REFERENCES_BUFFER_SIZE_MASK;
 	}else if(copiesMessages_Buffer.start != copiesMessages_Buffer.end)
 	{
-		currentOP = (OPERATION_HEADER_t*)copiesMessages_Buffer.buffer[copiesMessages_Buffer.start];
+		currentOP = (OPERATION_HEADER_t*)&copiesMessages_Buffer.buffer[copiesMessages_Buffer.start];
 		length = sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&currentOP->opCode);
 		
 		copiesMessages_Buffer.start += length;
@@ -152,20 +171,19 @@ void sendNextMessage()
 *****************************************************************************/
 static void rfDataConf(NWK_DataReq_t *req)
 {
-//	ledOff(LED_DATA);
+	//ledOff(LED_DATA);
 
 	if (NWK_SUCCESS_STATUS == req->status)
 	{
 		failRetries = 0;
 		currentState = RF_STATE_READY_TO_SEND;
-		
 		sendNextMessage();
 	}
 	else //NETWORK_PROBLEM
 	{
 		failRetries++;
-		
-		if(failRetries == RETRIES_LIMIT)
+		ledToggle(0);
+		if(failRetries == runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit)
 		{
 			failRetries = 0;
 			
@@ -181,6 +199,7 @@ static void rfDataConf(NWK_DataReq_t *req)
 		}
 		
 	}//TODO: Check and log for non expected network status
+	
 }
 
 /*****************************************************************************
@@ -197,4 +216,38 @@ static void retriesTimerHandler(SYS_Timer_t *timer)
 static void rfDataInd(NWK_DataInd_t *ind)
 {
 	//TODO: PROCCESS DATA ARRIVED
+	//Notificaciones???
+	OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)ind->data;
+	
+	/* TESTING REGION */
+	//For testing purposes just send throw UART port
+	HAL_UartPrint("OPERATION RECEIVED >> FROM:");
+	HAL_UartWriteNumberHEX(operation_header->sourceAddress);
+	HAL_UartPrint("\t TO:");
+	HAL_UartWriteNumberHEX(operation_header->destinationAddress);
+	HAL_UartPrint("\t CODE:");
+	HAL_UartWriteNumberHEX(operation_header->opCode);
+	HAL_UartPrint("\t ARGS:");
+	
+	uint8_t length = getCommandArgsLength(&operation_header->opCode);
+	
+	for (uint8_t i = 0; i < length; i++)
+	{
+		HAL_UartWriteNumberHEX(*((uint8_t*)operation_header + sizeof(OPERATION_HEADER_t) + i));
+		HAL_UartWriteByte(' ');
+	}
+	
+	HAL_UartPrint("\r\n");
+	if(operation_header->opCode == EXTENSION_OPCODE)
+	return;
+	/* END OF TESTING REGION */
+	
+	//TODO: Check with internal address instead of configuration address...
+	if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress) //MINE (EXTERNAL)
+	{
+		handleCommand(operation_header);
+	}else
+	{
+		//TODO: Send or log ERROR (OPERATION_DEST_ADDR_ERROR)		
+	}		
 }

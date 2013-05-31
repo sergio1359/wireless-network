@@ -29,14 +29,14 @@ typedef struct
 	uint8_t dir;
 	uint8_t mask;
 	uint8_t value;
-	TIME_t time;
+	uint8_t seconds;
 }DIGITAL_WRITE_MESSAGE_t;
 
 typedef struct
 {
 	uint8_t dir;
 	uint8_t mask;
-	TIME_t time;
+	uint8_t seconds;
 }DIGITAL_SWITCH_MESSAGE_t;
 
 typedef struct
@@ -57,7 +57,7 @@ typedef struct
 {
 	uint8_t dir;
 	uint8_t value;
-	TIME_t time;
+	uint8_t seconds;
 }ANALOG_WRITE_MESSAGE_t;
 
 typedef struct
@@ -124,6 +124,21 @@ typedef struct
 {
 	TIME_t time;
 }TIME_READ_RESPONSE_MESSAGE_t;
+
+//FECHAS
+typedef struct
+{
+	DATE_t time;
+}DATE_WRITE_MESSAGE_t;
+
+typedef struct
+{
+}DATE_READ_MESSAGE_t;
+
+typedef struct
+{
+	DATE_t time;
+}DATE_READ_RESPONSE_MESSAGE_t;
 
 void portModule_Init(void);
 void portModule_TaskHandler(void);

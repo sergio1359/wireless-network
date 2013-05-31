@@ -64,7 +64,7 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
 	sendFlag = true;
 		
-	ledToggle(0);
+	//ledToggle(0);
 	(void)timer;
 }
 #endif
@@ -90,20 +90,20 @@ static void appSendData(void)
 	HAL_UartPrint("\r\n");
 	
 	DISPLAY_Clear();
-	DISPLAY_SetCursor(0,0);
+	//DISPLAY_SetCursor(0,0);
 	DISPLAY_WriteString("DATE: ");
 	DISPLAY_WriteNumber(currentDate.day,2);
-	DISPLAY_WriteByte('/');
+	/*DISPLAY_WriteByte('/');
 	DISPLAY_WriteNumber(currentDate.month,2);
 	DISPLAY_WriteByte('/');
-	DISPLAY_WriteNumber(currentDate.year,4);
-	DISPLAY_SetCursor(0,1);
+	DISPLAY_WriteNumber(currentDate.year,4);*/
+	/*DISPLAY_SetCursor(0,1);
 	DISPLAY_WriteString("TIME: ");
 	DISPLAY_WriteNumber(currentTime.hour,2);
 	DISPLAY_WriteByte(':');
 	DISPLAY_WriteNumber(currentTime.minute,2);
 	DISPLAY_WriteByte(':');
-	DISPLAY_WriteNumber(currentTime.second,2);
+	DISPLAY_WriteNumber(currentTime.second,2);*/
 
 	
 	ADC_Reference(REF_DEFAULT);
@@ -114,6 +114,8 @@ static void appSendData(void)
 	HAL_UartPrint("ADC4: ");
 	HAL_UartWriteNumberDEC(adcVal);
 	HAL_UartPrint("\r\n");
+	
+	//sendData(serialNumber, SERIAL_NUMBER_SIZE);
 	
 	temp = DHT11_ReadTemperature(PINADDRESS('D', 0));
 	if(temp != DHT11_ERROR)
@@ -192,15 +194,15 @@ int main(void)
 	
 	EEPROM_Init();
 	
-	TIME_t debugTime;
-	debugTime.hour = 11;
-	debugTime.minute = 11;
-	debugTime.second = 00;
-	DATE_t debugDate;
-	debugDate.day = 25;
-	debugDate.month = 5;
-	debugDate.year = 2013;
-	TIME_Validate(&debugTime);
+	currentTime.hour = 00;
+	currentTime.minute = 00;
+	currentTime.second = 00;
+	
+	currentDate.weekDay.flags.Friday = 1;
+	currentDate.day = 31;
+	currentDate.month = 5;
+	currentDate.year = 2013;
+	TIME_Validate(&currentTime, &currentDate);
 	
 	if(DS2401_Init())
 	{

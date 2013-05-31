@@ -34,8 +34,8 @@ void PortMonitor_TaskHandler()
 			case 2: val = HAL_GPIO_PORTC_read(); config = runningConfiguration.topConfiguration.portConfig_PC; break;
 			case 3: val = HAL_GPIO_PORTD_read(); config = runningConfiguration.topConfiguration.portConfig_PD; break;
 			case 4: val = HAL_GPIO_PORTE_read(); config = runningConfiguration.topConfiguration.portConfig_PE; break;
-			//case 5: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
-			case 5: val = HAL_GPIO_PORTF_read(); config.maskAD = 0; break;
+			case 5: val = HAL_GPIO_PORTF_read(); config = runningConfiguration.topConfiguration.portConfig_PF; break;
+			//case 5: val = HAL_GPIO_PORTF_read(); config.maskAD = 0; break;
 			case 6: val = HAL_GPIO_PORTG_read(); config = runningConfiguration.topConfiguration.portConfig_PG; break;
 		}
 
@@ -47,29 +47,35 @@ void PortMonitor_TaskHandler()
 			
 			if(((~config.maskIO)>>pin) & 0x01) //Input
 			{
-				if((config.maskAD>>pin) & 0x01 && (config.changeTypeD>>(pin<<1)) != NO_EDGE) //Digital AND ChangeType != NONE
+				if((config.maskAD>>pin) & 0x01) //Digital 
 				{
-					//Debouncer
-					debounceBuffer[debounce_prt] = debounceBuffer[debounce_prt]<<1 | ((val>>pin) & 0x01);
-					if(debounceBuffer[debounce_prt] == 0xFF)
+					if ((config.changeTypeD>>(pin<<1)) != NO_EDGE) //AND ChangeType != NONE
 					{
-						val |=  (1 << pin);	//Set pin value
+						//Debouncer
+						debounceBuffer[debounce_prt] = debounceBuffer[debounce_prt]<<1 | ((val>>pin) & 0x01);
+						if(debounceBuffer[debounce_prt] == 0xFF)
+						{
+							val |=  (1 << pin);	//Set pin value
+						}else
+						{
+							val &= ~(1 << pin);	//Clear pin value
+						}
+						debounce_prt++;
+					
+						if( ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) & (port == 3 & pin == 7))
+							HAL_UartPrint("BUTTON PRESSED\r\n");
+					
+						//Check for valid changes
+						switch((config.changeTypeD>>(pin<<1)))
+						{
+							case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) ); break;
+							case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &  ((val>>pin) & 0x01) ); break;
+							case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) !=  ((val>>pin) & 0x01) ); break;
+							//case NO_EDGE :		changeOcurred = 0; break;
+						}
 					}else
 					{
-						val &= ~(1 << pin);	//Clear pin value
-					}
-					debounce_prt++;
-					
-					if( ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) & (port == 3 & pin == 7))
-						HAL_UartPrint("BUTTON PRESSED\r\n");
-					
-					//Check for valid changes
-					switch((config.changeTypeD>>(pin<<1)))
-					{
-						case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) && ~((val>>pin) & 0x01) ); break;
-						case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &&  ((val>>pin) & 0x01) ); break;
-						case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) !=  ((val>>pin) & 0x01) ); break;
-						case NO_EDGE :		changeOcurred = 0; break;
+						changeOcurred = 0;
 					}
 				}else //Analog
 				{
@@ -121,7 +127,7 @@ void PortMonitor_TaskHandler()
 			//Launch Operations if exits
 			if(!firstTime && changeOcurred)
 			{
-				//launchOperations((port*8) + pin);
+				launchOperations((port*8) + pin);
 			}
 		}
 		
@@ -146,7 +152,7 @@ void launchOperations(uint8_t pinAddress)
 		return;
 	
 	uint16_t res_ptr;
-	OPERATION_RESTRICTION_t* restric;
+	OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_RESTRIC_LIST_END_ADDRESS];
 	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
 	for(res_ptr = OPERATION_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_RESTRICTION_t))
 	{
@@ -165,7 +171,7 @@ void launchOperations(uint8_t pinAddress)
 		while( (restric->operationAddress == operation_ptr) && (res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current operation? && Restrictions operations available
 		{
 			restriction_passed = ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
-			restriction_passed &= (currentDate.weekDay.raw & restric->weekDays.raw != 0); //Day of the week
+			restriction_passed &= ((currentDate.weekDay.raw & restric->weekDays.raw) != 0); //Day of the week
 			res_ptr += sizeof(OPERATION_RESTRICTION_t);
 			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[res_ptr]; //Next restriction
 		}
@@ -178,49 +184,3 @@ void launchOperations(uint8_t pinAddress)
 		operation_ptr += sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode);
 	}
 }
-
-/*
-void launchOperations(uint8_t pinAddress)
-{
-	uint16_t pin_operation_list_start_addr_rel = runningConfiguration.raw[OPERATION_TABLE_ADDR + (pinAddress * 2)]; //Operation address relative to the end of the operation table
-	uint16_t pin_operation_list_end_addr_rel = runningConfiguration.raw[OPERATION_TABLE_ADDR + (pinAddress * 2) + 2];
-	
-	if(pin_operation_list_start_addr_rel - pin_operation_list_end_addr_rel == 0) //Operations
-	return;
-	
-	uint16_t res_ptr;
-	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
-	for(res_ptr = OPERATION_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_RESTRICTION_t))
-	{
-		OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr];
-		
-		if(restric->operationAddress >= pin_operation_list_start_addr_rel) break;
-	}
-	
-	//Iterate the list of operations for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
-	for(uint16_t operation_ptr=pin_operation_list_start_addr_rel; operation_ptr < pin_operation_list_end_addr_rel;)
-	{
-		OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr];
-		OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + operation_ptr];//DestAddress AND OP_CODE
-		
-		uint8_t args_length = getCommandArgsLenght(&operation_header->opCode);
-		
-		_Bool restriction_passed = (restric->operationAddress != operation_ptr);
-		
-		while( (restric->operationAddress == operation_ptr) && (operation_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS) ) //Restriction for the current operation? && Restrictions operations available
-		{
-			restriction_passed |= ( (compareTimes(restric->start, currentTime) <= 0) && (compareTimes(restric->end, currentTime) >= 0) ); //In time
-			res_ptr += sizeof(OPERATION_RESTRICTION_t);
-			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_TABLE_END_ADDR + res_ptr]; //Next restriction
-		}
-		
-		
-		if( restriction_passed ) //If all restrictions are met
-		{
-			OM_ProccessOperation(operation_header, false);
-		}
-		
-		operation_ptr += args_length + sizeof(OPERATION_HEADER_t);
-	}
-}
-*/

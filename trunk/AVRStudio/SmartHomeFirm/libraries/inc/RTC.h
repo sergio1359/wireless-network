@@ -21,8 +21,7 @@ typedef struct{
 	unsigned Reserved : 1; //MSB
 }WEEKDAYS_FLAG_t;
 
-typedef union
-{
+typedef union{
 	WEEKDAYS_FLAG_t flags;
 	uint8_t raw;
 }WEEKDAY_t;	

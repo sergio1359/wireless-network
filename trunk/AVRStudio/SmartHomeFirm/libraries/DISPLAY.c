@@ -60,13 +60,13 @@ void DISPLAY_Init(uint16_t EE_PinAddress, uint16_t RS_PinAddress, uint16_t D4_Pi
 	_delay_ms(5);
 	
 	writeNibbleToLCD(COMMAND_REGISTER, 0x03);
-	_delay_ms(1);
+	_delay_ms(5);
 	
 	writeNibbleToLCD(COMMAND_REGISTER, 0x02);
 	
 	//	Function set
 	writeByteToLCD(COMMAND_REGISTER, 0x28);
-	_delay_ms(4);
+	_delay_ms(5);
 	
 	//	Turn display off
 	writeByteToLCD(COMMAND_REGISTER, 0x08);
@@ -201,12 +201,12 @@ void writeByteToLCD(unsigned char selectedRegister, unsigned char byte)
 	{	
 		if(position == 16)
 		{
-			DISPLAY_SetCursor(0,1);
+			//DISPLAY_SetCursor(0,1);
 			_delay_ms(2);
 		}else if(position == 32)
 		{
 			position = 0;
-			DISPLAY_SetCursor(0,0);
+			//DISPLAY_SetCursor(0,0);
 			_delay_ms(2);
 		}
 		

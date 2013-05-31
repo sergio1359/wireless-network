@@ -12,7 +12,9 @@ void OM_ProccessOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
 {
 	/* TESTING REGION */
 	//For testing purposes just send throw UART port
-	HAL_UartPrint("PROCESSIG OPERATION >> TO:");
+	HAL_UartPrint("PROCESSING OPERATION >> FROM:");
+	HAL_UartWriteNumberHEX(operation_header->sourceAddress);
+	HAL_UartPrint("\t TO:");
 	HAL_UartWriteNumberHEX(operation_header->destinationAddress);
 	HAL_UartPrint("\t CODE:");
 	HAL_UartWriteNumberHEX(operation_header->opCode);
