@@ -117,7 +117,8 @@ void HAL_UartBytesReceived(uint16_t bytes)
 		{
 			if(index < RX_BUFFER_SIZE)
 			{
-				rxBuffer[index++] = byte;
+				*((uint8_t*)rxBuffer+index) = byte;
+				index++;
 			}				
 			else
 			{
@@ -127,7 +128,7 @@ void HAL_UartBytesReceived(uint16_t bytes)
 	}
 }
 
-static void sendData(uint8_t *data, uint8_t size)
+void sendData(uint8_t *data, uint8_t size)
 {
 	uint8_t cs = 0;
 

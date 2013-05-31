@@ -44,7 +44,7 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == DigitalWrite)
 	{
-		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header->opCode + 1);
+		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header + 1);
 		//TODO: Handle the time param
 		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, operation_header->sourceAddress))
 		{
@@ -52,7 +52,7 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 		}
 	}else if(operation_header->opCode == DigitalSwitch)
 	{
-		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header->opCode + 1);
+		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header + 1);
 		//TODO: Handle the time param
 		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  ~lastValuesD[msg->dir],  operation_header->sourceAddress))
 		{
@@ -60,7 +60,7 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 		}
 	}else if(operation_header->opCode == DigitalRead)
 	{
-		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header->opCode + 1);
+		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header + 1);
 		if(!proccessDigitalPortAction(msg->dir, 0, true,  0,  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
@@ -72,7 +72,7 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == AnalogWrite)
 	{
-		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header->opCode + 1);
+		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header + 1);
 		//TODO: To consider the time param
 		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value,  operation_header->sourceAddress))
 		{
@@ -80,7 +80,7 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 		}
 	}else if(operation_header->opCode == AnalogRead)
 	{
-		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header->opCode + 1);
+		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header + 1);
 		//TODO: To consider the time param
 		if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir],  operation_header->sourceAddress))
 		{

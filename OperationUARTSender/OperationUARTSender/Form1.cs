@@ -94,7 +94,7 @@ namespace OperationUARTSender
             }
             else if (sender == button5)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0xFF, Args = new byte[] { 0x12, 0x34 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
             }
             else if (sender == button6)
             {
@@ -157,8 +157,8 @@ namespace OperationUARTSender
 			        }				
 			        else
 			        {
-				        serialState = SerialReceiverState.USART_RECEIVER_ERROR_RX_STATE;
-                        listBox1.Items.Add("TRAMA DEFECTUOSA");
+                        serialState = SerialReceiverState.USART_RECEIVER_IDLE_RX_STATE;
+                        PrintMessage("TRAMA DEFECTUOSA");
 			        }				
 			        break;
 
@@ -170,8 +170,8 @@ namespace OperationUARTSender
                     }
                     else
                     {
-                        serialState = SerialReceiverState.USART_RECEIVER_ERROR_RX_STATE;
-                        listBox1.Items.Add("CHECKSUM INCORRECTO");
+                        serialState = SerialReceiverState.USART_RECEIVER_IDLE_RX_STATE;
+                        PrintMessage("CHECKSUM INCORRECTO");
                     }	
                     break;
 			
@@ -220,15 +220,31 @@ namespace OperationUARTSender
             serial.Write(frame.ToArray(), 0, frame.Count);
         }
 
+        void PrintMessage(string message)
+        {
+            this.BeginInvoke((Action)(() =>
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("[" + DateTime.Now.ToLongTimeString() + "]   ->   ");
+                sb.Append(message);
+                listBox1.Items.Add(sb.ToString());
+                listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            }));
+        }
+
         void PrintOperation(byte[] operation)
         {
-            StringBuilder sb = new StringBuilder(operation.Length * 2);
-            sb.Append("[" + DateTime.Now.ToLongTimeString() + "]   ->   ");
-            foreach (byte b in operation)
+            this.BeginInvoke((Action)(() =>
             {
-                sb.AppendFormat("0x{0:X2} ", b);
-            }
-            listBox1.Items.Add(sb.ToString());
+                StringBuilder sb = new StringBuilder(operation.Length * 2);
+                sb.Append("[" + DateTime.Now.ToLongTimeString() + "]   ->   ");
+                foreach (byte b in operation)
+                {
+                    sb.AppendFormat("0x{0:X2} ", b);
+                }
+                listBox1.Items.Add(sb.ToString());
+                listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            }));
         }
     }
 }

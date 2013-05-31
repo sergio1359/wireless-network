@@ -26,4 +26,6 @@ typedef enum _USARTReceiverState_t
   USART_RECEIVER_ERROR_RX_STATE
 } UARTReceiverState_t;
 
+void sendData(uint8_t *data, uint8_t size);
+
 #endif /* UARTMANAGER_H_ */

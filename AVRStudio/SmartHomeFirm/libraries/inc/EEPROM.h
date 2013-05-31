@@ -14,8 +14,8 @@
 #include "config.h"
 
 
-#define OPERATION_INDEX_START_ADDR							runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
-#define OPERATION_LIST_START_ADDR								runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
+#define OPERATION_INDEX_START_ADDR						runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
+#define OPERATION_LIST_START_ADDR						runningConfiguration.topConfiguration.dinamicIndex.portOperationIndex
 
 #define OPERATION_RESTRIC_LIST_START_ADDRESS			runningConfiguration.topConfiguration.dinamicIndex.portOperationTimeRestrictionList
 #define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.topConfiguration.dinamicIndex.timeOperationList
