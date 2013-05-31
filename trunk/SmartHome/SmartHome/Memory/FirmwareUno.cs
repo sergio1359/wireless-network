@@ -16,19 +16,20 @@ namespace SmartHome.Memory
         private List<ushort> dinamicIndex;
         private byte systemFlags;
         private List<byte> tempMemory;
+        private Base baseConfiguration;
 
         public FirmwareUno(Node node, byte systemFlags)
         {
             this.node = node;
             portOperationTimeRestictionDictionary = new Dictionary<ushort, SmartHome.Network.Action>();
             this.systemFlags = systemFlags;
-
+            baseConfiguration = node.GetBaseConfiguration();
         }
 
 
         public byte[] GenerateEEPROM()
         {
-            List<Byte> tempMemory = new List<Byte>();
+            tempMemory = new List<Byte>();
 
             //Generar toda la memoria (la memoria se genera con CRC16 a "00 00")
 
@@ -84,11 +85,11 @@ namespace SmartHome.Memory
             //Calculamos el tamaño en bytes
             ushort sizeMemory = (ushort)memory.Length;
 
-            memory[1] = sizeMemory.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
-            memory[2] = sizeMemory.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
+            memory[1] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[0];
+            memory[2] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[1];
 
             //Generar el CRC
-            byte[] crc = new Crc16().ComputeChecksumBytes(memory, node.GetBaseConfiguration().LittleEndian);
+            byte[] crc = new Crc16().ComputeChecksumBytes(memory, baseConfiguration.LittleEndian);
 
             //sustituimos el valor de CRC que esta en la posicion de memoria 0x02 0x03, no hace falta contar con endianidad
             memory[3] = crc[0];
@@ -112,7 +113,7 @@ namespace SmartHome.Memory
             result.Add(0x00);
 
             //updateDate
-            result.AddRange(DateTime.Now.ToBinaryDate(node.GetBaseConfiguration().LittleEndian));
+            result.AddRange(DateTime.Now.ToBinaryDate(baseConfiguration.LittleEndian));
 
             //updateTime
             result.AddRange(DateTime.Now.ToBinaryTime());
@@ -132,13 +133,13 @@ namespace SmartHome.Memory
             List<byte> result = new List<byte>();
 
             //deviceAddress
-            result.AddRange(node.Address.UshortToByte(node.GetBaseConfiguration().LittleEndian));
+            result.AddRange(node.Address.UshortToByte(baseConfiguration.LittleEndian));
 
             //chanel
             result.Add(NetworkManager.Security.Channel);
 
             //panID
-            result.AddRange(NetworkManager.Security.PanId.UshortToByte(node.GetBaseConfiguration().LittleEndian));
+            result.AddRange(NetworkManager.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
 
             //securityKey
             result.AddRange(NetworkManager.Security.GetSecurityKey());
@@ -150,7 +151,7 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
 
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPorts; i++)
+            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
             {
                 result.AddRange(PinIOConfig((char)(i + 'A')));
             }
@@ -162,7 +163,7 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<Byte>();
 
-            foreach (String pinPort in node.GetBaseConfiguration().PWMPorts)
+            foreach (String pinPort in baseConfiguration.PWMPorts)
             {
                 if (node.GetPinPortConfiguration(new PinPort(pinPort)) != null)
                     result.Add(node.GetPinPortConfiguration(new PinPort(pinPort)).DefaultValueA);
@@ -179,7 +180,7 @@ namespace SmartHome.Memory
             List<byte> result = new List<byte>();
             PinPortConfiguration p = null;
 
-            foreach (string pinPort in node.GetBaseConfiguration().AnalogPorts)
+            foreach (string pinPort in baseConfiguration.AnalogPorts)
             {
                 p = node.GetPinPortConfiguration(new PinPort(pinPort));
                 result.Add(p.Increment);
@@ -191,24 +192,24 @@ namespace SmartHome.Memory
 
         private void DinamicIndex(ushort startDinamicIndexMemory)
         {
+            ushort i = startDinamicIndexMemory;
             foreach (var item in dinamicIndex)
             {
-                tempMemory[startDinamicIndexMemory]     = item.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
-                tempMemory[startDinamicIndexMemory + 1] = item.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
+                tempMemory[i++] = item.UshortToByte(baseConfiguration.LittleEndian)[0];
+                tempMemory[i++] = item.UshortToByte(baseConfiguration.LittleEndian)[1];
             }
-            startDinamicIndexMemory += 2;
         }
 
         private byte[] PortOperationIndex(ushort startMemoryDir)
         {
             List<byte> result = new List<byte>();
-            ushort pointer = startMemoryDir;
+            ushort pointer = (ushort)(startMemoryDir + (baseConfiguration.NumPorts * baseConfiguration.NumPins * 2));
 
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPorts; i++)
+            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
             {
-                for (byte j = 0; j < node.GetBaseConfiguration().NumPins; j++)
+                for (byte j = 0; j < baseConfiguration.NumPins; j++)
                 {
-                    result.AddRange(pointer.UshortToByte(node.GetBaseConfiguration().LittleEndian));
+                    result.AddRange(pointer.UshortToByte(baseConfiguration.LittleEndian));
                     if (node.GetPinPortList().Contains(new PinPort(i, j)))
                     {
                         Connector connector = node.GetConnector(new PinPort(i, j));
@@ -231,19 +232,19 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
             Connector c = null;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPorts; i++)
+            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
             {
-                for (byte j = 0; j < node.GetBaseConfiguration().NumPins; j++)
+                for (byte j = 0; j < baseConfiguration.NumPins; j++)
                 {
                     c = node.GetConnector(new PinPort(i, j));
-                    if (c != null && new PinPort(i, j) == c.GetPinPort()[0])
+                    if (c != null && new PinPort(i, j).Equals(c.GetPinPort()[0]))
                     {
                         foreach (var a in c.GetActionsConnector())
                         {
-                            if (a.TimeRestrictions.Count > 0)
+                            if (a.TimeRestrictions != null && a.TimeRestrictions.Count > 0)
                                 portOperationTimeRestictionDictionary.Add((ushort)(result.Count + startDirection), a);
 
-                            result.AddRange(ToBinaryOperation(a, node.GetBaseConfiguration().LittleEndian));
+                            result.AddRange(ToBinaryOperation(a, baseConfiguration.LittleEndian));
                         }
                     }
                 }
@@ -261,7 +262,7 @@ namespace SmartHome.Memory
 
                 foreach (TimeRestriction tr in pe.Value.TimeRestrictions)
                 {
-                    result.AddRange(pe.Key.UshortToByte(node.GetBaseConfiguration().LittleEndian));
+                    result.AddRange(pe.Key.UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(tr.MaskWeekDays);
                     result.AddRange(tr.Start.ToBinaryTime());
                     result.AddRange(tr.End.ToBinaryTime());
@@ -281,7 +282,7 @@ namespace SmartHome.Memory
             {
                 result.Add(te.MascWeekDays);
                 result.AddRange(te.Time.ToBinaryTime());
-                result.AddRange(ToBinaryOperation((ActionAbstract)te, node.GetBaseConfiguration().LittleEndian));
+                result.AddRange(ToBinaryOperation((ActionAbstract)te, baseConfiguration.LittleEndian));
             }
 
             return result.ToArray();
@@ -353,8 +354,6 @@ namespace SmartHome.Memory
             return result.ToArray();
         }
 
-        //TODO: hay que redefinir el modelo:
-        //Si todos los sensores que vamos a tener son de tipo humedad y temperatura juntos no tiene sentido definirlo como lo tenemos actualmente
         private byte[] ModuleConfigTemperatureHumidity()
         {
             List<byte> result = new List<byte>();
@@ -364,7 +363,7 @@ namespace SmartHome.Memory
             {
                 if (item.HomeDevice != null)
                 {
-                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.TemperatureSensor || item.HomeDevice.HomeDeviceType == HomeDeviceType.HumiditySensor)
+                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.TemperatureHumiditySensor)
                     {
                         result[0]++;
                         result.Add(item.GetPinPort()[0].GetPinPortNumber());

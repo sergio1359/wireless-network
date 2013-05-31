@@ -7,3 +7,5 @@ c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\Operat
 c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\GenerateResource.write.1.tlog
 c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.exe
 c:\users\victor\documents\visual studio 2010\Projects\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.pdb
+C:\Users\Rafael Gómez García\Documents\Domotics\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.exe
+C:\Users\Rafael Gómez García\Documents\Domotics\OperationUARTSender\OperationUARTSender\obj\x86\Debug\OperationUARTSender.pdb

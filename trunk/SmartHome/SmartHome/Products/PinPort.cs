@@ -42,5 +42,11 @@ namespace SmartHome.Products
         {
             return (byte)(Port * 8 + Pin);
         }
+
+        public override bool Equals(object obj)
+        {
+            var p1 = obj as PinPort;
+            return p1 != null && p1.Pin == this.Pin && p1.Port == this.Port;
+        }
     }
 }

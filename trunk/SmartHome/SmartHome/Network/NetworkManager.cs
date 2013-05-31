@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network
 {
-    public class NetworkManager
+    public static class NetworkManager
     {
-        public static Security Security { get; set; }
-        public static List<Node> Nodes { get; set; }
+        public static Security Security = new Security();
+        public static List<Node> Nodes = new List<Node>();
 
-        public static List<HomeDevice> HomeDevices {get; set;}
+        public static List<HomeDevice> HomeDevices = new List<HomeDevice>();
+
+
+        //TODO: esto es solo para el ejemplo que estamos haciendo
+        public static void GetAllEEPROMS()
+        {
+            foreach (var item in Nodes)
+            {
+                item.GetEEPROM();
+            }
+        }
     }
 }

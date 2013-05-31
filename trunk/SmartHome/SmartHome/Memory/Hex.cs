@@ -41,10 +41,10 @@ namespace SmartHome.Memory
 
             return result.ToString();
         }
-        public static void SaveBin2Hex(byte[] input)
+        public static void SaveBin2Hex(byte[] input, string fileName)
         {
             string hexstr = Hex.Bin2Hex(input);
-            File.WriteAllText("ex.hex", hexstr);
+            File.WriteAllText(fileName + ".hex", hexstr);
         }
     }
 }

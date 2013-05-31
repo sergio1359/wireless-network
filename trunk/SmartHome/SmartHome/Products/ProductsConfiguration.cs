@@ -8,35 +8,35 @@ namespace SmartHome.Products
 {
     public class ProductConfiguration
     {
-        public static Dictionary<string, List<PinPort>> GetShieldDictionary(ShieldType shieldtype)
+        public static Dictionary<string, Tuple<ConnectorType, List<PinPort>>> GetShieldDictionary(ShieldType shieldtype)
         {
-            Dictionary<string, List<PinPort>> pinPorts = new Dictionary<string, List<PinPort>>();
+            Dictionary<string, Tuple<ConnectorType, List<PinPort>>> pinPorts = new Dictionary<string, Tuple<ConnectorType, List<PinPort>>>();
             switch (shieldtype)
             {
                 case ShieldType.Example:
-                    pinPorts.Add("Digital0", new List<PinPort>() { new PinPort("A0") });
-                    pinPorts.Add("Digital1", new List<PinPort>() { new PinPort("A1") });
-                    pinPorts.Add("Analog0", new List<PinPort>() { new PinPort("F0") });
-                    pinPorts.Add("Analog1", new List<PinPort>() { new PinPort("F1") });
-                    pinPorts.Add("Analog2", new List<PinPort>() { new PinPort("F2") });
-                    pinPorts.Add("PWM", new List<PinPort>() { new PinPort("B4"), new PinPort("B7"), new PinPort("G5") });
-                    pinPorts.Add("Dimmer0", new List<PinPort>() { new PinPort("G0") });
+                    pinPorts.Add("Digital0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A0") }));
+                    pinPorts.Add("Digital1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A1") }));
+                    pinPorts.Add("Analog0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F0") }));
+                    pinPorts.Add("Analog1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F1") }));
+                    pinPorts.Add("Analog2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F2") }));
+                    pinPorts.Add("PWM", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.PWMTTL, new List<PinPort>() { new PinPort("B4"), new PinPort("B7"), new PinPort("G5") }));
+                    pinPorts.Add("Dimmer0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("G0") }));
                     break;
 
                 case ShieldType.PinPortMap:
-                    pinPorts.Add("A0", new List<PinPort>() { new PinPort("A0") });
-                    pinPorts.Add("A1", new List<PinPort>() { new PinPort("A1") });
-                    pinPorts.Add("A2", new List<PinPort>() { new PinPort("A2") });
-                    pinPorts.Add("A3", new List<PinPort>() { new PinPort("A3") });
-                    pinPorts.Add("A4", new List<PinPort>() { new PinPort("A4") });
-                    pinPorts.Add("A5", new List<PinPort>() { new PinPort("A5") });
-                    pinPorts.Add("A6", new List<PinPort>() { new PinPort("A6") });
-                    pinPorts.Add("A7", new List<PinPort>() { new PinPort("A7") });
+                    pinPorts.Add("A0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A0") }));
+                    pinPorts.Add("A1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A1") }));
+                    pinPorts.Add("A2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A2") }));
+                    pinPorts.Add("A3", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A3") }));
+                    pinPorts.Add("A4", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A4") }));
+                    pinPorts.Add("A5", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A5") }));
+                    pinPorts.Add("A6", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A6") }));
+                    pinPorts.Add("A7", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A7") }));
                     break;
 
                 case ShieldType.Debug:
-                    pinPorts.Add("Button", new List<PinPort>() { new PinPort("D7") });
-                    pinPorts.Add("Light", new List<PinPort>() { new PinPort("D6") });
+                    pinPorts.Add("Button", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("D7") }));
+                    pinPorts.Add("Light", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
                     break;
                 default:
                     break;
@@ -75,7 +75,7 @@ namespace SmartHome.Products
 
             switch (homeDeviceType)
             {
-                case HomeDeviceType.Buttom:
+                case HomeDeviceType.Button:
                     configuration.Output = false;
                     configuration.Digital = true;
                     configuration.ChangeTypeD = PinPortConfiguration.Trigger.FallingEdge;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Light: HomeDevice
+    public class Light: HomeDevice
     {
         public bool TurnOn { get; set; }
 
@@ -14,6 +14,15 @@ namespace SmartHome.Network.HomeDevices
         public void On() { }
         public void OnTime(DateTime time) { }
         public void Switch() { }
+
+        public Light(string Name)
+        {
+            base.ConnectorType = Network.ConnectorType.SwitchLOW;
+            base.HomeDeviceType = Network.HomeDeviceType.Light;
+            base.Name = Name;
+            base.Actions = new List<Action>();
+        }
+
         public override void RefreshState()
         {
             base.RefreshState();
