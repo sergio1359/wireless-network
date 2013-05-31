@@ -30,6 +30,9 @@ namespace SmartHome.Memory
 
             List<Byte> result = new List<Byte>();
 
+            string value = Enum.GetName(typeof(DayOfWeek), time.DayOfWeek);
+            result.Add((byte)Enum.Parse(typeof(SmartHome.Network.TimeRestriction.WeekDays), value));
+
             result.Add((byte)time.Day);
             result.Add((byte)time.Month);
             result.AddRange(((ushort)time.Year).UshortToByte(littleEndian));
@@ -63,7 +66,7 @@ namespace SmartHome.Memory
 
             foreach (var item in dic.Values)
             {
-                result.AddRange(item);
+                result.AddRange(item.Item2);
             }
 
             return result;
@@ -119,7 +122,7 @@ namespace SmartHome.Memory
         {
             byte[] result = new Byte[5];
             PinPortConfiguration p = null;
-            
+
             result[0] = 0x00;
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
             {
@@ -128,7 +131,7 @@ namespace SmartHome.Memory
                     result[0] = (byte)(result[0] | (0x01 << i));
             }
 
-            
+
             result[1] = 0xFF;
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Analog:0 - Digital:1 default: 1
             {
@@ -146,11 +149,11 @@ namespace SmartHome.Memory
             }
 
             //ChangetypeD None:00 Rising:10, Fall:01, Both:11
-            UInt16 ctd = 0x00; //change type digital
+            ushort ctd = 0x00; //change type digital
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
             {
                 p = node.GetPinPortConfiguration(new PinPort(port, i));
-                ctd = (byte)(ctd | ((byte)p.ChangeTypeD) << (i * 2));
+                ctd |= (ushort)((ushort)p.ChangeTypeD << (i * 2));
             }
 
             result[3] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
@@ -163,6 +166,11 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
 
+            //TODO: SourceAddress, ojo con las request (tendremos que volver aqui)
+            result.Add(0x00);
+            result.Add(0x00);
+
+            //DestinationAddress
             if (act.ToHomeDevice.Connector != null && act.ToHomeDevice.Connector.Node.Address == node.Address)
             {
                 result.Add(0x00);

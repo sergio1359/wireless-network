@@ -9,17 +9,23 @@ namespace SmartHome.Network
     public class Security
     {
         public const byte CHANNEL = 0x00;
-        public const UInt16 PANID = 0x00;
+        public const ushort PANID = 0x00;
 
         public int ID { set; get; }
         public byte Channel { set; get; }
-        public UInt16 PanId { set; get; }
+        public ushort PanId { set; get; }
         public string SecurityKey { set; get; }
 
 
         public byte[] GetSecurityKey()
         {
-            return new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            return Encoding.ASCII.GetBytes("TestSecurityKey0");
+        }
+
+        public Security()
+        {
+            Channel = CHANNEL;
+            PanId = PANID;
         }
     }
 }

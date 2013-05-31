@@ -18,7 +18,7 @@ namespace SmartHome.Network
         public byte[] Args { get; set; }
         public Boolean Enable { get; set; }
 
-        public virtual void Execute(){}
+        public virtual void Execute() { }
     }
 
     public class Action : ActionAbstract
@@ -50,13 +50,13 @@ namespace SmartHome.Network
 
         public enum WeekDays : byte
         {
-            Monday = 0x01,
-            Tuesday = 0x02,
-            Wednesday = 0x04,
+            Monday = 0x40,
+            Tuesday = 0x20,
+            Wednesday = 0x10,
             Thursday = 0x08,
-            Friday = 0x10,
-            Saturday = 0x20,
-            Sunday = 0x40,
+            Friday = 0x04,
+            Saturday = 0x2,
+            Sunday = 0x01,
         }
 
         public TimeRestriction(byte maskWeekDays, int fromHour, int fromMin, int FromSeg, int ToHour, int ToMin, int ToSeg)

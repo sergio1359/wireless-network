@@ -10,7 +10,7 @@ namespace SmartHome.Network
     {
         User = 0x00,
         Central = 0x01,
-        Buttom = 0x02,
+        Button = 0x02,
         Switch = 0x03,
         WallPlug = 0x04,
         Light = 0x05,
@@ -21,6 +21,7 @@ namespace SmartHome.Network
         TemperatureSensor = 0x12,
         HumiditySensor = 0x13,
         LuminositySensor = 0x14,
+        TemperatureHumiditySensor = 0x15, //TODO: microdocumentar
 
         DoorLock = 0x20,
         RGBLight = 0x21,

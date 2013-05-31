@@ -42,7 +42,10 @@
         <ownedLiterals>
           <enumerationLiteral
             Id="9cdc865e-5316-4cd8-90cd-6d58a42394c8"
-            name="ATMega128RFA1" />
+            name="ATMega128RFA1_V1" />
+          <enumerationLiteral
+            Id="9f5dcebe-3f32-4d1d-b6ad-48b6ec94eb9f"
+            name="ATMega128RFA1_V2" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
@@ -85,6 +88,12 @@
           <enumerationLiteral
             Id="ee7dc915-1223-4976-8d96-8191eb75cae1"
             name="Example" />
+          <enumerationLiteral
+            Id="489df5fc-29df-43da-b6af-b8350c3bc7f9"
+            name="Debug" />
+          <enumerationLiteral
+            Id="38acfc18-fffa-49e4-81f5-3a333cf14133"
+            name="MapPinPorts" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
@@ -183,7 +192,7 @@
         <ownedLiterals>
           <enumerationLiteral
             Id="a6e106cc-6adc-4365-8895-2d7b7dc47143"
-            name="Buttom" />
+            name="Button" />
           <enumerationLiteral
             Id="7504503f-7973-43c3-b24c-7b23be5d10e0"
             name="Switch" />
@@ -223,6 +232,9 @@
           <enumerationLiteral
             Id="f0cb6199-5481-45b6-9530-1260d754a20f"
             name="Light" />
+          <enumerationLiteral
+            Id="9c13969a-6664-4b96-a9dd-50bf9d8e9f87"
+            name="TemperatureHumiditySensor" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

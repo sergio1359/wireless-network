@@ -51,6 +51,7 @@
     <Compile Include="Network\HomeDevices\PowerSensor.cs" />
     <Compile Include="Network\HomeDevices\PresenceSensor.cs" />
     <Compile Include="Network\HomeDevices\RGBLight.cs" />
+    <Compile Include="Network\HomeDevices\TemperatureHumiditySensor.cs" />
     <Compile Include="Network\HomeDevices\TemperatureSensor.cs" />
     <Compile Include="Plugins\PluginState.cs" />
     <Compile Include="Network\ShieldType.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="Messages\ToNetwork.cs" />
     <Compile Include="Messages\ToSystem.cs" />
     <Compile Include="Network\Actions.cs" />
-    <Compile Include="Network\HomeDevices\Buttom.cs" />
+    <Compile Include="Network\HomeDevices\Button.cs" />
     <Compile Include="Network\HomeDevices\WallPlug.cs" />
     <Compile Include="Network\HomeDevices\Dimmable.cs" />
     <Compile Include="Network\HomeDevices\Switch.cs" />
