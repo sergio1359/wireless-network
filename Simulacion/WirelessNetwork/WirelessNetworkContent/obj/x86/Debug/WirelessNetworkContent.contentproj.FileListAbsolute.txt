@@ -1,3 +1,4 @@
 d:\mis documentos\visual studio 2010\Projects\WirelessNetwork\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Mis documentos\Visual Studio 2010\Projects\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\ResolveAssemblyReference.cache
