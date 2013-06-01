@@ -72,7 +72,7 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 		
 		if(acceptFragment)
 		{
-			memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
+			//memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
 			index += (uint16_t)msg->length;
 			
 			if(currentFragment == msg->fragmentTotal)//ALL RECEIVED
