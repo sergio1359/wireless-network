@@ -21,13 +21,13 @@ typedef struct
 	uint8_t value;
 }TIME_KEEPER_ELEM_t;
 
-union
+struct
 {
 	OPERATION_HEADER_t header;
 	DIGITAL_READ_RESPONSE_MESSAGE_t response;
 }digitalResponse;
 
-union
+struct
 {
 	OPERATION_HEADER_t header;
 	ANALOG_READ_RESPONSE_MESSAGE_t response;
@@ -60,6 +60,9 @@ void portModule_Init()
 		
 		configPtr+= sizeof(PORT_CONFIG_t);			
 	}
+	
+	digitalResponse.header.opCode = DigitalReadResponse;
+	analogResponse.header.opCode = AnalogReadResponse;
 	
 	timeKeeperTimer.interval = 200; // 5 per seconds
 	timeKeeperTimer.mode = SYS_TIMER_PERIODIC_MODE;
@@ -100,6 +103,10 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
+	}else if(operation_header->opCode == DigitalReadResponse)
+	{
+		//TODO: NOTIFICATION (check)
+		modules_Notify(PortModule, operation_header);
 	}
 }
 
@@ -121,6 +128,9 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 		{
 			//TODO:SEND ERROR MESSAGE
 		}*/
+	}else if(operation_header->opCode == AnalogReadResponse)
+	{
+		//TODO: NOTIFICATION
 	}
 }	
 
@@ -153,10 +163,9 @@ _Bool proccessDigitalPortAction(uint8_t portAddress, uint8_t mask, _Bool read, u
 	{
 		digitalResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		digitalResponse.header.destinationAddress = sourceAddress;
-		digitalResponse.header.opCode = DigitalReadResponse;
 		digitalResponse.response.dir = portAddress;
 		digitalResponse.response.value = lastValuesD[portAddress];
-		//TODO: Send a DIGITAL_READ_RESPONSE_MESSAGE_t
+		//TODO: Send a DIGITAL_READ_RESPONSE_MESSAGE_t (check)
 		Radio_AddMessageByCopy(&digitalResponse.header);
 	}
 	else

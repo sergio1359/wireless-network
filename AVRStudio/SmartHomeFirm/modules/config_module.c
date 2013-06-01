@@ -6,16 +6,27 @@
  */ 
 #include "modules.h"
 #include "globals.h"
+#include <util/crc16.h>
+
+struct
+{
+	OPERATION_HEADER_t header;
+	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t response;
+}checksumResponse;
 
 _Bool receivingState;
-
-RUNNING_CONFIGURATION_t configBuffer;
 uint16_t index;
 uint8_t currentFragment;
 uint8_t totalExpected;
 
+RUNNING_CONFIGURATION_t configBuffer;
+
+_Bool validateReceivedConfig(void);
+
 void configModule_Init(void)
 {
+	checksumResponse.header.opCode = ConfigChecksumResponse;
+	
 	receivingState = false;
 	index = 0;
 }
@@ -61,12 +72,21 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 		
 		if(acceptFragment)
 		{
-			memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), 3);
-			index += msg->length;
+			memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
+			index += (uint16_t)msg->length;
 			
 			if(currentFragment == msg->fragmentTotal)//ALL RECEIVED
 			{
 				totalExpected = 0;
+				if(validateReceivedConfig())
+				{
+					//memcpy((uint8_t*)runningConfiguration.raw, (uint8_t*)configBuffer.raw, configBuffer.topConfiguration.deviceInfo.length);
+					validConfiguration = true;
+					
+					//TODO: Copy to EEPROM and restart instead
+					//EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
+					//softReset();
+				}
 			}
 		}
 	}
@@ -74,10 +94,54 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 
 void configRead_Handler(OPERATION_HEADER_t* operation_header)
 {
-	
+	if(operation_header->opCode == ConfigRead)
+	{
+		if(receivingState)
+		{
+			//TODO: SEND OR LOG ERROR (BUSY RECEIVING STATE)
+		}else
+		{
+		
+		}
+	}else if(operation_header->opCode == ConfigReadResponse)
+	{
+		//TODO: NOTIFICATION
+	}		
 }
 
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 {
+	if(operation_header->opCode == ConfigChecksum)
+	{
+		checksumResponse.header.destinationAddress = operation_header->sourceAddress;
+		checksumResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		checksumResponse.response.checksum = runningConfiguration.topConfiguration.deviceInfo.checkSum;
+		
+		//TODO: Send a CONFIG_CHECKSUM_RESPONSE_MESSAGE_t (check)
+		Radio_AddMessageByCopy(&checksumResponse.header);
+	}else if(operation_header->opCode == ConfigChecksumResponse)
+	{
+		//TODO: NOTIFICATION
+	}		
+}
+
+_Bool validateReceivedConfig()
+{
+	uint16_t eeprom_size = configBuffer.topConfiguration.deviceInfo.length;
+	uint16_t eeprom_crc = configBuffer.topConfiguration.deviceInfo.checkSum;
 	
+	if(eeprom_size != 0xFFFF && eeprom_size != 0x00)
+	{
+		configBuffer.topConfiguration.deviceInfo.checkSum = 0;
+		
+		uint16_t acc = 0;
+		for(int i = 0; i < eeprom_size; i++)
+		acc = _crc16_update(acc, configBuffer.raw[i]);
+		
+		configBuffer.topConfiguration.deviceInfo.checkSum = eeprom_crc;
+		
+		return eeprom_crc == acc;
+	}
+	
+	return false;
 }

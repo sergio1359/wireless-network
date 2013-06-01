@@ -251,10 +251,22 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="modules\inc\network_module.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\inc\temhum_module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\time_module.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\ports_module.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\network_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\temhum_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\time_module.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="otaInterface.c">

@@ -16,9 +16,19 @@
 #endif
 
 #include <stdint.h>
+#include <avr/wdt.h>
 #include "config.h"
 #include "RTC.h"
 #include "EEPROM.h"
+
+#define softReset()        \
+do                          \
+{                           \
+	wdt_enable(WDTO_15MS);  \
+	for(;;)                 \
+	{                       \
+	}                       \
+} while(0)
 
 #define CREATE_CIRCULARBUFFER(elemsType, bufferSize)										\
 struct {																					\

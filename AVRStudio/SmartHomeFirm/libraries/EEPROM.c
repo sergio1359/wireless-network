@@ -13,7 +13,7 @@ void EEPROM_Init(void)
 	//Get the header only
 	EEPROM_Read_Block(runningConfiguration.raw, 0x00, sizeof(DEVICE_INFO_t));
 	uint16_t eeprom_size = runningConfiguration.topConfiguration.deviceInfo.length;
-	uint16_t eeprom_crc = runningConfiguration.topConfiguration.deviceInfo.checkSum;;
+	uint16_t eeprom_crc = runningConfiguration.topConfiguration.deviceInfo.checkSum;
 	
 	//Copy Startup-configuration to Running-configuration
 	if(eeprom_size != 0xFFFF && eeprom_size != 0x00)

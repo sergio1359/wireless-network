@@ -16,6 +16,8 @@
 #include "ports_module.h"
 #include "network_module.h"
 #include "config_module.h"
+#include "time_module.h"
+#include "temhum_module.h"
 
 #define EXTENSION_OPCODE 0xFF
 
@@ -23,6 +25,8 @@
 PORTS_MODULE_DEFINITION   \
 NETWORK_MODULE_DEFINITION \
 CONFIG_MODULE_DEFINITION  \
+TIME_MODULE_DEFINITION	  \
+TEMHUM_MODULE_DEFINITION  \
 
 #define X(a, b, c) a,
 typedef enum MODULES_ID {
@@ -35,6 +39,8 @@ typedef enum MODULES_ID {
 COMMANDS_TABLE_PORTS    \
 COMMANDS_TABLE_NETWORK  \
 COMMANDS_TABLE_CONFIG   \
+COMMANDS_TABLE_TIME		\
+COMMANDS_TABLE_TEMHUM   \
 
 #define X(a, b, c, d, e) a = b,
 typedef enum COMMAND_OPCODES {
@@ -43,6 +49,7 @@ typedef enum COMMAND_OPCODES {
 #undef X
 
 void modules_Init(void);
+void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header);
 uint8_t getCommandArgsLength(uint8_t* opcode);
 extern inline void handleCommand(OPERATION_HEADER_t* header);
 
