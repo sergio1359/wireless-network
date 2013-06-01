@@ -44,6 +44,15 @@ void modules_Init(void)
 		(*modules_Inits[i])();
 }
 
+void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
+{
+	for(uint8_t i = 0; i<(sizeof(modules_NotificationInd) / sizeof(void*));i++)
+	{
+		if(i != moduleId)// Doesn't notify to the sender
+			(*modules_NotificationInd[i])(moduleId, header);	
+	}
+}
+
 uint8_t getCommandArgsLength(uint8_t* opcode)
 {
 	if(*opcode == EXTENSION_OPCODE)

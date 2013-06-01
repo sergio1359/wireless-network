@@ -47,7 +47,6 @@ void Radio_Init()
 	retriesTimer.mode = SYS_TIMER_INTERVAL_MODE;
 	retriesTimer.handler = retriesTimerHandler;
 	
-	//TODO: Initialize network
 	if(validConfiguration)
 	{
 		NWK_SetAddr(runningConfiguration.topConfiguration.networkConfig.deviceAddress);
@@ -182,7 +181,7 @@ static void rfDataConf(NWK_DataReq_t *req)
 	else //NETWORK_PROBLEM
 	{
 		failRetries++;
-		ledToggle(0);
+		
 		if(failRetries == runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit)
 		{
 			failRetries = 0;
@@ -198,8 +197,8 @@ static void rfDataConf(NWK_DataReq_t *req)
 			SYS_TimerStart(&retriesTimer);
 		}
 		
-	}//TODO: Check and log for non expected network status
-	
+	}//TODO:  Send or log ERROR (UNEXPECTED_NETWORK_STATUS)
+		
 }
 
 /*****************************************************************************
@@ -216,7 +215,6 @@ static void retriesTimerHandler(SYS_Timer_t *timer)
 static void rfDataInd(NWK_DataInd_t *ind)
 {
 	//TODO: PROCCESS DATA ARRIVED
-	//Notificaciones???
 	OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)ind->data;
 	
 	/* TESTING REGION */

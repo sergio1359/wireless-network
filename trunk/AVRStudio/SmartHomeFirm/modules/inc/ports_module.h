@@ -74,42 +74,11 @@ typedef struct
 }ANALOG_READ_RESPONSE_MESSAGE_t;
 
 
-
+//TODO: MOVE!
 // CONTROL
 typedef struct
 {
 }RESET_MESSAGE_t;
-
-
-//TIEMPO
-typedef struct
-{
-	TIME_t time;
-}TIME_WRITE_MESSAGE_t;
-
-typedef struct
-{
-}TIME_READ_MESSAGE_t;
-
-typedef struct
-{
-	TIME_t time;
-}TIME_READ_RESPONSE_MESSAGE_t;
-
-//FECHAS
-typedef struct
-{
-	DATE_t time;
-}DATE_WRITE_MESSAGE_t;
-
-typedef struct
-{
-}DATE_READ_MESSAGE_t;
-
-typedef struct
-{
-	DATE_t time;
-}DATE_READ_RESPONSE_MESSAGE_t;
 
 void portModule_Init(void);
 void portModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
