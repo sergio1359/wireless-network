@@ -78,7 +78,7 @@ void PortMonitor_TaskHandler()
 					{
 						changeOcurred = 0;
 					}
-				}else //Analog
+				}else if(port == 5) //Analog (Port F only)
 				{
 					uint8_t analog_val = ADC_Read(pin);
 					ANALOG_EVENT_CONFIG_t analog_config;
