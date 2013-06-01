@@ -7,8 +7,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
-      <Time>2012-05-31T20:25:11.9325276+02:00</Time>
+      <Output>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Time>2012-10-04T15:30:22.0733748+02:00</Time>
     </Item>
     <Item>
       <Source>circle.png</Source>
@@ -16,8 +16,17 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\circle.xnb</Output>
-      <Time>2012-05-31T20:25:11.835522+02:00</Time>
+      <Output>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\circle.xnb</Output>
+      <Time>2012-10-04T15:30:21.9673688+02:00</Time>
+    </Item>
+    <Item>
+      <Source>pixel.png</Source>
+      <Name>pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\pixel.xnb</Output>
+      <Time>2012-10-04T15:30:21.9663687+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -25,10 +34,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>D:\wireless-network\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
-      <LoggerRootDirectory>D:\wireless-network\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\wireless-network\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\wireless-network\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetworkContent\</RootDirectory>
+      <LoggerRootDirectory>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetwork\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetworkContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\wireless-network\Simulacion\WirelessNetwork\WirelessNetwork\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -57,7 +66,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2012-05-11T11:52:00.1854134+02:00</Value>
+        <Value>2013-04-07T18:29:42.1846796+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
