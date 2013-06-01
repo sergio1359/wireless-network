@@ -15,13 +15,26 @@
 
 #include "ports_module.h"
 #include "network_module.h"
+#include "config_module.h"
 
 #define EXTENSION_OPCODE 0xFF
 
-#define COMMANDS_TABLE \
-COMMANDS_TABLE_PORTS    \
-COMMANDS_TABLE_NETWORK \
+#define MODULES_TABLE	  \
+PORTS_MODULE_DEFINITION   \
+NETWORK_MODULE_DEFINITION \
+CONFIG_MODULE_DEFINITION  \
 
+#define X(a, b, c) a,
+typedef enum MODULES_ID {
+	MODULES_TABLE
+};
+#undef X
+
+
+#define COMMANDS_TABLE  \
+COMMANDS_TABLE_PORTS    \
+COMMANDS_TABLE_NETWORK  \
+COMMANDS_TABLE_CONFIG   \
 
 #define X(a, b, c, d, e) a = b,
 typedef enum COMMAND_OPCODES {
@@ -29,7 +42,7 @@ typedef enum COMMAND_OPCODES {
 };
 #undef X
 
-
+void modules_Init(void);
 uint8_t getCommandArgsLength(uint8_t* opcode);
 extern inline void handleCommand(OPERATION_HEADER_t* header);
 

@@ -11,10 +11,10 @@
 
 #include "halGpio.h"
 
-#define PINADDRESS(port, pin) (((port-'A')<<3)+pin)
+#define PINADDRESS(port, pin) ((((port)-'A')<<3)+(pin))
 
-#define PORT_FROM_PINADDRESS(address) &_SFR_IO8(3 * (address >> 3) + 2 )
-#define MASK_FROM_PINADDRESS(address) (1<<(address %  8))
+#define PORT_FROM_PINADDRESS(address) &_SFR_IO8(3 * ((address) >> 3) + 2 )
+#define MASK_FROM_PINADDRESS(address) (1<<((address) %  8))
 
 #define VARPIN(x) \
 uint8_t* portPrt_##x; \

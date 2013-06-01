@@ -14,6 +14,8 @@
 #include "RTC.h"
 #include "EEPROM.h"
 
+#define PORTS_MODULE_DEFINITION  X(PortModule, portModule_Init, portModule_NotificationInd)
+
 #define COMMANDS_TABLE_PORTS \
 X(DigitalWrite,			0x05, digitalPort_Handler, DIGITAL_WRITE_MESSAGE_t,			false)	\
 X(DigitalSwitch,		0x06, digitalPort_Handler, DIGITAL_SWITCH_MESSAGE_t,		false)	\
@@ -79,37 +81,6 @@ typedef struct
 }RESET_MESSAGE_t;
 
 
-
-// CONFIGURATION
-typedef struct
-{
-	uint8_t fragment:4; //LSB
-	uint8_t fragmentTotal:4;//MSB
-	uint8_t length;
-}CONFIG_WRITE_HEADER_MESSAGE_t;
-
-typedef struct
-{
-}CONFIG_READ_MESSAGE_t;
-
-typedef struct
-{
-	uint8_t fragment:4; //LSB
-	uint8_t fragmentTotal:4;//MSB
-	uint8_t length;
-}CONFIG_READ_RESPONSE_HEADER_MESSAGE_t;
-
-typedef struct
-{
-}CONFIG_CHECKSUM_MESSAGE_t;
-
-typedef struct
-{
-	uint16_t checksum;
-}CONFIG_CHECKSUM_RESPONSE_MESSAGE_t;
-
-
-
 //TIEMPO
 typedef struct
 {
@@ -141,7 +112,8 @@ typedef struct
 }DATE_READ_RESPONSE_MESSAGE_t;
 
 void portModule_Init(void);
-void portModule_TaskHandler(void);
+void portModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+
 void digitalPort_Handler(OPERATION_HEADER_t* operation_header);
 void analogPort_Handler(OPERATION_HEADER_t* operation_header);
 

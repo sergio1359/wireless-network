@@ -71,7 +71,6 @@ void PortMonitor_TaskHandler()
 							case FALLING_EDGE:	changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) & ~((val>>pin) & 0x01) ); break;
 							case RISIN_EDGE:	changeOcurred = ( ~((lastValuesD[port]>>pin) & 0x01) &  ((val>>pin) & 0x01) ); break;
 							case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) !=  ((val>>pin) & 0x01) ); break;
-							//case NO_EDGE :		changeOcurred = 0; break;
 						}
 					}else
 					{

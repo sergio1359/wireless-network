@@ -8,11 +8,17 @@
 #include "globals.h"
 #include "nwk.h"
 
-void networkInit(void)
+void networkModule_Init(void)
 {
+	
 }
 
-void networkHandler(OPERATION_HEADER_t* operation_header)
+void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
+{
+	
+}
+
+void route_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == RouteTableRead)
 	{

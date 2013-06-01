@@ -16,8 +16,8 @@ void searchFirstTimeOperation();
 
 void TIME_Validate(TIME_t *receivedTime, DATE_t *receivedDate)
 {
-	memcpy((uint8_t*)receivedTime,(uint8_t*)&currentTime, sizeof(TIME_t));
-	memcpy((uint8_t*)receivedDate,(uint8_t*)&currentDate, sizeof(DATE_t));
+	memcpy((uint8_t*)&currentTime,(uint8_t*)receivedTime, sizeof(TIME_t));
+	memcpy((uint8_t*)&currentDate,(uint8_t*)receivedDate, sizeof(DATE_t));
 	
 	searchFirstTimeOperation();
 	validDateTime = 1;
