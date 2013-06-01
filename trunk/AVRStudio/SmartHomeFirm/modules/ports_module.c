@@ -8,13 +8,40 @@
 #include "globals.h"
 #include "portMonitor.h"
 
-DIGITAL_READ_RESPONSE_MESSAGE_t digitalResponse;
-ANALOG_READ_RESPONSE_MESSAGE_t analogResponse;
+#include "sysTimer.h"
+
+#define TIME_KEEPER_BUFFER_SIZE 16
+#define TIME_KEEPER_BUFFER_SIZE_MASK TIME_KEEPER_BUFFER_SIZE-1
+
+typedef struct
+{
+	uint16_t counter;
+	uint8_t* portPtr;
+	uint8_t mask;
+	uint8_t value;
+}TIME_KEEPER_ELEM_t;
+
+union
+{
+	OPERATION_HEADER_t header;
+	DIGITAL_READ_RESPONSE_MESSAGE_t response;
+}digitalResponse;
+
+union
+{
+	OPERATION_HEADER_t header;
+	ANALOG_READ_RESPONSE_MESSAGE_t response;
+}analogResponse;
+
+SYS_Timer_t timeKeeperTimer;
+
+CREATE_CIRCULARBUFFER(TIME_KEEPER_ELEM_t, TIME_KEEPER_BUFFER_SIZE)	timeKeeper_Buffer;
 
 bool validatePortAction(PORT_CONFIG_t config, uint8_t mask, bool digital, bool read);
-bool proccessDigitalPortAction(uint8_t dir, uint8_t mask, bool read, uint8_t value, uint16_t sourceAddress);
+bool proccessDigitalPortAction(uint8_t dir, uint8_t mask, bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
+static void timeKeeperTimerHandler(SYS_Timer_t *timer);
 
-void portModule_Init(void)
+void portModule_Init()
 {
 	//TODO: Read and set configuration
 	PORT_CONFIG_t* configPtr = &runningConfiguration.topConfiguration.portConfig_PA;
@@ -33,11 +60,21 @@ void portModule_Init(void)
 		
 		configPtr+= sizeof(PORT_CONFIG_t);			
 	}
+	
+	timeKeeperTimer.interval = 200; // 5 per seconds
+	timeKeeperTimer.mode = SYS_TIMER_PERIODIC_MODE;
+	timeKeeperTimer.handler = timeKeeperTimerHandler;
+	SYS_TimerStart(&timeKeeperTimer);
+}
+
+void portModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
+{
+	
 }
 
 void portModule_TaskHandler(void)
 {
-	//TODO: Check the programed off pins
+	//TODO: Check the programmed off pins
 }
 
 void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
@@ -45,23 +82,21 @@ void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 	if(operation_header->opCode == DigitalWrite)
 	{
 		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header + 1);
-		//TODO: Handle the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, operation_header->sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, msg->seconds, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
 	}else if(operation_header->opCode == DigitalSwitch)
 	{
 		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header + 1);
-		//TODO: Handle the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  ~lastValuesD[msg->dir],  operation_header->sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  ~lastValuesD[msg->dir], msg->seconds, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
 	}else if(operation_header->opCode == DigitalRead)
 	{
 		DIGITAL_READ_MESSAGE_t* msg = (DIGITAL_READ_MESSAGE_t*)(operation_header + 1);
-		if(!proccessDigitalPortAction(msg->dir, 0, true,  0,  operation_header->sourceAddress))
+		if(!proccessDigitalPortAction(msg->dir, 0, true,  0, 0, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE (INVALID OPERATION)
 		}
@@ -72,20 +107,20 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == AnalogWrite)
 	{
-		DIGITAL_WRITE_MESSAGE_t* msg = (DIGITAL_WRITE_MESSAGE_t*)(operation_header + 1);
+		ANALOG_WRITE_MESSAGE_t* msg = (ANALOG_WRITE_MESSAGE_t*)(operation_header + 1);
 		//TODO: To consider the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value,  operation_header->sourceAddress))
+		/*if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, msg->seconds,  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
-		}
+		}*/
 	}else if(operation_header->opCode == AnalogRead)
 	{
-		DIGITAL_SWITCH_MESSAGE_t* msg = (DIGITAL_SWITCH_MESSAGE_t*)(operation_header + 1);
+		ANALOG_READ_MESSAGE_t* msg = (ANALOG_READ_MESSAGE_t*)(operation_header + 1);
 		//TODO: To consider the time param
-		if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir],  operation_header->sourceAddress))
+		/*if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir], msg->seconds, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
-		}
+		}*/
 	}
 }	
 
@@ -106,179 +141,64 @@ _Bool validatePortAction(PORT_CONFIG_t config, uint8_t mask, _Bool digital, _Boo
 	return result;
 }
 
-_Bool proccessDigitalPortAction(uint8_t port, uint8_t mask, _Bool read, uint8_t value, uint16_t sourceAddress)
+_Bool proccessDigitalPortAction(uint8_t portAddress, uint8_t mask, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
 {
-	switch(port)
-	{
-		case 0: //PORTA
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PA, mask, true, read))
-				return false;
-
-			if(!read)
-			{			
-				HAL_GPIO_PORTA_set(value & mask);
-				HAL_GPIO_PORTA_clr(~value & mask);	
-			}
-		break;
-		
-		case 1: //PORTB
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PB, mask, true, read))
-				return false;
-		
-			if(!read)
-			{
-				HAL_GPIO_PORTB_set(value & mask);
-				HAL_GPIO_PORTB_clr(~value & mask);
-			}
-		break;
-		
-		case 2: //PORTC
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PC, mask, true, read))
-				return false;
-		
-			if(!read)
-			{
-				HAL_GPIO_PORTC_set(value & mask);
-				HAL_GPIO_PORTC_clr(~value & mask);
-			}
-		break;
-		
-		case 3: //PORTD
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PD, mask, true, read))
-				return false;
-			
-			if(!read)
-			{
-				HAL_GPIO_PORTD_set(value & mask);
-				HAL_GPIO_PORTD_clr(~value & mask);
-			}
-		break;
-		
-		case 4: //PORTE
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PE, mask, true, read))
-				return false;
-			
-			if(!read)
-			{
-				HAL_GPIO_PORTE_set(value & mask);
-				HAL_GPIO_PORTE_clr(~value & mask);
-			}
-		break;
-		
-		case 5: //PORTF
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PF, mask, true, read))
-				return false;
-			
-			if(!read)
-			{
-				HAL_GPIO_PORTF_set(value & mask);
-				HAL_GPIO_PORTF_clr(~value & mask);
-			}
-		break;
-		
-		case 6: //PORTG
-			if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PG, mask, true, read))
-				return false;
-			
-			if(!read)
-			{
-				HAL_GPIO_PORTG_set(value & mask);
-				HAL_GPIO_PORTG_clr(~value & mask);
-			}
-		break;
-		
-		default:
-			return false;
-		break;
-	}
+	uint8_t* portPtr = PORT_FROM_PINADDRESS(portAddress<<3);
+	PORT_CONFIG_t* configPtr = (&runningConfiguration.topConfiguration.portConfig_PA + portAddress);
 	
+	if(!validatePortAction(*configPtr, mask, true, read))
+		return false;
+
 	if(read)
 	{
-		digitalResponse.value = lastValuesD[port];
-		digitalResponse.dir = sourceAddress;
+		digitalResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		digitalResponse.header.destinationAddress = sourceAddress;
+		digitalResponse.header.opCode = DigitalReadResponse;
+		digitalResponse.response.dir = portAddress;
+		digitalResponse.response.value = lastValuesD[portAddress];
 		//TODO: Send a DIGITAL_READ_RESPONSE_MESSAGE_t
+		Radio_AddMessageByCopy(&digitalResponse.header);
+	}
+	else
+	{
+		HAL_GPIO_PORT_set(portPtr, value & mask);
+		HAL_GPIO_PORT_clr(portPtr, ~value & mask);
+		
+		if(seconds > 0)
+		{
+			timeKeeper_Buffer.buffer[timeKeeper_Buffer.end].counter = (uint16_t)seconds*5;
+			timeKeeper_Buffer.buffer[timeKeeper_Buffer.end].portPtr = portPtr;
+			timeKeeper_Buffer.buffer[timeKeeper_Buffer.end].mask = mask;
+			timeKeeper_Buffer.buffer[timeKeeper_Buffer.end].value = ~value;
+			timeKeeper_Buffer.end++;
+		}
 	}
 	
 	return true;
 }
-
-
-/*
-uint8_t getCommandArgsLength(uint8_t* opcode)
+TIME_KEEPER_ELEM_t* currentElem;
+static void timeKeeperTimerHandler(SYS_Timer_t *timer)
 {
-	switch (*opcode)
+	unsigned int index = timeKeeper_Buffer.start;
+	
+	while(index != timeKeeper_Buffer.end)
 	{
-		case DigitalWrite:
-		return sizeof(DIGITAL_WRITE_MESSAGE_t);
+		currentElem = &timeKeeper_Buffer.buffer[index];
+		if(currentElem->counter > 0)
+		{
+			currentElem->counter--;
+		}else if(currentElem->portPtr != 0) //Is a valid elem
+		{
+			HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->value & currentElem->mask);
+			HAL_GPIO_PORT_clr(currentElem->portPtr, ~currentElem->value & currentElem->mask);
+			currentElem->portPtr = 0;
+		}
 		
-		case DigitalSwitch:
-		return sizeof(DIGITAL_SWITCH_MESSAGE_t);
+		if(currentElem->portPtr == 0 && timeKeeper_Buffer.start == index)
+		{
+			timeKeeper_Buffer.start = (index+1) & TIME_KEEPER_BUFFER_SIZE_MASK;
+		}
 		
-		case  DigitalReadResponse:
-		return sizeof(DIGITAL_READ_RESPONSE_MESSAGE_t);
-		
-		case DigitalRead:
-		return sizeof(DIGITAL_READ_MESSAGE_t);
-		
-		
-		
-		case AnalogWrite:
-		return sizeof(ANALOG_WRITE_MESSAGE_t);
-
-		case AnalogRead:
-		return sizeof(ANALOG_READ_MESSAGE_t);
-		
-		case AnalogReadResponse:
-		return sizeof(ANALOG_READ_RESPONSE_MESSAGE_t);
-		
-		
-		
-		case Reset:
-		return sizeof(RESET_MESSAGE_t);
-		
-		case RouteTableRead:
-		return sizeof(ROUTE_TABLE_READ_t);
-		
-		case RouteTableReadResponse:
-		return sizeof(ROUTE_TABLE_READ_RESPONSE_HEADER_t) + *(opcode+1); //CHECK!!!!!!!!! LENGTH READ
-		
-		
-		
-		case ConfigWrite:
-		return sizeof(CONFIG_WRITE_HEADER_MESSAGE_t) + *(opcode+1); //CHECK!!!!!!!!! LENGTH READ
-		
-		case ConfigRead:
-		return sizeof(CONFIG_READ_MESSAGE_t);
-		
-		case ConfigReadResponse:
-		return sizeof(CONFIG_READ_RESPONSE_HEADER_MESSAGE_t) + *(opcode+1); //CHECK!!!!!!!!! LENGTH READ
-		
-		case ConfigChecksum:
-		return sizeof(CONFIG_CHECKSUM_MESSAGE_t);
-		
-		case ConfigChecksumResponse:
-		return sizeof(CONFIG_CHECKSUM_RESPONSE_MESSAGE_t);
-		
-		
-		
-		case TimeWrite:
-		return sizeof(TIME_WRITE_MESSAGE_t);
-		
-		case TimeRead:
-		return sizeof(TIME_READ_MESSAGE_t);
-		
-		case TimeReadResponse:
-		return sizeof(TIME_READ_RESPONSE_MESSAGE_t);
-		
-		
-		
-		case  0xFF:
-		return 4;// JUST FOR FUN!
-		
-		//case Extension:
-		//return getCommandArgsLength(opcode+1);
-		
-		default:
-		return 0xFF;
+		index = (index+1) & TIME_KEEPER_BUFFER_SIZE_MASK;
 	}
-}*/
+}	

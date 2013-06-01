@@ -9,14 +9,15 @@
 #ifndef NETWORK_MODULE_H_
 #define NETWORK_MODULE_H_
 
-
 #include <stdint.h>
 #include <stdbool.h>
 #include "EEPROM.h"
 
+#define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_NotificationInd)
+
 #define COMMANDS_TABLE_NETWORK \
-X(RouteTableRead,			0x01, networkHandler, ROUTE_TABLE_READ_t,	false)	\
-X(RouteTableReadResponse,	0x02, networkHandler, ROUTE_TABLE_READ_RESPONSE_HEADER_t,	true)	\
+X(RouteTableRead,			0x01, route_Handler, ROUTE_TABLE_READ_t,	false)					\
+X(RouteTableReadResponse,	0x02, route_Handler, ROUTE_TABLE_READ_RESPONSE_HEADER_t,	true)	\
 
 //NETWORK
 typedef struct
@@ -31,7 +32,9 @@ typedef struct
 }ROUTE_TABLE_READ_RESPONSE_HEADER_t;
 
 
-void networkInit(void);
-void networkHandler(OPERATION_HEADER_t* operation_header);
+void networkModule_Init(void);
+void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+
+void route_Handler(OPERATION_HEADER_t* operation_header);
 
 #endif /* NETWORK_MODULE_H_ */

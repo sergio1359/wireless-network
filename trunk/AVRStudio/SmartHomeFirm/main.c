@@ -227,6 +227,7 @@ int main(void)
 	#endif
 	
 	Radio_Init();
+	modules_Init();
 	
 	ledsInit();
 	DISPLAY_Init(PINADDRESS('D',1), PINADDRESS('D',0), PINADDRESS('B',1), PINADDRESS('B',3), PINADDRESS('B',5), PINADDRESS('B',7));

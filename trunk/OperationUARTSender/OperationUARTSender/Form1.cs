@@ -82,7 +82,19 @@ namespace OperationUARTSender
         {
             if (sender == button2)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4001, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                /*SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
+
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());*/
+
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x40, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+                
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x41, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x42, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x43, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x44, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
             }
             else if (sender == button3)
             {

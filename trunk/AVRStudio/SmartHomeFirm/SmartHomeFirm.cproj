@@ -239,6 +239,12 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\RTC.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\config_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\config_module.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\inc\ports_module.h">
       <SubType>compile</SubType>
     </Compile>
