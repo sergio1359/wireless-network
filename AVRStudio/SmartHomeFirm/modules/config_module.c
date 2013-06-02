@@ -72,7 +72,13 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 		
 		if(acceptFragment)
 		{
-			//memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
+			if((msg->length + index) >= EEPROM_SIZE)
+			{
+				//TODO:SEND ERROR MESSAGE (ERROR CONFIG SIZE TOO BIG)
+				//return;
+			}				
+				
+			memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
 			index += (uint16_t)msg->length;
 			
 			if(currentFragment == msg->fragmentTotal)//ALL RECEIVED
@@ -86,6 +92,9 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 					//TODO: Copy to EEPROM and restart instead
 					//EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
 					//softReset();
+				}else
+				{
+					//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID CHECKSUM)
 				}
 			}
 		}

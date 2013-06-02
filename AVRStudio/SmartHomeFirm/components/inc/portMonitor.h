@@ -18,6 +18,7 @@
 #include "timeManager.h"
 
 void PortMonitor_TaskHandler();
+void PortMonitor_LaunchOperations(uint8_t pinAddress);
 
 extern uint8_t lastValuesD[NUM_PORTS];
 extern uint8_t lastValuesA[ANALOG_PINS];

@@ -210,4 +210,6 @@ static void timeKeeperTimerHandler(SYS_Timer_t *timer)
 		
 		index = (index+1) & TIME_KEEPER_BUFFER_SIZE_MASK;
 	}
+	
+	(void)timer;
 }	
