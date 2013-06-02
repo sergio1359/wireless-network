@@ -128,7 +128,7 @@ void PortMonitor_TaskHandler()
 			//Launch Operations if exits
 			if(!firstTime && changeOcurred)
 			{
-				launchOperations((port*8) + pin);
+				PortMonitor_LaunchOperations((port*8) + pin);
 			}
 		}
 		
@@ -139,7 +139,7 @@ void PortMonitor_TaskHandler()
 }
 
 
-void launchOperations(uint8_t pinAddress)
+void PortMonitor_LaunchOperations(uint8_t pinAddress)
 {
 	uint16_t pin_operation_list_start_addr = runningConfiguration.raw[OPERATION_INDEX_START_ADDR + (pinAddress * sizeof(uint16_t))];
 	uint16_t pin_operation_list_end_addr;

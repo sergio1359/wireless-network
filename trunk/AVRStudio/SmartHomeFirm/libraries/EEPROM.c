@@ -15,6 +15,12 @@ void EEPROM_Init(void)
 	uint16_t eeprom_size = runningConfiguration.topConfiguration.deviceInfo.length;
 	uint16_t eeprom_crc = runningConfiguration.topConfiguration.deviceInfo.checkSum;
 	
+	if(eeprom_size >= EEPROM_SIZE)
+	{
+		//TODO:SEND ERROR MESSAGE (ERROR CONFIG SIZE TOO BIG)
+		return;
+	}		
+	
 	//Copy Startup-configuration to Running-configuration
 	if(eeprom_size != 0xFFFF && eeprom_size != 0x00)
 	{
@@ -27,6 +33,14 @@ void EEPROM_Init(void)
 		
 		validConfiguration = eeprom_crc == acc;
 		runningConfiguration.topConfiguration.deviceInfo.checkSum = eeprom_crc;
+		
+		if(!validConfiguration)
+		{
+			//TODO:SEND ERROR MESSAGE (ERROR EEPROM INVALID CHECKSUM)
+		}
+	}else
+	{
+		//TODO:SEND ERROR MESSAGE (ERROR EEPROM EMPTY OR CORRUPTED)
 	}
 }
 
