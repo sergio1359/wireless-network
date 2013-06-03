@@ -5,9 +5,9 @@
  *  Author: Victor
  */ 
 
-#include "timeManager.h"
 #include "globals.h"
-#include "modules.h"
+#include "timeManager.h"
+#include "modulesManager.h"
 #include "operationsManager.h"
 
 TIME_OPERATION_HEADER_t* time_operation_header;
@@ -41,7 +41,7 @@ void TIME_CheckTimeOperation()
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
 			if(currentDate.weekDay.raw & time_operation_header->weekDays.raw != 0)
-				OM_ProccessOperation(&time_operation_header->operationHeader, false);
+				OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
 			
 			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
 			

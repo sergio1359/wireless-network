@@ -179,7 +179,7 @@ void PortMonitor_LaunchOperations(uint8_t pinAddress)
 		
 		if( restriction_passed ) //If all restrictions are met
 		{
-			OM_ProccessOperation(operation_header, false);
+			OM_ProccessInternalOperation(operation_header, false);
 		}
 		
 		operation_ptr += sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode);

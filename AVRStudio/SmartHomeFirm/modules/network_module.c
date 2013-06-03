@@ -4,7 +4,7 @@
  * Created: 17/05/2013 12:28:33
  *  Author: Victor
  */ 
-#include "modules.h"
+#include "modulesManager.h"
 #include "globals.h"
 #include "nwk.h"
 
