@@ -43,7 +43,7 @@ void temHumModule_Init(void)
 	humidityResponse.header.opCode = HumidityReadResponse;
 	
 	//TODO: READ CONFIG
-	uint8_t* config_start_address = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_TempHum];
+	uint8_t* config_start_address = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_TempHum];
 	uint8_t num_of_configs = *config_start_address;
 	
 	if(num_of_configs > MAX_SENSORS)
@@ -61,7 +61,7 @@ void temHumModule_Init(void)
 	sensorReadTimer.interval = 1000;
 	sensorReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	sensorReadTimer.handler = sensorReadTimerHandler;
-	//SYS_TimerStart(&sensorReadTimer);
+	SYS_TimerStart(&sensorReadTimer);
 }
 
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
