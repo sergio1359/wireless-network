@@ -51,6 +51,8 @@ void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
 		if(i != moduleId)// Doesn't notify to the sender
 			(*modules_NotificationInd[i])(moduleId, header);	
 	}
+	
+	//TODO: Send by UART if coordinator (address == 0x0001)
 }
 
 uint8_t getCommandArgsLength(uint8_t* opcode)

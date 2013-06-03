@@ -26,6 +26,7 @@ VARPIN(DATA);
 /*
  * get data from dht11
  */
+//TODO: Try to decrement waits
 uint8_t getdata(uint8_t select) {
 	uint8_t bits[5];
 	uint8_t i,j = 0;

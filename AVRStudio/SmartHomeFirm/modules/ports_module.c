@@ -43,9 +43,8 @@ static void timeKeeperTimerHandler(SYS_Timer_t *timer);
 
 void portModule_Init()
 {
-	//TODO: Read and set configuration
+	//TODO: Read and set configuration (ANALOG)
 	PORT_CONFIG_t* configPtr = &runningConfiguration.topConfiguration.portConfig_PA;
-	
 	uint8_t* portPtr;
 	
 	for(uint8_t port=0; port<NUM_PORTS; port++)
@@ -58,7 +57,7 @@ void portModule_Init()
 		HAL_GPIO_PORT_set(portPtr,(configPtr->defaultValuesD & ~(configPtr->maskIO)));
 		HAL_GPIO_PORT_clr(portPtr,(~(configPtr->defaultValuesD) & ~(configPtr->maskIO)));
 		
-		configPtr+= sizeof(PORT_CONFIG_t);			
+		configPtr++;			
 	}
 	
 	digitalResponse.header.opCode = DigitalReadResponse;
