@@ -36,6 +36,9 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.textBoxConfigAddress = new System.Windows.Forms.TextBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -122,11 +125,36 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // textBoxConfigAddress
+            // 
+            this.textBoxConfigAddress.Location = new System.Drawing.Point(298, 12);
+            this.textBoxConfigAddress.Name = "textBoxConfigAddress";
+            this.textBoxConfigAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxConfigAddress.TabIndex = 4;
+            this.textBoxConfigAddress.Text = "0000";
+            // 
+            // button7
+            // 
+            this.button7.Enabled = false;
+            this.button7.Location = new System.Drawing.Point(420, 12);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(92, 22);
+            this.button7.TabIndex = 5;
+            this.button7.Text = "Send Config";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 341);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.textBoxConfigAddress);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -138,6 +166,7 @@
             this.Name = "Form1";
             this.Text = "UART Operation Sender";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -151,6 +180,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox textBoxConfigAddress;
+        private System.Windows.Forms.Button button7;
     }
 }
 

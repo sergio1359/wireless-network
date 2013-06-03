@@ -73,7 +73,8 @@ void PortMonitor_TaskHandler()
 							case BOTH_EDGE:		changeOcurred = (  ((lastValuesD[port]>>pin) & 0x01) !=  ((val>>pin) & 0x01) ); break;
 						}
 						
-						lastValuesD[port] = (~(1 << pin) & lastValuesD[port]) | ((1 << pin) & val);
+						if(changeOcurred)
+							lastValuesD[port] = val; //Previous update for incoming request in module handlers
 					}else
 					{
 						changeOcurred = 0;
@@ -132,7 +133,7 @@ void PortMonitor_TaskHandler()
 			}
 		}
 		
-		//lastValuesD[port] = val;
+		lastValuesD[port] = val;
 	}
 	firstTime = 0;
 	debounce_prt = 0;

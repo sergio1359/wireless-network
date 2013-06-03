@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.IO;
+using System.Threading;
 
 namespace OperationUARTSender
 {
@@ -65,7 +67,7 @@ namespace OperationUARTSender
 
                     button1.Text = "Close";
                     comboBox1.Enabled = false;
-                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = true;
+                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = true;
                 }
             }
             else
@@ -74,7 +76,7 @@ namespace OperationUARTSender
 
                 button1.Text = "Open";
                 comboBox1.Enabled = true;
-                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = false;
+                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = false;
             }
         }
 
@@ -86,15 +88,13 @@ namespace OperationUARTSender
 
                 SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());*/
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x40, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+                /*
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x20, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
                 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x41, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x21, 0x03, 0x04, 0x05, 0x06 } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x42, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x43, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x44, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x22, 0x03, 0x07, 0x08, 0x09 } }.ToBinary());*/
+                SendConfigFile("0.bin", 0x00);
             }
             else if (sender == button3)
             {
@@ -110,7 +110,7 @@ namespace OperationUARTSender
             }
             else if (sender == button6)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4005, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
             }
         }
 
@@ -232,6 +232,33 @@ namespace OperationUARTSender
             serial.Write(frame.ToArray(), 0, frame.Count);
         }
 
+        const int MAX_CONTENT_SIZE = 50;
+
+        void SendConfigFile(string inputFilename, ushort destinationAddress)
+        {
+            byte[] fileBytes = File.ReadAllBytes(inputFilename);
+
+            Operation currentOp = new Operation() {
+                SourceAddress = 0x00,
+                DestinationAddress = destinationAddress,
+                OpCode = 0x40,
+                Args = new byte[MAX_CONTENT_SIZE + 2]};
+
+            byte numberOfFrames = (byte)(fileBytes.Length / MAX_CONTENT_SIZE);
+            int frameSize = 0;
+            for (byte i = 0; i <= numberOfFrames; i ++)
+            {
+                frameSize = Math.Min(MAX_CONTENT_SIZE, fileBytes.Length - (i * MAX_CONTENT_SIZE));
+                currentOp.Args[0] = (byte)((numberOfFrames << 4) | (i & 0xF));
+                currentOp.Args[1] = (byte)frameSize;
+                Buffer.BlockCopy(fileBytes, (i * MAX_CONTENT_SIZE), currentOp.Args, 2, frameSize);
+
+                SendData(currentOp.ToBinary());
+                Thread.Sleep(500);
+            }
+            MessageBox.Show("DONE");
+        }
+
         void PrintMessage(string message)
         {
             this.BeginInvoke((Action)(() =>
@@ -257,6 +284,18 @@ namespace OperationUARTSender
                 listBox1.Items.Add(sb.ToString());
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }));
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var res = openFileDialog1.ShowDialog();
+
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                ushort address = Convert.ToUInt16(textBoxConfigAddress.Text, 16);
+
+                SendConfigFile(openFileDialog1.FileName, address);
+            }
         }
     }
 }

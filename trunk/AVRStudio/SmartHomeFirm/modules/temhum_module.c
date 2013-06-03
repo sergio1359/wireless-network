@@ -4,9 +4,12 @@
  * Created: 01/06/2013 14:05:48
  *  Author: Victor
  */ 
-#include "modulesManager.h"
+
 #include "globals.h"
+#include "modulesManager.h"
 #include "portMonitor.h"
+
+#include "DHT11.h"
 
 #include "sysTimer.h"
 
@@ -58,7 +61,7 @@ void temHumModule_Init(void)
 	sensorReadTimer.interval = 1000;
 	sensorReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	sensorReadTimer.handler = sensorReadTimerHandler;
-	SYS_TimerStart(&sensorReadTimer);
+	//SYS_TimerStart(&sensorReadTimer);
 }
 
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -111,21 +114,27 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 	for(uint8_t i = 0; i<num_of_sensors; i++)
 	{
 		currentValue = DHT11_ReadTemperature(sensors[i]);
-		if(lastTemperature[i] != currentValue)
+		if(currentValue != DHT11_ERROR)
 		{
-			//TODO: HANDLE OPERATIONS
-			lastTemperature[i] = currentValue;
+			if(lastTemperature[i] != currentValue)
+			{
+				//TODO: HANDLE OPERATIONS
+				lastTemperature[i] = currentValue;
+				
+				//PortMonitor_LaunchOperations(sensors[i]);
+			}
 			
-			//PortMonitor_LaunchOperations(sensors[i]);
-		}
-		
-		currentValue = DHT11_ReadHumidity(sensors[i]);
-		if(lastHumidity[i] != currentValue)
+			currentValue = DHT11_ReadHumidity(sensors[i]);
+			if(lastHumidity[i] != currentValue)
+			{
+				//TODO: HANDLE OPERATIONS
+				lastHumidity[i] = currentValue;
+				
+				//PortMonitor_LaunchOperations(sensors[i]);
+			}	
+		}else
 		{
-			//TODO: HANDLE OPERATIONS
-			lastHumidity[i] = currentValue;
-			
-			//PortMonitor_LaunchOperations(sensors[i]);
+			//TODO: SEND ERROR (SENSOR NOT DETECTED)
 		}
 	}
 	

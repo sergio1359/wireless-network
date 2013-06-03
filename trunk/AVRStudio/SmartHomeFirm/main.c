@@ -117,6 +117,7 @@ static void appSendData(void)
 	
 	//sendData(serialNumber, SERIAL_NUMBER_SIZE);
 	
+	/*
 	temp = DHT11_ReadTemperature(PINADDRESS('D', 0));
 	if(temp != DHT11_ERROR)
 	{
@@ -131,7 +132,7 @@ static void appSendData(void)
 	}else
 	{
 		HAL_UartPrint("DHT11 not detected\r\n");
-	}
+	}*/
 	
 	sendFlag = false;
 }

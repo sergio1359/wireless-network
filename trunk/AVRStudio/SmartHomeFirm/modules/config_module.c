@@ -15,9 +15,10 @@ struct
 }checksumResponse;
 
 _Bool receivingState;
-uint16_t index;
+
 uint8_t currentFragment;
 uint8_t totalExpected;
+uint16_t currentIndex;
 
 RUNNING_CONFIGURATION_t configBuffer;
 
@@ -28,7 +29,7 @@ void configModule_Init(void)
 	checksumResponse.header.opCode = ConfigChecksumResponse;
 	
 	receivingState = false;
-	index = 0;
+	currentIndex = 0;
 }
 
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -60,7 +61,7 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 			}
 		}else if(msg->fragment == 0) //FirstFrame
 		{
-			index = 0;
+			currentIndex = 0;
 			receivingState = true;
 			totalExpected = msg->fragmentTotal;
 			acceptFragment = true;
@@ -72,30 +73,31 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 		
 		if(acceptFragment)
 		{
-			if((msg->length + index) >= EEPROM_SIZE)
+			if((msg->length + currentIndex) >= EEPROM_SIZE)
 			{
 				//TODO:SEND ERROR MESSAGE (ERROR CONFIG SIZE TOO BIG)
 				//return;
 			}				
 				
-			memcpy((uint8_t*)configBuffer.raw, (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
-			index += (uint16_t)msg->length;
+			memcpy((uint8_t*)&configBuffer.raw[currentIndex], (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);//(uint16_t)msg->length);
+			currentIndex += (uint16_t)msg->length;
 			
 			if(currentFragment == msg->fragmentTotal)//ALL RECEIVED
 			{
-				totalExpected = 0;
 				if(validateReceivedConfig())
 				{
 					//memcpy((uint8_t*)runningConfiguration.raw, (uint8_t*)configBuffer.raw, configBuffer.topConfiguration.deviceInfo.length);
-					validConfiguration = true;
+					//validConfiguration = true;
 					
 					//TODO: Copy to EEPROM and restart instead
-					//EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
-					//softReset();
+					EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
+					softReset();
 				}else
 				{
 					//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID CHECKSUM)
 				}
+				receivingState = false;
+				totalExpected = 0;
 			}
 		}
 	}
@@ -139,7 +141,7 @@ _Bool validateReceivedConfig()
 	uint16_t eeprom_size = configBuffer.topConfiguration.deviceInfo.length;
 	uint16_t eeprom_crc = configBuffer.topConfiguration.deviceInfo.checkSum;
 	
-	if(eeprom_size != 0xFFFF && eeprom_size != 0x00)
+	if(eeprom_size != 0xFFFF && eeprom_size != 0x00 && eeprom_size == currentIndex)
 	{
 		configBuffer.topConfiguration.deviceInfo.checkSum = 0;
 		
@@ -150,6 +152,9 @@ _Bool validateReceivedConfig()
 		configBuffer.topConfiguration.deviceInfo.checkSum = eeprom_crc;
 		
 		return eeprom_crc == acc;
+	}else
+	{
+		//TODO: SEND OR LOG ERROR (ERROR CONFIG SIZE NOT EXPECTED)
 	}
 	
 	return false;
