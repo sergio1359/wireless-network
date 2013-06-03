@@ -14,7 +14,7 @@
 #include "ANALOG.h"
 #include "globals.h"
 #include "config.h"
-#include "modules.h"
+#include "modulesManager.h"
 #include "timeManager.h"
 
 void PortMonitor_TaskHandler();

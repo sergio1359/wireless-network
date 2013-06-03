@@ -4,7 +4,7 @@
 * Created: 12/05/2013 13:00:25
 *  Author: Victor
 */
-#include "modules.h"
+#include "modulesManager.h"
 #include "globals.h"
 #include "portMonitor.h"
 

@@ -98,7 +98,7 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			{
 				uartState = USART_RECEIVER_IDLE_RX_STATE;
 				//TODO: PROCCESS MESAGE!!
-				OM_ProccessOperation((OPERATION_HEADER_t*)rxBuffer, true);
+				OM_ProccessInternalOperation((OPERATION_HEADER_t*)rxBuffer, true);
 			}
 			else
 			{
