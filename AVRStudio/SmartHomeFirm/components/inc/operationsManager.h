@@ -13,6 +13,6 @@
 
 void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy);
 void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header);
-
+void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header);
 
 #endif /* OPERATIONSMANAGER_H_ */

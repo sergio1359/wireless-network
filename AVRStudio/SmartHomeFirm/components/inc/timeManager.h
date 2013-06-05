@@ -12,8 +12,12 @@
 #include <stdint.h>
 #include "EEPROM.h"
 
-void TIME_Validate(TIME_t *receivedTime, DATE_t *receivedDate);
+#define VALID_DATETIME (validDate & validTime)
+
+void TIME_ValidateTime(TIME_t *receivedTime);
+void TIME_ValidateDate(DATE_t *receivedDate);
 int8_t TIME_CompareTimes(TIME_t time1, TIME_t time2);
+int8_t TIME_CompareDates(DATE_t date1, DATE_t date2);
 void   TIME_CheckTimeOperation();
 
 

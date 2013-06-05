@@ -51,8 +51,6 @@ void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
 		if(i != moduleId)// Doesn't notify to the sender
 			(*modules_NotificationInd[i])(moduleId, header);	
 	}
-	
-	//TODO: Send by UART if coordinator (address == 0x0001)
 }
 
 uint8_t getCommandArgsLength(uint8_t* opcode)
@@ -61,12 +59,14 @@ uint8_t getCommandArgsLength(uint8_t* opcode)
 		return 4;// JUST FOR TRIALS! In final version, we need to decode the next byte. *(opcode + 1)
 	
 	if(command_is_dinamic[*opcode])
-		return command_lengths[*opcode] + *(opcode+2); //TODO: CHECK!!!!!!!!! LENGTH READ
+		return command_lengths[*opcode] + *(opcode+2);
 	else
 		return command_lengths[*opcode];
 }	
 
 void handleCommand(OPERATION_HEADER_t* header)
 {
-	(*command_handlers[header->opCode]) (header);
+	//TODO: Check if exists
+	if(command_handlers[header->opCode] != 0)
+		(*command_handlers[header->opCode]) (header);
 }

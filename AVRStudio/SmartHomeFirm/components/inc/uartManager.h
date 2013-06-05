@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "halUart.h"
+
+#include "EEPROM.h"
 	
 /*****************************************************************************
                               Types section
@@ -26,6 +28,6 @@ typedef enum _USARTReceiverState_t
   USART_RECEIVER_ERROR_RX_STATE
 } UARTReceiverState_t;
 
-void sendData(uint8_t *data, uint8_t size);
+void USART_SendOperation(OPERATION_HEADER_t* operation_header);
 
 #endif /* UARTMANAGER_H_ */

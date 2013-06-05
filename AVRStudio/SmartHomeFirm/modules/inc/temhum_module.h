@@ -16,10 +16,10 @@
 #define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
 
 #define COMMANDS_TABLE_TEMHUM \
-X(TemperatureRead,				0x5A, temhumRead_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,			false)	\
-X(TemperatureReadResponse,		0x5B, temhumRead_Handler,		CONFIG_READ_MESSAGE_t,					false)	\
-X(HumidityRead,					0x5C, temhumRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,	false)	\
-X(HumidityReadResponse,			0x5D, temhumRead_Handler,		CONFIG_CHECKSUM_MESSAGE_t,				false)	\
+X(TemperatureRead,				0x5A, temhumRead_Handler,		TEMPERATURE_READ_MESSAGE_t,				false)	\
+X(TemperatureReadResponse,		0x5B, temhumRead_Handler,		TEMPERATURE_READ_RESPONSE_MESSAGE_t,	false)	\
+X(HumidityRead,					0x5C, temhumRead_Handler,		HUMIDITY_READ_MESSAGE_t,				false)	\
+X(HumidityReadResponse,			0x5D, temhumRead_Handler,		HUMIDITY_READ_RESPONSE_MESSAGE_t,		false)	\
 
 
 //TEMPERATURE

@@ -74,11 +74,6 @@ void portModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification
 	
 }
 
-void portModule_TaskHandler(void)
-{
-	//TODO: Check the programmed off pins
-}
-
 void digitalPort_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == DigitalWrite)
@@ -164,8 +159,8 @@ _Bool proccessDigitalPortAction(uint8_t portAddress, uint8_t mask, _Bool read, u
 		digitalResponse.header.destinationAddress = sourceAddress;
 		digitalResponse.response.dir = portAddress;
 		digitalResponse.response.value = lastValuesD[portAddress];
-		//TODO: Send a DIGITAL_READ_RESPONSE_MESSAGE_t (check)
-		Radio_AddMessageByCopy(&digitalResponse.header);
+		
+		OM_ProccessResponseOperation(&digitalResponse.header);
 	}
 	else
 	{

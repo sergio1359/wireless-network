@@ -8,7 +8,6 @@
 /*****************************************************************************
 *****************************************************************************/
 #include "uartManager.h"
-#include "EEPROM.h"
 
 /*****************************************************************************
                               Definitions section
@@ -30,6 +29,8 @@ UARTReceiverState_t uartState = USART_RECEIVER_IDLE_RX_STATE;
 uint8_t* rxBuffer[RX_BUFFER_SIZE];
 uint8_t index;
 uint8_t checkSum;
+
+void sendData(uint8_t* data, uint8_t size);
 
 void HAL_UartBytesReceived(uint16_t bytes)
 {
@@ -128,7 +129,12 @@ void HAL_UartBytesReceived(uint16_t bytes)
 	}
 }
 
-void sendData(uint8_t *data, uint8_t size)
+void USART_SendOperation(OPERATION_HEADER_t* operation_header)
+{
+	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode));
+}
+
+void sendData(uint8_t* data, uint8_t size)
 {
 	uint8_t cs = 0;
 

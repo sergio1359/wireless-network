@@ -62,9 +62,10 @@ _Bool sendFlag = false;
 *****************************************************************************/
 static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
-	sendFlag = true;
+	if(!IS_COORDINATOR)
+		sendFlag = true;
 		
-	//ledToggle(0);
+	ledToggle(0);
 	(void)timer;
 }
 #endif
@@ -159,7 +160,7 @@ static void appInit(void)
 	appNetworkStatusTimer.handler = appNetworkStatusTimerHandler;
 	SYS_TimerStart(&appNetworkStatusTimer);
 	
-	HAL_UartPrint("ROUTER\r\n");
+	//HAL_UartPrint("ROUTER\r\n");
 	#else
 	HAL_UartPrint("COORDINATOR\r\n");
 	ledOn(LED_NETWORK);
@@ -186,6 +187,7 @@ static void APP_TaskHandler(void)
 
 /*****************************************************************************
 *****************************************************************************/
+uint8_t aa;
 int main(void)
 {
 	SYS_Init();
@@ -200,24 +202,32 @@ int main(void)
 	debugTime.hour = 00;
 	debugTime.minute = 00;
 	debugTime.second = 00;
+	TIME_ValidateTime(&debugTime);
 	
 	DATE_t debugDate;
 	debugDate.weekDay.flags.Friday = 1;
 	debugDate.day = 31;
 	debugDate.month = 5;
 	debugDate.year = 2013;
-	TIME_Validate(&debugTime, &debugDate);
+	TIME_ValidateDate(&debugDate);
 	
 	if(DS2401_Init())
 	{
-		HAL_UartPrint("SERIAL NUMBER: ");
-		for(int i = 0; i < SERIAL_NUMBER_SIZE - 1; i++)
+		if(IS_COORDINATOR)
 		{
-			HAL_UartWriteNumberHEX(serialNumber[i]);
-			HAL_UartWriteByte('-');
+			//sendData(serialNumber, SERIAL_NUMBER_SIZE);
 		}
-		HAL_UartWriteNumberHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);
-		HAL_UartPrint("\r\n\r\n");
+		else
+		{
+			HAL_UartPrint("SERIAL NUMBER: ");
+			for(int i = 0; i < SERIAL_NUMBER_SIZE - 1; i++)
+			{
+				HAL_UartWriteNumberHEX(serialNumber[i]);
+				HAL_UartWriteByte('-');
+			}
+			HAL_UartWriteNumberHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);
+			HAL_UartPrint("\r\n\r\n");
+		}		
 	}else
 	{
 		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");

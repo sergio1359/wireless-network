@@ -258,6 +258,7 @@ uint16_t NWK_RouteNextHop(uint16_t dst)
 *****************************************************************************/
 NwkRouteTableRecord_t* NWK_RouteTable()
 {
+	//TODO: COPY ONLY VALID ENTRIES
 	return nwkRouteTable;
 }
 

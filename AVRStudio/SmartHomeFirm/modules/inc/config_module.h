@@ -17,10 +17,11 @@
 
 #define COMMANDS_TABLE_CONFIG \
 X(ConfigWrite,				0x40, configWrite_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,			true)	\
-X(ConfigRead,				0x41, configRead_Handler,		CONFIG_READ_MESSAGE_t,					false)	\
-X(ConfigReadResponse,		0x42, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,	true)	\
-X(ConfigChecksum,			0x43, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,				false)	\
-X(ConfigChecksumResponse,	0x44, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,		false)	\
+X(ConfigWriteResponse,		0x41, configWrite_Handler,		CONFIG_WRITE_RESPONSE_HEADER_MESSAGE_t,	false)	\
+X(ConfigRead,				0x42, configRead_Handler,		CONFIG_READ_MESSAGE_t,					false)	\
+X(ConfigReadResponse,		0x43, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,	true)	\
+X(ConfigChecksum,			0x44, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,				false)	\
+X(ConfigChecksumResponse,	0x45, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,		false)	\
 
 
 // CONFIGURATION
@@ -30,6 +31,13 @@ typedef struct
 	uint8_t fragmentTotal:4;//MSB
 	uint8_t length;
 }CONFIG_WRITE_HEADER_MESSAGE_t;
+
+typedef struct
+{
+	uint8_t fragment:4; //LSB
+	uint8_t fragmentTotal:4;//MSB
+	uint8_t code;
+}CONFIG_WRITE_RESPONSE_HEADER_MESSAGE_t;
 
 typedef struct
 {
