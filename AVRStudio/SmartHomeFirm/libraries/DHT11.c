@@ -23,39 +23,36 @@
 
 VARPIN(DATA);
 
-/*
- * get data from dht11
- */
-//TODO: Try to decrement waits
-uint8_t getdata(uint8_t select) {
+_Bool DHT11_Read(uint16_t pinAddress, DHT11_Read_t* result)
+{
 	uint8_t bits[5];
 	uint8_t i,j = 0;
+	
+	VARPIN_UPDATE(DATA, pinAddress);
 
 	memset(bits, 0, sizeof(bits));
-
-	//reset port
-	VARPIN_OUT(DATA); //output
-	VARPIN_SET(DATA); //high
-	_delay_ms(200);
+	
+	//Error Codes
+	result->humitity = 255;
+	result->temperature = 255;
 
 	//send request
+	VARPIN_OUT(DATA); //output
 	VARPIN_CLR(DATA); //low
 	_delay_ms(18);
-	_delay_ms(5);
-	VARPIN_SET(DATA); //high
-	_delay_us(1);
+	//VARPIN_SET(DATA); //high
 	VARPIN_INP(DATA); //input
 	VARPIN_SET(DATA); //high
-	_delay_us(40);
+	_delay_us(30);
 
 	//check start condition 1
 	if(VARPIN_READ(DATA)) {
-		return DHT11_ERROR;
+		return 0;
 	}
 	_delay_us(80);
 	//check start condition 2
 	if(!VARPIN_READ(DATA)) {
-		return DHT11_ERROR;
+		return 0;
 	}
 	_delay_us(80);
 
@@ -74,32 +71,17 @@ uint8_t getdata(uint8_t select) {
 
 	//reset port
 	VARPIN_OUT(DATA); //output
-	VARPIN_CLR(DATA); //low
+	VARPIN_SET(DATA); //low
 
 	//check checksum
-	if (bits[0] + bits[1] + bits[2] + bits[3] == bits[4]) {
-		if (select == 0) { //return temperature
-			return(bits[2]);
-		} else if(select == 1){ //return humidity
-			return(bits[0]);
-		}
+	if (bits[0] + bits[1] + bits[2] + bits[3] == bits[4]) 
+	{
+		result->humitity = bits[0];
+		result->temperature = bits[2];
+		
+		return 1;
+	}else
+	{
+		return 0;	
 	}
-
-	return DHT11_ERROR;
-}
-
-/*
- * get temperature (0..50C)
- */
-uint8_t DHT11_ReadTemperature(uint16_t pinAddress) {
-	VARPIN_UPDATE(DATA, pinAddress);
-	return getdata(0);
-}
-
-/*
- * get humidity (20..90%)
- */
-uint8_t DHT11_ReadHumidity(uint16_t pinAddress) {
-	VARPIN_UPDATE(DATA, pinAddress);
-	return getdata(1);
 }

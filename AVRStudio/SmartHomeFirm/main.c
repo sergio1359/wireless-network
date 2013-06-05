@@ -183,10 +183,7 @@ static void APP_TaskHandler(void)
 		appSendData();
 	}
 }
-#include <util/delay.h>
 
-#define sbi(port,bit)   ((port) |= (1 << (bit)))
-#define TOP 5000 
 /*****************************************************************************
 *****************************************************************************/
 int main(void)
@@ -199,15 +196,17 @@ int main(void)
 	
 	EEPROM_Init();
 	
-	currentTime.hour = 00;
-	currentTime.minute = 00;
-	currentTime.second = 00;
+	TIME_t debugTime;
+	debugTime.hour = 00;
+	debugTime.minute = 00;
+	debugTime.second = 00;
 	
-	currentDate.weekDay.flags.Friday = 1;
-	currentDate.day = 31;
-	currentDate.month = 5;
-	currentDate.year = 2013;
-	TIME_Validate(&currentTime, &currentDate);
+	DATE_t debugDate;
+	debugDate.weekDay.flags.Friday = 1;
+	debugDate.day = 31;
+	debugDate.month = 5;
+	debugDate.year = 2013;
+	TIME_Validate(&debugTime, &debugDate);
 	
 	if(DS2401_Init())
 	{
