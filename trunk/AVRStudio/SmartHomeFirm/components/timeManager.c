@@ -14,13 +14,22 @@ TIME_OPERATION_HEADER_t* time_operation_header;
 
 void searchFirstTimeOperation();
 
-void TIME_Validate(TIME_t *receivedTime, DATE_t *receivedDate)
+void TIME_ValidateTime(TIME_t *receivedTime)
 {
 	memcpy((uint8_t*)&currentTime,(uint8_t*)receivedTime, sizeof(TIME_t));
-	memcpy((uint8_t*)&currentDate,(uint8_t*)receivedDate, sizeof(DATE_t));
+	validTime = 1;
 	
-	searchFirstTimeOperation();
-	validDateTime = 1;
+	if(validDate)
+		searchFirstTimeOperation();
+}
+
+void TIME_ValidateDate(DATE_t *receivedDate)
+{
+	memcpy((uint8_t*)&currentDate,(uint8_t*)receivedDate, sizeof(DATE_t));
+	validDate = 1;
+	
+	if(validTime)
+		searchFirstTimeOperation();
 }
 
 int8_t TIME_CompareTimes(TIME_t time1, TIME_t time2)
@@ -34,9 +43,20 @@ int8_t TIME_CompareTimes(TIME_t time1, TIME_t time2)
 	return 0;
 }
 
+int8_t TIME_CompareDates(DATE_t date1, DATE_t date2)
+{
+	if (date1.year > date2.year) return 1;
+	if (date1.year < date2.year) return -1;
+	if (date1.month > date2.month) return 1;
+	if (date1.month < date2.month) return -1;
+	if (date1.day > date2.day) return 1;
+	if (date1.day < date2.day) return -1;
+	return 0;
+}
+
 void TIME_CheckTimeOperation()
 {
-	if(validDateTime && (TIME_OPERATION_LIST_START_ADDRESS != TIME_OPERATION_LIST_END_ADDRESS))
+	if(VALID_DATETIME && (TIME_OPERATION_LIST_START_ADDRESS != TIME_OPERATION_LIST_END_ADDRESS))
 	{
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{

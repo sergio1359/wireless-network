@@ -22,5 +22,14 @@ namespace OperationUARTSender
 
             return result.ToArray();
         }
+
+        public void FromBinary(byte[] buffer)
+        {
+            SourceAddress = (ushort)((((ushort)buffer[1]) << 8) | (ushort)buffer[0]);
+            DestinationAddress = (ushort)((((ushort)buffer[3]) << 8) | (ushort)buffer[2]);
+            OpCode = buffer[4];
+            Args = new byte[buffer.Length - 5];
+            Buffer.BlockCopy(buffer, 5, Args, 0, Args.Length);
+        }
     }
 }

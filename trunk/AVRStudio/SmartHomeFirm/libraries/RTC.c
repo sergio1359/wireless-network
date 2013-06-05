@@ -22,8 +22,6 @@ void RTC_Init()
 	while(ASSR&0x07);           //Wait until TC2 is updated
 	TIMSK2 |= (1<<TOIE2);        //set 8-bit Timer/Counter2 Overflow Interrupt Enable
 	sei();                     //set the Global Interrupt Enable Bit
-	
-	validDateTime = 0;
 }
 
 ISR(TIMER2_OVF_vect)  //overflow interrupt vector

@@ -81,10 +81,19 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			temperatureResponse.response.addr = msg->addr;
 			temperatureResponse.response.temperature = lastTemperature[msg->addr];
+			
+			OM_ProccessResponseOperation(&temperatureResponse.header);
 		}
 		else
 		{
 			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS)
+			
+			temperatureResponse.header.destinationAddress = operation_header->sourceAddress;
+			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+			temperatureResponse.response.addr = msg->addr;
+			temperatureResponse.response.temperature = 0xFF;
+			
+			OM_ProccessResponseOperation(&temperatureResponse.header);
 		}
 	}else if(operation_header->opCode == TemperatureReadResponse)
 	{
@@ -98,10 +107,19 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 			humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			humidityResponse.response.addr = msg->addr;
 			humidityResponse.response.humidity = lastHumidity[msg->addr];
+			
+			OM_ProccessResponseOperation(&humidityResponse.header);
 		}
 		else
 		{
 			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS)
+			
+			temperatureResponse.header.destinationAddress = operation_header->sourceAddress;
+			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+			temperatureResponse.response.addr = msg->addr;
+			temperatureResponse.response.temperature = 0xFF;
+			
+			OM_ProccessResponseOperation(&temperatureResponse.header);
 		}		
 	}else if(operation_header->opCode == HumidityReadResponse)
 	{

@@ -51,7 +51,7 @@
 #define PWM_PINS (8)
 #define DEBOUNCED_PINS NUM_PINS
 
-
+#define IS_COORDINATOR (runningConfiguration.topConfiguration.networkConfig.deviceAddress == 0x4003) //0x0001
 
 /*****************************************************************************
 *****************************************************************************/
