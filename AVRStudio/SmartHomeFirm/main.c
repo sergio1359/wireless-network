@@ -75,18 +75,18 @@ uint16_t adcVal;
 uint8_t temp;
 static void appSendData(void)
 {
-	HAL_UartWriteNumberDEC(currentDate.day);
+	HAL_UartWriteNumberDEC(currentDate.day,2);
 	HAL_UartWriteByte('/');
-	HAL_UartWriteNumberDEC(currentDate.month);
+	HAL_UartWriteNumberDEC(currentDate.month,2);
 	HAL_UartWriteByte('/');
-	HAL_UartWriteNumberDEC(currentDate.year);
+	HAL_UartWriteNumberDEC(currentDate.year,4);
 	HAL_UartPrint("\t");
 	
-	HAL_UartWriteNumberDEC(currentTime.hour);
+	HAL_UartWriteNumberDEC(currentTime.hour,2);
 	HAL_UartWriteByte(':');
-	HAL_UartWriteNumberDEC(currentTime.minute);
+	HAL_UartWriteNumberDEC(currentTime.minute,2);
 	HAL_UartWriteByte(':');
-	HAL_UartWriteNumberDEC(currentTime.second);
+	HAL_UartWriteNumberDEC(currentTime.second,2);
 	HAL_UartPrint("\r\n");
 	
 	DISPLAY_Clear();
@@ -106,13 +106,14 @@ static void appSendData(void)
 	DISPLAY_WriteNumber(currentTime.second,2);*/
 
 	
+	
 	ADC_Reference(REF_DEFAULT);
-	adcVal = ADC_Read(ADC4);
+	adcVal = ADC_Read(ADC0);
 	//ADC_Reference(REF_INTERNAL_16);
 	//adcVal = ADC_Read(INTERNAL_TEMP);
 	//adcVal = 1.13 * adcVal - 272.8;
-	HAL_UartPrint("ADC4: ");
-	HAL_UartWriteNumberDEC(adcVal);
+	HAL_UartPrint("ADC0: ");
+	HAL_UartWriteNumberDEC(adcVal,4);
 	HAL_UartPrint("\r\n");
 	
 	//sendData(serialNumber, SERIAL_NUMBER_SIZE);
@@ -183,6 +184,9 @@ static void APP_TaskHandler(void)
 	}
 }
 #include <util/delay.h>
+
+#define sbi(port,bit)   ((port) |= (1 << (bit)))
+#define TOP 5000 
 /*****************************************************************************
 *****************************************************************************/
 int main(void)
