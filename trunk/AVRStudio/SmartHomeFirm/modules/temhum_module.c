@@ -30,6 +30,7 @@ struct
 uint8_t sensors[MAX_SENSORS];
 uint8_t num_of_sensors;
 
+DHT11_Read_t sensorResult;
 uint8_t lastTemperature[MAX_SENSORS];
 uint8_t lastHumidity[MAX_SENSORS];
 
@@ -79,7 +80,7 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 			temperatureResponse.header.destinationAddress = operation_header->sourceAddress;
 			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			temperatureResponse.response.addr = msg->addr;
-			temperatureResponse.response.temperature = DHT11_ReadTemperature(sensors[msg->addr]);
+			temperatureResponse.response.temperature = lastTemperature[msg->addr];
 		}
 		else
 		{
@@ -96,7 +97,7 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 			humidityResponse.header.destinationAddress = operation_header->sourceAddress;
 			humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			humidityResponse.response.addr = msg->addr;
-			humidityResponse.response.humidity = DHT11_ReadHumidity(sensors[msg->addr]);
+			humidityResponse.response.humidity = lastHumidity[msg->addr];
 		}
 		else
 		{
@@ -113,23 +114,21 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 	uint8_t currentValue = 0;
 	for(uint8_t i = 0; i<num_of_sensors; i++)
 	{
-		currentValue = DHT11_ReadTemperature(sensors[i]);
-		if(currentValue != DHT11_ERROR)
+		if(DHT11_Read(sensors[i], &sensorResult))
 		{
-			if(lastTemperature[i] != currentValue)
+			if(lastTemperature[i] != sensorResult.temperature)
 			{
-				//TODO: HANDLE OPERATIONS
-				lastTemperature[i] = currentValue;
+				lastTemperature[i] = sensorResult.temperature;
 				
+				//TODO: HANDLE OPERATIONS
 				//PortMonitor_LaunchOperations(sensors[i]);
 			}
-			
-			currentValue = DHT11_ReadHumidity(sensors[i]);
-			if(lastHumidity[i] != currentValue)
+
+			if(lastHumidity[i] != sensorResult.humitity)
 			{
-				//TODO: HANDLE OPERATIONS
-				lastHumidity[i] = currentValue;
+				lastHumidity[i] = sensorResult.humitity;
 				
+				//TODO: HANDLE OPERATIONS
 				//PortMonitor_LaunchOperations(sensors[i]);
 			}	
 		}else
