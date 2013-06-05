@@ -44,16 +44,16 @@ unsigned int ADC_Read(uint8_t);
 /*
 * NAME	PIN
 *
-* PWM0  PB4		OC2A //Slow due to external RTC crystal it's in use
+* PWM0  PB4		OC2A //Slow due to external RTC crystal it's in use NOT WORKING!
 * PWM1  PB5		OC1A
 * PWM2  PB6		OC1B
-* PWM3  PB7		OC0A
+* PWM3  PB7		OC1C
 *
 * PWM4  PE3		OC3A
 * PWM5  PE4		OC3B
 * PWM6  PE5		OC3C
 *
-* PWM7  PG5		OC0B
+* PWM7  PG5		OC0B //NOT WORKING
 *
 */
 
@@ -77,28 +77,28 @@ unsigned int ADC_Read(uint8_t);
 
 ////////////PWM pin to Timer Regs mapping
 #define TIMER_AT_PIN_PWM0   2A
-#define TCCR_AT_PIN_PWM0    TCCR2A
+#define TCCR_AT_PIN_PWM0    TCCR2
 
 #define TIMER_AT_PIN_PWM1   1A
-#define TCCR_AT_PIN_PWM1    TCCR1A
+#define TCCR_AT_PIN_PWM1    TCCR1
 
 #define TIMER_AT_PIN_PWM2   1B
-#define TCCR_AT_PIN_PWM2    TCCR1B
+#define TCCR_AT_PIN_PWM2    TCCR1
 
-#define TIMER_AT_PIN_PWM3   0A
-#define TCCR_AT_PIN_PWM3    TCCR0A
+#define TIMER_AT_PIN_PWM3   1C
+#define TCCR_AT_PIN_PWM3    TCCR1
 
 #define TIMER_AT_PIN_PWM4   3A
-#define TCCR_AT_PIN_PWM4    TCCR3A
+#define TCCR_AT_PIN_PWM4    TCCR3
 
 #define TIMER_AT_PIN_PWM5   3B
-#define TCCR_AT_PIN_PWM5    TCCR3B
+#define TCCR_AT_PIN_PWM5    TCCR3
 
 #define TIMER_AT_PIN_PWM6   3C
-#define TCCR_AT_PIN_PWM6    TCCR3C
+#define TCCR_AT_PIN_PWM6    TCCR3
 
 #define TIMER_AT_PIN_PWM7   0B
-#define TCCR_AT_PIN_PWM7    TCCR0B
+#define TCCR_AT_PIN_PWM7    TCCR0
 
 ////////////PORT to DDRX mapping
 #define DIR_REG_AT_PortB DDRB
@@ -121,30 +121,24 @@ unsigned int ADC_Read(uint8_t);
 #define MERGE_TO_FUNC(prefix, id)   prefix##_##id
 #define EXPAND_WRAPPER( NEXTLEVEL, ...)  NEXTLEVEL( __VA_ARGS__ )
 
-#define _PWM_SET(id, val)   \
-do{                     \
-OCR##id = val;      \
-    }                       \
-    while(0)            
+#define _PWM_SET(id, val)   OCR##id = val            
 
-#define _PWM_ENABLE(TCCR, id) TCCR |= (_BV(COM##id##1) | _BV(WGM20)) //WGM20 añadido => PWM, phase correct, TOP=0xFF (PAG 327)
-#define _PWM_DISABLE(TCCR, id) TCCR &= ~(_BV(COM##id##1) | _BV(WGM20))
+#define _PWM_ENABLE(TCCR, id)				\
+TCCR##A |= _BV(COM##id##1) | _BV(WGM30);	\
+TCCR##B |= _BV(WGM32) | _BV(CS30)
+
+#define _PWM_DISABLE(TCCR, id)				\
+TCCR##A |= ~(_BV(COM##id##1) | _BV(WGM30));	\
+TCCR##B |= ~(_BV(WGM32) | _BV(CS30))
 
 #define _SET_OUTPUT(port_id, msk)  PORTID_TO_DIR_REG(port_id) |= (msk)
 #define _SET_INTPUT(port_id, msk)  PORTID_TO_DIR_REG(port_id) &= ~(msk)
 
-
-//#define PWM_ENABLE(pin)         EXPAND_WRAPPER(_PWM_ENABLE ,PIN_TO_TCCRID(pin) , PIN_TO_TIMERID(pin) )
 #define PWM_DISABLE(pin)        EXPAND_WRAPPER(_PWM_DISABLE ,PIN_TO_TCCRID(pin) , PIN_TO_TIMERID(pin) ) 
-#define PWM_SET(pin, val)       EXPAND_WRAPPER(_PWM_SET, PIN_TO_TIMERID(pin), val )
-
-//#define SET_OUTPUT(pin)         EXPAND_WRAPPER(_SET_OUTPUT, PIN_TO_PORTID(pin), PIN_TO_PORTMSK(pin) )
-//#define SET_INPUT(pin)          EXPAND_WRAPPER(_SET_INTPUT, PIN_TO_PORTID(pin), PIN_TO_PORTMSK(pin) )                  
+#define PWM_SET(pin, val)       EXPAND_WRAPPER(_PWM_SET, PIN_TO_TIMERID(pin), val )               
 	
-#define PWM_ENABLE(pin)  \
-	do{                         \
-		EXPAND_WRAPPER(_SET_OUTPUT, PIN_TO_PORTID(pin), PIN_TO_PORTMSK(pin) );		\
-		EXPAND_WRAPPER(_PWM_ENABLE ,PIN_TO_TCCRID(pin) , PIN_TO_TIMERID(pin) );		\
-    }while(0)
+#define PWM_ENABLE(pin)													\
+EXPAND_WRAPPER(_SET_OUTPUT, PIN_TO_PORTID(pin), PIN_TO_PORTMSK(pin));	\
+EXPAND_WRAPPER(_PWM_ENABLE, PIN_TO_TCCRID(pin), PIN_TO_TIMERID(pin))
 	
 #endif /* ANALOG_H_ */

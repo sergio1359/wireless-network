@@ -138,34 +138,23 @@ void HAL_UartInit(uint32_t baudrate)
 
 /*****************************************************************************
 *****************************************************************************/
-void HAL_UartWriteNumberDEC(unsigned int num)
+void HAL_UartWriteNumberDEC(unsigned int integer, uint8_t digits)
 {
-	int aux;
-	if(num > 9999)
-	{
-		aux = num / 10000;
-		num = num % 10000;
-		HAL_UartWriteByte(aux+'0');
-	}
-	if(num > 999)
-	{
-		aux = num/1000;
-		num = num % 1000;
-		HAL_UartWriteByte(aux+'0');
-	}
-	if(num > 99)
-	{
-		aux = num/100;
-		num = num % 100;
-		HAL_UartWriteByte(aux+'0');
-	}
-	if(num > 9)
-	{
-		aux = num/10;
-		num = num % 10;
-		HAL_UartWriteByte(aux+'0');
-	}
-	HAL_UartWriteByte(num+'0');
+	//	Break down the original number into the thousands, hundreds, tens and ones
+	unsigned char thousands = integer / 1000;
+	if(digits>3)
+	HAL_UartWriteByte(thousands + '0');
+	
+	unsigned char hundreds = (integer - thousands*1000) / 100;
+	if(digits>2)
+	HAL_UartWriteByte(hundreds + '0');
+	
+	unsigned char tens = (integer - thousands*1000 - hundreds*100 ) / 10;
+	if(digits>1)
+	HAL_UartWriteByte(tens + '0');
+	
+	unsigned char ones = (integer - thousands*1000 - hundreds*100 - tens*10);
+	HAL_UartWriteByte(ones + '0');
 }
 
 /*****************************************************************************
