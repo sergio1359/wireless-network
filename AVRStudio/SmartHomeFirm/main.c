@@ -65,7 +65,7 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 	if(!IS_COORDINATOR)
 		sendFlag = true;
 		
-	ledToggle(0);
+	//ledToggle(0);
 	(void)timer;
 }
 #endif
