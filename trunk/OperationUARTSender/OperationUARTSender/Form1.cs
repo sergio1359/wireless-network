@@ -36,6 +36,18 @@ namespace OperationUARTSender
             ERROR_BUSY_RECEIVING_STATE
         };
 
+        enum DayOfWeeks
+        {
+            SUN = 1,
+            SAT = 2,
+            FRI = 4,
+            THU = 8,
+            WED = 16,
+            TUE = 32,
+            MON = 64,
+            UNK = 128
+        };
+
         // Magic symbol to start SOF end EOF sequences with. Should be duplicated if
         // occured inside the message.
         const byte APP_MAGIC_SYMBOL = 0x10;
@@ -48,6 +60,14 @@ namespace OperationUARTSender
         byte CheckSum;
 
         event EventHandler OperationReceived;
+
+        ushort CurrentAddress
+        {
+            get
+            {
+                return Convert.ToUInt16(textBoxConfigAddress.Text, 16);
+            }
+        }
 
         void OnOperationReceived(Operation oper)
         {
@@ -88,7 +108,7 @@ namespace OperationUARTSender
 
                     button1.Text = "Close";
                     comboBox1.Enabled = false;
-                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = true;
+                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = button8.Enabled = true;
                 }
             }
             else
@@ -97,14 +117,12 @@ namespace OperationUARTSender
 
                 button1.Text = "Open";
                 comboBox1.Enabled = true;
-                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = false;
+                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = button8.Enabled = false;
             }
         }
 
         private void buttonCmd_Click(object sender, EventArgs e)
         {
-            ushort address = Convert.ToUInt16(textBoxConfigAddress.Text, 16);
-
             if (sender == button2)
             {
                 /*SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
@@ -118,13 +136,13 @@ namespace OperationUARTSender
 
                 SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x22, 0x03, 0x07, 0x08, 0x09 } }.ToBinary());*/
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = address, OpCode = 0x5A, Args = new byte[] { 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x5A, Args = new byte[] { 0x00 } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = address, OpCode = 0x5C, Args = new byte[] { 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x5C, Args = new byte[] { 0x00 } }.ToBinary());
             }
             else if (sender == button3)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = address, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
             }
             else if (sender == button4)
             {
@@ -140,9 +158,9 @@ namespace OperationUARTSender
 
                 //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x07, Args = new byte[] { 0x03 } }.ToBinary());
 
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x21, Args = new byte[] { } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x21, Args = new byte[] { } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x24, Args = new byte[] { } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x24, Args = new byte[] { } }.ToBinary());
             }
         }
 
@@ -211,7 +229,7 @@ namespace OperationUARTSender
             {
                 PrintMessage(String.Format("DATE READ FROM 0x{0:X4} -> {1}  {2:d2}/{3:d2}/{4:d4}",
                     operation.SourceAddress,
-                    operation.Args[0],
+                    Enum.GetName(typeof(DayOfWeeks), (object)operation.Args[0]),
                     operation.Args[1],
                     operation.Args[2],
                     ((ushort)operation.Args[4])<<8 | operation.Args[3]));
@@ -414,6 +432,15 @@ namespace OperationUARTSender
 
                 SendConfigFile(openFileDialog1.FileName, address);
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var dat = DateTime.Now;
+            var dow = (int)Enum.Parse(typeof(DayOfWeeks), dat.DayOfWeek.ToString().ToUpper().Substring(0,3));
+
+            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x20, Args = new byte[] { (byte)dat.Hour, (byte)dat.Minute, (byte)dat.Second } }.ToBinary());
+            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x23, Args = new byte[] { (byte)dow, (byte)dat.Day, (byte)dat.Month, (byte)dat.Year, (byte)(dat.Year>>8) } }.ToBinary());
         }
     }
 }
