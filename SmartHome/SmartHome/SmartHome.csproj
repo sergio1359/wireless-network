@@ -40,10 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comunications\ErrorCodes.cs" />
+    <Compile Include="Comunications\MessagesProtocol.cs" />
+    <Compile Include="Comunications\Protocol.cs" />
     <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Network\BaseType.cs" />
-    <Compile Include="Messages\OPCode.cs" />
-    <Compile Include="Messages\IConnexion.cs" />
+    <Compile Include="Comunications\OPCode.cs" />
+    <Compile Include="Comunications\IConnexion.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />
     <Compile Include="Network\HomeDevices\HumiditySensor.cs" />
     <Compile Include="Network\HomeDevices\Light.cs" />
@@ -65,10 +68,10 @@
     <Compile Include="Memory\Conversors.cs" />
     <Compile Include="Memory\Crc16.cs" />
     <Compile Include="Memory\Hex.cs" />
-    <Compile Include="Messages\HID.cs" />
-    <Compile Include="Messages\Serial.cs" />
-    <Compile Include="Messages\ToNetwork.cs" />
-    <Compile Include="Messages\ToSystem.cs" />
+    <Compile Include="Comunications\HID.cs" />
+    <Compile Include="Comunications\Serial.cs" />
+    <Compile Include="Comunications\ToNetwork.cs" />
+    <Compile Include="Comunications\ToSystem.cs" />
     <Compile Include="Network\Actions.cs" />
     <Compile Include="Network\HomeDevices\Button.cs" />
     <Compile Include="Network\HomeDevices\WallPlug.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Products\ProductsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Sheduler.cs" />
+    <Compile Include="Comunications\EventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
