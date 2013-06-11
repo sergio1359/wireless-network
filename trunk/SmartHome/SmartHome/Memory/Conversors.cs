@@ -31,7 +31,7 @@ namespace SmartHome.Memory
             List<Byte> result = new List<Byte>();
 
             string value = Enum.GetName(typeof(DayOfWeek), time.DayOfWeek);
-            result.Add((byte)Enum.Parse(typeof(SmartHome.Network.TimeRestriction.WeekDays), value));
+            result.Add((byte)Enum.Parse(typeof(WeekDays), value));
 
             result.Add((byte)time.Day);
             result.Add((byte)time.Month);
@@ -120,9 +120,10 @@ namespace SmartHome.Memory
     {
         private byte[] PinIOConfig(char port)
         {
-            byte[] result = new Byte[5];
+            byte[] result = new Byte[4];
             PinPortConfiguration p = null;
 
+            //maskIO
             result[0] = 0x00;
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
             {
@@ -131,16 +132,8 @@ namespace SmartHome.Memory
                     result[0] = (byte)(result[0] | (0x01 << i));
             }
 
-
-            result[1] = 0xFF;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Analog:0 - Digital:1 default: 1
-            {
-                p = node.GetPinPortConfiguration(new PinPort(port, i));
-                if (p.Digital == false)
-                    result[1] = (byte)(result[1] & ~(0x01 << i));
-            }
-
-            result[2] = 0x00;
+            //defaultChangesD
+            result[1] = 0x00;
             for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
             {
                 p = node.GetPinPortConfiguration(new PinPort(port, i));
@@ -156,8 +149,8 @@ namespace SmartHome.Memory
                 ctd |= (ushort)((ushort)p.ChangeTypeD << (i * 2));
             }
 
-            result[3] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
-            result[4] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
+            result[2] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
+            result[3] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
 
             return result;
         }

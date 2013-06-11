@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Messages
+namespace SmartHome.Comunications
 {
     public enum OPCode : byte
     {
@@ -29,10 +29,11 @@ namespace SmartHome.Messages
         Error = 0x31,
 
         ConfigWrite = 0x40,
-        ConfigRead = 0x41,
-        ConfigReadResponse = 0x42,
-        ConfigChecksum = 0x43,
-        ConfigChecksumResponse = 0x44,
+        ConfigWriteResponse = 0x41,
+        ConfigRead = 0x42,
+        ConfigReadResponse = 0x43,
+        ConfigChecksum = 0x44,
+        ConfigChecksumResponse = 0x45,
 
         ColorWrite = 0x50,
         ColorWriteRandom = 0x51,

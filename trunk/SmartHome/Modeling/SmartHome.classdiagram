@@ -3739,6 +3739,9 @@ Faltan las notificaciones en el diagrama</body>
             </appliedStereotypesInternal>
             <elementDefinition Id="40af2669-a9d3-411a-8f1b-8a0384f95284" />
           </property>
+          <property Id="1a5772d7-c460-4e82-8dc5-34794e80fca7" name="DEFAULT_SENSIBILITY" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="379fadaa-cb88-4503-82cc-bbf6d71f040f" />
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="ae43332a-632b-4c12-8c33-dd399c49f702" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -3940,6 +3943,9 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="4df59ecc-0a5d-468f-96e2-9bffe5848956" />
+          </property>
+          <property Id="8b3f472f-5f0a-42e4-8ffa-fa32d0c32206" name="DEFAULT_SENSIBILITY" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="14b977cd-104a-457b-955a-7a167cb8f901" />
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>

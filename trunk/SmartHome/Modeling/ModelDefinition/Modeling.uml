@@ -5164,6 +5164,17 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="379fadaa-cb88-4503-82cc-bbf6d71f040f"
+            name="DEFAULT_SENSIBILITY"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -5426,6 +5437,17 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="14b977cd-104a-457b-955a-7a167cb8f901"
+            name="DEFAULT_SENSIBILITY"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation

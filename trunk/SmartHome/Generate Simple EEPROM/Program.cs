@@ -95,7 +95,7 @@ namespace Generate_Simple_EEPROM
             //Actions 0->1
             NetworkManager.Nodes[0].Connectors[0].HomeDevice.Actions.Add(new SmartHome.Network.Action()
             {
-                OPCode = SmartHome.Messages.OPCode.DigitalSwitch,
+                OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
                 Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
                 ToHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
             });
@@ -103,7 +103,7 @@ namespace Generate_Simple_EEPROM
             //1->0
             NetworkManager.Nodes[1].Connectors[0].HomeDevice.Actions.Add(new SmartHome.Network.Action()
             {
-                OPCode = SmartHome.Messages.OPCode.DigitalSwitch,
+                OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
                 Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
                 ToHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
             });

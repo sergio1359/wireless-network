@@ -104,6 +104,9 @@ namespace SmartHome.Memory
 
             result.Add((byte)node.Base);
 
+            //firmware version = 1
+            result.Add(0x01);
+
             //Default Lenght (unknow at the moment)
             result.Add(0x00);
             result.Add(0x00);
@@ -163,14 +166,28 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<Byte>();
 
+            PinPortConfiguration p = null;
+
+            //header
+            byte header = 0x00;
             foreach (String pinPort in baseConfiguration.PWMPorts)
             {
-                if (node.GetPinPortConfiguration(new PinPort(pinPort)) != null)
-                    result.Add(node.GetPinPortConfiguration(new PinPort(pinPort)).DefaultValueA);
+                p = node.GetPinPortConfiguration(new PinPort(pinPort));
+                if (p != null && p.Digital == false && p.Output == true)
+                    header |= 1;
                 else
-                {
+                    header |= 0;
+                header <<= 1;
+            }
+            result.Add(header);
+
+            foreach (String pinPort in baseConfiguration.PWMPorts)
+            {
+                p = node.GetPinPortConfiguration(new PinPort(pinPort));
+                if (p != null)
+                    result.Add(p.DefaultValueA);
+                else
                     result.Add(0x00);
-                }
             }
             return result.ToArray();
         }
@@ -179,6 +196,18 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
             PinPortConfiguration p = null;
+
+            //header
+            byte header = 0x00;
+            foreach (String pinPort in baseConfiguration.PWMPorts)
+            {
+                if (p != null && p.Digital == false && p.Output == false)
+                    header |= 1;
+                else
+                    header |= 0;
+                header <<= 1;
+            }
+            result.Add(header);
 
             foreach (string pinPort in baseConfiguration.AnalogPorts)
             {

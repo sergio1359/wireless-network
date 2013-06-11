@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
-using SmartHome.Messages;
+using SmartHome.Comunications;
 
 namespace SmartHome.Network
 {
@@ -16,7 +16,7 @@ namespace SmartHome.Network
         public HomeDevice ToHomeDevice { get; set; }
         public OPCode OPCode { get; set; }
         public byte[] Args { get; set; }
-        public Boolean Enable { get; set; }
+        public bool Enable { get; set; }
 
         public virtual void Execute() { }
     }
@@ -24,6 +24,7 @@ namespace SmartHome.Network
     public class Action : ActionAbstract
     {
         public List<TimeRestriction> TimeRestrictions { get; set; }
+        
         public override string ToString()
         {
             throw new NotImplementedException();
@@ -34,7 +35,6 @@ namespace SmartHome.Network
     {
         public byte MascWeekDays { get; set; }
         public DateTime Time;
-
 
         public override string ToString()
         {
@@ -47,17 +47,6 @@ namespace SmartHome.Network
         public byte MaskWeekDays { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-
-        public enum WeekDays : byte
-        {
-            Monday = 0x40,
-            Tuesday = 0x20,
-            Wednesday = 0x10,
-            Thursday = 0x08,
-            Friday = 0x04,
-            Saturday = 0x2,
-            Sunday = 0x01,
-        }
 
         public TimeRestriction(byte maskWeekDays, int fromHour, int fromMin, int FromSeg, int ToHour, int ToMin, int ToSeg)
         {
@@ -79,5 +68,16 @@ namespace SmartHome.Network
             Start = fromTime;
             End = toTime;
         }
+    }
+
+    public enum WeekDays : byte
+    {
+        Monday = 0x40,
+        Tuesday = 0x20,
+        Wednesday = 0x10,
+        Thursday = 0x08,
+        Friday = 0x04,
+        Saturday = 0x2,
+        Sunday = 0x01,
     }
 }
