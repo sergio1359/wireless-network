@@ -47,7 +47,7 @@ void PortMonitor_TaskHandler()
 			
 			if(((~config.maskIO)>>pin) & 0x01) //Input
 			{
-				if((config.maskAD>>pin) & 0x01) //Digital 
+				if((config.maskAD>>pin) & 0x01) //Digital //TOBEREMOVED
 				{
 					if ((config.changeTypeD>>(pin<<1)) != NO_EDGE) //AND ChangeType != NONE
 					{

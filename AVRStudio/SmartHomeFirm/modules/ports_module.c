@@ -13,6 +13,8 @@
 #define TIME_KEEPER_BUFFER_SIZE 16
 #define TIME_KEEPER_BUFFER_SIZE_MASK TIME_KEEPER_BUFFER_SIZE-1
 
+#define ANALOG_TO_PINADDRESS(addr) ((5 << 3) + addr)
+
 typedef struct
 {
 	uint16_t counter;
@@ -37,13 +39,14 @@ SYS_Timer_t timeKeeperTimer;
 
 CREATE_CIRCULARBUFFER(TIME_KEEPER_ELEM_t, TIME_KEEPER_BUFFER_SIZE)	timeKeeper_Buffer;
 
-bool validatePortAction(PORT_CONFIG_t config, uint8_t mask, bool digital, bool read);
-bool proccessDigitalPortAction(uint8_t dir, uint8_t mask, bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
+_Bool validatePortAction(PORT_CONFIG_t config, uint8_t mask, _Bool digital, _Bool read);
+_Bool proccessAnalogPortAction(uint8_t adcAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
+_Bool proccessDigitalPortAction(uint8_t dir, uint8_t mask, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static void timeKeeperTimerHandler(SYS_Timer_t *timer);
 
 void portModule_Init()
 {
-	//TODO: Read and set configuration (ANALOG)
+	//TODO: Read and set configuration (PWM)
 	PORT_CONFIG_t* configPtr = &runningConfiguration.topConfiguration.portConfig_PA;
 	uint8_t* portPtr;
 	
@@ -58,7 +61,7 @@ void portModule_Init()
 		HAL_GPIO_PORT_clr(portPtr,(~(configPtr->defaultValuesD) & ~(configPtr->maskIO)));
 		
 		configPtr++;			
-	}
+	}		
 	
 	digitalResponse.header.opCode = DigitalReadResponse;
 	analogResponse.header.opCode = AnalogReadResponse;
@@ -110,18 +113,18 @@ void analogPort_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		ANALOG_WRITE_MESSAGE_t* msg = (ANALOG_WRITE_MESSAGE_t*)(operation_header + 1);
 		//TODO: To consider the time param
-		/*if(!proccessDigitalPortAction(msg->dir, msg->mask, false,  msg->value, msg->seconds,  operation_header->sourceAddress))
+		//TODO: Implement
+		if(!proccessAnalogPortAction(msg->dir, false,  msg->value, msg->seconds,  operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
-		}*/
+		}
 	}else if(operation_header->opCode == AnalogRead)
 	{
 		ANALOG_READ_MESSAGE_t* msg = (ANALOG_READ_MESSAGE_t*)(operation_header + 1);
-		//TODO: To consider the time param
-		/*if(!proccessDigitalPortAction(msg->dir, msg->mask, false, ~lastValuesD[msg->dir], msg->seconds, operation_header->sourceAddress))
+		if(!proccessAnalogPortAction(msg->dir, true, 0, 0, operation_header->sourceAddress))
 		{
 			//TODO:SEND ERROR MESSAGE
-		}*/
+		}
 	}else if(operation_header->opCode == AnalogReadResponse)
 	{
 		//TODO: NOTIFICATION
@@ -143,6 +146,25 @@ _Bool validatePortAction(PORT_CONFIG_t config, uint8_t mask, _Bool digital, _Boo
 		result &= (config.maskIO & mask) == mask;
 		
 	return result;
+}
+
+_Bool proccessAnalogPortAction(uint8_t adcAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
+{
+	if(!validatePortAction(runningConfiguration.topConfiguration.portConfig_PF, (1 << adcAddress), false, read))
+		return false;
+	
+	if(read)
+	{
+		analogResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		analogResponse.header.destinationAddress = sourceAddress;
+		analogResponse.response.dir = adcAddress;
+		analogResponse.response.value = lastValuesA[adcAddress];
+		
+		OM_ProccessResponseOperation(&analogResponse.header);
+	}else
+	{
+		
+	}		
 }
 
 _Bool proccessDigitalPortAction(uint8_t portAddress, uint8_t mask, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
