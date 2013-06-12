@@ -40,6 +40,8 @@
             this.textBoxConfigAddress = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -132,16 +134,16 @@
             // 
             // textBoxConfigAddress
             // 
-            this.textBoxConfigAddress.Location = new System.Drawing.Point(298, 12);
+            this.textBoxConfigAddress.Location = new System.Drawing.Point(263, 12);
             this.textBoxConfigAddress.Name = "textBoxConfigAddress";
-            this.textBoxConfigAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxConfigAddress.Size = new System.Drawing.Size(53, 20);
             this.textBoxConfigAddress.TabIndex = 4;
             this.textBoxConfigAddress.Text = "0000";
             // 
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(420, 12);
+            this.button7.Location = new System.Drawing.Point(334, 11);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(92, 22);
             this.button7.TabIndex = 5;
@@ -152,7 +154,7 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(530, 12);
+            this.button8.Location = new System.Drawing.Point(530, 10);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(92, 22);
             this.button8.TabIndex = 5;
@@ -160,12 +162,24 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // button9
+            // 
+            this.button9.Enabled = false;
+            this.button9.Location = new System.Drawing.Point(432, 10);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(92, 22);
+            this.button9.TabIndex = 5;
+            this.button9.Text = "Read Config";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 341);
             this.Controls.Add(this.button8);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.textBoxConfigAddress);
             this.Controls.Add(this.button6);
@@ -197,6 +211,8 @@
         private System.Windows.Forms.TextBox textBoxConfigAddress;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

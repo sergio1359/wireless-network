@@ -48,6 +48,73 @@ namespace OperationUARTSender
             UNK = 128
         };
 
+        enum OPCode : byte
+        {
+            Reset = 0x00,
+            FirmwareVersionRead,
+            FirmwareVersionReadResponse,
+            ConfigWrite,
+            ConfigWriteResponse,
+            ConfigRead,
+            ConfigReadResponse,
+            ConfigReadConfirmation,
+            ConfigChecksum,
+            ConfigChecksumResponse,
+
+            MacRead = 0x20,					
+            MacReadResponse,			
+            NextHopRead,				
+            NextHopReadResponse,		
+            RouteTableRead,			
+            RouteTableReadResponse,	
+            RouteTableReadConfirmation,
+
+            TimeWrite = 0x30,
+            TimeRead,
+            TimeReadResponse,
+            DateWrite,
+            DateRead,
+            DateReadResponse,
+            DateTimeRequest,
+            DateTimeRequestResponse,
+
+            Warning = 0x3E,
+            Error = 0x3F,
+
+            DigitalWrite = 0x40,
+            DigitalSwitch,
+            DigitalRead,
+            DigitalReadResponse,
+
+            AnalogWrite = 0x4A,
+            AnalogRead,
+            AnalogReadResponse,
+
+            ColorWrite = 0x50,
+            ColorWriteRandom = 0x51,
+            ColorSecuenceWrite = 0x52,
+            ColorSortedSecuenceWrite = 0x53,
+            ColorRead = 0x54,
+            ColorReadResponse = 0x55,
+
+            PresenceRead = 0x57,
+            PresenceReadResponse = 0x58,
+
+            TemperatureRead = 0x5A,
+            TemperatureReadResponse = 0x5B,
+            HumidityRead = 0x5C,
+            HumidityReadResponse = 0x5D,
+
+            PowerRead = 0x60,
+            PowerReadResponse = 0x61,
+
+            LuminosityRead = 0x63,
+            LuminosityReadResponse = 0x64,
+
+            PCOperation = 0xFE,
+            Extension = 0xFF,
+        }
+
         // Magic symbol to start SOF end EOF sequences with. Should be duplicated if
         // occured inside the message.
         const byte APP_MAGIC_SYMBOL = 0x10;
@@ -58,6 +125,10 @@ namespace OperationUARTSender
         SerialReceiverState serialState = SerialReceiverState.USART_RECEIVER_IDLE_RX_STATE;
         List<byte> currentMessage = new List<byte>();
         byte CheckSum;
+
+        const int MAX_CONTENT_SIZE = 50;
+        List<Operation> configWriteBuffer = new List<Operation>();
+        List<Operation> configReadBuffer = new List<Operation>();
 
         event EventHandler OperationReceived;
 
@@ -108,7 +179,8 @@ namespace OperationUARTSender
 
                     button1.Text = "Close";
                     comboBox1.Enabled = false;
-                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = button8.Enabled = true;
+                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled =
+                    button6.Enabled = button7.Enabled = button8.Enabled = button9.Enabled = true;
                 }
             }
             else
@@ -117,7 +189,8 @@ namespace OperationUARTSender
 
                 button1.Text = "Open";
                 comboBox1.Enabled = true;
-                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled = button6.Enabled = button7.Enabled = button8.Enabled = false;
+                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled =
+                button6.Enabled = button7.Enabled = button8.Enabled = button9.Enabled = false;
             }
         }
 
@@ -125,42 +198,42 @@ namespace OperationUARTSender
         {
             if (sender == button2)
             {
-                /*SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());*/
-
                 /*
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x20, 0x03, 0x01, 0x02, 0x03 } }.ToBinary());
-                
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x21, 0x03, 0x04, 0x05, 0x06 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x40, Args = new byte[] { 0x22, 0x03, 0x07, 0x08, 0x09 } }.ToBinary());*/
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
+                */
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x5A, Args = new byte[] { 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TemperatureRead, Args = new byte[] { 0x00 } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x5C, Args = new byte[] { 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x00 } }.ToBinary());
             }
             else if (sender == button3)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
             }
             else if (sender == button4)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4003, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4003, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
             }
             else if (sender == button5)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = 0x06, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
             }
             else if (sender == button6)
             {
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x44, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = (byte)OPCode.DigitalRead, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
 
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = 0x07, Args = new byte[] { 0x03 } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x21, Args = new byte[] { } }.ToBinary());
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TimeRead, Args = new byte[] { } }.ToBinary());
 
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x24, Args = new byte[] { } }.ToBinary());
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DateRead, Args = new byte[] { } }.ToBinary());
+
+
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.MacRead, Args = new byte[] { } }.ToBinary());
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.FirmwareVersionRead, Args = new byte[] { } }.ToBinary());
+                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.NextHopRead, Args = new byte[] { 0x04, 0x40 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.RouteTableRead, Args = new byte[] { } }.ToBinary());
             }
         }
 
@@ -168,14 +241,14 @@ namespace OperationUARTSender
         {
             Operation operation = sender as Operation;
 
-            if (operation.OpCode == 0x41)
+            if (operation.OpCode == (byte)OPCode.ConfigWriteResponse)
             {
                 if (operation.Args[1] == 0x00)
                 {
                     configWriteBuffer.RemoveAt(0);
                     if (configWriteBuffer.Count > 0)
                     {
-                        if(configWriteBuffer.Count == 1)
+                        if (configWriteBuffer.Count == 1)
                             PrintMessage("CONFIG. UPDATE DONE");
 
                         SendData(configWriteBuffer[0].ToBinary());
@@ -187,7 +260,7 @@ namespace OperationUARTSender
                     PrintMessage("CONFIG. ERROR CODE: " + Enum.GetName(typeof(ConfigErrorCodes), (object)operation.Args[1]));
                 }
             }
-            else if (operation.OpCode == 0x5B || operation.OpCode == 0x5D)
+            else if (operation.OpCode == (byte)OPCode.TemperatureReadResponse || operation.OpCode == (byte)OPCode.HumidityReadResponse)
             {
                 if (operation.Args[1] == 0xFF)
                 {
@@ -204,20 +277,20 @@ namespace OperationUARTSender
                     PrintMessage(String.Format(baseStr, operation.SourceAddress, operation.Args[0], operation.Args[1]));
                 }
             }
-            else if (operation.OpCode == 0x45)
+            else if (operation.OpCode == (byte)OPCode.ConfigChecksumResponse)
             {
                 PrintMessage(String.Format("CHECKSUM RECEIVED FROM 0x{0:X4}: 0x{1:X4}",
                     operation.SourceAddress,
-                    ((ushort)operation.Args[1])<<8 | operation.Args[0]));
+                    ((ushort)operation.Args[1]) << 8 | operation.Args[0]));
             }
-            else if (operation.OpCode == 0x08)
+            else if (operation.OpCode == (byte)OPCode.DigitalReadResponse)
             {
                 PrintMessage(String.Format("DIGITAL READ FROM 0x{0:X4} PORT_{1}: 0x{2:X2}",
                     operation.SourceAddress,
                     (char)('A' + operation.Args[0]),
                     operation.Args[1]));
             }
-            else if (operation.OpCode == 0x22)
+            else if (operation.OpCode == (byte)OPCode.TimeReadResponse)
             {
                 PrintMessage(String.Format("TIME READ FROM 0x{0:X4} ->  {1:d2}:{2:d2}:{3:d2}",
                     operation.SourceAddress,
@@ -225,14 +298,66 @@ namespace OperationUARTSender
                     operation.Args[1],
                     operation.Args[2]));
             }
-            else if (operation.OpCode == 0x25)
+            else if (operation.OpCode == (byte)OPCode.DateReadResponse)
             {
                 PrintMessage(String.Format("DATE READ FROM 0x{0:X4} -> {1}  {2:d2}/{3:d2}/{4:d4}",
                     operation.SourceAddress,
                     Enum.GetName(typeof(DayOfWeeks), (object)operation.Args[0]),
                     operation.Args[1],
                     operation.Args[2],
-                    ((ushort)operation.Args[4])<<8 | operation.Args[3]));
+                    ((ushort)operation.Args[4]) << 8 | operation.Args[3]));
+            }
+            else if (operation.OpCode == (byte)OPCode.MacReadResponse)
+            {
+                PrintMessage(String.Format("MAC FROM 0x{0:X4} -> 0x{1:X2}-0x{2:X2}-0x{3:X2}-0x{4:X2}-0x{5:X2}-0x{6:X2}",
+                    operation.SourceAddress,
+                    operation.Args[0],
+                    operation.Args[1],
+                    operation.Args[2],
+                    operation.Args[3],
+                    operation.Args[4],
+                    operation.Args[5]));
+            }
+            else if (operation.OpCode == (byte)OPCode.FirmwareVersionReadResponse)
+            {
+                PrintMessage(String.Format("FIRMWARE VERSION FROM 0x{0:X4} -> {1}",
+                    operation.SourceAddress,
+                    operation.Args[0]));
+            }
+            else if (operation.OpCode == (byte)OPCode.ConfigReadResponse)
+            {
+                int fragment = operation.Args[0] & 0x0F;
+                int totalFragment = (operation.Args[0] & 0xF0) >> 4;
+
+                Operation lastOp = null;
+                if (configReadBuffer.Count > 0)
+                    lastOp = configReadBuffer.Last();
+
+                if (lastOp == null || (lastOp != null && operation.Args[0] == lastOp.Args[0] + 1))
+                {
+                    PrintMessage(String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} OK",
+                        operation.SourceAddress,
+                        fragment,
+                        totalFragment));
+
+                    configReadBuffer.Add(operation);
+                    SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } }.ToBinary());
+
+                    if (fragment == totalFragment)
+                    {
+                        SaveConfigFile();
+                    }
+                }
+                else
+                {
+                    PrintMessage(String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} ERROR",
+                        operation.SourceAddress,
+                        fragment,
+                        totalFragment));
+
+                    //Send error code back
+                    SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x01 } }.ToBinary());
+                }
             }
             else
             {
@@ -360,23 +485,20 @@ namespace OperationUARTSender
             serial.Write(frame.ToArray(), 0, frame.Count);
         }
 
-        const int MAX_CONTENT_SIZE = 50;
-        List<Operation> configWriteBuffer = new List<Operation>();
-
         void SendConfigFile(string inputFilename, ushort destinationAddress)
         {
             byte[] fileBytes = File.ReadAllBytes(inputFilename);
 
             configWriteBuffer.Clear();
-            byte numberOfFrames = (byte)(fileBytes.Length / MAX_CONTENT_SIZE);
+            byte numberOfFrames = (byte)Math.Ceiling((double)fileBytes.Length / MAX_CONTENT_SIZE);
             int frameSize = 0;
-            for (byte i = 0; i <= numberOfFrames; i++)
+            for (byte i = 0; i < numberOfFrames; i++)
             {
                 Operation currentOp = new Operation()
                 {
                     SourceAddress = 0x00,
                     DestinationAddress = destinationAddress,
-                    OpCode = 0x40,
+                    OpCode = (byte)OPCode.ConfigWrite,
                     Args = new byte[MAX_CONTENT_SIZE + 2]
                 };
 
@@ -389,6 +511,36 @@ namespace OperationUARTSender
             }
 
             SendData(configWriteBuffer[0].ToBinary());
+        }
+
+        void SaveConfigFile()
+        {
+            List<byte> rawBytes = new List<byte>();
+
+            foreach (Operation op in configReadBuffer)
+            {
+                rawBytes.AddRange(op.Args.Skip(2));
+            }
+
+            //TODO: Calculate Checksum
+            ushort configLength = (ushort)((((ushort)rawBytes[2]) << 8) | (ushort)rawBytes[1]);
+
+            if (configLength == rawBytes.Count)
+            {
+                this.BeginInvoke((Action)(() =>
+                {
+                    var res = saveFileDialog1.ShowDialog();
+
+                    if (res == System.Windows.Forms.DialogResult.OK)
+                    {
+                        System.IO.File.WriteAllBytes(saveFileDialog1.FileName, rawBytes.ToArray());
+                    }
+                }));
+            }
+            else
+            {
+                PrintMessage("CONFIG ER9ROR. UNEXPECTED SIZE");
+            }
         }
 
         void PrintMessage(string message)
@@ -428,19 +580,24 @@ namespace OperationUARTSender
 
             if (res == System.Windows.Forms.DialogResult.OK)
             {
-                ushort address = Convert.ToUInt16(textBoxConfigAddress.Text, 16);
-
-                SendConfigFile(openFileDialog1.FileName, address);
+                SendConfigFile(openFileDialog1.FileName, CurrentAddress);
             }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             var dat = DateTime.Now;
-            var dow = (int)Enum.Parse(typeof(DayOfWeeks), dat.DayOfWeek.ToString().ToUpper().Substring(0,3));
+            var dow = (int)Enum.Parse(typeof(DayOfWeeks), dat.DayOfWeek.ToString().ToUpper().Substring(0, 3));
 
-            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x20, Args = new byte[] { (byte)dat.Hour, (byte)dat.Minute, (byte)dat.Second } }.ToBinary());
-            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = 0x23, Args = new byte[] { (byte)dow, (byte)dat.Day, (byte)dat.Month, (byte)dat.Year, (byte)(dat.Year>>8) } }.ToBinary());
+            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TimeWrite, Args = new byte[] { (byte)dat.Hour, (byte)dat.Minute, (byte)dat.Second } }.ToBinary());
+            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DateWrite, Args = new byte[] { (byte)dow, (byte)dat.Day, (byte)dat.Month, (byte)dat.Year, (byte)(dat.Year >> 8) } }.ToBinary());
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            configReadBuffer.Clear();
+
+            SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigRead, Args = new byte[] { } }.ToBinary());
         }
     }
 }

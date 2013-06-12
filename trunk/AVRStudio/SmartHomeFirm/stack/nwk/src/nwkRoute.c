@@ -249,17 +249,27 @@ void nwkRouteErrorReceived(NWK_DataInd_t *ind)
 
 /*****************************************************************************
 *****************************************************************************/
-uint16_t NWK_RouteNextHop(uint16_t dst)
+NwkRouteTableRecord_t* NWK_RouteNextHop(uint16_t dst)
 {
-  return nwkRouteNextHop(dst);
+	return nwkRouteFindRecord(dst);
 }
 
 /*****************************************************************************
 *****************************************************************************/
-NwkRouteTableRecord_t* NWK_RouteTable()
+void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length)
 {
+	uint8_t writeIndex = 0;
 	//TODO: COPY ONLY VALID ENTRIES
-	return nwkRouteTable;
+	for (uint8_t i = 0; i < NWK_ROUTE_TABLE_SIZE; i++)
+	{
+		if (nwkRouteTable[i].dst != NWK_ROUTE_UNKNOWN)
+		{
+			memcpy((uint8_t*)&buffer[writeIndex],(uint8_t*)&nwkRouteTable[i], sizeof(NwkRouteTableRecord_t));
+			writeIndex+= sizeof(NwkRouteTableRecord_t);
+		}			
+	}
+	
+	length = writeIndex;			
 }
 
 #endif // NWK_ENABLE_ROUTING

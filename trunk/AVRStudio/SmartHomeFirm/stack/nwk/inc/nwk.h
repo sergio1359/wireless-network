@@ -154,8 +154,8 @@ void NWK_SetAckControl(uint8_t control);
 void NWK_TaskHandler(void);
 
 #ifdef NWK_ENABLE_ROUTING
-uint16_t NWK_RouteNextHop(uint16_t dst);
-NwkRouteTableRecord_t* NWK_RouteTable(void);
+NwkRouteTableRecord_t* NWK_RouteNextHop(uint16_t dst);
+void NWK_RouteTable(uint8_t* buffer, uint8_t length);
 #endif
 
 #endif // _NWK_H_

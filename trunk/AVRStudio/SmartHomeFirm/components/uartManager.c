@@ -30,7 +30,7 @@ uint8_t* rxBuffer[RX_BUFFER_SIZE];
 uint8_t index;
 uint8_t checkSum;
 
-void sendData(uint8_t* data, uint8_t size);
+void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize);
 
 void HAL_UartBytesReceived(uint16_t bytes)
 {
@@ -131,10 +131,15 @@ void HAL_UartBytesReceived(uint16_t bytes)
 
 void USART_SendOperation(OPERATION_HEADER_t* operation_header)
 {
-	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode));
+	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode), 0, 0);
 }
 
-void sendData(uint8_t* data, uint8_t size)
+void USART_SendOperationWithBody(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize)
+{
+	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
+}
+
+void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize)
 {
 	uint8_t cs = 0;
 
@@ -150,6 +155,17 @@ void sendData(uint8_t* data, uint8_t size)
 		}
 		HAL_UartWriteByte(data[i]);
 		cs += data[i];
+	}
+	
+	for (uint8_t i = 0; i < bodySize; i++)
+	{
+		if (body[i] == APP_MAGIC_SYMBOL)
+		{
+			HAL_UartWriteByte(APP_MAGIC_SYMBOL);
+			cs += APP_MAGIC_SYMBOL;
+		}
+		HAL_UartWriteByte(body[i]);
+		cs += body[i];
 	}
 
 	HAL_UartWriteByte(eof[0]);
