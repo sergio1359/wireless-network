@@ -69,17 +69,20 @@ typedef struct{
 }DIGITAL_PORT_CHANGE_TYPE_t;
 
 typedef struct{
+	//uint8_t maskDIGITAL; //0-> disabled		1-> enabled
 	uint8_t maskIO;   //0-> inputs		1-> outputs
-	uint8_t maskAD;   //0-> analog		1-> digital
+	uint8_t maskAD;   //0-> analog		1-> digital													//TOBEREMOVED
 	uint8_t defaultValuesD;		 //Initial values DIGITAL
-	uint16_t changeTypeD; //Two for pin	10-> risingEdge		01-> fallingEdge	11->both
+	uint16_t changeTypeD; //Two for pin	10-> risingEdge		01-> fallingEdge	11->both			//TOBEREMOVED
 }PORT_CONFIG_t;
 
 typedef struct{
+	//uint8_t maskPWM; //0-> disabled		1-> enabled
 	uint8_t defaultValueA;   //Initial value ANALOG output (PWM)
 }PWM_CONFIG_t;
 
 typedef struct{
+	//uint8_t maskANALOG; //0-> disabled		1-> enabled
 	uint8_t increment;   //Difference between the last and current value
 	uint8_t threshold;	 //hysteresis value to exceed
 }ANALOG_EVENT_CONFIG_t;
