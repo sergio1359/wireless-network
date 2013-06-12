@@ -20,11 +20,24 @@ enum
 	ERROR_BUSY_RECEIVING_STATE
 }RESPONSE_ERROR_CODES;
 
+
 struct
 {
 	OPERATION_HEADER_t header;
-	CONFIG_WRITE_RESPONSE_HEADER_MESSAGE_t response;
+	FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t response;
+}firmwareResponse;
+
+struct
+{
+	OPERATION_HEADER_t header;
+	CONFIG_WRITE_RESPONSE_MESSAGE_t response;
 }configWriteResponse;
+
+struct
+{
+	OPERATION_HEADER_t header;
+	CONFIG_READ_RESPONSE_HEADER_MESSAGE_t response;
+}configReadResponse;
 
 struct
 {
@@ -41,6 +54,7 @@ _Bool sendingState;
 uint8_t currentSendFragment;
 uint8_t totalSendExpected;
 uint16_t currentSendIndex;
+uint16_t currentSendFrameSize;
 
 RUNNING_CONFIGURATION_t configBuffer;
 
@@ -48,7 +62,9 @@ _Bool validateReceivedConfig(void);
 
 void configModule_Init(void)
 {
+	firmwareResponse.header.opCode		= FirmwareVersionReadResponse;
 	configWriteResponse.header.opCode = ConfigWriteResponse;
+	configReadResponse.header.opCode = ConfigReadResponse;
 	checksumResponse.header.opCode = ConfigChecksumResponse;
 	
 	receivingState = false;
@@ -59,6 +75,24 @@ void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificati
 {
 	
 }
+
+void configSystem_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == Reset)
+	{
+		softReset();
+	}else if(operation_header->opCode == FirmwareVersionRead)
+	{
+		firmwareResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		firmwareResponse.header.destinationAddress = operation_header->sourceAddress;
+		firmwareResponse.response.version = FIRMWARE_VERSION;
+		
+		OM_ProccessResponseOperation(&firmwareResponse.header);
+	}else if(operation_header->opCode == FirmwareVersionReadResponse)
+	{
+		//TODO: SEND NOTIFICATION
+	}
+};
 
 void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 {
@@ -135,17 +169,73 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == ConfigRead)
 	{
+		configReadResponse.header.destinationAddress = operation_header->sourceAddress;
+		configReadResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		
 		if(sendingState)
 		{
-			//TODO: SEND OR LOG ERROR (BUSY SENDING STATE)
+			//TODO: SEND OR LOG ERROR (BUSY SENDING CONFIG STATE)
 		}else
 		{
-		
+			sendingState = true;
+			
+			currentSendIndex = 0;
+			currentSendFragment = 0;
+			totalSendExpected = CEILING(runningConfiguration.topConfiguration.deviceInfo.length , MAX_CONTENT_MESSAGE_SIZE);
+			currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.deviceInfo.length - currentSendIndex);
+			
+			configReadResponse.response.fragment = currentSendFragment;
+			configReadResponse.response.fragmentTotal = totalSendExpected;
+			configReadResponse.response.length = currentSendFrameSize;
+			
+			//TODO: Add frame from currentSendIndex(0) to currentSendFrameSize
+			OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&runningConfiguration.raw, currentSendFrameSize);
+		}
+	}else if(operation_header->opCode == ConfigReadConfirmation)
+	{
+		if(sendingState)
+		{
+			CONFIG_READ_CONFIRMATION_MESSAGE_t* msg = (CONFIG_READ_CONFIRMATION_MESSAGE_t*)(operation_header + 1);
+			
+			if(msg->fragment == currentSendFragment && msg->fragmentTotal == totalSendExpected)
+			{
+				if(msg->code == 0x00) //'OK'
+				{
+					if(currentSendFragment < totalSendExpected)	 //Something to send
+					{
+						currentSendIndex += currentSendFrameSize;
+						currentSendFragment++;
+						
+						currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.deviceInfo.length - currentSendIndex);
+						
+						configReadResponse.response.fragment = currentSendFragment;
+						configReadResponse.response.fragmentTotal = totalSendExpected;
+						configReadResponse.response.length = currentSendFrameSize;
+						
+						OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&runningConfiguration.raw[currentSendIndex], currentSendFrameSize);
+					}else
+					{
+						//Finish
+						sendingState = false;
+					}
+				}else
+				{
+					//Something wrong at server size. Abort current session
+					sendingState = false;
+				}
+			}else
+			{
+				sendingState = false;
+				//TODO: SEND OR LOG ERROR (FRAGMENT OR FRAGMENT TOTAL NOT EXPECTED)
+			}
+		}else
+		{
+			//TODO: SEND OR LOG ERROR (NOT SENDING CONFIG)
 		}
 	}else if(operation_header->opCode == ConfigReadResponse)
 	{
-		//TODO: NOTIFICATION
-	}		
+		//TODO: SEND NOTIFICATION
+	}			
 }
 
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header)

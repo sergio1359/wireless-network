@@ -16,13 +16,30 @@
 #define CONFIG_MODULE_DEFINITION  X(ConfigModule, configModule_Init, configModule_NotificationInd)
 
 #define COMMANDS_TABLE_CONFIG \
-X(ConfigWrite,				0x40, configWrite_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,			true)	\
-X(ConfigWriteResponse,		0x41, configWrite_Handler,		CONFIG_WRITE_RESPONSE_HEADER_MESSAGE_t,	false)	\
-X(ConfigRead,				0x42, configRead_Handler,		CONFIG_READ_MESSAGE_t,					false)	\
-X(ConfigReadResponse,		0x43, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,	true)	\
-X(ConfigChecksum,			0x44, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,				false)	\
-X(ConfigChecksumResponse,	0x45, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,		false)	\
+X(Reset,						0x00, configSystem_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				false)	\
+X(FirmwareVersionRead,			0x01, configSystem_Handler,		FIRMWARE_VERSION_READ_MESSAGE_t,			false)	\
+X(FirmwareVersionReadResponse,	0x02, configSystem_Handler,		FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t,	false)	\
+X(ConfigWrite,					0x03, configWrite_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				true)	\
+X(ConfigWriteResponse,			0x04, configWrite_Handler,		CONFIG_WRITE_RESPONSE_MESSAGE_t,			false)	\
+X(ConfigRead,					0x05, configRead_Handler,		CONFIG_READ_MESSAGE_t,						false)	\
+X(ConfigReadResponse,			0x06, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,		true)	\
+X(ConfigReadConfirmation,		0x07, configRead_Handler,		CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
+X(ConfigChecksum,				0x08, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,					false)	\
+X(ConfigChecksumResponse,		0x09, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
 
+//SYSTEM
+typedef struct
+{
+}RESET_MESSAGE_t;
+
+typedef struct
+{
+}FIRMWARE_VERSION_READ_MESSAGE_t;
+
+typedef struct
+{
+	uint8_t version;
+}FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t;
 
 // CONFIGURATION
 typedef struct
@@ -37,7 +54,7 @@ typedef struct
 	uint8_t fragment:4; //LSB
 	uint8_t fragmentTotal:4;//MSB
 	uint8_t code;
-}CONFIG_WRITE_RESPONSE_HEADER_MESSAGE_t;
+}CONFIG_WRITE_RESPONSE_MESSAGE_t;
 
 typedef struct
 {
@@ -52,6 +69,13 @@ typedef struct
 
 typedef struct
 {
+	uint8_t fragment:4; //LSB
+	uint8_t fragmentTotal:4;//MSB
+	uint8_t code;
+}CONFIG_READ_CONFIRMATION_MESSAGE_t;
+
+typedef struct
+{
 }CONFIG_CHECKSUM_MESSAGE_t;
 
 typedef struct
@@ -63,6 +87,7 @@ typedef struct
 void configModule_Init(void);
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
 
+void configSystem_Handler(OPERATION_HEADER_t* operation_header);
 void configWrite_Handler(OPERATION_HEADER_t* operation_header);
 void configRead_Handler(OPERATION_HEADER_t* operation_header);
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header);

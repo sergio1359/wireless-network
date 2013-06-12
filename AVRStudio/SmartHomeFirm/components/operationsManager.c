@@ -42,6 +42,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		handleCommand(operation_header);
 	}else
 	{
+		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :)
 		if(IS_COORDINATOR)
 			operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		
@@ -105,5 +106,16 @@ void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 	}else
 	{
 		Radio_AddMessageByCopy(operation_header);
+	}
+}
+
+void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodyLength)
+{
+	if(IS_COORDINATOR)
+	{
+		USART_SendOperationWithBody(operation_header, bodyPtr, bodyLength);
+	}else
+	{
+		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength);
 	}
 }

@@ -17,14 +17,14 @@
 #define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_NotificationInd)
 
 #define COMMANDS_TABLE_TIME \
-X(TimeWrite,					0x20, time_Handler,		TIME_WRITE_MESSAGE_t,					false)	\
-X(TimeRead,						0x21, time_Handler,		TIME_READ_MESSAGE_t,					false)	\
-X(TimeReadResponse,				0x22, time_Handler,		TIME_READ_RESPONSE_MESSAGE_t,			false)	\
-X(DateWrite,					0x23, date_Handler,		DATE_WRITE_MESSAGE_t,					false)	\ 
-X(DateRead,						0x24, date_Handler,		DATE_READ_MESSAGE_t,					false)	\
-X(DateReadResponse,				0x25, date_Handler,		DATE_READ_RESPONSE_MESSAGE_t,			false)	\
-X(DateTimeRequest,				0x26, request_Handler,	DATE_TIME_REQUEST_MESSAGE_t,			false)	\
-X(DateTimeRequestResponse,		0x27, request_Handler,	DATE_TIME_REQUEST_RESPONSE_MESSAGE_t,	false)	\
+X(TimeWrite,					0x30, time_Handler,		TIME_WRITE_MESSAGE_t,					false)	\
+X(TimeRead,						0x31, time_Handler,		TIME_READ_MESSAGE_t,					false)	\
+X(TimeReadResponse,				0x32, time_Handler,		TIME_READ_RESPONSE_MESSAGE_t,			false)	\
+X(DateWrite,					0x33, date_Handler,		DATE_WRITE_MESSAGE_t,					false)	\ 
+X(DateRead,						0x34, date_Handler,		DATE_READ_MESSAGE_t,					false)	\
+X(DateReadResponse,				0x35, date_Handler,		DATE_READ_RESPONSE_MESSAGE_t,			false)	\
+X(DateTimeRequest,				0x36, request_Handler,	DATE_TIME_REQUEST_MESSAGE_t,			false)	\
+X(DateTimeRequestResponse,		0x37, request_Handler,	DATE_TIME_REQUEST_RESPONSE_MESSAGE_t,	false)	\
 
 //TIME
 typedef struct

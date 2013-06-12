@@ -30,4 +30,6 @@ typedef enum _USARTReceiverState_t
 
 void USART_SendOperation(OPERATION_HEADER_t* operation_header);
 
+void USART_SendOperationWithBody(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize);
+
 #endif /* UARTMANAGER_H_ */

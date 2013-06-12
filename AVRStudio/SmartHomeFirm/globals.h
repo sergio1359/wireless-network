@@ -21,6 +21,8 @@
 #include "RTC.h"
 #include "EEPROM.h"
 
+#define FIRMWARE_VERSION 1
+
 #define softReset()        \
 do                          \
 {                           \
@@ -29,6 +31,10 @@ do                          \
 	{                       \
 	}                       \
 } while(0)
+
+#define MIN(x,y) ((x) < (y) ? (x) : (y))
+#define MAX(x,y) ((x) > (y) ? (x) : (y))
+#define CEILING(x,y) (((x) + (y) - 1) / (y))
 
 #define CREATE_CIRCULARBUFFER(elemsType, bufferSize)										\
 struct {																					\

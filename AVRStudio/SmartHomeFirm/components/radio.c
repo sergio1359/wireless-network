@@ -34,6 +34,7 @@ NWK_DataReq_t nwkDataReq;
 uint8_t failRetries;
 SYS_Timer_t retriesTimer;
 
+inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
 void sendNextMessage(void);
 static void rfDataConf(NWK_DataReq_t *req);
@@ -79,23 +80,41 @@ void Radio_Init()
 
 _Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message)
 {
-	uint8_t length = sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&message->opCode);
-	if(freeSpace(copiesMessages_Buffer.start, copiesMessages_Buffer.end, COPIES_BUFFER_SIZE) >= length)
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&message->opCode), 0, 0);
+}
+
+
+_Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize)
+{
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&message->opCode) - bodySize, body, bodySize);
+}
+
+inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize)
+{
+	if(freeSpace(copiesMessages_Buffer.start, copiesMessages_Buffer.end, COPIES_BUFFER_SIZE) >= (size + bodySize))
 	{
-		for(int i = 0; i < length; i++)
+		for(int i = 0; i < size; i++)
 		{
 			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end + i] = *((uint8_t*)message + i);
 		}
-		copiesMessages_Buffer.end += length;
+		copiesMessages_Buffer.end += size;
+		copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
+		
+		for(int i = 0; i < bodySize; i++)
+		{
+			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end + i] = body[i];
+		}
+		copiesMessages_Buffer.end += bodySize;		
 		copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		
 		sendNextMessage();
+		
+		return true;
 	}else
 	{
 		//TODO: Send or Log ERROR (COPIES_BUFFER_FULL)
 		return false;
 	}
-	return true;
 }
 
 _Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message)
