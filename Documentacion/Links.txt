@@ -14,3 +14,6 @@ http://openenergymonitor.org/emon/buildingblocks/ct-sensors-interface
 
 Simple Current Transformer:
 http://www.kerrywong.com/2011/07/16/simple-current-transformer/
+
+A Multi-Protocol Infrared Remote Library for the Arduino
+http://www.righto.com/2009/08/multi-protocol-infrared-remote-library.html

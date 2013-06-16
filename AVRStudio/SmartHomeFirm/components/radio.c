@@ -200,6 +200,24 @@ static void rfDataConf(NWK_DataReq_t *req)
 	}
 	else //NETWORK_PROBLEM
 	{
+		if(IS_COORDINATOR)
+		{
+			DISPLAY_Clear();
+			switch(req->status)
+			{
+				case NWK_ERROR_STATUS:
+					DISPLAY_WriteString("NWK_ERROR_STATUS"); break;
+				case NWK_OUT_OF_MEMORY_STATUS:
+					DISPLAY_WriteString("NWK_OUT_OF_MEMORY_STATUS"); break;
+				case NWK_NO_ACK_STATUS:
+					DISPLAY_WriteString("NWK_NO_ACK_STATUS"); break;//COMMON
+				case NWK_PHY_CHANNEL_ACCESS_FAILURE_STATUS://COMMON
+					DISPLAY_WriteString("NWK_PHY_CHANNEL_ACCESS_FAILURE_STATUS"); break;
+				case NWK_PHY_NO_ACK_STATUS:
+					DISPLAY_WriteString("NWK_PHY_NO_ACK_STATUS"); break;//COMMON
+			}
+		}
+		
 		failRetries++;
 		
 		if(failRetries == runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit)
@@ -234,5 +252,14 @@ static void retriesTimerHandler(SYS_Timer_t *timer)
 *****************************************************************************/
 static void rfDataInd(NWK_DataInd_t *ind)
 {
+	/*TODO: Check this:
+	 NWK_IND_OPT_ACK_REQUESTED Acknowledgment was requested
+	>NWK_IND_OPT_SECURED Frame was encrypted
+	>NWK_IND_OPT_BROADCAST Frame was sent to a broadcast address (0xffff)
+	>NWK_IND_OPT_LOCAL Frame was received from a directly accessible node
+	>NWK_IND_OPT_BROADCAST_PAN_ID Frame was sent to a broadcast PAN ID (0xffff)
+	NWK_IND_OPT_LINK_LOCAL Frame was sent with a Link Local field set to 1
+	NWK_IND_OPT_MULTICAST Frame was sent to a group address
+	*/
 	OM_ProccessExternalOperation((OPERATION_HEADER_t*)ind->data);		
 }

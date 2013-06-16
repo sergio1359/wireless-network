@@ -31,17 +31,23 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.buttonDigSwitch = new System.Windows.Forms.Button();
+            this.buttonTemp = new System.Windows.Forms.Button();
+            this.buttonHum = new System.Windows.Forms.Button();
+            this.buttonTime = new System.Windows.Forms.Button();
+            this.buttonDate = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBoxConfigAddress = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.buttonMAC = new System.Windows.Forms.Button();
+            this.buttonFirm = new System.Windows.Forms.Button();
+            this.buttonCheckSum = new System.Windows.Forms.Button();
+            this.buttonDigRead = new System.Windows.Forms.Button();
+            this.buttonReset = new System.Windows.Forms.Button();
+            this.buttonSwitchTime = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -70,63 +76,63 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(13, 41);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(499, 290);
+            this.listBox1.Size = new System.Drawing.Size(586, 290);
             this.listBox1.TabIndex = 2;
             // 
-            // button2
+            // buttonDigSwitch
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(530, 51);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 37);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "CMD 1";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonDigSwitch.Enabled = false;
+            this.buttonDigSwitch.Location = new System.Drawing.Point(605, 50);
+            this.buttonDigSwitch.Name = "buttonDigSwitch";
+            this.buttonDigSwitch.Size = new System.Drawing.Size(99, 37);
+            this.buttonDigSwitch.TabIndex = 3;
+            this.buttonDigSwitch.Text = "DIG SWITCH";
+            this.buttonDigSwitch.UseVisualStyleBackColor = true;
+            this.buttonDigSwitch.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // button3
+            // buttonTemp
             // 
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(530, 110);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(99, 37);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "CMD 2";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonTemp.Enabled = false;
+            this.buttonTemp.Location = new System.Drawing.Point(815, 111);
+            this.buttonTemp.Name = "buttonTemp";
+            this.buttonTemp.Size = new System.Drawing.Size(99, 37);
+            this.buttonTemp.TabIndex = 3;
+            this.buttonTemp.Text = "TEMPERATURE";
+            this.buttonTemp.UseVisualStyleBackColor = true;
+            this.buttonTemp.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // button4
+            // buttonHum
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(530, 169);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(99, 37);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "CMD 3";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonHum.Enabled = false;
+            this.buttonHum.Location = new System.Drawing.Point(815, 50);
+            this.buttonHum.Name = "buttonHum";
+            this.buttonHum.Size = new System.Drawing.Size(99, 37);
+            this.buttonHum.TabIndex = 3;
+            this.buttonHum.Text = "HUMIDITY";
+            this.buttonHum.UseVisualStyleBackColor = true;
+            this.buttonHum.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // button5
+            // buttonTime
             // 
-            this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(530, 228);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(99, 37);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "CMD 4";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonTime.Enabled = false;
+            this.buttonTime.Location = new System.Drawing.Point(605, 227);
+            this.buttonTime.Name = "buttonTime";
+            this.buttonTime.Size = new System.Drawing.Size(99, 37);
+            this.buttonTime.TabIndex = 3;
+            this.buttonTime.Text = "TIME";
+            this.buttonTime.UseVisualStyleBackColor = true;
+            this.buttonTime.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // button6
+            // buttonDate
             // 
-            this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(530, 287);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(99, 37);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "CMD 5";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonDate.Enabled = false;
+            this.buttonDate.Location = new System.Drawing.Point(605, 286);
+            this.buttonDate.Name = "buttonDate";
+            this.buttonDate.Size = new System.Drawing.Size(99, 37);
+            this.buttonDate.TabIndex = 3;
+            this.buttonDate.Text = "DATE";
+            this.buttonDate.UseVisualStyleBackColor = true;
+            this.buttonDate.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
             // openFileDialog1
             // 
@@ -173,20 +179,92 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // buttonMAC
+            // 
+            this.buttonMAC.Enabled = false;
+            this.buttonMAC.Location = new System.Drawing.Point(710, 50);
+            this.buttonMAC.Name = "buttonMAC";
+            this.buttonMAC.Size = new System.Drawing.Size(99, 37);
+            this.buttonMAC.TabIndex = 3;
+            this.buttonMAC.Text = "MAC";
+            this.buttonMAC.UseVisualStyleBackColor = true;
+            this.buttonMAC.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonFirm
+            // 
+            this.buttonFirm.Enabled = false;
+            this.buttonFirm.Location = new System.Drawing.Point(710, 109);
+            this.buttonFirm.Name = "buttonFirm";
+            this.buttonFirm.Size = new System.Drawing.Size(99, 37);
+            this.buttonFirm.TabIndex = 3;
+            this.buttonFirm.Text = "FIRMWARE";
+            this.buttonFirm.UseVisualStyleBackColor = true;
+            this.buttonFirm.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonCheckSum
+            // 
+            this.buttonCheckSum.Enabled = false;
+            this.buttonCheckSum.Location = new System.Drawing.Point(710, 172);
+            this.buttonCheckSum.Name = "buttonCheckSum";
+            this.buttonCheckSum.Size = new System.Drawing.Size(99, 37);
+            this.buttonCheckSum.TabIndex = 3;
+            this.buttonCheckSum.Text = "CHECKSUM";
+            this.buttonCheckSum.UseVisualStyleBackColor = true;
+            this.buttonCheckSum.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonDigRead
+            // 
+            this.buttonDigRead.Enabled = false;
+            this.buttonDigRead.Location = new System.Drawing.Point(605, 172);
+            this.buttonDigRead.Name = "buttonDigRead";
+            this.buttonDigRead.Size = new System.Drawing.Size(99, 37);
+            this.buttonDigRead.TabIndex = 3;
+            this.buttonDigRead.Text = "DIG READ";
+            this.buttonDigRead.UseVisualStyleBackColor = true;
+            this.buttonDigRead.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonReset
+            // 
+            this.buttonReset.Enabled = false;
+            this.buttonReset.Location = new System.Drawing.Point(710, 286);
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.Size = new System.Drawing.Size(99, 37);
+            this.buttonReset.TabIndex = 3;
+            this.buttonReset.Text = "RESET";
+            this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonSwitchTime
+            // 
+            this.buttonSwitchTime.Enabled = false;
+            this.buttonSwitchTime.Location = new System.Drawing.Point(605, 111);
+            this.buttonSwitchTime.Name = "buttonSwitchTime";
+            this.buttonSwitchTime.Size = new System.Drawing.Size(99, 37);
+            this.buttonSwitchTime.TabIndex = 3;
+            this.buttonSwitchTime.Text = "DIG SWITCH TIME";
+            this.buttonSwitchTime.UseVisualStyleBackColor = true;
+            this.buttonSwitchTime.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 341);
+            this.ClientSize = new System.Drawing.Size(931, 341);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.textBoxConfigAddress);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonReset);
+            this.Controls.Add(this.buttonDate);
+            this.Controls.Add(this.buttonDigRead);
+            this.Controls.Add(this.buttonTime);
+            this.Controls.Add(this.buttonCheckSum);
+            this.Controls.Add(this.buttonHum);
+            this.Controls.Add(this.buttonFirm);
+            this.Controls.Add(this.buttonTemp);
+            this.Controls.Add(this.buttonMAC);
+            this.Controls.Add(this.buttonSwitchTime);
+            this.Controls.Add(this.buttonDigSwitch);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
@@ -202,17 +280,23 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonDigSwitch;
+        private System.Windows.Forms.Button buttonTemp;
+        private System.Windows.Forms.Button buttonHum;
+        private System.Windows.Forms.Button buttonTime;
+        private System.Windows.Forms.Button buttonDate;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBoxConfigAddress;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button buttonMAC;
+        private System.Windows.Forms.Button buttonFirm;
+        private System.Windows.Forms.Button buttonCheckSum;
+        private System.Windows.Forms.Button buttonDigRead;
+        private System.Windows.Forms.Button buttonReset;
+        private System.Windows.Forms.Button buttonSwitchTime;
     }
 }
 

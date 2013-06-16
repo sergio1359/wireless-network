@@ -85,7 +85,7 @@
 
 #define HAL_ENABLE_UART
 #define HAL_UART_CHANNEL                    0
-#define HAL_UART_RX_FIFO_SIZE               128
-#define HAL_UART_TX_FIFO_SIZE               128
+#define HAL_UART_RX_FIFO_SIZE               1024
+#define HAL_UART_TX_FIFO_SIZE               1024
 
 #endif // _CONFIG_H_

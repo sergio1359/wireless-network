@@ -61,12 +61,12 @@ namespace OperationUARTSender
             ConfigChecksum,
             ConfigChecksumResponse,
 
-            MacRead = 0x20,					
-            MacReadResponse,			
-            NextHopRead,				
-            NextHopReadResponse,		
-            RouteTableRead,			
-            RouteTableReadResponse,	
+            MacRead = 0x20,
+            MacReadResponse,
+            NextHopRead,
+            NextHopReadResponse,
+            RouteTableRead,
+            RouteTableReadResponse,
             RouteTableReadConfirmation,
 
             TimeWrite = 0x30,
@@ -179,8 +179,14 @@ namespace OperationUARTSender
 
                     button1.Text = "Close";
                     comboBox1.Enabled = false;
-                    button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled =
-                    button6.Enabled = button7.Enabled = button8.Enabled = button9.Enabled = true;
+
+                    foreach (var control in this.Controls)
+                    {
+                        if (control is Button && control != button1)
+                        {
+                            ((Button)control).Enabled = true;
+                        }
+                    }
                 }
             }
             else
@@ -189,51 +195,63 @@ namespace OperationUARTSender
 
                 button1.Text = "Open";
                 comboBox1.Enabled = true;
-                button2.Enabled = button3.Enabled = button4.Enabled = button5.Enabled =
-                button6.Enabled = button7.Enabled = button8.Enabled = button9.Enabled = false;
+
+                foreach (var control in this.Controls)
+                {
+                    if (control is Button && control != button1)
+                    {
+                        ((Button)control).Enabled = false;
+                    }
+                }
             }
         }
 
         private void buttonCmd_Click(object sender, EventArgs e)
         {
-            if (sender == button2)
+            if (sender == buttonDigSwitch)
             {
-                /*
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
-                */
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TemperatureRead, Args = new byte[] { 0x00 } }.ToBinary());
-
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
             }
-            else if (sender == button3)
+            else if (sender == buttonSwitchTime)
             {
                 SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } }.ToBinary());
             }
-            else if (sender == button4)
+            else if (sender == buttonDigRead)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4003, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DigitalRead, Args = new byte[] { 0x03, 0x40 } }.ToBinary());
             }
-            else if (sender == button5)
+            else if (sender == buttonCheckSum)
             {
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x4004, OpCode = (byte)OPCode.DigitalSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigChecksum, Args = new byte[] { } }.ToBinary());
             }
-            else if (sender == button6)
+            else if (sender == buttonTemp)
             {
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = 0x00, OpCode = (byte)OPCode.DigitalRead, Args = new byte[] { 0x03, 0x40, 0x00 } }.ToBinary());
-
-
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TimeRead, Args = new byte[] { } }.ToBinary());
-
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DateRead, Args = new byte[] { } }.ToBinary());
-
-
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.MacRead, Args = new byte[] { } }.ToBinary());
-                //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.FirmwareVersionRead, Args = new byte[] { } }.ToBinary());
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TemperatureRead, Args = new byte[] { 0x00 } }.ToBinary());
+            }
+            else if (sender == buttonHum)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x00 } }.ToBinary());
+            }
+            else if (sender == buttonTime)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TimeRead, Args = new byte[] { } }.ToBinary());
+            }
+            else if (sender == buttonDate)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.DateRead, Args = new byte[] { } }.ToBinary());
                 //SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.NextHopRead, Args = new byte[] { 0x04, 0x40 } }.ToBinary());
-                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.RouteTableRead, Args = new byte[] { } }.ToBinary());
+            }
+            else if (sender == buttonMAC)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.MacRead, Args = new byte[] { } }.ToBinary());
+            }
+            else if (sender == buttonFirm)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.FirmwareVersionRead, Args = new byte[] { } }.ToBinary());
+            }
+            else if (sender == buttonReset)
+            {
+                SendData(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.Reset, Args = new byte[] { } }.ToBinary());
             }
         }
 
@@ -243,21 +261,38 @@ namespace OperationUARTSender
 
             if (operation.OpCode == (byte)OPCode.ConfigWriteResponse)
             {
-                if (operation.Args[1] == 0x00)
+                if (configWriteBuffer.Count > 0)
                 {
-                    configWriteBuffer.RemoveAt(0);
-                    if (configWriteBuffer.Count > 0)
+                    if (operation.Args[0] == configWriteBuffer[0].Args[0])
                     {
-                        if (configWriteBuffer.Count == 1)
-                            PrintMessage("CONFIG. UPDATE DONE");
+                        if (operation.Args[1] == 0x00)
+                        {
+                            configWriteBuffer.RemoveAt(0);
+                            if (configWriteBuffer.Count > 0)
+                            {
+                                if (configWriteBuffer.Count == 1)
+                                    PrintMessage(String.Format("CONFIG. UPDATE DONE TO 0x{0:X4}", operation.SourceAddress));
 
-                        SendData(configWriteBuffer[0].ToBinary());
+                                SendData(configWriteBuffer[0].ToBinary());
+                            }
+                        }
+                        else
+                        {
+                            configWriteBuffer.Clear();
+                            PrintMessage("CONFIG. ERROR CODE: " + Enum.GetName(typeof(ConfigErrorCodes), (object)operation.Args[1]));
+                        }
                     }
-                }
-                else
-                {
-                    configWriteBuffer.Clear();
-                    PrintMessage("CONFIG. ERROR CODE: " + Enum.GetName(typeof(ConfigErrorCodes), (object)operation.Args[1]));
+                    else
+                    {
+                        int rcvFragment = operation.Args[0] & 0x0F;
+                        int rcvTotalFragment = (operation.Args[0] & 0xF0) >> 4;
+                        int expFragment = configWriteBuffer[0].Args[0] & 0x0F;
+                        int expTotalFragment = (configWriteBuffer[0].Args[0] & 0xF0) >> 4;
+
+                        PrintMessage(String.Format("CONFIG. INVALID PROTOCOL: RECEIVED({0}/{1}) EXPECTED({2}/{3})",
+                            rcvFragment,rcvTotalFragment, expFragment, expTotalFragment));
+                        configWriteBuffer.Clear();
+                    }
                 }
             }
             else if (operation.OpCode == (byte)OPCode.TemperatureReadResponse || operation.OpCode == (byte)OPCode.HumidityReadResponse)
@@ -490,9 +525,9 @@ namespace OperationUARTSender
             byte[] fileBytes = File.ReadAllBytes(inputFilename);
 
             configWriteBuffer.Clear();
-            byte numberOfFrames = (byte)Math.Ceiling((double)fileBytes.Length / MAX_CONTENT_SIZE);
+            byte numberOfFrames = (byte)(fileBytes.Length / MAX_CONTENT_SIZE);
             int frameSize = 0;
-            for (byte i = 0; i < numberOfFrames; i++)
+            for (byte i = 0; i <= numberOfFrames; i++)
             {
                 Operation currentOp = new Operation()
                 {
