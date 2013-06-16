@@ -42,7 +42,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		handleCommand(operation_header);
 	}else
 	{
-		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :)
+		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
 		if(IS_COORDINATOR)
 			operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		

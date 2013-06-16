@@ -149,6 +149,8 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 					if(validateReceivedConfig())
 					{
 						EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
+						
+						//TODO: Wait to send until reset!
 						softReset();
 					}else
 					{
@@ -181,7 +183,7 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 			
 			currentSendIndex = 0;
 			currentSendFragment = 0;
-			totalSendExpected = CEILING(runningConfiguration.topConfiguration.deviceInfo.length , MAX_CONTENT_MESSAGE_SIZE);
+			totalSendExpected = (runningConfiguration.topConfiguration.deviceInfo.length / MAX_CONTENT_MESSAGE_SIZE);
 			currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.deviceInfo.length - currentSendIndex);
 			
 			configReadResponse.response.fragment = currentSendFragment;
@@ -201,7 +203,7 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 			{
 				if(msg->code == 0x00) //'OK'
 				{
-					if(currentSendFragment < totalSendExpected)	 //Something to send
+					if(currentSendFragment <= totalSendExpected)	 //Something to send
 					{
 						currentSendIndex += currentSendFrameSize;
 						currentSendFragment++;

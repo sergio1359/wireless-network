@@ -91,20 +91,19 @@ static void appSendData(void)
 	HAL_UartPrint("\r\n");
 	
 	DISPLAY_Clear();
-	//DISPLAY_SetCursor(0,0);
 	DISPLAY_WriteString("DATE: ");
 	DISPLAY_WriteNumber(currentDate.day,2);
-	/*DISPLAY_WriteByte('/');
+	DISPLAY_WriteByte('/');
 	DISPLAY_WriteNumber(currentDate.month,2);
 	DISPLAY_WriteByte('/');
-	DISPLAY_WriteNumber(currentDate.year,4);*/
-	/*DISPLAY_SetCursor(0,1);
+	DISPLAY_WriteNumber(currentDate.year,4);
+	DISPLAY_SetCursor(0,1);
 	DISPLAY_WriteString("TIME: ");
 	DISPLAY_WriteNumber(currentTime.hour,2);
 	DISPLAY_WriteByte(':');
 	DISPLAY_WriteNumber(currentTime.minute,2);
 	DISPLAY_WriteByte(':');
-	DISPLAY_WriteNumber(currentTime.second,2);*/
+	DISPLAY_WriteNumber(currentTime.second,2);
 
 	
 	
