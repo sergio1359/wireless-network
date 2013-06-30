@@ -245,7 +245,7 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="modules\inc\config_module.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="modules\inc\ports_module.h">
+    <Compile Include="modules\inc\logic_module.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\inc\network_module.h">
@@ -257,7 +257,7 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="modules\inc\time_module.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="modules\ports_module.c">
+    <Compile Include="modules\logic_module.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\network_module.c">
