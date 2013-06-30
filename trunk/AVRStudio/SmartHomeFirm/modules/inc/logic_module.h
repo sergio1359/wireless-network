@@ -1,0 +1,75 @@
+/*
+ * logic_module.h
+ *
+ * Created: 12/05/2013 13:00:15
+ *  Author: Victor
+ */ 
+
+
+#ifndef LOGIC_MODULE_H_
+#define LOGIC_MODULE_H_
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "RTC.h"
+#include "EEPROM.h"
+
+#define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
+
+#define COMMANDS_TABLE_PORTS														\
+X(LogicWrite,			0x40, logic_Handler, LOGIC_WRITE_MESSAGE_t,			false)	\
+X(LogicSwitch,			0x41, logic_Handler, LOGIC_SWITCH_MESSAGE_t,		false)	\
+X(LogicRead,			0x42, logic_Handler, LOGIC_READ_MESSAGE_t,			false)	\
+X(LogicReadResponse,	0x43, logic_Handler, LOGIC_READ_RESPONSE_MESSAGE_t,	false)	\
+
+//LOGIC PORT MESSAGES
+typedef struct
+{
+	uint16_t address;
+	uint8_t mask;
+	uint8_t value;
+	uint8_t seconds;
+}LOGIC_WRITE_MESSAGE_t;
+
+typedef struct
+{
+	uint16_t address;
+	uint8_t mask;
+	uint8_t seconds;
+}LOGIC_SWITCH_MESSAGE_t;
+
+typedef struct
+{
+	uint16_t address;
+}LOGIC_READ_MESSAGE_t;
+
+typedef struct
+{
+	uint16_t address;
+	uint8_t value;
+}LOGIC_READ_RESPONSE_MESSAGE_t;
+
+
+//CONFIGURATION
+
+typedef struct
+{
+	unsigned changeType		: 0; //LSB
+	unsigned defaultValue	: 1;
+	unsigned maskIO			: 2;
+	unsigned reserved		: 5; //MSB	
+}LOGIC_BITS_CONFIG_t;
+
+typedef struct
+{
+	 uint16_t deviceID,
+	 uint8_t pinPort,
+	 LOGIC_BITS_CONFIG_t configBits,
+}LOGIC_CONFIG_t;
+
+void logicModule_Init(void);
+void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+
+void logic_Handler(OPERATION_HEADER_t* operation_header);
+
+#endif /* LOGIC_MODULE_H_ */
