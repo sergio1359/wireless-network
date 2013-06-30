@@ -211,6 +211,98 @@ DocumentPath=Project Outputs for USB_Charger\Design Rule Check - USB_Charger.htm
 DItemRevisionGUID=
 
 [GeneratedDocument2]
+DocumentPath=Outputs\Gerber Output\Gerber Files.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GBP
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GKO
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GM1
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GM3
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GM13
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GM15
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GPB
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GPT
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GTP
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=Outputs\Gerber Output\Gerber Files.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument18]
+DocumentPath=Outputs\Gerber Output\Gerber Files.REP
+DItemRevisionGUID=
+
+[GeneratedDocument19]
+DocumentPath=Outputs\Gerber Output\Gerber Files.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument20]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files-RoundHoles-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument21]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files-SlotHoles-Plated.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument22]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRL
+DItemRevisionGUID=
+
+[GeneratedDocument23]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument24]
+DocumentPath=Outputs\NC Drill Output\NC Drill Files.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument25]
 DocumentPath=..\Libraries\U.FL-R-SMT.PcbLib.htm
 DItemRevisionGUID=
 
