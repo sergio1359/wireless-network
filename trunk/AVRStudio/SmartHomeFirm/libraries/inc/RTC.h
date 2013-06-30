@@ -33,7 +33,7 @@ typedef struct{
 }TIME_t;
 
 typedef struct{
-	WEEKDAY_t weekDay;
+	//WEEKDAY_t weekDay;
 	unsigned char day;
 	unsigned char month;
 	unsigned int year;
