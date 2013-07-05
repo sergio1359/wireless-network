@@ -18,7 +18,7 @@ uint8_t debounce_prt = 0;
 
 uint8_t port_tst = 0, pin_tst = 0, val_tst = 0;
 
-/* READ PORTS*/
+/*
 void PortMonitor_TaskHandler()
 {
 	for(uint8_t port=0; port<NUM_PORTS; port++)
@@ -129,7 +129,7 @@ void PortMonitor_TaskHandler()
 			//Launch Operations if exits
 			if(!firstTime && changeOcurred)
 			{
-				PortMonitor_LaunchOperations((port*8) + pin);
+				//PortMonitor_LaunchOperations((port*8) + pin);
 			}
 		}
 		
@@ -137,9 +137,9 @@ void PortMonitor_TaskHandler()
 	}
 	firstTime = 0;
 	debounce_prt = 0;
-}
+}*/
 
-
+/*
 void PortMonitor_LaunchOperations(uint8_t pinAddress)
 {
 	uint16_t pin_operation_list_start_addr = runningConfiguration.raw[OPERATION_INDEX_START_ADDR + (pinAddress * sizeof(uint16_t))];
@@ -154,16 +154,16 @@ void PortMonitor_LaunchOperations(uint8_t pinAddress)
 		return;
 	
 	uint16_t res_ptr;
-	OPERATION_RESTRICTION_t* restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_RESTRIC_LIST_END_ADDRESS];
+	OPERATION_TIME_RESTRICTION_t* restric = (OPERATION_TIME_RESTRICTION_t*)&runningConfiguration.raw[OPERATION_RESTRIC_LIST_END_ADDRESS];
 	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
-	for(res_ptr = OPERATION_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_RESTRICTION_t))
+	for(res_ptr = OPERATION_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_TIME_RESTRICTION_t))
 	{
-		restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[res_ptr];
+		restric = (OPERATION_TIME_RESTRICTION_t*)&runningConfiguration.raw[res_ptr];
 		
 		if(restric->operationAddress >= pin_operation_list_start_addr) break;
 	}
 	
-	//Iterate the list of operations for the current pin and checks to be satisfied temporary restrictions (if any) and that the enable flag is set
+	//Iterate the list of operations for the current pin and checks to be satisfied temporary restrictions (if any) and that enable flag is set
 	for(uint16_t operation_ptr = pin_operation_list_start_addr; operation_ptr < pin_operation_list_end_addr;)
 	{
 		OPERATION_HEADER_t* operation_header = (OPERATION_HEADER_t*)&runningConfiguration.raw[operation_ptr];
@@ -174,8 +174,8 @@ void PortMonitor_LaunchOperations(uint8_t pinAddress)
 		{
 			restriction_passed = ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
 			restriction_passed &= ((currentDate.weekDay.raw & restric->weekDays.raw) != 0); //Day of the week
-			res_ptr += sizeof(OPERATION_RESTRICTION_t);
-			restric = (OPERATION_RESTRICTION_t*)&runningConfiguration.raw[res_ptr]; //Next restriction
+			res_ptr += sizeof(OPERATION_TIME_RESTRICTION_t);
+			restric = (OPERATION_TIME_RESTRICTION_t*)&runningConfiguration.raw[res_ptr]; //Next restriction
 		}
 		
 		if( restriction_passed ) //If all restrictions are met
@@ -185,4 +185,4 @@ void PortMonitor_LaunchOperations(uint8_t pinAddress)
 		
 		operation_ptr += sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode);
 	}
-}
+}*/

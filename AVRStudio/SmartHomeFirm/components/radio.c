@@ -64,7 +64,7 @@ void Radio_Init()
 		NWK_SetPanId(APP_PANID);
 		PHY_SetChannel(APP_CHANNEL);
 		
-		runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit = DEFAULT_RETRIES_LIMIT;
+		runningConfiguration.topConfiguration.networkConfig.networkRetries = DEFAULT_RETRIES_LIMIT;
 		
 		#ifdef NWK_ENABLE_SECURITY
 		NWK_SetSecurityKey((uint8_t *)APP_SECURITY_KEY);
@@ -220,7 +220,7 @@ static void rfDataConf(NWK_DataReq_t *req)
 		
 		failRetries++;
 		
-		if(failRetries == runningConfiguration.topConfiguration.deviceInfo.networkRetriesLimit)
+		if(failRetries == runningConfiguration.topConfiguration.networkConfig.networkRetries)
 		{
 			failRetries = 0;
 			

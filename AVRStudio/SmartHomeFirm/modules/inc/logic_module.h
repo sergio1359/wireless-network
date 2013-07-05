@@ -16,7 +16,7 @@
 
 #define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
 
-#define COMMANDS_TABLE_PORTS														\
+#define COMMANDS_TABLE_LOGIC														\
 X(LogicWrite,			0x40, logic_Handler, LOGIC_WRITE_MESSAGE_t,			false)	\
 X(LogicSwitch,			0x41, logic_Handler, LOGIC_SWITCH_MESSAGE_t,		false)	\
 X(LogicRead,			0x42, logic_Handler, LOGIC_READ_MESSAGE_t,			false)	\
@@ -54,17 +54,17 @@ typedef struct
 
 typedef struct
 {
-	unsigned changeType		: 0; //LSB
+	unsigned changeType		: 2; //LSB
 	unsigned defaultValue	: 1;
-	unsigned maskIO			: 2;
-	unsigned reserved		: 5; //MSB	
+	unsigned maskIO			: 1;
+	unsigned reserved		: 4; //MSB	
 }LOGIC_BITS_CONFIG_t;
 
 typedef struct
 {
-	 uint16_t deviceID,
-	 uint8_t pinPort,
-	 LOGIC_BITS_CONFIG_t configBits,
+	 uint16_t deviceID;
+	 uint8_t pinPort;
+	 LOGIC_BITS_CONFIG_t configBits;
 }LOGIC_CONFIG_t;
 
 void logicModule_Init(void);

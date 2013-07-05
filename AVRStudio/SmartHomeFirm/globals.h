@@ -49,6 +49,7 @@ GLOBAL volatile _Bool validConfiguration;
 /*	Time vars	4 bytes  */
 GLOBAL volatile TIME_t currentTime;
 GLOBAL volatile DATE_t currentDate;
+GLOBAL volatile WEEKDAY_t currentWeek;
 GLOBAL volatile _Bool validTime;
 GLOBAL volatile _Bool validDate;
 

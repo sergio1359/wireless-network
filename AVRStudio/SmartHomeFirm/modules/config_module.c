@@ -148,7 +148,7 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 				{
 					if(validateReceivedConfig())
 					{
-						EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.deviceInfo.length);
+						EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.configHeader.length);
 						
 						//TODO: Wait to send until reset!
 						softReset();
@@ -183,8 +183,8 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 			
 			currentSendIndex = 0;
 			currentSendFragment = 0;
-			totalSendExpected = (runningConfiguration.topConfiguration.deviceInfo.length / MAX_CONTENT_MESSAGE_SIZE);
-			currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.deviceInfo.length - currentSendIndex);
+			totalSendExpected = (runningConfiguration.topConfiguration.configHeader.length / MAX_CONTENT_MESSAGE_SIZE);
+			currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - currentSendIndex);
 			
 			configReadResponse.response.fragment = currentSendFragment;
 			configReadResponse.response.fragmentTotal = totalSendExpected;
@@ -208,7 +208,7 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 						currentSendIndex += currentSendFrameSize;
 						currentSendFragment++;
 						
-						currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.deviceInfo.length - currentSendIndex);
+						currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - currentSendIndex);
 						
 						configReadResponse.response.fragment = currentSendFragment;
 						configReadResponse.response.fragmentTotal = totalSendExpected;
@@ -246,7 +246,7 @@ void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		checksumResponse.header.destinationAddress = operation_header->sourceAddress;
 		checksumResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-		checksumResponse.response.checksum = runningConfiguration.topConfiguration.deviceInfo.checkSum;
+		checksumResponse.response.checksum = runningConfiguration.topConfiguration.configHeader.checkSum;
 		
 		OM_ProccessResponseOperation(&checksumResponse.header);
 	}else if(operation_header->opCode == ConfigChecksumResponse)
@@ -257,18 +257,18 @@ void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 
 _Bool validateReceivedConfig()
 {
-	uint16_t eeprom_size = configBuffer.topConfiguration.deviceInfo.length;
-	uint16_t eeprom_crc = configBuffer.topConfiguration.deviceInfo.checkSum;
+	uint16_t eeprom_size = configBuffer.topConfiguration.configHeader.length;
+	uint16_t eeprom_crc = configBuffer.topConfiguration.configHeader.checkSum;
 	
 	if(eeprom_size != 0xFFFF && eeprom_size != 0x00 && eeprom_size == currentRecvIndex)
 	{
-		configBuffer.topConfiguration.deviceInfo.checkSum = 0;
+		configBuffer.topConfiguration.configHeader.checkSum = 0;
 		
 		uint16_t acc = 0;
 		for(int i = 0; i < eeprom_size; i++)
 		acc = _crc16_update(acc, configBuffer.raw[i]);
 		
-		configBuffer.topConfiguration.deviceInfo.checkSum = eeprom_crc;
+		configBuffer.topConfiguration.configHeader.checkSum = eeprom_crc;
 		
 		return eeprom_crc == acc;
 	}else

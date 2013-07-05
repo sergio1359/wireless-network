@@ -23,9 +23,10 @@ void TIME_ValidateTime(TIME_t *receivedTime)
 		searchFirstTimeOperation();
 }
 
-void TIME_ValidateDate(DATE_t *receivedDate)
+void TIME_ValidateDate(DATE_t *receivedDate, WEEKDAY_t *receivedWeek)
 {
 	memcpy((uint8_t*)&currentDate,(uint8_t*)receivedDate, sizeof(DATE_t));
+	memcpy((uint8_t*)&currentWeek,(uint8_t*)receivedWeek, sizeof(WEEKDAY_t));
 	validDate = 1;
 	
 	if(validTime)
@@ -60,8 +61,9 @@ void TIME_CheckTimeOperation()
 	{
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
-			if(currentDate.weekDay.raw & time_operation_header->weekDays.raw != 0)
-				OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
+			//TODO: USE OPERATION MANAGER!
+			//if(currentDate.weekDay.raw & time_operation_header->weekDays.raw != 0)
+			//	OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
 			
 			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
 			

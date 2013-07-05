@@ -36,10 +36,10 @@ ISR(TIMER2_OVF_vect)  //overflow interrupt vector
 			{
 				currentTime.hour=0;
 				
-				if(currentDate.weekDay.flags.Sunday)
-					currentDate.weekDay.raw = 1;	//Monday
+				if(currentWeek.flags.Sunday)
+					currentWeek.raw = 1;	//Monday
 				else
-					currentDate.weekDay.raw <<= 1;	//Next day
+					currentWeek.raw <<= 1;	//Next day
 				
 				if (++currentDate.day==32)
 				{

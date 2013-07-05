@@ -87,7 +87,7 @@ typedef struct{
 	WEEKDAY_t weekDays;
 	TIME_t start;
 	TIME_t end;
-}OPERATION_RESTRICTION_t;
+}OPERATION_TIME_RESTRICTION_t;
 
 
 typedef struct {
