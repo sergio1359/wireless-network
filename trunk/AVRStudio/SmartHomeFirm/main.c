@@ -257,6 +257,6 @@ int main(void)
 		OTA_ClientTaskHandler();
 		#endif
 		APP_TaskHandler();
-		PortMonitor_TaskHandler();
+		//PortMonitor_TaskHandler();
 	}
 }

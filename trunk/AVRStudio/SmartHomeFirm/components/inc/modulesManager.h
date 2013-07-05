@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "EEPROM.h"
 
-#include "ports_module.h"
+#include "logic_module.h"
 #include "network_module.h"
 #include "config_module.h"
 #include "time_module.h"
@@ -36,7 +36,7 @@ typedef enum MODULES_ID {
 
 
 #define COMMANDS_TABLE  \
-COMMANDS_TABLE_PORTS    \
+COMMANDS_TABLE_LOGIC    \
 COMMANDS_TABLE_NETWORK  \
 COMMANDS_TABLE_CONFIG   \
 COMMANDS_TABLE_TIME		\

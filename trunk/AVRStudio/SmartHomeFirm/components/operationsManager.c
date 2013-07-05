@@ -9,6 +9,9 @@
 #include "modulesManager.h"
 #include "globals.h"
 
+_Bool checkTimeRestrictions(uint16_t operationAddress);
+_Bool checkConditions(uint16_t operationAddress);
+
 void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
 {
 	/* TESTING REGION */
@@ -34,8 +37,11 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		HAL_UartPrint("\r\n");
 		if(operation_header->opCode == EXTENSION_OPCODE)
 		return;
-		/* END OF TESTING REGION */
 	}
+	/* END OF TESTING REGION */
+	
+	if(!checkTimeRestrictions(operation_header) || !checkConditions(operation_header)) //Restriction not satisfied
+		return;
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
 	{
@@ -118,4 +124,39 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 	{
 		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength);
 	}
+}
+
+/************************************************************************/
+/*                       INTERNAL METHODS                               */
+/************************************************************************/
+
+_Bool checkTimeRestrictions(uint16_t operationAddress)
+{
+	uint16_t res_ptr;
+	OPERATION_TIME_RESTRICTION_t* restric;
+	_Bool restriction_passed = true;
+	
+	//Looks for the first temporary restriction applicable to the current list of operations. (Operation address greater or equal than the list start address to process)
+	for(res_ptr = OPERATION_TIME_RESTRIC_LIST_START_ADDRESS; res_ptr < OPERATION_TIME_RESTRIC_LIST_END_ADDRESS; res_ptr += sizeof(OPERATION_TIME_RESTRICTION_t))
+	{
+		restric = (OPERATION_TIME_RESTRICTION_t*)&runningConfiguration.raw[res_ptr];
+		
+		if(restric->operationAddress == operationAddress && restriction_passed)
+		{
+			restriction_passed =  ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
+			restriction_passed &= ( (currentWeek.raw & restric->weekDays.raw) != 0);														//Day of the week
+			restriction_passed &= ( (TIME_CompareDates(restric->dateFrom, currentDate) <= 0) && (TIME_CompareDates(restric->dateTo, currentDate) >= 0) ); //In date
+		}else if(restric->operationAddress > operationAddress || !restriction_passed)
+		{
+			break;
+		}
+	}
+	
+	return restriction_passed;
+}
+
+_Bool checkConditions(uint16_t operationAddress)
+{
+	_Bool restriction_passed = true;
+	return restriction_passed;
 }
