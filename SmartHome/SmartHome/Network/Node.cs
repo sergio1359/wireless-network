@@ -12,8 +12,7 @@ namespace SmartHome.Network
 {
     public class Node
     {
-        public int ID { get; set; }
-        public uint Mac { get; set; }
+        public uint Mac { get; set; } //El ID es su MAC
         public string Name { get; set; }
         public byte NetworkRetries = 3;
         public ushort Address { get; set; }
@@ -50,9 +49,25 @@ namespace SmartHome.Network
             return ProductConfiguration.GetBaseConfiguration(Base);
         }
 
-        public TimeAction[] GetTimeActions()
+        public SortedDictionary<DateTime, List<Operation>> GetTimeActions()
         {
-            return Sheduler.TimeActions.Where(x => x.ToHomeDevice.Connector.Node.Address == Address).ToArray();
+            //Puke, quiero hacer esto con linQ!!
+            SortedDictionary<DateTime, List<Operation>> res = new SortedDictionary<DateTime, List<Operation>>();
+            foreach (var item in Sheduler.TimeActions)
+            {
+                foreach (var operation in item.Value)
+                {
+                    if (operation.DestionationHomeDevice.Connector.Node.Address == Address)
+                    {
+                        if (res.ContainsKey(item.Key))
+                            res[item.Key].Add(operation);
+                        else
+                            res.Add(item.Key, new List<Operation>() { operation });
+                    }
+                }
+            }
+
+            return res;
         }
 
         public void GetEEPROM()

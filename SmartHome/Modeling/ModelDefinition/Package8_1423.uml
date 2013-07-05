@@ -70,7 +70,7 @@
             isAbstract="false">
             <interfaceMoniker
               Id="0e2589bf-322b-4a0d-9821-c48bb125345a"
-              LastKnownName="ActionAbstract"
+              LastKnownName="Action"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -602,6 +602,58 @@
                   <upperValueInternal>
                     <literalString
                       Id="f5e5414c-daed-4442-8710-3066d2f5965f"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="fe6413ee-42bb-4ad3-940b-8354210a5f21"
+            isDerived="false"
+            sourceEndRoleName="Scheduler"
+            targetEndRoleName="Action"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
+              LastKnownName="Action"
+              LastKnownLocation="Modeling.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c5406748-2bf4-45d6-81b5-ca37c95cc992"
+                  name="Scheduler"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="86591e7a-d575-4f4e-a533-369e8fed0ae3"
+                  name="Action"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="bea4aeaf-44ff-4570-952c-5af14ca5a3c3"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9c40b804-44cb-42a9-b4fa-021d6f692da1"
                       name="Upper"
                       value="n" />
                   </upperValueInternal>

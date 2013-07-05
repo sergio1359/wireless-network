@@ -1,4 +1,5 @@
 ﻿using SmartHome.Network;
+using SmartHome.Network.HomeDevices;
 using SmartHome.Products;
 using System;
 using System.Collections.Generic;
@@ -118,44 +119,20 @@ namespace SmartHome.Memory
 
     public partial class FirmwareUno
     {
-        private byte[] PinIOConfig(char port)
+        private byte GetLogicConfiguration(Connector hd)
         {
-            byte[] result = new Byte[4];
-            PinPortConfiguration p = null;
+            PinPortConfiguration ppc = hd.GetPinPortConfiguration();
+            byte res = 0x00;
+            if (ppc.Output)
+                res |= (byte)(0x01 << 3);
+            if (ppc.DefaultValueD)
+                res |= (byte)(0x01 << 2);
+            res |= (byte)ppc.Threshold;
 
-            //maskIO
-            result[0] = 0x00;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
-            {
-                p = node.GetPinPortConfiguration(new PinPort(port, i));
-                if (p.Output == true)
-                    result[0] = (byte)(result[0] | (0x01 << i));
-            }
-
-            //defaultChangesD
-            result[1] = 0x00;
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)//Input:0 - Output:1, default=0
-            {
-                p = node.GetPinPortConfiguration(new PinPort(port, i));
-                if (p.DefaultValueD == true)
-                    result[2] = (byte)(result[2] | (0x01 << i));
-            }
-
-            //ChangetypeD None:00 Rising:10, Fall:01, Both:11
-            ushort ctd = 0x00; //change type digital
-            for (byte i = 0; i < node.GetBaseConfiguration().NumPins; i++)
-            {
-                p = node.GetPinPortConfiguration(new PinPort(port, i));
-                ctd |= (ushort)((ushort)p.ChangeTypeD << (i * 2));
-            }
-
-            result[2] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[0];
-            result[3] = ctd.UshortToByte(node.GetBaseConfiguration().LittleEndian)[1];
-
-            return result;
+            return res;
         }
 
-        private byte[] ToBinaryOperation(ActionAbstract act, bool littleEndian)
+        private byte[] ToBinaryOperation(Operation operation, bool littleEndian)
         {
             List<byte> result = new List<byte>();
 
@@ -164,27 +141,27 @@ namespace SmartHome.Memory
             result.Add(0x00);
 
             //DestinationAddress
-            if (act.ToHomeDevice.Connector != null && act.ToHomeDevice.Connector.Node.Address == node.Address)
+            if (operation.DestionationHomeDevice.Connector != null && operation.DestionationHomeDevice.Connector.Node.Address == node.Address)
             {
                 result.Add(0x00);
                 result.Add(0x00);
             }
             else
             {
-                result.AddRange(act.ToHomeDevice.Connector.Node.Address.UshortToByte(littleEndian));
+                result.AddRange(operation.DestionationHomeDevice.Connector.Node.Address.UshortToByte(littleEndian));
             }
 
-            result.Add((byte)act.OPCode);
-            result.AddRange(act.Args);
+            result.Add((byte)operation.OPCode);
+            result.AddRange(operation.Args);
 
             return result.ToArray();
         }
 
-        private UInt16 SizePinEvents(SmartHome.Network.Action[] actions)
+        private UInt16 SizePinEvents(Operation[] operations)
         {
             UInt16 size = 0;
 
-            foreach (SmartHome.Network.Action act in actions)
+            foreach (Operation act in operations)
                 size += (UInt16)ToBinaryOperation(act, true).Length;
 
             return size;
