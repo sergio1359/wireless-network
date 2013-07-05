@@ -12,7 +12,9 @@ namespace SmartHome.Memory
     public partial class FirmwareUno
     {
         private Node node;
-        private Dictionary<ushort, SmartHome.Network.Action> portOperationTimeRestictionDictionary;
+        private Dictionary<ushort, Operation[]> OperationDictionary;
+        private Dictionary<ushort, Operation> OperationTimeRestictionDictionary;
+        private Dictionary<ushort, Operation> OperationConditionRestrictionsDictionary;
         private List<ushort> dinamicIndex;
         private byte systemFlags;
         private List<byte> tempMemory;
@@ -21,7 +23,9 @@ namespace SmartHome.Memory
         public FirmwareUno(Node node, byte systemFlags)
         {
             this.node = node;
-            portOperationTimeRestictionDictionary = new Dictionary<ushort, SmartHome.Network.Action>();
+            OperationTimeRestictionDictionary = new Dictionary<ushort, Operation>();
+            OperationConditionRestrictionsDictionary = new Dictionary<ushort, Operation>();
+            OperationDictionary = new Dictionary<ushort, Operation[]>();
             this.systemFlags = systemFlags;
             baseConfiguration = node.GetBaseConfiguration();
         }
@@ -33,44 +37,39 @@ namespace SmartHome.Memory
 
             //Generar toda la memoria (la memoria se genera con CRC16 a "00 00")
 
-            tempMemory.AddRange(DeviceInfo());
+            //ConfigHeader
+            tempMemory.AddRange(ConfigHeader());
 
+            //NetworkConfig
             tempMemory.AddRange(NetworkConfig());
-
-            tempMemory.AddRange(PortsIOConfig());
-
-            tempMemory.AddRange(PWMConfig());
-
-            tempMemory.AddRange(AnalogInputsConfig());
 
             ushort pointerStartDinamicIndex = (ushort)tempMemory.Count;
             dinamicIndex = new List<ushort>();
 
             //fill with 00 in memory for Dinamic Index
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 12; i++)
             {
                 tempMemory.Add(0x00);
                 tempMemory.Add(0x00);
             }
 
-            //PortOperationIndex
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(PortOperationIndex((ushort)tempMemory.Count));
-
-            //PortsOperation
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(PortsOperation((ushort)tempMemory.Count));
-
-            //PortOperationTimeRestriction
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(PortOperationTimeRestriction());
+            //DevicesConfig
+            DevicesConfig();
 
             //TimeOperation
             dinamicIndex.Add((ushort)tempMemory.Count);
             tempMemory.AddRange(TimeOperation());
 
-            //Module Config
-            tempMemory.AddRange(ModuleConfig((ushort)tempMemory.Count));
+            //Operation
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(Operation((ushort)tempMemory.Count));
+
+            //OperationTimeRestriction
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(OperationTimeRestriction());
+
+            //OperationConditionRestrictions
+            //TODO
 
             //free region
             dinamicIndex.Add((ushort)tempMemory.Count);
@@ -78,7 +77,6 @@ namespace SmartHome.Memory
             //change directions of DinamicIndex using the DinamicIndexList
             DinamicIndex(pointerStartDinamicIndex);
             //DINAMIC END
-
 
             byte[] memory = tempMemory.ToArray();
 
@@ -98,7 +96,7 @@ namespace SmartHome.Memory
             return memory;
         }
 
-        private byte[] DeviceInfo()
+        private byte[] ConfigHeader()
         {
             List<byte> result = new List<byte>();
 
@@ -124,9 +122,6 @@ namespace SmartHome.Memory
             //systemFlags
             result.Add(systemFlags);
 
-            //networkRetriesLimit
-            result.Add(node.NetworkRetries);
-
             return result.ToArray();
         }
 
@@ -147,76 +142,41 @@ namespace SmartHome.Memory
             //securityKey
             result.AddRange(NetworkManager.Security.GetSecurityKey());
 
-            return result.ToArray();
-        }
-
-        private byte[] PortsIOConfig()
-        {
-            List<byte> result = new List<byte>();
-
-            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
-            {
-                result.AddRange(PinIOConfig((char)(i + 'A')));
-            }
+            //networkRetriesLimit
+            result.Add(node.NetworkRetries);
 
             return result.ToArray();
         }
 
-        private byte[] PWMConfig()
+        private void DevicesConfig()
         {
-            List<byte> result = new List<Byte>();
+            //Logic
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigLogic());
 
-            PinPortConfiguration p = null;
+            //Dimmable
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigDimmable());
 
-            //header
-            byte header = 0x00;
-            foreach (String pinPort in baseConfiguration.PWMPorts)
-            {
-                p = node.GetPinPortConfiguration(new PinPort(pinPort));
-                if (p != null && p.Digital == false && p.Output == true)
-                    header |= 1;
-                else
-                    header |= 0;
-                header <<= 1;
-            }
-            result.Add(header);
+            //RGB
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigRGB());
 
-            foreach (String pinPort in baseConfiguration.PWMPorts)
-            {
-                p = node.GetPinPortConfiguration(new PinPort(pinPort));
-                if (p != null)
-                    result.Add(p.DefaultValueA);
-                else
-                    result.Add(0x00);
-            }
-            return result.ToArray();
-        }
+            //Presence
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigPresence());
 
-        private byte[] AnalogInputsConfig()
-        {
-            List<byte> result = new List<byte>();
-            PinPortConfiguration p = null;
+            //Temp/Humi
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigTemperatureHumidity());
 
-            //header
-            byte header = 0x00;
-            foreach (String pinPort in baseConfiguration.PWMPorts)
-            {
-                if (p != null && p.Digital == false && p.Output == false)
-                    header |= 1;
-                else
-                    header |= 0;
-                header <<= 1;
-            }
-            result.Add(header);
+            //EnergyMeter
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigPowerMeter());
 
-            foreach (string pinPort in baseConfiguration.AnalogPorts)
-            {
-                p = node.GetPinPortConfiguration(new PinPort(pinPort));
-                result.Add(p.Increment);
-                result.Add(p.Threshold);
-            }
-
-            return result.ToArray();
+            //Luminosity
+            dinamicIndex.Add((ushort)tempMemory.Count);
+            tempMemory.AddRange(DeviceConfigLuminosity());
         }
 
         private void DinamicIndex(ushort startDinamicIndexMemory)
@@ -229,121 +189,63 @@ namespace SmartHome.Memory
             }
         }
 
-        private byte[] PortOperationIndex(ushort startMemoryDir)
+        private byte[] TimeOperation()
         {
             List<byte> result = new List<byte>();
-            ushort pointer = (ushort)(startMemoryDir + (baseConfiguration.NumPorts * baseConfiguration.NumPins * 2));
 
-            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
+            var timeAct = node.GetTimeActions();
+
+            foreach (var parValue in timeAct)
             {
-                for (byte j = 0; j < baseConfiguration.NumPins; j++)
+                foreach (var item in parValue.Value)
                 {
-                    result.AddRange(pointer.UshortToByte(baseConfiguration.LittleEndian));
-                    if (node.GetPinPortList().Contains(new PinPort(i, j)))
-                    {
-                        Connector connector = node.GetConnector(new PinPort(i, j));
-
-                        if (connector.ConnectorType != ConnectorType.RGB)
-                            pointer += SizePinEvents(connector.GetActionsConnector());
-                        else
-                        {
-                            if (new PinPort(i, j) == connector.GetPinPort()[0])
-                                pointer += SizePinEvents(connector.GetActionsConnector()); //si es RGB y estamos en su R entonces añadimos puntero con las acciones
-                        }
-                    }
+                    result.AddRange(parValue.Key.ToBinaryTime());
+                    result.AddRange(ToBinaryOperation(item, baseConfiguration.LittleEndian));
                 }
             }
 
             return result.ToArray();
         }
 
-        private byte[] PortsOperation(ushort startDirection)
+        private byte[] Operation(ushort startDirection)
         {
             List<byte> result = new List<byte>();
-            Connector c = null;
-            for (byte i = 0; i < baseConfiguration.NumPorts; i++)
-            {
-                for (byte j = 0; j < baseConfiguration.NumPins; j++)
-                {
-                    c = node.GetConnector(new PinPort(i, j));
-                    if (c != null && new PinPort(i, j).Equals(c.GetPinPort()[0]))
-                    {
-                        foreach (var a in c.GetActionsConnector())
-                        {
-                            if (a.TimeRestrictions != null && a.TimeRestrictions.Count > 0)
-                                portOperationTimeRestictionDictionary.Add((ushort)(result.Count + startDirection), a);
 
-                            result.AddRange(ToBinaryOperation(a, baseConfiguration.LittleEndian));
-                        }
-                    }
+            foreach (var item in OperationDictionary)
+            {
+                //añadimos direccion a la configuracion del config configuration
+                tempMemory[item.Key] = ((ushort)(result.Count + startDirection)).UshortToByte(baseConfiguration.LittleEndian)[0];
+                tempMemory[item.Key + 1] = ((ushort)(result.Count + startDirection)).UshortToByte(baseConfiguration.LittleEndian)[1];
+
+                foreach (var a in item.Value)
+                {
+                    if (a.TimeRestrictions != null && a.TimeRestrictions.Count > 0)
+                        OperationTimeRestictionDictionary.Add((ushort)(result.Count + startDirection), a);
+
+                    result.AddRange(ToBinaryOperation(a, baseConfiguration.LittleEndian));
                 }
             }
-
             return result.ToArray();
         }
 
-        private byte[] PortOperationTimeRestriction()
+        private byte[] OperationTimeRestriction()
         {
             List<byte> result = new List<byte>();
 
-            foreach (KeyValuePair<ushort, SmartHome.Network.Action> pe in portOperationTimeRestictionDictionary)
+            foreach (KeyValuePair<ushort, Operation> pe in OperationTimeRestictionDictionary)
             {
-
                 foreach (TimeRestriction tr in pe.Value.TimeRestrictions)
                 {
                     result.AddRange(pe.Key.UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(tr.MaskWeekDays);
-                    result.AddRange(tr.Start.ToBinaryTime());
-                    result.AddRange(tr.End.ToBinaryTime());
+                    result.AddRange(tr.DateStart.ToBinaryTime());
+                    result.AddRange(tr.HourEnd.ToBinaryTime());
                 }
-
             }
             return result.ToArray();
         }
 
-        private byte[] TimeOperation()
-        {
-            List<byte> result = new List<byte>();
-            //TODO: Organizamos por tiempo
-            TimeAction[] timeAct = node.GetTimeActions().OrderBy(x => x.Time).ToArray();
-
-            foreach (TimeAction te in timeAct)
-            {
-                result.Add(te.MascWeekDays);
-                result.AddRange(te.Time.ToBinaryTime());
-                result.AddRange(ToBinaryOperation((ActionAbstract)te, baseConfiguration.LittleEndian));
-            }
-
-            return result.ToArray();
-        }
-
-        private byte[] ModuleConfig(ushort directionMemory)
-        {
-            List<byte> result = new List<byte>();
-            //RGB
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(ModuleConfigRGB());
-
-            //Presencia
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(ModuleConfigPresence());
-
-            //Temp/Hum
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(ModuleConfigTemperatureHumidity());
-
-            //Potencia
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(ModuleConfigPower());
-
-            //IntensidadLuminica
-            dinamicIndex.Add((ushort)tempMemory.Count);
-            tempMemory.AddRange(ModuleConfigLuminosity());
-
-            return result.ToArray();
-        }
-
-        private byte[] ModuleConfigRGB()
+        private byte[] DeviceConfigLogic()
         {
             List<byte> result = new List<byte>();
             result.Add(0x00);
@@ -351,20 +253,28 @@ namespace SmartHome.Memory
             {
                 if (item.HomeDevice != null)
                 {
-                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.RGBLight)
+                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.Button ||
+                        item.HomeDevice.HomeDeviceType == HomeDeviceType.Switch ||
+                        item.HomeDevice.HomeDeviceType == HomeDeviceType.WallPlug ||
+                        item.HomeDevice.HomeDeviceType == HomeDeviceType.Light)
                     {
                         result[0]++;
-                        foreach (var pinPort in item.GetPinPort())
-                        {
-                            result.Add(pinPort.GetPinPortNumber());
-                        }
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(GetLogicConfiguration(item));
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
             return result.ToArray();
         }
 
-        private byte[] ModuleConfigPresence()
+        private byte[] DeviceConfigDimmable()
         {
             List<byte> result = new List<byte>();
             result.Add(0x00);
@@ -375,15 +285,75 @@ namespace SmartHome.Memory
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PresenceSensor)
                     {
                         result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
                         result.Add(item.GetPinPort()[0].GetPinPortNumber());
-                        result.Add(((PresenceSensor)item.HomeDevice).Sensibility);
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
             return result.ToArray();
         }
 
-        private byte[] ModuleConfigTemperatureHumidity()
+        private byte[] DeviceConfigRGB()
+        {
+            List<byte> result = new List<byte>();
+            result.Add(0x00);
+            foreach (Connector item in node.Connectors)
+            {
+                if (item.HomeDevice != null)
+                {
+                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.RGBLight)
+                    {
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        foreach (var pinPort in item.GetPinPort())
+                        {
+                            result.Add(pinPort.GetPinPortNumber());
+                        }
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
+                    }
+                }
+            }
+            return result.ToArray();
+        }
+
+        private byte[] DeviceConfigPresence()
+        {
+            List<byte> result = new List<byte>();
+            result.Add(0x00);
+            foreach (Connector item in node.Connectors)
+            {
+                if (item.HomeDevice != null)
+                {
+                    if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PresenceSensor)
+                    {
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(((PresenceSensor)item.HomeDevice).Sensibility);
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
+                    }
+                }
+            }
+            return result.ToArray();
+        }
+
+        private byte[] DeviceConfigTemperatureHumidity()
         {
             List<byte> result = new List<byte>();
 
@@ -395,15 +365,21 @@ namespace SmartHome.Memory
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.TemperatureHumiditySensor)
                     {
                         result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
                         result.Add(item.GetPinPort()[0].GetPinPortNumber());
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
-
             return result.ToArray();
         }
 
-        private byte[] ModuleConfigPower()
+        private byte[] DeviceConfigPowerMeter()
         {
             List<byte> result = new List<byte>();
 
@@ -415,8 +391,15 @@ namespace SmartHome.Memory
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PowerSensor)
                     {
                         result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
                         result.Add(item.GetPinPort()[0].GetPinPortNumber());
                         result.Add(((PowerSensor)item.HomeDevice).Sensibility);
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
@@ -424,7 +407,7 @@ namespace SmartHome.Memory
             return result.ToArray();
         }
 
-        private byte[] ModuleConfigLuminosity()
+        private byte[] DeviceConfigLuminosity()
         {
             List<byte> result = new List<byte>();
 
@@ -438,10 +421,15 @@ namespace SmartHome.Memory
                         result[0]++;
                         result.Add(item.GetPinPort()[0].GetPinPortNumber());
                         result.Add(((LuminositySensor)item.HomeDevice).Sensibility);
+
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
-
             return result.ToArray();
         }
 

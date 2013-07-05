@@ -35,15 +35,15 @@ namespace SmartHome.Network
             return ProductConfiguration.GetPinPortConfiguration(HomeDevice.HomeDeviceType);
         }
 
-        public Action[] GetActionsConnector()
+        public Operation[] GetActionsConnector()
         {
             if (HomeDevice == null)
             {
-                return new Action[0];
+                return new Operation[0];
             }
             else
             {
-                return HomeDevice.Actions.ToArray();
+                return HomeDevice.Operations.ToArray();
             }
 
         }

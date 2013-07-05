@@ -13,7 +13,7 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorType = Network.ConnectorType.IOLogic;
             base.HomeDeviceType = Network.HomeDeviceType.Button;
             base.Name = Name;
-            base.Actions = new List<Action>();
+            base.Operations = new List<Operation>();
         }
     
         public void Push()

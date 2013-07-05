@@ -56,281 +56,192 @@
         </appliedStereotypesInternal>
         <ownedOperationsInternal>
           <operation
-            Id="09319587-3be2-486d-92f1-04cfa319669d"
-            name="GetHomeDevicesLinked"
+            Id="613d2d27-7873-4a39-be36-6dde121af93c"
+            name="RemoveHomeDevice"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="a404ac56-5c4c-49be-aa3d-204857287737"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="ab0f7c98-ec7d-4c0b-941d-0523011a223a">
-                    <propertyInstance
-                      Id="197409fe-e2a9-4e0d-9fc5-f8c3ea88b466"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="35b6c220-f9a5-41e3-a473-771e1c5d460e">
-                    <propertyInstance
-                      Id="b6d342cd-6f9d-46c6-98e0-ed6e919ca35a"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="7c3055e2-69ca-4314-84cf-a0fb54b069e7">
-                    <propertyInstance
-                      Id="ffa3c011-5f9e-449a-8e1b-2ca6ac1abec9"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="ebe3e00d-c01b-4ac1-b5f4-f8c30e167b00">
-                    <propertyInstance
-                      Id="8bfddf6b-7106-4f94-bcd2-ba79610c7cae"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d9b09e14-d4fe-48c6-b8ef-76cdfa266374">
-                    <propertyInstance
-                      Id="cf9a42ce-6a3d-406d-aee5-384810fb5cc2"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="417c2e93-7bad-4a03-a4f9-45ff69f021c8">
-                    <propertyInstance
-                      Id="e8faf905-52a4-45b8-bf52-9feb9ec73bdc"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
-            Id="c1adf98a-9585-46de-9428-721fc596ce28"
-            name="GetNodesWithFreeConnectors"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="70412350-8305-458c-a9b9-7d06eaf866ec"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="63100fa8-8998-4668-9b33-0becdac37f26">
-                    <propertyInstance
-                      Id="fb0a12d4-4de2-4e01-885d-fb9b0a9fd9e2"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="f3efd3a3-2e85-4725-a2ad-60307780b7b7">
-                    <propertyInstance
-                      Id="9d9768c2-a207-4e9b-ad1b-adb0357be9f7"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="fc5f45b4-cb93-4040-b603-c96cf90705e9">
-                    <propertyInstance
-                      Id="f9908f39-e763-4731-bdc7-0753c30563d8"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="850d82d7-4fdb-4dcb-8b7a-4420547fc0f9">
-                    <propertyInstance
-                      Id="4a35f87b-e634-4aad-8af4-80859f9f7854"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="5a52e3d0-56cd-42f9-8cdd-ab85feffc164">
-                    <propertyInstance
-                      Id="6c49763a-940e-48d6-8c68-ab73d7392333"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="3fb86435-dfce-43e2-898d-80235d791698">
-                    <propertyInstance
-                      Id="867ee893-821d-4285-af32-54ad07089556"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
-            Id="47a0e89f-8734-4ca4-9b14-acbef75a1cbd"
-            name="GetFreeHomeDeviceCompatibleWithTypeConector"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="d291e1b8-593a-4052-8825-bbef468bf8d5"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="f47bd21d-0c20-4cdc-8b2d-822fd2a5f882">
-                    <propertyInstance
-                      Id="0d3c2803-59e0-4c8c-8164-c4a16c94f071"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="ea765581-a8fa-477e-a26e-359ba1f84686">
-                    <propertyInstance
-                      Id="b24d35c6-82fa-4fbc-b9d6-d3d65595d884"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="c1252552-dfc7-46d6-8108-4b92fd575b7c">
-                    <propertyInstance
-                      Id="9eac59e1-549b-4851-86bc-2817ddac220f"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="4f48455c-b72d-42ac-8a3b-8a2046dd5d72">
-                    <propertyInstance
-                      Id="12274c40-4575-4bd3-9403-45b53b8e620e"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="67e2a827-c751-4f0f-94a0-423c6b958dd6">
-                    <propertyInstance
-                      Id="cab3c0ea-2a7e-42b4-88a7-676f7cc12393"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="159bb6ac-bbdc-47e1-b336-343e6d863a87">
-                    <propertyInstance
-                      Id="af60604b-a7f8-4040-9034-c1bfdbbd1baa"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="f6a5f5b6-bf0c-4dc8-b516-1e0a876b6ff6"
-                  name="TypeConnector"
+                  Id="30b25124-8987-4524-8954-bf846ae1bc54"
+                  name="HomeDevice"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
           <operation
-            Id="7249d3ec-55c3-46d8-bc52-d4346c521476"
-            name="LinkHomeDeviceToConnector"
+            Id="11fa8ee1-7f54-4a19-929b-9e06145674bb"
+            name="ChangeNameHomeDevice"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="cb069eb7-e006-45f1-8338-01d716f9d6ec"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="8fd7668e-cc0d-4ccb-8947-ace6e16fe0c7">
-                    <propertyInstance
-                      Id="2012d000-af72-498d-b75b-aaac00934172"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="67efd74f-e202-448f-9cbc-ee869a51a5f5">
-                    <propertyInstance
-                      Id="8f34603a-538f-4d79-b2ed-ac740c57eda4"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="1461d2e7-4161-4693-8078-5a511330412f">
-                    <propertyInstance
-                      Id="07ef8498-7387-4592-a090-e4269669c6ff"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="7bad907f-710a-4e27-a1fa-d39cef6ec273">
-                    <propertyInstance
-                      Id="c1aa9532-fd2a-4a23-b909-04591e351227"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="dc53f3e3-20e8-44db-af41-bb65d19ec140">
-                    <propertyInstance
-                      Id="05454155-12e0-43f8-993d-834458aabf70"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6b9cf40e-2e7f-4491-99e4-6b623cb7bca6">
-                    <propertyInstance
-                      Id="8fddef24-5d52-419c-b9cb-1ae6d7e04e37"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="6a0ef532-c22c-418a-a413-2dd35f50b831"
+                  Id="56601e59-5306-4ab6-a5ef-1977c6d94e4d"
                   name="HomeDevice"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="4813cc45-8afa-4154-832b-e1edaa3ede8e"
-                  name="Connector"
+                  Id="7ec207b9-57d7-4a34-bb39-48132f60b040"
+                  name="String Name"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
           <operation
-            Id="7e0ced46-7ea2-4c6c-9d6d-2787781898e8"
-            name="RefreshAllDevices"
+            Id="546be519-cb7a-4084-b06e-b7ddad2d11f6"
+            name="ChangeIconHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e2669833-a4e5-48ae-8af2-c1c7de9d32bd"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="eb9e5369-5dfd-4741-bfc9-c9cad654ef6d"
+                  name="Icon"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="131b87e8-c6b2-452b-9ac4-e35617dba1ac"
+            name="GetTypesHomeDevices"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="4a029940-7dfd-4d66-b1c1-e0c5f1035e69"
+            name="UpdatePosition"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="be82a07d-2f4e-4dac-b60d-b6cea936fe47"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d96b70bf-8e6f-41ea-acea-b2a24b971a59"
+                  name="Zone"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5ab32d62-0c7d-4c97-aec4-2b9e297f22e1"
+                  name="X"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="08953cc8-4e56-4067-8698-fee4abfc6e46"
+                  name="Y"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="55f07ee1-bdd0-42e8-a5da-f49fa0192709"
+            name="GetHomeDevices"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d68eaee0-d753-471a-b0ff-24a397a4eed5"
+            name="GetHomeDevices"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="de0bfa2e-1b35-450d-9153-2545763886d3"
+                  name="Zona"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b5149ece-3e1e-434d-8516-1e2a8ed9741b"
+                  name="Tipo"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="25412f65-12c1-45c8-980e-ae71fcbe7cee"
+            name="GetHomeDevices"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f3f8dac2-317c-4a7e-874d-c185dffb3b12"
+                  name="Zona"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="585f35cb-eb18-4cd7-a717-966498924c79"
+                  name="List&lt;Tipo&gt;"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5ee11ac6-60d5-41c9-863f-b28cf61714ab"
+                  name="bool Connected"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
         Id="1463f1c2-9cd9-46da-b22d-d8df0975af64"
-        name="NetworkSerive"
+        name="HomeSerive"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -377,6 +288,102 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="81008b30-779f-4ee4-8cdf-de6bee25b349"
+            name="SignOut"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ebd3856e-2537-4ed9-9553-8ad195360e2c"
+            name="ChangeHomeName"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="24919e3d-6a83-42e8-934a-431c19c2e558"
+                  name="String Name"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ec04446e-cfbc-48c9-a158-a1a7e454113c"
+            name="GetHomeName"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="49c19e73-d2f2-4cd8-8212-9fa66611e132"
+            name="GetHomeCity"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="09a30b2c-cb0d-435a-a3ae-71035db655e9"
+            name="UnlinkNode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2feb6e8c-9a47-4c39-82fb-b74fee376531"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1f65fd05-3a24-4bea-90ce-1a6300d84f57"
+            name="GetNodes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ff05016a-5a86-4b8b-a6ab-0e46be21c32a"
+            name="GetZones"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5db707d5-74c5-4a98-a515-e48c7d269cdc"
+                  name="String Zone"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="61372212-9420-4d1d-9164-4fd5ba25d182"
+            name="ChangeNameZone"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -439,8 +446,58 @@
             concurrency="Sequential"
             isQuery="false" />
           <operation
-            Id="78dfa99c-02de-4082-890d-72fc9ccda72b"
-            name="AddClientLog"
+            Id="72216bb4-7a6e-44cd-9d73-94b87a1b3dcc"
+            name="GetCategoryLog"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="619708a0-1bbb-467f-a191-0713ddfd8480"
+                  name="CategoryLog"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="64d3cf35-90f0-4014-a539-8d7dd9f14736"
+            name="GetCategoryLog"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d1c82f3d-8e20-463c-8c11-53379736721d"
+                  name="CategoryLog"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="093934c0-7721-484b-a3d5-adf0144e177d"
+                  name="int from"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="01d53bcc-2377-425d-9031-a8a72a3ef6a3"
+                  name="int to"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b2b40833-c45c-46c8-a04d-ec534df04eab"
+            name="GetLogCategories"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -460,15 +517,348 @@
     <packageHasNamedElement>
       <class
         Id="6308a142-7234-4145-b5c6-5ee76e298635"
-        name="MediaService"
+        name="NodeService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="548382ac-9a2b-4b2b-aac7-2f26e5ead99b"
+            name="LinkHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8bd657e9-af3b-4505-8f26-466b5b5cf86a"
+                  name="Connector"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8a468350-6ca2-470d-a6a8-3a93136d0d9e"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="848c83dd-2c43-48c8-8c2c-8e69e2e85082"
+            name="UnlinkHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="45248cf5-f4f2-444a-8551-5ecf46640de3"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="d78866c9-9a1b-4b21-808e-b71702da1df1"
+            name="GetConnectors"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c10a2837-ba47-441b-a8fb-5806a1f86861"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="053ff0c5-a0ad-4178-85de-7d360545b2db"
+            name="GetTypeShields"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="f346c8cf-feaa-4765-8038-7848e6cb7dfa"
+            name="GetTypeBases"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="482b1c91-7774-4186-a68d-7282bbe16c87"
+            name="GetNameNode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8af9da3e-eb49-4a1c-b626-1b5f0ad27b94"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="083b745c-f6d9-4b0b-b281-f2157d0c982c"
+            name="GetAdressNode"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7debc648-bfe3-44f0-9f8d-f010d1277885"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="de1e1990-0825-4001-8a8e-a17722062496"
+            name="UpdatePosition"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="debc1516-eda2-440b-91c3-1bbc2080cf2f"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="306ef22d-9357-4ab7-b167-97039385aeb4"
+                  name="Zone"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="599c46fe-9fed-45d3-aff2-ef27c3ebae32"
+                  name="X"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2ca4f387-7b43-4402-aabb-ee905ebd9bea"
+                  name="Y"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="dbcab26f-32de-4a47-b150-6dc2db57a15f"
+            name="GetFreeConnectors"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9ef92da1-3b39-4c3e-8e4b-980772f5ae55"
+                  name="Node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="fceade02-52b4-4e8f-8835-c0589f23fec8"
+            name="GetNodes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="86796082-7103-4be0-9c44-76f11bdeff29"
+            name="GetNodes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f7025eef-1946-4410-b62c-43aa754af9c4"
+                  name="Zone"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="7c44f45d-fa1d-4347-b03b-95d55e4e3215"
+            name="GetConnectorCaptable"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="94bb555b-a9c9-4ad2-902b-b8d8110b5ce2"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="255ccf9b-1a5f-4cdf-9bf1-9fdb40ec0c79"
+        name="PluginService"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
-        Id="255ccf9b-1a5f-4cdf-9bf1-9fdb40ec0c79"
-        name="PluginService"
+        Id="d6e257b8-5a77-40fc-b261-4290c17bb542"
+        name="OperationService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="e798315a-b4e7-407c-ac16-69e7c480d997"
+            name="GetOperations"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="58192f34-9e47-4b24-930b-fb6077bed713"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4b22d33f-88ae-47a5-b76c-3c2b6cecb461"
+            name="RemoveOperation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fc60f1c3-7390-4510-9e67-8db2ed41100b"
+                  name="Operation"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4e79cd2d-2bc4-42a6-96aa-4ff3c121d141"
+            name="bool: ChangeEnableOperation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f9b56b84-2504-4bf9-8a0b-bbacfcabaa46"
+                  name="Operation"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6781cade-4e88-4804-a389-54a8738237f3"
+            name="ExecuteOperation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="adf5603e-c1f6-4cf4-8a58-9a5a7ea75261"
+                  name="Operation"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="28e98dfc-8868-4935-92b6-a060b74b0449"
+            name="AddOperation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8b6ec7fe-375b-4065-b922-469d3d655bd8"
+                  name="HomeDevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c1d1b2e6-9d38-4847-802d-799b2707032d"
+                  name="Operation"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b8684922-ebf9-474c-9f10-73b93e0a2bb8"
+        name="ConfigService2"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />

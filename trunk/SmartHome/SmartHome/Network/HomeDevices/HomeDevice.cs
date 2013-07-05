@@ -9,14 +9,14 @@ namespace SmartHome.Network.HomeDevices
 {
     public abstract class HomeDevice
     {
-        public int ID { get; set; }
+        public ushort ID { get; set; }
         public string Name { get; set; }
         public Connector Connector { get; set; }
 
         public ConnectorType ConnectorType { get; set; }
         public HomeDeviceType HomeDeviceType { get; set; }
         public Position Position { get; set; }
-        public List<Action> Actions { get; set; }
+        public List<Operation> Operations { get; set; }
 
         public void Link(Connector Connector)
         {

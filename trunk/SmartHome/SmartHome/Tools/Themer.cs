@@ -7,14 +7,5 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Tools
 {
-    public static class Sheduler
-    {
-        public static List<TimeAction> TimeActions = new List<TimeAction>();
 
-
-
-
-
-
-    }
 }

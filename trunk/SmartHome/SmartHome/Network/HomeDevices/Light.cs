@@ -20,7 +20,7 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorType = Network.ConnectorType.SwitchLOW;
             base.HomeDeviceType = Network.HomeDeviceType.Light;
             base.Name = Name;
-            base.Actions = new List<Action>();
+            base.Operations = new List<Operation>();
         }
 
         public override void RefreshState()

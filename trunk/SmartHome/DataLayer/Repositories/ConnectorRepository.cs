@@ -12,7 +12,7 @@ namespace DataLayer.Repositories
         
         public IQueryable<Connector> GetAllWithHomeDevice()
         {
-            return _Connectors.Include("HomeDevice");
+            return _Collection.Include("HomeDevice");
         }
     }
 }

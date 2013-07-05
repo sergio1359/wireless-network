@@ -2,17 +2,11 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="ddffd40b-f1f3-42a3-80c8-1dbc8085db27"
-  name="Messages" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  name="Connection" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <ownedCommentsInternal>
     <comment
       Id="1da7f046-02f7-4e3e-a72f-89465f1665ff">
       <body>El cometido sera la interpretacion de mensajes por parte de los nodos y el envio de peticiones y acciones</body>
-    </comment>
-    <comment
-      Id="99a7a610-0eb8-4ba5-af71-ffbb380a0752">
-      <body>send
-receive
-checkCentralNode</body>
     </comment>
   </ownedCommentsInternal>
   <packagedElements>
@@ -387,7 +381,43 @@ checkCentralNode</body>
         Id="17fb3da7-804e-4580-90a8-f671e53d2b4b"
         name="IConnexion"
         isAbstract="false"
-        isLeaf="false" />
+        isLeaf="false">
+        <ownedAttributes>
+          <property
+            Id="f64cbbf4-3526-493e-9767-e255ba600d3d"
+            name="Send"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="c95e007d-0eb9-45f7-acb0-80aad9e1ede0"
+            name="Receive"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="222917d2-62b9-4706-8a28-c0e6fdcf2b08"
+            name="CheckCentralNode"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributes>
+      </Interface>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <enumeration
@@ -545,6 +575,43 @@ checkCentralNode</body>
           <enumerationLiteral
             Id="8a930f8c-5da4-4f1f-ad75-0d9bb3017e62"
             name="Extension" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="2a411020-332e-45a4-8e27-1cb528c8efa6"
+        name="ErrorCode"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="454dfa1e-ed14-4ebe-9185-790ac6a4d8ba"
+            name="OK" />
+          <enumerationLiteral
+            Id="b079d0dd-fd53-4cf9-8210-3a659850b9f0"
+            name="ResponseErrorCodes" />
+          <enumerationLiteral
+            Id="a0081fb0-4152-4f39-8bef-892e931c0f43"
+            name="ErrorFragmentTotalNotExpected" />
+          <enumerationLiteral
+            Id="11c36a4e-91a1-4994-b66b-9595dba492c8"
+            name="ErrorFragmentOrder" />
+          <enumerationLiteral
+            Id="821ba000-f56a-4a25-9213-fa479f0b35d3"
+            name="ErrorWaitingFirstFragment" />
+          <enumerationLiteral
+            Id="382e17c5-b8f6-48d5-93a6-104d30d001d1"
+            name="ErrorConfigSizeTooBig" />
+          <enumerationLiteral
+            Id="6d180c9c-1944-4147-9f6e-b5fc5d3f09d1"
+            name="ErrorConfigInvalidChecksum" />
+          <enumerationLiteral
+            Id="c8e91108-8fa2-45f0-bd8a-48040bd109ed"
+            name="ErrorConfigSizeNotExpected" />
+          <enumerationLiteral
+            Id="b18e7913-8874-49ba-9e11-3b9f2ef2a998"
+            name="ErrorBusyReceivingState" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

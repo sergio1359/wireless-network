@@ -49,7 +49,7 @@
     <Compile Include="Repositories\ConnectorRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\UnitOfWork.cs" />
+    <Compile Include="SmartHomeDBContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

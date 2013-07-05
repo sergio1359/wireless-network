@@ -93,19 +93,19 @@ namespace Generate_Simple_EEPROM
             NetworkManager.Nodes[1].Address = 0x4004;
 
             //Actions 0->1
-            NetworkManager.Nodes[0].Connectors[0].HomeDevice.Actions.Add(new SmartHome.Network.Action()
+            NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
                 Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
-                ToHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
+                DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
             });
 
             //1->0
-            NetworkManager.Nodes[1].Connectors[0].HomeDevice.Actions.Add(new SmartHome.Network.Action()
+            NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
                 Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
-                ToHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
+                DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
             });
 
             NetworkManager.GetAllEEPROMS();
