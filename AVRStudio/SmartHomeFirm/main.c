@@ -186,7 +186,6 @@ static void APP_TaskHandler(void)
 
 /*****************************************************************************
 *****************************************************************************/
-uint8_t aa;
 int main(void)
 {
 	SYS_Init();
@@ -203,12 +202,13 @@ int main(void)
 	debugTime.second = 00;
 	TIME_ValidateTime(&debugTime);
 	
+	WEEKDAY_t debugWeek;
 	DATE_t debugDate;
-	debugDate.weekDay.flags.Friday = 1;
+	debugWeek.flags.Friday = 1;
 	debugDate.day = 31;
 	debugDate.month = 5;
 	debugDate.year = 2013;
-	TIME_ValidateDate(&debugDate);
+	TIME_ValidateDate(&debugDate, &debugWeek);
 	
 	if(DS2401_Init())
 	{
