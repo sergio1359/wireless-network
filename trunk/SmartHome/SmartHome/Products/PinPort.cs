@@ -40,7 +40,7 @@ namespace SmartHome.Products
 
         public byte GetPinPortNumber()
         {
-            return (byte)(Port * 8 + Pin);
+            return (byte)((Port-'A') * 8 + Pin);
         }
 
         public override bool Equals(object obj)

@@ -18,6 +18,14 @@ namespace SmartHome.Network.HomeDevices
         public Position Position { get; set; }
         public List<Operation> Operations { get; set; }
 
+        public static ushort incrementID = 0;
+
+        public HomeDevice()
+        {
+            ID = incrementID;
+            incrementID++;
+        }
+
         public void Link(Connector Connector)
         {
             if (Connector.HomeDevice != null)
