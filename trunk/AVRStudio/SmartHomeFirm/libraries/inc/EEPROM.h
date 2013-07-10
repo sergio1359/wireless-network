@@ -41,6 +41,7 @@ typedef struct{
 	uint8_t firmVersion;	//Desired firmware version for the current config
 	uint16_t length;		//Size of the current config
 	uint16_t checkSum;		//Crc16
+	WEEKDAY_t updateWeekDay;
 	DATE_t updateDate;
 	TIME_t updateTime;
 	SYSTEM_FLAGS_t systemFlags;
@@ -56,7 +57,13 @@ typedef struct{
 
 
 typedef struct{
+	uint16_t pointerOperationList;
+	uint8_t numberOfOperations;
+}CONFIG_MODULE_ELEM_HEADER_t;
+
+typedef struct{
 	uint16_t configModule_Logic;
+	uint16_t configModule_Dimmable;
 	uint16_t configModule_RGB;
 	uint16_t configModule_Presence;
 	uint16_t configModule_TempHum;
