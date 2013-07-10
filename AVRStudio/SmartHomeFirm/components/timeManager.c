@@ -62,7 +62,7 @@ void TIME_CheckTimeOperation()
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
 			//TODO: USE OPERATION MANAGER!
-			//if(currentDate.weekDay.raw & time_operation_header->weekDays.raw != 0)
+			//if(currentWeek.raw & time_operation_header->weekDays.raw != 0)
 			//	OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
 			
 			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
@@ -85,7 +85,7 @@ void searchFirstTimeOperation()
 		time_operation_header = (TIME_OPERATION_HEADER_t*)&runningConfiguration.raw[operation_ptr];
 		
 		if(TIME_CompareTimes(time_operation_header->activationTime, currentTime) >= 0)
-		break;
+			break;
 		
 		operation_ptr += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
 	}

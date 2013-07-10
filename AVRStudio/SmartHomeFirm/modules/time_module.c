@@ -47,10 +47,7 @@ void time_Handler(OPERATION_HEADER_t* operation_header)
 			timeResponse.response.time = currentTime;
 		}else
 		{
-			for(uint8_t i = 0; i < sizeof(TIME_READ_RESPONSE_MESSAGE_t); i++)
-			{
-				((uint8_t*)&timeResponse.response)[i] = 0xFF;
-			}
+			timeResponse.response.week.raw = 0xFF; // Datetime not valid
 		}		
 		
 		OM_ProccessResponseOperation(&timeResponse.header);

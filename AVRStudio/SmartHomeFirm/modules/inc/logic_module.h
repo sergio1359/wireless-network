@@ -56,12 +56,13 @@ typedef struct
 {
 	unsigned changeType		: 2; //LSB
 	unsigned defaultValue	: 1;
-	unsigned maskIO			: 1;
+	unsigned maskIO			: 1; //Input -> 0	Output -> 1
 	unsigned reserved		: 4; //MSB	
 }LOGIC_BITS_CONFIG_t;
 
 typedef struct
 {
+	 CONFIG_MODULE_ELEM_HEADER_t operationsInfo;
 	 uint16_t deviceID;
 	 uint8_t pinPort;
 	 LOGIC_BITS_CONFIG_t configBits;

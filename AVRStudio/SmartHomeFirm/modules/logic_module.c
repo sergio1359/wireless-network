@@ -44,7 +44,7 @@ void logicModule_Init()
 	uint8_t mask;
 	
 	num_of_logic_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic];	//First byte is number of configs
-	configPtr = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic + 1];		//At second byte the list start
+	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic + 1];		//At second byte the list start
 	
 	if(num_of_logic_elems > MAX_LOGIC_DEVICES)
 	{
@@ -175,11 +175,13 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 	for(uint8_t i = 0; i < num_of_logic_elems; i++)
 	{
 		LOGIC_ELEM_t* currentElem = &logic_elems[i];
+		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfo;
 		LOGIC_BITS_CONFIG_t* configBitsPtr = &currentElem->config->configBits; 
 		
-		if( ((~configBitsPtr->maskIO) & currentElem->mask) != currentElem->mask )//Read if input
+		if( ~configBitsPtr->maskIO )	//Read if input
 		{
-			if ((configBitsPtr->changeType>>(currentElem->mask)) != NO_EDGE) //AND ChangeType != NONE
+			if ( (operationsInfoPtr->numberOfOperations > 0) &&		//Operations to send
+				 (configBitsPtr->changeType != NO_EDGE) )		//AND ChangeType != NONE
 			{
 				_Bool changeOcurred = 0;
 				uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
@@ -197,14 +199,21 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 					
 					currentElem->lastValue = val;
 					
-					//if(changeOcurred)
-					//TODO: USE OPERATION MANAGER!
+					if(changeOcurred)
+					{
+						//TODO: USE OPERATION MANAGER!
+						OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
+						for(int c = 0; c < operationsInfoPtr->numberOfOperations; i++)
+						{
+							operationPtr++;
+						}
+					}					
 				}
 				
 				currentElem->debouncerValue = val;
 			}
 		}
-		else// Timer check
+		else// Timer check (Outputs)
 		{
 			if(currentElem->timerCounter > 1)
 			{
