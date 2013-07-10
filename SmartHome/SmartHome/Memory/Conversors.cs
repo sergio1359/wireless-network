@@ -127,7 +127,7 @@ namespace SmartHome.Memory
                 res |= (byte)(0x01 << 3);
             if (ppc.DefaultValueD)
                 res |= (byte)(0x01 << 2);
-            res |= (byte)ppc.Threshold;
+            res |= (byte)ppc.ChangeTypeD;
 
             return res;
         }

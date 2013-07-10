@@ -69,6 +69,7 @@ namespace SmartHome.Memory
             tempMemory.AddRange(OperationTimeRestriction());
 
             //OperationConditionRestrictions
+            dinamicIndex.Add((ushort)tempMemory.Count);
             //TODO
 
             //free region
@@ -99,8 +100,6 @@ namespace SmartHome.Memory
         private byte[] ConfigHeader()
         {
             List<byte> result = new List<byte>();
-
-            result.Add((byte)node.Base);
 
             //firmware version = 1
             result.Add(0x01);
@@ -258,16 +257,17 @@ namespace SmartHome.Memory
                         item.HomeDevice.HomeDeviceType == HomeDeviceType.WallPlug ||
                         item.HomeDevice.HomeDeviceType == HomeDeviceType.Light)
                     {
-                        result[0]++;
-                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-                        result.Add(GetLogicConfiguration(item));
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+                        
+                        //ConfigList
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(GetLogicConfiguration(item));
                     }
                 }
             }
@@ -278,21 +278,23 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
             result.Add(0x00);
+            result.Add(0x00); //TODO: Zero detection
             foreach (Connector item in node.Connectors)
             {
                 if (item.HomeDevice != null)
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PresenceSensor)
                     {
-                        result[0]++;
-                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+                        
+                        //ConfigList
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
                     }
                 }
             }
@@ -309,18 +311,19 @@ namespace SmartHome.Memory
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.RGBLight)
                     {
+                        //pointerOperation
+                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
+                        result.Add(0x00);
+                        result.Add(0x00);
+                        result.Add((byte)item.HomeDevice.Operations.Count);
+                        
+                        //ConfigList
                         result[0]++;
                         result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
                         foreach (var pinPort in item.GetPinPort())
                         {
                             result.Add(pinPort.GetPinPortNumber());
                         }
-
-                        //pointerOperation
-                        OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
-                        result.Add(0x00);
-                        result.Add(0x00);
-                        result.Add((byte)item.HomeDevice.Operations.Count);
                     }
                 }
             }
@@ -337,16 +340,17 @@ namespace SmartHome.Memory
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PresenceSensor)
                     {
-                        result[0]++;
-                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-                        result.Add(((PresenceSensor)item.HomeDevice).Sensibility);
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+                        
+                        //ConfigList
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(((PresenceSensor)item.HomeDevice).Sensibility);
                     }
                 }
             }
@@ -364,15 +368,16 @@ namespace SmartHome.Memory
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.TemperatureHumiditySensor)
                     {
-                        result[0]++;
-                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+                        
+                        //ConfigList
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
                     }
                 }
             }
@@ -390,16 +395,17 @@ namespace SmartHome.Memory
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.PowerSensor)
                     {
-                        result[0]++;
-                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-                        result.Add(((PowerSensor)item.HomeDevice).Sensibility);
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+
+                        //ConfigList
+                        result[0]++;
+                        result.AddRange(item.HomeDevice.ID.UshortToByte(baseConfiguration.LittleEndian));
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(((PowerSensor)item.HomeDevice).Sensibility);
                     }
                 }
             }
@@ -418,15 +424,16 @@ namespace SmartHome.Memory
                 {
                     if (item.HomeDevice.HomeDeviceType == HomeDeviceType.LuminositySensor)
                     {
-                        result[0]++;
-                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
-                        result.Add(((LuminositySensor)item.HomeDevice).Sensibility);
-
                         //pointerOperation
                         OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.HomeDevice.Operations.ToArray());
                         result.Add(0x00);
                         result.Add(0x00);
                         result.Add((byte)item.HomeDevice.Operations.Count);
+
+                        //ConfigList
+                        result[0]++;
+                        result.Add(item.GetPinPort()[0].GetPinPortNumber());
+                        result.Add(((LuminositySensor)item.HomeDevice).Sensibility);
                     }
                 }
             }

@@ -75,6 +75,12 @@ namespace Generate_Simple_EEPROM
             NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
             NetworkManager.HomeDevices.Add(new Light("Led1"));
 
+            //IDS HomeDevices
+            for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
+            {
+                NetworkManager.HomeDevices[i].ID = i;
+            }
+
             //Node0
             NetworkManager.Nodes[0].Connectors[0].HomeDevice = NetworkManager.HomeDevices[0];
             NetworkManager.Nodes[0].Connectors[1].HomeDevice = NetworkManager.HomeDevices[1];
@@ -96,7 +102,7 @@ namespace Generate_Simple_EEPROM
             NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
-                Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
+                Args = new byte[] { 0x03, 0x00 }, //Harcondig: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
             });
 
@@ -104,7 +110,7 @@ namespace Generate_Simple_EEPROM
             NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
-                Args = new byte[] { 0x03, (1 << 6), 0x00 }, //Hardconding: D6, Time = 0
+                Args = new byte[] { 0x01, 0x00 }, //Hardconding: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
             });
 

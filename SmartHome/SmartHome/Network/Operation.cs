@@ -54,7 +54,7 @@ namespace SmartHome.Network
 
     public static class Sheduler
     {
-        public static SortedDictionary<DateTime, List<Operation>> TimeActions;
+        public static SortedDictionary<DateTime, List<Operation>> TimeActions = new SortedDictionary<DateTime, List<Operation>>();
 
     }
 
