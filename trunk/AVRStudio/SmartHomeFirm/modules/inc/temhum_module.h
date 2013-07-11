@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "EEPROM.h"
+#include "configManager.h"
 
 #define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
 
@@ -25,27 +25,39 @@ X(HumidityReadResponse,			0x5D, temhumRead_Handler,		HUMIDITY_READ_RESPONSE_MESS
 //TEMPERATURE
 typedef struct
 {
-	uint8_t addr;
+	uint16_t deviceID;
 }TEMPERATURE_READ_MESSAGE_t;
 
 typedef struct
 {
-	uint8_t addr;
+	uint16_t deviceID;
 	uint8_t temperature;
 }TEMPERATURE_READ_RESPONSE_MESSAGE_t;
 
 //HUMIDITY
 typedef struct
 {
-	uint8_t addr;
+	uint16_t deviceID;
 }HUMIDITY_READ_MESSAGE_t;
 
 typedef struct
 {
-	uint8_t addr;
+	uint16_t deviceID;
 	uint8_t humidity;
 }HUMIDITY_READ_RESPONSE_MESSAGE_t;
 
+
+//CONFIGURATION
+
+typedef struct
+{
+	CONFIG_MODULE_ELEM_HEADER_t operationsInfoTemperature;
+	CONFIG_MODULE_ELEM_HEADER_t operationsInfoHumidity;
+	uint16_t deviceID;
+	uint8_t pinAddress;
+	uint8_t sensibilityTemperature;
+	uint8_t sensibilityHumidity;
+}TEMHUM_CONFIG_t;
 
 
 void temHumModule_Init(void);

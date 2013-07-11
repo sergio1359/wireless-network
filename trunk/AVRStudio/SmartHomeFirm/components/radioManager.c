@@ -1,5 +1,5 @@
 /*
- * radio.c
+ * radioManager.c
  *
  * Created: 28/01/2013 14:28:08
  *  Author: Victor
@@ -9,7 +9,7 @@
 #include "nwk.h"
 #include "sysTimer.h"
 
-#include "radio.h"
+#include "radioManager.h"
 #include "modulesManager.h"
 #include "operationsManager.h"
 
@@ -80,13 +80,13 @@ void Radio_Init()
 
 _Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&message->opCode), 0, 0);
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode), 0, 0);
 }
 
 
 _Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&message->opCode) - bodySize, body, bodySize);
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize);
 }
 
 inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize)
@@ -157,14 +157,14 @@ void sendNextMessage()
 	if(referencesMessages_Buffer.start != referencesMessages_Buffer.end)
 	{
 		currentOP = referencesMessages_Buffer.buffer[referencesMessages_Buffer.start];
-		length = sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&currentOP->opCode);
+		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
 		
 		referencesMessages_Buffer.start++;
 		referencesMessages_Buffer.start &= REFERENCES_BUFFER_SIZE_MASK;
 	}else if(copiesMessages_Buffer.start != copiesMessages_Buffer.end)
 	{
 		currentOP = (OPERATION_HEADER_t*)&copiesMessages_Buffer.buffer[copiesMessages_Buffer.start];
-		length = sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&currentOP->opCode);
+		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
 		
 		copiesMessages_Buffer.start += length;
 		copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;

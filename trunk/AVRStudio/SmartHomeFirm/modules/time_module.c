@@ -19,6 +19,7 @@ struct
 
 void timeModule_Init(void)
 {
+	//Set responses opCodes
 	timeResponse.header.opCode = DateTimeReadResponse;
 }
 

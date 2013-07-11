@@ -38,13 +38,13 @@ bool command_is_dinamic[] = {
 };
 #undef X
 
-void modules_Init(void)
+void MODULES_Init(void)
 {
 	for(uint8_t i = 0; i<(sizeof(modules_Inits) / sizeof(void*));i++)
 		(*modules_Inits[i])();
 }
 
-void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
+void MODULES_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
 {
 	for(uint8_t i = 0; i<(sizeof(modules_NotificationInd) / sizeof(void*));i++)
 	{
@@ -53,7 +53,7 @@ void modules_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
 	}
 }
 
-uint8_t getCommandArgsLength(uint8_t* opcode)
+uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode)
 {
 	if(*opcode == EXTENSION_OPCODE)
 		return 4;// JUST FOR TRIALS! In final version, we need to decode the next byte. *(opcode + 1)
@@ -64,7 +64,7 @@ uint8_t getCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode];
 }	
 
-void handleCommand(OPERATION_HEADER_t* header)
+void MODULES_HandleCommand(OPERATION_HEADER_t* header)
 {
 	//TODO: Check if exists
 	if(command_handlers[header->opCode] != 0)

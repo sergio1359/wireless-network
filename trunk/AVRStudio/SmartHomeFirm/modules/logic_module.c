@@ -6,10 +6,9 @@
 */
 #include "modulesManager.h"
 #include "globals.h"
-#include "portMonitor.h"
+#include "DIGITAL.h"
 
 #include "sysTimer.h"
-
 
 #define MAX_LOGIC_DEVICES 32
 
@@ -36,6 +35,7 @@ SYS_Timer_t logicTimer;
 
 _Bool proccessDigitalPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static void logicTimerHandler(SYS_Timer_t *timer);
+uint8_t findLogicElem(uint16_t deviceAddress);
 
 void logicModule_Init()
 {
@@ -43,7 +43,7 @@ void logicModule_Init()
 	uint8_t* portPtr;
 	uint8_t mask;
 	
-	num_of_logic_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic];	//First byte is number of configs
+	num_of_logic_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic];			//First byte is number of configs
 	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic + 1];		//At second byte the list start
 	
 	if(num_of_logic_elems > MAX_LOGIC_DEVICES)
@@ -54,8 +54,8 @@ void logicModule_Init()
 	
 	for(uint8_t i = 0; i<num_of_logic_elems; i++)
 	{		
-		portPtr = PORT_FROM_PINADDRESS(configPtr->pinPort);
-		mask = MASK_FROM_PINADDRESS(configPtr->pinPort);
+		portPtr = PORT_FROM_PINADDRESS(configPtr->pinAddress);
+		mask = MASK_FROM_PINADDRESS(configPtr->pinAddress);
 
 		HAL_GPIO_PORT_out(portPtr, mask);
 		HAL_GPIO_PORT_in(portPtr,~(mask));
@@ -70,8 +70,10 @@ void logicModule_Init()
 		configPtr++;
 	}
 	
+	//Set responses opCodes
 	logicResponse.header.opCode = LogicReadResponse;
 	
+	//Configure Timer
 	logicTimer.interval = 200; // 5 times per second
 	logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	logicTimer.handler = logicTimerHandler;
@@ -109,7 +111,7 @@ void logic_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == LogicReadResponse)
 	{
 		//TODO: NOTIFICATION (check)
-		modules_Notify(LogicModule, operation_header);
+		MODULES_Notify(LogicModule, operation_header);
 	}
 }
 
@@ -203,8 +205,9 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 					{
 						//TODO: USE OPERATION MANAGER!
 						OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
-						for(int c = 0; c < operationsInfoPtr->numberOfOperations; i++)
+						for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 						{
+							OM_ProccessInternalOperation(operationPtr, false);
 							operationPtr++;
 						}
 					}					

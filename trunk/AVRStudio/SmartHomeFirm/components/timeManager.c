@@ -62,10 +62,9 @@ void TIME_CheckTimeOperation()
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
 			//TODO: USE OPERATION MANAGER!
-			//if(currentWeek.raw & time_operation_header->weekDays.raw != 0)
-			//	OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
+			OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
 			
-			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
+			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&time_operation_header->operationHeader.opCode);
 			
 			if(time_operation_header >= ((uint16_t)&runningConfiguration) + TIME_OPERATION_LIST_END_ADDRESS)
 			{
@@ -75,6 +74,11 @@ void TIME_CheckTimeOperation()
 		}
 	}
 }
+
+
+/************************************************************************/
+/*                       INTERNAL METHODS                               */
+/************************************************************************/
 
 
 void searchFirstTimeOperation()
@@ -87,7 +91,7 @@ void searchFirstTimeOperation()
 		if(TIME_CompareTimes(time_operation_header->activationTime, currentTime) >= 0)
 			break;
 		
-		operation_ptr += sizeof(TIME_OPERATION_HEADER_t) + getCommandArgsLength(&time_operation_header->operationHeader.opCode);
+		operation_ptr += sizeof(TIME_OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&time_operation_header->operationHeader.opCode);
 	}
 	
 	if(operation_ptr >= TIME_OPERATION_LIST_END_ADDRESS)

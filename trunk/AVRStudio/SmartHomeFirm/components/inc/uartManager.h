@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "halUart.h"
 
-#include "EEPROM.h"
+#include "configManager.h"
 	
 /*****************************************************************************
                               Types section

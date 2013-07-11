@@ -149,6 +149,12 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="components\configManager.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="components\inc\configManager.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="components\inc\timeManager.h">
       <SubType>compile</SubType>
     </Compile>
@@ -164,19 +170,13 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="components\inc\operationsManager.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="components\inc\portMonitor.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="components\inc\radio.h">
+    <Compile Include="components\inc\radioManager.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="components\operationsManager.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="components\portMonitor.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="components\radio.c">
+    <Compile Include="components\radioManager.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="components\timeManager.c">
