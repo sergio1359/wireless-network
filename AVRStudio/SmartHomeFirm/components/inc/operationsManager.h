@@ -9,7 +9,7 @@
 #ifndef OPERATIONSMANAGER_H_
 #define OPERATIONSMANAGER_H_
 
-#include "EEPROM.h"
+#include "configManager.h"
 
 void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy);
 void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header);

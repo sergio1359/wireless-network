@@ -131,12 +131,12 @@ void HAL_UartBytesReceived(uint16_t bytes)
 
 void USART_SendOperation(OPERATION_HEADER_t* operation_header)
 {
-	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode), 0, 0);
+	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode), 0, 0);
 }
 
 void USART_SendOperationWithBody(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize)
 {
-	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + getCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
+	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
 }
 
 void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize)

@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "RTC.h"
-#include "EEPROM.h"
+#include "configManager.h"
 
 #define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
 
@@ -64,7 +64,7 @@ typedef struct
 {
 	 CONFIG_MODULE_ELEM_HEADER_t operationsInfo;
 	 uint16_t deviceID;
-	 uint8_t pinPort;
+	 uint8_t pinAddress;
 	 LOGIC_BITS_CONFIG_t configBits;
 }LOGIC_CONFIG_t;
 

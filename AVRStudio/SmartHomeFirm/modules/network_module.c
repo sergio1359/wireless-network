@@ -36,6 +36,7 @@ uint16_t currentRouteFrameSize;
 
 void networkModule_Init(void)
 {
+	//Set responses opCodes
 	macResponse.header.opCode			= MacReadResponse;
 	routeTableResponse.header.opCode	= RouteTableReadResponse;
 	nextHopResponse.header.opCode		= NextHopReadResponse;

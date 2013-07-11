@@ -12,7 +12,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "EEPROM.h"
+#include "configManager.h"
 
 #define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_NotificationInd)
 

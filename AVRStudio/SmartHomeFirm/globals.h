@@ -19,7 +19,7 @@
 #include <avr/wdt.h>
 #include "config.h"
 #include "RTC.h"
-#include "EEPROM.h"
+#include "configManager.h"
 
 #define FIRMWARE_VERSION 1
 

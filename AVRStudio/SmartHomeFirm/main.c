@@ -13,7 +13,6 @@
 
 //LIBRARIES
 #include "RTC.h"
-#include "EEPROM.h"
 #include "ANALOG.h"
 #include "DIGITAL.h"
 #include "DS2401.h"
@@ -24,6 +23,7 @@
 #include "globals.h"
 
 //COMPONENTS
+#include "configManager.h"
 #include "uartManager.h"
 
 #ifdef APP_ENABLE_OTA_SERVER
@@ -194,7 +194,7 @@ int main(void)
 	
 	RTC_Init();
 	
-	EEPROM_Init();
+	CONFIG_Init();
 	
 	TIME_t debugTime;
 	debugTime.hour = 00;
@@ -240,7 +240,7 @@ int main(void)
 	#endif
 	
 	Radio_Init();
-	modules_Init();
+	MODULES_Init();
 	
 	ledsInit();
 	DISPLAY_Init(PINADDRESS('D',1), PINADDRESS('D',0), PINADDRESS('B',1), PINADDRESS('B',3), PINADDRESS('B',5), PINADDRESS('B',7));
@@ -257,6 +257,5 @@ int main(void)
 		OTA_ClientTaskHandler();
 		#endif
 		APP_TaskHandler();
-		//PortMonitor_TaskHandler();
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * radio.h
+ * radioManager.h
  *
  * Created: 28/01/2013 14:27:58
  *  Author: Victor
@@ -9,7 +9,7 @@
 #ifndef RADIO_H_
 #define RADIO_H_
 
-#include "EEPROM.h"
+#include "configManager.h"
 #include <stdbool.h>
 
 typedef enum RadioState_t

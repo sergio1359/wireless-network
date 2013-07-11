@@ -7,6 +7,8 @@
 
 #include "operationsManager.h"
 #include "modulesManager.h"
+#include "radioManager.h"
+#include "uartManager.h"
 #include "globals.h"
 
 _Bool checkTimeRestrictions(uint16_t operationAddress);
@@ -26,7 +28,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		HAL_UartWriteNumberHEX(operation_header->opCode);
 		HAL_UartPrint("\t ARGS:");
 	
-		uint8_t length = getCommandArgsLength(&operation_header->opCode);
+		uint8_t length = MODULES_GetCommandArgsLength(&operation_header->opCode);
 	
 		for (uint8_t i = 0; i < length; i++)
 		{
@@ -45,7 +47,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
 	{
-		handleCommand(operation_header);
+		MODULES_HandleCommand(operation_header);
 	}else
 	{
 		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
@@ -73,7 +75,7 @@ void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header)
 		HAL_UartWriteNumberHEX(operation_header->opCode);
 		HAL_UartPrint("\t ARGS:");
 	
-		uint8_t length = getCommandArgsLength(&operation_header->opCode);
+		uint8_t length = MODULES_GetCommandArgsLength(&operation_header->opCode);
 	
 		for (uint8_t i = 0; i < length; i++)
 		{
@@ -96,7 +98,7 @@ void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header)
 		//TODO: Check with internal address instead of configuration address...
 		if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress) //MINE (EXTERNAL)
 		{
-			handleCommand(operation_header);
+			MODULES_HandleCommand(operation_header);
 		}else
 		{
 			//TODO: Send or log ERROR (OPERATION_DEST_ADDR_ERROR)
@@ -143,9 +145,9 @@ _Bool checkTimeRestrictions(uint16_t operationAddress)
 		
 		if(restric->operationAddress == operationAddress && restriction_passed)
 		{
-			restriction_passed =  ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) ); //In time
-			restriction_passed &= ( (currentWeek.raw & restric->weekDays.raw) != 0);														//Day of the week
-			restriction_passed &= ( (TIME_CompareDates(restric->dateFrom, currentDate) <= 0) && (TIME_CompareDates(restric->dateTo, currentDate) >= 0) ); //In date
+			restriction_passed =  ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) );			//In time
+			restriction_passed &= ( (currentWeek.raw & restric->weekDays.raw) != 0);																		//Day of the week
+			restriction_passed &= ( (TIME_CompareDates(restric->dateFrom, currentDate) <= 0) && (TIME_CompareDates(restric->dateTo, currentDate) >= 0) );	//In date
 		}else if(restric->operationAddress > operationAddress || !restriction_passed)
 		{
 			break;

@@ -10,7 +10,7 @@
 #define TIMEMANAGER_H_
 
 #include <stdint.h>
-#include "EEPROM.h"
+#include "configManager.h"
 
 #define VALID_DATETIME (validDate & validTime)
 
