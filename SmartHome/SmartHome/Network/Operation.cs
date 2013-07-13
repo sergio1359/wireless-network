@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
 using SmartHome.Comunications;
+using SmartHome.Memory;
 
 namespace SmartHome.Network
 {
@@ -14,6 +15,7 @@ namespace SmartHome.Network
         public int ID { get; set; }
         public String Name { get; set; }
         public HomeDevice DestionationHomeDevice { get; set; }
+        public HomeDevice OriginHomeDevice { get; set; }
         public OPCode OPCode { get; set; }
         public byte[] Args { get; set; }
         public bool Enable { get; set; }
@@ -21,7 +23,34 @@ namespace SmartHome.Network
         public List<TimeRestriction> TimeRestrictions { get; set; }
         public List<ConditionalRestriction> ConditionalRestriction { get; set; }
 
-        public virtual void Execute() { }
+        public void Execute() { }
+
+        public byte[] ToBinaryOperation()
+        {
+            List<byte> result = new List<byte>();
+
+            //TODO: SourceAddress, ojo con las request (tendremos que volver aqui)
+            result.Add(0x00);
+            result.Add(0x00);
+
+            //DestinationAddress
+            if (DestionationHomeDevice.Connector != null && DestionationHomeDevice.Connector.Node.Address == OriginHomeDevice.Connector.Node.Address)
+            {
+                result.Add(0x00);
+                result.Add(0x00);
+            }
+            else
+            {
+                result.AddRange(DestionationHomeDevice.Connector.Node.Address.UshortToByte(DestionationHomeDevice.Connector.Node.GetBaseConfiguration().LittleEndian));
+            }
+
+            result.Add((byte)OPCode);
+            result.AddRange(Args);
+
+            return result.ToArray();
+        }
+
+
     }
 
     public class TimeRestriction

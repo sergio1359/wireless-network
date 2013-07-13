@@ -131,40 +131,5 @@ namespace SmartHome.Memory
 
             return res;
         }
-
-        private byte[] ToBinaryOperation(Operation operation, bool littleEndian)
-        {
-            List<byte> result = new List<byte>();
-
-            //TODO: SourceAddress, ojo con las request (tendremos que volver aqui)
-            result.Add(0x00);
-            result.Add(0x00);
-
-            //DestinationAddress
-            if (operation.DestionationHomeDevice.Connector != null && operation.DestionationHomeDevice.Connector.Node.Address == node.Address)
-            {
-                result.Add(0x00);
-                result.Add(0x00);
-            }
-            else
-            {
-                result.AddRange(operation.DestionationHomeDevice.Connector.Node.Address.UshortToByte(littleEndian));
-            }
-
-            result.Add((byte)operation.OPCode);
-            result.AddRange(operation.Args);
-
-            return result.ToArray();
-        }
-
-        private UInt16 SizePinEvents(Operation[] operations)
-        {
-            UInt16 size = 0;
-
-            foreach (Operation act in operations)
-                size += (UInt16)ToBinaryOperation(act, true).Length;
-
-            return size;
-        }
     }
 }

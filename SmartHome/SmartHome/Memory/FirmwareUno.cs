@@ -199,7 +199,7 @@ namespace SmartHome.Memory
                 foreach (var item in parValue.Value)
                 {
                     result.AddRange(parValue.Key.ToBinaryTime());
-                    result.AddRange(ToBinaryOperation(item, baseConfiguration.LittleEndian));
+                    result.AddRange(item.ToBinaryOperation());
                 }
             }
 
@@ -221,7 +221,7 @@ namespace SmartHome.Memory
                     if (a.TimeRestrictions != null && a.TimeRestrictions.Count > 0)
                         OperationTimeRestictionDictionary.Add((ushort)(result.Count + startDirection), a);
 
-                    result.AddRange(ToBinaryOperation(a, baseConfiguration.LittleEndian));
+                    result.AddRange(a.ToBinaryOperation());
                 }
             }
             return result.ToArray();
