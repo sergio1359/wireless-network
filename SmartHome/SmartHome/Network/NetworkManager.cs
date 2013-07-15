@@ -1,4 +1,5 @@
-﻿using SmartHome.Network.HomeDevices;
+﻿using SmartHome.HomeModel;
+using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace SmartHome.Network
         public static List<Node> Nodes = new List<Node>();
 
         public static List<HomeDevice> HomeDevices = new List<HomeDevice>();
+
+        public static Home Home = new Home();
 
 
         //TODO: esto es solo para el ejemplo que estamos haciendo

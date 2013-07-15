@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    class LogService
+    public class LogService
     {
+        public void AddClientLog(string log)
+        {
+
+        }
+
+        public string[] GetLog(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetLogCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

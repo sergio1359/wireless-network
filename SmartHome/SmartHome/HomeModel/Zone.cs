@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace SmartHome.HomeModel
 {
-    class Zone
+    public class Zone
     {
         public string NameZone { get; set; }
         public int Height { get; set; }

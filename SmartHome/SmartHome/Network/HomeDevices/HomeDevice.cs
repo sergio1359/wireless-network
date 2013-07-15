@@ -13,6 +13,17 @@ namespace SmartHome.Network.HomeDevices
         public string Name { get; set; }
         public Connector Connector { get; set; }
 
+        public bool InUse
+        {
+            get
+            {
+                if (Connector != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public ConnectorType ConnectorType { get; set; }
         public HomeDeviceType HomeDeviceType { get; set; }
         public Position Position { get; set; }
@@ -25,24 +36,6 @@ namespace SmartHome.Network.HomeDevices
             ID = incrementID;
             incrementID++;
         }
-
-        public void Link(Connector Connector)
-        {
-            if (Connector.HomeDevice != null)
-            {
-                throw new Exception("Connector it's available for other HomeDevice, please unlink firts the other homedevice :D");
-            }
-
-            this.Connector.HomeDevice = this;
-            this.Connector = Connector;
-        }
-
-        public void Unlink()
-        {
-            this.Connector.HomeDevice = null;
-            this.Connector = null;
-        }
-
 
         public virtual void RefreshState()
         {

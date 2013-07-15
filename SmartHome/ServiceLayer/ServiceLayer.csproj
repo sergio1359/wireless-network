@@ -40,11 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectorService.cs" />
-    <Compile Include="PluginService.cs" />
-    <Compile Include="MediaService.cs" />
-    <Compile Include="LogService.cs" />
     <Compile Include="HomeDeviceService.cs" />
-    <Compile Include="NetworkService.cs" />
+    <Compile Include="HomeService.cs" />
+    <Compile Include="LogService.cs" />
+    <Compile Include="NodeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

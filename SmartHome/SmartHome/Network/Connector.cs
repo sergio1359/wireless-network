@@ -16,6 +16,17 @@ namespace SmartHome.Network
         public Node Node { get; set; }
         public HomeDevice HomeDevice { get; set; }
 
+        public bool InUse
+        {
+            get
+            {
+                if (HomeDevice != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public Connector() { }
 
         public Connector(string Name, ConnectorType type, Node node)
