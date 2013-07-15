@@ -3,9 +3,12 @@ using System.Collections.Generic;
 
 namespace SmartHome.HomeModel
 {
-    class Home
+    public class Home
     {
         public string Name { get; set; }
         public List<Zone> Zones { get; set; }
+
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
 }
