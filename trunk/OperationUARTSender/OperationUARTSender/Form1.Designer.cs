@@ -34,8 +34,7 @@
             this.buttonDigSwitch = new System.Windows.Forms.Button();
             this.buttonTemp = new System.Windows.Forms.Button();
             this.buttonHum = new System.Windows.Forms.Button();
-            this.buttonTime = new System.Windows.Forms.Button();
-            this.buttonDate = new System.Windows.Forms.Button();
+            this.buttonDateTime = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBoxConfigAddress = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -112,27 +111,16 @@
             this.buttonHum.UseVisualStyleBackColor = true;
             this.buttonHum.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // buttonTime
+            // buttonDateTime
             // 
-            this.buttonTime.Enabled = false;
-            this.buttonTime.Location = new System.Drawing.Point(605, 227);
-            this.buttonTime.Name = "buttonTime";
-            this.buttonTime.Size = new System.Drawing.Size(99, 37);
-            this.buttonTime.TabIndex = 3;
-            this.buttonTime.Text = "TIME";
-            this.buttonTime.UseVisualStyleBackColor = true;
-            this.buttonTime.Click += new System.EventHandler(this.buttonCmd_Click);
-            // 
-            // buttonDate
-            // 
-            this.buttonDate.Enabled = false;
-            this.buttonDate.Location = new System.Drawing.Point(605, 286);
-            this.buttonDate.Name = "buttonDate";
-            this.buttonDate.Size = new System.Drawing.Size(99, 37);
-            this.buttonDate.TabIndex = 3;
-            this.buttonDate.Text = "DATE";
-            this.buttonDate.UseVisualStyleBackColor = true;
-            this.buttonDate.Click += new System.EventHandler(this.buttonCmd_Click);
+            this.buttonDateTime.Enabled = false;
+            this.buttonDateTime.Location = new System.Drawing.Point(605, 227);
+            this.buttonDateTime.Name = "buttonDateTime";
+            this.buttonDateTime.Size = new System.Drawing.Size(99, 37);
+            this.buttonDateTime.TabIndex = 3;
+            this.buttonDateTime.Text = "DATETIME";
+            this.buttonDateTime.UseVisualStyleBackColor = true;
+            this.buttonDateTime.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
             // openFileDialog1
             // 
@@ -255,9 +243,8 @@
             this.Controls.Add(this.button7);
             this.Controls.Add(this.textBoxConfigAddress);
             this.Controls.Add(this.buttonReset);
-            this.Controls.Add(this.buttonDate);
             this.Controls.Add(this.buttonDigRead);
-            this.Controls.Add(this.buttonTime);
+            this.Controls.Add(this.buttonDateTime);
             this.Controls.Add(this.buttonCheckSum);
             this.Controls.Add(this.buttonHum);
             this.Controls.Add(this.buttonFirm);
@@ -283,8 +270,7 @@
         private System.Windows.Forms.Button buttonDigSwitch;
         private System.Windows.Forms.Button buttonTemp;
         private System.Windows.Forms.Button buttonHum;
-        private System.Windows.Forms.Button buttonTime;
-        private System.Windows.Forms.Button buttonDate;
+        private System.Windows.Forms.Button buttonDateTime;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBoxConfigAddress;
         private System.Windows.Forms.Button button7;
