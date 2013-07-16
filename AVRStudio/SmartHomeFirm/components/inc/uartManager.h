@@ -28,8 +28,25 @@ typedef enum _USARTReceiverState_t
   USART_RECEIVER_ERROR_RX_STATE
 } UARTReceiverState_t;
 
-void USART_SendOperation(OPERATION_HEADER_t* operation_header);
+typedef struct
+{
+	unsigned int endPoint : 6;
+	unsigned int routing  : 1;
+	unsigned int security : 1;
+	uint16_t nextHop;
+	uint8_t rssi;
+}INPUT_UART_HEADER_t;
 
-void USART_SendOperationWithBody(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize);
+typedef struct
+{
+	unsigned int endPoint : 6;
+	unsigned int routing  : 1;
+	unsigned int security : 1;
+	uint8_t retries;
+}OUTPUT_UART_HEADER_t;
+
+void USART_SendOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header);
+
+void USART_SendOperationWithBody(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize);
 
 #endif /* UARTMANAGER_H_ */

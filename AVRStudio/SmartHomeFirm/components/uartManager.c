@@ -30,7 +30,11 @@ uint8_t* rxBuffer[RX_BUFFER_SIZE];
 uint8_t index;
 uint8_t checkSum;
 
-void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize);
+inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize);
+
+inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size);
+
+
 
 void HAL_UartBytesReceived(uint16_t bytes)
 {
@@ -99,7 +103,7 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			{
 				uartState = USART_RECEIVER_IDLE_RX_STATE;
 				//TODO: PROCCESS MESAGE!!
-				OM_ProccessInternalOperation((OPERATION_HEADER_t*)rxBuffer, true);
+				OM_ProccessInternalOperation((OPERATION_HEADER_t*)(rxBuffer + sizeof(OUTPUT_UART_HEADER_t)), true);
 			}
 			else
 			{
@@ -129,23 +133,20 @@ void HAL_UartBytesReceived(uint16_t bytes)
 	}
 }
 
-void USART_SendOperation(OPERATION_HEADER_t* operation_header)
+void USART_SendOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header)
 {
-	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode), 0, 0);
+	sendMagicPackage(input_header, (uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode), 0, 0);
 }
 
-void USART_SendOperationWithBody(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize)
+void USART_SendOperationWithBody(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize)
 {
-	sendData((uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
+	sendMagicPackage(input_header, (uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
 }
 
-void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize)
+inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size)
 {
 	uint8_t cs = 0;
-
-	HAL_UartWriteByte(sof[0]);
-	HAL_UartWriteByte(sof[1]);
-
+	
 	for (uint8_t i = 0; i < size; i++)
 	{
 		if (data[i] == APP_MAGIC_SYMBOL)
@@ -157,16 +158,21 @@ void sendData(uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize)
 		cs += data[i];
 	}
 	
-	for (uint8_t i = 0; i < bodySize; i++)
-	{
-		if (body[i] == APP_MAGIC_SYMBOL)
-		{
-			HAL_UartWriteByte(APP_MAGIC_SYMBOL);
-			cs += APP_MAGIC_SYMBOL;
-		}
-		HAL_UartWriteByte(body[i]);
-		cs += body[i];
-	}
+	return cs;
+}
+
+inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* operation, uint8_t operationSize, uint8_t* body, uint8_t bodySize)
+{
+	uint8_t cs = 0;
+
+	HAL_UartWriteByte(sof[0]);
+	HAL_UartWriteByte(sof[1]);
+	
+	cs += sendMagicSegment((uint8_t*) input_header, sizeof(INPUT_UART_HEADER_t));
+	
+	cs += sendMagicSegment(operation, operationSize);
+	
+	cs += sendMagicSegment(body, bodySize);
 
 	HAL_UartWriteByte(eof[0]);
 	HAL_UartWriteByte(eof[1]);
