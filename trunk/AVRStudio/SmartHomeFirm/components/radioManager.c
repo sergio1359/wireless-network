@@ -34,6 +34,8 @@ NWK_DataReq_t nwkDataReq;
 uint8_t failRetries;
 SYS_Timer_t retriesTimer;
 
+INPUT_UART_HEADER_t uartRadioHeader;
+
 inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
 void sendNextMessage(void);
@@ -261,5 +263,11 @@ static void rfDataInd(NWK_DataInd_t *ind)
 	NWK_IND_OPT_LINK_LOCAL Frame was sent with a Link Local field set to 1
 	NWK_IND_OPT_MULTICAST Frame was sent to a group address
 	*/
-	OM_ProccessExternalOperation((OPERATION_HEADER_t*)ind->data);		
+	uartRadioHeader.endPoint = ind->dstEndpoint;
+	//uartRadioHeader.nextHop = ;
+	uartRadioHeader.routing = ~(ind->options & NWK_IND_OPT_LOCAL);
+	uartRadioHeader.rssi = ind->rssi;
+	uartRadioHeader.security = ind->options & NWK_IND_OPT_SECURED;
+	
+	OM_ProccessExternalOperation(&uartRadioHeader, (OPERATION_HEADER_t*)ind->data);		
 }

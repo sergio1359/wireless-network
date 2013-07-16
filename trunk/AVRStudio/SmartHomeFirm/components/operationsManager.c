@@ -8,11 +8,21 @@
 #include "operationsManager.h"
 #include "modulesManager.h"
 #include "radioManager.h"
-#include "uartManager.h"
 #include "globals.h"
+
+INPUT_UART_HEADER_t coordinator_UART_header;
 
 _Bool checkTimeRestrictions(uint16_t operationAddress);
 _Bool checkConditions(uint16_t operationAddress);
+
+void OM_Init(void)
+{
+	coordinator_UART_header.endPoint	= 1; //Application endpoint
+	coordinator_UART_header.nextHop		= 0; //No hop
+	coordinator_UART_header.routing		= 0; //
+	coordinator_UART_header.rssi		= 0; //Highest quality
+	coordinator_UART_header.security	= 1; //SecurityEnabled
+}
 
 void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
 {
@@ -61,7 +71,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 	}
 }
 
-void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header)
+void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header)
 {
 	if(!IS_COORDINATOR)
 	{
@@ -92,7 +102,7 @@ void OM_ProccessExternalOperation(OPERATION_HEADER_t* operation_header)
 
 	if(IS_COORDINATOR)
 	{
-		USART_SendOperation(operation_header);
+		USART_SendOperation(input_header, operation_header);
 	}else
 	{
 		//TODO: Check with internal address instead of configuration address...
@@ -110,7 +120,7 @@ void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 {
 	if(IS_COORDINATOR)
 	{
-		USART_SendOperation(operation_header);
+		USART_SendOperation(&coordinator_UART_header, operation_header);
 	}else
 	{
 		Radio_AddMessageByCopy(operation_header);
@@ -121,7 +131,7 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 {
 	if(IS_COORDINATOR)
 	{
-		USART_SendOperationWithBody(operation_header, bodyPtr, bodyLength);
+		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength);
 	}else
 	{
 		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength);

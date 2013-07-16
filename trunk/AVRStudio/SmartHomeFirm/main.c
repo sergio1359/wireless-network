@@ -239,6 +239,7 @@ int main(void)
 	OTA_ClientInit();
 	#endif
 	
+	OM_Init();
 	Radio_Init();
 	MODULES_Init();
 	
