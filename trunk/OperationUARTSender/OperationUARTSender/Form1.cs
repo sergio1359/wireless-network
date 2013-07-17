@@ -55,9 +55,9 @@ namespace OperationUARTSender
             FirmwareVersionRead,
             FirmwareVersionReadResponse,
             ShieldModelRead,
-            ShieldModelResponse,
+            ShieldModelReadResponse,
             BaseModelRead,
-            BaseModelResponse,
+            BaseModelReadResponse,
             ConfigWrite,
             ConfigWriteResponse,
             ConfigRead,
@@ -379,6 +379,14 @@ namespace OperationUARTSender
             {
                 SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.FirmwareVersionRead, Args = new byte[] { } });
             }
+            else if (sender == buttonBaseModel)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.BaseModelRead, Args = new byte[] { } });
+            }
+            else if (sender == buttonShieldModel)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ShieldModelRead, Args = new byte[] { } });
+            }
             else if (sender == buttonReset)
             {
                 SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.Reset, Args = new byte[] { } });
@@ -458,11 +466,11 @@ namespace OperationUARTSender
             }
             else if (operation.OpCode == (byte)OPCode.TemperatureReadResponse || operation.OpCode == (byte)OPCode.HumidityReadResponse)
             {
-                if (operation.Args[1] == 0xFF)
+                if (operation.Args[2] == 0xFF)
                 {
-                    PrintMessage(String.Format("SENSOR {1} FROM 0x{0:X4} UNKNOWN",
+                    PrintMessage(String.Format("SENSOR 0x{1:X4} FROM 0x{0:X4} UNKNOWN",
                         operation.SourceAddress,
-                        operation.Args[0]));
+                        ((ushort)operation.Args[1]) << 8 | operation.Args[0]));
                 }
                 else
                 {
@@ -515,6 +523,18 @@ namespace OperationUARTSender
             else if (operation.OpCode == (byte)OPCode.FirmwareVersionReadResponse)
             {
                 PrintMessage(String.Format("FIRMWARE VERSION FROM 0x{0:X4} -> {1}",
+                    operation.SourceAddress,
+                    operation.Args[0]));
+            }
+            else if (operation.OpCode == (byte)OPCode.BaseModelReadResponse)
+            {
+                PrintMessage(String.Format("BASE MODEL FROM 0x{0:X4} -> {1}",
+                    operation.SourceAddress,
+                    operation.Args[0]));
+            }
+            else if (operation.OpCode == (byte)OPCode.ShieldModelReadResponse)
+            {
+                PrintMessage(String.Format("SHIELD MODEL FROM 0x{0:X4} -> {1}",
                     operation.SourceAddress,
                     operation.Args[0]));
             }

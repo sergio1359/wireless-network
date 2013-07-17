@@ -47,6 +47,8 @@
             this.buttonDigRead = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.buttonSwitchTime = new System.Windows.Forms.Button();
+            this.buttonShieldModel = new System.Windows.Forms.Button();
+            this.buttonBaseModel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -181,7 +183,7 @@
             // buttonFirm
             // 
             this.buttonFirm.Enabled = false;
-            this.buttonFirm.Location = new System.Drawing.Point(710, 109);
+            this.buttonFirm.Location = new System.Drawing.Point(710, 111);
             this.buttonFirm.Name = "buttonFirm";
             this.buttonFirm.Size = new System.Drawing.Size(99, 37);
             this.buttonFirm.TabIndex = 3;
@@ -192,7 +194,7 @@
             // buttonCheckSum
             // 
             this.buttonCheckSum.Enabled = false;
-            this.buttonCheckSum.Location = new System.Drawing.Point(710, 172);
+            this.buttonCheckSum.Location = new System.Drawing.Point(815, 172);
             this.buttonCheckSum.Name = "buttonCheckSum";
             this.buttonCheckSum.Size = new System.Drawing.Size(99, 37);
             this.buttonCheckSum.TabIndex = 3;
@@ -233,6 +235,28 @@
             this.buttonSwitchTime.UseVisualStyleBackColor = true;
             this.buttonSwitchTime.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
+            // buttonShieldModel
+            // 
+            this.buttonShieldModel.Enabled = false;
+            this.buttonShieldModel.Location = new System.Drawing.Point(710, 172);
+            this.buttonShieldModel.Name = "buttonShieldModel";
+            this.buttonShieldModel.Size = new System.Drawing.Size(99, 37);
+            this.buttonShieldModel.TabIndex = 3;
+            this.buttonShieldModel.Text = "SHIELD MODEL";
+            this.buttonShieldModel.UseVisualStyleBackColor = true;
+            this.buttonShieldModel.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // buttonBaseModel
+            // 
+            this.buttonBaseModel.Enabled = false;
+            this.buttonBaseModel.Location = new System.Drawing.Point(710, 227);
+            this.buttonBaseModel.Name = "buttonBaseModel";
+            this.buttonBaseModel.Size = new System.Drawing.Size(99, 37);
+            this.buttonBaseModel.TabIndex = 3;
+            this.buttonBaseModel.Text = "BASE MODEL";
+            this.buttonBaseModel.UseVisualStyleBackColor = true;
+            this.buttonBaseModel.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,6 +271,8 @@
             this.Controls.Add(this.buttonDateTime);
             this.Controls.Add(this.buttonCheckSum);
             this.Controls.Add(this.buttonHum);
+            this.Controls.Add(this.buttonBaseModel);
+            this.Controls.Add(this.buttonShieldModel);
             this.Controls.Add(this.buttonFirm);
             this.Controls.Add(this.buttonTemp);
             this.Controls.Add(this.buttonMAC);
@@ -283,6 +309,8 @@
         private System.Windows.Forms.Button buttonDigRead;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.Button buttonSwitchTime;
+        private System.Windows.Forms.Button buttonShieldModel;
+        private System.Windows.Forms.Button buttonBaseModel;
     }
 }
 
