@@ -74,7 +74,7 @@ void logicModule_Init()
 	logicResponse.header.opCode = LogicReadResponse;
 	
 	//Configure Timer
-	logicTimer.interval = 200; // 5 times per second
+	logicTimer.interval = 50; // 5 times per second
 	logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	logicTimer.handler = logicTimerHandler;
 	SYS_TimerStart(&logicTimer);
@@ -210,6 +210,15 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 							OM_ProccessInternalOperation(operationPtr, false);
 							operationPtr++;
 						}
+						
+						
+						//Send to coordinator
+						logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+						logicResponse.header.destinationAddress = COORDINATOR_ADDRESS;
+						logicResponse.response.address = currentElem->config->deviceID;
+						logicResponse.response.value = val;
+						
+						OM_ProccessResponseOperation(&logicResponse.header);
 					}					
 				}
 				

@@ -1,9 +1,9 @@
 /*
- * config_module.c
- *
- * Created: 31/05/2013 19:41:10
- *  Author: Victor
- */ 
+* config_module.c
+*
+* Created: 31/05/2013 19:41:10
+*  Author: Victor
+*/
 #include "modulesManager.h"
 #include "globals.h"
 #include <util/crc16.h>
@@ -26,6 +26,18 @@ struct
 	OPERATION_HEADER_t header;
 	FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t response;
 }firmwareResponse;
+
+struct
+{
+	OPERATION_HEADER_t header;
+	SHIELD_MODEL_READ_RESPONSE_MESSAGE_t response;
+}shieldModelResponse;
+
+struct
+{
+	OPERATION_HEADER_t header;
+	BASE_MODEL_READ_RESPONSE_MESSAGE_t response;
+}baseModelResponse;
 
 struct
 {
@@ -63,9 +75,11 @@ _Bool validateReceivedConfig(void);
 void configModule_Init(void)
 {
 	firmwareResponse.header.opCode		= FirmwareVersionReadResponse;
-	configWriteResponse.header.opCode = ConfigWriteResponse;
-	configReadResponse.header.opCode = ConfigReadResponse;
-	checksumResponse.header.opCode = ConfigChecksumResponse;
+	shieldModelResponse.header.opCode	= ShieldModelReadResponse;
+	baseModelResponse.header.opCode		= BaseModelReadResponse;
+	configWriteResponse.header.opCode	= ConfigWriteResponse;
+	configReadResponse.header.opCode	= ConfigReadResponse;
+	checksumResponse.header.opCode		= ConfigChecksumResponse;
 	
 	receivingState = false;
 	currentRecvIndex = 0;
@@ -89,6 +103,26 @@ void configSystem_Handler(OPERATION_HEADER_t* operation_header)
 		
 		OM_ProccessResponseOperation(&firmwareResponse.header);
 	}else if(operation_header->opCode == FirmwareVersionReadResponse)
+	{
+		//TODO: SEND NOTIFICATION
+	}else if(operation_header->opCode == ShieldModelRead)
+	{
+		shieldModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		shieldModelResponse.header.destinationAddress = operation_header->sourceAddress;
+		shieldModelResponse.response.model = SHIELD_MODEL;
+		
+		OM_ProccessResponseOperation(&shieldModelResponse.header);
+	}else if(operation_header->opCode == ShieldModelReadResponse)
+	{
+		//TODO: SEND NOTIFICATION
+	}else if(operation_header->opCode == BaseModelRead)
+	{
+		baseModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		baseModelResponse.header.destinationAddress = operation_header->sourceAddress;
+		baseModelResponse.response.model = BASE_MODEL;
+		
+		OM_ProccessResponseOperation(&baseModelResponse.header);
+	}else if(operation_header->opCode == BaseModelReadResponse)
 	{
 		//TODO: SEND NOTIFICATION
 	}
@@ -140,10 +174,10 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 			{
 				configWriteResponse.response.code = ERROR_CONFIG_SIZE_TOO_BIG;
 			}else
-			{	
+			{
 				memcpy((uint8_t*)&configBuffer.raw[currentRecvIndex], (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);
 				currentRecvIndex += (uint16_t)msg->length;
-			
+				
 				if(currentRecvFragment == msg->fragmentTotal)//ALL RECEIVED
 				{
 					if(validateReceivedConfig())
@@ -159,7 +193,7 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 					receivingState = false;
 					totalRecvExpected = 0;
 				}
-			}			
+			}
 		}
 		
 		OM_ProccessResponseOperation(&configWriteResponse.header);
@@ -237,7 +271,7 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == ConfigReadResponse)
 	{
 		//TODO: SEND NOTIFICATION
-	}			
+	}
 }
 
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
@@ -252,7 +286,7 @@ void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == ConfigChecksumResponse)
 	{
 		//TODO: NOTIFICATION
-	}		
+	}
 }
 
 _Bool validateReceivedConfig()
