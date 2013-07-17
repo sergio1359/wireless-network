@@ -23,6 +23,10 @@
 
 #define FIRMWARE_VERSION 1
 
+#define SHIELD_MODEL 1
+
+#define BASE_MODEL 2
+
 #define softReset()        \
 do                          \
 {                           \

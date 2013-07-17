@@ -110,7 +110,7 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 		}
 		else
 		{
-			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS)
+			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS) USING ERROR RESPONSE INSTEAD
 			
 			temperatureResponse.header.destinationAddress = operation_header->sourceAddress;
 			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
@@ -137,14 +137,14 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 		}
 		else
 		{
-			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS)
+			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS) USING ERROR RESPONSE INSTEAD
 			
 			humidityResponse.header.destinationAddress = operation_header->sourceAddress;
 			humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			humidityResponse.response.deviceID = msg->deviceID;
 			humidityResponse.response.humidity = 0xFF;
 			
-			OM_ProccessResponseOperation(&temperatureResponse.header);
+			OM_ProccessResponseOperation(&humidityResponse.header);
 		}		
 	}else if(operation_header->opCode == HumidityReadResponse)
 	{
@@ -186,6 +186,14 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 						OM_ProccessInternalOperation(operationPtr, false);
 						operationPtr++;
 					}
+					
+					//Send to coordinator
+					temperatureResponse.header.destinationAddress = COORDINATOR_ADDRESS;
+					temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+					temperatureResponse.response.deviceID = currentElem->config->deviceID;
+					temperatureResponse.response.temperature = currentElem->currentTemperature;
+					
+					OM_ProccessResponseOperation(&temperatureResponse.header);
 				}
 			}
 
@@ -202,6 +210,14 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 						OM_ProccessInternalOperation(operationPtr, false);
 						operationPtr++;
 					}
+					
+					//Send to coordinator
+					humidityResponse.header.destinationAddress = COORDINATOR_ADDRESS;
+					humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+					humidityResponse.response.deviceID = currentElem->config->deviceID;
+					humidityResponse.response.humidity = currentElem->currentHumidity;
+					
+					OM_ProccessResponseOperation(&humidityResponse.header);
 				}
 			}	
 		}else

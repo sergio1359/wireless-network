@@ -51,7 +51,9 @@
 #define PWM_PINS (8)
 #define DEBOUNCED_PINS NUM_PINS
 
-#define IS_COORDINATOR (runningConfiguration.topConfiguration.networkConfig.deviceAddress == 0x4003) //0x0001
+#define COORDINATOR_ADDRESS 0x4003  //0x0001
+
+#define IS_COORDINATOR (runningConfiguration.topConfiguration.networkConfig.deviceAddress == COORDINATOR_ADDRESS)
 
 #define MAX_CONTENT_MESSAGE_SIZE 50
 
