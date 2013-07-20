@@ -364,6 +364,60 @@
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="fec4228b-a09e-4d00-b370-d4d00fa46096"
+            isDerived="false"
+            sourceEndRoleName="Theme"
+            targetEndRoleName="Operation"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
+              LastKnownName="Operation"
+              LastKnownLocation="Modeling.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a9f2a93a-8396-413f-a94a-75e4eb656934"
+                  name="Theme"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="183d9d90-9279-4126-9fb3-bf4fd4613d0e"
+                  name="Operation"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="1c356d83-d8e5-465a-af45-553cc4f12434"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="f81be6d7-654b-4a56-9a90-5df7b0a7f257"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="4dc9eea5-5e4c-4a60-af22-8f35043cea1a"
@@ -427,75 +481,6 @@
                     Id="e622388e-1849-4d0d-8c9c-e567c15fea97">
                     <propertyInstance
                       Id="d3a8e6e6-ccfb-4e6d-aacf-a9d473395ee5"
-                      name="Set"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </property>
-          <property
-            Id="9d72a705-9bdb-4a32-8f9e-3ad768805975"
-            name="List&lt;Delegates&gt;"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="c0fb759c-f90a-4eaa-9815-ff0d64b18b5f"
-                name="property"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="5cee1284-0de1-4320-aabb-afdd7ddd2fa5">
-                    <propertyInstance
-                      Id="081c436a-4dc5-4807-88a0-66ee853e0b9e"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="1a77d3e0-3310-4b12-9c14-3bde1c0d1ed7">
-                    <propertyInstance
-                      Id="1596c6ce-26ea-455f-a89d-3c7bd8760662"
-                      name="Get"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="a3888607-e668-4c2d-a6b1-e52f3c9189bf">
-                    <propertyInstance
-                      Id="c6b077ec-d12a-4acc-bdd8-b71eba56c400"
-                      name="HasBody"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="4a3578f0-864c-413f-a827-fd0a6fb4469e">
-                    <propertyInstance
-                      Id="d006dbd9-60c8-4984-8c0f-6cb822f2ec7d"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d95d3249-f3fe-4faf-b226-a042f3761624">
-                    <propertyInstance
-                      Id="5011152f-58db-413c-89e1-e08ad23d525d"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="784e3873-9cb0-4230-b457-495124844584">
-                    <propertyInstance
-                      Id="54d3bbf7-48f4-4774-bd96-2f028a60331d"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="076edda7-f55d-4da6-acf2-92313d61b567">
-                    <propertyInstance
-                      Id="1fc7b992-d394-4f8a-86e0-1e46a6ccb489"
                       name="Set"
                       value="none" />
                   </stereotypeInstanceHasPropertyInstances>
@@ -618,7 +603,7 @@
             isAbstract="false">
             <classMoniker
               Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
-              LastKnownName="Action"
+              LastKnownName="Operation"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>

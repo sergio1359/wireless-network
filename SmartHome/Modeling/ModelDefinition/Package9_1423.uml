@@ -3,6 +3,12 @@
   dslVersion="1.0.0.0"
   Id="98cd862f-a870-445a-8b73-0b18a515d438"
   name="Service" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="56947b45-2d94-4cfd-a54e-960d8e16dd6c">
+      <body>DOING</body>
+    </comment>
+  </ownedCommentsInternal>
   <packagedElements>
     <packageHasNamedElement>
       <class

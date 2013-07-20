@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class LuminositySensor: HomeDevice
+    public class LuminositySensor: HomeDevice
     {
         public byte Sensibility { get; set; }
 

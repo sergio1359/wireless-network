@@ -1,7 +1,9 @@
-﻿using SmartHome.Network;
+﻿using SmartHome.HomeModel;
+using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +20,11 @@ namespace ServiceLayer
         /// <returns>0 == OK, 
         /// 1 == el conector estaba ya ocupado por un home Device
         /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo</returns>
-        public int LinkHomeDevice(Connector connector, HomeDevice homeDevice)
+        public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
+            Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.ID == idConnector);
+            HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
+
             if (connector.HomeDevice != null)
                 return 1;
 
@@ -35,58 +40,50 @@ namespace ServiceLayer
         /// <summary>
         /// Desrelaciona un HomeDevice de su conector asociado
         /// </summary>
-        public void Unlink(HomeDevice homeDevice)
+        public void Unlink(int idHomeDevice)
         {
+            HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
             homeDevice.Connector.HomeDevice = null;
             homeDevice.Connector = null;
         }
 
         public Connector[] GetConnectors(Node node)
         {
-            return node.Connectors.ToArray();
+            throw new NotImplementedException();
         }
 
-        public string[] GetTypeShields()
+        public string GetNameNode(int idNode)
         {
-            return Enum.GetNames(typeof(ShieldType));
+            return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Name;
         }
 
-        public string[] GetTypeBases()
+        public ushort GetAddressNode(int idNode)
         {
-            return Enum.GetNames(typeof(BaseType));
+            return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Address;
         }
 
-
-        public string GetNameNode(Node node)
+        public void UpdatePosition(int idNode, int idZone, float X, float Y)
         {
-            return node.Name;
-        }
-
-        public ushort GetAddressNode(Node node)
-        {
-            return node.Address;
-        }
-
-        public void UpdatePosition(Node node, string zone, int X, int Y)
-        {
-            node.Position.Zone = zone;
-            node.Position.X = X;
-            node.Position.Y = Y;
+            Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
+            node.Position.Zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idNode);
+            node.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
         public Connector[] GetFreeConnectors(Node node)
         {
-            return node.Connectors.Where(n => !n.InUse).ToArray();
+            throw new NotImplementedException();
         }
 
         public Node[] GetNodes()
         {
-            return NetworkManager.Nodes.ToArray();
+            throw new NotImplementedException();
         }
 
-        public Node[] GetNode(string zone)
+        public Dictionary<int, Tuple<string, Position>> GetNode(int idZone)
         {
-            return NetworkManager.Nodes.Where(n => n.Position.Zone == zone).ToArray();
+            Dictionary<int, Tuple<string, Position>> res = new Dictionary<int,Tuple<string,Position>>();
+            NetworkManager.Nodes.Where(n => n.Position.Id == idZone).ToList().ForEach(n => { res.Add(n.Id, new Tuple<string, Position>(n.Name, n.Position)); });
+            return res;
         }
     }
 }

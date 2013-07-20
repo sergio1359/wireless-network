@@ -5,9 +5,9 @@
   name="Modeling" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <ownedCommentsInternal>
     <comment
-      Id="cda1a2de-7e44-445f-9867-dc4418d9c87d">
-      <body>Los valores deben de estar monitorizados para ser cambiados en la interfaz
-Faltan las notificaciones en el diagrama</body>
+      Id="08d00194-325b-4356-8088-b662ae3a6622">
+      <body>Operation Protocol:
+Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
     </comment>
   </ownedCommentsInternal>
   <packagedElements>
@@ -110,7 +110,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <classMoniker
               Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-              LastKnownName="Position"
+              LastKnownName="Positions"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -360,7 +360,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="44870366-5920-43b7-ae6d-1eb5b16893f0"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -712,7 +712,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="d5245a80-c00b-444c-9af3-353d96bedfee"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -785,7 +785,7 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <class
         Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-        name="Position"
+        name="Positions"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -832,6 +832,99 @@ Faltan las notificaciones en el diagrama</body>
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="e0eb530e-2d7f-42fe-b7c7-73eb473bfe9c"
+            isDerived="false"
+            sourceEndRoleName="Positions"
+            targetEndRoleName="Zone"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="42a966cc-c320-4c04-a929-65d1fcf5e1c1"
+              LastKnownName="Zone"
+              LastKnownLocation="Package1_1423.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e9467e07-b553-4318-9d96-ff7bc92eb7fd"
+                  name="Positions"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f7989b90-6cc3-4067-b9d6-c57a14a7d2e1"
+                  name="Zone"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a8a84825-0a60-4108-bfc8-b1c8e2f61103"
+            isDerived="false"
+            sourceEndRoleName="Positions"
+            targetEndRoleName="View"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5e7ab37d-fa2d-46bb-8efe-434631df6b8f"
+              LastKnownName="View"
+              LastKnownLocation="Package1_1423.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="90a73fd6-c372-4551-b5b1-13c2d51de26c"
+                  name="Positions"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="661261e7-8868-4959-b39a-ff2103a3fa5c"
+                  name="View"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="07d19d4e-fca9-40d5-a049-27a68925609b"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="1951ddd9-9796-409b-860f-23ed59b8ed8e"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="ad9afec9-9491-4bdc-bb12-8738a620ac5a"
@@ -895,144 +988,6 @@ Faltan las notificaciones en el diagrama</body>
                     Id="81d5fe6e-75ce-449e-a050-7e62a9c478bb">
                     <propertyInstance
                       Id="f7af1706-9267-47a0-80ff-36984686230b"
-                      name="Set"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </property>
-          <property
-            Id="a4b14667-97c8-412b-933e-f2d4e49e85b2"
-            name="X"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="2741a74b-ddb5-44fa-9d55-01795e42b706"
-                name="property"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="24456328-8e09-4b5c-bba2-6addc6d19769">
-                    <propertyInstance
-                      Id="4f3e2feb-f47c-476c-946e-d7737fcfe83d"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="cd2212da-9ec4-435d-a05d-8a434a7087dd">
-                    <propertyInstance
-                      Id="eaa0c042-8709-4ee8-aad7-7e75e42dc18a"
-                      name="Get"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="3846d690-4a89-424e-a202-ee4968ac03e6">
-                    <propertyInstance
-                      Id="2f337562-b90c-4b4a-8b24-a749a12a4137"
-                      name="HasBody"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="80caa677-069d-459b-8a26-f629d48b7340">
-                    <propertyInstance
-                      Id="8590a01b-f9fb-4858-a580-cca72ec6c575"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="84e27ba3-3d94-4918-9260-8a839259b257">
-                    <propertyInstance
-                      Id="fdd6f444-1810-48bf-9868-775d171373b2"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d4f7e1ad-4312-4ddf-ac4b-5f6b6d96628e">
-                    <propertyInstance
-                      Id="991ee9f4-7e48-49de-88fd-1066cf6ebdcd"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="a58e8bcd-8f05-4e89-bfb2-95f889e21b30">
-                    <propertyInstance
-                      Id="a094c632-82ab-4011-a840-c8d04f4e4e5e"
-                      name="Set"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </property>
-          <property
-            Id="509aa1e0-bfb6-4cdb-845d-20686aa07fb7"
-            name="Y"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="0b4a8364-5038-46d4-afdd-cf634509f841"
-                name="property"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="310313f6-c571-4146-9b2b-8ba10c852f28">
-                    <propertyInstance
-                      Id="4691bf0a-6600-4da2-a40d-6de2ff1e1537"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="90301369-2750-4b5d-8eaf-85ff20863023">
-                    <propertyInstance
-                      Id="823244a5-143e-434d-a14e-2beb15a7a3c7"
-                      name="Get"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6b30c801-e15d-407a-9218-8f9384f60248">
-                    <propertyInstance
-                      Id="3287a065-a10c-408b-ad1a-726bc3f1f29a"
-                      name="HasBody"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="530e674c-e861-4a6d-af0d-1c1366635005">
-                    <propertyInstance
-                      Id="0ec0811c-ae09-466a-85e1-c91bb32532b8"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="83790bdd-da1a-4f9a-a126-fe74826210d3">
-                    <propertyInstance
-                      Id="cc2bc936-c024-4938-a39c-1c6a5d5f4533"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="00be9191-d93f-42e9-ba35-ece69d611426">
-                    <propertyInstance
-                      Id="e4eeed30-4802-49e6-a91b-13fa8b5916eb"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="43425961-8be5-4009-aee4-15a28d6e110f">
-                    <propertyInstance
-                      Id="3bc439c9-14a5-4d14-a58b-72565910e356"
                       name="Set"
                       value="none" />
                   </stereotypeInstanceHasPropertyInstances>
@@ -1111,7 +1066,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="c3962553-a5de-4027-917a-75e4e57508a5"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1178,6 +1133,28 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="e293fda9-016d-46a1-8eec-19ae9f0c7b08"
+            name="CoodenadaZone"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="11556c35-17e0-41c6-8dfb-0dac99835051"
+            name="Views"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -1433,6 +1410,45 @@ Faltan las notificaciones en el diagrama</body>
                       value="n" />
                   </upperValueInternal>
                 </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="59d44722-b08b-4162-b891-57c590fc1cec"
+            isDerived="false"
+            sourceEndRoleName="NetworkManager"
+            targetEndRoleName="Home"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="58db818a-ebf9-4d24-ab49-2fbdf35b4d01"
+              LastKnownName="Home"
+              LastKnownLocation="Package1_1423.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="716e4d81-3e25-4cd4-97a2-94392390498a"
+                  name="NetworkManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="72c3b1d7-afa6-46ec-af1e-1daa116d7914"
+                  name="Home"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -1765,7 +1781,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="7d3f465f-50b2-444c-a137-ca113fddcfde"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1832,6 +1848,17 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="e69e3e75-1090-486b-bcd3-08ffd2ff57cd"
+            name="Mapping"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
@@ -1962,6 +1989,22 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="a5dca2f0-e58e-4322-a224-3ff1fd2a22b1"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fe6c16b8-41bf-4b98-81b3-8bede293aa15"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -2017,7 +2060,7 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false">
             <classMoniker
               Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-              LastKnownName="Position"
+              LastKnownName="Positions"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2181,12 +2224,12 @@ Faltan las notificaciones en el diagrama</body>
             Id="4d09fa27-502e-4cae-b00a-0b91893e80a3"
             isDerived="false"
             sourceEndRoleName="HomeDevice"
-            targetEndRoleName="Action"
+            targetEndRoleName="Operation"
             isLeaf="false"
             isAbstract="false">
             <classMoniker
               Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
-              LastKnownName="Action"
+              LastKnownName="Operation"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -2205,7 +2248,7 @@ Faltan las notificaciones en el diagrama</body>
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="10eb15fc-4f23-4854-b69a-f17aa97492b9"
-                  name="Action"
+                  name="Operation"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -2233,7 +2276,7 @@ Faltan las notificaciones en el diagrama</body>
         <ownedAttributes>
           <property
             Id="50a57c45-6b87-4bca-8b9d-7f6e59f21b5a"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -2430,6 +2473,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="81e470d0-acd2-45d4-aefa-639c5d9cf146"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bf384735-70ad-4919-9b85-8cb4f0a61555"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperations>
       </Interface>
     </packageHasNamedElement>
@@ -2682,6 +2741,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="de7801c9-a0b3-4918-b9bf-dc43e03d25ac"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2fde3b53-49e1-4d0a-8ec8-6bf0a94fd186"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -3161,6 +3236,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="5c5b4d6a-6be2-4244-872f-e97cb3921653"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="582d4a7e-cc07-4cac-b701-446ba9cd8c20"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -3599,6 +3690,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="f0aac620-a1b0-42c4-ba38-436a104df275"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="71bcfc53-c50c-49b0-9ba2-276de3f80c69"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -4215,6 +4322,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="bff8338a-1f66-4fb4-894e-14ea72111b3d"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="30c3c84a-76dc-4aaa-9ce1-2c8cfe3837c4"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5084,6 +5207,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="7592372b-071d-4aec-be4b-d3ed31df39ee"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="167dd7d8-257f-443e-acb5-c6509c3722fc"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5288,6 +5427,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="57417b98-1f01-4400-955a-adcb65a7cc42"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0e8b39e1-cf33-4ea4-b36a-043e2d663866"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5561,6 +5716,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="03da50e5-29e1-45b2-b75f-47503083d79a"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a62be295-cde5-4365-9f88-586d7c15ab82"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5754,6 +5925,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="71e4761e-6024-4b8a-8f57-f28f765dc14a"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="150368af-17a7-49a2-9c1d-ec7e3ffbfa70"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5947,6 +6134,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="62e1f170-332f-4398-81fb-d52b9681d69c"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="63d74898-ac42-4a5c-96d2-ca3afae41ff0"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6209,6 +6412,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="1eaec02d-8331-404b-9ac2-0acbece18f04"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="97f2ef32-a8ee-425b-9fee-84bb84fa5503"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6735,45 +6954,6 @@ Faltan las notificaciones en el diagrama</body>
               <associationHasOwnedEnds>
                 <memberEnd
                   Id="b134f96c-a524-40bb-a8d5-cd01c66f646e"
-                  name="Action"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="3aac8c1e-6164-4ee2-8a8f-40ef8e1581be"
-            isDerived="false"
-            sourceEndRoleName="TimeRestriction"
-            targetEndRoleName="Action"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
-              LastKnownName="Action"
-              LastKnownLocation="Modeling.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="e04f7d86-6376-43fb-97d8-53d7f20cd23c"
-                  name="TimeRestriction"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="7c8464af-dc8f-4451-8ee5-79f1ff9038bb"
                   name="Action"
                   isLeaf="false"
                   isStatic="false"
@@ -7727,6 +7907,22 @@ Faltan las notificaciones en el diagrama</body>
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="e4611cec-dd76-4ebe-971b-72aa3c378580"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3b836dd5-1074-4acc-b69e-31257ea9119a"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -8199,6 +8395,22 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="c5dbe59c-d3f3-47b0-9184-00dc99e937a3"
+            name="GetTypes"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="60709c37-c107-4730-b053-3f5e8794859f"
+            name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -8323,45 +8535,6 @@ Faltan las notificaciones en el diagrama</body>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
-          <association
-            Id="fa6e494b-e744-4272-a687-b46ca9df2333"
-            isDerived="false"
-            sourceEndRoleName="ConditionalRestriction"
-            targetEndRoleName="Action"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
-              LastKnownName="Action"
-              LastKnownLocation="Modeling.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="5959cc59-9d45-4225-a573-d11a8b29c38c"
-                  name="ConditionalRestriction"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="38896e63-22cb-490a-8344-dee9868519a0"
-                  name="Action"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
         </targetEnds>
         <ownedAttributesInternal>
           <property
@@ -8414,8 +8587,8 @@ Faltan las notificaciones en el diagrama</body>
     <packageHasNamedElement>
       <class
         Id="66fdd3af-8d16-429b-9a13-d98a144d490d"
-        name="Action"
-        isAbstract="false"
+        name="Operation"
+        isAbstract="true"
         isLeaf="false"
         isActiveClass="false">
         <appliedStereotypesInternal>
@@ -8461,6 +8634,86 @@ Faltan las notificaciones en el diagrama</body>
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="20ed828f-4796-4fe5-9050-b19aafc82680"
+            isDerived="false"
+            sourceEndRoleName="Operation"
+            targetEndRoleName="TimeRestriction"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="9b8657e9-dd76-4b17-a514-94ea507dc2f3"
+              LastKnownName="TimeRestriction"
+              LastKnownLocation="Modeling.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d3dadcc3-bcf5-4518-892e-65432db9739a"
+                  name="Operation"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="103cd79d-bc62-479a-8299-ce56d242e41c"
+                  name="TimeRestriction"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="32e9013a-a227-4715-abaf-940e0ab1be42"
+            isDerived="false"
+            sourceEndRoleName="Operation"
+            targetEndRoleName="ConditionalRestriction"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="24272910-d8b5-4a44-90f0-6d7211b3038a"
+              LastKnownName="ConditionalRestriction"
+              LastKnownLocation="Modeling.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e77495c0-496c-49dd-bf3c-eec0997552b7"
+                  name="Operation"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3b1ff3de-1a93-41fd-9856-4fab12fa4748"
+                  name="ConditionalRestriction"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="343cc37d-9e92-44f3-b85a-fffe93970d67"
@@ -8602,7 +8855,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="860dc9e5-ca90-417e-a76f-c8424ee92bd1"
-            name="Enable"
+            name="Name"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -8671,7 +8924,7 @@ Faltan las notificaciones en el diagrama</body>
           </property>
           <property
             Id="3035eed2-dc42-4b1d-8217-13e2c4989829"
-            name="ID"
+            name="Id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -8868,6 +9121,14 @@ Faltan las notificaciones en el diagrama</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
+          <operation
+            Id="df45531e-d1b7-405b-b790-308ac87f9aaf"
+            name="GenerateBinaryOperation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>

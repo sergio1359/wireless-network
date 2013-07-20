@@ -3,12 +3,6 @@
   dslVersion="1.0.0.0"
   Id="ddffd40b-f1f3-42a3-80c8-1dbc8085db27"
   name="Connection" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
-  <ownedCommentsInternal>
-    <comment
-      Id="1da7f046-02f7-4e3e-a72f-89465f1665ff">
-      <body>El cometido sera la interpretacion de mensajes por parte de los nodos y el envio de peticiones y acciones</body>
-    </comment>
-  </ownedCommentsInternal>
   <packagedElements>
     <packageHasNamedElement>
       <class
@@ -456,125 +450,158 @@
         </appliedStereotypesInternal>
         <ownedLiterals>
           <enumerationLiteral
-            Id="d71ac7e1-beb8-4950-a84d-8da36e247c26"
-            name="DigitalWrite" />
-          <enumerationLiteral
-            Id="5a13fe92-5b68-443d-838c-3e0417a8b355"
-            name="DigitalSwitch" />
-          <enumerationLiteral
-            Id="76a96b5e-fd2c-48b3-a48c-2883937c774c"
-            name="DigitalWriteTime" />
-          <enumerationLiteral
-            Id="e1aef9a3-e30a-4f0e-9ae1-ca8130198886"
-            name="DigitalSwitchTime" />
-          <enumerationLiteral
-            Id="f2027044-30bf-466d-be00-b3a6f96073f8"
-            name="DigitalRead" />
-          <enumerationLiteral
-            Id="0a13065f-2564-4e50-bcbd-7af17a3c0b00"
-            name="DigitalReadResponse" />
-          <enumerationLiteral
-            Id="03247653-0acf-4e9d-b68f-5b4b6de89566"
-            name="AnalogWrite" />
-          <enumerationLiteral
-            Id="cfadedee-baee-4d46-949d-0b1891b6e636"
-            name="AnalogWriteTime" />
-          <enumerationLiteral
-            Id="880b2358-c9f9-4249-9e47-d8e6c8e4e5d5"
-            name="AnalogRead" />
-          <enumerationLiteral
-            Id="57613b9b-1d7e-444c-b394-91ffb72ee133"
-            name="AnalogReadResponse" />
-          <enumerationLiteral
-            Id="dbb70e67-31ae-4bd8-82bc-a1207d9a9195"
+            Id="b61e452c-1df5-470b-bdfd-1527c942b562"
             name="Reset" />
           <enumerationLiteral
-            Id="a3302825-411e-4fc9-8ac9-240057d91c44"
-            name="RouteTableRead" />
+            Id="b2eccf84-04ac-4c45-b353-6e40f564bc69"
+            name="FirmwareVersionRead" />
           <enumerationLiteral
-            Id="36ad5aa9-3297-417d-931d-afc79de0503b"
-            name="RouteTableReadResponse" />
+            Id="b7d610ca-27e4-4d91-8f57-bc3b64ddd64c"
+            name="FirmwareVersionReadResponse" />
           <enumerationLiteral
-            Id="cbd9e535-5f65-495f-95e6-227e642ff283"
-            name="TimeWrite" />
+            Id="53ea7660-9e9d-43bd-8b49-0a91198d048c"
+            name="ShieldModelRead" />
           <enumerationLiteral
-            Id="df460d9e-fbf8-465d-a886-a5a504ae02f5"
-            name="TimeRead" />
+            Id="70a85e31-cf26-4758-ba34-6f5c74c2750a"
+            name="ShielModelReadResponse" />
           <enumerationLiteral
-            Id="6f1ac4bf-8384-4b89-9451-e3a5de30f585"
-            name="TimeReponse" />
+            Id="ccdae4bf-4acc-4090-aac5-d171747f100a"
+            name="BaseModelRead" />
           <enumerationLiteral
-            Id="c5016177-fcb0-43c2-bcaa-a56941362480"
-            name="Warning" />
+            Id="f2787d82-71db-4cd7-964d-91c6dc6a36e6"
+            name="BaseModelReadResponse" />
           <enumerationLiteral
-            Id="614ed91e-7768-4852-a8dc-472a77c25fbe"
-            name="Error" />
-          <enumerationLiteral
-            Id="eb57a514-2c8f-476a-a7a1-a864cd75d202"
-            name="ColorWrite" />
-          <enumerationLiteral
-            Id="d8c1364d-251b-433b-bae1-4b40d7023a63"
-            name="ColorWriteRandom" />
-          <enumerationLiteral
-            Id="b0a22739-c49d-485c-8608-ef9f6e49c479"
-            name="ColorSecuenceWrite" />
-          <enumerationLiteral
-            Id="37ab3edf-c984-48a1-81f1-44444991a6ba"
-            name="ColorSortedSecuenceWrite" />
-          <enumerationLiteral
-            Id="1805b476-ef31-46dd-83d9-9b4ff0a4d7da"
-            name="ColorReadResponse" />
-          <enumerationLiteral
-            Id="7abfe25c-9f00-43c0-ad0e-9f20487790f2"
+            Id="71428259-d881-423f-9ffb-b7cfad8d4aba"
             name="ConfigWrite" />
           <enumerationLiteral
-            Id="6d54652f-3eaa-4010-a178-d6cbb40d8158"
+            Id="1cef7b56-7984-4141-a680-30f2b1f7c625"
+            name="ConfigWriteResponse" />
+          <enumerationLiteral
+            Id="bc48d868-e512-447f-ae31-96bafe940fe5"
             name="ConfigRead" />
           <enumerationLiteral
-            Id="88624b8f-4003-45d2-8ab7-f136a908f346"
+            Id="69d5d844-626c-4667-a3ea-3302a94bb6cd"
             name="ConfigReadResponse" />
           <enumerationLiteral
-            Id="cf6c5c95-e4ea-4d22-8551-a053bee0a790"
-            name="ConfigChecksum" />
+            Id="d760e887-a56d-4a77-bbd5-42c453d70960"
+            name="ConfigReadConfirmation" />
           <enumerationLiteral
-            Id="0d5bb7de-5da4-4cb2-898f-a2cb209a9978"
-            name="ConfigChecksumResponse" />
+            Id="41684398-1af7-41ee-8c87-5b3bad272720"
+            name="ConfigChecksumRead" />
           <enumerationLiteral
-            Id="680425d5-fc33-4f4a-a6f0-66cc5381ad07"
+            Id="ff82bfa3-891a-49d4-89bc-e220dcc53278"
+            name="ConfigChecksumReadResponse" />
+          <enumerationLiteral
+            Id="8be93580-34af-4048-a85c-bfcf36705169"
+            name="MacRead" />
+          <enumerationLiteral
+            Id="816f4bc0-c430-4c5c-b198-c71d0fed0400"
+            name="MacReadResponse" />
+          <enumerationLiteral
+            Id="31fe3ca7-bc3c-4549-8b73-a401ff87839a"
+            name="NextHopRead" />
+          <enumerationLiteral
+            Id="43849fdc-9523-4067-b2ca-0f8efad0646b"
+            name="NectHopReadResponse" />
+          <enumerationLiteral
+            Id="ebaddd64-c3ae-49ee-b42a-f4772c3b8699"
+            name="RouteTableRead" />
+          <enumerationLiteral
+            Id="77db0fc4-b3e0-4869-8b0f-a9f223715e00"
+            name="TouteTableReadResponse" />
+          <enumerationLiteral
+            Id="32691389-e38a-481b-b4a9-7589c955c58a"
+            name="RouteTableRead" />
+          <enumerationLiteral
+            Id="f15fddab-bb72-49a5-a027-a3be024c7355"
+            name="RouteTableReadResponse" />
+          <enumerationLiteral
+            Id="443fe65b-29b8-48af-8d38-6fffebdbfbab"
+            name="RoutetableReadConfigration" />
+          <enumerationLiteral
+            Id="6e7b6ce3-d092-43b9-8552-954314a12839"
+            name="DateTimeWrite" />
+          <enumerationLiteral
+            Id="f119efab-36f7-40fb-bbd5-45889257d7a1"
+            name="DateTO,eRead" />
+          <enumerationLiteral
+            Id="1e65a392-9a67-4e6f-ac6b-ae2a058d7f44"
+            name="DateTimeReadResponse" />
+          <enumerationLiteral
+            Id="9bbee311-139b-4932-87c2-a7b800f4725f"
+            name="DateTimeRead" />
+          <enumerationLiteral
+            Id="4d4faefc-f97e-4fc3-9658-b3ffb5a51bfc"
+            name="Warning" />
+          <enumerationLiteral
+            Id="8c477644-eaf4-4e36-bfe6-e23de1610a70"
+            name="Error" />
+          <enumerationLiteral
+            Id="b619919b-6ad1-4b46-853e-b0937e451170"
+            name="LogicWrite" />
+          <enumerationLiteral
+            Id="020859b2-50d4-4e21-a5cb-c57ef7928738"
+            name="LogicSwitch" />
+          <enumerationLiteral
+            Id="d7366f46-78a1-4eae-8b10-299652995bdd"
+            name="LogicRead" />
+          <enumerationLiteral
+            Id="b03bcfd6-edf0-4ae8-a880-847c83cfaeb1"
+            name="LogicReadResponse" />
+          <enumerationLiteral
+            Id="4702f90e-1db9-4ec9-ad20-15f7850ea787"
+            name="ColorWrite" />
+          <enumerationLiteral
+            Id="2a1ff5f9-38ff-446c-a537-025a5cc80db1"
+            name="ColorWriteRandom" />
+          <enumerationLiteral
+            Id="5f3d94f0-50be-42f4-8728-cf6db0038fe3"
+            name="ColorSecuenceWrite" />
+          <enumerationLiteral
+            Id="92e809d1-704f-4a05-9e78-e259d31b871f"
+            name="ColorSortedSecuenceWrite" />
+          <enumerationLiteral
+            Id="45a0f414-47c4-43e9-abbe-3a46256241a1"
             name="ColorRead" />
           <enumerationLiteral
-            Id="c2d95d4c-5aad-46fb-8522-fac583c38882"
+            Id="9fd0f555-f409-4b9c-b494-604b51416fe4"
+            name="ColorReadResponse" />
+          <enumerationLiteral
+            Id="b77d65e5-fd21-463a-b2ab-737c706bb598"
             name="PresenceRead" />
           <enumerationLiteral
-            Id="125b084a-8aa0-4145-8c42-72d801417f96"
+            Id="2d22ca8a-f537-49bd-abcd-f01ba41eeb23"
             name="PresenceReadResponse" />
           <enumerationLiteral
-            Id="1836a481-5739-460a-9b68-4efe49895217"
+            Id="c76c4265-67e1-443a-a401-cc88c8f0ae43"
             name="TemperatureRead" />
           <enumerationLiteral
-            Id="2a66cf92-4d0d-4565-9d6f-850a96c27c46"
+            Id="81ce0b1b-0ed8-489a-9bf9-538a8692caeb"
             name="TemperatureReadResponse" />
           <enumerationLiteral
-            Id="38c50cf0-40c2-4ead-8916-78aaa43bd180"
+            Id="76a1f072-2b4c-4218-ba49-a17bd233afc2"
             name="HumidityRead" />
           <enumerationLiteral
-            Id="797f0861-e7e8-4107-8813-f3b86f0069a5"
+            Id="eacfdaa9-ddc7-44a5-ac6d-f9e3745d3935"
             name="HumidityReadResponse" />
           <enumerationLiteral
-            Id="7f4569ab-e5e3-4476-8638-8b773b3dce0e"
+            Id="6412ad07-88d3-4647-8540-00aeec2495fd"
             name="PowerRead" />
           <enumerationLiteral
-            Id="01d0d353-b5c3-4ac4-9aa4-790705ed9a16"
+            Id="bc970a3e-8cbd-4eee-a6c1-9cd4713443f5"
             name="PowerReadResponse" />
           <enumerationLiteral
-            Id="7af93998-3a53-4d1d-9caa-94b7f60ad235"
+            Id="29cf060d-d06a-49f3-8829-3845fbea0fe2"
             name="LuminosityRead" />
           <enumerationLiteral
-            Id="8bb0b0fa-5b8f-4695-a954-7fcbc9bd1a55"
+            Id="4af7e8eb-e4a5-45c0-a4b1-746433ad3b9f"
             name="LuminosityReadResponse" />
           <enumerationLiteral
-            Id="8a930f8c-5da4-4f1f-ad75-0d9bb3017e62"
-            name="Extension" />
+            Id="c09b67ea-8e3e-482d-ad56-194fe5948ede"
+            name="PCOperationCode" />
+          <enumerationLiteral
+            Id="77854698-b5d4-46ed-81e8-818d4a148478"
+            name="ExtensionCode" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

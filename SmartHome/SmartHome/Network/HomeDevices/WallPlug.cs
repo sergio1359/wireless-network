@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class WallPlug: HomeDevice
+    public class WallPlug: HomeDevice
     {
         public enum WallPlugType
         {

@@ -27,6 +27,8 @@ namespace SmartHome.Network
             }
         }
 
+        public Dictionary<List<PinPort>, List<HomeDevice>> MappingHomeDevice;
+
         public Connector() { }
 
         public Connector(string Name, ConnectorType type, Node node)
@@ -43,7 +45,7 @@ namespace SmartHome.Network
 
         public PinPortConfiguration GetPinPortConfiguration()
         {
-            return ProductConfiguration.GetPinPortConfiguration(HomeDevice.HomeDeviceType);
+            return ProductConfiguration.GetPinPortConfiguration(HomeDevice);
         }
 
         public Operation[] GetActionsConnector()

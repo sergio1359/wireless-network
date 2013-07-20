@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class PresenceSensor: HomeDevice
+    public class PresenceSensor: HomeDevice
     {
         public byte Sensibility { get; set; }
         public const int DEFAULT_SENSIBILITY = 10;

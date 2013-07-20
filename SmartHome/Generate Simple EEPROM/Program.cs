@@ -78,7 +78,7 @@ namespace Generate_Simple_EEPROM
             //IDS HomeDevices
             for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
             {
-                NetworkManager.HomeDevices[i].ID = i;
+                NetworkManager.HomeDevices[i].Id = i;
             }
 
             //Node0
@@ -101,7 +101,7 @@ namespace Generate_Simple_EEPROM
             //Actions 0->1
             NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
-                OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
+                OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
                 Args = new byte[] { 0x03, 0x00 }, //Harcondig: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
             });
@@ -109,7 +109,7 @@ namespace Generate_Simple_EEPROM
             //1->0
             NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
-                OPCode = SmartHome.Comunications.OPCode.DigitalSwitch,
+                OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
                 Args = new byte[] { 0x01, 0x00 }, //Hardconding: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
             });

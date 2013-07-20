@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class HumiditySensor: HomeDevice
+    public class HumiditySensor: HomeDevice
     {
         public int Humidity { get; set; }
 

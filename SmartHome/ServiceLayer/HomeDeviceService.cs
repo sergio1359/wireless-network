@@ -1,15 +1,22 @@
-﻿using SmartHome.Network;
+﻿using SmartHome.HomeModel;
+using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ServiceLayer
 {
     public class HomeDeviceService
     {
+        public int AddHomeDevice(HomeDevice homeDevice)
+        {
+            NetworkManager.HomeDevices.Add(homeDevice);
+            return NetworkManager.HomeDevices.Last().Id;
+        }
 
         public void RemoveHomeDevice(HomeDevice homeDevice)
         {
@@ -21,17 +28,11 @@ namespace ServiceLayer
             NetworkManager.HomeDevices.Remove(homeDevice);
         }
 
-        public void SetNameHomeDevice(HomeDevice homeDevice, string Name)
+        public void SetNameHomeDevice(int idHomeDevice, string NewName)
         {
-            homeDevice.Name = Name;
-
-
+            NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = NewName;
         }
 
-        public string[] GetTypesHomeDevices()
-        {
-            return Enum.GetNames(typeof(HomeDeviceType));
-        }
 
         /// <summary>
         /// Acualiza la posicion de un HomeDevice
@@ -40,13 +41,16 @@ namespace ServiceLayer
         /// <param name="Zone">Zona asignada</param>
         /// <param name="X">Posicion relativa en el eje X</param>
         /// <param name="Y">Posicion relativa en el eje Y</param>
-        public void UpdatePosition(HomeDevice homeDevice, string Zone, int X, int Y)
+        public void UpdatePosition(int idHomeDevice, int idZone, int X, int Y)
         {
-            homeDevice.Position.Zone = Zone;
-            homeDevice.Position.X = X;
-            homeDevice.Position.Y = Y;
+            HomeDevice home = NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice);
+            Zone zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idZone);
+
+            home.Position.Zone = zone;
+            home.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
+        //HAY QUE VOLVER A PROGRAMARLOS PENSANDO QUE ME VOY A LLEVAR
         /// <summary>
         /// Devuelve todos los homeDevices del sistema (estén o no conectados a un nodo)
         /// </summary>
@@ -62,11 +66,9 @@ namespace ServiceLayer
         /// <param name="zona"></param>
         /// <param name="homeDeviceType"></param>
         /// <returns></returns>
-        public HomeDevice[] GetHomeDevices(string zona, string homeDeviceType)
+        public List<HomeDevice> GetHomeDevices(Zone zona, string type)
         {
-            HomeDeviceType type = (HomeDeviceType)Enum.Parse(typeof(HomeDeviceType), homeDeviceType);
-
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone == zona && hd.HomeDeviceType == type && hd.Connector != null).ToArray();
+            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone == zona && hd.HomeDeviceType == type).ToList();
         }
 
         /// <summary>
@@ -76,15 +78,9 @@ namespace ServiceLayer
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public HomeDevice[] GetHomeDevices(string zona, List<string> homeDeviceTypes, bool connected)
+        public List<HomeDevice> GetHomeDevices(Zone zona, List<string> homeDeviceTypes, bool connected)
         {
-            List<HomeDeviceType> types = new List<HomeDeviceType>();
-            foreach (var item in homeDeviceTypes)
-            {
-                types.Add((HomeDeviceType)Enum.Parse(typeof(HomeDeviceType), item));
-            }
-
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone == zona && types.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToArray();
+            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone == zona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToList();
         }
     }
 }

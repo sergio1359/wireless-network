@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class TemperatureSensor: HomeDevice
+    public class TemperatureSensor: HomeDevice
     {
         public int CelciusTemperature { get; set; }
 

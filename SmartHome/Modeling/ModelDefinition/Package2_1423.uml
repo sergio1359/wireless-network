@@ -151,6 +151,9 @@
           <enumerationLiteral
             Id="66129c25-2a78-401a-b285-0e592e8be6ea"
             name="RGB" />
+          <enumerationLiteral
+            Id="2204c91d-91da-4339-aa92-3b5065b706c5"
+            name="DimmableZero" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>
