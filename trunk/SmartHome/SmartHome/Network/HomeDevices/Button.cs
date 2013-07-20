@@ -10,8 +10,6 @@ namespace SmartHome.Network.HomeDevices
     {
         public Button(string Name)
         {
-            base.ConnectorType = Network.ConnectorType.IOLogic;
-            base.HomeDeviceType = Network.HomeDeviceType.Button;
             base.Name = Name;
             base.Operations = new List<Operation>();
         }

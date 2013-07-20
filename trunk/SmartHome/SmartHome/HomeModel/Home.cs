@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace SmartHome.HomeModel
 {
@@ -7,8 +8,15 @@ namespace SmartHome.HomeModel
     {
         public string Name { get; set; }
         public List<Zone> Zones { get; set; }
+        public Coordenate Location { get; set; }
 
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+
+        
+    }
+
+    public class Coordenate
+    {
+        public float Longitude { get; set; }
+        public float Latitude { get; set; }
     }
 }

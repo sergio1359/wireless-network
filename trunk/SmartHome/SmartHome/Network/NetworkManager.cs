@@ -21,10 +21,7 @@ namespace SmartHome.Network
         //TODO: esto es solo para el ejemplo que estamos haciendo
         public static void GetAllEEPROMS()
         {
-            foreach (var item in Nodes)
-            {
-                item.GetEEPROM();
-            }
+            Nodes.ForEach(n => n.GetEEPROM());
         }
     }
 }

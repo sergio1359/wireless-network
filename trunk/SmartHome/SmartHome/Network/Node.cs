@@ -12,7 +12,8 @@ namespace SmartHome.Network
 {
     public class Node
     {
-        public uint Mac { get; set; } //El ID es su MAC
+        public int Id { get; set; }
+        public uint Mac { get; set; }
         public string Name { get; set; }
         public byte NetworkRetries = 3;
         public ushort Address { get; set; }

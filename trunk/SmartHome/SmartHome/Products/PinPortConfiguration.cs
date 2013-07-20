@@ -14,7 +14,7 @@ namespace SmartHome.Products
         public bool Output { get; set; }
         public bool Digital { get; set; }
 
-        public enum Trigger : byte { None = 0x00, FallingEdge = 0x01, RisingEdge = 0x10, Both = 0x11 }
+        public enum Trigger : byte { None = 0x0, FallingEdge = 0x1, RisingEdge = 0x2, Both = 0x3 }
 
         //Digital-------------------------------------
         //output

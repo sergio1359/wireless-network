@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class RGBLight: HomeDevice
+    public class RGBLight: HomeDevice
     {
         public enum ModeRGBLight  {
             None,

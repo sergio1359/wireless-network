@@ -15,11 +15,8 @@ namespace SmartHome.Network.HomeDevices
         public void OnTime(DateTime time) { }
         public void Switch() { }
 
-        public Light(string Name)
+        public Light(string name): base(name)
         {
-            base.ConnectorType = Network.ConnectorType.SwitchLOW;
-            base.HomeDeviceType = Network.HomeDeviceType.Light;
-            base.Name = Name;
             base.Operations = new List<Operation>();
         }
 

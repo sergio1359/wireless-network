@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SmartHome.Plugins;
 using SmartHome.Network;
+using SmartHome.Network.HomeDevices;
 
 namespace SmartHome.Products
 {
@@ -14,8 +15,8 @@ namespace SmartHome.Products
             switch (shieldtype)
             {
                 case ShieldType.Example:
-                    pinPorts.Add("Digital0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A0") }));
-                    pinPorts.Add("Digital1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A1") }));
+                    pinPorts.Add("Digital0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A0") }));
+                    pinPorts.Add("Digital1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A1") }));
                     pinPorts.Add("Analog0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F0") }));
                     pinPorts.Add("Analog1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F1") }));
                     pinPorts.Add("Analog2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F2") }));
@@ -24,18 +25,18 @@ namespace SmartHome.Products
                     break;
 
                 case ShieldType.PinPortMap:
-                    pinPorts.Add("A0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A0") }));
-                    pinPorts.Add("A1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A1") }));
-                    pinPorts.Add("A2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A2") }));
-                    pinPorts.Add("A3", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A3") }));
-                    pinPorts.Add("A4", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A4") }));
-                    pinPorts.Add("A5", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A5") }));
-                    pinPorts.Add("A6", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A6") }));
-                    pinPorts.Add("A7", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("A7") }));
+                    pinPorts.Add("A0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A0") }));
+                    pinPorts.Add("A1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A1") }));
+                    pinPorts.Add("A2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A2") }));
+                    pinPorts.Add("A3", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A3") }));
+                    pinPorts.Add("A4", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A4") }));
+                    pinPorts.Add("A5", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A5") }));
+                    pinPorts.Add("A6", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A6") }));
+                    pinPorts.Add("A7", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A7") }));
                     break;
 
                 case ShieldType.Debug:
-                    pinPorts.Add("Button", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.IOLogic, new List<PinPort>() { new PinPort("D7") }));
+                    pinPorts.Add("Button", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("D7") }));
                     pinPorts.Add("Light", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
                     break;
                 default:
@@ -69,54 +70,44 @@ namespace SmartHome.Products
             return result;
         }
 
-        public static PinPortConfiguration GetPinPortConfiguration(HomeDeviceType homeDeviceType)
+        public static PinPortConfiguration GetPinPortConfiguration(HomeDevice homeDevice)
         {
             PinPortConfiguration configuration = DefaultPinPortConfiguration();
 
-            switch (homeDeviceType)
+            if (homeDevice is Button)
             {
-                case HomeDeviceType.Button:
-                    configuration.Output = false;
-                    configuration.Digital = true;
-                    configuration.ChangeTypeD = PinPortConfiguration.Trigger.FallingEdge;
-                    break;
-                case HomeDeviceType.Switch:
-                    configuration.Output = false;
-                    configuration.Digital = true;
-                    configuration.ChangeTypeD = PinPortConfiguration.Trigger.Both;
-                    break;
-                case HomeDeviceType.WallPlug:
-                case HomeDeviceType.Light:
-                    configuration.Output = true;
-                    configuration.Digital = true;
-                    configuration.DefaultValueD = false;
-                    break;
-                case HomeDeviceType.Dimmable:
-                    configuration.Output = true;
-                    configuration.Digital = false;
-                    configuration.DefaultValueA = 0x00;
-                    break;
-                case HomeDeviceType.PresenceSensor:
-                    configuration.Output = false;
-                    configuration.Digital = true;
-                    configuration.ChangeTypeD = PinPortConfiguration.Trigger.RisingEdge;
-                    break;
-                case HomeDeviceType.PowerSensor:
-                    break;
-                case HomeDeviceType.TemperatureSensor:
-                    break;
-                case HomeDeviceType.HumiditySensor:
-                    break;
-                case HomeDeviceType.LuminositySensor:
-                    break;
-                case HomeDeviceType.DoorLock:
-                    configuration.Output = true;
-                    configuration.Digital = true;
-                    break;
-                case HomeDeviceType.RGBLight:
-                    break;
-                default:
-                    break;
+                configuration.Output = false;
+                configuration.Digital = true;
+                configuration.ChangeTypeD = PinPortConfiguration.Trigger.FallingEdge;
+            }
+            else if (homeDevice is Switch)
+            {
+                configuration.Output = false;
+                configuration.Digital = true;
+                configuration.ChangeTypeD = PinPortConfiguration.Trigger.Both;
+            }
+            else if (homeDevice is Light || homeDevice is WallPlug)
+            {
+                configuration.Output = true;
+                configuration.Digital = true;
+                configuration.DefaultValueD = false;
+            }
+            else if (homeDevice is Dimmable)
+            {
+                configuration.Output = true;
+                configuration.Digital = false;
+                configuration.DefaultValueA = 0x00;
+            }
+            else if (homeDevice is PresenceSensor)
+            {
+                configuration.Output = false;
+                configuration.Digital = true;
+                configuration.ChangeTypeD = PinPortConfiguration.Trigger.RisingEdge;
+            }
+            else if(homeDevice is DoorLock)
+            {
+                configuration.Output = true;
+                configuration.Digital = true;
             }
 
             return configuration;

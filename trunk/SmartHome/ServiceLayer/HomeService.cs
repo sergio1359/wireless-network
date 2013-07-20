@@ -1,5 +1,6 @@
 ﻿using SmartHome.HomeModel;
 using SmartHome.Network;
+using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace ServiceLayer
 {
     public class HomeService
     {
-        public void SetHomeName(string name)
+        public void SetHomeName(string newName)
         {
-            NetworkManager.Home.Name = name;
+            NetworkManager.Home.Name = newName;
         }
 
         public string GetHomeName()
@@ -20,46 +21,46 @@ namespace ServiceLayer
             return NetworkManager.Home.Name;
         }
 
-        public void SetHomeCity(double latitude, double longitude)
+        public void SetHomeLocation(float latitude, float longitude)
         {
-            NetworkManager.Home.Latitude = latitude;
-            NetworkManager.Home.Longitude = longitude;
+            NetworkManager.Home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
         }
 
-        public Tuple<double, double> GetHomeCity()
+        public Coordenate GetHomeLocation()
         {
-            return new Tuple<double, double>(NetworkManager.Home.Latitude, NetworkManager.Home.Longitude);
+            return NetworkManager.Home.Location;
         }
 
-        public uint GetPendingNodes()
+        public uint[] GetPendingNodes()
         {
             throw new NotImplementedException();
         }
 
-        public void UnlinkNode(uint MAC)
+        public void UnlinkNode(int idNode)
         {
-            Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Mac == MAC);
+            Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
             NetworkManager.Nodes.Remove(node);
         }
 
-        public string[] GetZones()
+        public Dictionary<int, string> GetZones()
         {
-            return NetworkManager.Home.Zones.Select(z => z.NameZone).ToArray();
+            return NetworkManager.Home.Zones.ToDictionary(z => z.Id , z=> z.NameZone);
         }
 
-        public Zone GetZone(string zone)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="zone"></param>
+        /// <returns>Devuelve el Id de la zona añadida</returns>
+        public int AddZone(Zone zone)
         {
-            return NetworkManager.Home.Zones.FirstOrDefault(z => z.NameZone == zone);
+            NetworkManager.Home.Zones.Add(zone);
+            return NetworkManager.Home.Zones.Last().Id;
         }
 
-        public void AddZone(string zone)
+        public void SetNameZone(int idZone, string newName)
         {
-            NetworkManager.Home.Zones.Add(new Zone() { NameZone = zone });
-        }
-
-        public void SetNameZone(string zone, string newName)
-        {
-            NetworkManager.Home.Zones.FirstOrDefault(z => z.NameZone == zone).NameZone = newName;
+            NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idZone).NameZone= newName;
         }
     }
 }

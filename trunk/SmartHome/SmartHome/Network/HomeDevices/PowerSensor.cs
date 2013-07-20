@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class PowerSensor: HomeDevice
+    public class PowerSensor: HomeDevice
     {
         public const int DEFAULT_SENSIBILITY = 29; //AQUI PONEMOS ALGUNA REGLA ¿800 kw/h blabalbalbla?
 

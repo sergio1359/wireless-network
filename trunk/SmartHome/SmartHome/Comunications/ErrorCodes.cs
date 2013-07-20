@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Comunications
 {
-    internal enum ErrorCodes: byte
+    public enum StatusCode: byte
     {
-
+        OK = 0,
+        ErrorFragmentTotalNotExpected,
+        ErrorFragmentOrder,
+        ErrorWaitingFirstFragment,
+        ErrorConfigSizeTooBig,
+        ErrorConfigInvalidChecksum,
+        ErrorConfigSizeNotExpected,
+        ErrorBusyReceivingState
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class DoorLock : HomeDevice
+    public class DoorLock : HomeDevice
     {
         public const int DEFAULT_OPEN_TIME = 1; //1 segundo
 

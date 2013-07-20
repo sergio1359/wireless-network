@@ -54,11 +54,10 @@
     <Compile Include="Network\HomeDevices\PowerSensor.cs" />
     <Compile Include="Network\HomeDevices\PresenceSensor.cs" />
     <Compile Include="Network\HomeDevices\RGBLight.cs" />
-    <Compile Include="Network\HomeDevices\TemperatureHumiditySensor.cs" />
     <Compile Include="Network\HomeDevices\TemperatureSensor.cs" />
+    <Compile Include="HomeModel\View.cs" />
     <Compile Include="Plugins\PluginState.cs" />
     <Compile Include="Network\ShieldType.cs" />
-    <Compile Include="Network\HomeDeviceType.cs" />
     <Compile Include="HomeModel\Home.cs" />
     <Compile Include="HomeModel\Zone.cs" />
     <Compile Include="Logs\Log.cs" />

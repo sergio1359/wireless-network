@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public class ConnectorService
+    public class DeprecatedConnectorService
     {
         private ConnectorRepository _connectorRepository;
 
-        public ConnectorService(ConnectorRepository connectorRepository)
+        public DeprecatedConnectorService(ConnectorRepository connectorRepository)
         {
             _connectorRepository = connectorRepository;
         }

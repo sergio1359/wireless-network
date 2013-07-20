@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Switch: HomeDevice
+    public class Switch: HomeDevice
     {
         public bool Open { get; set; }
 

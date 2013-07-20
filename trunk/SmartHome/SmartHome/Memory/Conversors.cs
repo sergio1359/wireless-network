@@ -85,7 +85,7 @@ namespace SmartHome.Memory
             {
                 if (con.HomeDevice != null)
                 {
-                    return ProductConfiguration.GetPinPortConfiguration(con.HomeDevice.HomeDeviceType);
+                    return ProductConfiguration.GetPinPortConfiguration(con.HomeDevice);
                 }
             }
 

@@ -12,7 +12,8 @@ namespace SmartHome.Network
         SwitchHI,
         PWMTTL,
         Dimmer,
-        IOLogic,
+        LogicInput,
         RGB,
+        ConectorSensorBoard
     }
 }
