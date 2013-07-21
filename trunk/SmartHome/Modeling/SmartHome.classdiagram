@@ -4906,7 +4906,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           <enumerationLiteral Id="53b6b784-b6c1-4544-8a31-51a1b18f26a3" name="RandomSecuence">
             <elementDefinition Id="96f60f04-f838-4f46-8935-92d60cffdeaf" />
           </enumerationLiteral>
-          <enumerationLiteral Id="9f8d1185-5598-4d90-9077-082bef17de79" name="Solid">
+          <enumerationLiteral Id="9f8d1185-5598-4d90-9077-082bef17de79" name="StaticColor">
             <elementDefinition Id="b592def6-a125-4614-9689-16e3c3c3c106" />
           </enumerationLiteral>
           <enumerationLiteral Id="4583097e-c1c9-48c8-80a7-0a3e88a50100" name="SortedSecuence">

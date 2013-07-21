@@ -10,7 +10,7 @@ namespace SmartHome.Network
 {
     public class Connector
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
@@ -27,7 +27,7 @@ namespace SmartHome.Network
             }
         }
 
-        public Dictionary<List<PinPort>, List<HomeDevice>> MappingHomeDevice;
+        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
         public Connector() { }
 
