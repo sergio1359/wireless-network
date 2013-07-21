@@ -14,39 +14,35 @@ namespace SmartHome.Products
             Dictionary<string, Tuple<ConnectorType, List<PinPort>>> pinPorts = new Dictionary<string, Tuple<ConnectorType, List<PinPort>>>();
             switch (shieldtype)
             {
-                case ShieldType.Example:
-                    pinPorts.Add("Digital0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A0") }));
-                    pinPorts.Add("Digital1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A1") }));
-                    pinPorts.Add("Analog0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F0") }));
-                    pinPorts.Add("Analog1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F1") }));
-                    pinPorts.Add("Analog2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("F2") }));
-                    pinPorts.Add("PWM", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.PWMTTL, new List<PinPort>() { new PinPort("B4"), new PinPort("B7"), new PinPort("G5") }));
-                    pinPorts.Add("Dimmer0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.Dimmer, new List<PinPort>() { new PinPort("G0") }));
-                    break;
-
-                case ShieldType.PinPortMap:
-                    pinPorts.Add("A0", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A0") }));
-                    pinPorts.Add("A1", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A1") }));
-                    pinPorts.Add("A2", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A2") }));
-                    pinPorts.Add("A3", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A3") }));
-                    pinPorts.Add("A4", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A4") }));
-                    pinPorts.Add("A5", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A5") }));
-                    pinPorts.Add("A6", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A6") }));
-                    pinPorts.Add("A7", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("A7") }));
-                    break;
-
                 case ShieldType.Debug:
-                    pinPorts.Add("Button", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("D7") }));
-                    pinPorts.Add("Light", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
+                    pinPorts.Add("Button",      new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("D7") }));
+                    pinPorts.Add("Light",       new Tuple<ConnectorType, List<PinPort>>(ConnectorType.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
                     pinPorts.Add("Temperature", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Humidity", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Presence", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("B6") }));
+                    pinPorts.Add("Humidity",    new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("E2") }));
+                    pinPorts.Add("Presence",    new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("B6") }));
                     break;
                 default:
                     break;
             }
 
             return pinPorts;
+        }
+
+        public static Dictionary<int, List<HomeDevice>> GetAdvanceProducts(AdvanceProducts product)
+        {
+            Dictionary<int, List<HomeDevice>> resultProduct = new Dictionary<int, List<HomeDevice>>();
+
+            switch (product)
+            {
+                case AdvanceProducts.SensorBoard:
+                    //TODO
+                    break;
+                default:
+                    break;
+            }
+
+
+            return resultProduct;
         }
 
         public static Base GetBaseConfiguration(BaseType controller)

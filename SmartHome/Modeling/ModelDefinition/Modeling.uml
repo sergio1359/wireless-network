@@ -7780,7 +7780,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             name="RandomSecuence" />
           <enumerationLiteral
             Id="b592def6-a125-4614-9689-16e3c3c3c106"
-            name="Solid" />
+            name="StaticColor" />
           <enumerationLiteral
             Id="87fb9b6e-028c-4dbd-b316-e2dc24f7b65a"
             name="SortedSecuence" />

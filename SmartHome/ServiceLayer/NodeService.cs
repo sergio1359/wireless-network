@@ -22,7 +22,7 @@ namespace ServiceLayer
         /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.ID == idConnector);
+            Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.Id == idConnector);
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
 
             if (connector.HomeDevice != null)
