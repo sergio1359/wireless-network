@@ -20,7 +20,7 @@ typedef struct
 	uint16_t timerCounter;
 	unsigned lastValue		: 1;	//LSB
 	unsigned debouncerValue : 1;
-}LOGIC_ELEM_t;	
+}LOGIC_ELEM_t;
 
 struct
 {
@@ -53,16 +53,25 @@ void logicModule_Init()
 	}
 	
 	for(uint8_t i = 0; i<num_of_logic_elems; i++)
-	{		
+	{
 		portPtr = PORT_FROM_PINADDRESS(configPtr->pinAddress);
 		mask = MASK_FROM_PINADDRESS(configPtr->pinAddress);
 
-		HAL_GPIO_PORT_out(portPtr, mask);
-		HAL_GPIO_PORT_in(portPtr,~(mask));
+
+		if(configPtr->configBits.maskIO) //Output
+		{
+			HAL_GPIO_PORT_out(portPtr, mask);
+			
+			if(configPtr->configBits.defaultValue)
+				HAL_GPIO_PORT_set(portPtr, mask);
+			else
+				HAL_GPIO_PORT_clr(portPtr,mask);
+				
+		}else
+		{
+			HAL_GPIO_PORT_in(portPtr, mask);
+		}
 		
-		HAL_GPIO_PORT_set(portPtr,(configPtr->configBits.defaultValue & ~(mask)));
-		HAL_GPIO_PORT_clr(portPtr,(~(configPtr->configBits.defaultValue) & ~(mask)));
-	
 		logic_elems[i].config = configPtr;
 		logic_elems[i].portPtr = portPtr;
 		logic_elems[i].mask = mask;
@@ -74,7 +83,7 @@ void logicModule_Init()
 	logicResponse.header.opCode = LogicReadResponse;
 	
 	//Configure Timer
-	logicTimer.interval = 50; // 5 times per second
+	logicTimer.interval = 50; // 20 times per second
 	logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	logicTimer.handler = logicTimerHandler;
 	SYS_TimerStart(&logicTimer);
@@ -120,7 +129,7 @@ uint8_t findLogicElem(uint16_t deviceAddress)
 	for(uint8_t i = 0; i < num_of_logic_elems; i++)
 	{
 		if(logic_elems[i].config->deviceID == deviceAddress)
-			return i;
+		return i;
 	}
 	
 	return 0xFF;//Address not found
@@ -134,13 +143,13 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 	uint8_t  mask;
 	
 	if(configIndex == 0xFF) //UNKNOWN DEVICE ADDRESS
-		return false;
+	return false;
 	
 	configPtr = logic_elems[configIndex].config;
 	portPtr = logic_elems[configIndex].portPtr;
 	mask = logic_elems[configIndex].mask;
 	
-	if((read && ((~configPtr->configBits.maskIO) & mask) != mask) || (!read && ((configPtr->configBits.maskIO & mask) != mask) )) //INVALID OPERATION
+	if( (read && (configPtr->configBits.maskIO)) || (!read && (~configPtr->configBits.maskIO)) ) //INVALID OPERATION
 		return false;
 	
 	if(read)
@@ -159,8 +168,10 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 			value = ~HAL_GPIO_PORT_read(portPtr, mask);
 		}else
 		{
-			HAL_GPIO_PORT_set(portPtr, value & mask);
-			HAL_GPIO_PORT_clr(portPtr, ~value & mask);
+			if(value)
+				HAL_GPIO_PORT_set(portPtr, mask);
+			else
+				HAL_GPIO_PORT_clr(portPtr, mask);
 		}
 		
 		if(seconds > 0)
@@ -178,19 +189,18 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 	{
 		LOGIC_ELEM_t* currentElem = &logic_elems[i];
 		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfo;
-		LOGIC_BITS_CONFIG_t* configBitsPtr = &currentElem->config->configBits; 
+		LOGIC_BITS_CONFIG_t* configBitsPtr = &currentElem->config->configBits;
 		
 		if( ~configBitsPtr->maskIO )	//Read if input
 		{
-			if ( (operationsInfoPtr->numberOfOperations > 0) &&		//Operations to send
-				 (configBitsPtr->changeType != NO_EDGE) )		//AND ChangeType != NONE
+			if ( configBitsPtr->changeType != NO_EDGE )		//AND ChangeType != NONE
 			{
 				_Bool changeOcurred = 0;
 				uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
 				
 				//Debouncer
 				if(val == currentElem->debouncerValue)//Valid value
-				{	
+				{
 					//Check for valid changes
 					switch(configBitsPtr->changeType)
 					{
@@ -219,7 +229,7 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 						logicResponse.response.value = val;
 						
 						OM_ProccessResponseOperation(&logicResponse.header);
-					}					
+					}
 				}
 				
 				currentElem->debouncerValue = val;
@@ -233,11 +243,13 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 			}else if(currentElem->timerCounter == 1) //Time to proccess
 			{
 				//Invert current value
-				HAL_GPIO_PORT_set(currentElem->portPtr, ~currentElem->lastValue & currentElem->mask);
-				HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->lastValue & currentElem->mask);
-			
+				if(currentElem->lastValue)
+					HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
+				else
+					HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
+				
 				currentElem->timerCounter = 0; //Disable timer
-			}	
+			}
 		}
 	}
 	

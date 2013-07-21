@@ -51,12 +51,9 @@ typedef struct
 
 typedef struct
 {
-	CONFIG_MODULE_ELEM_HEADER_t operationsInfoTemperature;
-	CONFIG_MODULE_ELEM_HEADER_t operationsInfoHumidity;
+	CONFIG_MODULE_ELEM_HEADER_t operationsInfo;
 	uint16_t deviceID;
 	uint8_t pinAddress;
-	uint8_t sensibilityTemperature;
-	uint8_t sensibilityHumidity;
 }TEMHUM_CONFIG_t;
 
 
