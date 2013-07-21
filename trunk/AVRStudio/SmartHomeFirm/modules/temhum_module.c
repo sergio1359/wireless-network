@@ -12,17 +12,22 @@
 
 #include "sysTimer.h"
 
-#define MAX_TEMHUM_DEVICES 8
+#define MAX_TEMHUM_DEVICES 4
 
 
 typedef struct
 {
 	TEMHUM_CONFIG_t* config;
 	uint8_t lastTemperature;
-	uint8_t lastHumidity;
 	uint8_t currentTemperature;
+}TEMPERATURE_ELEM_t;
+
+typedef struct
+{
+	TEMHUM_CONFIG_t* config;
+	uint8_t lastHumidity;
 	uint8_t currentHumidity;
-}TEMHUM_ELEM_t;
+}HUMIDITY_ELEM_t;
 
 struct
 {
@@ -36,45 +41,59 @@ struct
 	HUMIDITY_READ_RESPONSE_MESSAGE_t response;
 }humidityResponse;
 
-TEMHUM_ELEM_t temhum_elems[MAX_TEMHUM_DEVICES];
-uint8_t num_of_temhum_elems;
+TEMPERATURE_ELEM_t temp_elems[MAX_TEMHUM_DEVICES];
+uint8_t num_of_temp_elems;
+
+HUMIDITY_ELEM_t hum_elems[MAX_TEMHUM_DEVICES];
+uint8_t num_of_hum_elems;
 
 DHT11_Read_t DHT11Result;
 
 SYS_Timer_t sensorReadTimer;
 
 static void sensorReadTimerHandler(SYS_Timer_t *timer);
-uint8_t findTemHumElem(uint16_t deviceAddress);
+uint8_t findTempElem(uint16_t deviceAddress);
+uint8_t findHumElem(uint16_t deviceAddress);
 
 void temHumModule_Init(void)
 {
-	TEMHUM_CONFIG_t* configPtr;
+	TEMHUM_CONFIG_t* configTempPtr;
+	TEMHUM_CONFIG_t* configHumPtr;
 	
-	num_of_temhum_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_TempHum];			//First byte is number of configs
-	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_TempHum + 1];		//At second byte the list start
+	num_of_temp_elems  = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Temperature];		//First byte is number of configs
+	num_of_hum_elems   = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Humidity];		
 	
-	if(num_of_temhum_elems > MAX_TEMHUM_DEVICES)
+	configTempPtr	   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Temperature + 1];	//At second byte the list start
+	
+	if(num_of_temp_elems > MAX_TEMHUM_DEVICES)
 	{
-		//TODO: SEND ERROR (MAX NUMBER OF DEVICES EXCEEDED)
-		num_of_temhum_elems = MAX_TEMHUM_DEVICES;
+		//TODO: SEND ERROR (MAX NUMBER OF TEMP DEVICES EXCEEDED)
+		num_of_temp_elems = MAX_TEMHUM_DEVICES;
 	}
 	
-	for(uint8_t i = 0; i<num_of_temhum_elems; i++)
+	if(num_of_hum_elems > MAX_TEMHUM_DEVICES)
 	{
-		if(configPtr->sensibilityHumidity == 0)
+		//TODO: SEND ERROR (MAX NUMBER OF HUM DEVICES EXCEEDED)
+		num_of_hum_elems = MAX_TEMHUM_DEVICES;
+	}
+	
+	for(uint8_t i = 0; i<num_of_temp_elems; i++)
+	{
+		temp_elems[i].config = configTempPtr;
+		
+		configHumPtr = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Humidity + 1];	
+		
+		for(uint8_t i = 0; i<num_of_hum_elems; i++)
 		{
-			//TODO: SEND ERROR (INVALID SENSIBILITY VALUE)
-			configPtr->sensibilityHumidity = 1;
+			if(configTempPtr->pinAddress == configHumPtr->pinAddress)
+			{
+				hum_elems[i].config = configHumPtr;	
+				break;
+			}
+			configHumPtr++;
 		}
 		
-		if(configPtr->sensibilityTemperature == 0)
-		{
-			//TODO: SEND ERROR (INVALID SENSIBILITY VALUE)
-			configPtr->sensibilityTemperature = 1;
-		}
-		
-		temhum_elems[i].config = configPtr;
-		configPtr++;
+		configTempPtr++;
  	}
 	 
 	//Set responses opCodes
@@ -98,13 +117,13 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 	if(operation_header->opCode == TemperatureRead)
 	{
 		TEMPERATURE_READ_MESSAGE_t* msg = (TEMPERATURE_READ_MESSAGE_t*)(operation_header + 1);
-		uint8_t elemIndex = findTemHumElem(msg->deviceID);
+		uint8_t elemIndex = findTempElem(msg->deviceID);
 		if(elemIndex != 0xFF)
 		{
 			temperatureResponse.header.destinationAddress = operation_header->sourceAddress;
 			temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			temperatureResponse.response.deviceID = msg->deviceID;
-			temperatureResponse.response.temperature = temhum_elems[elemIndex].currentTemperature;
+			temperatureResponse.response.temperature = temp_elems[elemIndex].currentTemperature;
 			
 			OM_ProccessResponseOperation(&temperatureResponse.header);
 		}
@@ -125,13 +144,13 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == HumidityRead)
 	{
 		HUMIDITY_READ_MESSAGE_t* msg = (HUMIDITY_READ_MESSAGE_t*)(operation_header + 1);
-		uint8_t elemIndex = findTemHumElem(msg->deviceID);
+		uint8_t elemIndex = findHumElem(msg->deviceID);
 		if(elemIndex != 0xFF)
 		{
 			humidityResponse.header.destinationAddress = operation_header->sourceAddress;
 			humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 			humidityResponse.response.deviceID = msg->deviceID;
-			humidityResponse.response.humidity = temhum_elems[elemIndex].currentHumidity;
+			humidityResponse.response.humidity = hum_elems[elemIndex].currentHumidity;
 			
 			OM_ProccessResponseOperation(&humidityResponse.header);
 		}
@@ -152,11 +171,22 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
-uint8_t findTemHumElem(uint16_t deviceAddress)
+uint8_t findTempElem(uint16_t deviceAddress)
 {
-	for(uint8_t i = 0; i < num_of_temhum_elems; i++)
+	for(uint8_t i = 0; i < num_of_temp_elems; i++)
 	{
-		if(temhum_elems[i].config->deviceID == deviceAddress)
+		if(temp_elems[i].config->deviceID == deviceAddress)
+		return i;
+	}
+	
+	return 0xFF;
+}
+
+uint8_t findHumElem(uint16_t deviceAddress)
+{
+	for(uint8_t i = 0; i < num_of_hum_elems; i++)
+	{
+		if(hum_elems[i].config->deviceID == deviceAddress)
 		return i;
 	}
 	
@@ -165,57 +195,63 @@ uint8_t findTemHumElem(uint16_t deviceAddress)
 
 static void sensorReadTimerHandler(SYS_Timer_t *timer)
 {	
-	for(uint8_t i = 0; i < num_of_temhum_elems; i++)
+	for(uint8_t i = 0; i < num_of_temp_elems; i++)
 	{
-		TEMHUM_ELEM_t* currentElem = &temhum_elems[i];
-		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoTemPtr = &currentElem->config->operationsInfoTemperature;
-		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoHumPtr = &currentElem->config->operationsInfoHumidity;
+		TEMPERATURE_ELEM_t* currentTempElem = &temp_elems[i];
+		HUMIDITY_ELEM_t* currentHumElem = &hum_elems[i];
+		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoTemPtr = &currentTempElem->config->operationsInfo;
+		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoHumPtr = &currentHumElem->config->operationsInfo;
 		
-		if(DHT11_Read(currentElem->config->pinAddress, &DHT11Result))
+		if(DHT11_Read(currentTempElem->config->pinAddress, &DHT11Result))
 		{
-			if(currentElem->currentTemperature != DHT11Result.temperature)
+			if(currentTempElem->currentTemperature != DHT11Result.temperature)
 			{
-				currentElem->currentTemperature = DHT11Result.temperature;				
+				currentTempElem->currentTemperature = DHT11Result.temperature;
+				currentHumElem->currentHumidity = DHT11Result.humitity;				
 				
-				if(abs(currentElem->currentTemperature - currentElem->lastTemperature) > currentElem->config->sensibilityTemperature)
+				if(currentTempElem->currentTemperature != currentTempElem->lastTemperature)
 				{
-					CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfoTemperature;
-					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
+					CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = operationsInfoTemPtr;
+					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoTemPtr->pointerOperationList];
 					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 					{
 						OM_ProccessInternalOperation(operationPtr, false);
 						operationPtr++;
 					}
 					
+					currentTempElem->lastTemperature = currentTempElem->currentTemperature;
+					
 					//Send to coordinator
 					temperatureResponse.header.destinationAddress = COORDINATOR_ADDRESS;
 					temperatureResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-					temperatureResponse.response.deviceID = currentElem->config->deviceID;
-					temperatureResponse.response.temperature = currentElem->currentTemperature;
+					temperatureResponse.response.deviceID = currentTempElem->config->deviceID;
+					temperatureResponse.response.temperature = currentTempElem->currentTemperature;
 					
 					OM_ProccessResponseOperation(&temperatureResponse.header);
 				}
 			}
 
-			if(currentElem->currentHumidity != DHT11Result.humitity)
+			if(currentHumElem->currentHumidity != DHT11Result.humitity)
 			{
-				currentElem->currentHumidity = DHT11Result.humitity;
+				currentHumElem->currentHumidity = DHT11Result.humitity;
 				
-				if(abs(currentElem->currentHumidity - currentElem->lastHumidity) > currentElem->config->sensibilityHumidity)
+				if(currentHumElem->currentHumidity != currentHumElem->lastHumidity)
 				{
-					CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfoHumidity;
-					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
+					CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = operationsInfoHumPtr;
+					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoHumPtr->pointerOperationList];
 					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 					{
 						OM_ProccessInternalOperation(operationPtr, false);
 						operationPtr++;
 					}
 					
+					currentHumElem->lastHumidity = currentHumElem->currentHumidity;
+					
 					//Send to coordinator
 					humidityResponse.header.destinationAddress = COORDINATOR_ADDRESS;
 					humidityResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-					humidityResponse.response.deviceID = currentElem->config->deviceID;
-					humidityResponse.response.humidity = currentElem->currentHumidity;
+					humidityResponse.response.deviceID = currentHumElem->config->deviceID;
+					humidityResponse.response.humidity = currentHumElem->currentHumidity;
 					
 					OM_ProccessResponseOperation(&humidityResponse.header);
 				}

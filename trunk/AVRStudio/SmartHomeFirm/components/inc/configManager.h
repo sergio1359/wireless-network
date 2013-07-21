@@ -66,7 +66,8 @@ typedef struct{
 	uint16_t configModule_Dimmable;
 	uint16_t configModule_RGB;
 	uint16_t configModule_Presence;
-	uint16_t configModule_TempHum;
+	uint16_t configModule_Temperature;
+	uint16_t configModule_Humidity;
 	uint16_t configModule_EnergyMeter;
 	uint16_t configModule_Luminosity;
 	uint16_t timeOperationList;
