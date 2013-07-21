@@ -13,6 +13,7 @@ namespace Generate_Simple_EEPROM
         static void Main(string[] args)
         {
 
+            #region Example 01
             ////Example 01: pulsar y que el led se apague
             //NetworkManager.Nodes.Add(new Node(0x00, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
             //NetworkManager.HomeDevices.Add(new Button("Botón Placa"));
@@ -34,8 +35,10 @@ namespace Generate_Simple_EEPROM
             //});
 
             ////escribir todas las eeproms
-            //NetworkManager.GetAllEEPROMS();
+            //NetworkManager.GetAllEEPROMS(); 
+            #endregion
 
+            #region Example 02
             ////Example 02: pulsar que otro led se apague
             //NetworkManager.Nodes.Add(new Node(0x00, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
             //NetworkManager.HomeDevices.Add(new Button("Botón Placa"));
@@ -58,11 +61,67 @@ namespace Generate_Simple_EEPROM
             //});
 
             ////escribir todas las eeproms
-            //NetworkManager.GetAllEEPROMS();
+            //NetworkManager.GetAllEEPROMS(); 
+            #endregion
+
+            #region Example 03
+            ////Example 03: pulsar que otro led se apague
+            //NetworkManager.Security.Channel = 0x0f;
+            //NetworkManager.Security.PanId = 0x1234;
+
+            //NetworkManager.Nodes.Add(new Node(0x00, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
+            //NetworkManager.Nodes.Add(new Node(0xFF, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
+
+            //NetworkManager.HomeDevices.Add(new Button("Botón Placa0"));
+            //NetworkManager.HomeDevices.Add(new Light("Led0"));
+
+            //NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
+            //NetworkManager.HomeDevices.Add(new Light("Led1"));
+
+            ////IDS HomeDevices
+            //for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
+            //{
+            //    NetworkManager.HomeDevices[i].Id = i;
+            //}
+
+            ////Node0
+            //NetworkManager.Nodes[0].Connectors[0].HomeDevice = NetworkManager.HomeDevices[0];
+            //NetworkManager.Nodes[0].Connectors[1].HomeDevice = NetworkManager.HomeDevices[1];
+            ////Puke: bidirectional
+            //NetworkManager.Nodes[0].Connectors[0].HomeDevice.Connector = NetworkManager.Nodes[0].Connectors[0];
+            //NetworkManager.Nodes[0].Connectors[1].HomeDevice.Connector = NetworkManager.Nodes[0].Connectors[1];
+            //NetworkManager.Nodes[0].Address = 0x4003;
 
 
+            ////Node1
+            //NetworkManager.Nodes[1].Connectors[0].HomeDevice = NetworkManager.HomeDevices[2];
+            //NetworkManager.Nodes[1].Connectors[1].HomeDevice = NetworkManager.HomeDevices[3];
+            ////Puke: bidirectional
+            //NetworkManager.Nodes[1].Connectors[0].HomeDevice.Connector = NetworkManager.Nodes[1].Connectors[0];
+            //NetworkManager.Nodes[1].Connectors[1].HomeDevice.Connector = NetworkManager.Nodes[1].Connectors[1];
+            //NetworkManager.Nodes[1].Address = 0x4004;
 
-            //Example 03: pulsar que otro led se apague
+            ////Actions 0->1
+            //NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
+            //{
+            //    OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
+            //    Args = new byte[] { 0x03, 0x00 }, //Harcondig: IDHomeDev, Time = 0
+            //    DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
+            //});
+
+            ////1->0
+            //NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
+            //{
+            //    OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
+            //    Args = new byte[] { 0x01, 0x00 }, //Hardconding: IDHomeDev, Time = 0
+            //    DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
+            //});
+
+            //NetworkManager.GetAllEEPROMS(); 
+            #endregion
+
+            #region Example 04
+            //Example 04: Configuracion para el "SensorShield" demostrativo
             NetworkManager.Security.Channel = 0x0f;
             NetworkManager.Security.PanId = 0x1234;
 
@@ -71,6 +130,9 @@ namespace Generate_Simple_EEPROM
 
             NetworkManager.HomeDevices.Add(new Button("Botón Placa0"));
             NetworkManager.HomeDevices.Add(new Light("Led0"));
+            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor"));
+            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor"));
+            NetworkManager.HomeDevices.Add(new Button("PresenceSensor"));
 
             NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
             NetworkManager.HomeDevices.Add(new Light("Led1"));
@@ -84,19 +146,28 @@ namespace Generate_Simple_EEPROM
             //Node0
             NetworkManager.Nodes[0].Connectors[0].HomeDevice = NetworkManager.HomeDevices[0];
             NetworkManager.Nodes[0].Connectors[1].HomeDevice = NetworkManager.HomeDevices[1];
-            //Puke: bidirectional
-            NetworkManager.Nodes[0].Connectors[0].HomeDevice.Connector = NetworkManager.Nodes[0].Connectors[0];
-            NetworkManager.Nodes[0].Connectors[1].HomeDevice.Connector = NetworkManager.Nodes[0].Connectors[1];
+            NetworkManager.Nodes[0].Connectors[2].HomeDevice = NetworkManager.HomeDevices[2];
+            NetworkManager.Nodes[0].Connectors[3].HomeDevice = NetworkManager.HomeDevices[3];
+            NetworkManager.Nodes[0].Connectors[4].HomeDevice = NetworkManager.HomeDevices[4];
+
             NetworkManager.Nodes[0].Address = 0x4003;
 
 
             //Node1
-            NetworkManager.Nodes[1].Connectors[0].HomeDevice = NetworkManager.HomeDevices[2];
-            NetworkManager.Nodes[1].Connectors[1].HomeDevice = NetworkManager.HomeDevices[3];
-            //Puke: bidirectional
-            NetworkManager.Nodes[1].Connectors[0].HomeDevice.Connector = NetworkManager.Nodes[1].Connectors[0];
-            NetworkManager.Nodes[1].Connectors[1].HomeDevice.Connector = NetworkManager.Nodes[1].Connectors[1];
+            NetworkManager.Nodes[1].Connectors[0].HomeDevice = NetworkManager.HomeDevices[5];
+            NetworkManager.Nodes[1].Connectors[1].HomeDevice = NetworkManager.HomeDevices[6];
+
             NetworkManager.Nodes[1].Address = 0x4004;
+
+            //Puke: bidirectional
+            foreach (Node n in NetworkManager.Nodes)
+            {
+                foreach (Connector c in n.Connectors)
+                {
+                    if (c.HomeDevice != null)
+                        c.HomeDevice.Connector = c;
+                }
+            }
 
             //Actions 0->1
             NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
@@ -115,6 +186,11 @@ namespace Generate_Simple_EEPROM
             });
 
             NetworkManager.GetAllEEPROMS();
+            #endregion
+
+
+            Console.WriteLine("Archivos de configuración generados.");
+            Console.ReadLine();
         }
     }
 }

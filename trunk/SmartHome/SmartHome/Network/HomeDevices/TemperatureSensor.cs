@@ -10,6 +10,12 @@ namespace SmartHome.Network.HomeDevices
     {
         public int CelciusTemperature { get; set; }
 
+        public TemperatureSensor(string name)
+            : base(name)
+        {
+            base.Operations = new List<Operation>();
+        }
+
         public override void RefreshState()
         {
             base.RefreshState();
