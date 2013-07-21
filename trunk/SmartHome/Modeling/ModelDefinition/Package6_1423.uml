@@ -602,6 +602,15 @@
           <enumerationLiteral
             Id="77854698-b5d4-46ed-81e8-818d4a148478"
             name="ExtensionCode" />
+          <enumerationLiteral
+            Id="baf7828e-d1a2-491b-aa4a-6427a3ed52d0"
+            name="DimmableRead" />
+          <enumerationLiteral
+            Id="0e2b4936-5289-4132-ae93-830d5a5225c1"
+            name="DimmableReadResponse" />
+          <enumerationLiteral
+            Id="81606b5c-172c-4ba1-adf2-78b0a7566816"
+            name="DimmableWrite" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

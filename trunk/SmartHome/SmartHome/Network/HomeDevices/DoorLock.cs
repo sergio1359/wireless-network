@@ -8,13 +8,13 @@ namespace SmartHome.Network.HomeDevices
 {
     public class DoorLock : HomeDevice
     {
-        public const int DEFAULT_OPEN_TIME = 1; //1 segundo
+        public const byte DEFAULT_OPEN_TIME = 1; //1 segundo
 
-        public int OpenTime { get; set; }
+        public byte OpenTime { get; set; }
 
         public void OpenDoor()
         {
-
+            LogicWrite(LogicWriteValues.Set, OpenTime);
         }
     }
 }

@@ -1318,12 +1318,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           <operation Id="1764dc36-590b-4e5b-9a24-669d7133f185" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="a733af50-7f58-4c5e-919d-f59f88356945" />
           </operation>
-          <operation Id="612bb20c-94af-413f-82ec-f5738cfb2ad9" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="a5dca2f0-e58e-4322-a224-3ff1fd2a22b1" />
-          </operation>
-          <operation Id="d91cdf5f-bf9c-421c-8b80-8a3b88ccdb16" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="fe6c16b8-41bf-4b98-81b3-8bede293aa15" />
-          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1776,12 +1770,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             </appliedStereotypesInternal>
             <elementDefinition Id="10ce5b06-dbe1-4391-9586-fc7d6502b9d8" />
           </operation>
-          <operation Id="7421ab05-5dd9-4b56-97a8-705c49eebbac" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="de7801c9-a0b3-4918-b9bf-dc43e03d25ac" />
-          </operation>
-          <operation Id="d33153f7-7699-41b5-9766-10f210c102fe" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="2fde3b53-49e1-4d0a-8ec8-6bf0a94fd186" />
-          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1825,12 +1813,12 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="1d29d67b-7f60-4f3f-90e2-b74ecea4eed5" />
-        <suppliersInternal>
-          <interfaceRealization Id="42c4ddc0-aeb5-48af-8fa7-a653ff8d81ab">
-            <interfaceMoniker Id="0f0cd443-3616-421d-9843-63c6bed50a18" LastKnownName="HomeDevice" />
-            <elementDefinition Id="efd53fc6-595b-4cf7-b479-a08d65d6303d" />
-          </interfaceRealization>
-        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="c5729dd9-ff0b-4d9e-b507-77b0e1cd19e1" isSubstitutable="false">
+            <classMoniker Id="1aa1a8d1-f8c5-4bb1-8229-313558a2aa27" LastKnownName="Light" />
+            <elementDefinition Id="cafa3bb4-170c-48d2-a7fe-08e0cfbaf5be" />
+          </generalization>
+        </generalsInternal>
         <targetEnds>
           <association Id="3a74c26f-330c-40bb-bf15-e637248e5592" isDerived="false" sourceEndRoleName="WallPlug" targetEndRoleName="WallPlugSubtype" isLeaf="false" isAbstract="false">
             <enumerationMoniker Id="077b1453-1942-483e-86df-46004e5c4f89" LastKnownName="WallPlugType" />
@@ -2094,58 +2082,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
-          </operation>
-          <operation Id="50b02a88-f017-409a-a001-6bb35d03047c" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance Id="71ff9710-6f71-4e2e-87cf-e3ee2c4a5689" name="method" profile="CSharpProfile">
-                <elementDefinition Id="7bbfd909-2f68-4c54-b5d2-bac35da736b3" />
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="1a6a17f1-fd2f-49de-b9fe-91a568a2bd60">
-                    <propertyInstance Id="c7b33b1f-d7da-4cc0-bcff-d21a6f348030" name="ClrAttributes">
-                      <elementDefinition Id="656c3cac-55ec-4efb-82f2-0a0d4fb09b47" />
-                    </propertyInstance>
-                    <elementDefinition Id="5c486745-7084-43ac-9497-fb489b39a335" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="42b0d180-0840-4df9-8270-d0ce69ee1b11">
-                    <propertyInstance Id="15edf2c3-3631-4b16-a8c0-18abcc9769da" name="IsPartial" value="false">
-                      <elementDefinition Id="23ec266e-78f6-42f9-bfbe-ff1e6cb1d46c" />
-                    </propertyInstance>
-                    <elementDefinition Id="0ed46111-fdbe-4d84-aa42-15df17079898" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="774fac40-a4ad-46b2-8f7d-99086d87be85">
-                    <propertyInstance Id="c9c65d83-3b39-4f33-8a5c-fb732774aaed" name="IsUnsafe" value="false">
-                      <elementDefinition Id="1180846c-57c9-48aa-844f-12bda30502ea" />
-                    </propertyInstance>
-                    <elementDefinition Id="29a86a86-a0b7-49ed-bb01-c775d7aa5d8f" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="83570267-58b5-4a84-a83f-1af36f28e594">
-                    <propertyInstance Id="b47f9411-b08c-468b-a8f1-a04cc6a77f9e" name="Inheritance" value="none">
-                      <elementDefinition Id="8d3f8106-36ef-46d7-a3ef-af91e7a9c4fd" />
-                    </propertyInstance>
-                    <elementDefinition Id="a0609d22-49db-4c56-89bf-4fc88275c6cc" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="8fa6a6e2-fa66-4484-98d1-24f9203a5413">
-                    <propertyInstance Id="1add9a4c-5378-422c-b4c9-66b2703d8e2b" name="PackageVisibility" value="internal">
-                      <elementDefinition Id="721a4ffb-7340-48b1-8fe1-59f08066e982" />
-                    </propertyInstance>
-                    <elementDefinition Id="8ee701ab-b078-43d3-a347-e112622c3ffa" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="c105b0ce-7bb4-43df-aa99-38ef4991ca46">
-                    <propertyInstance Id="737c62a9-4775-4994-839c-a59ca5340eb3" name="params" value="false">
-                      <elementDefinition Id="0924c613-16b2-4458-8eec-23ad2ff1283e" />
-                    </propertyInstance>
-                    <elementDefinition Id="5cb1366d-3ba8-4b40-b6d2-c77a400a56fa" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-            <elementDefinition Id="4d4cb59e-1b15-4a50-a03d-5d6e6ec594db" />
-          </operation>
-          <operation Id="1a065896-a276-4c93-913e-cbbc91781c54" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="5c5b4d6a-6be2-4244-872f-e97cb3921653" />
-          </operation>
-          <operation Id="4a1b4be0-5504-4fbd-b42a-517f3e8d7302" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="582d4a7e-cc07-4cac-b701-446ba9cd8c20" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -2487,12 +2423,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="e5157af2-440f-4efa-97b3-b2bef8aea4e8" />
-          </operation>
-          <operation Id="f7fa728c-930f-4f7e-8c6b-c6fd97e7f405" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="f0aac620-a1b0-42c4-ba38-436a104df275" />
-          </operation>
-          <operation Id="f73b5ddc-0c76-4fc0-9452-31a3f9930164" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="71bcfc53-c50c-49b0-9ba2-276de3f80c69" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -2957,12 +2887,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="d94910f4-98c1-4bec-94e7-131b2def1a7c" />
-          </operation>
-          <operation Id="8e28c3a3-61c5-46ea-96a3-09d7bac18a30" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="bff8338a-1f66-4fb4-894e-14ea72111b3d" />
-          </operation>
-          <operation Id="bb694880-3dd8-4d3e-8816-285f83a49713" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="30c3c84a-76dc-4aaa-9ce1-2c8cfe3837c4" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -3460,7 +3384,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="f04d8835-6d38-417b-b9df-766c2b99b085" name="Secuence" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="f04d8835-6d38-417b-b9df-766c2b99b085" name="SortedSecuence" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <appliedStereotypesInternal>
               <stereotypeInstance Id="9b818416-9f4e-4045-9769-1d1c9852d244" name="method" profile="CSharpProfile">
                 <elementDefinition Id="52c9c570-1ba8-4e07-b2e5-5df160784064" />
@@ -3507,13 +3431,13 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             <elementDefinition Id="8f99122b-9511-4d42-aa76-f193f3518fd8" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="e2b397e8-dd35-44e6-9081-552b5fa0c79a" name="Color[]" direction="In" isUnique="false">
-                  <elementDefinition Id="a2cf9c59-b338-461b-b147-3e8c8c839c67" />
+                <parameter Id="6bb7057b-9dee-4825-9e49-7db2f7393889" name="Color[]" direction="In" isUnique="false">
+                  <elementDefinition Id="ed44501f-3990-4910-ab5b-56abb64b9dad" />
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="88d9fc1e-720d-43ec-af0c-eea5eaf24ef5" name="time" direction="In" isUnique="false">
-                  <elementDefinition Id="1bea7d75-ad85-4038-a773-e7a8fa10c5ec" />
+                <parameter Id="7967ae97-03da-4fb9-84df-75851ea1d228" name="time" direction="In" isUnique="false">
+                  <elementDefinition Id="172c839a-af07-412e-9d76-327c11062f15" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -3621,12 +3545,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="1694225d-a9e4-45af-9eb1-5841348eaa85" />
-          </operation>
-          <operation Id="332d0c65-2df3-4c3c-962c-be41770635b1" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="7592372b-071d-4aec-be4b-d3ed31df39ee" />
-          </operation>
-          <operation Id="7f5ed650-3eea-4838-a421-2be89f114afc" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="167dd7d8-257f-443e-acb5-c6509c3722fc" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -3780,12 +3698,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="6d56bd06-ca4e-45fa-9f78-6f4e82c1bf62" />
-          </operation>
-          <operation Id="1e56d927-b746-4d89-9197-946f7a08febc" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="57417b98-1f01-4400-955a-adcb65a7cc42" />
-          </operation>
-          <operation Id="c4a86adf-58f9-45c4-9fb9-1cc0ed9425c5" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="0e8b39e1-cf33-4ea4-b36a-043e2d663866" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -3992,12 +3904,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             </appliedStereotypesInternal>
             <elementDefinition Id="264ce316-50eb-4443-8c66-2d1237a98958" />
           </operation>
-          <operation Id="6f33d0c3-2700-495a-b7e5-06172ee9f528" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="03da50e5-29e1-45b2-b75f-47503083d79a" />
-          </operation>
-          <operation Id="48b9c5cc-1583-4665-9583-cf05484bfe20" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="a62be295-cde5-4365-9f88-586d7c15ab82" />
-          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -4148,12 +4054,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             </appliedStereotypesInternal>
             <elementDefinition Id="d86558d3-66e4-430e-9670-c4f705f36559" />
           </operation>
-          <operation Id="c0d4afd4-6dd1-42d4-a345-ae7f1d1db877" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="71e4761e-6024-4b8a-8f57-f28f765dc14a" />
-          </operation>
-          <operation Id="9c21abc8-515b-4bba-b3e0-c8f9f82fc911" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="150368af-17a7-49a2-9c1d-ec7e3ffbfa70" />
-          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -4303,12 +4203,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="e0608ef8-284f-46af-a93e-460570e553d0" />
-          </operation>
-          <operation Id="bc0779dd-45a7-4392-bf33-471bf90478e3" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="62e1f170-332f-4398-81fb-d52b9681d69c" />
-          </operation>
-          <operation Id="31e3f016-816d-46c5-896e-a1469a617a61" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="63d74898-ac42-4a5c-96d2-ca3afae41ff0" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -4511,12 +4405,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
             <elementDefinition Id="7a4615d3-be42-4410-80a4-f54b69d8bc07" />
-          </operation>
-          <operation Id="83d676e1-20c3-4978-975d-25f0777fbb66" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="1eaec02d-8331-404b-9ac2-0acbece18f04" />
-          </operation>
-          <operation Id="21febdef-b740-4d24-826b-1571579ba788" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="97f2ef32-a8ee-425b-9fee-84bb84fa5503" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -4877,60 +4765,11 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
-          <operation Id="6eaf42a4-1398-4393-9648-45f1c1572f28" name="OpenDoor" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance Id="ba7a7fc5-c91e-41a9-a322-7c4a419f6d2a" name="method" profile="CSharpProfile">
-                <elementDefinition Id="3dc1fb27-c8b5-4d89-91e8-86c96f5b5dd9" />
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="7c063eaf-8a64-44b8-ab63-d3300d3e9fcb">
-                    <propertyInstance Id="d8e78b0d-26ee-42ae-9688-dcea75f55730" name="ClrAttributes">
-                      <elementDefinition Id="917dbb3e-4898-4849-be7b-c778f2bddb6f" />
-                    </propertyInstance>
-                    <elementDefinition Id="eb0d8d78-92e5-48a2-a856-d1f8671d8c1f" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="2f0873a0-d596-436f-b197-218658809923">
-                    <propertyInstance Id="608460cd-6d4e-41a5-a95c-67ff0b677b62" name="IsPartial" value="false">
-                      <elementDefinition Id="03e402e0-90b1-4302-895a-30eaa05533f3" />
-                    </propertyInstance>
-                    <elementDefinition Id="45a0a262-b439-4d09-8396-731e114a1cd5" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="d9af4740-6f5f-4932-8785-e49742d4efcc">
-                    <propertyInstance Id="07b27fca-30c1-4015-9b3a-3c8d0d1e4a0a" name="IsUnsafe" value="false">
-                      <elementDefinition Id="7ff355cc-a8c8-4155-9fec-2bb3c4cbed16" />
-                    </propertyInstance>
-                    <elementDefinition Id="6941b95a-a99d-444e-b247-9bdfa8ece9f1" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="29844845-8298-42ac-847d-ba5a71a262a2">
-                    <propertyInstance Id="b8108258-ca32-4b7b-9897-6738ae5004bf" name="Inheritance" value="none">
-                      <elementDefinition Id="54c51ffa-cac1-46cb-8f65-108f7878dcb5" />
-                    </propertyInstance>
-                    <elementDefinition Id="d5f0f09a-9ca0-4131-ad33-5694199249eb" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="b528d44e-fc4e-421c-bbf9-f575f2e58848">
-                    <propertyInstance Id="73bdcaab-b2ed-4c9a-87ca-4389b66c02d0" name="PackageVisibility" value="internal">
-                      <elementDefinition Id="17aafa03-c6ef-48f4-ae41-2248a52c1f94" />
-                    </propertyInstance>
-                    <elementDefinition Id="92871200-d053-4030-b849-6614e4bab794" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="dbf656c0-597e-466c-9e3a-88a0567e587b">
-                    <propertyInstance Id="d149a3d0-fc48-4d1a-ae36-2f3170f973fd" name="params" value="false">
-                      <elementDefinition Id="3ebc1782-6c8d-46ff-9660-fc7b02210dae" />
-                    </propertyInstance>
-                    <elementDefinition Id="4c65fe3f-97d0-4c00-b256-21401791f98f" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-            <elementDefinition Id="3e661807-37b2-4304-9d92-f4b5fd44bc0c" />
-          </operation>
           <operation Id="924a1779-fa9c-406d-81da-38a6cc33e89e" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="edbe03fe-eaf0-4a3a-a9aa-c63f8cb42f3b" />
           </operation>
-          <operation Id="274e68fa-0bde-4163-b1bd-fdd43c21e0f5" name="GetTypes" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="e4611cec-dd76-4ebe-971b-72aa3c378580" />
-          </operation>
-          <operation Id="5b87485f-a874-4153-af23-a87b332d8bcd" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="3b836dd5-1074-4acc-b69e-31257ea9119a" />
+          <operation Id="0f3f6940-7c79-4fbf-bd62-3fe4e49f92f7" name="OpenDoor" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="11e79eee-1259-40e7-9f1b-7dbf85ea0010" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -9368,6 +9207,15 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
                 </enumerationLiteral>
                 <enumerationLiteral Id="16c3bd77-110e-48e3-9513-4c531f271679" name="ExtensionCode">
                   <elementDefinition Id="77854698-b5d4-46ed-81e8-818d4a148478" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="22402522-4c67-4b9a-898e-371d7f7abf58" name="DimmableRead">
+                  <elementDefinition Id="baf7828e-d1a2-491b-aa4a-6427a3ed52d0" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="58be1c3b-b59d-42a0-985d-d9df58fc411d" name="DimmableReadResponse">
+                  <elementDefinition Id="0e2b4936-5289-4132-ae93-830d5a5225c1" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="048ec220-a8d3-491e-814a-c6f6d8e1855b" name="DimmableWrite">
+                  <elementDefinition Id="81606b5c-172c-4ba1-adf2-78b0a7566816" />
                 </enumerationLiteral>
               </ownedLiterals>
             </enumeration>
