@@ -361,11 +361,11 @@ namespace OperationUARTSender
             }
             else if (sender == buttonTemp)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TemperatureRead, Args = new byte[] { 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.TemperatureRead, Args = new byte[] { 0x02, 0x00 } });
             }
             else if (sender == buttonHum)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x02, 0x00 } });
             }
             else if (sender == buttonDateTime)
             {
@@ -424,6 +424,11 @@ namespace OperationUARTSender
             SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigRead, Args = new byte[] { } });
         }
 
+        private void buttonClean_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+        }
+
         void Form1_OperationReceived(object sender, EventArgs e)
         {
             Operation operation = sender as Operation;
@@ -478,7 +483,10 @@ namespace OperationUARTSender
                         "TEMPERATURE RECEIVED FROM 0x{0:X4} SENSOR {1}: {2}ºC" :
                         "HUMIDITY RECEIVED FROM 0x{0:X4} SENSOR {1}: {2}%";
 
-                    PrintMessage(String.Format(baseStr, operation.SourceAddress, operation.Args[0], operation.Args[1]));
+                    PrintMessage(String.Format(baseStr, 
+                        operation.SourceAddress, 
+                        (((ushort)operation.Args[1]) << 8 | operation.Args[0]), 
+                        operation.Args[2]));
                 }
             }
             else if (operation.OpCode == (byte)OPCode.ConfigChecksumResponse)
@@ -489,10 +497,10 @@ namespace OperationUARTSender
             }
             else if (operation.OpCode == (byte)OPCode.LogicReadResponse)
             {
-                PrintMessage(String.Format("LOGIC READ FROM 0x{0:X4} PORT_{1}: 0x{2:X2}",
+                PrintMessage(String.Format("LOGIC READ FROM 0x{0:X4}: 0x{1:X4} {2}",
                     operation.SourceAddress,
-                    (char)('A' + operation.Args[0]),
-                    operation.Args[1]));
+                    ((ushort)operation.Args[1]) << 8 | operation.Args[0],
+                    operation.Args[2] != 0));
             }
             else if (operation.OpCode == (byte)OPCode.DateTimeReadResponse)
             {
@@ -669,6 +677,5 @@ namespace OperationUARTSender
         }
 
         #endregion
-
     }
 }

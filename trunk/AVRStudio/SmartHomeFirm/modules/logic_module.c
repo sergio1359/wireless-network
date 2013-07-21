@@ -234,7 +234,7 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 				
 				currentElem->debouncerValue = val;
 			}
-		}
+		}//TODO: Revisar timer. Se ha cambiado el tiempo de refresco de 5 a 20 veces / segundo.
 		else// Timer check (Outputs)
 		{
 			if(currentElem->timerCounter > 1)
