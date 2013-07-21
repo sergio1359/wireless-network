@@ -49,6 +49,7 @@
             this.buttonSwitchTime = new System.Windows.Forms.Button();
             this.buttonShieldModel = new System.Windows.Forms.Button();
             this.buttonBaseModel = new System.Windows.Forms.Button();
+            this.buttonClean = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -130,7 +131,7 @@
             // 
             // textBoxConfigAddress
             // 
-            this.textBoxConfigAddress.Location = new System.Drawing.Point(263, 12);
+            this.textBoxConfigAddress.Location = new System.Drawing.Point(534, 13);
             this.textBoxConfigAddress.Name = "textBoxConfigAddress";
             this.textBoxConfigAddress.Size = new System.Drawing.Size(53, 20);
             this.textBoxConfigAddress.TabIndex = 4;
@@ -139,7 +140,7 @@
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(334, 11);
+            this.button7.Location = new System.Drawing.Point(605, 12);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(92, 22);
             this.button7.TabIndex = 5;
@@ -150,7 +151,7 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(530, 10);
+            this.button8.Location = new System.Drawing.Point(801, 11);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(92, 22);
             this.button8.TabIndex = 5;
@@ -161,7 +162,7 @@
             // button9
             // 
             this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(432, 10);
+            this.button9.Location = new System.Drawing.Point(703, 11);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(92, 22);
             this.button9.TabIndex = 5;
@@ -257,11 +258,23 @@
             this.buttonBaseModel.UseVisualStyleBackColor = true;
             this.buttonBaseModel.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
+            // buttonClean
+            // 
+            this.buttonClean.Enabled = false;
+            this.buttonClean.Location = new System.Drawing.Point(221, 10);
+            this.buttonClean.Name = "buttonClean";
+            this.buttonClean.Size = new System.Drawing.Size(75, 23);
+            this.buttonClean.TabIndex = 6;
+            this.buttonClean.Text = "Clean";
+            this.buttonClean.UseVisualStyleBackColor = true;
+            this.buttonClean.Click += new System.EventHandler(this.buttonClean_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(931, 341);
+            this.Controls.Add(this.buttonClean);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button7);
@@ -311,6 +324,7 @@
         private System.Windows.Forms.Button buttonSwitchTime;
         private System.Windows.Forms.Button buttonShieldModel;
         private System.Windows.Forms.Button buttonBaseModel;
+        private System.Windows.Forms.Button buttonClean;
     }
 }
 
