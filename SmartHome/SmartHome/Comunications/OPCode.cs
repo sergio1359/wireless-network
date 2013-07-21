@@ -43,9 +43,13 @@ namespace SmartHome.Comunications
         LogicRead,
         LogicReadResponse,
 
+        DimmerWrite = 0x46,
+        DimmerRead,
+        DimmerReadResponse,
+
         ColorWrite = 0x50,
         ColorWriteRandom,
-        ColorSecuenceWrite,
+        ColorRandomSecuenceWrite,
         ColorSortedSecuenceWrite,
         ColorRead,
         ColorReadResponse,

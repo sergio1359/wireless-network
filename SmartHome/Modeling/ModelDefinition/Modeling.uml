@@ -1989,22 +1989,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
-          <operation
-            Id="a5dca2f0-e58e-4322-a224-3ff1fd2a22b1"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="fe6c16b8-41bf-4b98-81b3-8bede293aa15"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -2741,22 +2725,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="de7801c9-a0b3-4918-b9bf-dc43e03d25ac"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="2fde3b53-49e1-4d0a-8ec8-6bf0a94fd186"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -2810,15 +2778,16 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             </propertyInstances>
           </stereotypeInstance>
         </appliedStereotypesInternal>
-        <suppliersInternal>
-          <interfaceRealization
-            Id="efd53fc6-595b-4cf7-b479-a08d65d6303d">
-            <interfaceMoniker
-              Id="85ae48ad-4431-44bf-9177-443e38a684e4"
-              LastKnownName="HomeDevice"
+        <generalsInternal>
+          <generalization
+            Id="cafa3bb4-170c-48d2-a7fe-08e0cfbaf5be"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ff861631-893e-4c32-9cc7-196d704d246a"
+              LastKnownName="Light"
               LastKnownLocation="Modeling.uml" />
-          </interfaceRealization>
-        </suppliersInternal>
+          </generalization>
+        </generalsInternal>
         <targetEnds>
           <association
             Id="6f318412-8fcc-4113-b563-4e2f7d04c7f8"
@@ -3177,81 +3146,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation
-            Id="4d4cb59e-1b15-4a50-a03d-5d6e6ec594db"
-            name="RefreshState"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="7bbfd909-2f68-4c54-b5d2-bac35da736b3"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="5c486745-7084-43ac-9497-fb489b39a335">
-                    <propertyInstance
-                      Id="656c3cac-55ec-4efb-82f2-0a0d4fb09b47"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="0ed46111-fdbe-4d84-aa42-15df17079898">
-                    <propertyInstance
-                      Id="23ec266e-78f6-42f9-bfbe-ff1e6cb1d46c"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="29a86a86-a0b7-49ed-bb01-c775d7aa5d8f">
-                    <propertyInstance
-                      Id="1180846c-57c9-48aa-844f-12bda30502ea"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="a0609d22-49db-4c56-89bf-4fc88275c6cc">
-                    <propertyInstance
-                      Id="8d3f8106-36ef-46d7-a3ef-af91e7a9c4fd"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="8ee701ab-b078-43d3-a347-e112622c3ffa">
-                    <propertyInstance
-                      Id="721a4ffb-7340-48b1-8fe1-59f08066e982"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="5cb1366d-3ba8-4b40-b6d2-c77a400a56fa">
-                    <propertyInstance
-                      Id="0924c613-16b2-4458-8eec-23ad2ff1283e"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
-            Id="5c5b4d6a-6be2-4244-872f-e97cb3921653"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="582d4a7e-cc07-4cac-b701-446ba9cd8c20"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -3690,22 +3584,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="f0aac620-a1b0-42c4-ba38-436a104df275"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="71bcfc53-c50c-49b0-9ba2-276de3f80c69"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -4322,22 +4200,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="bff8338a-1f66-4fb4-894e-14ea72111b3d"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="30c3c84a-76dc-4aaa-9ce1-2c8cfe3837c4"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5000,7 +4862,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           </operation>
           <operation
             Id="8f99122b-9511-4d42-aa76-f193f3518fd8"
-            name="Secuence"
+            name="SortedSecuence"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -5059,14 +4921,14 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="a2cf9c59-b338-461b-b147-3e8c8c839c67"
+                  Id="ed44501f-3990-4910-ab5b-56abb64b9dad"
                   name="Color[]"
                   direction="In"
                   isUnique="false" />
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="1bea7d75-ad85-4038-a773-e7a8fa10c5ec"
+                  Id="172c839a-af07-412e-9d76-327c11062f15"
                   name="time"
                   direction="In"
                   isUnique="false" />
@@ -5207,22 +5069,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="7592372b-071d-4aec-be4b-d3ed31df39ee"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="167dd7d8-257f-443e-acb5-c6509c3722fc"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5427,22 +5273,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="57417b98-1f01-4400-955a-adcb65a7cc42"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="0e8b39e1-cf33-4ea4-b36a-043e2d663866"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5716,22 +5546,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="03da50e5-29e1-45b2-b75f-47503083d79a"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="a62be295-cde5-4365-9f88-586d7c15ab82"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -5925,22 +5739,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="71e4761e-6024-4b8a-8f57-f28f765dc14a"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="150368af-17a7-49a2-9c1d-ec7e3ffbfa70"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6134,22 +5932,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="62e1f170-332f-4398-81fb-d52b9681d69c"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="63d74898-ac42-4a5c-96d2-ca3afae41ff0"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -6412,22 +6194,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </operation>
-          <operation
-            Id="1eaec02d-8331-404b-9ac2-0acbece18f04"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="97f2ef32-a8ee-425b-9fee-84bb84fa5503"
-            name="OperationsProtocol"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -7841,65 +7607,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
-            Id="3e661807-37b2-4304-9d92-f4b5fd44bc0c"
-            name="OpenDoor"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <appliedStereotypesInternal>
-              <stereotypeInstance
-                Id="3dc1fb27-c8b5-4d89-91e8-86c96f5b5dd9"
-                name="method"
-                profile="CSharpProfile">
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="eb0d8d78-92e5-48a2-a856-d1f8671d8c1f">
-                    <propertyInstance
-                      Id="917dbb3e-4898-4849-be7b-c778f2bddb6f"
-                      name="ClrAttributes" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="45a0a262-b439-4d09-8396-731e114a1cd5">
-                    <propertyInstance
-                      Id="03e402e0-90b1-4302-895a-30eaa05533f3"
-                      name="IsPartial"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="6941b95a-a99d-444e-b247-9bdfa8ece9f1">
-                    <propertyInstance
-                      Id="7ff355cc-a8c8-4155-9fec-2bb3c4cbed16"
-                      name="IsUnsafe"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="d5f0f09a-9ca0-4131-ad33-5694199249eb">
-                    <propertyInstance
-                      Id="54c51ffa-cac1-46cb-8f65-108f7878dcb5"
-                      name="Inheritance"
-                      value="none" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="92871200-d053-4030-b849-6614e4bab794">
-                    <propertyInstance
-                      Id="17aafa03-c6ef-48f4-ae41-2248a52c1f94"
-                      name="PackageVisibility"
-                      value="internal" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances
-                    Id="4c65fe3f-97d0-4c00-b256-21401791f98f">
-                    <propertyInstance
-                      Id="3ebc1782-6c8d-46ff-9660-fc7b02210dae"
-                      name="params"
-                      value="false" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-          </operation>
-          <operation
             Id="edbe03fe-eaf0-4a3a-a9aa-c63f8cb42f3b"
             name="RefreshState"
             isLeaf="false"
@@ -7908,16 +7615,8 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             concurrency="Sequential"
             isQuery="false" />
           <operation
-            Id="e4611cec-dd76-4ebe-971b-72aa3c378580"
-            name="GetTypes"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="3b836dd5-1074-4acc-b69e-31257ea9119a"
-            name="OperationsProtocol"
+            Id="11e79eee-1259-40e7-9f1b-7dbf85ea0010"
+            name="OpenDoor"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"

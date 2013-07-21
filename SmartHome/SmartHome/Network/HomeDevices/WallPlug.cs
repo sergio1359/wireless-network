@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    public class WallPlug: HomeDevice
+    public class WallPlug: Light
     {
         public enum WallPlugType
         {
@@ -20,14 +20,10 @@ namespace SmartHome.Network.HomeDevices
             None,
         }
         
-        public bool Active { get; set; }
         public WallPlugType Type { get; set; }
-        
 
-        public void On(){}
-        public void Off(){}
-        public void ONTime() { }
-        public void Switch() { }
+        public WallPlug(string name) : base(name) { }
+
         public override void RefreshState()
         {
             base.RefreshState();

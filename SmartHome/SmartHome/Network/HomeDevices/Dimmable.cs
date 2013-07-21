@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    class Dimmable: HomeDevice
+    class Dimmable : HomeDevice
     {
         public enum DimmableType
         {
@@ -15,16 +15,62 @@ namespace SmartHome.Network.HomeDevices
             Other,
         }
 
-        public int Value { get; set; } //it's a value between 0 to 100
-        public int LastValue { get; set; }
+        private int value;
+        public int Value
+        {
+            get
+            {
+                return this.value;
+            }
+            set
+            {
+                lastValue = this.value;
+                this.value = value;
+            }
+        } //it's a value between 0 to 100
+        private int lastValue;
+
         public DimmableType Type { get; set; }
 
 
-        public void On() { }
-        public void Off() { }
-        public void ONTime() { }
-        public void Switch() { }
-        public void PercentageDimmer(int percentage) { }
+        public void On()
+        {
+            PercentageDimmer(100);
+        }
+
+        public void Off()
+        {
+            PercentageDimmer(0);
+        }
+
+        public void OnTime(byte seconds)
+        {
+            PercentageDimmer(100, seconds);
+        }
+
+        public void Switch()
+        {
+            if (Value != 0)
+            {
+                Off();
+            }
+            else
+            {
+                PercentageDimmer(lastValue);
+            }
+        }
+
+        public void PercentageDimmer(int percentage)
+        {
+            PercentageDimmer(percentage, 0);
+        }
+
+        public void PercentageDimmer(int percentage, byte seconds)
+        {
+            DimmerWrite((byte)(percentage * byte.MaxValue / 100.0), 0);
+            //Value = percentage;
+        }
+
         public override void RefreshState()
         {
             base.RefreshState();
