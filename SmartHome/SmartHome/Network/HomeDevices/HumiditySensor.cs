@@ -10,6 +10,12 @@ namespace SmartHome.Network.HomeDevices
     {
         public int Humidity { get; set; }
 
+        public HumiditySensor(string name)
+            : base(name)
+        {
+            base.Operations = new List<Operation>();
+        }
+
         public override void RefreshState()
         {
             base.RefreshState();

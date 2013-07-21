@@ -48,5 +48,10 @@ namespace SmartHome.Products
             var p1 = obj as PinPort;
             return p1 != null && p1.Pin == this.Pin && p1.Port == this.Port;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
