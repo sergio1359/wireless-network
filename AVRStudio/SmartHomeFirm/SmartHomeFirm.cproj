@@ -29,13 +29,13 @@
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>31420</port>
+        <port>4207</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
         <InterfaceName>JTAG</InterfaceName>
         <InterfaceProperties>
-          <JtagDbgClock>150000</JtagDbgClock>
+          <JtagDbgClock>200000</JtagDbgClock>
           <JtagProgClock>1000000</JtagProgClock>
           <IspClock>150000</IspClock>
           <JtagInChain>false</JtagInChain>
@@ -251,6 +251,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="modules\inc\network_module.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\inc\presence_module.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\inc\temhum_module.h">
       <SubType>compile</SubType>
     </Compile>
@@ -261,6 +264,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\network_module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\presence_module.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\temhum_module.c">

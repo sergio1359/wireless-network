@@ -32,6 +32,7 @@ LOGIC_ELEM_t logic_elems[MAX_LOGIC_DEVICES];
 uint8_t num_of_logic_elems;
 
 SYS_Timer_t logicTimer;
+uint8_t timerDivider;
 
 _Bool proccessDigitalPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static void logicTimerHandler(SYS_Timer_t *timer);
@@ -63,10 +64,10 @@ void logicModule_Init()
 			HAL_GPIO_PORT_out(portPtr, mask);
 			
 			if(configPtr->configBits.defaultValue)
-				HAL_GPIO_PORT_set(portPtr, mask);
+			HAL_GPIO_PORT_set(portPtr, mask);
 			else
-				HAL_GPIO_PORT_clr(portPtr,mask);
-				
+			HAL_GPIO_PORT_clr(portPtr,mask);
+			
 		}else
 		{
 			HAL_GPIO_PORT_in(portPtr, mask);
@@ -83,6 +84,8 @@ void logicModule_Init()
 	logicResponse.header.opCode = LogicReadResponse;
 	
 	//Configure Timer
+	timerDivider = 0;
+	
 	logicTimer.interval = 50; // 20 times per second
 	logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	logicTimer.handler = logicTimerHandler;
@@ -134,50 +137,45 @@ uint8_t findLogicElem(uint16_t deviceAddress)
 	
 	return 0xFF;//Address not found
 }
-
+LOGIC_ELEM_t* currentElem;
 _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
 {
 	uint8_t configIndex = findLogicElem(deviceAddress);
-	LOGIC_CONFIG_t* configPtr;
-	uint8_t* portPtr;
-	uint8_t  mask;
-	
+
 	if(configIndex == 0xFF) //UNKNOWN DEVICE ADDRESS
 	return false;
 	
-	configPtr = logic_elems[configIndex].config;
-	portPtr = logic_elems[configIndex].portPtr;
-	mask = logic_elems[configIndex].mask;
-	
-	if( (read && (configPtr->configBits.maskIO)) || (!read && (~configPtr->configBits.maskIO)) ) //INVALID OPERATION
-		return false;
+	currentElem = &logic_elems[configIndex];
 	
 	if(read)
 	{
 		logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		logicResponse.header.destinationAddress = sourceAddress;
 		logicResponse.response.address = deviceAddress;
-		logicResponse.response.value = logic_elems[configIndex].lastValue;
+		logicResponse.response.value = currentElem->lastValue;
 		
 		OM_ProccessResponseOperation(&logicResponse.header);
 	}
 	else
 	{
+		if( currentElem->config->configBits.maskIO == 0 ) //If is Input -> INVALID OPERATION
+		return false;
+		
 		if(value == 0xFF)//Switch action
 		{
-			value = ~HAL_GPIO_PORT_read(portPtr, mask);
+			HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
 		}else
 		{
 			if(value)
-				HAL_GPIO_PORT_set(portPtr, mask);
+			HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
 			else
-				HAL_GPIO_PORT_clr(portPtr, mask);
+			HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
 		}
-		
+
 		if(seconds > 0)
-			logic_elems->timerCounter = (uint16_t)seconds*5; //Enable timer
+			currentElem->timerCounter = (uint16_t)seconds*5; //Enable timer
 		else
-			logic_elems->timerCounter = 0; //Disable timer
+			currentElem->timerCounter = 0; //Disable timer
 	}
 	
 	return true;
@@ -190,63 +188,63 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 		LOGIC_ELEM_t* currentElem = &logic_elems[i];
 		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfo;
 		LOGIC_BITS_CONFIG_t* configBitsPtr = &currentElem->config->configBits;
-		
-		if( ~configBitsPtr->maskIO )	//Read if input
+
+		_Bool changeOcurred = 0;
+		uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
+				
+		//Debouncer
+		if(val == currentElem->debouncerValue)//Valid value
 		{
-			if ( configBitsPtr->changeType != NO_EDGE )		//AND ChangeType != NONE
+			//Check changes for inputs with changeType distinct of NO_EDGE
+			if (configBitsPtr->maskIO == 0 && configBitsPtr->changeType != NO_EDGE )
 			{
-				_Bool changeOcurred = 0;
-				uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
-				
-				//Debouncer
-				if(val == currentElem->debouncerValue)//Valid value
+				//Check for valid changes
+				switch(configBitsPtr->changeType)
 				{
-					//Check for valid changes
-					switch(configBitsPtr->changeType)
-					{
-						case FALLING_EDGE:	changeOcurred = (  currentElem->lastValue & ~val ); break;
-						case RISIN_EDGE:	changeOcurred = ( ~currentElem->lastValue &  val ); break;
-						case BOTH_EDGE:		changeOcurred = (  currentElem->lastValue != val ); break;
-					}
-					
-					currentElem->lastValue = val;
-					
-					if(changeOcurred)
-					{
-						//TODO: USE OPERATION MANAGER!
-						OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
-						for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
-						{
-							OM_ProccessInternalOperation(operationPtr, false);
-							operationPtr++;
-						}
-						
-						
-						//Send to coordinator
-						logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-						logicResponse.header.destinationAddress = COORDINATOR_ADDRESS;
-						logicResponse.response.address = currentElem->config->deviceID;
-						logicResponse.response.value = val;
-						
-						OM_ProccessResponseOperation(&logicResponse.header);
-					}
+					case FALLING_EDGE:	changeOcurred = (  currentElem->lastValue & ~val ); break;
+					case RISIN_EDGE:	changeOcurred = ( ~currentElem->lastValue &  val ); break;
+					case BOTH_EDGE:		changeOcurred = (  currentElem->lastValue != val ); break;
 				}
-				
-				currentElem->debouncerValue = val;
+					
+				if(changeOcurred)
+				{
+					//TODO: USE OPERATION MANAGER!
+					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
+					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
+					{
+						OM_ProccessInternalOperation(operationPtr, false);
+						operationPtr++;
+					}
+						
+						
+					//Send to coordinator
+					logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+					logicResponse.header.destinationAddress = COORDINATOR_ADDRESS;
+					logicResponse.response.address = currentElem->config->deviceID;
+					logicResponse.response.value = val;
+						
+					OM_ProccessResponseOperation(&logicResponse.header);
+				}
 			}
-		}//TODO: Revisar timer. Se ha cambiado el tiempo de refresco de 5 a 20 veces / segundo.
-		else// Timer check (Outputs)
+					
+			currentElem->lastValue = val;					
+		}
+				
+		currentElem->debouncerValue = val;
+		
+		//If is OUTPUT Check TimerToggle
+		if( configBitsPtr->maskIO == 1 && timerDivider++ == 3) //4 * 50ms = 200 ms
 		{
+			timerDivider = 0;
+			
+			// Timer check (Outputs)
 			if(currentElem->timerCounter > 1)
 			{
 				currentElem->timerCounter--;
 			}else if(currentElem->timerCounter == 1) //Time to proccess
 			{
 				//Invert current value
-				if(currentElem->lastValue)
-					HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
-				else
-					HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
+				HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
 				
 				currentElem->timerCounter = 0; //Disable timer
 			}

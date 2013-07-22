@@ -306,7 +306,7 @@ namespace OperationUARTSender
         {
             if (button1.Text == "Open")
             {
-                if (comboBox1.SelectedIndex > 0)
+                if (comboBox1.SelectedIndex > -1)
                 {
                     serial.BaudRate = 38400;
                     serial.PortName = comboBox1.Text;
@@ -345,15 +345,15 @@ namespace OperationUARTSender
         {
             if (sender == buttonDigSwitch)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicSwitch, Args = new byte[] { 0x03, 0x40, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x00 } });
             }
             else if (sender == buttonSwitchTime)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicSwitch, Args = new byte[] { 0x03, 0x40, 0x02 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x02 } });
             }
             else if (sender == buttonDigRead)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicRead, Args = new byte[] { 0x03, 0x40 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.LogicRead, Args = new byte[] { 0x01, 0x00 } });
             }
             else if (sender == buttonCheckSum)
             {
@@ -504,13 +504,13 @@ namespace OperationUARTSender
             }
             else if (operation.OpCode == (byte)OPCode.DateTimeReadResponse)
             {
-                string DateStr = String.Format("{1}  {2:d2}/{3:d2}/{4:d4}",
+                string DateStr = String.Format("{0}  {1:d2}/{2:d2}/{3:d4}",
                     Enum.GetName(typeof(DayOfWeeks), (object)operation.Args[0]),
                     operation.Args[1],
                     operation.Args[2],
                     ((ushort)operation.Args[4]) << 8 | operation.Args[3]);
 
-                string TimeStr = String.Format(" {1:d2}:{2:d2}:{3:d2}",
+                string TimeStr = String.Format(" {0:d2}:{1:d2}:{2:d2}",
                     operation.Args[5],
                     operation.Args[6],
                     operation.Args[7]);
