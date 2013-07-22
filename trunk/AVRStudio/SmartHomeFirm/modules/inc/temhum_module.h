@@ -11,7 +11,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "configManager.h"
 
 #define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
 

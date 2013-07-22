@@ -26,10 +26,10 @@ X(BaseModelReadResponse,		0x06, configSystem_Handler,		BASE_MODEL_READ_RESPONSE_
 X(ConfigWrite,					0x07, configWrite_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				true)	\
 X(ConfigWriteResponse,			0x08, configWrite_Handler,		CONFIG_WRITE_RESPONSE_MESSAGE_t,			false)	\
 X(ConfigRead,					0x09, configRead_Handler,		CONFIG_READ_MESSAGE_t,						false)	\
-X(ConfigReadResponse,			0x10, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,		true)	\
-X(ConfigReadConfirmation,		0x11, configRead_Handler,		CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
-X(ConfigChecksum,				0x12, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,					false)	\
-X(ConfigChecksumResponse,		0x13, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
+X(ConfigReadResponse,			0x0A, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,		true)	\
+X(ConfigReadConfirmation,		0x0B, configRead_Handler,		CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
+X(ConfigChecksum,				0x0C, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,					false)	\
+X(ConfigChecksumResponse,		0x0D, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
 
 //SYSTEM
 typedef struct

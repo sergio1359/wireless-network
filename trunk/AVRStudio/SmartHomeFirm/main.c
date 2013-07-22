@@ -231,21 +231,6 @@ int main(void)
 	{
 		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");
 	}
-	/*
-	HAL_GPIO_PD6_out();
-	HAL_GPIO_PB6_in();
-	while(1)
-	{
-		if(HAL_GPIO_PB6_read())
-		{
-			HAL_GPIO_PD6_set();
-			ledOn(0);
-		}else
-		{
-			HAL_GPIO_PD6_clr();
-			ledOff(0);
-		}						
-	}*/
 	
 	#ifdef APP_ENABLE_OTA_SERVER
 	OTA_ServerInit();

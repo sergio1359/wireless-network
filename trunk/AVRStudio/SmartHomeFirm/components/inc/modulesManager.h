@@ -18,6 +18,7 @@
 #include "config_module.h"
 #include "time_module.h"
 #include "temhum_module.h"
+#include "presence_module.h"
 
 #define EXTENSION_OPCODE 0xFF
 
@@ -27,6 +28,7 @@ NETWORK_MODULE_DEFINITION \
 CONFIG_MODULE_DEFINITION  \
 TIME_MODULE_DEFINITION	  \
 TEMHUM_MODULE_DEFINITION  \
+PRESENCE_MODULE_DEFINITION  \
 
 #define X(a, b, c) a,
 typedef enum MODULES_ID {
@@ -41,6 +43,7 @@ COMMANDS_TABLE_NETWORK  \
 COMMANDS_TABLE_CONFIG   \
 COMMANDS_TABLE_TIME		\
 COMMANDS_TABLE_TEMHUM   \
+COMMANDS_TABLE_PRESENCE \
 
 #define X(a, b, c, d, e) a = b,
 typedef enum COMMAND_OPCODES {

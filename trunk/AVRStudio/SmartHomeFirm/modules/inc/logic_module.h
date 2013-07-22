@@ -26,7 +26,6 @@ X(LogicReadResponse,	0x43, logic_Handler, LOGIC_READ_RESPONSE_MESSAGE_t,	false)	
 typedef struct
 {
 	uint16_t address;
-	uint8_t mask;
 	uint8_t value;
 	uint8_t seconds;
 }LOGIC_WRITE_MESSAGE_t;
@@ -34,7 +33,6 @@ typedef struct
 typedef struct
 {
 	uint16_t address;
-	uint8_t mask;
 	uint8_t seconds;
 }LOGIC_SWITCH_MESSAGE_t;
 

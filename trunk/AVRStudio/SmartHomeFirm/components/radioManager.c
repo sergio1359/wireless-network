@@ -91,7 +91,7 @@ _Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body,
 	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize);
 }
 
-inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize)
+_Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize)
 {
 	if(freeSpace(copiesMessages_Buffer.start, copiesMessages_Buffer.end, COPIES_BUFFER_SIZE) >= (size + bodySize))
 	{
@@ -138,7 +138,7 @@ _Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message)
 
 /*****************************************************************************
 *****************************************************************************/
-inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size)
+unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size)
 {
 	if(start <= end)
 		return size - (end - start);

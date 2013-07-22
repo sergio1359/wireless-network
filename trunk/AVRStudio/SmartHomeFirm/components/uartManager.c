@@ -35,7 +35,6 @@ inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* data, u
 inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size);
 
 
-
 void HAL_UartBytesReceived(uint16_t bytes)
 {
 	uint8_t byte;
@@ -143,7 +142,7 @@ void USART_SendOperationWithBody(INPUT_UART_HEADER_t* input_header, OPERATION_HE
 	sendMagicPackage(input_header, (uint8_t*) operation_header, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&operation_header->opCode) - bodySize, bodyPtr, bodySize);
 }
 
-inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size)
+uint8_t sendMagicSegment(uint8_t* data, uint8_t size)
 {
 	uint8_t cs = 0;
 	
@@ -161,7 +160,7 @@ inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size)
 	return cs;
 }
 
-inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* operation, uint8_t operationSize, uint8_t* body, uint8_t bodySize)
+void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* operation, uint8_t operationSize, uint8_t* body, uint8_t bodySize)
 {
 	uint8_t cs = 0;
 
