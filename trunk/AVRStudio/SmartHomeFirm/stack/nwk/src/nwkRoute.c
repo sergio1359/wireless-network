@@ -272,4 +272,22 @@ void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length)
 	length = writeIndex;			
 }
 
+/*****************************************************************************
+*****************************************************************************/
+void NWK_CopyNeighboursTable(uint8_t* buffer, uint8_t length)
+{
+	uint8_t writeIndex = 0;
+	//TODO: COPY ONLY VALID ENTRIES
+	for (uint8_t i = 0; i < NWK_ROUTE_TABLE_SIZE; i++)
+	{
+		if (nwkRouteTable[i].dst != NWK_ROUTE_UNKNOWN && nwkRouteTable[i].dst == nwkRouteTable[i].nextHop)
+		{
+			memcpy((uint8_t*)&buffer[writeIndex],(uint8_t*)&nwkRouteTable[i], sizeof(NwkRouteTableRecord_t));
+			writeIndex+= sizeof(NwkRouteTableRecord_t);
+		}
+	}
+	
+	length = writeIndex;
+}
+
 #endif // NWK_ENABLE_ROUTING

@@ -34,7 +34,7 @@ typedef struct
 	unsigned int routing  : 1;
 	unsigned int security : 1;
 	uint16_t nextHop;
-	uint8_t rssi;
+	int8_t rssi;
 }INPUT_UART_HEADER_t;
 
 typedef struct

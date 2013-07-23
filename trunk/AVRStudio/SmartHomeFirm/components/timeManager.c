@@ -10,9 +10,35 @@
 #include "modulesManager.h"
 #include "operationsManager.h"
 
+#include "sysTimer.h"
+
 TIME_OPERATION_HEADER_t* time_operation_header;
 
+struct
+{
+	OPERATION_HEADER_t header;
+	TIME_READ_MESSAGE_t request;
+}timeSyncRequest;
+
+uint8_t timeSyncCounter;
+SYS_Timer_t timeSyncTimer;
+
 void searchFirstTimeOperation();
+static void timeSyncTimerHandler(SYS_Timer_t *timer);
+
+void TIME_Init()
+{
+	RTC_Init();
+	
+	timeSyncCounter = 0;
+	timeSyncRequest.header.opCode = DateTimeRead;
+	
+	//Configure Timer
+	timeSyncTimer.interval = 1000;
+	timeSyncTimer.mode = SYS_TIMER_PERIODIC_MODE;
+	timeSyncTimer.handler = timeSyncTimerHandler;
+	//SYS_TimerStart(&timeSyncTimer);
+}
 
 void TIME_ValidateTime(TIME_t *receivedTime)
 {
@@ -97,5 +123,22 @@ void searchFirstTimeOperation()
 	if(operation_ptr >= TIME_OPERATION_LIST_END_ADDRESS)
 	{
 		time_operation_header = (TIME_OPERATION_HEADER_t*)&runningConfiguration.raw[TIME_OPERATION_LIST_START_ADDRESS];
+	}
+}
+
+static void timeSyncTimerHandler(SYS_Timer_t *timer)
+{
+	if(!VALID_DATETIME)
+	{
+		if(timeSyncCounter > 0)
+		{
+			timeSyncCounter--;	
+		}else
+		{
+			//TODO: Send TimeSyncRequest
+			//timeSyncRequest.header.destinationAddress = nodeAddress;
+			//timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+			//Radio_AddMessageByReference(timeSyncRequest.header);
+		}			
 	}
 }

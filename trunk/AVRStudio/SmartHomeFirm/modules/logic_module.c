@@ -58,7 +58,6 @@ void logicModule_Init()
 		portPtr = PORT_FROM_PINADDRESS(configPtr->pinAddress);
 		mask = MASK_FROM_PINADDRESS(configPtr->pinAddress);
 
-
 		if(configPtr->configBits.maskIO) //Output
 		{
 			HAL_GPIO_PORT_out(portPtr, mask);
@@ -137,7 +136,7 @@ uint8_t findLogicElem(uint16_t deviceAddress)
 	
 	return 0xFF;//Address not found
 }
-LOGIC_ELEM_t* currentElem;
+
 _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
 {
 	uint8_t configIndex = findLogicElem(deviceAddress);
@@ -145,7 +144,7 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 	if(configIndex == 0xFF) //UNKNOWN DEVICE ADDRESS
 	return false;
 	
-	currentElem = &logic_elems[configIndex];
+	LOGIC_ELEM_t* currentElem = &logic_elems[configIndex];
 	
 	if(read)
 	{

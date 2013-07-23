@@ -60,7 +60,7 @@ namespace OperationUARTSender
 
             NextHop = (ushort)((((ushort)buffer[2]) << 8) | (ushort)buffer[1]);
 
-            RSSI = buffer[3];
+            RSSI = (sbyte)buffer[3];
 
             Content.FromBinary(buffer, 4);
         }

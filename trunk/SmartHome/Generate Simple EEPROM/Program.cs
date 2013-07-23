@@ -130,12 +130,15 @@ namespace Generate_Simple_EEPROM
 
             NetworkManager.HomeDevices.Add(new Button("Botón Placa0"));
             NetworkManager.HomeDevices.Add(new Light("Led0"));
-            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor"));
-            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor"));
-            NetworkManager.HomeDevices.Add(new Button("PresenceSensor"));
+            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor0"));
+            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor0"));
+            NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor0"));
 
             NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
             NetworkManager.HomeDevices.Add(new Light("Led1"));
+            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor1"));
+            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor1"));
+            NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor1"));
 
             //IDS HomeDevices
             for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
@@ -156,6 +159,9 @@ namespace Generate_Simple_EEPROM
             //Node1
             NetworkManager.Nodes[1].Connectors[0].HomeDevice = NetworkManager.HomeDevices[5];
             NetworkManager.Nodes[1].Connectors[1].HomeDevice = NetworkManager.HomeDevices[6];
+            NetworkManager.Nodes[1].Connectors[2].HomeDevice = NetworkManager.HomeDevices[7];
+            NetworkManager.Nodes[1].Connectors[3].HomeDevice = NetworkManager.HomeDevices[8];
+            NetworkManager.Nodes[1].Connectors[4].HomeDevice = NetworkManager.HomeDevices[9];
 
             NetworkManager.Nodes[1].Address = 0x4004;
 
@@ -169,11 +175,11 @@ namespace Generate_Simple_EEPROM
                 }
             }
 
-            //Actions 0->1
+            //Operations 0->1
             NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
-                Args = new byte[] { 0x03, 0x00 }, //Harcondig: IDHomeDev, Time = 0
+                Args = new byte[] { 0x06, 0x00, 0x00 }, //Harcondig: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
             });
 
@@ -181,7 +187,7 @@ namespace Generate_Simple_EEPROM
             NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
-                Args = new byte[] { 0x01, 0x00 }, //Hardconding: IDHomeDev, Time = 0
+                Args = new byte[] { 0x01, 0x00, 0x00 }, //Hardconding: IDHomeDev, Time = 0
                 DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
             });
 

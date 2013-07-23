@@ -49,9 +49,9 @@ uint8_t num_of_hum_elems;
 
 DHT11_Read_t DHT11Result;
 
-SYS_Timer_t sensorReadTimer;
+SYS_Timer_t tempHumReadTimer;
 
-static void sensorReadTimerHandler(SYS_Timer_t *timer);
+static void tempHumReadTimerHandler(SYS_Timer_t *timer);
 uint8_t findTempElem(uint16_t deviceAddress);
 uint8_t findHumElem(uint16_t deviceAddress);
 
@@ -101,10 +101,10 @@ void temHumModule_Init(void)
 	humidityResponse.header.opCode = HumidityReadResponse; 
 	 
 	//Configure Timer 
-	sensorReadTimer.interval = 1000;
-	sensorReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
-	sensorReadTimer.handler = sensorReadTimerHandler;
-	SYS_TimerStart(&sensorReadTimer);
+	tempHumReadTimer.interval = 1000;
+	tempHumReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
+	tempHumReadTimer.handler = tempHumReadTimerHandler;
+	SYS_TimerStart(&tempHumReadTimer);
 }
 
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -193,7 +193,7 @@ uint8_t findHumElem(uint16_t deviceAddress)
 	return 0xFF;
 }
 
-static void sensorReadTimerHandler(SYS_Timer_t *timer)
+static void tempHumReadTimerHandler(SYS_Timer_t *timer)
 {	
 	for(uint8_t i = 0; i < num_of_temp_elems; i++)
 	{

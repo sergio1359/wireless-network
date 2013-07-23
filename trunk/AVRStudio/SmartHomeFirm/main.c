@@ -179,9 +179,11 @@ static void APP_TaskHandler(void)
 	if(!initialized)
 	{
 		appInit();
-	}else if(sendFlag){
-		appSendData();
-	}
+	}else
+	{
+		if(sendFlag)
+			appSendData();
+	}	
 }
 
 /*****************************************************************************
@@ -192,11 +194,11 @@ int main(void)
 	
 	HAL_UartInit(38400);
 	
-	RTC_Init();
+	TIME_Init();
 	
 	CONFIG_Init();
 	
-	TIME_t debugTime;
+	/*TIME_t debugTime;
 	debugTime.hour = 00;
 	debugTime.minute = 00;
 	debugTime.second = 00;
@@ -208,7 +210,7 @@ int main(void)
 	debugDate.day = 31;
 	debugDate.month = 5;
 	debugDate.year = 2013;
-	TIME_ValidateDate(&debugDate, &debugWeek);
+	TIME_ValidateDate(&debugDate, &debugWeek);*/
 	
 	if(DS2401_Init())
 	{
