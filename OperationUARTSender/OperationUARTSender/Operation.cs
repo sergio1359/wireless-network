@@ -36,5 +36,20 @@ namespace OperationUARTSender
             Args = new byte[buffer.Length - 5 - offset];
             Buffer.BlockCopy(buffer, 5 + offset, Args, 0, Args.Length);
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("FROM: 0x{0:X4}   TO: 0x{1:X4}   OPCODE: 0x{2:X2}   ARGS: ",
+                this.SourceAddress,
+                this.DestinationAddress,
+                this.OpCode);
+            foreach (byte b in this.Args)
+            {
+                sb.AppendFormat("0x{0:X2} ", b);
+            }
+
+            return sb.ToString();
+        }
     }
 }

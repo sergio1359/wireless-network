@@ -50,6 +50,7 @@
             this.buttonShieldModel = new System.Windows.Forms.Button();
             this.buttonBaseModel = new System.Windows.Forms.Button();
             this.buttonClean = new System.Windows.Forms.Button();
+            this.buttonPresence = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -195,7 +196,7 @@
             // buttonCheckSum
             // 
             this.buttonCheckSum.Enabled = false;
-            this.buttonCheckSum.Location = new System.Drawing.Point(815, 172);
+            this.buttonCheckSum.Location = new System.Drawing.Point(820, 227);
             this.buttonCheckSum.Name = "buttonCheckSum";
             this.buttonCheckSum.Size = new System.Drawing.Size(99, 37);
             this.buttonCheckSum.TabIndex = 3;
@@ -269,6 +270,17 @@
             this.buttonClean.UseVisualStyleBackColor = true;
             this.buttonClean.Click += new System.EventHandler(this.buttonClean_Click);
             // 
+            // buttonPresence
+            // 
+            this.buttonPresence.Enabled = false;
+            this.buttonPresence.Location = new System.Drawing.Point(820, 172);
+            this.buttonPresence.Name = "buttonPresence";
+            this.buttonPresence.Size = new System.Drawing.Size(99, 37);
+            this.buttonPresence.TabIndex = 3;
+            this.buttonPresence.Text = "PRESENCE";
+            this.buttonPresence.UseVisualStyleBackColor = true;
+            this.buttonPresence.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,6 +299,7 @@
             this.Controls.Add(this.buttonBaseModel);
             this.Controls.Add(this.buttonShieldModel);
             this.Controls.Add(this.buttonFirm);
+            this.Controls.Add(this.buttonPresence);
             this.Controls.Add(this.buttonTemp);
             this.Controls.Add(this.buttonMAC);
             this.Controls.Add(this.buttonSwitchTime);
@@ -325,6 +338,7 @@
         private System.Windows.Forms.Button buttonShieldModel;
         private System.Windows.Forms.Button buttonBaseModel;
         private System.Windows.Forms.Button buttonClean;
+        private System.Windows.Forms.Button buttonPresence;
     }
 }
 

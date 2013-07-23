@@ -263,11 +263,13 @@ static void rfDataInd(NWK_DataInd_t *ind)
 	NWK_IND_OPT_LINK_LOCAL Frame was sent with a Link Local field set to 1
 	NWK_IND_OPT_MULTICAST Frame was sent to a group address
 	*/
+	NwkRouteTableRecord_t *rec = NWK_RouteNextHop(ind->srcAddr);
+	
 	uartRadioHeader.endPoint = ind->dstEndpoint;
-	//uartRadioHeader.nextHop = ;
-	uartRadioHeader.routing = ~(ind->options & NWK_IND_OPT_LOCAL);
+	uartRadioHeader.nextHop = rec->nextHop;
+	uartRadioHeader.routing = (ind->options & NWK_IND_OPT_LOCAL) == 0;
 	uartRadioHeader.rssi = ind->rssi;
-	uartRadioHeader.security = ind->options & NWK_IND_OPT_SECURED;
+	uartRadioHeader.security = (ind->options & NWK_IND_OPT_SECURED) != 0;
 	
 	OM_ProccessExternalOperation(&uartRadioHeader, (OPERATION_HEADER_t*)ind->data);		
 }

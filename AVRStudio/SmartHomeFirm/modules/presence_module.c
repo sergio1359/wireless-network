@@ -1,9 +1,9 @@
 /*
- * presence_module.c
- *
- * Created: 22/07/2013 23:59:33
- *  Author: Victor
- */ 
+* presence_module.c
+*
+* Created: 22/07/2013 23:59:33
+*  Author: Victor
+*/
 
 #include "globals.h"
 #include "modulesManager.h"
@@ -19,7 +19,7 @@ typedef struct
 	uint8_t* portPtr;
 	uint8_t mask;
 	unsigned lastValue		: 1;	//LSB
-	unsigned debouncerValue : 1;
+	unsigned timeCounter	: 7;	//MSB
 }PRESENCE_ELEM_t;
 
 struct
@@ -31,9 +31,9 @@ struct
 PRESENCE_ELEM_t presen_elems[MAX_PRESENCE_DEVICES];
 uint8_t num_of_presen_elems;
 
-SYS_Timer_t sensorReadTimer;
+SYS_Timer_t presenceReadTimer;
 
-static void sensorReadTimerHandler(SYS_Timer_t *timer);
+static void presenceReadTimerHandler(SYS_Timer_t *timer);
 uint8_t findPresenceElem(uint16_t deviceAddress);
 
 void presenceModule_Init(void)
@@ -60,7 +60,8 @@ void presenceModule_Init(void)
 		
 		presen_elems[i].config  = configPtr;
 		presen_elems[i].portPtr = portPtr;
-		presen_elems[i].config  = mask;
+		presen_elems[i].mask  = mask;
+		presen_elems[i].timeCounter  = 0;
 		
 		configPtr++;
 	}
@@ -69,10 +70,10 @@ void presenceModule_Init(void)
 	presenceResponse.header.opCode = PresenceReadResponse;
 	
 	//Configure Timer
-	sensorReadTimer.interval = 1000;
-	sensorReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
-	sensorReadTimer.handler = sensorReadTimerHandler;
-	SYS_TimerStart(&sensorReadTimer);
+	presenceReadTimer.interval = 500;
+	presenceReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
+	presenceReadTimer.handler = presenceReadTimerHandler;
+	SYS_TimerStart(&presenceReadTimer);
 }
 
 void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -123,7 +124,7 @@ uint8_t findPresenceElem(uint16_t deviceAddress)
 	return 0xFF;
 }
 
-static void sensorReadTimerHandler(SYS_Timer_t *timer)
+static void presenceReadTimerHandler(SYS_Timer_t *timer)
 {
 	for(uint8_t i = 0; i < num_of_presen_elems; i++)
 	{
@@ -133,11 +134,12 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 		
 		uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
 		
-		//Debouncer
-		if(val == currentElem->debouncerValue)//Valid value
+		if(val)
 		{
-			if(~currentElem->lastValue &  val) //RISING EDGE
+			if(currentElem->lastValue == 0) //RISING EDGE
 			{
+				currentElem->timeCounter = 0;
+			
 				//TODO: USE OPERATION MANAGER!
 				OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
 				for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
@@ -145,19 +147,22 @@ static void sensorReadTimerHandler(SYS_Timer_t *timer)
 					OM_ProccessInternalOperation(operationPtr, false);
 					operationPtr++;
 				}
-				
-				
+			
 				//Send to coordinator
 				presenceResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 				presenceResponse.header.destinationAddress = COORDINATOR_ADDRESS;
 				presenceResponse.response.deviceID = currentElem->config->deviceID;
 				presenceResponse.response.detected = val;
-				
-				OM_ProccessResponseOperation(&presenceResponse.header);
-			}
 			
-			currentElem->lastValue = val;
-		}			
+				OM_ProccessResponseOperation(&presenceResponse.header);
+			}else
+			{
+				if(currentElem->timeCounter < 0x7F)
+					currentElem->timeCounter++;
+			}
+		}		
+		
+		currentElem->lastValue = val;
 	}
 	
 	(void)timer;

@@ -109,7 +109,7 @@ namespace OperationUARTSender
 
             PCOperation = 0xFE,
             Extension = 0xFF,
-        } 
+        }
         #endregion
 
         // Magic symbol to start SOF end EOF sequences with. Should be duplicated if
@@ -137,7 +137,7 @@ namespace OperationUARTSender
             }
         }
 
-        void OnOperationReceived(Operation oper)
+        void OnOperationReceived(InputMessage oper)
         {
             if (OperationReceived != null)
                 OperationReceived(oper, null);
@@ -268,25 +268,6 @@ namespace OperationUARTSender
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }));
         }
-
-        private void PrintOperation(Operation operation)
-        {
-            this.BeginInvoke((Action)(() =>
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("[" + DateTime.Now.ToLongTimeString() + "]   ->   ");
-                sb.AppendFormat("FROM: 0x{0:X4}   TO: 0x{1:X4}   OPCODE: 0x{2:X2}   ARGS: ",
-                    operation.SourceAddress,
-                    operation.DestinationAddress,
-                    operation.OpCode);
-                foreach (byte b in operation.Args)
-                {
-                    sb.AppendFormat("0x{0:X2} ", b);
-                }
-                listBox1.Items.Add(sb.ToString());
-                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-            }));
-        } 
         #endregion
 
         #region EventCallbacks
@@ -365,7 +346,11 @@ namespace OperationUARTSender
             }
             else if (sender == buttonHum)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x02, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.HumidityRead, Args = new byte[] { 0x03, 0x00 } });
+            }
+            else if (sender == buttonPresence)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.PresenceRead, Args = new byte[] { 0x04, 0x00 } });
             }
             else if (sender == buttonDateTime)
             {
@@ -431,7 +416,10 @@ namespace OperationUARTSender
 
         void Form1_OperationReceived(object sender, EventArgs e)
         {
-            Operation operation = sender as Operation;
+            InputMessage message = (sender as InputMessage);
+            Operation operation = message.Content;
+
+            string msgToPrint = "";
 
             if (operation.OpCode == (byte)OPCode.ConfigWriteResponse)
             {
@@ -445,7 +433,7 @@ namespace OperationUARTSender
                             if (configWriteBuffer.Count > 0)
                             {
                                 if (configWriteBuffer.Count == 1)
-                                    PrintMessage(String.Format("CONFIG. UPDATE DONE TO 0x{0:X4}", operation.SourceAddress));
+                                    msgToPrint = String.Format("CONFIG. UPDATE DONE TO 0x{0:X4}", operation.SourceAddress);
 
                                 SendOperation(configWriteBuffer[0]);
                             }
@@ -453,7 +441,7 @@ namespace OperationUARTSender
                         else
                         {
                             configWriteBuffer.Clear();
-                            PrintMessage("CONFIG. ERROR CODE: " + Enum.GetName(typeof(ConfigErrorCodes), (object)operation.Args[1]));
+                            msgToPrint = "CONFIG. ERROR CODE: " + Enum.GetName(typeof(ConfigErrorCodes), (object)operation.Args[1]);
                         }
                     }
                     else
@@ -463,8 +451,9 @@ namespace OperationUARTSender
                         int expFragment = configWriteBuffer[0].Args[0] & 0x0F;
                         int expTotalFragment = (configWriteBuffer[0].Args[0] & 0xF0) >> 4;
 
-                        PrintMessage(String.Format("CONFIG. INVALID PROTOCOL: RECEIVED({0}/{1}) EXPECTED({2}/{3})",
-                            rcvFragment, rcvTotalFragment, expFragment, expTotalFragment));
+                        msgToPrint = String.Format("CONFIG. INVALID PROTOCOL: RECEIVED({0}/{1}) EXPECTED({2}/{3})",
+                            rcvFragment, rcvTotalFragment, expFragment, expTotalFragment);
+
                         configWriteBuffer.Clear();
                     }
                 }
@@ -473,9 +462,9 @@ namespace OperationUARTSender
             {
                 if (operation.Args[2] == 0xFF)
                 {
-                    PrintMessage(String.Format("SENSOR 0x{1:X4} FROM 0x{0:X4} UNKNOWN",
+                    msgToPrint = String.Format("SENSOR 0x{1:X4} FROM 0x{0:X4} UNKNOWN",
                         operation.SourceAddress,
-                        ((ushort)operation.Args[1]) << 8 | operation.Args[0]));
+                        ((ushort)operation.Args[1]) << 8 | operation.Args[0]);
                 }
                 else
                 {
@@ -483,24 +472,31 @@ namespace OperationUARTSender
                         "TEMPERATURE RECEIVED FROM 0x{0:X4} SENSOR {1}: {2}ºC" :
                         "HUMIDITY RECEIVED FROM 0x{0:X4} SENSOR {1}: {2}%";
 
-                    PrintMessage(String.Format(baseStr, 
-                        operation.SourceAddress, 
-                        (((ushort)operation.Args[1]) << 8 | operation.Args[0]), 
-                        operation.Args[2]));
+                    msgToPrint = String.Format(baseStr,
+                         operation.SourceAddress,
+                         (((ushort)operation.Args[1]) << 8 | operation.Args[0]),
+                         operation.Args[2]);
                 }
+            }
+            else if (operation.OpCode == (byte)OPCode.PresenceReadResponse)
+            {
+                msgToPrint = String.Format("PRESENCE READ FROM 0x{0:X4}: 0x{1:X4} {2}DETECTED",
+                    operation.SourceAddress,
+                    ((ushort)operation.Args[1]) << 8 | operation.Args[0],
+                    (operation.Args[2] != 0) ? "" : "NOT ");
             }
             else if (operation.OpCode == (byte)OPCode.ConfigChecksumResponse)
             {
-                PrintMessage(String.Format("CHECKSUM RECEIVED FROM 0x{0:X4}: 0x{1:X4}",
+                msgToPrint = String.Format("CHECKSUM RECEIVED FROM 0x{0:X4}: 0x{1:X4}",
                     operation.SourceAddress,
-                    ((ushort)operation.Args[1]) << 8 | operation.Args[0]));
+                    ((ushort)operation.Args[1]) << 8 | operation.Args[0]);
             }
             else if (operation.OpCode == (byte)OPCode.LogicReadResponse)
             {
-                PrintMessage(String.Format("LOGIC READ FROM 0x{0:X4}: 0x{1:X4} {2}",
+                msgToPrint = String.Format("LOGIC READ FROM 0x{0:X4}: 0x{1:X4} {2}",
                     operation.SourceAddress,
                     ((ushort)operation.Args[1]) << 8 | operation.Args[0],
-                    operation.Args[2] != 0));
+                    operation.Args[2] != 0);
             }
             else if (operation.OpCode == (byte)OPCode.DateTimeReadResponse)
             {
@@ -515,36 +511,36 @@ namespace OperationUARTSender
                     operation.Args[6],
                     operation.Args[7]);
 
-                PrintMessage(String.Format("DATETIME READ FROM 0x{0:X4} -> ", operation.SourceAddress) + DateStr + " " + TimeStr);
+                msgToPrint = String.Format("DATETIME READ FROM 0x{0:X4} -> ", operation.SourceAddress) + DateStr + " " + TimeStr;
             }
             else if (operation.OpCode == (byte)OPCode.MacReadResponse)
             {
-                PrintMessage(String.Format("MAC FROM 0x{0:X4} -> 0x{1:X2}-0x{2:X2}-0x{3:X2}-0x{4:X2}-0x{5:X2}-0x{6:X2}",
+                msgToPrint = String.Format("MAC FROM 0x{0:X4} -> 0x{1:X2}-0x{2:X2}-0x{3:X2}-0x{4:X2}-0x{5:X2}-0x{6:X2}",
                     operation.SourceAddress,
                     operation.Args[0],
                     operation.Args[1],
                     operation.Args[2],
                     operation.Args[3],
                     operation.Args[4],
-                    operation.Args[5]));
+                    operation.Args[5]);
             }
             else if (operation.OpCode == (byte)OPCode.FirmwareVersionReadResponse)
             {
-                PrintMessage(String.Format("FIRMWARE VERSION FROM 0x{0:X4} -> {1}",
+                msgToPrint = String.Format("FIRMWARE VERSION FROM 0x{0:X4} -> {1}",
                     operation.SourceAddress,
-                    operation.Args[0]));
+                    operation.Args[0]);
             }
             else if (operation.OpCode == (byte)OPCode.BaseModelReadResponse)
             {
-                PrintMessage(String.Format("BASE MODEL FROM 0x{0:X4} -> {1}",
+                msgToPrint = String.Format("BASE MODEL FROM 0x{0:X4} -> {1}",
                     operation.SourceAddress,
-                    operation.Args[0]));
+                    operation.Args[0]);
             }
             else if (operation.OpCode == (byte)OPCode.ShieldModelReadResponse)
             {
-                PrintMessage(String.Format("SHIELD MODEL FROM 0x{0:X4} -> {1}",
+                msgToPrint = String.Format("SHIELD MODEL FROM 0x{0:X4} -> {1}",
                     operation.SourceAddress,
-                    operation.Args[0]));
+                    operation.Args[0]);
             }
             else if (operation.OpCode == (byte)OPCode.ConfigReadResponse)
             {
@@ -557,10 +553,10 @@ namespace OperationUARTSender
 
                 if (lastOp == null || (lastOp != null && operation.Args[0] == lastOp.Args[0] + 1))
                 {
-                    PrintMessage(String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} OK",
+                    msgToPrint = String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} OK",
                         operation.SourceAddress,
                         fragment,
-                        totalFragment));
+                        totalFragment);
 
                     configReadBuffer.Add(operation);
                     SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } });
@@ -572,10 +568,10 @@ namespace OperationUARTSender
                 }
                 else
                 {
-                    PrintMessage(String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} ERROR",
+                    msgToPrint = String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} ERROR",
                         operation.SourceAddress,
                         fragment,
-                        totalFragment));
+                        totalFragment);
 
                     //Send error code back
                     SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = (byte)OPCode.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x01 } });
@@ -583,8 +579,10 @@ namespace OperationUARTSender
             }
             else
             {
-                PrintOperation(operation);
+                msgToPrint = operation.ToString();
             }
+
+            PrintMessage("RSSI: " + message.RSSI + "   " + msgToPrint);
         }
 
         void serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -654,7 +652,7 @@ namespace OperationUARTSender
                             InputMessage inputMessage = new InputMessage();
                             inputMessage.FromBinary(currentMessage.ToArray());
 
-                            OnOperationReceived(inputMessage.Content);
+                            OnOperationReceived(inputMessage);
                         }
                         else
                         {
