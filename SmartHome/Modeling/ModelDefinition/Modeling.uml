@@ -449,6 +449,17 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="4586bbc7-2be2-4e76-b92a-37e1701c7902"
+            name="HomeDevices"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
@@ -1614,7 +1625,20 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false" />
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="34d586ff-55c3-4579-b1f3-8bf2e3d0b425"
+                      name="Lower"
+                      value="n" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="36fbccae-e7e6-4558-ac52-06d9ad0aee0a"
+                      name="Upper"
+                      value="n" />
+                  </upperValueInternal>
+                </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -1859,7 +1883,75 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false" />
+          <property
+            Id="4101a69b-0f53-44b8-9193-b81067b1b834"
+            name="HomeDevices"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="a8e09f75-32b7-4331-88b3-0dfdad89c3bf"
+            name="PinPorts"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b20d6dfd-29f4-4008-85d3-036f88945084"
+            name="LinkHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c8eba6b8-4fc4-455e-8c56-f4b7b7783d5d"
+                  name="homedevice"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="5f895ffb-e601-4754-8fbc-f8104054b0bd"
+            name="LinkProducto"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ea4a8488-7a3f-4545-b952-f57bc49be354"
+                  name="producto"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="2f0095a2-0f1a-4148-a623-6aeda7b51516"
+            name="UnlinkHomeDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -2396,6 +2488,17 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="3295c0b1-06a6-4016-aeb5-4d9ea5174d22"
+            name="InUse"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributes>
         <ownedOperations>
           <operation
@@ -2468,6 +2571,32 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           <operation
             Id="bf384735-70ad-4919-9b85-8cb4f0a61555"
             name="OperationsProtocol"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="1518234c-d559-43a7-902e-9fe74a6503d8"
+            name="LinkConnector"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9d21bfea-79ec-44d2-916e-d2e84f3bfa63"
+                  name="Connector"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="be17b0a9-7c76-4cea-b8cf-c10b59fd49a3"
+            name="UnlinkConnector"
             isLeaf="false"
             isStatic="false"
             isAbstract="true"
@@ -8110,6 +8239,32 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="2c9b8955-07a6-4e12-b6a1-6caff236df2d"
+            name="LinkConnector"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0e3f4256-90f0-4c5a-ba38-606abf3d922c"
+                  name="Connector"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ff2b3023-1f04-4a2c-9b0a-c38c61420f13"
+            name="UnlinkConnector"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -8867,6 +9022,47 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             name="Range5" />
         </ownedLiterals>
       </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="22b9b6bb-9bf9-43b0-b9b3-accf0ffb5e63"
+        name="Product"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="b78190b6-0b5c-43d6-8541-c3699d6cf7f2"
+            name="Map"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="20a256b1-63fe-413f-9ef3-e07e895ac7ee"
+        name="BoardSensor"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <generalsInternal>
+          <generalization
+            Id="854f5579-39dc-4649-9a04-9af0ef8121de"
+            isSubstitutable="false">
+            <classMoniker
+              Id="22b9b6bb-9bf9-43b0-b9b3-accf0ffb5e63"
+              LastKnownName="Product"
+              LastKnownLocation="Modeling.uml" />
+          </generalization>
+        </generalsInternal>
+      </class>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

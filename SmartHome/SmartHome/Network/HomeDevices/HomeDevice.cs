@@ -15,15 +15,13 @@ namespace SmartHome.Network.HomeDevices
         public ushort Id { get; set; }
         public string Name { get; set; }
         public Connector Connector { get; set; }
+        public ConnectorType ConnectorCapable { get; set; }
 
         public bool InUse
         {
             get
             {
-                if (Connector != null)
-                    return true;
-                else
-                    return false;
+                return Connector != null;
             }
         }
 
@@ -74,8 +72,8 @@ namespace SmartHome.Network.HomeDevices
 
 
 
-        //LOW LEVEL PROTOCOL
-
+        //LOW LEVEL COMUNICATION PROTOCOL
+        #region ComunicationProtocol
         public enum LogicWriteValues : byte
         {
             Clear = 0x00,
@@ -202,5 +200,7 @@ namespace SmartHome.Network.HomeDevices
         public Operation LuminosityRead() { return GetDefaultOperationAddr(OPCode.LuminosityRead, new byte[] { }); }
 
         //EXTENSION CODE NOT IMPLEMENTED
+        #endregion
+
     }
 }

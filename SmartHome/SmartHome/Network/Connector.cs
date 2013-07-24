@@ -55,7 +55,6 @@ namespace SmartHome.Network
         /// <param name="homeDevice"></param>
         public void LinkHomeDevice(HomeDevice homeDevice)
         {
-            MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
             MappingHomeDevice.Add(homeDevice, GetPinPort());
         }
 
@@ -68,7 +67,6 @@ namespace SmartHome.Network
             
         }
 
-
         public void UnlinkHomeDevice()
         {
             if (this.ConnectorType == Network.ConnectorType.ConectorSensorBoard)
@@ -78,6 +76,14 @@ namespace SmartHome.Network
             }
 
             MappingHomeDevice.Clear();
+        }
+
+        public bool IsCapable(HomeDevice homeDevice)
+        {
+            if (this.ConnectorType == Network.ConnectorType.DimmerPassZero)
+                return false;
+
+            return this.ConnectorType == homeDevice.ConnectorCapable;
         }
 
         public List<PinPort> GetPinPort()
