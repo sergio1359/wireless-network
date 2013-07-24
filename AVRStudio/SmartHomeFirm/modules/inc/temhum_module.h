@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
+#define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_DataConf, temHumModule_NotificationInd)
 
 #define COMMANDS_TABLE_TEMHUM \
 X(TemperatureRead,				0x5A, temhumRead_Handler,		TEMPERATURE_READ_MESSAGE_t,				false)	\
@@ -58,6 +58,7 @@ typedef struct
 
 void temHumModule_Init(void);
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void temHumModule_DataConf(NWK_DataReq_t *req);
 
 void temhumRead_Handler(OPERATION_HEADER_t* operation_header);
 

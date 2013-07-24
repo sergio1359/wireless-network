@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "configManager.h"
+#include "radioManager.h"
 
 #include "logic_module.h"
 #include "network_module.h"
@@ -30,7 +31,7 @@ TIME_MODULE_DEFINITION	  \
 TEMHUM_MODULE_DEFINITION  \
 PRESENCE_MODULE_DEFINITION  \
 
-#define X(a, b, c) a,
+#define X(a, b, c, d) a,
 typedef enum  {
 	MODULES_TABLE
 }MODULES_ID;
@@ -53,6 +54,7 @@ typedef enum  {
 
 void MODULES_Init(void);
 void MODULES_Notify(uint8_t moduleId, OPERATION_HEADER_t* header);
+extern inline void* MODULES_DataConf(uint8_t moduleId);
 uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode);
 extern inline void MODULES_HandleCommand(OPERATION_HEADER_t* header);
 

@@ -112,6 +112,11 @@ void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificati
 	
 }
 
+static void temHumModule_DataConf(NWK_DataReq_t *req)
+{
+	
+}
+
 void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == TemperatureRead)

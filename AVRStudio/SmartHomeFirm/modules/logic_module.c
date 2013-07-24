@@ -91,6 +91,11 @@ void logicModule_Init()
 	SYS_TimerStart(&logicTimer);
 }
 
+static void logicModule_DataConf(NWK_DataReq_t *req)
+{
+	
+}
+
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
 {
 	
@@ -122,7 +127,7 @@ void logic_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == LogicReadResponse)
 	{
 		//TODO: NOTIFICATION (check)
-		MODULES_Notify(LogicModule, operation_header);
+		//MODULES_Notify(LogicModule, operation_header);
 	}
 }
 

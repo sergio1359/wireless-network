@@ -9,6 +9,7 @@
 #ifndef RADIO_H_
 #define RADIO_H_
 
+#include "nwk.h"
 #include "configManager.h"
 #include <stdbool.h>
 

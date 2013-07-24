@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "configManager.h"
 
-#define CONFIG_MODULE_DEFINITION  X(ConfigModule, configModule_Init, configModule_NotificationInd)
+#define CONFIG_MODULE_DEFINITION  X(ConfigModule, configModule_Init, configModule_DataConf, configModule_NotificationInd)
 
 #define COMMANDS_TABLE_CONFIG \
 X(Reset,						0x00, configSystem_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				false)	\
@@ -108,6 +108,7 @@ typedef struct
 
 void configModule_Init(void);
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void configModule_DataConf(NWK_DataReq_t *req);
 
 void configSystem_Handler(OPERATION_HEADER_t* operation_header);
 void configWrite_Handler(OPERATION_HEADER_t* operation_header);

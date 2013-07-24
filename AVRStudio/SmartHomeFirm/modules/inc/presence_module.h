@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define PRESENCE_MODULE_DEFINITION  X(PresenceModule, presenceModule_Init, presenceModule_NotificationInd)
+#define PRESENCE_MODULE_DEFINITION  X(PresenceModule, presenceModule_Init, presenceModule_DataConf, presenceModule_NotificationInd)
 
 #define COMMANDS_TABLE_PRESENCE \
 X(PresenceRead,				0x57, presenceRead_Handler,		PRESENCE_READ_MESSAGE_t,				false)	\
@@ -44,6 +44,7 @@ typedef struct
 
 void presenceModule_Init(void);
 void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void presenceModule_DataConf(NWK_DataReq_t *req);
 
 void presenceRead_Handler(OPERATION_HEADER_t* operation_header);
 

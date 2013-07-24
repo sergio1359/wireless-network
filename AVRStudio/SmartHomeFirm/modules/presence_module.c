@@ -81,6 +81,11 @@ void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notifica
 	
 }
 
+static void presenceModule_DataConf(NWK_DataReq_t *req)
+{
+	
+}
+
 void presenceRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == PresenceRead)

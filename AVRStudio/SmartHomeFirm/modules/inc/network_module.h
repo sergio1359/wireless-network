@@ -14,7 +14,7 @@
 #include "configManager.h"
 #include "DS2401.h"
 
-#define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_NotificationInd)
+#define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_DataConf, networkModule_NotificationInd)
 
 #define COMMANDS_TABLE_NETWORK \
 X(MacRead,							0x20, mac_Handler,	 MAC_READ_MESSAGE_t,								false)					\
@@ -71,6 +71,7 @@ typedef struct
 
 void networkModule_Init(void);
 void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void networkModule_DataConf(NWK_DataReq_t *req);
 
 void mac_Handler(OPERATION_HEADER_t* operation_header);
 void route_Handler(OPERATION_HEADER_t* operation_header);
