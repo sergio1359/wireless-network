@@ -22,9 +22,9 @@ typedef enum RadioState_t
 	RF_STATE_WAKEUP,
 } RadioState_t;
 
-_Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message);
-_Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize);
-_Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message);
+_Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback);
+_Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback);
+_Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message, void* callback);
 
 void Radio_Init(void);
 
