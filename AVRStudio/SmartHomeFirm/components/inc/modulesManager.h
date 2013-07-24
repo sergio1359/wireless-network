@@ -31,9 +31,9 @@ TEMHUM_MODULE_DEFINITION  \
 PRESENCE_MODULE_DEFINITION  \
 
 #define X(a, b, c) a,
-typedef enum MODULES_ID {
+typedef enum  {
 	MODULES_TABLE
-};
+}MODULES_ID;
 #undef X
 
 
@@ -46,9 +46,9 @@ COMMANDS_TABLE_TEMHUM   \
 COMMANDS_TABLE_PRESENCE \
 
 #define X(a, b, c, d, e) a = b,
-typedef enum COMMAND_OPCODES {
+typedef enum  {
 	COMMANDS_TABLE
-};
+}COMMAND_OPCODES;
 #undef X
 
 void MODULES_Init(void);

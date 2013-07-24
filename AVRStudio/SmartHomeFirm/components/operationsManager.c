@@ -52,7 +52,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 	}
 	/* END OF TESTING REGION */
 	
-	if(!checkTimeRestrictions(operation_header) || !checkConditions(operation_header)) //Restriction not satisfied
+	if(!checkTimeRestrictions((uint16_t)operation_header) || !checkConditions((uint16_t)operation_header)) //Restriction not satisfied
 		return;
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
@@ -65,9 +65,9 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 			operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		
 		if(byCopy)
-			Radio_AddMessageByCopy(operation_header);
+			Radio_AddMessageByCopy(operation_header, 0x00);
 		else
-			Radio_AddMessageByReference(operation_header);
+			Radio_AddMessageByReference(operation_header, 0x00);
 	}
 }
 
@@ -123,7 +123,7 @@ void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 		USART_SendOperation(&coordinator_UART_header, operation_header);
 	}else
 	{
-		Radio_AddMessageByCopy(operation_header);
+		Radio_AddMessageByCopy(operation_header, 0x00);
 	}
 }
 
@@ -134,7 +134,7 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength);
 	}else
 	{
-		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength);
+		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, 0x00);
 	}
 }
 

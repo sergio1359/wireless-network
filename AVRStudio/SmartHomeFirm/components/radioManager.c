@@ -13,21 +13,26 @@
 #include "modulesManager.h"
 #include "operationsManager.h"
 
-
 #include "leds.h"
 
-#define REFERENCES_BUFFER_SIZE 64
 #define COPIES_BUFFER_SIZE 256
+#define PENDING_BUFFER_SIZE 64
 
-#define REFERENCES_BUFFER_SIZE_MASK REFERENCES_BUFFER_SIZE-1
 #define COPIES_BUFFER_SIZE_MASK COPIES_BUFFER_SIZE-1
+#define PENDING_BUFFER_SIZE_MASK PENDING_BUFFER_SIZE-1
 
 #define DEFAULT_RETRIES_LIMIT 6
 #define TIME_BW_RETRIES 500 //milliseconds
- 
+
+typedef struct
+{
+	OPERATION_HEADER_t* operationPtr;
+	void         (*confirm)(struct NWK_DataReq_t *req);
+}RADIO_ELEM_t;	
+
 /* Circular buffer object */
-CREATE_CIRCULARBUFFER(OPERATION_HEADER_t*, REFERENCES_BUFFER_SIZE)	referencesMessages_Buffer;
-CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)					copiesMessages_Buffer;
+CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)				copiesMessages_Buffer;
+CREATE_CIRCULARBUFFER(RADIO_ELEM_t*, PENDING_BUFFER_SIZE)	pendingMessages_Buffer;
 
 RadioState_t currentState = RF_STATE_INITIAL;
 NWK_DataReq_t nwkDataReq;
@@ -36,8 +41,9 @@ SYS_Timer_t retriesTimer;
 
 INPUT_UART_HEADER_t uartRadioHeader;
 
-inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize);
+inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
+inline _Bool isInCopiesBuffer(OPERATION_HEADER_t* message);
 void sendNextMessage(void);
 static void rfDataConf(NWK_DataReq_t *req);
 static void rfDataInd(NWK_DataInd_t *ind);
@@ -80,21 +86,49 @@ void Radio_Init()
 	currentState = RF_STATE_READY_TO_SEND;
 }
 
-_Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message)
+_Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message, void* callback)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode), 0, 0);
+	if(freeSpace(pendingMessages_Buffer.start, pendingMessages_Buffer.end, PENDING_BUFFER_SIZE) >= 1)
+	{
+		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end]->operationPtr = message;
+		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end]->confirm = callback;
+		pendingMessages_Buffer.end++;
+		pendingMessages_Buffer.end &= PENDING_BUFFER_SIZE_MASK;
+		
+		sendNextMessage();
+		
+		return true;
+	}else
+	{
+		//TODO: Send or Log ERROR (REFERENCES_BUFFER_FULL)
+		return false;
+	}
+}
+
+_Bool Radio_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback)
+{
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode), 0, 0, callback);
 }
 
 
-_Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize)
+_Bool Radio_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize);
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize, callback);
 }
 
-_Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize)
+
+
+/************************************************************************/
+/*                       INTERNAL METHODS                               */
+/************************************************************************/
+
+
+_Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback)
 {
 	if(freeSpace(copiesMessages_Buffer.start, copiesMessages_Buffer.end, COPIES_BUFFER_SIZE) >= (size + bodySize))
-	{
+	{	
+		OPERATION_HEADER_t* initialPtr = (OPERATION_HEADER_t*)&copiesMessages_Buffer.buffer[copiesMessages_Buffer.end];
+		
 		for(int i = 0; i < size; i++)
 		{
 			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end + i] = *((uint8_t*)message + i);
@@ -109,9 +143,7 @@ _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body,
 		copiesMessages_Buffer.end += bodySize;		
 		copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		
-		sendNextMessage();
-		
-		return true;
+		return Radio_AddMessageByReference(initialPtr, callback);
 	}else
 	{
 		//TODO: Send or Log ERROR (COPIES_BUFFER_FULL)
@@ -119,35 +151,21 @@ _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body,
 	}
 }
 
-_Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message)
-{
-	if(freeSpace(referencesMessages_Buffer.start, referencesMessages_Buffer.end, REFERENCES_BUFFER_SIZE) >= 1)
-	{
-		referencesMessages_Buffer.buffer[referencesMessages_Buffer.end++] = message;
-		referencesMessages_Buffer.end &= REFERENCES_BUFFER_SIZE_MASK;
-		
-		sendNextMessage();
-		
-		return true;
-	}else
-	{
-		//TODO: Send or Log ERROR (REFERENCES_BUFFER_FULL)
-		return false;
-	}
-}
 
-/*****************************************************************************
-*****************************************************************************/
 unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size)
 {
 	if(start <= end)
 		return size - (end - start);
 	else
 		return start - end;
-}	
+}
 
-/*****************************************************************************
-*****************************************************************************/
+_Bool isInCopiesBuffer(OPERATION_HEADER_t* message)
+{
+	return ((uint16_t)message >= (uint16_t)copiesMessages_Buffer.buffer && (uint16_t)message <= ((uint16_t)(copiesMessages_Buffer.buffer) + COPIES_BUFFER_SIZE));
+}
+
+
 void sendNextMessage()
 {
 	//TODO: Avoid this situation
@@ -156,21 +174,28 @@ void sendNextMessage()
 	
 	OPERATION_HEADER_t* currentOP;
 	uint8_t length;
-	if(referencesMessages_Buffer.start != referencesMessages_Buffer.end)
+	if(pendingMessages_Buffer.start != pendingMessages_Buffer.end)
 	{
-		currentOP = referencesMessages_Buffer.buffer[referencesMessages_Buffer.start];
+		currentOP = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start]->operationPtr;
 		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
 		
-		referencesMessages_Buffer.start++;
-		referencesMessages_Buffer.start &= REFERENCES_BUFFER_SIZE_MASK;
-	}else if(copiesMessages_Buffer.start != copiesMessages_Buffer.end)
+		pendingMessages_Buffer.start++;
+		pendingMessages_Buffer.start &= PENDING_BUFFER_SIZE_MASK;
+		
+		if(isInCopiesBuffer(currentOP))
+		{
+			copiesMessages_Buffer.start += length;
+			copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;
+		}
+	}
+	/*else if(copiesMessages_Buffer.start != copiesMessages_Buffer.end)
 	{
 		currentOP = (OPERATION_HEADER_t*)&copiesMessages_Buffer.buffer[copiesMessages_Buffer.start];
 		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
 		
 		copiesMessages_Buffer.start += length;
 		copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;
-	}else
+	}else*/
 	{
 		return; //Nothing to send
 	}		
@@ -188,8 +213,7 @@ void sendNextMessage()
 	NWK_DataReq(&nwkDataReq);
 }
 
-/*****************************************************************************
-*****************************************************************************/
+
 static void rfDataConf(NWK_DataReq_t *req)
 {
 	//ledOff(LED_DATA);
@@ -241,8 +265,7 @@ static void rfDataConf(NWK_DataReq_t *req)
 		
 }
 
-/*****************************************************************************
-*****************************************************************************/
+
 static void retriesTimerHandler(SYS_Timer_t *timer)
 {
 	NWK_DataReq(&nwkDataReq);
@@ -250,8 +273,7 @@ static void retriesTimerHandler(SYS_Timer_t *timer)
 	(void)timer;
 }
 
-/*****************************************************************************
-*****************************************************************************/
+
 static void rfDataInd(NWK_DataInd_t *ind)
 {
 	/*TODO: Check this:
