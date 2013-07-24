@@ -19,7 +19,8 @@ namespace ServiceLayer
         /// <param name="homeDevice"></param>
         /// <returns>0 == OK, 
         /// 1 == el conector estaba ya ocupado por un home Device
-        /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo</returns>
+        /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo
+        /// 3 == el homeDevice no es compatible con el conector</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
             Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.Id == idConnector);
@@ -31,9 +32,9 @@ namespace ServiceLayer
             if (homeDevice.InUse)
                 return 2;
 
+            connector.LinkHomeDevice(homeDevice);
+            homeDevice.LinkConnector(connector);
 
-            connector.HomeDevices = homeDevice;
-            homeDevice.Connector = connector;
             return 0;
         }
 
@@ -43,8 +44,8 @@ namespace ServiceLayer
         public void Unlink(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
-            homeDevice.Connector.HomeDevices = null;
-            homeDevice.Connector = null;
+            homeDevice.Connector.UnlinkHomeDevice();
+            homeDevice.UnlinkConnector();
         }
 
         public Connector[] GetConnectors(Node node)

@@ -36,6 +36,7 @@ namespace SmartHome.Network
 
         public Node(uint Mac, BaseType baseType, ShieldType shieldType)
         {
+            //CHAPUZA QUE SE HIZO EL DIA QUE QUISIMOS GENERAR UNA EEPROM
             Base = baseType;
             Shield = shieldType;
 

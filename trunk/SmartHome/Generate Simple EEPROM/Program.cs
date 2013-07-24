@@ -121,77 +121,77 @@ namespace Generate_Simple_EEPROM
             #endregion
 
             #region Example 04
-            //Example 04: Configuracion para el "SensorShield" demostrativo
-            NetworkManager.Security.Channel = 0x0f;
-            NetworkManager.Security.PanId = 0x1234;
+            ////Example 04: Configuracion para el "SensorShield" demostrativo
+            //NetworkManager.Security.Channel = 0x0f;
+            //NetworkManager.Security.PanId = 0x1234;
 
-            NetworkManager.Nodes.Add(new Node(0x00, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
-            NetworkManager.Nodes.Add(new Node(0xFF, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
+            //NetworkManager.Nodes.Add(new Node(0x00, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
+            //NetworkManager.Nodes.Add(new Node(0xFF, BaseType.ATMega128RFA1_V1, ShieldType.Debug));
 
-            NetworkManager.HomeDevices.Add(new Button("Botón Placa0"));
-            NetworkManager.HomeDevices.Add(new Light("Led0"));
-            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor0"));
-            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor0"));
-            NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor0"));
+            //NetworkManager.HomeDevices.Add(new Button("Botón Placa0"));
+            //NetworkManager.HomeDevices.Add(new Light("Led0"));
+            //NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor0"));
+            //NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor0"));
+            //NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor0"));
 
-            NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
-            NetworkManager.HomeDevices.Add(new Light("Led1"));
-            NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor1"));
-            NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor1"));
-            NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor1"));
+            //NetworkManager.HomeDevices.Add(new Button("Botón Placa1"));
+            //NetworkManager.HomeDevices.Add(new Light("Led1"));
+            //NetworkManager.HomeDevices.Add(new TemperatureSensor("TemperatureSensor1"));
+            //NetworkManager.HomeDevices.Add(new HumiditySensor("HumiditySensor1"));
+            //NetworkManager.HomeDevices.Add(new PresenceSensor("PresenceSensor1"));
 
-            //IDS HomeDevices
-            for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
-            {
-                NetworkManager.HomeDevices[i].Id = i;
-            }
+            ////IDS HomeDevices
+            //for (ushort i = 0; i < NetworkManager.HomeDevices.Count; i++)
+            //{
+            //    NetworkManager.HomeDevices[i].Id = i;
+            //}
 
-            //Node0
-            NetworkManager.Nodes[0].Connectors[0].HomeDevices = NetworkManager.HomeDevices[0];
-            NetworkManager.Nodes[0].Connectors[1].HomeDevices = NetworkManager.HomeDevices[1];
-            NetworkManager.Nodes[0].Connectors[2].HomeDevices = NetworkManager.HomeDevices[2];
-            NetworkManager.Nodes[0].Connectors[3].HomeDevices = NetworkManager.HomeDevices[3];
-            NetworkManager.Nodes[0].Connectors[4].HomeDevices = NetworkManager.HomeDevices[4];
+            ////Node0
+            //NetworkManager.Nodes[0].Connectors[0].HomeDevices = NetworkManager.HomeDevices[0];
+            //NetworkManager.Nodes[0].Connectors[1].HomeDevices = NetworkManager.HomeDevices[1];
+            //NetworkManager.Nodes[0].Connectors[2].HomeDevices = NetworkManager.HomeDevices[2];
+            //NetworkManager.Nodes[0].Connectors[3].HomeDevices = NetworkManager.HomeDevices[3];
+            //NetworkManager.Nodes[0].Connectors[4].HomeDevices = NetworkManager.HomeDevices[4];
 
-            NetworkManager.Nodes[0].Address = 0x4003;
+            //NetworkManager.Nodes[0].Address = 0x4003;
 
 
-            //Node1
-            NetworkManager.Nodes[1].Connectors[0].HomeDevices = NetworkManager.HomeDevices[5];
-            NetworkManager.Nodes[1].Connectors[1].HomeDevices = NetworkManager.HomeDevices[6];
-            NetworkManager.Nodes[1].Connectors[2].HomeDevice = NetworkManager.HomeDevices[7];
-            NetworkManager.Nodes[1].Connectors[3].HomeDevice = NetworkManager.HomeDevices[8];
-            NetworkManager.Nodes[1].Connectors[4].HomeDevice = NetworkManager.HomeDevices[9];
+            ////Node1
+            //NetworkManager.Nodes[1].Connectors[0].HomeDevices = NetworkManager.HomeDevices[5];
+            //NetworkManager.Nodes[1].Connectors[1].HomeDevices = NetworkManager.HomeDevices[6];
+            //NetworkManager.Nodes[1].Connectors[2].HomeDevice = NetworkManager.HomeDevices[7];
+            //NetworkManager.Nodes[1].Connectors[3].HomeDevice = NetworkManager.HomeDevices[8];
+            //NetworkManager.Nodes[1].Connectors[4].HomeDevice = NetworkManager.HomeDevices[9];
 
-            NetworkManager.Nodes[1].Address = 0x4004;
+            //NetworkManager.Nodes[1].Address = 0x4004;
 
-            //Puke: bidirectional
-            foreach (Node n in NetworkManager.Nodes)
-            {
-                foreach (Connector c in n.Connectors)
-                {
-                    if (c.HomeDevices != null)
-                        c.HomeDevices.Connector = c;
-                }
-            }
+            ////Puke: bidirectional
+            //foreach (Node n in NetworkManager.Nodes)
+            //{
+            //    foreach (Connector c in n.Connectors)
+            //    {
+            //        if (c.HomeDevices != null)
+            //            c.HomeDevices.Connector = c;
+            //    }
+            //}
 
-            //Operations 0->1
-            NetworkManager.Nodes[0].Connectors[0].HomeDevices.Operations.Add(new Operation()
-            {
-                OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
-                Args = new byte[] { 0x06, 0x00, 0x00 }, //Harcondig: IDHomeDev, Time = 0
-                DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevices,
-            });
+            ////Operations 0->1
+            //NetworkManager.Nodes[0].Connectors[0].HomeDevices.Operations.Add(new Operation()
+            //{
+            //    OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
+            //    Args = new byte[] { 0x06, 0x00, 0x00 }, //Harcondig: IDHomeDev, Time = 0
+            //    DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevices,
+            //});
 
-            //1->0
-            NetworkManager.Nodes[1].Connectors[0].HomeDevices.Operations.Add(new Operation()
-            {
-                OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
-                Args = new byte[] { 0x01, 0x00, 0x00 }, //Hardconding: IDHomeDev, Time = 0
-                DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevices,
-            });
+            ////1->0
+            //NetworkManager.Nodes[1].Connectors[0].HomeDevices.Operations.Add(new Operation()
+            //{
+            //    OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
+            //    Args = new byte[] { 0x01, 0x00, 0x00 }, //Hardconding: IDHomeDev, Time = 0
+            //    DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevices,
+            //});
 
-            NetworkManager.GetAllEEPROMS();
+            //NetworkManager.GetAllEEPROMS();
             #endregion
 
 

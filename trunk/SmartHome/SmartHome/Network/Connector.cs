@@ -36,10 +36,7 @@ namespace SmartHome.Network
         {
             get
             {
-                if (HomeDevices != null)
-                    return true;
-                else
-                    return false;
+                return HomeDevices.Count != 0;
             }
         }
 
@@ -50,6 +47,37 @@ namespace SmartHome.Network
             this.Name = Name;
             ConnectorType = type;
             Node = node;
+        }
+
+        /// <summary>
+        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, un conector con el HomeDevice pasado por parametros
+        /// </summary>
+        /// <param name="homeDevice"></param>
+        public void LinkHomeDevice(HomeDevice homeDevice)
+        {
+            MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
+            MappingHomeDevice.Add(homeDevice, GetPinPort());
+        }
+
+        /// <summary>
+        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, el conector con el producto cuyo nombre es pasado por parametros
+        /// </summary>
+        /// <param name="nameProduct"></param>
+        public void LinkHomeDevice(string nameProduct)
+        {
+            
+        }
+
+
+        public void UnlinkHomeDevice()
+        {
+            if (this.ConnectorType == Network.ConnectorType.ConectorSensorBoard)
+            {
+                //TODO: hay que destruir los elementos uno a uno.
+                
+            }
+
+            MappingHomeDevice.Clear();
         }
 
         public List<PinPort> GetPinPort()

@@ -57,10 +57,22 @@ namespace SmartHome.Network.HomeDevices
             Name = name;
         }
 
+        public void LinkConnector(Connector connector)
+        {
+            this.Connector = connector;
+        }
+
+        public void UnlinkConnector()
+        {
+            this.Connector = null;
+        }
+
         public virtual void RefreshState()
         {
 
         }
+
+
 
         //LOW LEVEL PROTOCOL
 
@@ -149,11 +161,11 @@ namespace SmartHome.Network.HomeDevices
 
         public Operation DimmerRead() { return GetDefaultOperationAddr(OPCode.DimmerRead, new byte[] { }); }
 
-        public Operation ColorWrite(Color color, byte seconds) { return GetDefaultOperationAddr(OPCode.ColorWrite, new byte[] {color.R, color.G, color.B, seconds }); }
+        public Operation ColorWrite(Color color, byte seconds) { return GetDefaultOperationAddr(OPCode.ColorWrite, new byte[] { color.R, color.G, color.B, seconds }); }
 
         public Operation ColorWriteRandom(byte seconds) { return GetDefaultOperationAddr(OPCode.ColorWriteRandom, new byte[] { seconds }); }
 
-        public Operation ColorRandomSecuenceWrite(byte seconds, Color[] colors) 
+        public Operation ColorRandomSecuenceWrite(byte seconds, Color[] colors)
         {
             List<byte> args = new List<byte>();
             args.Add(seconds);
@@ -162,7 +174,7 @@ namespace SmartHome.Network.HomeDevices
                 args.AddRange(new byte[] { item.R, item.G, item.B });
             }
 
-            return GetDefaultOperationAddr(OPCode.ColorRandomSecuenceWrite, args.ToArray()); 
+            return GetDefaultOperationAddr(OPCode.ColorRandomSecuenceWrite, args.ToArray());
         }
 
         public Operation ColorSortedSecuenceWrite(byte seconds, Color[] colors)
