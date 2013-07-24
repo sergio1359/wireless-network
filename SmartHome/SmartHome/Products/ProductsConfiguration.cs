@@ -28,23 +28,6 @@ namespace SmartHome.Products
             return pinPorts;
         }
 
-        public static Dictionary<int, List<HomeDevice>> GetAdvanceProducts(AdvanceProducts product)
-        {
-            Dictionary<int, List<HomeDevice>> resultProduct = new Dictionary<int, List<HomeDevice>>();
-
-            switch (product)
-            {
-                case AdvanceProducts.SensorBoard:
-                    //TODO
-                    break;
-                default:
-                    break;
-            }
-
-
-            return resultProduct;
-        }
-
         public static Base GetBaseConfiguration(BaseType controller)
         {
             Base result = new Base();

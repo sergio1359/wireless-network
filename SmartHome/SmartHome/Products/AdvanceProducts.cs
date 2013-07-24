@@ -5,8 +5,5 @@ using System.Text;
 
 namespace SmartHome.Products
 {
-    public enum AdvanceProducts
-    {
-        SensorBoard,
-    }
+    
 }

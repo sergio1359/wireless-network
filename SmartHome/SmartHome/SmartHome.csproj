@@ -53,6 +53,7 @@
     <Compile Include="Network\HomeDevices\LuminositySensor.cs" />
     <Compile Include="Network\HomeDevices\PowerSensor.cs" />
     <Compile Include="Network\HomeDevices\PresenceSensor.cs" />
+    <Compile Include="Network\HomeDevices\Product.cs" />
     <Compile Include="Network\HomeDevices\RGBLight.cs" />
     <Compile Include="Network\HomeDevices\TemperatureSensor.cs" />
     <Compile Include="HomeModel\View.cs" />

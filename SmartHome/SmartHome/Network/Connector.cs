@@ -14,20 +14,34 @@ namespace SmartHome.Network
         public string Name { get; set; }
         public ConnectorType ConnectorType { get; set; }
         public Node Node { get; set; }
-        public HomeDevice HomeDevice { get; set; }
+        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
+
+        public List<HomeDevice> HomeDevices
+        {
+            get
+            {
+                return MappingHomeDevice.Keys.ToList();
+            }
+        }
+
+        public List<PinPort> PinPorts
+        {
+            get
+            {
+                return MappingHomeDevice.Values.SelectMany(v => v).ToList(); //TODO: quitar los repetidos
+            }
+        }
 
         public bool InUse
         {
             get
             {
-                if (HomeDevice != null)
+                if (HomeDevices != null)
                     return true;
                 else
                     return false;
             }
         }
-
-        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
         public Connector() { }
 
@@ -43,20 +57,20 @@ namespace SmartHome.Network
             return ProductConfiguration.GetShieldDictionary(Node.Shield)[Name].Item2;
         }
 
-        public PinPortConfiguration GetPinPortConfiguration()
+        public PinPortConfiguration GetPinPortConfiguration(HomeDevice homeDevice)
         {
-            return ProductConfiguration.GetPinPortConfiguration(HomeDevice);
+            return ProductConfiguration.GetPinPortConfiguration(homeDevice);
         }
 
         public Operation[] GetActionsConnector()
         {
-            if (HomeDevice == null)
+            if (!InUse)
             {
                 return new Operation[0];
             }
             else
             {
-                return HomeDevice.Operations.ToArray();
+                return HomeDevices.SelectMany(hd => hd.Operations).ToArray();
             }
 
         }
