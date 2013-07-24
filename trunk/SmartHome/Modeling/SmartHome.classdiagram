@@ -277,6 +277,9 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           <property Id="c6283c7c-5618-42cd-a4f9-5eec32748089" name="NetworkRetries" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="8805887b-8a0d-4de0-8d53-4ee83611bca5" />
           </property>
+          <property Id="8a78b1ae-d427-4b94-8a33-67831f03a88e" name="HomeDevices" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4586bbc7-2be2-4e76-b92a-37e1701c7902" />
+          </property>
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1062,6 +1065,16 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd Id="4f95e929-202c-4aac-a511-72debbf5c578" name="HomeDevice" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="3b008146-5bcf-494e-b108-b536c9382259" name="Lower" value="n">
+                      <elementDefinition Id="34d586ff-55c3-4579-b1f3-8bf2e3d0b425" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="fe7366c3-db25-47d9-9f47-a46884b7e5ee" name="Upper" value="n">
+                      <elementDefinition Id="36fbccae-e7e6-4558-ac52-06d9ad0aee0a" />
+                    </literalString>
+                  </upperValueInternal>
                   <elementDefinition Id="142eb214-35b4-45b1-b1d9-c0bd9d251ff3" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -1219,7 +1232,38 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           <property Id="2fe84aad-041d-45d3-931f-08ed82f7cfc1" name="Mapping" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="e69e3e75-1090-486b-bcd3-08ffd2ff57cd" />
           </property>
+          <property Id="4f5cf809-2687-4bf7-8941-ec061a2a6500" name="HomeDevices" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4101a69b-0f53-44b8-9193-b81067b1b834" />
+          </property>
+          <property Id="48f90f3b-ec60-4ec9-9144-6aac7d2941b8" name="PinPorts" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a8e09f75-32b7-4331-88b3-0dfdad89c3bf" />
+          </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="5839830e-3767-4451-af09-f64a808d445e" name="LinkHomeDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b20d6dfd-29f4-4008-85d3-036f88945084" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4475c25b-7f4a-4547-9218-bd40f93b1ecc" name="homedevice" direction="In" isUnique="false">
+                  <elementDefinition Id="c8eba6b8-4fc4-455e-8c56-f4b7b7783d5d" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="3cce6e18-22f2-4899-ac9f-5517bb50938f" name="LinkProducto" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5f895ffb-e601-4754-8fbc-f8104054b0bd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4e05e799-7a6f-48fe-95f5-c81402699f4c" name="producto" direction="In" isUnique="false">
+                  <elementDefinition Id="ea4a8488-7a3f-4545-b952-f57bc49be354" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="74141a72-e3da-4c37-90b2-a7d01f95ea70" name="UnlinkHomeDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2f0095a2-0f1a-4148-a623-6aeda7b51516" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -1520,6 +1564,9 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             </appliedStereotypesInternal>
             <elementDefinition Id="c10d7674-bc71-4f44-a53d-f3530950030b" />
           </property>
+          <property Id="f1bed561-e62f-4a9d-b70c-e6ab4e8be8fd" name="InUse" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3295c0b1-06a6-4016-aeb5-4d9ea5174d22" />
+          </property>
         </ownedAttributes>
         <ownedOperations>
           <operation Id="d4e521cc-ebad-4048-8eca-5991de9b6f10" name="RefreshState" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -1573,6 +1620,19 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           </operation>
           <operation Id="d8bccebe-cac2-417c-b67b-6574e3deecb3" name="OperationsProtocol" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="bf384735-70ad-4919-9b85-8cb4f0a61555" />
+          </operation>
+          <operation Id="3742f983-5481-4861-8de4-8c7554ff7932" name="LinkConnector" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="1518234c-d559-43a7-902e-9fe74a6503d8" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a0c893da-dac4-4829-9b73-8360c37c88ed" name="Connector" direction="In" isUnique="false">
+                  <elementDefinition Id="9d21bfea-79ec-44d2-916e-d2e84f3bfa63" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="c5f5887b-000f-4d6a-b8f6-1eec2446d3eb" name="UnlinkConnector" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="be17b0a9-7c76-4cea-b8cf-c10b59fd49a3" />
           </operation>
         </ownedOperations>
       </Interface>
@@ -7034,14 +7094,8 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         </appliedStereotypesInternal>
         <elementDefinition Id="dc0e929d-c3df-48da-9d3d-0b806e85ef45" />
         <ownedLiterals>
-          <enumerationLiteral Id="d4ea4594-1cd3-4529-9b8e-271073f2485e" name="Example">
-            <elementDefinition Id="ee7dc915-1223-4976-8d96-8191eb75cae1" />
-          </enumerationLiteral>
           <enumerationLiteral Id="145169e6-f53c-4fa6-b453-6f4ec8d1ff1f" name="Debug">
             <elementDefinition Id="489df5fc-29df-43da-b6af-b8350c3bc7f9" />
-          </enumerationLiteral>
-          <enumerationLiteral Id="882c1cf9-a89f-430f-aea4-7f7b71614e5b" name="MapPinPorts">
-            <elementDefinition Id="38acfc18-fffa-49e4-81f5-3a333cf14133" />
           </enumerationLiteral>
         </ownedLiterals>
       </enumeration>
@@ -9768,6 +9822,27 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
           </enumerationLiteral>
         </ownedLiterals>
       </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="932f5f70-6471-485f-bfa0-11e45205bc35" name="Product" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="22b9b6bb-9bf9-43b0-b9b3-accf0ffb5e63" />
+        <ownedAttributesInternal>
+          <property Id="472f1d50-3e0e-411c-9d1a-a18d1b08bbc7" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b78190b6-0b5c-43d6-8541-c3699d6cf7f2" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d530face-f865-41e4-bf72-7ba15640e194" name="BoardSensor" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="20a256b1-63fe-413f-9ef3-e07e895ac7ee" />
+        <generalsInternal>
+          <generalization Id="91a81c7c-fc14-40d9-9b0a-19501d21edd7" isSubstitutable="false">
+            <classMoniker Id="932f5f70-6471-485f-bfa0-11e45205bc35" LastKnownName="Product" />
+            <elementDefinition Id="854f5579-39dc-4649-9a04-9af0ef8121de" />
+          </generalization>
+        </generalsInternal>
+      </class>
     </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="bccca03e-3443-4c92-a5a5-06662791af09" name="Modeling">

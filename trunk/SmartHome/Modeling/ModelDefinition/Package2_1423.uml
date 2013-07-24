@@ -86,14 +86,8 @@
         </appliedStereotypesInternal>
         <ownedLiterals>
           <enumerationLiteral
-            Id="ee7dc915-1223-4976-8d96-8191eb75cae1"
-            name="Example" />
-          <enumerationLiteral
             Id="489df5fc-29df-43da-b6af-b8350c3bc7f9"
             name="Debug" />
-          <enumerationLiteral
-            Id="38acfc18-fffa-49e4-81f5-3a333cf14133"
-            name="MapPinPorts" />
         </ownedLiterals>
       </enumeration>
     </packageHasNamedElement>

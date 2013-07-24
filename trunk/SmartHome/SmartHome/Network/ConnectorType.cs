@@ -14,6 +14,7 @@ namespace SmartHome.Network
         Dimmer,
         LogicInput,
         RGB,
+        DimmerPassZero,
         ConectorSensorBoard
     }
 }
