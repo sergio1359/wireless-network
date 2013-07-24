@@ -10,10 +10,12 @@
 #include "radioManager.h"
 #include "globals.h"
 
+
 INPUT_UART_HEADER_t coordinator_UART_header;
 
 _Bool checkTimeRestrictions(uint16_t operationAddress);
 _Bool checkConditions(uint16_t operationAddress);
+
 
 void OM_Init(void)
 {
@@ -70,6 +72,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 			Radio_AddMessageByReference(operation_header, 0x00);
 	}
 }
+	
 
 void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header)
 {

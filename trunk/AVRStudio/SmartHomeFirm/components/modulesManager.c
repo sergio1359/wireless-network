@@ -7,13 +7,19 @@
 #include "modulesManager.h"
 
 //--------------------MODULES-----------------//
-#define X(a, b, c) [a] = b,
+#define X(a, b, c, d) [a] = b,
 void (*modules_Inits[]) () = {
 	MODULES_TABLE
 };
 #undef X
 
-#define X(a, b, c) [a] = c,
+#define X(a, b, c, d) [a] = c,
+void (*modules_DataConf[]) (NWK_DataReq_t *req) = {
+	MODULES_TABLE
+};
+#undef X
+
+#define X(a, b, c, d) [a] = d,
 void (*modules_NotificationInd[]) (uint8_t, OPERATION_HEADER_t*) = {
 	MODULES_TABLE
 };
@@ -62,6 +68,11 @@ uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode] + *(opcode+2);
 	else
 		return command_lengths[*opcode];
+}
+
+void* MODULES_DataConf(uint8_t moduleId)
+{
+	return (*modules_DataConf[moduleId]);
 }	
 
 void MODULES_HandleCommand(OPERATION_HEADER_t* header)

@@ -14,7 +14,7 @@
 #include <stdbool.h>
 #include "configManager.h"
 
-#define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_NotificationInd)
+#define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_DataConf, timeModule_NotificationInd)
 
 #define COMMANDS_TABLE_TIME \
 X(DateTimeWrite,				0x30, time_Handler,		TIME_WRITE_MESSAGE_t,					false)	\
@@ -43,6 +43,7 @@ typedef struct
 
 void timeModule_Init(void);
 void timeModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void timeModule_DataConf(NWK_DataReq_t *req);
 
 void time_Handler(OPERATION_HEADER_t* operation_header);
 

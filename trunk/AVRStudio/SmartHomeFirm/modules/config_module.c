@@ -85,6 +85,11 @@ void configModule_Init(void)
 	currentRecvIndex = 0;
 }
 
+static void configModule_DataConf(NWK_DataReq_t *req)
+{
+	
+}
+
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
 {
 	

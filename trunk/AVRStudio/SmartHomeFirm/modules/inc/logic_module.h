@@ -14,7 +14,7 @@
 #include "RTC.h"
 #include "configManager.h"
 
-#define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
+#define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_DataConf, logicModule_NotificationInd)
 
 #define COMMANDS_TABLE_LOGIC														\
 X(LogicWrite,			0x40, logic_Handler, LOGIC_WRITE_MESSAGE_t,			false)	\
@@ -68,6 +68,7 @@ typedef struct
 
 void logicModule_Init(void);
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
+static void logicModule_DataConf(NWK_DataReq_t *req);
 
 void logic_Handler(OPERATION_HEADER_t* operation_header);
 

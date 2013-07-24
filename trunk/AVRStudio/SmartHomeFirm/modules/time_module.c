@@ -28,6 +28,11 @@ void timeModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification
 	
 }
 
+static void timeModule_DataConf(NWK_DataReq_t *req)
+{
+	
+}
+
 void time_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == DateTimeWrite)

@@ -6,7 +6,6 @@
  */ 
 
 #include "globals.h"
-#include "nwk.h"
 #include "sysTimer.h"
 
 #include "radioManager.h"
@@ -32,10 +31,10 @@ typedef struct
 
 /* Circular buffer object */
 CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)				copiesMessages_Buffer;
-CREATE_CIRCULARBUFFER(RADIO_ELEM_t*, PENDING_BUFFER_SIZE)	pendingMessages_Buffer;
+CREATE_CIRCULARBUFFER(RADIO_ELEM_t, PENDING_BUFFER_SIZE)		pendingMessages_Buffer;
 
 RadioState_t currentState = RF_STATE_INITIAL;
-NWK_DataReq_t nwkDataReq;
+static NWK_DataReq_t nwkDataReq;
 uint8_t failRetries;
 SYS_Timer_t retriesTimer;
 
@@ -43,7 +42,8 @@ INPUT_UART_HEADER_t uartRadioHeader;
 
 inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
-inline _Bool isInCopiesBuffer(OPERATION_HEADER_t* message);
+inline _Bool isInCopiesBuffer(uint8_t* message);
+void resetRadioState(NWK_DataReq_t *req);
 void sendNextMessage(void);
 static void rfDataConf(NWK_DataReq_t *req);
 static void rfDataInd(NWK_DataInd_t *ind);
@@ -90,8 +90,8 @@ _Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message, void* callback)
 {
 	if(freeSpace(pendingMessages_Buffer.start, pendingMessages_Buffer.end, PENDING_BUFFER_SIZE) >= 1)
 	{
-		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end]->operationPtr = message;
-		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end]->confirm = callback;
+		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end].operationPtr = message;
+		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end].confirm = callback;
 		pendingMessages_Buffer.end++;
 		pendingMessages_Buffer.end &= PENDING_BUFFER_SIZE_MASK;
 		
@@ -160,11 +160,29 @@ unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size)
 		return start - end;
 }
 
-_Bool isInCopiesBuffer(OPERATION_HEADER_t* message)
+_Bool isInCopiesBuffer(uint8_t* message)
 {
-	return ((uint16_t)message >= (uint16_t)copiesMessages_Buffer.buffer && (uint16_t)message <= ((uint16_t)(copiesMessages_Buffer.buffer) + COPIES_BUFFER_SIZE));
+	return ((uint16_t)message >= (uint16_t)&copiesMessages_Buffer.buffer && (uint16_t)message <= ((uint16_t)(&copiesMessages_Buffer.buffer) + COPIES_BUFFER_SIZE));
 }
 
+void resetRadioState(NWK_DataReq_t *req)
+{
+	if( pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm != 0)
+		(*pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm)(req);
+	
+	pendingMessages_Buffer.start++;
+	pendingMessages_Buffer.start &= PENDING_BUFFER_SIZE_MASK;
+	
+	if(isInCopiesBuffer(nwkDataReq.data))
+	{
+		copiesMessages_Buffer.start += nwkDataReq.size;
+		copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;
+	}
+	
+	failRetries = 0;
+	currentState = RF_STATE_READY_TO_SEND;
+	sendNextMessage();
+}
 
 void sendNextMessage()
 {
@@ -174,43 +192,24 @@ void sendNextMessage()
 	
 	OPERATION_HEADER_t* currentOP;
 	uint8_t length;
-	if(pendingMessages_Buffer.start != pendingMessages_Buffer.end)
+	
+	if(pendingMessages_Buffer.start != pendingMessages_Buffer.end)//Something to send
 	{
-		currentOP = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start]->operationPtr;
+		currentOP = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].operationPtr;
 		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
-		
-		pendingMessages_Buffer.start++;
-		pendingMessages_Buffer.start &= PENDING_BUFFER_SIZE_MASK;
-		
-		if(isInCopiesBuffer(currentOP))
-		{
-			copiesMessages_Buffer.start += length;
-			copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;
-		}
-	}
-	/*else if(copiesMessages_Buffer.start != copiesMessages_Buffer.end)
-	{
-		currentOP = (OPERATION_HEADER_t*)&copiesMessages_Buffer.buffer[copiesMessages_Buffer.start];
-		length = sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&currentOP->opCode);
-		
-		copiesMessages_Buffer.start += length;
-		copiesMessages_Buffer.start &= COPIES_BUFFER_SIZE_MASK;
-	}else*/
-	{
-		return; //Nothing to send
-	}		
 			
-	nwkDataReq.dstAddr = currentOP->destinationAddress;
-	nwkDataReq.dstEndpoint = APP_ENDPOINT;
-	nwkDataReq.srcEndpoint = APP_ENDPOINT;
-	nwkDataReq.options = NWK_OPT_ACK_REQUEST | NWK_OPT_ENABLE_SECURITY;
-	nwkDataReq.data = (uint8_t *)currentOP;
-	nwkDataReq.size = length;
-	nwkDataReq.confirm = rfDataConf;
+		nwkDataReq.dstAddr = currentOP->destinationAddress;
+		nwkDataReq.dstEndpoint = APP_ENDPOINT;
+		nwkDataReq.srcEndpoint = APP_ENDPOINT;
+		nwkDataReq.options = NWK_OPT_ACK_REQUEST | NWK_OPT_ENABLE_SECURITY;
+		nwkDataReq.data = (uint8_t *)currentOP;
+		nwkDataReq.size = length;
+		nwkDataReq.confirm = rfDataConf;
 
-	currentState = RF_STATE_WAIT_CONF;
+		currentState = RF_STATE_WAIT_CONF;
 		
-	NWK_DataReq(&nwkDataReq);
+		NWK_DataReq(&nwkDataReq);
+	}	
 }
 
 
@@ -220,9 +219,7 @@ static void rfDataConf(NWK_DataReq_t *req)
 
 	if (NWK_SUCCESS_STATUS == req->status)
 	{
-		failRetries = 0;
-		currentState = RF_STATE_READY_TO_SEND;
-		sendNextMessage();
+		resetRadioState(req);
 	}
 	else //NETWORK_PROBLEM
 	{
@@ -248,11 +245,8 @@ static void rfDataConf(NWK_DataReq_t *req)
 		
 		if(failRetries == runningConfiguration.topConfiguration.networkConfig.networkRetries)
 		{
-			failRetries = 0;
-			
 			//Discard message
-			currentState = RF_STATE_READY_TO_SEND;
-			sendNextMessage();
+			resetRadioState(req);
 			
 			//TODO: Send or log ERROR (LIMIT_EXCEDED)
 		}else
