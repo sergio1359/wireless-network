@@ -267,7 +267,7 @@ namespace SmartHome.Memory
                     result[0]++;
                     result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
-                    result.Add(GetLogicConfiguration(item.Connector));
+                    result.Add(GetLogicConfiguration(item.Connector, item));
                 }
 
             }

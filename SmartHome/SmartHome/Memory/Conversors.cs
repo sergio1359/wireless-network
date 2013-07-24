@@ -72,26 +72,7 @@ namespace SmartHome.Memory
 
             return result;
         }
-
-        //esto es para generar la memoria. Devuelve NULL si no tiene configuracion
-        public static PinPortConfiguration GetPinPortConfiguration(this Node node, PinPort pinport)
-        {
-            Connector con = node.GetConnector(pinport);
-            if (con == null)
-            {
-                return ProductConfiguration.DefaultPinPortConfiguration();
-            }
-            else
-            {
-                if (con.InUse)
-                {
-                    return ProductConfiguration.GetPinPortConfiguration(con.HomeDevices);
-                }
-            }
-
-            return ProductConfiguration.DefaultPinPortConfiguration();
-        }
-
+        
 
         /// <summary>
         /// Devuelve el Connector que tiene el pinPort Asociado, si no existe ningun conector entonces null
@@ -119,9 +100,9 @@ namespace SmartHome.Memory
 
     public partial class FirmwareUno
     {
-        private byte GetLogicConfiguration(Connector hd)
+        private byte GetLogicConfiguration(Connector connector, HomeDevice homeDevice)
         {
-            PinPortConfiguration ppc = hd.GetPinPortConfiguration();
+            PinPortConfiguration ppc = connector.GetPinPortConfiguration(homeDevice);
             byte res = 0x00;
             if (ppc.Output)
                 res |= (byte)(0x01 << 3);
