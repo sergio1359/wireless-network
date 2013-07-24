@@ -147,18 +147,18 @@ namespace Generate_Simple_EEPROM
             }
 
             //Node0
-            NetworkManager.Nodes[0].Connectors[0].HomeDevice = NetworkManager.HomeDevices[0];
-            NetworkManager.Nodes[0].Connectors[1].HomeDevice = NetworkManager.HomeDevices[1];
-            NetworkManager.Nodes[0].Connectors[2].HomeDevice = NetworkManager.HomeDevices[2];
-            NetworkManager.Nodes[0].Connectors[3].HomeDevice = NetworkManager.HomeDevices[3];
-            NetworkManager.Nodes[0].Connectors[4].HomeDevice = NetworkManager.HomeDevices[4];
+            NetworkManager.Nodes[0].Connectors[0].HomeDevices = NetworkManager.HomeDevices[0];
+            NetworkManager.Nodes[0].Connectors[1].HomeDevices = NetworkManager.HomeDevices[1];
+            NetworkManager.Nodes[0].Connectors[2].HomeDevices = NetworkManager.HomeDevices[2];
+            NetworkManager.Nodes[0].Connectors[3].HomeDevices = NetworkManager.HomeDevices[3];
+            NetworkManager.Nodes[0].Connectors[4].HomeDevices = NetworkManager.HomeDevices[4];
 
             NetworkManager.Nodes[0].Address = 0x4003;
 
 
             //Node1
-            NetworkManager.Nodes[1].Connectors[0].HomeDevice = NetworkManager.HomeDevices[5];
-            NetworkManager.Nodes[1].Connectors[1].HomeDevice = NetworkManager.HomeDevices[6];
+            NetworkManager.Nodes[1].Connectors[0].HomeDevices = NetworkManager.HomeDevices[5];
+            NetworkManager.Nodes[1].Connectors[1].HomeDevices = NetworkManager.HomeDevices[6];
             NetworkManager.Nodes[1].Connectors[2].HomeDevice = NetworkManager.HomeDevices[7];
             NetworkManager.Nodes[1].Connectors[3].HomeDevice = NetworkManager.HomeDevices[8];
             NetworkManager.Nodes[1].Connectors[4].HomeDevice = NetworkManager.HomeDevices[9];
@@ -170,25 +170,25 @@ namespace Generate_Simple_EEPROM
             {
                 foreach (Connector c in n.Connectors)
                 {
-                    if (c.HomeDevice != null)
-                        c.HomeDevice.Connector = c;
+                    if (c.HomeDevices != null)
+                        c.HomeDevices.Connector = c;
                 }
             }
 
             //Operations 0->1
-            NetworkManager.Nodes[0].Connectors[0].HomeDevice.Operations.Add(new Operation()
+            NetworkManager.Nodes[0].Connectors[0].HomeDevices.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
                 Args = new byte[] { 0x06, 0x00, 0x00 }, //Harcondig: IDHomeDev, Time = 0
-                DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevice,
+                DestionationHomeDevice = NetworkManager.Nodes[1].Connectors[1].HomeDevices,
             });
 
             //1->0
-            NetworkManager.Nodes[1].Connectors[0].HomeDevice.Operations.Add(new Operation()
+            NetworkManager.Nodes[1].Connectors[0].HomeDevices.Operations.Add(new Operation()
             {
                 OPCode = SmartHome.Comunications.OPCode.LogicSwitch,
                 Args = new byte[] { 0x01, 0x00, 0x00 }, //Hardconding: IDHomeDev, Time = 0
-                DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevice,
+                DestionationHomeDevice = NetworkManager.Nodes[0].Connectors[1].HomeDevices,
             });
 
             NetworkManager.GetAllEEPROMS();

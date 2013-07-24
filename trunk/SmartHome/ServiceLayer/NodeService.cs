@@ -25,14 +25,14 @@ namespace ServiceLayer
             Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.Id == idConnector);
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
 
-            if (connector.HomeDevice != null)
+            if (connector.InUse)
                 return 1;
 
             if (homeDevice.InUse)
                 return 2;
 
 
-            connector.HomeDevice = homeDevice;
+            connector.HomeDevices = homeDevice;
             homeDevice.Connector = connector;
             return 0;
         }
@@ -43,7 +43,7 @@ namespace ServiceLayer
         public void Unlink(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
-            homeDevice.Connector.HomeDevice = null;
+            homeDevice.Connector.HomeDevices = null;
             homeDevice.Connector = null;
         }
 

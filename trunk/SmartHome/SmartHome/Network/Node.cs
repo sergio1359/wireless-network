@@ -7,6 +7,7 @@ using SmartHome.Products;
 using SmartHome.Tools;
 using SmartHome.Memory;
 using System.IO;
+using SmartHome.Network.HomeDevices;
 
 namespace SmartHome.Network
 {
@@ -22,6 +23,14 @@ namespace SmartHome.Network
         public BaseType Base { get; set; }
         public ShieldType Shield { get; set; }
         public Security Security { get; set; }
+
+        public List<HomeDevice> HomeDevices 
+        { 
+            get 
+            {
+                throw new NotImplementedException();
+            }
+        } 
 
         public Node() { }
 
