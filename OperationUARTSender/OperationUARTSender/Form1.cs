@@ -166,7 +166,7 @@ namespace OperationUARTSender
             SendData(outputMessage.ToBinary());
         }
 
-        public void SendConfigFile(string inputFilename, ushort destinationAddress)
+        public void SendConfigFile(ushort destinationAddress, string inputFilename)
         {
             byte[] fileBytes = File.ReadAllBytes(inputFilename);
 
@@ -225,6 +225,20 @@ namespace OperationUARTSender
             frame.Add(cs);
 
             serial.Write(frame.ToArray(), 0, frame.Count);
+        }
+
+        private void SendDateTime(ushort destinationAddress, bool writeOperation)
+        {
+            var dat = DateTime.Now;
+            var dow = (int)Enum.Parse(typeof(DayOfWeeks), dat.DayOfWeek.ToString().ToUpper().Substring(0, 3));
+
+            SendOperation(new Operation()
+            {
+                SourceAddress = 0x00,
+                DestinationAddress = destinationAddress,
+                OpCode = writeOperation ? (byte)OPCode.DateTimeWrite : (byte)OPCode.DateTimeReadResponse,
+                Args = new byte[] { (byte)dow, (byte)dat.Day, (byte)dat.Month, (byte)dat.Year, (byte)(dat.Year >> 8), (byte)dat.Hour, (byte)dat.Minute, (byte)dat.Second }
+            });
         }
 
         private void SaveConfigFile()
@@ -384,22 +398,13 @@ namespace OperationUARTSender
 
             if (res == System.Windows.Forms.DialogResult.OK)
             {
-                SendConfigFile(openFileDialog1.FileName, CurrentAddress);
+                SendConfigFile(CurrentAddress, openFileDialog1.FileName);
             }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            var dat = DateTime.Now;
-            var dow = (int)Enum.Parse(typeof(DayOfWeeks), dat.DayOfWeek.ToString().ToUpper().Substring(0, 3));
-
-            SendOperation(new Operation()
-            {
-                SourceAddress = 0x00,
-                DestinationAddress = CurrentAddress,
-                OpCode = (byte)OPCode.DateTimeWrite,
-                Args = new byte[] { (byte)dow, (byte)dat.Day, (byte)dat.Month, (byte)dat.Year, (byte)(dat.Year >> 8), (byte)dat.Hour, (byte)dat.Minute, (byte)dat.Second }
-            });
+            SendDateTime(CurrentAddress, true);
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -480,10 +485,12 @@ namespace OperationUARTSender
             }
             else if (operation.OpCode == (byte)OPCode.PresenceReadResponse)
             {
-                msgToPrint = String.Format("PRESENCE READ FROM 0x{0:X4}: 0x{1:X4} {2}DETECTED",
+                string valStr = (operation.Args[2] == 0xFF) ? "UNKNOWN" : (operation.Args[2] != 0) ? "DETECTED" : "NOT DETECTED";
+
+                msgToPrint = String.Format("PRESENCE READ FROM 0x{0:X4}: 0x{1:X4} {2}",
                     operation.SourceAddress,
                     ((ushort)operation.Args[1]) << 8 | operation.Args[0],
-                    (operation.Args[2] != 0) ? "" : "NOT ");
+                    valStr);
             }
             else if (operation.OpCode == (byte)OPCode.ConfigChecksumResponse)
             {
@@ -498,20 +505,35 @@ namespace OperationUARTSender
                     ((ushort)operation.Args[1]) << 8 | operation.Args[0],
                     operation.Args[2] != 0);
             }
+            else if (operation.OpCode == (byte)OPCode.DateTimeRead) //TIME SYNC REQUEST!
+            {
+                SendDateTime(operation.SourceAddress, false);
+                msgToPrint = String.Format("TIME SYNC RESPONSE SENT TO 0x{0:X4}",operation.SourceAddress);
+            }
             else if (operation.OpCode == (byte)OPCode.DateTimeReadResponse)
             {
-                string DateStr = String.Format("{0}  {1:d2}/{2:d2}/{3:d4}",
-                    Enum.GetName(typeof(DayOfWeeks), (object)operation.Args[0]),
-                    operation.Args[1],
-                    operation.Args[2],
-                    ((ushort)operation.Args[4]) << 8 | operation.Args[3]);
+                string DateTimeStr = string.Empty;
 
-                string TimeStr = String.Format(" {0:d2}:{1:d2}:{2:d2}",
-                    operation.Args[5],
-                    operation.Args[6],
-                    operation.Args[7]);
+                if (operation.Args[0] != 0xFF)//Valid DATETIME
+                {
+                    string DateStr = String.Format("{0}  {1:d2}/{2:d2}/{3:d4}",
+                        Enum.GetName(typeof(DayOfWeeks), (object)operation.Args[0]),
+                        operation.Args[1],
+                        operation.Args[2],
+                        ((ushort)operation.Args[4]) << 8 | operation.Args[3]);
 
-                msgToPrint = String.Format("DATETIME READ FROM 0x{0:X4} -> ", operation.SourceAddress) + DateStr + " " + TimeStr;
+                    string TimeStr = String.Format(" {0:d2}:{1:d2}:{2:d2}",
+                        operation.Args[5],
+                        operation.Args[6],
+                        operation.Args[7]);
+
+                    DateTimeStr = DateStr + " " + TimeStr;
+                }
+                else
+                {
+                    DateTimeStr = "INVALID";
+                }
+                msgToPrint = String.Format("DATETIME READ FROM 0x{0:X4} -> ", operation.SourceAddress) + DateTimeStr;
             }
             else if (operation.OpCode == (byte)OPCode.MacReadResponse)
             {
