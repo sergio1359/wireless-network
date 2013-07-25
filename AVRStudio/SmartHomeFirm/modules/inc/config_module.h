@@ -13,23 +13,23 @@
 #include <stdbool.h>
 #include "configManager.h"
 
-#define CONFIG_MODULE_DEFINITION  X(ConfigModule, configModule_Init, configModule_DataConf, configModule_NotificationInd)
+#define CONFIG_MODULE_DEFINITION  X(ConfigModule, configModule_Init, configModule_NotificationInd)
 
 #define COMMANDS_TABLE_CONFIG \
-X(Reset,						0x00, configSystem_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				false)	\
-X(FirmwareVersionRead,			0x01, configSystem_Handler,		FIRMWARE_VERSION_READ_MESSAGE_t,			false)	\
-X(FirmwareVersionReadResponse,	0x02, configSystem_Handler,		FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t,	false)	\
-X(ShieldModelRead,				0x03, configSystem_Handler,		SHIELD_MODEL_READ_MESSAGE_t,				false)	\
-X(ShieldModelReadResponse,		0x04, configSystem_Handler,		SHIELD_MODEL_READ_RESPONSE_MESSAGE_t,		false)	\
-X(BaseModelRead,				0x05, configSystem_Handler,		BASE_MODEL_READ_MESSAGE_t,					false)	\
-X(BaseModelReadResponse,		0x06, configSystem_Handler,		BASE_MODEL_READ_RESPONSE_MESSAGE_t,			false)	\
-X(ConfigWrite,					0x07, configWrite_Handler,		CONFIG_WRITE_HEADER_MESSAGE_t,				true)	\
-X(ConfigWriteResponse,			0x08, configWrite_Handler,		CONFIG_WRITE_RESPONSE_MESSAGE_t,			false)	\
-X(ConfigRead,					0x09, configRead_Handler,		CONFIG_READ_MESSAGE_t,						false)	\
-X(ConfigReadResponse,			0x0A, configRead_Handler,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,		true)	\
-X(ConfigReadConfirmation,		0x0B, configRead_Handler,		CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
-X(ConfigChecksum,				0x0C, configChecksum_Handler,	CONFIG_CHECKSUM_MESSAGE_t,					false)	\
-X(ConfigChecksumResponse,		0x0D, configChecksum_Handler,	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
+X(Reset,						0x00, configSystem_Handler,		configModule_DataConf,		CONFIG_WRITE_HEADER_MESSAGE_t,				false)	\
+X(FirmwareVersionRead,			0x01, configSystem_Handler,		configModule_DataConf,		FIRMWARE_VERSION_READ_MESSAGE_t,			false)	\
+X(FirmwareVersionReadResponse,	0x02, configSystem_Handler,		configModule_DataConf,		FIRMWARE_VERSION_READ_RESPONSE_MESSAGE_t,	false)	\
+X(ShieldModelRead,				0x03, configSystem_Handler,		configModule_DataConf,		SHIELD_MODEL_READ_MESSAGE_t,				false)	\
+X(ShieldModelReadResponse,		0x04, configSystem_Handler,		configModule_DataConf,		SHIELD_MODEL_READ_RESPONSE_MESSAGE_t,		false)	\
+X(BaseModelRead,				0x05, configSystem_Handler,		configModule_DataConf,		BASE_MODEL_READ_MESSAGE_t,					false)	\
+X(BaseModelReadResponse,		0x06, configSystem_Handler,		configModule_DataConf,		BASE_MODEL_READ_RESPONSE_MESSAGE_t,			false)	\
+X(ConfigWrite,					0x07, configWrite_Handler,		configModule_DataConf,		CONFIG_WRITE_HEADER_MESSAGE_t,				true)	\
+X(ConfigWriteResponse,			0x08, configWrite_Handler,		configModule_DataConf,		CONFIG_WRITE_RESPONSE_MESSAGE_t,			false)	\
+X(ConfigRead,					0x09, configRead_Handler,		configModule_DataConf,		CONFIG_READ_MESSAGE_t,						false)	\
+X(ConfigReadResponse,			0x0A, configRead_Handler,		configModule_DataConf,		CONFIG_READ_RESPONSE_HEADER_MESSAGE_t,		true)	\
+X(ConfigReadConfirmation,		0x0B, configRead_Handler,		configModule_DataConf,		CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
+X(ConfigChecksum,				0x0C, configChecksum_Handler,	configModule_DataConf,		CONFIG_CHECKSUM_MESSAGE_t,					false)	\
+X(ConfigChecksumResponse,		0x0D, configChecksum_Handler,	configModule_DataConf,		CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
 
 //SYSTEM
 typedef struct
@@ -108,7 +108,7 @@ typedef struct
 
 void configModule_Init(void);
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-static void configModule_DataConf(NWK_DataReq_t *req);
+void configModule_DataConf(NWK_DataReq_t *req);
 
 void configSystem_Handler(OPERATION_HEADER_t* operation_header);
 void configWrite_Handler(OPERATION_HEADER_t* operation_header);

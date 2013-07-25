@@ -113,5 +113,6 @@ typedef union
 
 void CONFIG_Init(void);
 
+inline uint16_t CONFIG_GetOperationAddress(OPERATION_HEADER_t* operation_header);
 
 #endif /* CONFIGMANAGER_H_ */

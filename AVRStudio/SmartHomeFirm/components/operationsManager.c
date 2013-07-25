@@ -7,6 +7,7 @@
 
 #include "operationsManager.h"
 #include "modulesManager.h"
+#include "timeManager.h"
 #include "radioManager.h"
 #include "globals.h"
 
@@ -26,7 +27,7 @@ void OM_Init(void)
 	coordinator_UART_header.security	= 1; //SecurityEnabled
 }
 
-void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy)
+void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header)
 {
 	/* TESTING REGION */
 	if(!IS_COORDINATOR)
@@ -53,8 +54,8 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		return;
 	}
 	/* END OF TESTING REGION */
-	
-	if(!checkTimeRestrictions((uint16_t)operation_header) || !checkConditions((uint16_t)operation_header)) //Restriction not satisfied
+	uint16_t operationConfigAddress = CONFIG_GetOperationConfigAddress(operation_header);
+	if(!checkTimeRestrictions(operationConfigAddress) || !checkConditions(operationConfigAddress)) //Restriction not satisfied
 		return;
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
@@ -62,14 +63,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool by
 		MODULES_HandleCommand(operation_header);
 	}else
 	{
-		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
-		if(IS_COORDINATOR)
-			operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-		
-		if(byCopy)
-			Radio_AddMessageByCopy(operation_header, 0x00);
-		else
-			Radio_AddMessageByReference(operation_header, 0x00);
+		Radio_AddMessageByReference(operation_header, MODULES_DataConf(&operation_header->opCode));
 	}
 }
 	
@@ -121,12 +115,13 @@ void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_H
 
 void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 {
-	if(IS_COORDINATOR)
+	//TODO: Condition "operation_header->destinationAddress == 0" added for testing...
+	if(IS_COORDINATOR || operation_header->destinationAddress == 0)
 	{
 		USART_SendOperation(&coordinator_UART_header, operation_header);
 	}else
 	{
-		Radio_AddMessageByCopy(operation_header, 0x00);
+		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(&operation_header->opCode));
 	}
 }
 
@@ -137,8 +132,24 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength);
 	}else
 	{
-		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, 0x00);
+		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, MODULES_DataConf(&operation_header->opCode));
 	}
+}
+
+void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEADER_t* operation_header)
+{
+	//TODO: EVERY NODE CAN BE USED AS DONGLE WITHOUT CONFIGURATION. RIHGT?
+	
+	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
+	{
+		MODULES_HandleCommand(operation_header);
+	}else
+	{
+		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
+		operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	
+		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(&operation_header->opCode));
+	}	
 }
 
 /************************************************************************/
@@ -158,9 +169,10 @@ _Bool checkTimeRestrictions(uint16_t operationAddress)
 		
 		if(restric->operationAddress == operationAddress && restriction_passed)
 		{
-			restriction_passed =  ( (TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0) );			//In time
-			restriction_passed &= ( (currentWeek.raw & restric->weekDays.raw) != 0);																		//Day of the week
-			restriction_passed &= ( (TIME_CompareDates(restric->dateFrom, currentDate) <= 0) && (TIME_CompareDates(restric->dateTo, currentDate) >= 0) );	//In date
+			restriction_passed = VALID_DATETIME &&																											//System DateTime
+								 ((currentWeek.raw & restric->weekDays.raw) != 0) &&																		//Day of the week
+								 ((TIME_CompareTimes(restric->start, currentTime) <= 0) && (TIME_CompareTimes(restric->end, currentTime) >= 0)) &&			//In time
+								 ((TIME_CompareDates(restric->dateFrom, currentDate) <= 0) && (TIME_CompareDates(restric->dateTo, currentDate) >= 0));		//In date
 		}else if(restric->operationAddress > operationAddress || !restriction_passed)
 		{
 			break;

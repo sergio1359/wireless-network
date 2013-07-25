@@ -91,7 +91,7 @@ void logicModule_Init()
 	SYS_TimerStart(&logicTimer);
 }
 
-static void logicModule_DataConf(NWK_DataReq_t *req)
+void logicModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }
@@ -216,7 +216,7 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
 					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 					{
-						OM_ProccessInternalOperation(operationPtr, false);
+						OM_ProccessInternalOperation(operationPtr);
 						operationPtr++;
 					}
 						

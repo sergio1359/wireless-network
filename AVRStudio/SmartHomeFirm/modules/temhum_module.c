@@ -112,7 +112,7 @@ void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificati
 	
 }
 
-static void temHumModule_DataConf(NWK_DataReq_t *req)
+void temHumModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }
@@ -220,7 +220,7 @@ static void tempHumReadTimerHandler(SYS_Timer_t *timer)
 					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoTemPtr->pointerOperationList];
 					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 					{
-						OM_ProccessInternalOperation(operationPtr, false);
+						OM_ProccessInternalOperation(operationPtr);
 						operationPtr++;
 					}
 					
@@ -246,7 +246,7 @@ static void tempHumReadTimerHandler(SYS_Timer_t *timer)
 					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoHumPtr->pointerOperationList];
 					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 					{
-						OM_ProccessInternalOperation(operationPtr, false);
+						OM_ProccessInternalOperation(operationPtr);
 						operationPtr++;
 					}
 					

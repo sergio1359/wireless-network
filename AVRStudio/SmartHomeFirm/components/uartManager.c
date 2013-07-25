@@ -101,8 +101,8 @@ void HAL_UartBytesReceived(uint16_t bytes)
 			if (checkSum == byte)
 			{
 				uartState = USART_RECEIVER_IDLE_RX_STATE;
-				//TODO: PROCCESS MESAGE!!
-				OM_ProccessInternalOperation((OPERATION_HEADER_t*)((uint8_t*)rxBuffer + sizeof(OUTPUT_UART_HEADER_t)), true);
+				//TODO: PROCCESS UART HEADER!!
+				OM_ProccessUARTOperation((OUTPUT_UART_HEADER_t*)rxBuffer, (OPERATION_HEADER_t*)((uint8_t*)rxBuffer + sizeof(OUTPUT_UART_HEADER_t)));
 			}
 			else
 			{

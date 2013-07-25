@@ -12,13 +12,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_DataConf, temHumModule_NotificationInd)
+#define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
 
 #define COMMANDS_TABLE_TEMHUM \
-X(TemperatureRead,				0x5A, temhumRead_Handler,		TEMPERATURE_READ_MESSAGE_t,				false)	\
-X(TemperatureReadResponse,		0x5B, temhumRead_Handler,		TEMPERATURE_READ_RESPONSE_MESSAGE_t,	false)	\
-X(HumidityRead,					0x5C, temhumRead_Handler,		HUMIDITY_READ_MESSAGE_t,				false)	\
-X(HumidityReadResponse,			0x5D, temhumRead_Handler,		HUMIDITY_READ_RESPONSE_MESSAGE_t,		false)	\
+X(TemperatureRead,				0x5A, temhumRead_Handler,	temHumModule_DataConf,	TEMPERATURE_READ_MESSAGE_t,				false)	\
+X(TemperatureReadResponse,		0x5B, temhumRead_Handler,	temHumModule_DataConf,	TEMPERATURE_READ_RESPONSE_MESSAGE_t,	false)	\
+X(HumidityRead,					0x5C, temhumRead_Handler,	temHumModule_DataConf,	HUMIDITY_READ_MESSAGE_t,				false)	\
+X(HumidityReadResponse,			0x5D, temhumRead_Handler,	temHumModule_DataConf,	HUMIDITY_READ_RESPONSE_MESSAGE_t,		false)	\
 
 
 //TEMPERATURE
@@ -58,7 +58,7 @@ typedef struct
 
 void temHumModule_Init(void);
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-static void temHumModule_DataConf(NWK_DataReq_t *req);
+void temHumModule_DataConf(NWK_DataReq_t *req);
 
 void temhumRead_Handler(OPERATION_HEADER_t* operation_header);
 

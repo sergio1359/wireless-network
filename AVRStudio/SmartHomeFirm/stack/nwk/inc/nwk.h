@@ -156,6 +156,7 @@ void NWK_TaskHandler(void);
 #ifdef NWK_ENABLE_ROUTING
 NwkRouteTableRecord_t* NWK_RouteNextHop(uint16_t dst);
 void NWK_RouteTable(uint8_t* buffer, uint8_t length);
+uint16_t NWK_GetNextNeighbourAddress(uint16_t lastAddress);
 #endif
 
 #endif // _NWK_H_

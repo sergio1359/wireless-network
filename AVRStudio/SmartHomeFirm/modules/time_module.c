@@ -28,7 +28,7 @@ void timeModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification
 	
 }
 
-static void timeModule_DataConf(NWK_DataReq_t *req)
+void timeModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }
@@ -60,5 +60,8 @@ void time_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == DateTimeReadResponse)
 	{
 		//TODO: NOTIFICATION
+		
+		TIME_READ_RESPONSE_MESSAGE_t* msg = (TIME_READ_RESPONSE_MESSAGE_t*)(operation_header + 1);
+		TIME_ProccessSyncResponse(&msg->week, &msg->date, &msg->time);
 	}
 }

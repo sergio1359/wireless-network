@@ -24,6 +24,7 @@
 
 //COMPONENTS
 #include "configManager.h"
+#include "timeManager.h"
 #include "uartManager.h"
 
 #ifdef APP_ENABLE_OTA_SERVER
@@ -63,8 +64,8 @@ _Bool sendFlag = false;
 static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
 	if(!IS_COORDINATOR)
-		sendFlag = true;
-		
+	sendFlag = true;
+	
 	//ledToggle(0);
 	(void)timer;
 }
@@ -90,22 +91,23 @@ static void appSendData(void)
 	HAL_UartWriteNumberDEC(currentTime.second,2);
 	HAL_UartPrint("\r\n");
 	
-	DISPLAY_Clear();
-	DISPLAY_WriteString("DATE: ");
-	DISPLAY_WriteNumber(currentDate.day,2);
-	DISPLAY_WriteByte('/');
-	DISPLAY_WriteNumber(currentDate.month,2);
-	DISPLAY_WriteByte('/');
-	DISPLAY_WriteNumber(currentDate.year,4);
-	DISPLAY_SetCursor(0,1);
-	DISPLAY_WriteString("TIME: ");
-	DISPLAY_WriteNumber(currentTime.hour,2);
-	DISPLAY_WriteByte(':');
-	DISPLAY_WriteNumber(currentTime.minute,2);
-	DISPLAY_WriteByte(':');
-	DISPLAY_WriteNumber(currentTime.second,2);
-
-	
+	if(VALID_DATETIME)
+	{
+		DISPLAY_Clear();
+		DISPLAY_WriteString("DATE: ");
+		DISPLAY_WriteNumberDEC(currentDate.day,2);
+		DISPLAY_WriteByte('/');
+		DISPLAY_WriteNumberDEC(currentDate.month,2);
+		DISPLAY_WriteByte('/');
+		DISPLAY_WriteNumberDEC(currentDate.year,4);
+		DISPLAY_SetCursor(0,1);
+		DISPLAY_WriteString("TIME: ");
+		DISPLAY_WriteNumberDEC(currentTime.hour,2);
+		DISPLAY_WriteByte(':');
+		DISPLAY_WriteNumberDEC(currentTime.minute,2);
+		DISPLAY_WriteByte(':');
+		DISPLAY_WriteNumberDEC(currentTime.second,2);
+	}
 	
 	ADC_Reference(REF_DEFAULT);
 	adcVal = ADC_Read(ADC0);
@@ -182,8 +184,8 @@ static void APP_TaskHandler(void)
 	}else
 	{
 		if(sendFlag)
-			appSendData();
-	}	
+		appSendData();
+	}
 }
 
 /*****************************************************************************
@@ -199,8 +201,8 @@ int main(void)
 	CONFIG_Init();
 	
 	/*TIME_t debugTime;
-	debugTime.hour = 00;
-	debugTime.minute = 00;
+	debugTime.hour = 21;
+	debugTime.minute = 59;
 	debugTime.second = 00;
 	TIME_ValidateTime(&debugTime);
 	
@@ -208,7 +210,7 @@ int main(void)
 	DATE_t debugDate;
 	debugWeek.flags.Friday = 1;
 	debugDate.day = 31;
-	debugDate.month = 5;
+	debugDate.month = 7;
 	debugDate.year = 2013;
 	TIME_ValidateDate(&debugDate, &debugWeek);*/
 	
@@ -228,7 +230,7 @@ int main(void)
 			}
 			HAL_UartWriteNumberHEX(serialNumber[SERIAL_NUMBER_SIZE - 1]);
 			HAL_UartPrint("\r\n\r\n");
-		}		
+		}
 	}else
 	{
 		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");

@@ -85,7 +85,7 @@ void configModule_Init(void)
 	currentRecvIndex = 0;
 }
 
-static void configModule_DataConf(NWK_DataReq_t *req)
+void configModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }
