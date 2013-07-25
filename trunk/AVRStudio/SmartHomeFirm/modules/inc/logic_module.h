@@ -14,13 +14,13 @@
 #include "RTC.h"
 #include "configManager.h"
 
-#define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_DataConf, logicModule_NotificationInd)
+#define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
 
 #define COMMANDS_TABLE_LOGIC														\
-X(LogicWrite,			0x40, logic_Handler, LOGIC_WRITE_MESSAGE_t,			false)	\
-X(LogicSwitch,			0x41, logic_Handler, LOGIC_SWITCH_MESSAGE_t,		false)	\
-X(LogicRead,			0x42, logic_Handler, LOGIC_READ_MESSAGE_t,			false)	\
-X(LogicReadResponse,	0x43, logic_Handler, LOGIC_READ_RESPONSE_MESSAGE_t,	false)	\
+X(LogicWrite,			0x40, logic_Handler,	logicModule_DataConf,	LOGIC_WRITE_MESSAGE_t,			false)	\
+X(LogicSwitch,			0x41, logic_Handler,	logicModule_DataConf,	LOGIC_SWITCH_MESSAGE_t,			false)	\
+X(LogicRead,			0x42, logic_Handler,	logicModule_DataConf,	LOGIC_READ_MESSAGE_t,			false)	\
+X(LogicReadResponse,	0x43, logic_Handler,	logicModule_DataConf,	LOGIC_READ_RESPONSE_MESSAGE_t,	false)	\
 
 //LOGIC PORT MESSAGES
 typedef struct
@@ -68,7 +68,7 @@ typedef struct
 
 void logicModule_Init(void);
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-static void logicModule_DataConf(NWK_DataReq_t *req);
+void logicModule_DataConf(NWK_DataReq_t *req);
 
 void logic_Handler(OPERATION_HEADER_t* operation_header);
 

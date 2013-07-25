@@ -95,7 +95,7 @@ void DISPLAY_WriteString(char* stringPointer)
 	writeByteToLCD(DATA_REGISTER, *stringPointer++);
 }
 
-void DISPLAY_WriteNumber(int integer, unsigned char digits)
+void DISPLAY_WriteNumberDEC(int integer, unsigned char digits)
 {
 	//	Break down the original number into the thousands, hundreds, tens,
 	//	and ones places and then immediately write that value to the LCD
@@ -113,6 +113,28 @@ void DISPLAY_WriteNumber(int integer, unsigned char digits)
 	
 	unsigned char ones = (integer - thousands*1000 - hundreds*100 - tens*10);
 	writeByteToLCD(DATA_REGISTER, ones + '0');
+}
+
+void DISPLAY_WriteNumberHEX(unsigned int num)
+{
+	int aux = num;
+	char c;
+	do
+	{
+		c = (aux & 0xF0)>>4;
+		if(c <= 9)
+		writeByteToLCD(DATA_REGISTER, c + '0');
+		else
+		writeByteToLCD(DATA_REGISTER, (c - 10) + 'A');
+		
+		c = (aux & 0xF);
+		if(c <= 9)
+		writeByteToLCD(DATA_REGISTER, c + '0');
+		else
+		writeByteToLCD(DATA_REGISTER, (c - 10) + 'A');
+		
+		aux >>= 8;
+	} while (aux != 0);
 }
 
 void DISPLAY_Clear(void)

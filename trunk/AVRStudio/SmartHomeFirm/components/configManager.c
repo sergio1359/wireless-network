@@ -44,3 +44,8 @@ void CONFIG_Init(void)
 		//TODO:SEND ERROR MESSAGE (ERROR EEPROM EMPTY OR CORRUPTED)
 	}
 }
+
+uint16_t CONFIG_GetOperationConfigAddress(OPERATION_HEADER_t* operation_header)
+{
+	return (uint16_t)operation_header - (uint16_t)&runningConfiguration;
+}

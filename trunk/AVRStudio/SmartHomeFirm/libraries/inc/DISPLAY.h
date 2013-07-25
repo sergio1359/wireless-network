@@ -43,7 +43,9 @@ void DISPLAY_WriteByte(char byte);
 
 void DISPLAY_WriteString(char* stringPointer);
 
-void DISPLAY_WriteNumber(int integer, unsigned char digits);
+void DISPLAY_WriteNumberDEC(int integer, unsigned char digits);
+
+void DISPLAY_WriteNumberHEX(unsigned int num);
 
 void DISPLAY_Clear(void);
 

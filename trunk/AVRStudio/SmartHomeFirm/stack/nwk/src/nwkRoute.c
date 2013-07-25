@@ -274,20 +274,22 @@ void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length)
 
 /*****************************************************************************
 *****************************************************************************/
-void NWK_CopyNeighboursTable(uint8_t* buffer, uint8_t length)
+uint16_t NWK_GetNextNeighbourAddress(uint16_t lastAddress)
 {
-	uint8_t writeIndex = 0;
-	//TODO: COPY ONLY VALID ENTRIES
-	for (uint8_t i = 0; i < NWK_ROUTE_TABLE_SIZE; i++)
+	_Bool lastFound = (lastAddress == 0) || (lastAddress == NWK_ROUTE_UNKNOWN);
+	
+	for (uint16_t i = 0; i < NWK_ROUTE_TABLE_SIZE; i++)
 	{
-		if (nwkRouteTable[i].dst != NWK_ROUTE_UNKNOWN && nwkRouteTable[i].dst == nwkRouteTable[i].nextHop)
+		if(!lastFound)
 		{
-			memcpy((uint8_t*)&buffer[writeIndex],(uint8_t*)&nwkRouteTable[i], sizeof(NwkRouteTableRecord_t));
-			writeIndex+= sizeof(NwkRouteTableRecord_t);
+			lastFound = nwkRouteTable[i].dst == lastAddress;
+		}else if (nwkRouteTable[i].dst != NWK_ROUTE_UNKNOWN && nwkRouteTable[i].dst == nwkRouteTable[i].nextHop)
+		{
+			return nwkRouteTable[i].dst;
 		}
 	}
 	
-	length = writeIndex;
+	return NWK_ROUTE_UNKNOWN;
 }
 
 #endif // NWK_ENABLE_ROUTING

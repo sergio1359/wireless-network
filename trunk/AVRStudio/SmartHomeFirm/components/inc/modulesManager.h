@@ -31,7 +31,7 @@ TIME_MODULE_DEFINITION	  \
 TEMHUM_MODULE_DEFINITION  \
 PRESENCE_MODULE_DEFINITION  \
 
-#define X(a, b, c, d) a,
+#define X(a, b, c) a,
 typedef enum  {
 	MODULES_TABLE
 }MODULES_ID;
@@ -46,7 +46,7 @@ COMMANDS_TABLE_TIME		\
 COMMANDS_TABLE_TEMHUM   \
 COMMANDS_TABLE_PRESENCE \
 
-#define X(a, b, c, d, e) a = b,
+#define X(a, b, c, d, e, f) a = b,
 typedef enum  {
 	COMMANDS_TABLE
 }COMMAND_OPCODES;
@@ -54,7 +54,7 @@ typedef enum  {
 
 void MODULES_Init(void);
 void MODULES_Notify(uint8_t moduleId, OPERATION_HEADER_t* header);
-extern inline void* MODULES_DataConf(uint8_t moduleId);
+extern inline void* MODULES_DataConf(uint8_t* opcode);
 uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode);
 extern inline void MODULES_HandleCommand(OPERATION_HEADER_t* header);
 

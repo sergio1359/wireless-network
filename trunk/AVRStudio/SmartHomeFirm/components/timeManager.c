@@ -12,32 +12,37 @@
 
 #include "sysTimer.h"
 
-TIME_OPERATION_HEADER_t* time_operation_header;
+static TIME_OPERATION_HEADER_t* time_operation_header;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	TIME_READ_MESSAGE_t request;
 }timeSyncRequest;
 
-uint8_t timeSyncCounter;
-SYS_Timer_t timeSyncTimer;
+static uint8_t timeSyncCounter;
+static SYS_Timer_t timeSyncTimer;
+static uint16_t currentNeighbourAddress;
+static TimeSyncState_t timeSyncState;
 
-void searchFirstTimeOperation();
+static void searchFirstTimeOperation();
 static void timeSyncTimerHandler(SYS_Timer_t *timer);
+static void timeSync_DataConf(NWK_DataReq_t *req);
 
 void TIME_Init()
 {
 	RTC_Init();
 	
-	timeSyncCounter = 0;
+	timeSyncState = TIME_SYNC_WAITING_COUNTER;
+	timeSyncCounter = 2;
+	currentNeighbourAddress = 0;
 	timeSyncRequest.header.opCode = DateTimeRead;
 	
 	//Configure Timer
 	timeSyncTimer.interval = 1000;
 	timeSyncTimer.mode = SYS_TIMER_PERIODIC_MODE;
 	timeSyncTimer.handler = timeSyncTimerHandler;
-	//SYS_TimerStart(&timeSyncTimer);
+	SYS_TimerStart(&timeSyncTimer);
 }
 
 void TIME_ValidateTime(TIME_t *receivedTime)
@@ -88,7 +93,7 @@ void TIME_CheckTimeOperation()
 		while(TIME_CompareTimes(time_operation_header->activationTime, currentTime) == 0)
 		{
 			//TODO: USE OPERATION MANAGER!
-			OM_ProccessInternalOperation(&time_operation_header->operationHeader, false);
+			OM_ProccessInternalOperation(&time_operation_header->operationHeader);
 			
 			time_operation_header += sizeof(TIME_OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&time_operation_header->operationHeader.opCode);
 			
@@ -101,13 +106,28 @@ void TIME_CheckTimeOperation()
 	}
 }
 
+void TIME_ProccessSyncResponse(WEEKDAY_t *receivedWeek, DATE_t *receivedDate, TIME_t *receivedTime)
+{
+	if(timeSyncState == TIME_SYNC_WAITING_RESPONSE_STATE)
+	{
+		//Check if the received DATETIME is valid. The validate
+		if(receivedWeek->raw != 0xFF)
+		{
+			TIME_ValidateTime(receivedTime);
+			TIME_ValidateDate(receivedDate, receivedWeek);	
+		}
+		
+		timeSyncState = TIME_SYNC_WAITING_COUNTER;
+	}
+}
+
 
 /************************************************************************/
 /*                       INTERNAL METHODS                               */
 /************************************************************************/
 
 
-void searchFirstTimeOperation()
+static void searchFirstTimeOperation()
 {
 	uint16_t operation_ptr;
 	for(operation_ptr = TIME_OPERATION_LIST_START_ADDRESS; operation_ptr < TIME_OPERATION_LIST_END_ADDRESS;)
@@ -133,12 +153,68 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 		if(timeSyncCounter > 0)
 		{
 			timeSyncCounter--;	
+		}else if(timeSyncState == TIME_SYNC_WAITING_RESPONSE_STATE)
+		{
+			//Skip this node at this iteration
+			timeSyncState = TIME_SYNC_WAITING_COUNTER;
+		}					
+		else if(timeSyncState == TIME_SYNC_WAITING_COUNTER)
+		{
+			//Get the next neighbour node Address
+			currentNeighbourAddress = NWK_GetNextNeighbourAddress(currentNeighbourAddress);
+			
+			if(currentNeighbourAddress == 0xFFFF)//Last neighbour
+			{
+				timeSyncState = TIME_SYNC_WAITING_COUNTER;
+				timeSyncCounter = 5;	
+			}else
+			{
+				//TODO: Send TimeSyncRequest
+				timeSyncRequest.header.destinationAddress = currentNeighbourAddress;
+				timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+				
+				timeSyncState = TIME_SYNC_WAITING_CONFIRM_STATE;
+				Radio_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf);	
+			}
+		}
+		
+			DISPLAY_Clear();
+			DISPLAY_WriteString("SENT TO: 0x");
+			DISPLAY_WriteNumberHEX(currentNeighbourAddress >> 8);
+			DISPLAY_WriteNumberHEX(currentNeighbourAddress & 0xFF);
+			
+			DISPLAY_SetCursor(0,1);
+			DISPLAY_WriteString("WAITING: ");
+			switch (timeSyncState)
+			{
+				case TIME_SYNC_WAITING_COUNTER:
+				DISPLAY_WriteString("COUNTER");
+				break;
+				case TIME_SYNC_WAITING_CONFIRM_STATE:
+				DISPLAY_WriteString("CONFIRM");
+				break;
+				case TIME_SYNC_WAITING_RESPONSE_STATE:
+				DISPLAY_WriteString("RESPONSE");
+				break;
+			}			
+	}
+}
+
+static void timeSync_DataConf(NWK_DataReq_t *req)
+{
+	if(timeSyncState == TIME_SYNC_WAITING_CONFIRM_STATE)
+	{
+		if (NWK_SUCCESS_STATUS == req->status)
+		{
+			timeSyncCounter = 5;//TimeOut
+			timeSyncState = TIME_SYNC_WAITING_RESPONSE_STATE;
 		}else
 		{
-			//TODO: Send TimeSyncRequest
-			//timeSyncRequest.header.destinationAddress = nodeAddress;
-			//timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-			//Radio_AddMessageByReference(timeSyncRequest.header);
-		}			
+			//Skip this node at this iteration
+			timeSyncState = TIME_SYNC_WAITING_COUNTER;
+		}	
+	}else
+	{
+		//TODO:  Send or log ERROR (UNEXPECTED_TIME_SYNC_STATUS)
 	}
 }

@@ -81,7 +81,7 @@ void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notifica
 	
 }
 
-static void presenceModule_DataConf(NWK_DataReq_t *req)
+void presenceModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }
@@ -149,7 +149,7 @@ static void presenceReadTimerHandler(SYS_Timer_t *timer)
 				OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
 				for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
 				{
-					OM_ProccessInternalOperation(operationPtr, false);
+					OM_ProccessInternalOperation(operationPtr);
 					operationPtr++;
 				}
 			

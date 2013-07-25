@@ -14,12 +14,12 @@
 #include <stdbool.h>
 #include "configManager.h"
 
-#define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_DataConf, timeModule_NotificationInd)
+#define TIME_MODULE_DEFINITION  X(TimeModule, timeModule_Init, timeModule_NotificationInd)
 
 #define COMMANDS_TABLE_TIME \
-X(DateTimeWrite,				0x30, time_Handler,		TIME_WRITE_MESSAGE_t,					false)	\
-X(DateTimeRead,					0x31, time_Handler,		TIME_READ_MESSAGE_t,					false)	\
-X(DateTimeReadResponse,			0x32, time_Handler,		TIME_READ_RESPONSE_MESSAGE_t,			false)	\
+X(DateTimeWrite,				0x30, time_Handler,		timeModule_DataConf,	TIME_WRITE_MESSAGE_t,					false)	\
+X(DateTimeRead,					0x31, time_Handler,		timeModule_DataConf,	TIME_READ_MESSAGE_t,					false)	\
+X(DateTimeReadResponse,			0x32, time_Handler,		timeModule_DataConf,	TIME_READ_RESPONSE_MESSAGE_t,			false)	\
 
 
 typedef struct
@@ -43,7 +43,7 @@ typedef struct
 
 void timeModule_Init(void);
 void timeModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-static void timeModule_DataConf(NWK_DataReq_t *req);
+void timeModule_DataConf(NWK_DataReq_t *req);
 
 void time_Handler(OPERATION_HEADER_t* operation_header);
 

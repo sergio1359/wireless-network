@@ -42,7 +42,7 @@ void networkModule_Init(void)
 	nextHopResponse.header.opCode		= NextHopReadResponse;
 }
 
-static void networkModule_DataConf(NWK_DataReq_t *req)
+void networkModule_DataConf(NWK_DataReq_t *req)
 {
 	
 }

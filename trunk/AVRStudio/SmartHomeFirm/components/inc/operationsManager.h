@@ -13,9 +13,10 @@
 #include "uartManager.h"
 
 void OM_Init(void);
-void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header, _Bool byCopy);
+void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header);
 void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header);
 void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header);
 void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodyLength);
+void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEADER_t* operation_header);
 
 #endif /* OPERATIONSMANAGER_H_ */

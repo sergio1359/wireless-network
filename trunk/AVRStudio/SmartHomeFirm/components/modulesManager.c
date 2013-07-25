@@ -7,38 +7,39 @@
 #include "modulesManager.h"
 
 //--------------------MODULES-----------------//
-#define X(a, b, c, d) [a] = b,
+#define X(a, b, c) [a] = b,
 void (*modules_Inits[]) () = {
 	MODULES_TABLE
 };
 #undef X
 
-#define X(a, b, c, d) [a] = c,
-void (*modules_DataConf[]) (NWK_DataReq_t *req) = {
-	MODULES_TABLE
-};
-#undef X
-
-#define X(a, b, c, d) [a] = d,
+#define X(a, b, c) [a] = c,
 void (*modules_NotificationInd[]) (uint8_t, OPERATION_HEADER_t*) = {
 	MODULES_TABLE
 };
 #undef X
 
 //------------------OPERATIONS----------------//
-#define X(a, b, c, d, e) [b] = c,
+#define X(a, b, c, d, e, f) [b] = c,
 void (*command_handlers[]) (OPERATION_HEADER_t*) = {
 	COMMANDS_TABLE
 };
 #undef X
 
-#define X(a, b, c, d, e) [b] = sizeof(d),
+
+#define  X(a, b, c, d, e, f) [b] = d,
+void (*command_DataConfs[]) (NWK_DataReq_t *req) = {
+	COMMANDS_TABLE
+};
+#undef X
+
+#define X(a, b, c, d, e, f) [b] = sizeof(e),
 uint8_t command_lengths[] = {
 	COMMANDS_TABLE
 };
 #undef X
 
-#define X(a, b, c, d, e) [b] = e,
+#define X(a, b, c, d, e, f) [b] = f,
 bool command_is_dinamic[] = {
 	COMMANDS_TABLE
 };
@@ -70,9 +71,9 @@ uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode];
 }
 
-void* MODULES_DataConf(uint8_t moduleId)
+void* MODULES_DataConf(uint8_t* opcode)
 {
-	return (*modules_DataConf[moduleId]);
+	return (*command_DataConfs[*opcode]);
 }	
 
 void MODULES_HandleCommand(OPERATION_HEADER_t* header)

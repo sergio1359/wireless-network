@@ -14,16 +14,16 @@
 #include "configManager.h"
 #include "DS2401.h"
 
-#define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_DataConf, networkModule_NotificationInd)
+#define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_NotificationInd)
 
 #define COMMANDS_TABLE_NETWORK \
-X(MacRead,							0x20, mac_Handler,	 MAC_READ_MESSAGE_t,								false)					\
-X(MacReadResponse,					0x21, mac_Handler,	 MAC_READ_RESPONSE_MESSAGE_t,						false)					\
-X(NextHopRead,						0x22, route_Handler, NEXT_HOP_READ_MESSAGE_t,							false)					\
-X(NextHopReadResponse,				0x23, route_Handler, NEXT_HOP_READ_RESPONSE_MESSAGE_t,					false)					\
-X(RouteTableRead,					0x24, route_Handler, ROUTE_TABLE_READ_MESSAGE_t,						false)					\
-X(RouteTableReadResponse,			0x25, route_Handler, ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,		true)					\
-X(RouteTableReadConfirmation,		0x26, route_Handler, ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,			false)					\
+X(MacRead,							0x20, mac_Handler,		networkModule_DataConf,	 MAC_READ_MESSAGE_t,							false)					\
+X(MacReadResponse,					0x21, mac_Handler,		networkModule_DataConf,	 MAC_READ_RESPONSE_MESSAGE_t,					false)					\
+X(NextHopRead,						0x22, route_Handler,	networkModule_DataConf,  NEXT_HOP_READ_MESSAGE_t,						false)					\
+X(NextHopReadResponse,				0x23, route_Handler,	networkModule_DataConf,  NEXT_HOP_READ_RESPONSE_MESSAGE_t,				false)					\
+X(RouteTableRead,					0x24, route_Handler,	networkModule_DataConf,  ROUTE_TABLE_READ_MESSAGE_t,					false)					\
+X(RouteTableReadResponse,			0x25, route_Handler,	networkModule_DataConf,  ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,	true)					\
+X(RouteTableReadConfirmation,		0x26, route_Handler,	networkModule_DataConf,  ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,		false)					\
 
 
 //MAC
@@ -71,7 +71,7 @@ typedef struct
 
 void networkModule_Init(void);
 void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-static void networkModule_DataConf(NWK_DataReq_t *req);
+void networkModule_DataConf(NWK_DataReq_t *req);
 
 void mac_Handler(OPERATION_HEADER_t* operation_header);
 void route_Handler(OPERATION_HEADER_t* operation_header);
