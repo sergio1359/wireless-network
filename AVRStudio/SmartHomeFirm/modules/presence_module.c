@@ -81,7 +81,7 @@ void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notifica
 	
 }
 
-void presenceModule_DataConf(NWK_DataReq_t *req)
+void presenceModule_DataConf(OPERATION_DataConf_t *req)
 {
 	
 }

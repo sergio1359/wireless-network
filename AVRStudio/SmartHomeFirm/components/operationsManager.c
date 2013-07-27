@@ -63,14 +63,14 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header)
 		MODULES_HandleCommand(operation_header);
 	}else
 	{
-		Radio_AddMessageByReference(operation_header, MODULES_DataConf(&operation_header->opCode));
+		Radio_AddMessageByReference(operation_header, MODULES_DataConf(operation_header->opCode));
 	}
 }
 	
 
 void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header)
 {
-	if(!IS_COORDINATOR)
+	if(!IS_COORDINATOR && false)
 	{
 		/* TESTING REGION */
 		//For testing purposes just send throw UART port
@@ -96,14 +96,15 @@ void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_H
 		/* END OF TESTING REGION */
 	}	
 	
-
-	if(IS_COORDINATOR)
+	//TODO: Call a method that returns true if the OpCode is managed by the firmware.
+	if(IS_COORDINATOR && !MODULES_HandledByFirmware(operation_header->opCode))
 	{
-		USART_SendOperation(input_header, operation_header);
+		USART_SendOperation(input_header, operation_header, 0);
 	}else
 	{
 		//TODO: Check with internal address instead of configuration address...
-		if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress) //MINE (EXTERNAL)
+		if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress || //MINE (EXTERNAL)
+		   (operation_header->destinationAddress == BROADCAST_ADDRESS && operation_header->opCode == FirmwareVersionRead))
 		{
 			MODULES_HandleCommand(operation_header);
 		}else
@@ -116,12 +117,12 @@ void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_H
 void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 {
 	//TODO: Condition "operation_header->destinationAddress == 0" added for testing...
-	if(IS_COORDINATOR || operation_header->destinationAddress == 0)
+	if((IS_COORDINATOR && !MODULES_HandledByFirmware(operation_header->opCode)) || operation_header->destinationAddress == 0)
 	{
-		USART_SendOperation(&coordinator_UART_header, operation_header);
+		USART_SendOperation(&coordinator_UART_header, operation_header, MODULES_DataConf(operation_header->opCode));
 	}else
 	{
-		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(&operation_header->opCode));
+		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(operation_header->opCode));
 	}
 }
 
@@ -129,16 +130,16 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 {
 	if(IS_COORDINATOR)
 	{
-		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength);
+		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
 	}else
 	{
-		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, MODULES_DataConf(&operation_header->opCode));
+		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
 	}
 }
 
 void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEADER_t* operation_header)
 {
-	//TODO: EVERY NODE CAN BE USED AS DONGLE WITHOUT CONFIGURATION. RIHGT?
+	//TODO: AT THIS MOMENT, EVERY NODE CAN BE USED AS DONGLE WITHOUT CONFIGURATION. RIHGT?
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
 	{
@@ -148,7 +149,7 @@ void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEA
 		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
 		operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 	
-		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(&operation_header->opCode));
+		Radio_AddMessageByCopy(operation_header, &USART_DataConf);
 	}	
 }
 

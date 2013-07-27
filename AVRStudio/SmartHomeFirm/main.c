@@ -76,7 +76,7 @@ static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 uint16_t adcVal;
 uint8_t temp;
 static void appSendData(void)
-{
+{/*
 	HAL_UartWriteNumberDEC(currentDate.day,2);
 	HAL_UartWriteByte('/');
 	HAL_UartWriteNumberDEC(currentDate.month,2);
@@ -89,7 +89,7 @@ static void appSendData(void)
 	HAL_UartWriteNumberDEC(currentTime.minute,2);
 	HAL_UartWriteByte(':');
 	HAL_UartWriteNumberDEC(currentTime.second,2);
-	HAL_UartPrint("\r\n");
+	HAL_UartPrint("\r\n");*/
 	
 	if(VALID_DATETIME)
 	{
@@ -108,7 +108,7 @@ static void appSendData(void)
 		DISPLAY_WriteByte(':');
 		DISPLAY_WriteNumberDEC(currentTime.second,2);
 	}
-	
+	/*
 	ADC_Reference(REF_DEFAULT);
 	adcVal = ADC_Read(ADC0);
 	//ADC_Reference(REF_INTERNAL_16);
@@ -116,7 +116,7 @@ static void appSendData(void)
 	//adcVal = 1.13 * adcVal - 272.8;
 	HAL_UartPrint("ADC0: ");
 	HAL_UartWriteNumberDEC(adcVal,4);
-	HAL_UartPrint("\r\n");
+	HAL_UartPrint("\r\n");*/
 	
 	//sendData(serialNumber, SERIAL_NUMBER_SIZE);
 	
@@ -194,7 +194,7 @@ int main(void)
 {
 	SYS_Init();
 	
-	HAL_UartInit(38400);
+	USART_Init();
 	
 	TIME_Init();
 	

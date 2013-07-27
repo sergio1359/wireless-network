@@ -58,7 +58,7 @@ typedef struct
 
 void temHumModule_Init(void);
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void temHumModule_DataConf(NWK_DataReq_t *req);
+void temHumModule_DataConf(OPERATION_DataConf_t *req);
 
 void temhumRead_Handler(OPERATION_HEADER_t* operation_header);
 

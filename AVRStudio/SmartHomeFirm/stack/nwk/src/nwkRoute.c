@@ -373,18 +373,24 @@ void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length)
 
 /*****************************************************************************
 *****************************************************************************/
-uint16_t NWK_GetNextNeighbourAddress(uint16_t lastAddress)
+static uint8_t lastNeighborIndex;
+uint16_t NWK_GetNextNeighborAddress(uint16_t lastAddress)
 {
+	NWK_RouteTableEntry_t* currentEntry;
 	_Bool lastFound = (lastAddress == 0) || (lastAddress == NWK_ROUTE_UNKNOWN);
 	
-	for (uint16_t i = 0; i < NWK_ROUTE_TABLE_SIZE; i++)
+	if(lastFound || nwkRouteTable[lastNeighborIndex].dstAddr != lastAddress)
+		lastNeighborIndex = 0;
+	
+	for (lastNeighborIndex; lastNeighborIndex < NWK_ROUTE_TABLE_SIZE; lastNeighborIndex++)
 	{
+		currentEntry = &nwkRouteTable[lastNeighborIndex];
 		if(!lastFound)
 		{
-			lastFound = nwkRouteTable[i].dstAddr == lastAddress;
-		}else if (nwkRouteTable[i].dstAddr != NWK_ROUTE_UNKNOWN && nwkRouteTable[i].dstAddr == nwkRouteTable[i].nextHopAddr)
+			lastFound = currentEntry->dstAddr == lastAddress;
+		}else if (currentEntry->dstAddr != NWK_ROUTE_UNKNOWN && currentEntry->dstAddr == currentEntry->nextHopAddr)
 		{
-			return nwkRouteTable[i].dstAddr;
+			return currentEntry->dstAddr;
 		}
 	}
 	

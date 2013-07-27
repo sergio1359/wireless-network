@@ -26,13 +26,13 @@ struct
 	NEXT_HOP_READ_RESPONSE_MESSAGE_t response;
 }nextHopResponse;
 
-uint8_t routeTableBuffer[NWK_ROUTE_TABLE_SIZE];
-uint8_t bufferSize = 0;
-_Bool routeSendingState;
-uint8_t currentRouteFragment;
-uint8_t totalRouteExpected;
-uint16_t currentRouteIndex;
-uint16_t currentRouteFrameSize;
+static uint8_t routeTableBuffer[NWK_ROUTE_TABLE_SIZE];
+static uint8_t bufferSize = 0;
+static _Bool routeSendingState;
+static uint8_t currentRouteFragment;
+static uint8_t totalRouteExpected;
+static uint16_t currentRouteIndex;
+static uint16_t currentRouteFrameSize;
 
 void networkModule_Init(void)
 {
@@ -42,7 +42,7 @@ void networkModule_Init(void)
 	nextHopResponse.header.opCode		= NextHopReadResponse;
 }
 
-void networkModule_DataConf(NWK_DataReq_t *req)
+void networkModule_DataConf(OPERATION_DataConf_t *req)
 {
 	
 }

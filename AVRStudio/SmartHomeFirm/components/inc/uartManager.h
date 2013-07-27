@@ -30,6 +30,13 @@ typedef enum _USARTReceiverState_t
 
 typedef struct
 {
+	unsigned int sendOk : 1;	//LSB
+	unsigned int retries : 7;	//MSB
+	OPERATION_HEADER_t* header;
+} OPERATION_DataConf_t;
+
+typedef struct
+{
 	unsigned int endPoint : 6;
 	unsigned int routing  : 1;
 	unsigned int security : 1;
@@ -45,8 +52,12 @@ typedef struct
 	uint8_t retries;
 }OUTPUT_UART_HEADER_t;
 
-void USART_SendOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header);
+void USART_Init(void);
 
-void USART_SendOperationWithBody(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize);
+void USART_DataConf(OPERATION_DataConf_t *req);
+
+void USART_SendOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, void* callback);
+
+void USART_SendOperationWithBody(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodySize, void* callback);
 
 #endif /* UARTMANAGER_H_ */

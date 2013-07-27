@@ -28,7 +28,7 @@ void timeModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification
 	
 }
 
-void timeModule_DataConf(NWK_DataReq_t *req)
+void timeModule_DataConf(OPERATION_DataConf_t *req)
 {
 	
 }

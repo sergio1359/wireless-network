@@ -7,6 +7,7 @@
 #include "modulesManager.h"
 #include "globals.h"
 #include <util/crc16.h>
+#include <sysTimer.h>
 
 enum
 {
@@ -57,23 +58,28 @@ struct
 	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t response;
 }checksumResponse;
 
-_Bool receivingState;
-uint8_t currentRecvFragment;
-uint8_t totalRecvExpected;
-uint16_t currentRecvIndex;
+static _Bool receivingState;
+static _Bool waitingForReset;
+static uint8_t currentRecvFragment;
+static uint8_t totalRecvExpected;
+static uint16_t currentRecvIndex;
 
-_Bool sendingState;
-uint8_t currentSendFragment;
-uint8_t totalSendExpected;
-uint16_t currentSendIndex;
-uint16_t currentSendFrameSize;
+static _Bool sendingState;
+static uint8_t currentSendFragment;
+static uint8_t totalSendExpected;
+static uint16_t currentSendIndex;
+static uint16_t currentSendFrameSize;
 
-RUNNING_CONFIGURATION_t configBuffer;
+static RUNNING_CONFIGURATION_t configBuffer;
 
-_Bool validateReceivedConfig(void);
+static SYS_Timer_t configResetTimer;
+
+static void configResetTimerHandler(SYS_Timer_t *timer);
+static _Bool validateReceivedConfig(void);
 
 void configModule_Init(void)
-{
+{	
+	//Set responses opCodes
 	firmwareResponse.header.opCode		= FirmwareVersionReadResponse;
 	shieldModelResponse.header.opCode	= ShieldModelReadResponse;
 	baseModelResponse.header.opCode		= BaseModelReadResponse;
@@ -81,13 +87,13 @@ void configModule_Init(void)
 	configReadResponse.header.opCode	= ConfigReadResponse;
 	checksumResponse.header.opCode		= ConfigChecksumResponse;
 	
-	receivingState = false;
-	currentRecvIndex = 0;
-}
-
-void configModule_DataConf(NWK_DataReq_t *req)
-{
+	//Configure Timer
+	configResetTimer.interval = 1000;
+	configResetTimer.mode = SYS_TIMER_INTERVAL_MODE;
+	configResetTimer.handler = configResetTimerHandler;
 	
+	receivingState = false;
+	sendingState = false;
 }
 
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -95,12 +101,17 @@ void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificati
 	
 }
 
-void configSystem_Handler(OPERATION_HEADER_t* operation_header)
+/*- Reset --------------------------------------------------------*/
+void configReset_Handler(OPERATION_HEADER_t* operation_header)
 {
-	if(operation_header->opCode == Reset)
-	{
-		softReset();
-	}else if(operation_header->opCode == FirmwareVersionRead)
+	softReset();
+}
+
+
+/*- Firmware Version ---------------------------------------------*/
+void configFirmware_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == FirmwareVersionRead)
 	{
 		firmwareResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		firmwareResponse.header.destinationAddress = operation_header->sourceAddress;
@@ -110,7 +121,22 @@ void configSystem_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == FirmwareVersionReadResponse)
 	{
 		//TODO: SEND NOTIFICATION
-	}else if(operation_header->opCode == ShieldModelRead)
+	}
+}
+
+void sendFirmwareResponse(uint16_t address)
+{
+	firmwareResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	firmwareResponse.header.destinationAddress = address;
+	firmwareResponse.response.version = FIRMWARE_VERSION;
+	
+	OM_ProccessResponseOperation(&firmwareResponse.header);
+}
+
+/*- Shield Model -------------------------------------------------*/
+void configShield_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == ShieldModelRead)
 	{
 		shieldModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		shieldModelResponse.header.destinationAddress = operation_header->sourceAddress;
@@ -120,7 +146,14 @@ void configSystem_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == ShieldModelReadResponse)
 	{
 		//TODO: SEND NOTIFICATION
-	}else if(operation_header->opCode == BaseModelRead)
+	}
+}
+
+
+/*- Base Model ---------------------------------------------------*/
+void configBaseModel_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == BaseModelRead)
 	{
 		baseModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		baseModelResponse.header.destinationAddress = operation_header->sourceAddress;
@@ -131,8 +164,10 @@ void configSystem_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		//TODO: SEND NOTIFICATION
 	}
-};
+}
 
+
+/*- Config Write -------------------------------------------------*/
 void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == ConfigWrite)
@@ -162,7 +197,10 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 			}
 		}else if(msg->fragment == 0) //FirstFrame
 		{
+			waitingForReset = false;
 			currentRecvFragment = 0;
+			currentRecvIndex = 0;
+			
 			receivingState = true;
 			totalRecvExpected = msg->fragmentTotal;
 			acceptFragment = true;
@@ -189,8 +227,7 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 					{
 						EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.configHeader.length);
 						
-						//TODO: Wait to send until reset!
-						softReset();
+						waitingForReset = true;
 					}else
 					{
 						configWriteResponse.response.code = ERROR_CONFIG_INVALID_CHECKSUM;
@@ -205,7 +242,22 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+void configWrite_DataConf(OPERATION_DataConf_t *req)
+{
+	if(waitingForReset)//All receviced. Wainting for reset
+	{
+		if (req->sendOk)
+		{
+			SYS_TimerStart(&configResetTimer);
+		}else
+		{
+			OM_ProccessResponseOperation(&configWriteResponse.header); //Resend last response	
+		}
+	}
+}
 
+
+/*- Config Read --------------------------------------------------*/
 void configRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == ConfigRead)
@@ -279,6 +331,13 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+void configRead_DataConf(OPERATION_DataConf_t *req)
+{
+	//TODO: Handle Master Responses here
+}
+
+
+/*- Checksum --------------------------------------------------*/
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == ConfigChecksum)
@@ -292,6 +351,12 @@ void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		//TODO: NOTIFICATION
 	}
+}
+
+void configResetTimerHandler(SYS_Timer_t *timer)
+{
+	softReset();
+	(void)timer;
 }
 
 _Bool validateReceivedConfig()

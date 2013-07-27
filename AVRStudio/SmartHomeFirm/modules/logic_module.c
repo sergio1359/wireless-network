@@ -28,15 +28,15 @@ struct
 	LOGIC_READ_RESPONSE_MESSAGE_t response;
 }logicResponse;
 
-LOGIC_ELEM_t logic_elems[MAX_LOGIC_DEVICES];
-uint8_t num_of_logic_elems;
+static LOGIC_ELEM_t logic_elems[MAX_LOGIC_DEVICES];
+static uint8_t num_of_logic_elems;
 
-SYS_Timer_t logicTimer;
-uint8_t timerDivider;
+static SYS_Timer_t logicTimer;
+static uint8_t timerDivider;
 
-_Bool proccessDigitalPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static void logicTimerHandler(SYS_Timer_t *timer);
-uint8_t findLogicElem(uint16_t deviceAddress);
+static _Bool proccessDigitalPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
+static uint8_t findLogicElem(uint16_t deviceAddress);
 
 void logicModule_Init()
 {
@@ -91,7 +91,7 @@ void logicModule_Init()
 	SYS_TimerStart(&logicTimer);
 }
 
-void logicModule_DataConf(NWK_DataReq_t *req)
+void logicModule_DataConf(OPERATION_DataConf_t *req)
 {
 	
 }

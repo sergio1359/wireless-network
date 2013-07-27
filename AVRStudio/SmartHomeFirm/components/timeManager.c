@@ -22,20 +22,20 @@ static struct
 
 static uint8_t timeSyncCounter;
 static SYS_Timer_t timeSyncTimer;
-static uint16_t currentNeighbourAddress;
+static uint16_t currentNeighborAddress;
 static TimeSyncState_t timeSyncState;
 
 static void searchFirstTimeOperation();
 static void timeSyncTimerHandler(SYS_Timer_t *timer);
-static void timeSync_DataConf(NWK_DataReq_t *req);
+static void timeSync_DataConf(OPERATION_DataConf_t *req);
 
 void TIME_Init()
 {
 	RTC_Init();
 	
-	timeSyncState = TIME_SYNC_WAITING_COUNTER;
+	timeSyncState = TIME_SYNC_WAITING_NEXT_LOOP;
 	timeSyncCounter = 2;
-	currentNeighbourAddress = 0;
+	currentNeighborAddress = 0;
 	timeSyncRequest.header.opCode = DateTimeRead;
 	
 	//Configure Timer
@@ -108,16 +108,19 @@ void TIME_CheckTimeOperation()
 
 void TIME_ProccessSyncResponse(WEEKDAY_t *receivedWeek, DATE_t *receivedDate, TIME_t *receivedTime)
 {
-	if(timeSyncState == TIME_SYNC_WAITING_RESPONSE_STATE)
+	if(timeSyncState == TIME_SYNC_WAITING_SYNC_RESPONSE)
 	{
-		//Check if the received DATETIME is valid. The validate
+		//Check if the received DATETIME is valid.
 		if(receivedWeek->raw != 0xFF)
 		{
 			TIME_ValidateTime(receivedTime);
 			TIME_ValidateDate(receivedDate, receivedWeek);	
+			//TODO: Turn off timer?
+		}else
+		{
+			timeSyncState = TIME_SYNC_WAITING_SYNC_SEND;
+			timeSyncCounter = 0;	
 		}
-		
-		timeSyncState = TIME_SYNC_WAITING_COUNTER;
 	}
 }
 
@@ -153,65 +156,101 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 		if(timeSyncCounter > 0)
 		{
 			timeSyncCounter--;	
-		}else if(timeSyncState == TIME_SYNC_WAITING_RESPONSE_STATE)
+		}
+		else if(timeSyncState == TIME_SYNC_WAITING_NEXT_LOOP)
+		{
+			//Refresh the table in 10 seconds..
+			timeSyncState = TIME_SYNC_WAITING_DISCOVERY_SEND;
+		}
+		else if(timeSyncState == TIME_SYNC_WAITING_DISCOVERY_SEND)
+		{
+			//Send a discovery operation to refresh the neighbors table
+			Radio_SendDiscovery(timeSync_DataConf);
+			timeSyncState = TIME_SYNC_WAITING_DISCOVERY_CONFIRM;
+		}
+		else if(timeSyncState == TIME_SYNC_WAITING_SYNC_RESPONSE)//TimeOut
 		{
 			//Skip this node at this iteration
-			timeSyncState = TIME_SYNC_WAITING_COUNTER;
-		}					
-		else if(timeSyncState == TIME_SYNC_WAITING_COUNTER)
+			timeSyncState = TIME_SYNC_WAITING_SYNC_SEND;
+		}				
+		else if(timeSyncState == TIME_SYNC_WAITING_SYNC_SEND)
 		{
-			//Get the next neighbour node Address
-			currentNeighbourAddress = NWK_GetNextNeighbourAddress(currentNeighbourAddress);
+			//Get the next neighbor address
+			currentNeighborAddress = NWK_GetNextNeighborAddress(currentNeighborAddress);
 			
-			if(currentNeighbourAddress == 0xFFFF)//Last neighbour
+			if(currentNeighborAddress == 0xFFFF)//Last neighbor
 			{
-				timeSyncState = TIME_SYNC_WAITING_COUNTER;
-				timeSyncCounter = 5;	
+				//Try again in 10 seconds..
+				timeSyncState = TIME_SYNC_WAITING_NEXT_LOOP;
+				timeSyncCounter = 10;	
 			}else
 			{
-				//TODO: Send TimeSyncRequest
-				timeSyncRequest.header.destinationAddress = currentNeighbourAddress;
+				//Send TimeSyncRequest
+				timeSyncRequest.header.destinationAddress = currentNeighborAddress;
 				timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 				
-				timeSyncState = TIME_SYNC_WAITING_CONFIRM_STATE;
+				timeSyncState = TIME_SYNC_WAITING_SYNC_CONFIRM;
 				Radio_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf);	
 			}
 		}
 		
-			DISPLAY_Clear();
-			DISPLAY_WriteString("SENT TO: 0x");
-			DISPLAY_WriteNumberHEX(currentNeighbourAddress >> 8);
-			DISPLAY_WriteNumberHEX(currentNeighbourAddress & 0xFF);
-			
-			DISPLAY_SetCursor(0,1);
-			DISPLAY_WriteString("WAITING: ");
-			switch (timeSyncState)
-			{
-				case TIME_SYNC_WAITING_COUNTER:
-				DISPLAY_WriteString("COUNTER");
-				break;
-				case TIME_SYNC_WAITING_CONFIRM_STATE:
-				DISPLAY_WriteString("CONFIRM");
-				break;
-				case TIME_SYNC_WAITING_RESPONSE_STATE:
-				DISPLAY_WriteString("RESPONSE");
-				break;
-			}			
+		DISPLAY_Clear();
+		DISPLAY_WriteString("SENT TO: 0x");
+		DISPLAY_WriteNumberHEX(currentNeighborAddress >> 8);
+		DISPLAY_WriteNumberHEX(currentNeighborAddress & 0xFF);
+		
+		DISPLAY_SetCursor(0,1);
+		switch (timeSyncState)
+		{
+			case TIME_SYNC_WAITING_DISCOVERY_SEND:
+			DISPLAY_WriteString("DISC SEND");
+			break;
+			case TIME_SYNC_WAITING_DISCOVERY_CONFIRM:
+			DISPLAY_WriteString("DISC CONF");
+			break;
+			case TIME_SYNC_WAITING_NEXT_LOOP:
+			DISPLAY_WriteString("NEXT LOOP ");
+			DISPLAY_WriteNumberDEC(timeSyncCounter, 2);
+			break;
+			case TIME_SYNC_WAITING_SYNC_SEND:
+			DISPLAY_WriteString("SYNC SEND ");
+			DISPLAY_WriteNumberDEC(timeSyncCounter, 2);
+			break;
+			case TIME_SYNC_WAITING_SYNC_CONFIRM:
+			DISPLAY_WriteString("SYNC CONFIRM");
+			break;
+			case TIME_SYNC_WAITING_SYNC_RESPONSE:
+			DISPLAY_WriteString("SYNC RESPONSE");
+			break;
+		}		
 	}
+	
+	(void)timer;
 }
 
-static void timeSync_DataConf(NWK_DataReq_t *req)
+static void timeSync_DataConf(OPERATION_DataConf_t *req)
 {
-	if(timeSyncState == TIME_SYNC_WAITING_CONFIRM_STATE)
+	if(timeSyncState == TIME_SYNC_WAITING_DISCOVERY_CONFIRM)
 	{
-		if (NWK_SUCCESS_STATUS == req->status)
+		if (req->sendOk)
+		{
+			timeSyncCounter = 5;//Waiting for responses before sending
+			timeSyncState = TIME_SYNC_WAITING_SYNC_SEND;
+		}else
+		{
+			//Try again
+			timeSyncState = TIME_SYNC_WAITING_DISCOVERY_SEND;
+		}
+	}else if(timeSyncState == TIME_SYNC_WAITING_SYNC_CONFIRM)
+	{
+		if (req->sendOk)
 		{
 			timeSyncCounter = 5;//TimeOut
-			timeSyncState = TIME_SYNC_WAITING_RESPONSE_STATE;
+			timeSyncState = TIME_SYNC_WAITING_SYNC_RESPONSE;
 		}else
 		{
 			//Skip this node at this iteration
-			timeSyncState = TIME_SYNC_WAITING_COUNTER;
+			timeSyncState = TIME_SYNC_WAITING_DISCOVERY_SEND;
 		}	
 	}else
 	{

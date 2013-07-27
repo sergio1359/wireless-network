@@ -26,19 +26,26 @@
 typedef struct
 {
 	OPERATION_HEADER_t* operationPtr;
-	void         (*confirm)(struct NWK_DataReq_t *req);
+	void         (*confirm)(struct OPERATION_DataConf_t *req);
 }RADIO_ELEM_t;	
 
 /* Circular buffer object */
 CREATE_CIRCULARBUFFER(uint8_t, COPIES_BUFFER_SIZE)				copiesMessages_Buffer;
 CREATE_CIRCULARBUFFER(RADIO_ELEM_t, PENDING_BUFFER_SIZE)		pendingMessages_Buffer;
 
-RadioState_t currentState = RF_STATE_INITIAL;
+static RadioState_t currentState = RF_STATE_INITIAL;
 static NWK_DataReq_t nwkDataReq;
-uint8_t failRetries;
-SYS_Timer_t retriesTimer;
+static uint8_t failRetries;
+static SYS_Timer_t retriesTimer;
 
-INPUT_UART_HEADER_t uartRadioHeader;
+static INPUT_UART_HEADER_t uartRadioHeader;
+
+static OPERATION_DataConf_t radioDataConf;
+
+static struct
+{
+	OPERATION_HEADER_t header;
+}discoveryFirmwareRead;
 
 inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
@@ -86,6 +93,15 @@ void Radio_Init()
 	currentState = RF_STATE_READY_TO_SEND;
 }
 
+void Radio_SendDiscovery(void* callback)
+{
+	discoveryFirmwareRead.header.opCode				= FirmwareVersionRead;
+	discoveryFirmwareRead.header.sourceAddress		= runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	discoveryFirmwareRead.header.destinationAddress = BROADCAST_ADDRESS;
+	
+	Radio_AddMessageByReference(&discoveryFirmwareRead.header, callback);
+}
+
 _Bool Radio_AddMessageByReference(OPERATION_HEADER_t* message, void* callback)
 {
 	if(freeSpace(pendingMessages_Buffer.start, pendingMessages_Buffer.end, PENDING_BUFFER_SIZE) >= 1)
@@ -131,18 +147,18 @@ _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body,
 		
 		for(int i = 0; i < size; i++)
 		{
-			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end + i] = *((uint8_t*)message + i);
+			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end] = *((uint8_t*)message + i);
+			copiesMessages_Buffer.end++;
+			copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		}
-		copiesMessages_Buffer.end += size;
-		copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		
 		for(int i = 0; i < bodySize; i++)
 		{
-			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end + i] = body[i];
+			copiesMessages_Buffer.buffer[copiesMessages_Buffer.end] = body[i];
+			copiesMessages_Buffer.end++;
+			copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		}
-		copiesMessages_Buffer.end += bodySize;		
-		copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
-		
+
 		return Radio_AddMessageByReference(initialPtr, callback);
 	}else
 	{
@@ -168,7 +184,12 @@ _Bool isInCopiesBuffer(uint8_t* message)
 void resetRadioState(NWK_DataReq_t *req)
 {
 	if( pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm != 0)
-		(*pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm)(req);
+	{
+		radioDataConf.header = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].operationPtr;
+		radioDataConf.retries = failRetries;
+		radioDataConf.sendOk = (NWK_SUCCESS_STATUS == req->status);
+		(*pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm)(&radioDataConf);
+	}		
 	
 	pendingMessages_Buffer.start++;
 	pendingMessages_Buffer.start &= PENDING_BUFFER_SIZE_MASK;
@@ -201,10 +222,14 @@ void sendNextMessage()
 		nwkDataReq.dstAddr = currentOP->destinationAddress;
 		nwkDataReq.dstEndpoint = APP_ENDPOINT;
 		nwkDataReq.srcEndpoint = APP_ENDPOINT;
-		nwkDataReq.options = NWK_OPT_ACK_REQUEST | NWK_OPT_ENABLE_SECURITY;
 		nwkDataReq.data = (uint8_t *)currentOP;
 		nwkDataReq.size = length;
 		nwkDataReq.confirm = rfDataConf;
+		
+		if(nwkDataReq.dstAddr == BROADCAST_ADDRESS)
+			nwkDataReq.options = NWK_OPT_LINK_LOCAL  | NWK_OPT_ENABLE_SECURITY;
+		else
+			nwkDataReq.options = NWK_OPT_ACK_REQUEST | NWK_OPT_ENABLE_SECURITY;
 
 		currentState = RF_STATE_WAIT_CONF;
 		
@@ -215,8 +240,6 @@ void sendNextMessage()
 
 static void rfDataConf(NWK_DataReq_t *req)
 {
-	//ledOff(LED_DATA);
-
 	if (NWK_SUCCESS_STATUS == req->status)
 	{
 		resetRadioState(req);
@@ -255,18 +278,8 @@ static void rfDataConf(NWK_DataReq_t *req)
 			SYS_TimerStart(&retriesTimer);
 		}
 		
-	}//TODO:  Send or log ERROR (UNEXPECTED_NETWORK_STATUS)
-		
+	}//TODO:  Send or log ERROR (UNEXPECTED_NETWORK_STATUS)	
 }
-
-
-static void retriesTimerHandler(SYS_Timer_t *timer)
-{
-	NWK_DataReq(&nwkDataReq);
-
-	(void)timer;
-}
-
 
 static void rfDataInd(NWK_DataInd_t *ind)
 {
@@ -287,4 +300,12 @@ static void rfDataInd(NWK_DataInd_t *ind)
 	uartRadioHeader.security = (ind->options & NWK_IND_OPT_SECURED) != 0;
 	
 	OM_ProccessExternalOperation(&uartRadioHeader, (OPERATION_HEADER_t*)ind->data);		
+}
+
+
+static void retriesTimerHandler(SYS_Timer_t *timer)
+{
+	NWK_DataReq(&nwkDataReq);
+
+	(void)timer;
 }

@@ -76,7 +76,7 @@ void NWK_RouteFreeEntry(NWK_RouteTableEntry_t *entry);
 uint16_t NWK_RouteNextHop(uint16_t dst, uint8_t multicast);
 NWK_RouteTableEntry_t *NWK_RouteTable(void);
 void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length);//Added
-uint16_t NWK_GetNextNeighbourAddress(uint16_t lastAddress);//Added
+uint16_t NWK_GetNextNeighborAddress(uint16_t lastAddress);//Added
 
 void nwkRouteInit(void);
 void nwkRouteRemove(uint16_t dst, uint8_t multicast);
