@@ -8,19 +8,19 @@
 #include "globals.h"
 #include "nwk.h"
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	MAC_READ_RESPONSE_MESSAGE_t response;
 }macResponse;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t response;
 }routeTableResponse;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	NEXT_HOP_READ_RESPONSE_MESSAGE_t response;
@@ -52,7 +52,7 @@ void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificat
 	
 }
 
-void mac_Handler(OPERATION_HEADER_t* operation_header)
+void networkMac_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == MacRead)
 	{
@@ -68,7 +68,29 @@ void mac_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
-void route_Handler(OPERATION_HEADER_t* operation_header)
+void networkNextHop_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == NextHopRead)
+	{
+		NEXT_HOP_READ_MESSAGE_t* msg = (NEXT_HOP_READ_MESSAGE_t*)(operation_header + 1);
+		NWK_RouteTableEntry_t *rec = NWK_RouteFindEntry(msg->nodeAddress, 0);
+		
+		nextHopResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		nextHopResponse.header.destinationAddress = operation_header->sourceAddress;
+		
+		nextHopResponse.response.nodeAddress = msg->nodeAddress;
+		nextHopResponse.response.nextHopeAddress = rec->nextHopAddr;
+		nextHopResponse.response.lqi = rec->lqi;
+		nextHopResponse.response.score = rec->score;
+		
+		OM_ProccessResponseOperation(&nextHopResponse.header);
+	}else if(operation_header->opCode == NextHopReadResponse)
+	{
+		//TODO: SEND NOTIFICATION
+	}
+}
+
+void networkRoute_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == RouteTableRead)
 	{
@@ -139,22 +161,5 @@ void route_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == RouteTableReadResponse)
 	{
 		//TODO: SEND NOTIFICATION
-	}else if(operation_header->opCode == NextHopRead)
-	{
-		NEXT_HOP_READ_MESSAGE_t* msg = (NEXT_HOP_READ_MESSAGE_t*)(operation_header + 1);
-		NWK_RouteTableEntry_t *rec = NWK_RouteFindEntry(msg->nodeAddress, 0);
-		
-		nextHopResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-		nextHopResponse.header.destinationAddress = operation_header->sourceAddress;
-		
-		nextHopResponse.response.nodeAddress = msg->nodeAddress;
-		nextHopResponse.response.nextHopeAddress = rec->nextHopAddr;
-		nextHopResponse.response.lqi = rec->lqi;
-		nextHopResponse.response.score = rec->score;
-		
-		OM_ProccessResponseOperation(&nextHopResponse.header);
-	}else if(operation_header->opCode == NextHopReadResponse)
-	{
-		//TODO: SEND NOTIFICATION
-	}					
+	}				
 }

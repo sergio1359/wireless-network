@@ -22,19 +22,19 @@ typedef struct
 	unsigned timeCounter	: 7;	//MSB
 }PRESENCE_ELEM_t;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	PRESENCE_READ_RESPONSE_MESSAGE_t response;
 }presenceResponse;
 
-PRESENCE_ELEM_t presen_elems[MAX_PRESENCE_DEVICES];
-uint8_t num_of_presen_elems;
+static PRESENCE_ELEM_t presen_elems[MAX_PRESENCE_DEVICES];
+static uint8_t num_of_presen_elems;
 
-SYS_Timer_t presenceReadTimer;
+static SYS_Timer_t presenceReadTimer;
 
 static void presenceReadTimerHandler(SYS_Timer_t *timer);
-uint8_t findPresenceElem(uint16_t deviceAddress);
+static uint8_t findPresenceElem(uint16_t deviceAddress);
 
 void presenceModule_Init(void)
 {

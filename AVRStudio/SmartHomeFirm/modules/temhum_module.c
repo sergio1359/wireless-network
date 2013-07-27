@@ -29,31 +29,31 @@ typedef struct
 	uint8_t currentHumidity;
 }HUMIDITY_ELEM_t;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	TEMPERATURE_READ_RESPONSE_MESSAGE_t response;
 }temperatureResponse;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	HUMIDITY_READ_RESPONSE_MESSAGE_t response;
 }humidityResponse;
 
-TEMPERATURE_ELEM_t temp_elems[MAX_TEMHUM_DEVICES];
-uint8_t num_of_temp_elems;
+static TEMPERATURE_ELEM_t temp_elems[MAX_TEMHUM_DEVICES];
+static uint8_t num_of_temp_elems;
 
-HUMIDITY_ELEM_t hum_elems[MAX_TEMHUM_DEVICES];
-uint8_t num_of_hum_elems;
+static HUMIDITY_ELEM_t hum_elems[MAX_TEMHUM_DEVICES];
+static uint8_t num_of_hum_elems;
 
-DHT11_Read_t DHT11Result;
+static DHT11_Read_t DHT11Result;
 
-SYS_Timer_t tempHumReadTimer;
+static SYS_Timer_t tempHumReadTimer;
 
 static void tempHumReadTimerHandler(SYS_Timer_t *timer);
-uint8_t findTempElem(uint16_t deviceAddress);
-uint8_t findHumElem(uint16_t deviceAddress);
+static uint8_t findTempElem(uint16_t deviceAddress);
+static uint8_t findHumElem(uint16_t deviceAddress);
 
 void temHumModule_Init(void)
 {
@@ -112,12 +112,8 @@ void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificati
 	
 }
 
-void temHumModule_DataConf(OPERATION_DataConf_t *req)
-{
-	
-}
 
-void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
+void temperatureRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == TemperatureRead)
 	{
@@ -146,7 +142,18 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == TemperatureReadResponse)
 	{
 		//TODO: NOTIFICATION
-	}else if(operation_header->opCode == HumidityRead)
+	}
+}
+
+void temperatureRead_DataConf(OPERATION_DataConf_t *req)
+{
+	
+}
+
+
+void humidityRead_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == HumidityRead)
 	{
 		HUMIDITY_READ_MESSAGE_t* msg = (HUMIDITY_READ_MESSAGE_t*)(operation_header + 1);
 		uint8_t elemIndex = findHumElem(msg->deviceID);
@@ -174,6 +181,11 @@ void temhumRead_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		//TODO: NOTIFICATION
 	}
+}
+
+void humidityRead_DataConf(OPERATION_DataConf_t *req)
+{
+	
 }
 
 uint8_t findTempElem(uint16_t deviceAddress)
