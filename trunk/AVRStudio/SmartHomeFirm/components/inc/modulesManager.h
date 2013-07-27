@@ -54,9 +54,10 @@ typedef enum  {
 
 void MODULES_Init(void);
 void MODULES_Notify(uint8_t moduleId, OPERATION_HEADER_t* header);
-extern inline void* MODULES_DataConf(uint8_t* opcode);
+extern inline void* MODULES_DataConf(uint8_t opcode);
 uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode);
 extern inline void MODULES_HandleCommand(OPERATION_HEADER_t* header);
+inline _Bool MODULES_HandledByFirmware(uint8_t opcode);
 
 
 #endif /* MODULESMANAGER_H_ */

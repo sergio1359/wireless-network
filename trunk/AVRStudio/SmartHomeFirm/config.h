@@ -52,6 +52,7 @@
 #define DEBOUNCED_PINS NUM_PINS
 
 #define COORDINATOR_ADDRESS 0x4003  //0x0001
+#define BROADCAST_ADDRESS	0xFFFF  //0x0001
 
 #define IS_COORDINATOR (runningConfiguration.topConfiguration.networkConfig.deviceAddress == COORDINATOR_ADDRESS)
 
@@ -74,16 +75,20 @@
 #define PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 
 #define SYS_SECURITY_MODE                   0
-#define NWK_BUFFERS_AMOUNT                  3
-#define NWK_MAX_ENDPOINTS_AMOUNT            3
-#define NWK_DUPLICATE_REJECTION_TABLE_SIZE  10
-#define NWK_DUPLICATE_REJECTION_TTL         3000 // ms
+
+#define NWK_BUFFERS_AMOUNT                  10
+#define NWK_DUPLICATE_REJECTION_TABLE_SIZE  50
+#define NWK_DUPLICATE_REJECTION_TTL         2000 // ms
 #define NWK_ROUTE_TABLE_SIZE                100
 #define NWK_ROUTE_DEFAULT_SCORE             3
 #define NWK_ACK_WAIT_TIME                   1000 // ms
+#define NWK_GROUPS_AMOUNT                   3
+#define NWK_ROUTE_DISCOVERY_TABLE_SIZE      5
+#define NWK_ROUTE_DISCOVERY_TIMEOUT         1000 // ms
 
 #define NWK_ENABLE_ROUTING
 //#define NWK_ENABLE_SECURITY
+#define NWK_ENABLE_ROUTE_DISCOVERY
 
 #define HAL_ENABLE_UART
 #define HAL_UART_CHANNEL                    0

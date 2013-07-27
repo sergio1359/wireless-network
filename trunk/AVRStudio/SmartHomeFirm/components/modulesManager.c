@@ -28,7 +28,7 @@ void (*command_handlers[]) (OPERATION_HEADER_t*) = {
 
 
 #define  X(a, b, c, d, e, f) [b] = d,
-void (*command_DataConfs[]) (NWK_DataReq_t *req) = {
+void (*command_DataConfs[]) (OPERATION_DataConf_t *req) = {
 	COMMANDS_TABLE
 };
 #undef X
@@ -71,9 +71,9 @@ uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode)
 		return command_lengths[*opcode];
 }
 
-void* MODULES_DataConf(uint8_t* opcode)
+void* MODULES_DataConf(uint8_t opcode)
 {
-	return (*command_DataConfs[*opcode]);
+	return (*command_DataConfs[opcode]);
 }	
 
 void MODULES_HandleCommand(OPERATION_HEADER_t* header)
@@ -81,4 +81,11 @@ void MODULES_HandleCommand(OPERATION_HEADER_t* header)
 	//TODO: Check if exists
 	if(command_handlers[header->opCode] != 0)
 		(*command_handlers[header->opCode]) (header);
+}
+
+_Bool MODULES_HandledByFirmware(uint8_t opcode)
+{
+	return opcode == DateTimeRead			||
+		   opcode == DateTimeReadResponse	||
+		   opcode == FirmwareVersionRead;
 }

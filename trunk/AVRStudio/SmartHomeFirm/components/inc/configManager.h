@@ -107,7 +107,7 @@ typedef struct {
 typedef union
 {
 	TOP_CONFIGURATION_t  topConfiguration;
-	uint8_t raw[EEPROM_SIZE];
+	uint8_t raw[EEPROM_SIZE/4];
 }RUNNING_CONFIGURATION_t;
 
 

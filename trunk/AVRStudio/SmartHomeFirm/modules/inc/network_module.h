@@ -71,7 +71,7 @@ typedef struct
 
 void networkModule_Init(void);
 void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void networkModule_DataConf(NWK_DataReq_t *req);
+void networkModule_DataConf(OPERATION_DataConf_t *req);
 
 void mac_Handler(OPERATION_HEADER_t* operation_header);
 void route_Handler(OPERATION_HEADER_t* operation_header);

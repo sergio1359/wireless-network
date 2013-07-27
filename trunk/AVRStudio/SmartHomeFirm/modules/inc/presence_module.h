@@ -44,7 +44,7 @@ typedef struct
 
 void presenceModule_Init(void);
 void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void presenceModule_DataConf(NWK_DataReq_t *req);
+void presenceModule_DataConf(OPERATION_DataConf_t *req);
 
 void presenceRead_Handler(OPERATION_HEADER_t* operation_header);
 

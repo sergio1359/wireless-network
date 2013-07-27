@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include "RTC.h"
 #include "configManager.h"
+#include "operationsManager.h"
 
 #define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
 
@@ -68,7 +69,7 @@ typedef struct
 
 void logicModule_Init(void);
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void logicModule_DataConf(NWK_DataReq_t *req);
+void logicModule_DataConf(OPERATION_DataConf_t *req);
 
 void logic_Handler(OPERATION_HEADER_t* operation_header);
 
