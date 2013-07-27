@@ -103,7 +103,7 @@ namespace OperationUARTSender
             sb.AppendFormat("FROM: 0x{0:X4}   TO: 0x{1:X4}   OPCODE: 0x{2:X2}   ARGS: ",
                 this.SourceAddress,
                 this.DestinationAddress,
-                this.OpCode);
+                (byte)this.OpCode);
             foreach (byte b in this.Args)
             {
                 sb.AppendFormat("0x{0:X2} ", b);
