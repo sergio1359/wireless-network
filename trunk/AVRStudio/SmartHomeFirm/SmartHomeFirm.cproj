@@ -347,7 +347,13 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="stack\nwk\src\nwkFrame.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="stack\nwk\src\nwkGroup.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="stack\nwk\src\nwkRoute.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stack\nwk\src\nwkRouteDiscovery.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="stack\nwk\src\nwkRx.c">
