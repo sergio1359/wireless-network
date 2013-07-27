@@ -1,7 +1,7 @@
 /**
- * \file sysTimer.c
+ * \file nwkGroup.c
  *
- * \brief System timer implementation
+ * \brief Multicast group management implementation
  *
  * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
@@ -37,144 +37,89 @@
  *
  * \asf_license_stop
  *
- * $Id: sysTimer.c 7863 2013-05-13 20:14:34Z ataradov $
+ * $Id: nwkGroup.c 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 /*- Includes ---------------------------------------------------------------*/
 #include <stdlib.h>
-#include "hal.h"
-#include "halTimer.h"
-#include "sysTimer.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
+#include "sysConfig.h"
+
+#ifdef NWK_ENABLE_MULTICAST
+
+/*- Definitions ------------------------------------------------------------*/
+#define NWK_GROUP_FREE      0xffff
 
 /*- Prototypes -------------------------------------------------------------*/
-static void placeTimer(SYS_Timer_t *timer);
+static bool nwkGroupSwitch(uint16_t from, uint16_t to);
 
 /*- Variables --------------------------------------------------------------*/
-static SYS_Timer_t *timers;
+static uint16_t nwkGroups[NWK_GROUPS_AMOUNT];
 
 /*- Implementations --------------------------------------------------------*/
 
 /*************************************************************************//**
+  @brief Initializes the Group module
 *****************************************************************************/
-void SYS_TimerInit(void)
+void nwkGroupInit(void)
 {
-  timers = NULL;
+  for (uint8_t i = 0; i < NWK_GROUPS_AMOUNT; i++)
+    nwkGroups[i] = NWK_GROUP_FREE;
 }
 
 /*************************************************************************//**
+  @brief Adds node to the @a group
+  @param[in] group Group ID
+  @return @c true in case of success and @c false otherwise
 *****************************************************************************/
-void SYS_TimerStart(SYS_Timer_t *timer)
+bool NWK_GroupAdd(uint16_t group)
 {
-  if (!SYS_TimerStarted(timer))
-    placeTimer(timer);
+  return nwkGroupSwitch(NWK_GROUP_FREE, group);
 }
 
 /*************************************************************************//**
+  @brief Removes node from the @a group
+  @param[in] group Group ID
+  @return @c true in case of success and @c false otherwise
 *****************************************************************************/
-void SYS_TimerStop(SYS_Timer_t *timer)
+bool NWK_GroupRemove(uint16_t group)
 {
-  SYS_Timer_t *prev = NULL;
-
-  for (SYS_Timer_t *t = timers; t; t = t->next)
-  {
-    if (t == timer)
-    {
-      if (prev)
-        prev->next = t->next;
-      else
-        timers = t->next;
-
-      if (t->next)
-        t->next->timeout += timer->timeout;
-
-      break;
-    }
-    prev = t;
-  }
+  return nwkGroupSwitch(group, NWK_GROUP_FREE);
 }
 
 /*************************************************************************//**
+  @brief Verifies if node is a member of the @a group
+  @param[in] group Group ID
+  @return @c true if node is a member of the group and @c false otherwise
 *****************************************************************************/
-bool SYS_TimerStarted(SYS_Timer_t *timer)
+bool NWK_GroupIsMember(uint16_t group)
 {
-  for (SYS_Timer_t *t = timers; t; t = t->next)
-    if (t == timer)
+  for (uint8_t i = 0; i < NWK_GROUPS_AMOUNT; i++)
+    if (group == nwkGroups[i])
       return true;
   return false;
 }
 
 /*************************************************************************//**
+  @brief Switches records with IDs @a from and @a to in the the group table
+  @param[in] from Source group ID
+  @param[in] to   Destination group ID
+  @return @c true if @a from entry was found and @c false otherwise
 *****************************************************************************/
-void SYS_TimerTaskHandler(void)
+static bool nwkGroupSwitch(uint16_t from, uint16_t to)
 {
-  uint32_t elapsed;
-  uint8_t cnt;
-
-  if (0 == halTimerIrqCount)
-    return;
-
-  ATOMIC_SECTION_ENTER
-    cnt = halTimerIrqCount;
-    halTimerIrqCount = 0;
-  ATOMIC_SECTION_LEAVE
-
-  elapsed = cnt * HAL_TIMER_INTERVAL;
-
-  while (timers && (timers->timeout <= elapsed))
+  for (uint8_t i = 0; i < NWK_GROUPS_AMOUNT; i++)
   {
-    SYS_Timer_t *timer = timers;
-
-    elapsed -= timers->timeout;
-    timers = timers->next;
-    if (SYS_TIMER_PERIODIC_MODE == timer->mode)
-      placeTimer(timer);
-    timer->handler(timer);
+    if (from == nwkGroups[i])
+    {
+      nwkGroups[i] = to;
+      return true;
+    }
   }
-
-  if (timers)
-    timers->timeout -= elapsed;
+  return false;
 }
 
-/*************************************************************************//**
-*****************************************************************************/
-static void placeTimer(SYS_Timer_t *timer)
-{
-  if (timers)
-  {
-    SYS_Timer_t *prev = NULL;
-    uint32_t timeout = timer->interval;
-
-    for (SYS_Timer_t *t = timers; t; t = t->next)
-    {
-      if (timeout < t->timeout)
-      {
-         t->timeout -= timeout;
-         break;
-      }
-      else
-        timeout -= t->timeout;
-
-      prev = t;
-    }
-
-    timer->timeout = timeout;
-
-    if (prev)
-    {
-      timer->next = prev->next;
-      prev->next = timer;
-    }
-    else
-    {
-      timer->next = timers;
-      timers = timer;
-    }
-  }
-  else
-  {
-    timer->next = NULL;
-    timer->timeout = timer->interval;
-    timers = timer;
-  }
-}
+#endif // NWK_ENABLE_MULTICAST

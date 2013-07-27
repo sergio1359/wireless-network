@@ -1,7 +1,7 @@
 /**
- * \file phy.h
+ * \file nwkCommand.h
  *
- * \brief ATMEGA128RFA1 PHY interface
+ * \brief Network commands interface
  *
  * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
@@ -37,62 +37,58 @@
  *
  * \asf_license_stop
  *
- * $Id: phy.h 7863 2013-05-13 20:14:34Z ataradov $
+ * $Id: nwkCommand.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
-#ifndef _PHY_H_
-#define _PHY_H_
+#ifndef _NWK_COMMAND_H_
+#define _NWK_COMMAND_H_
 
 /*- Includes ---------------------------------------------------------------*/
 #include <stdint.h>
-#include <stdbool.h>
-#include "sysConfig.h"
-#include "atmega128rfa1.h"
-
-/*- Definitions ------------------------------------------------------------*/
-#define PHY_RSSI_BASE_VAL                  (-90)
-
-#define PHY_HAS_RANDOM_NUMBER_GENERATOR
-#define PHY_HAS_AES_MODULE
+#include "sysTypes.h"
 
 /*- Types ------------------------------------------------------------------*/
-typedef struct PHY_DataInd_t
+enum
 {
-  uint8_t    *data;
-  uint8_t    size;
-  uint8_t    lqi;
-  int8_t     rssi;
-} PHY_DataInd_t;
+  NWK_COMMAND_ACK                 = 0x00,
+  NWK_COMMAND_ROUTE_ERROR         = 0x01,
+  NWK_COMMAND_ROUTE_REQUEST       = 0x02,
+  NWK_COMMAND_ROUTE_REPLY         = 0x03,
+};
 
-/*- Prototypes -------------------------------------------------------------*/
-void PHY_Init(void);
-void PHY_SetRxState(bool rx);
-void PHY_SetChannel(uint8_t channel);
-void PHY_SetPanId(uint16_t panId);
-void PHY_SetShortAddr(uint16_t addr);
-void PHY_SetTxPower(uint8_t txPower);
-bool PHY_Busy(void);
-void PHY_Sleep(void);
-void PHY_Wakeup(void);
-void PHY_DataReq(uint8_t *data, uint8_t size);
-void PHY_DataConf(uint8_t status);
-void PHY_DataInd(PHY_DataInd_t *ind);
-void PHY_TaskHandler(void);
+typedef struct PACK NwkCommandAck_t
+{
+  uint8_t    id;
+  uint8_t    seq;
+  uint8_t    control;
+} NwkCommandAck_t;
 
-#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-void PHY_RandomReq(void);
-void PHY_RandomConf(uint16_t rnd);
-#endif
+typedef struct PACK NwkCommandRouteError_t
+{
+  uint8_t    id;
+  uint16_t   srcAddr;
+  uint16_t   dstAddr;
+  uint8_t    multicast;
+} NwkCommandRouteError_t;
 
-#ifdef PHY_ENABLE_AES_MODULE
-void PHY_EncryptReq(uint8_t *text, uint8_t *key);
-void PHY_EncryptConf();
-#endif
+typedef struct PACK NwkCommandRouteRequest_t
+{
+  uint8_t    id;
+  uint16_t   srcAddr;
+  uint16_t   dstAddr;
+  uint8_t    multicast;
+  uint8_t    linkQuality;
+} NwkCommandRouteRequest_t;
 
-#ifdef PHY_ENABLE_ENERGY_DETECTION
-void PHY_EdReq(void);
-void PHY_EdConf(int8_t ed);
-#endif
+typedef struct PACK NwkCommandRouteReply_t
+{
+  uint8_t    id;
+  uint16_t   srcAddr;
+  uint16_t   dstAddr;
+  uint8_t    multicast;
+  uint8_t    forwardLinkQuality;
+  uint8_t    reverseLinkQuality;
+} NwkCommandRouteReply_t;
 
-#endif // _PHY_H_
+#endif // _NWK_COMMAND_H_

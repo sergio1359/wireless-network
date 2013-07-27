@@ -3,7 +3,7 @@
  *
  * \brief ATmega128rfa1 sleep implementation
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,31 +37,33 @@
  *
  * \asf_license_stop
  *
- * $Id: halSleep.c 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: halSleep.c 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
+/*- Includes ---------------------------------------------------------------*/
 #include <stdbool.h>
 #include "hal.h"
 #include "halSleep.h"
 
-/*****************************************************************************
-*****************************************************************************/
-#define HAL_SLEEP_TIMER_CLOCK        32768ul
-#define HAL_SLEEP_TIMER_PRESCALER    1024ul
+/*- Definitions ------------------------------------------------------------*/
+#define SLEEP_TIMER_CLOCK        32768ul
+#define SLEEP_TIMER_PRESCALER    1024ul
+#define PRESCALED_CLOCK          (SLEEP_TIMER_CLOCK / SLEEP_TIMER_PRESCALER)
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Variables --------------------------------------------------------------*/
 static volatile bool halSleepTimerEvent;
 
-/*****************************************************************************
+/*- Implementations --------------------------------------------------------*/
+
+/*************************************************************************//**
 *****************************************************************************/
-inline void halSleepSynchronize(void)
+static inline void halSleepSynchronize(void)
 {
   while (ASSR & ((1 << TCN2UB) | (1 << OCR2AUB) | (1 << OCR2BUB) | (1 << TCR2AUB) | (1 << TCR2BUB)));
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 void HAL_Sleep(uint32_t interval)
 {
@@ -69,7 +71,7 @@ void HAL_Sleep(uint32_t interval)
   uint16_t integer;
   uint8_t fractional;
 
-  ticks = (HAL_SLEEP_TIMER_CLOCK * interval) / (HAL_SLEEP_TIMER_PRESCALER * 1000ul);
+  ticks = (interval * PRESCALED_CLOCK) / 1000ul;
   if (0 == ticks)
     return;
 
@@ -133,7 +135,7 @@ void HAL_Sleep(uint32_t interval)
   }
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 ISR(TIMER2_COMPA_vect)
 {

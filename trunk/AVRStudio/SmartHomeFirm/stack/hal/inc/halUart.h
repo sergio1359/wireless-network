@@ -3,7 +3,7 @@
  *
  * \brief ATmega128rfa1 UART interface
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,20 +37,19 @@
  *
  * \asf_license_stop
  *
- * $Id: halUart.h 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: halUart.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 #ifndef _HAL_UART_H_
 #define _HAL_UART_H_
 
+/*- Includes ---------------------------------------------------------------*/
 #include <stdint.h>
 #include <sysConfig.h>
 
+/*- Prototypes -------------------------------------------------------------*/
 #ifdef HAL_ENABLE_UART
-
-/*****************************************************************************
-*****************************************************************************/
 void HAL_UartInit(uint32_t baudrate);
 void HAL_UartWriteNumberDEC(unsigned int integer, uint8_t digits);
 void HAL_UartWriteNumberHEX(unsigned int num);
@@ -62,5 +61,4 @@ void HAL_UartBytesReceived(uint16_t bytes);
 void HAL_UartTaskHandler(void);
 
 #endif // HAL_ENABLE_UART
-
 #endif // _HAL_UART_H_

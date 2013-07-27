@@ -3,7 +3,7 @@
  *
  * \brief OTA Client implementation
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,10 +37,11 @@
  *
  * \asf_license_stop
  *
- * $Id: otaClient.c 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: otaClient.c 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
+/*- Includes ---------------------------------------------------------------*/
 #include "stdlib.h"
 #include "string.h"
 #include "nwk.h"
@@ -50,8 +51,7 @@
 
 #ifdef APP_ENABLE_OTA_CLIENT
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Types ------------------------------------------------------------------*/
 typedef union OtaClientCommand_t
 {
   OtaStartRespCommand_t   start;
@@ -78,21 +78,21 @@ typedef struct OtaClient_t
   uint8_t          retries;
 } OtaClient_t;
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Prototypes -------------------------------------------------------------*/
 static void otaDataConf(NWK_DataReq_t *req);
 static void otaClientSendResponse(OTA_Status_t status);
 static void otaRequestTimerHandler(SYS_Timer_t *timer);
 static bool otaClientDataInd(NWK_DataInd_t *ind);
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Variables --------------------------------------------------------------*/
 static OtaClient_t         otaClient;
 static OtaClientCommand_t  otaCommand;
 static NWK_DataReq_t       otaDataReq;
 static SYS_Timer_t         otaRequestTimer;
 
-/*****************************************************************************
+/*- Implementations --------------------------------------------------------*/
+
+/*************************************************************************//**
 *****************************************************************************/
 void OTA_ClientInit(void)
 {
@@ -110,7 +110,7 @@ void OTA_ClientInit(void)
   NWK_OpenEndpoint(APP_OTA_ENDPOINT, otaClientDataInd);
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 void OTA_ClientBlockConfirm(OTA_Status_t status)
 {
@@ -120,7 +120,7 @@ void OTA_ClientBlockConfirm(OTA_Status_t status)
     otaClientSendResponse(status);
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static void otaDataConf(NWK_DataReq_t *req)
 {
@@ -167,7 +167,7 @@ static void otaDataConf(NWK_DataReq_t *req)
   }
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static void otaRequestTimerHandler(SYS_Timer_t *timer)
 {
@@ -176,7 +176,7 @@ static void otaRequestTimerHandler(SYS_Timer_t *timer)
   (void)timer;
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static void otaClientSendResponse(OTA_Status_t status)
 {
@@ -193,7 +193,7 @@ static void otaClientSendResponse(OTA_Status_t status)
   NWK_DataReq(&otaDataReq);
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static bool otaHandleStartReq(NWK_DataInd_t *ind)
 {
@@ -226,7 +226,7 @@ static bool otaHandleStartReq(NWK_DataInd_t *ind)
   return true;
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static bool otaHandleBlockReq(NWK_DataInd_t *ind)
 {
@@ -260,7 +260,7 @@ static bool otaHandleBlockReq(NWK_DataInd_t *ind)
   return true;
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 static bool otaClientDataInd(NWK_DataInd_t *ind)
 {
@@ -275,7 +275,7 @@ static bool otaClientDataInd(NWK_DataInd_t *ind)
   return false;
 }
 
-/*****************************************************************************
+/*************************************************************************//**
 *****************************************************************************/
 void OTA_ClientTaskHandler(void)
 {

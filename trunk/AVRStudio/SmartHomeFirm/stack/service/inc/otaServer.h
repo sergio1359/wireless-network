@@ -3,7 +3,7 @@
  *
  * \brief OTA Server interface
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,18 +37,18 @@
  *
  * \asf_license_stop
  *
- * $Id: otaServer.h 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: otaServer.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 #ifndef _OTA_SERVER_H_
 #define _OTA_SERVER_H_
 
+/*- Includes ---------------------------------------------------------------*/
 #include "nwk.h"
 #include "otaCommon.h"
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Prototypes -------------------------------------------------------------*/
 void OTA_ServerInit(void);
 void OTA_ServerStartUpdrade(uint16_t addr, uint32_t size);
 void OTA_ServerSendBlock(uint8_t *data);
