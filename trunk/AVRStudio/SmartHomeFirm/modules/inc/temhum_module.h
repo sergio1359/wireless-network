@@ -15,10 +15,10 @@
 #define TEMHUM_MODULE_DEFINITION  X(TemHumModule, temHumModule_Init, temHumModule_NotificationInd)
 
 #define COMMANDS_TABLE_TEMHUM \
-X(TemperatureRead,				0x5A, temhumRead_Handler,	temHumModule_DataConf,	TEMPERATURE_READ_MESSAGE_t,				false)	\
-X(TemperatureReadResponse,		0x5B, temhumRead_Handler,	temHumModule_DataConf,	TEMPERATURE_READ_RESPONSE_MESSAGE_t,	false)	\
-X(HumidityRead,					0x5C, temhumRead_Handler,	temHumModule_DataConf,	HUMIDITY_READ_MESSAGE_t,				false)	\
-X(HumidityReadResponse,			0x5D, temhumRead_Handler,	temHumModule_DataConf,	HUMIDITY_READ_RESPONSE_MESSAGE_t,		false)	\
+X(TemperatureRead,				0x5A, temperatureRead_Handler,	temperatureRead_DataConf,	TEMPERATURE_READ_MESSAGE_t,				false)	\
+X(TemperatureReadResponse,		0x5B, temperatureRead_Handler,	temperatureRead_DataConf,	TEMPERATURE_READ_RESPONSE_MESSAGE_t,	false)	\
+X(HumidityRead,					0x5C, humidityRead_Handler,		humidityRead_DataConf,		HUMIDITY_READ_MESSAGE_t,				false)	\
+X(HumidityReadResponse,			0x5D, humidityRead_Handler,		humidityRead_DataConf,		HUMIDITY_READ_RESPONSE_MESSAGE_t,		false)	\
 
 
 //TEMPERATURE
@@ -58,8 +58,11 @@ typedef struct
 
 void temHumModule_Init(void);
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void temHumModule_DataConf(OPERATION_DataConf_t *req);
 
-void temhumRead_Handler(OPERATION_HEADER_t* operation_header);
+void temperatureRead_Handler(OPERATION_HEADER_t* operation_header);
+void humidityRead_Handler(OPERATION_HEADER_t* operation_header);
+
+void temperatureRead_DataConf(OPERATION_DataConf_t *req);
+void humidityRead_DataConf(OPERATION_DataConf_t *req);
 
 #endif /* TEMHUM_MODULE_H_ */

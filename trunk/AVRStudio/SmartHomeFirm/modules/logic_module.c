@@ -22,7 +22,7 @@ typedef struct
 	unsigned debouncerValue : 1;
 }LOGIC_ELEM_t;
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	LOGIC_READ_RESPONSE_MESSAGE_t response;

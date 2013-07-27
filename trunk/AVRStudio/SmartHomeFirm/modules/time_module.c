@@ -10,7 +10,7 @@
 #include "modulesManager.h"
 #include "timeManager.h"
 
-struct
+static struct
 {
 	OPERATION_HEADER_t header;
 	TIME_READ_RESPONSE_MESSAGE_t response;
