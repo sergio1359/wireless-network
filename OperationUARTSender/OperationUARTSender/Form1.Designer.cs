@@ -36,7 +36,7 @@
             this.buttonHum = new System.Windows.Forms.Button();
             this.buttonDateTime = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.textBoxConfigAddress = new System.Windows.Forms.TextBox();
+            this.textBoxDestAddress = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -51,6 +51,10 @@
             this.buttonBaseModel = new System.Windows.Forms.Button();
             this.buttonClean = new System.Windows.Forms.Button();
             this.buttonPresence = new System.Windows.Forms.Button();
+            this.buttonNextHop = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxParamAddress = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -79,13 +83,13 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(13, 41);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(586, 290);
+            this.listBox1.Size = new System.Drawing.Size(813, 290);
             this.listBox1.TabIndex = 2;
             // 
             // buttonDigSwitch
             // 
             this.buttonDigSwitch.Enabled = false;
-            this.buttonDigSwitch.Location = new System.Drawing.Point(605, 50);
+            this.buttonDigSwitch.Location = new System.Drawing.Point(832, 53);
             this.buttonDigSwitch.Name = "buttonDigSwitch";
             this.buttonDigSwitch.Size = new System.Drawing.Size(99, 37);
             this.buttonDigSwitch.TabIndex = 3;
@@ -96,7 +100,7 @@
             // buttonTemp
             // 
             this.buttonTemp.Enabled = false;
-            this.buttonTemp.Location = new System.Drawing.Point(815, 111);
+            this.buttonTemp.Location = new System.Drawing.Point(1042, 112);
             this.buttonTemp.Name = "buttonTemp";
             this.buttonTemp.Size = new System.Drawing.Size(99, 37);
             this.buttonTemp.TabIndex = 3;
@@ -107,7 +111,7 @@
             // buttonHum
             // 
             this.buttonHum.Enabled = false;
-            this.buttonHum.Location = new System.Drawing.Point(815, 50);
+            this.buttonHum.Location = new System.Drawing.Point(1042, 53);
             this.buttonHum.Name = "buttonHum";
             this.buttonHum.Size = new System.Drawing.Size(99, 37);
             this.buttonHum.TabIndex = 3;
@@ -118,7 +122,7 @@
             // buttonDateTime
             // 
             this.buttonDateTime.Enabled = false;
-            this.buttonDateTime.Location = new System.Drawing.Point(605, 227);
+            this.buttonDateTime.Location = new System.Drawing.Point(832, 230);
             this.buttonDateTime.Name = "buttonDateTime";
             this.buttonDateTime.Size = new System.Drawing.Size(99, 37);
             this.buttonDateTime.TabIndex = 3;
@@ -130,20 +134,20 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // textBoxConfigAddress
+            // textBoxDestAddress
             // 
-            this.textBoxConfigAddress.Location = new System.Drawing.Point(534, 13);
-            this.textBoxConfigAddress.Name = "textBoxConfigAddress";
-            this.textBoxConfigAddress.Size = new System.Drawing.Size(53, 20);
-            this.textBoxConfigAddress.TabIndex = 4;
-            this.textBoxConfigAddress.Text = "0000";
+            this.textBoxDestAddress.Location = new System.Drawing.Point(497, 10);
+            this.textBoxDestAddress.Name = "textBoxDestAddress";
+            this.textBoxDestAddress.Size = new System.Drawing.Size(53, 20);
+            this.textBoxDestAddress.TabIndex = 4;
+            this.textBoxDestAddress.Text = "0000";
             // 
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(605, 12);
+            this.button7.Location = new System.Drawing.Point(832, 15);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(92, 22);
+            this.button7.Size = new System.Drawing.Size(99, 22);
             this.button7.TabIndex = 5;
             this.button7.Text = "Send Config";
             this.button7.UseVisualStyleBackColor = true;
@@ -152,9 +156,9 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(801, 11);
+            this.button8.Location = new System.Drawing.Point(1042, 14);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(92, 22);
+            this.button8.Size = new System.Drawing.Size(99, 22);
             this.button8.TabIndex = 5;
             this.button8.Text = "Send DateTime";
             this.button8.UseVisualStyleBackColor = true;
@@ -163,9 +167,9 @@
             // button9
             // 
             this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(703, 11);
+            this.button9.Location = new System.Drawing.Point(937, 15);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(92, 22);
+            this.button9.Size = new System.Drawing.Size(99, 22);
             this.button9.TabIndex = 5;
             this.button9.Text = "Read Config";
             this.button9.UseVisualStyleBackColor = true;
@@ -174,7 +178,7 @@
             // buttonMAC
             // 
             this.buttonMAC.Enabled = false;
-            this.buttonMAC.Location = new System.Drawing.Point(710, 50);
+            this.buttonMAC.Location = new System.Drawing.Point(937, 53);
             this.buttonMAC.Name = "buttonMAC";
             this.buttonMAC.Size = new System.Drawing.Size(99, 37);
             this.buttonMAC.TabIndex = 3;
@@ -185,7 +189,7 @@
             // buttonFirm
             // 
             this.buttonFirm.Enabled = false;
-            this.buttonFirm.Location = new System.Drawing.Point(710, 111);
+            this.buttonFirm.Location = new System.Drawing.Point(937, 112);
             this.buttonFirm.Name = "buttonFirm";
             this.buttonFirm.Size = new System.Drawing.Size(99, 37);
             this.buttonFirm.TabIndex = 3;
@@ -196,7 +200,7 @@
             // buttonCheckSum
             // 
             this.buttonCheckSum.Enabled = false;
-            this.buttonCheckSum.Location = new System.Drawing.Point(820, 227);
+            this.buttonCheckSum.Location = new System.Drawing.Point(1042, 230);
             this.buttonCheckSum.Name = "buttonCheckSum";
             this.buttonCheckSum.Size = new System.Drawing.Size(99, 37);
             this.buttonCheckSum.TabIndex = 3;
@@ -207,7 +211,7 @@
             // buttonDigRead
             // 
             this.buttonDigRead.Enabled = false;
-            this.buttonDigRead.Location = new System.Drawing.Point(605, 172);
+            this.buttonDigRead.Location = new System.Drawing.Point(832, 171);
             this.buttonDigRead.Name = "buttonDigRead";
             this.buttonDigRead.Size = new System.Drawing.Size(99, 37);
             this.buttonDigRead.TabIndex = 3;
@@ -218,7 +222,7 @@
             // buttonReset
             // 
             this.buttonReset.Enabled = false;
-            this.buttonReset.Location = new System.Drawing.Point(710, 286);
+            this.buttonReset.Location = new System.Drawing.Point(937, 289);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(99, 37);
             this.buttonReset.TabIndex = 3;
@@ -229,7 +233,7 @@
             // buttonSwitchTime
             // 
             this.buttonSwitchTime.Enabled = false;
-            this.buttonSwitchTime.Location = new System.Drawing.Point(605, 111);
+            this.buttonSwitchTime.Location = new System.Drawing.Point(832, 112);
             this.buttonSwitchTime.Name = "buttonSwitchTime";
             this.buttonSwitchTime.Size = new System.Drawing.Size(99, 37);
             this.buttonSwitchTime.TabIndex = 3;
@@ -240,7 +244,7 @@
             // buttonShieldModel
             // 
             this.buttonShieldModel.Enabled = false;
-            this.buttonShieldModel.Location = new System.Drawing.Point(710, 172);
+            this.buttonShieldModel.Location = new System.Drawing.Point(937, 171);
             this.buttonShieldModel.Name = "buttonShieldModel";
             this.buttonShieldModel.Size = new System.Drawing.Size(99, 37);
             this.buttonShieldModel.TabIndex = 3;
@@ -251,7 +255,7 @@
             // buttonBaseModel
             // 
             this.buttonBaseModel.Enabled = false;
-            this.buttonBaseModel.Location = new System.Drawing.Point(710, 227);
+            this.buttonBaseModel.Location = new System.Drawing.Point(937, 230);
             this.buttonBaseModel.Name = "buttonBaseModel";
             this.buttonBaseModel.Size = new System.Drawing.Size(99, 37);
             this.buttonBaseModel.TabIndex = 3;
@@ -273,7 +277,7 @@
             // buttonPresence
             // 
             this.buttonPresence.Enabled = false;
-            this.buttonPresence.Location = new System.Drawing.Point(820, 172);
+            this.buttonPresence.Location = new System.Drawing.Point(1042, 171);
             this.buttonPresence.Name = "buttonPresence";
             this.buttonPresence.Size = new System.Drawing.Size(99, 37);
             this.buttonPresence.TabIndex = 3;
@@ -281,18 +285,59 @@
             this.buttonPresence.UseVisualStyleBackColor = true;
             this.buttonPresence.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
+            // buttonNextHop
+            // 
+            this.buttonNextHop.Enabled = false;
+            this.buttonNextHop.Location = new System.Drawing.Point(832, 289);
+            this.buttonNextHop.Name = "buttonNextHop";
+            this.buttonNextHop.Size = new System.Drawing.Size(99, 37);
+            this.buttonNextHop.TabIndex = 3;
+            this.buttonNextHop.Text = "NEXTHOP";
+            this.buttonNextHop.UseVisualStyleBackColor = true;
+            this.buttonNextHop.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(387, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Destination Address:";
+            // 
+            // textBoxParamAddress
+            // 
+            this.textBoxParamAddress.Location = new System.Drawing.Point(681, 9);
+            this.textBoxParamAddress.Name = "textBoxParamAddress";
+            this.textBoxParamAddress.Size = new System.Drawing.Size(53, 20);
+            this.textBoxParamAddress.TabIndex = 4;
+            this.textBoxParamAddress.Text = "0000";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(576, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Parameter Address:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 341);
+            this.ClientSize = new System.Drawing.Size(1163, 341);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonClean);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
+            this.Controls.Add(this.textBoxParamAddress);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.textBoxConfigAddress);
+            this.Controls.Add(this.textBoxDestAddress);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.buttonDigRead);
+            this.Controls.Add(this.buttonNextHop);
             this.Controls.Add(this.buttonDateTime);
             this.Controls.Add(this.buttonCheckSum);
             this.Controls.Add(this.buttonHum);
@@ -324,7 +369,7 @@
         private System.Windows.Forms.Button buttonHum;
         private System.Windows.Forms.Button buttonDateTime;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.TextBox textBoxConfigAddress;
+        private System.Windows.Forms.TextBox textBoxDestAddress;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
@@ -339,6 +384,10 @@
         private System.Windows.Forms.Button buttonBaseModel;
         private System.Windows.Forms.Button buttonClean;
         private System.Windows.Forms.Button buttonPresence;
+        private System.Windows.Forms.Button buttonNextHop;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxParamAddress;
+        private System.Windows.Forms.Label label2;
     }
 }
 

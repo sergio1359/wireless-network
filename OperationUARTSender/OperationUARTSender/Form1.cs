@@ -67,11 +67,19 @@ namespace OperationUARTSender
 
         event EventHandler OperationReceived;
 
-        ushort CurrentAddress
+        ushort DestinationAddress
         {
             get
             {
-                return Convert.ToUInt16(textBoxConfigAddress.Text, 16);
+                return Convert.ToUInt16(textBoxDestAddress.Text, 16);
+            }
+        }
+
+        ushort ParameterAddress
+        {
+            get
+            {
+                return Convert.ToUInt16(textBoxParamAddress.Text, 16);
             }
         }
 
@@ -205,7 +213,7 @@ namespace OperationUARTSender
             }
             else
             {
-                PrintMessage("CONFIG ER9ROR. UNEXPECTED SIZE");
+                PrintMessage("CONFIG ERROR. UNEXPECTED SIZE");
             }
         }
 
@@ -278,55 +286,59 @@ namespace OperationUARTSender
         {
             if (sender == buttonDigSwitch)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x00 } });
             }
             else if (sender == buttonSwitchTime)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x02 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.LogicSwitch, Args = new byte[] { 0x01, 0x00, 0x02 } });
             }
             else if (sender == buttonDigRead)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.LogicRead, Args = new byte[] { 0x01, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.LogicRead, Args = new byte[] { 0x01, 0x00 } });
             }
             else if (sender == buttonCheckSum)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.ConfigChecksumRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigChecksumRead, Args = new byte[] { } });
             }
             else if (sender == buttonTemp)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.TemperatureRead, Args = new byte[] { 0x02, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.TemperatureRead, Args = new byte[] { 0x02, 0x00 } });
             }
             else if (sender == buttonHum)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.HumidityRead, Args = new byte[] { 0x03, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.HumidityRead, Args = new byte[] { 0x03, 0x00 } });
             }
             else if (sender == buttonPresence)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.PresenceRead, Args = new byte[] { 0x04, 0x00 } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.PresenceRead, Args = new byte[] { 0x04, 0x00 } });
             }
             else if (sender == buttonDateTime)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.DateTimeRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.DateTimeRead, Args = new byte[] { } });
             }
             else if (sender == buttonMAC)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.MacRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.MacRead, Args = new byte[] { } });
             }
             else if (sender == buttonFirm)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.FirmwareVersionRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.FirmwareVersionRead, Args = new byte[] { } });
             }
             else if (sender == buttonBaseModel)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.BaseModelRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.BaseModelRead, Args = new byte[] { } });
             }
             else if (sender == buttonShieldModel)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.ShieldModelRead, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ShieldModelRead, Args = new byte[] { } });
+            }
+            else if (sender == buttonNextHop)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.NextHopRead, Args = BitConverter.GetBytes(ParameterAddress) });
             }
             else if (sender == buttonReset)
             {
-                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.Reset, Args = new byte[] { } });
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.Reset, Args = new byte[] { } });
             }
         }
 
@@ -336,20 +348,20 @@ namespace OperationUARTSender
 
             if (res == System.Windows.Forms.DialogResult.OK)
             {
-                SendConfigFile(CurrentAddress, openFileDialog1.FileName);
+                SendConfigFile(DestinationAddress, openFileDialog1.FileName);
             }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            SendDateTime(CurrentAddress, true);
+            SendDateTime(DestinationAddress, true);
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             configReadBuffer.Clear();
 
-            SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.ConfigRead, Args = new byte[] { } });
+            SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigRead, Args = new byte[] { } });
         }
 
         private void buttonClean_Click(object sender, EventArgs e)
@@ -370,15 +382,16 @@ namespace OperationUARTSender
                 {
                     if (operation.Args[0] == configWriteBuffer[0].Args[0])
                     {
-                        if (operation.Args[1] == 0x00)
+                        if (operation.Args[1] == (byte)ConfigErrorCodes.OK)
                         {
                             configWriteBuffer.RemoveAt(0);
                             if (configWriteBuffer.Count > 0)
                             {
-                                if (configWriteBuffer.Count == 1)
-                                    msgToPrint = String.Format("CONFIG. UPDATE DONE TO 0x{0:X4}", operation.SourceAddress);
-
                                 SendOperation(configWriteBuffer[0]);
+                            }
+                            else
+                            {
+                                msgToPrint = String.Format("CONFIG. UPDATE DONE TO 0x{0:X4}", operation.SourceAddress);
                             }
                         }
                         else
@@ -446,7 +459,7 @@ namespace OperationUARTSender
             else if (operation.OpCode == Operation.OPCodes.DateTimeRead) //TIME SYNC REQUEST!
             {
                 SendDateTime(operation.SourceAddress, false);
-                msgToPrint = String.Format("TIME SYNC RESPONSE SENT TO 0x{0:X4}",operation.SourceAddress);
+                msgToPrint = String.Format("TIME SYNC RESPONSE SENT TO 0x{0:X4}", operation.SourceAddress);
             }
             else if (operation.OpCode == Operation.OPCodes.DateTimeReadResponse)
             {
@@ -502,6 +515,15 @@ namespace OperationUARTSender
                     operation.SourceAddress,
                     operation.Args[0]);
             }
+            else if (operation.OpCode == Operation.OPCodes.NextHopReadResponse)
+            {
+                msgToPrint = String.Format("NEXTHOP READ FROM 0x{0:X4} -> ADDRESS: 0x{1:X4}   NEXTHOP: 0x{2:X4}   SCORE: {3}   LQI: {4}",
+                    operation.SourceAddress,
+                    ((ushort)operation.Args[1] << 8 | operation.Args[0]),
+                    ((ushort)operation.Args[3] << 8 | operation.Args[2]),
+                    operation.Args[4],
+                    operation.Args[5]);
+            }
             else if (operation.OpCode == Operation.OPCodes.ConfigReadResponse)
             {
                 int fragment = operation.Args[0] & 0x0F;
@@ -519,7 +541,7 @@ namespace OperationUARTSender
                         totalFragment);
 
                     configReadBuffer.Add(operation);
-                    SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } });
+                    SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } });
 
                     if (fragment == totalFragment)
                     {
@@ -534,7 +556,7 @@ namespace OperationUARTSender
                         totalFragment);
 
                     //Send error code back
-                    SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = CurrentAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x01 } });
+                    SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x01 } });
                 }
             }
             else
@@ -542,7 +564,8 @@ namespace OperationUARTSender
                 msgToPrint = operation.ToString();
             }
 
-            PrintMessage("RSSI: " + message.RSSI + "   " + msgToPrint);
+            if (!string.IsNullOrWhiteSpace(msgToPrint))
+                PrintMessage(String.Format("RSSI: {0} NEXTHOP: 0x{1:X4}     {2}", message.RSSI, message.NextHop, msgToPrint));
         }
 
         void serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
