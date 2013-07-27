@@ -3,7 +3,7 @@
  *
  * \brief ATmega128rfa1 GPIO interface
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,18 +37,17 @@
  *
  * \asf_license_stop
  *
- * $Id: halGpio.h 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: halGpio.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 #ifndef _HAL_GPIO_H_
 #define _HAL_GPIO_H_
 
+/*- Includes ---------------------------------------------------------------*/
 #include "sysTypes.h"
 
-#define INPUT 0x0
-#define OUTPUT 0x1
-
+/*- Definitions ------------------------------------------------------------*/
 #define HAL_GPIO_PIN(name, port, bit) \
   INLINE void    HAL_GPIO_##name##_set()      { PORT##port |= (1 << bit); } \
   INLINE void    HAL_GPIO_##name##_clr()      { PORT##port &= ~(1 << bit); } \

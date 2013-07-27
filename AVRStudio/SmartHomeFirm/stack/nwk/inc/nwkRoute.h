@@ -1,7 +1,7 @@
 /**
- * \file phy.h
+ * \file nwkRoute.h
  *
- * \brief ATMEGA128RFA1 PHY interface
+ * \brief Routing interface
  *
  * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
@@ -37,62 +37,56 @@
  *
  * \asf_license_stop
  *
- * $Id: phy.h 7863 2013-05-13 20:14:34Z ataradov $
+ * $Id: nwkRoute.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
-#ifndef _PHY_H_
-#define _PHY_H_
+#ifndef _NWK_ROUTE_H_
+#define _NWK_ROUTE_H_
 
 /*- Includes ---------------------------------------------------------------*/
 #include <stdint.h>
-#include <stdbool.h>
-#include "sysConfig.h"
-#include "atmega128rfa1.h"
+#include "sysTypes.h"
+#include "nwkRx.h"
+#include "nwkFrame.h"
 
 /*- Definitions ------------------------------------------------------------*/
-#define PHY_RSSI_BASE_VAL                  (-90)
+#define NWK_ROUTE_UNKNOWN            0xffff
+#define NWK_ROUTE_NON_ROUTING        0x8000
 
-#define PHY_HAS_RANDOM_NUMBER_GENERATOR
-#define PHY_HAS_AES_MODULE
+#ifdef NWK_ENABLE_ROUTING
 
 /*- Types ------------------------------------------------------------------*/
-typedef struct PHY_DataInd_t
+typedef struct NWK_RouteTableEntry_t
 {
-  uint8_t    *data;
-  uint8_t    size;
-  uint8_t    lqi;
-  int8_t     rssi;
-} PHY_DataInd_t;
+  uint8_t  fixed     : 1;
+  uint8_t  multicast : 1;
+  uint8_t  reserved  : 2;
+  uint8_t  score     : 4;
+  uint16_t dstAddr;
+  uint16_t nextHopAddr;
+  uint8_t  rank;
+  uint8_t  lqi;
+} NWK_RouteTableEntry_t;
 
 /*- Prototypes -------------------------------------------------------------*/
-void PHY_Init(void);
-void PHY_SetRxState(bool rx);
-void PHY_SetChannel(uint8_t channel);
-void PHY_SetPanId(uint16_t panId);
-void PHY_SetShortAddr(uint16_t addr);
-void PHY_SetTxPower(uint8_t txPower);
-bool PHY_Busy(void);
-void PHY_Sleep(void);
-void PHY_Wakeup(void);
-void PHY_DataReq(uint8_t *data, uint8_t size);
-void PHY_DataConf(uint8_t status);
-void PHY_DataInd(PHY_DataInd_t *ind);
-void PHY_TaskHandler(void);
+NWK_RouteTableEntry_t *NWK_RouteFindEntry(uint16_t dst, uint8_t multicast);
+NWK_RouteTableEntry_t *NWK_RouteNewEntry(void);
+void NWK_RouteFreeEntry(NWK_RouteTableEntry_t *entry);
+uint16_t NWK_RouteNextHop(uint16_t dst, uint8_t multicast);
+NWK_RouteTableEntry_t *NWK_RouteTable(void);
+void NWK_CopyRouteTable(uint8_t* buffer, uint8_t length);//Added
+uint16_t NWK_GetNextNeighbourAddress(uint16_t lastAddress);//Added
 
-#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-void PHY_RandomReq(void);
-void PHY_RandomConf(uint16_t rnd);
-#endif
+void nwkRouteInit(void);
+void nwkRouteRemove(uint16_t dst, uint8_t multicast);
+void nwkRouteFrameReceived(NwkFrame_t *frame);
+void nwkRouteFrameSent(NwkFrame_t *frame);
+void nwkRoutePrepareTx(NwkFrame_t *frame);
+void nwkRouteFrame(NwkFrame_t *frame);
+void nwkRouteErrorReceived(NWK_DataInd_t *ind);
+void nwkRouteUpdateEntry(uint16_t dst, uint8_t multicast, uint16_t nextHop, uint8_t lqi);
 
-#ifdef PHY_ENABLE_AES_MODULE
-void PHY_EncryptReq(uint8_t *text, uint8_t *key);
-void PHY_EncryptConf();
-#endif
+#endif // NWK_ENABLE_ROUTING
 
-#ifdef PHY_ENABLE_ENERGY_DETECTION
-void PHY_EdReq(void);
-void PHY_EdConf(int8_t ed);
-#endif
-
-#endif // _PHY_H_
+#endif // _NWK_ROUTE_H_

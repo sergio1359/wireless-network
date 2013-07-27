@@ -142,13 +142,13 @@ void route_Handler(OPERATION_HEADER_t* operation_header)
 	}else if(operation_header->opCode == NextHopRead)
 	{
 		NEXT_HOP_READ_MESSAGE_t* msg = (NEXT_HOP_READ_MESSAGE_t*)(operation_header + 1);
-		NwkRouteTableRecord_t *rec = NWK_RouteNextHop(msg->nodeAddress);
+		NWK_RouteTableEntry_t *rec = NWK_RouteFindEntry(msg->nodeAddress, 0);
 		
 		nextHopResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		nextHopResponse.header.destinationAddress = operation_header->sourceAddress;
 		
 		nextHopResponse.response.nodeAddress = msg->nodeAddress;
-		nextHopResponse.response.nextHopeAddress = rec->nextHop;
+		nextHopResponse.response.nextHopeAddress = rec->nextHopAddr;
 		nextHopResponse.response.lqi = rec->lqi;
 		nextHopResponse.response.score = rec->score;
 		

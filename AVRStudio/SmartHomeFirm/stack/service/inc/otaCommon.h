@@ -3,7 +3,7 @@
  *
  * \brief OTA Server and OTA Client common interface
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,22 +37,20 @@
  *
  * \asf_license_stop
  *
- * $Id: otaCommon.h 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: otaCommon.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 #ifndef _OTA_COMMON_H_
 #define _OTA_COMMON_H_
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Definitions ------------------------------------------------------------*/
 #define OTA_MAX_BLOCK_SIZE     90 //(NWK_MAX_PAYLOAD_SIZE - (1 + 2 + 1))
 #define OTA_RESPONSE_TIMEOUT   2000
 #define OTA_FRAME_SPACING      50
 #define OTA_MAX_RETRIES        3
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Types ------------------------------------------------------------------*/
 enum
 {
   OTA_START_REQ_COMMAND_ID    = 0x01,
@@ -122,7 +120,9 @@ typedef struct OtaBlockRespCommand_t
   uint8_t     status;
 } OtaBlockRespCommand_t;
 
-/*****************************************************************************
+/*- Implementations --------------------------------------------------------*/
+
+/*************************************************************************//**
 *****************************************************************************/
 static inline uint16_t otaCrcUpdateCcitt(uint16_t crc, uint8_t data)
 {

@@ -1,7 +1,7 @@
 /**
- * \file phy.h
+ * \file nwkRouteDiscovery.h
  *
- * \brief ATMEGA128RFA1 PHY interface
+ * \brief Route discovery interface
  *
  * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
@@ -37,62 +37,27 @@
  *
  * \asf_license_stop
  *
- * $Id: phy.h 7863 2013-05-13 20:14:34Z ataradov $
+ * $Id: nwkRouteDiscovery.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
-#ifndef _PHY_H_
-#define _PHY_H_
+#ifndef _NWK_ROUTE_DISCOVERY_H_
+#define _NWK_ROUTE_DISCOVERY_H_
 
 /*- Includes ---------------------------------------------------------------*/
 #include <stdint.h>
-#include <stdbool.h>
-#include "sysConfig.h"
-#include "atmega128rfa1.h"
+#include "nwk.h"
+#include "sysTypes.h"
+#include "nwkFrame.h"
 
-/*- Definitions ------------------------------------------------------------*/
-#define PHY_RSSI_BASE_VAL                  (-90)
-
-#define PHY_HAS_RANDOM_NUMBER_GENERATOR
-#define PHY_HAS_AES_MODULE
-
-/*- Types ------------------------------------------------------------------*/
-typedef struct PHY_DataInd_t
-{
-  uint8_t    *data;
-  uint8_t    size;
-  uint8_t    lqi;
-  int8_t     rssi;
-} PHY_DataInd_t;
+#ifdef NWK_ENABLE_ROUTE_DISCOVERY
 
 /*- Prototypes -------------------------------------------------------------*/
-void PHY_Init(void);
-void PHY_SetRxState(bool rx);
-void PHY_SetChannel(uint8_t channel);
-void PHY_SetPanId(uint16_t panId);
-void PHY_SetShortAddr(uint16_t addr);
-void PHY_SetTxPower(uint8_t txPower);
-bool PHY_Busy(void);
-void PHY_Sleep(void);
-void PHY_Wakeup(void);
-void PHY_DataReq(uint8_t *data, uint8_t size);
-void PHY_DataConf(uint8_t status);
-void PHY_DataInd(PHY_DataInd_t *ind);
-void PHY_TaskHandler(void);
+void nwkRouteDiscoveryInit(void);
+void nwkRouteDiscoveryRequest(NwkFrame_t *frame);
+bool nwkRouteDiscoveryReplyReceived(NWK_DataInd_t *ind);
+bool nwkRouteDiscoveryRequestReceived(NWK_DataInd_t *ind);
 
-#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-void PHY_RandomReq(void);
-void PHY_RandomConf(uint16_t rnd);
-#endif
+#endif // NWK_ENABLE_ROUTE_DISCOVERY
 
-#ifdef PHY_ENABLE_AES_MODULE
-void PHY_EncryptReq(uint8_t *text, uint8_t *key);
-void PHY_EncryptConf();
-#endif
-
-#ifdef PHY_ENABLE_ENERGY_DETECTION
-void PHY_EdReq(void);
-void PHY_EdConf(int8_t ed);
-#endif
-
-#endif // _PHY_H_
+#endif // _NWK_ROUTE_DISCOVERY_H_

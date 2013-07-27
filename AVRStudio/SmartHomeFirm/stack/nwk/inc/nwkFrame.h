@@ -1,7 +1,7 @@
 /**
- * \file nwk.h
+ * \file nwkFrame.h
  *
- * \brief Network layer public interface
+ * \brief Frame buffers management interface
  *
  * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
@@ -37,69 +37,100 @@
  *
  * \asf_license_stop
  *
- * $Id: nwk.h 7863 2013-05-13 20:14:34Z ataradov $
+ * $Id: nwkFrame.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
-#ifndef _NWK_H_
-#define _NWK_H_
+#ifndef _NWK_FRAME_H_
+#define _NWK_FRAME_H_
 
 /*- Includes ---------------------------------------------------------------*/
 #include <stdint.h>
-#include <stdbool.h>
-#include "sysConfig.h"
-#include "nwkRoute.h"
-#include "nwkGroup.h"
-#include "nwkSecurity.h"
-#include "nwkDataReq.h"
+#include "sysTypes.h"
 
 /*- Definitions ------------------------------------------------------------*/
-#define NWK_MAX_PAYLOAD_SIZE            (127 - 16/*NwkFrameHeader_t*/ - 2/*crc*/)
-
-#define NWK_BROADCAST_PANID             0xffff
-#define NWK_BROADCAST_ADDR              0xffff
-
-#define NWK_ENDPOINTS_AMOUNT            16
+#define NWK_FRAME_MAX_PAYLOAD_SIZE   127
 
 /*- Types ------------------------------------------------------------------*/
-typedef enum
+typedef struct PACK NwkFrameHeader_t
 {
-  NWK_SUCCESS_STATUS                      = 0x00,
-  NWK_ERROR_STATUS                        = 0x01,
-  NWK_OUT_OF_MEMORY_STATUS                = 0x02,
+  uint16_t    macFcf;
+  uint8_t     macSeq;
+  uint16_t    macDstPanId;
+  uint16_t    macDstAddr;
+  uint16_t    macSrcAddr;
 
-  NWK_NO_ACK_STATUS                       = 0x10,
-  NWK_NO_ROUTE_STATUS                     = 0x11,
+  struct PACK
+  {
+    uint8_t   ackRequest : 1;
+    uint8_t   security   : 1;
+    uint8_t   linkLocal  : 1;
+    uint8_t   multicast  : 1;
+    uint8_t   reserved   : 4;
+  }           nwkFcf;
+  uint8_t     nwkSeq;
+  uint16_t    nwkSrcAddr;
+  uint16_t    nwkDstAddr;
+  struct PACK
+  {
+    uint8_t   nwkSrcEndpoint : 4;
+    uint8_t   nwkDstEndpoint : 4;
+  };
+} NwkFrameHeader_t;
 
-  NWK_PHY_CHANNEL_ACCESS_FAILURE_STATUS   = 0x20,
-  NWK_PHY_NO_ACK_STATUS                   = 0x21,
-} NWK_Status_t;
-
-typedef struct NwkIb_t
+typedef struct PACK NwkFrameMulticastHeader_t
 {
-  uint16_t     addr;
-  uint16_t     panId;
-  uint8_t      nwkSeqNum;
-  uint8_t      macSeqNum;
-  bool         (*endpoint[NWK_ENDPOINTS_AMOUNT])(NWK_DataInd_t *ind);
-#ifdef NWK_ENABLE_SECURITY
-  uint32_t     key[4];
-#endif
-} NwkIb_t;
+  uint16_t    nonMemberRadius    : 4;
+  uint16_t    maxNonMemberRadius : 4;
+  uint16_t    memberRadius       : 4;
+  uint16_t    maxMemberRadius    : 4;
+} NwkFrameMulticastHeader_t;
 
-/*- Variables --------------------------------------------------------------*/
-extern NwkIb_t nwkIb;
+typedef struct NwkFrame_t
+{
+  uint8_t      state;
+  uint8_t      size;
+
+  union
+  {
+    NwkFrameHeader_t header;
+    uint8_t          data[NWK_FRAME_MAX_PAYLOAD_SIZE];
+  };
+
+  uint8_t      *payload;
+
+  union
+  {
+    struct
+    {
+      uint8_t  lqi;
+      int8_t   rssi;
+    } rx;
+
+    struct
+    {
+      uint8_t  status;
+      uint16_t timeout;
+      uint8_t  control;
+      void     (*confirm)(struct NwkFrame_t *frame);
+    } tx;
+  };
+} NwkFrame_t;
 
 /*- Prototypes -------------------------------------------------------------*/
-void NWK_Init(void);
-void NWK_SetAddr(uint16_t addr);
-void NWK_SetPanId(uint16_t panId);
-void NWK_OpenEndpoint(uint8_t id, bool (*handler)(NWK_DataInd_t *ind));
-bool NWK_Busy(void);
-void NWK_SleepReq(void);
-void NWK_WakeupReq(void);
-void NWK_TaskHandler(void);
+void nwkFrameInit(void);
+NwkFrame_t *nwkFrameAlloc(void);
+void nwkFrameFree(NwkFrame_t *frame);
+NwkFrame_t *nwkFrameNext(NwkFrame_t *frame);
+void nwkFrameCommandInit(NwkFrame_t *frame);
 
-uint8_t NWK_LinearizeLqi(uint8_t lqi);
+/*- Implementations --------------------------------------------------------*/
 
-#endif // _NWK_H_
+/*************************************************************************//**
+*****************************************************************************/
+static inline uint8_t nwkFramePayloadSize(NwkFrame_t *frame)
+{
+  return frame->size - (frame->payload - frame->data);
+}
+
+#endif // _NWK_FRAME_H_

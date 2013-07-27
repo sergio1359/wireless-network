@@ -3,7 +3,7 @@
  *
  * \brief ATmega128rfa1 sleep interface
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,15 +37,17 @@
  *
  * \asf_license_stop
  *
- * $Id: halSleep.h 5223 2012-09-10 16:47:17Z ataradov $
+ * $Id: halSleep.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
 #ifndef _HAL_SLEEP_H_
 #define _HAL_SLEEP_H_
 
-/*****************************************************************************
-*****************************************************************************/
+/*- Includes ---------------------------------------------------------------*/
+#include <stdint.h>
+
+/*- Prototypes -------------------------------------------------------------*/
 void HAL_Sleep(uint32_t interval);
 
 #endif // _HAL_SLEEP_H_

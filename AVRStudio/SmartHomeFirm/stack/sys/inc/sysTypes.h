@@ -3,7 +3,7 @@
  *
  * \brief System types and definitions
  *
- * Copyright (C) 2012 Atmel Corporation. All rights reserved.
+ * Copyright (C) 2012-2013, Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -37,7 +37,7 @@
  *
  * \asf_license_stop
  *
- * $Id: sysTypes.h 5245 2012-09-10 20:07:02Z ataradov $
+ * $Id: sysTypes.h 7863 2013-05-13 20:14:34Z ataradov $
  *
  */
 
@@ -46,13 +46,15 @@
 
 #include <stdint.h>
 
+#define SYS_LW_MESH_ENV
+
 #if defined(__ICCAVR__)
   #include <inavr.h>
   #include <ioavr.h>
   #include <intrinsics.h>
   #include <pgmspace.h>
 
-  #define PACK // TODO: define
+  #define PACK
 
   #define PRAGMA(x) _Pragma(#x)
 
@@ -115,6 +117,8 @@
   #define SYS_DEVICE_SIZE        131072
   #define SYS_PAGE_SIZE          256
   #define SYS_BOOTLOADER_SIZE    2048
+
+#elif defined(HAL_ATMEGA256RFR2)
 
 #elif defined(HAL_ATXMEGA128B1)
 
