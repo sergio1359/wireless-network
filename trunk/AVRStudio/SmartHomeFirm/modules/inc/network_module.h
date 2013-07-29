@@ -24,6 +24,11 @@ X(NextHopReadResponse,				0x23, networkNextHop_Handler,	networkModule_DataConf, 
 X(RouteTableRead,					0x24, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_MESSAGE_t,					false)					\
 X(RouteTableReadResponse,			0x25, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,	true)					\
 X(RouteTableReadConfirmation,		0x26, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,		false)					\
+X(JoinRequest,						0x2A, 0x00,						0x00,					 JOIN_REQUEST_MESSAGE_t,						false)					\
+X(JoinResponse,						0x2B, 0x00,						0x00,					 JOIN_RESPONSE_MESSAGE_t,						false)					\
+X(JoinAbort,						0x2C, 0x00,						0x00,					 JOIN_ABORT_MESSAGE_t,							false)					\
+X(JoinAccept,						0x2D, 0x00,						0x00,					 JOIN_ACCEPT_MESSAGE_t,							false)					\
+X(JoinAcceptResponse,				0x2E, 0x00,						0x00,					 JOIN_ACCEPT_RESPONSE_MESSAGE_t,				false)					\
 
 
 //MAC
@@ -67,6 +72,34 @@ typedef struct
 	uint8_t score;
 	uint8_t lqi;
 }NEXT_HOP_READ_RESPONSE_MESSAGE_t;
+
+
+//NETWORK JOIN
+typedef struct
+{
+}JOIN_REQUEST_MESSAGE_t;
+
+typedef struct
+{
+	uint8_t RSA_Key[16];
+}JOIN_RESPONSE_MESSAGE_t;
+
+typedef struct
+{
+	uint8_t NumberOfResponses;
+}JOIN_ABORT_MESSAGE_t;
+
+typedef struct
+{
+	uint8_t MacAddress[SERIAL_NUMBER_SIZE];
+	uint8_t AES_Key[16];
+}JOIN_ACCEPT_MESSAGE_t;
+
+typedef struct
+{
+	uint16_t Address;
+	uint8_t  Network_AES_Key[16];
+}JOIN_ACCEPT_RESPONSE_MESSAGE_t;
 
 
 void networkModule_Init(void);

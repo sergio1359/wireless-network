@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <util/delay.h>
+
 #include "config.h"
 #include "hal.h"
 #include "phy.h"
@@ -9,7 +11,6 @@
 #include "halUart.h"
 #include "halSleep.h"
 #include "sysTimer.h"
-#include "leds.h"
 
 //LIBRARIES
 #include "RTC.h"
@@ -18,6 +19,7 @@
 #include "DS2401.h"
 #include "DHT11.h"
 #include "DISPLAY.h"
+#include "BASE_IO.h"
 
 #define DECLARING_GLOBALS
 #include "globals.h"
@@ -56,6 +58,7 @@
 static SYS_Timer_t appNetworkStatusTimer;
 
 _Bool initialized = false;
+_Bool buttonLastPressed = false;
 _Bool sendFlag = false;
 
 #if APP_ROUTER || APP_ENDDEVICE
@@ -64,9 +67,8 @@ _Bool sendFlag = false;
 static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
 	if(!IS_COORDINATOR)
-	sendFlag = true;
+		sendFlag = true;
 	
-	//ledToggle(0);
 	(void)timer;
 }
 #endif
@@ -153,8 +155,16 @@ void PHY_RandomConf(uint16_t rnd)
 *****************************************************************************/
 static void appInit(void)
 {
-	ledsInit();
-
+	#ifdef APP_ENABLE_OTA_SERVER
+	OTA_ServerInit();
+	#endif
+	#ifdef APP_ENABLE_OTA_CLIENT
+	OTA_ClientInit();
+	#endif
+	
+	DISPLAY_Init(PINADDRESS('D',1), PINADDRESS('D',0), PINADDRESS('B',1), PINADDRESS('B',3), PINADDRESS('B',5), PINADDRESS('B',7));
+	DISPLAY_WriteString("HELLO!");
+	
 	#if APP_ROUTER || APP_ENDDEVICE
 	appNetworkStatusTimer.interval = 1000;//500
 	appNetworkStatusTimer.mode = SYS_TIMER_PERIODIC_MODE;
@@ -164,12 +174,34 @@ static void appInit(void)
 	//HAL_UartPrint("ROUTER\r\n");
 	#else
 	HAL_UartPrint("COORDINATOR\r\n");
-	ledOn(LED_NETWORK);
 	#endif
 
 	#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
 	PHY_RandomReq();
 	#endif
+	
+	buttonLastPressed = BASE_ButtonPressed();
+	uint8_t joinCounter = 0;
+	while(buttonLastPressed)
+	{
+		BASE_LedToggle();
+		_delay_ms(200);
+		
+		if(joinCounter++ == (5 * 2)) //2 Seconds
+		{
+			RADIO_StartNetworkJoin();
+			break;
+		}
+		
+		buttonLastPressed = BASE_ButtonPressed();
+	};
+	
+	BASE_LedOn();
+	
+	TIME_Init();
+	OM_Init();
+	RADIO_Init();
+	//MODULES_Init();
 	
 	initialized = true;
 }
@@ -183,8 +215,15 @@ static void APP_TaskHandler(void)
 		appInit();
 	}else
 	{
+		if(buttonLastPressed && BASE_ButtonPressed())
+		{
+			softReset();
+		}
+		
+		buttonLastPressed = BASE_ButtonPressed();
+		
 		if(sendFlag)
-		appSendData();
+			appSendData();
 	}
 }
 
@@ -196,11 +235,12 @@ int main(void)
 	
 	USART_Init();
 	
-	TIME_Init();
-	
 	CONFIG_Init();
 	
-	/*TIME_t debugTime;
+	BASE_Init();
+	
+	/*
+	TIME_t debugTime;
 	debugTime.hour = 21;
 	debugTime.minute = 59;
 	debugTime.second = 00;
@@ -214,7 +254,7 @@ int main(void)
 	debugDate.year = 2013;
 	TIME_ValidateDate(&debugDate, &debugWeek);*/
 	
-	if(DS2401_Init())
+	/*if(DS2401_Init())
 	{
 		if(IS_COORDINATOR)
 		{
@@ -234,22 +274,7 @@ int main(void)
 	}else
 	{
 		HAL_UartPrint("SERIAL NUMBER: NOT DETECTED!\r\n");
-	}
-	
-	#ifdef APP_ENABLE_OTA_SERVER
-	OTA_ServerInit();
-	#endif
-	#ifdef APP_ENABLE_OTA_CLIENT
-	OTA_ClientInit();
-	#endif
-	
-	OM_Init();
-	Radio_Init();
-	MODULES_Init();
-	
-	ledsInit();
-	DISPLAY_Init(PINADDRESS('D',1), PINADDRESS('D',0), PINADDRESS('B',1), PINADDRESS('B',3), PINADDRESS('B',5), PINADDRESS('B',7));
-	DISPLAY_WriteString("HELLO!");
+	}*/
 
 	while (1)
 	{

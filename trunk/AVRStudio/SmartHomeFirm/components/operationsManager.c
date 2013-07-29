@@ -63,7 +63,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header)
 		MODULES_HandleCommand(operation_header);
 	}else
 	{
-		Radio_AddMessageByReference(operation_header, MODULES_DataConf(operation_header->opCode));
+		RADIO_AddMessageByReference(operation_header, MODULES_DataConf(operation_header->opCode));
 	}
 }
 	
@@ -122,7 +122,7 @@ void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 		USART_SendOperation(&coordinator_UART_header, operation_header, MODULES_DataConf(operation_header->opCode));
 	}else
 	{
-		Radio_AddMessageByCopy(operation_header, MODULES_DataConf(operation_header->opCode));
+		RADIO_AddMessageByCopy(operation_header, MODULES_DataConf(operation_header->opCode));
 	}
 }
 
@@ -133,7 +133,7 @@ void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, 
 		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
 	}else
 	{
-		Radio_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
+		RADIO_AddMessageWithBodyByCopy(operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
 	}
 }
 
@@ -149,7 +149,7 @@ void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEA
 		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
 		operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 	
-		Radio_AddMessageByCopy(operation_header, &USART_DataConf);
+		RADIO_AddMessageByCopy(operation_header, &USART_DataConf);
 	}	
 }
 

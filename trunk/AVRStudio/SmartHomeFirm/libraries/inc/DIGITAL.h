@@ -24,9 +24,12 @@ uint8_t portMask_##x
 portPrt_##x = PORT_FROM_PINADDRESS(pinAddress); \
 portMask_##x = MASK_FROM_PINADDRESS(pinAddress) \
 
+#define VARPIN_ISSET(x) portPrt_##x != 0					\
+
 #define CCAT(a, b) a ## b
 #define VARPIN_SET(x) HAL_GPIO_PORT_set(CCAT(portPrt_,x), CCAT(portMask_,x))
 #define VARPIN_CLR(x) HAL_GPIO_PORT_clr(CCAT(portPrt_,x), CCAT(portMask_,x))
+#define VARPIN_TOG(x) HAL_GPIO_PORT_toggle(CCAT(portPrt_,x), CCAT(portMask_,x))
 #define VARPIN_OUT(x) HAL_GPIO_PORT_out(CCAT(portPrt_,x), CCAT(portMask_,x))
 #define VARPIN_INP(x) HAL_GPIO_PORT_in(CCAT(portPrt_,x), CCAT(portMask_,x))
 #define VARPIN_READ(x) HAL_GPIO_PORT_read(CCAT(portPrt_,x), CCAT(portMask_,x))

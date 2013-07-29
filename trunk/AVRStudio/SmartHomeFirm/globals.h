@@ -25,8 +25,6 @@
 
 #define SHIELD_MODEL 1
 
-#define BASE_MODEL 2
-
 #define softReset()        \
 do                          \
 {                           \
@@ -49,6 +47,9 @@ struct {																					\
 
 GLOBAL RUNNING_CONFIGURATION_t runningConfiguration;
 GLOBAL volatile _Bool validConfiguration;
+
+//System info
+GLOBAL volatile uint8_t baseModel;
 
 /*	Time vars	4 bytes  */
 GLOBAL volatile TIME_t currentTime;
