@@ -446,6 +446,7 @@ static void rfDataInd(NWK_DataInd_t *ind)
 	}else if(joinState == JOIN_STATE_WAIT_REQUEST_RESP)
 	{
 		//TODO: Count Responses
+		//responsesCount++;
 	}else if(joinState == JOIN_STATE_WAIT_ACCEPT_RESP)
 	{		
 		
