@@ -165,7 +165,7 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 		else if(timeSyncState == TIME_SYNC_WAITING_DISCOVERY_SEND)
 		{
 			//Send a discovery operation to refresh the neighbors table
-			Radio_SendDiscovery(timeSync_DataConf);
+			RADIO_SendDiscovery(timeSync_DataConf);
 			timeSyncState = TIME_SYNC_WAITING_DISCOVERY_CONFIRM;
 		}
 		else if(timeSyncState == TIME_SYNC_WAITING_SYNC_RESPONSE)//TimeOut
@@ -190,7 +190,7 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 				timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 				
 				timeSyncState = TIME_SYNC_WAITING_SYNC_CONFIRM;
-				Radio_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf);	
+				RADIO_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf);	
 			}
 		}
 		

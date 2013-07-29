@@ -157,7 +157,7 @@ void configBaseModel_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		baseModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		baseModelResponse.header.destinationAddress = operation_header->sourceAddress;
-		baseModelResponse.response.model = BASE_MODEL;
+		baseModelResponse.response.model = baseModel;
 		
 		OM_ProccessResponseOperation(&baseModelResponse.header);
 	}else if(operation_header->opCode == BaseModelReadResponse)
