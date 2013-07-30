@@ -32,6 +32,14 @@ namespace OperationUARTSender
             RouteTableRead,
             RouteTableReadResponse,
             RouteTableReadConfirmation,
+            PingRequest,
+            PingResponse,
+
+            JoinRequest = 0x2A,
+            JoinRequestResponse,
+            JoinAbort,
+            JoinAccept,
+            JoinAcceptResponse,
 
             DateTimeWrite = 0x30,
             DateTimeRead,

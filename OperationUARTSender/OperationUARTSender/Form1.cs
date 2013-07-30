@@ -65,6 +65,8 @@ namespace OperationUARTSender
         List<Operation> configWriteBuffer = new List<Operation>();
         List<Operation> configReadBuffer = new List<Operation>();
 
+        Dictionary<byte[], ushort> networkDevices = new Dictionary<byte[], ushort>(new ByteArrayComparer());
+
         event EventHandler OperationReceived;
 
         ushort DestinationAddress
@@ -138,6 +140,30 @@ namespace OperationUARTSender
             }
 
             SendOperation(configWriteBuffer[0]);
+        }
+
+        public void SendJoinRequestResponse(ushort destinationAddress)
+        {
+            byte[] RSAKey = new byte[16];
+            Random r = new Random();
+            r.NextBytes(RSAKey);
+
+            SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = destinationAddress, OpCode = Operation.OPCodes.JoinRequestResponse, Args = RSAKey });
+        }
+
+        public void SendJoinAcceptResponse(ushort destinationAddress, byte[] macAddress, byte[] AESKey)
+        {
+            List<byte> operationArgs = new List<byte>();
+
+            if (!networkDevices.ContainsKey(macAddress))
+            {
+                networkDevices.Add(macAddress, (ushort)(0x4004 + networkDevices.Count));
+            }
+
+            operationArgs.AddRange(BitConverter.GetBytes(networkDevices[macAddress]));
+            operationArgs.AddRange(Encoding.ASCII.GetBytes("TestSecurityKey0"));
+
+            SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = destinationAddress, OpCode = Operation.OPCodes.JoinAcceptResponse, Args = operationArgs.ToArray() });
         }
 
         #region Private Methods
@@ -523,6 +549,44 @@ namespace OperationUARTSender
                     ((ushort)operation.Args[3] << 8 | operation.Args[2]),
                     operation.Args[4],
                     operation.Args[5]);
+            }
+            else if (operation.OpCode == Operation.OPCodes.PingResponse)
+            {
+                msgToPrint = String.Format("PING RESPONSE RECEIVED FROM 0x{0:X4}", operation.SourceAddress);
+            }
+            else if (operation.OpCode == Operation.OPCodes.JoinRequest)
+            {
+                msgToPrint = String.Format("JOIN REQUEST RECEIVED FROM 0x{0:X4}", operation.SourceAddress);
+                SendJoinRequestResponse(operation.SourceAddress);
+            }
+            else if (operation.OpCode == Operation.OPCodes.JoinAbort)
+            {
+                msgToPrint = String.Format("JOIN ABORT RECEIVED FROM 0x{0:X4} -> NUMBER OF RESPONSES: {1}", operation.SourceAddress, operation.Args[0]);
+                SendJoinRequestResponse(operation.SourceAddress);
+            }
+            else if (operation.OpCode == Operation.OPCodes.JoinAccept)
+            {
+                byte[] macAddress = operation.Args.Take(6).ToArray();
+                byte[] aesKey =     operation.Args.Skip(6).ToArray();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("JOIN ACCEPT RECEIVED FROM 0x{0:X4} -> MAC: ", operation.SourceAddress);
+
+                foreach (byte b in macAddress)
+                {
+                    sb.AppendFormat("0x{0:X2} ", b);
+                }
+
+                sb.Append("  AES-KEY: ");
+
+                foreach (byte b in aesKey)
+                {
+                    sb.AppendFormat("0x{0:X2} ", b);
+                }
+
+                msgToPrint = sb.ToString();
+
+                SendJoinAcceptResponse(operation.SourceAddress, macAddress, aesKey);
             }
             else if (operation.OpCode == Operation.OPCodes.ConfigReadResponse)
             {
