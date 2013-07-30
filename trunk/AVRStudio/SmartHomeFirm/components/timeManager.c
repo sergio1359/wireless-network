@@ -116,6 +116,7 @@ void TIME_ProccessSyncResponse(WEEKDAY_t *receivedWeek, DATE_t *receivedDate, TI
 			TIME_ValidateTime(receivedTime);
 			TIME_ValidateDate(receivedDate, receivedWeek);	
 			//TODO: Turn off timer?
+			//SYS_TimerStop(&timeSyncTimer);
 		}else
 		{
 			timeSyncState = TIME_SYNC_WAITING_SYNC_SEND;

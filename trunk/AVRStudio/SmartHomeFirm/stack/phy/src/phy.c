@@ -340,20 +340,23 @@ static void phySetRxState(void)
 static void phyHandleSetRequests(void)
 {
   phyTrxSetState(TRX_CMD_TRX_OFF);
+  
+  uint8_t requestCopy = phyIb.request;
+  phyIb.request = PHY_REQ_NONE;
 
-  if (phyIb.request & PHY_REQ_CHANNEL)
+  if (requestCopy & PHY_REQ_CHANNEL)
   {
     PHY_CC_CCA_REG_s.channel = phyIb.channel;
   }
 
-  if (phyIb.request & PHY_REQ_PANID)
+  if (requestCopy & PHY_REQ_PANID)
   {
     uint8_t *d = (uint8_t *)&phyIb.panId;
     PAN_ID_0_REG = d[0];
     PAN_ID_1_REG = d[1];
   }
 
-  if (phyIb.request & PHY_REQ_ADDR)
+  if (requestCopy & PHY_REQ_ADDR)
   {
     uint8_t *d = (uint8_t *)&phyIb.addr;
     SHORT_ADDR_0_REG = d[0];
@@ -361,7 +364,7 @@ static void phyHandleSetRequests(void)
   }
 
 #ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-  if (phyIb.request & PHY_REQ_RANDOM)
+  if (requestCopy & PHY_REQ_RANDOM)
   {
     uint16_t rnd = phyGetRandomNumber();
     PHY_RandomConf(rnd);
@@ -369,7 +372,7 @@ static void phyHandleSetRequests(void)
 #endif
 
 #ifdef PHY_ENABLE_AES_MODULE
-  if (phyIb.request & PHY_REQ_ENCRYPT)
+  if (requestCopy & PHY_REQ_ENCRYPT)
   {
     phyEncryptBlock();
     PHY_EncryptConf();
@@ -377,7 +380,7 @@ static void phyHandleSetRequests(void)
 #endif
 
 #ifdef PHY_ENABLE_ENERGY_DETECTION
-  if (phyIb.request & PHY_REQ_ED)
+  if (requestCopy & PHY_REQ_ED)
   {
     IRQ_MASK_REG_s.rxEndEn = 0;
     IRQ_MASK_REG_s.txEndEn = 0;
@@ -390,13 +393,11 @@ static void phyHandleSetRequests(void)
 #endif
 
 #ifdef PHY_ENABLE_ENERGY_DETECTION
-  if (!(phyIb.request & PHY_REQ_ED))
+  if (!(requestCopy & PHY_REQ_ED))
     phySetRxState();
 #else
   phySetRxState();
 #endif
-
-  phyIb.request = PHY_REQ_NONE;
 }
 
 /*****************************************************************************

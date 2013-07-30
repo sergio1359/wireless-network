@@ -26,6 +26,12 @@ static struct
 	NEXT_HOP_READ_RESPONSE_MESSAGE_t response;
 }nextHopResponse;
 
+static struct
+{
+	OPERATION_HEADER_t header;
+	PING_RESPONSE_MESSAGE_t response;
+}pingResponse;
+
 static uint8_t routeTableBuffer[NWK_ROUTE_TABLE_SIZE];
 static uint8_t bufferSize = 0;
 static _Bool routeSendingState;
@@ -40,6 +46,7 @@ void networkModule_Init(void)
 	macResponse.header.opCode			= MacReadResponse;
 	routeTableResponse.header.opCode	= RouteTableReadResponse;
 	nextHopResponse.header.opCode		= NextHopReadResponse;
+	pingResponse.header.opCode			= PingResponse;
 }
 
 void networkModule_DataConf(OPERATION_DataConf_t *req)
@@ -162,4 +169,18 @@ void networkRoute_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		//TODO: SEND NOTIFICATION
 	}				
+}
+
+void networkPing_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == PingRequest)
+	{
+		pingResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		pingResponse.header.destinationAddress = operation_header->sourceAddress;
+		
+		OM_ProccessResponseOperation(&pingResponse.header);
+	}else if(operation_header->opCode == PingResponse)
+	{
+		//TODO: SEND NOTIFICATION
+	}
 }
