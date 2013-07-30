@@ -96,13 +96,12 @@ void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_H
 		/* END OF TESTING REGION */
 	}	
 	
-	//TODO: Call a method that returns true if the OpCode is managed by the firmware.
+	//Call a method that returns true if the OpCode is managed by the firmware.
 	if(IS_COORDINATOR && !MODULES_HandledByFirmware(operation_header->opCode))
 	{
 		USART_SendOperation(input_header, operation_header, 0);
 	}else
 	{
-		//TODO: Check with internal address instead of configuration address...
 		if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress || //MINE (EXTERNAL)
 		   (operation_header->destinationAddress == BROADCAST_ADDRESS && operation_header->opCode == FirmwareVersionRead))
 		{

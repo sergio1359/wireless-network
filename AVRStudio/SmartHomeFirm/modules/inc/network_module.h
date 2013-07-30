@@ -24,8 +24,10 @@ X(NextHopReadResponse,				0x23, networkNextHop_Handler,	networkModule_DataConf, 
 X(RouteTableRead,					0x24, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_MESSAGE_t,					false)					\
 X(RouteTableReadResponse,			0x25, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,	true)					\
 X(RouteTableReadConfirmation,		0x26, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,		false)					\
+X(PingRequest,						0x27, networkPing_Handler,		networkModule_DataConf,	 PING_REQUEST_MESSAGE_t,						false)					\
+X(PingResponse,						0x28, networkPing_Handler,		networkModule_DataConf,	 PING_RESPONSE_MESSAGE_t,						false)					\
 X(JoinRequest,						0x2A, 0x00,						0x00,					 JOIN_REQUEST_MESSAGE_t,						false)					\
-X(JoinResponse,						0x2B, 0x00,						0x00,					 JOIN_RESPONSE_MESSAGE_t,						false)					\
+X(JoinRequestResponse,				0x2B, 0x00,						0x00,					 JOIN_REQUEST_RESPONSE_MESSAGE_t,				false)					\
 X(JoinAbort,						0x2C, 0x00,						0x00,					 JOIN_ABORT_MESSAGE_t,							false)					\
 X(JoinAccept,						0x2D, 0x00,						0x00,					 JOIN_ACCEPT_MESSAGE_t,							false)					\
 X(JoinAcceptResponse,				0x2E, 0x00,						0x00,					 JOIN_ACCEPT_RESPONSE_MESSAGE_t,				false)					\
@@ -73,6 +75,13 @@ typedef struct
 	uint8_t lqi;
 }NEXT_HOP_READ_RESPONSE_MESSAGE_t;
 
+typedef struct
+{
+}PING_REQUEST_MESSAGE_t;
+
+typedef struct
+{
+}PING_RESPONSE_MESSAGE_t;
 
 //NETWORK JOIN
 typedef struct
@@ -82,7 +91,7 @@ typedef struct
 typedef struct
 {
 	uint8_t RSA_Key[16];
-}JOIN_RESPONSE_MESSAGE_t;
+}JOIN_REQUEST_RESPONSE_MESSAGE_t;
 
 typedef struct
 {
@@ -109,5 +118,6 @@ void networkModule_DataConf(OPERATION_DataConf_t *req);
 void networkMac_Handler(OPERATION_HEADER_t* operation_header);
 void networkNextHop_Handler(OPERATION_HEADER_t* operation_header);
 void networkRoute_Handler(OPERATION_HEADER_t* operation_header);
+void networkPing_Handler(OPERATION_HEADER_t* operation_header);
 
 #endif /* NETWORK_MODULE_H_ */

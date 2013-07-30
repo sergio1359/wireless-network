@@ -87,5 +87,5 @@ _Bool MODULES_HandledByFirmware(uint8_t opcode)
 {
 	return opcode == DateTimeRead			||
 		   opcode == DateTimeReadResponse	||
-		   opcode == FirmwareVersionRead;
+		   opcode == PingRequest;
 }

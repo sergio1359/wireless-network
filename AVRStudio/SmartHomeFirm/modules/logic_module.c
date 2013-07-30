@@ -82,13 +82,16 @@ void logicModule_Init()
 	//Set responses opCodes
 	logicResponse.header.opCode = LogicReadResponse;
 	
-	//Configure Timer
-	timerDivider = 0;
+	if(num_of_logic_elems > 0)
+	{
+		//Configure Timer
+		timerDivider = 0;
 	
-	logicTimer.interval = 50; // 20 times per second
-	logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
-	logicTimer.handler = logicTimerHandler;
-	SYS_TimerStart(&logicTimer);
+		logicTimer.interval = 50; // 20 times per second
+		logicTimer.mode = SYS_TIMER_PERIODIC_MODE;
+		logicTimer.handler = logicTimerHandler;
+		SYS_TimerStart(&logicTimer);		
+	}
 }
 
 void logicModule_DataConf(OPERATION_DataConf_t *req)

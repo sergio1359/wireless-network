@@ -100,11 +100,14 @@ void temHumModule_Init(void)
 	temperatureResponse.header.opCode = TemperatureReadResponse;
 	humidityResponse.header.opCode = HumidityReadResponse; 
 	 
-	//Configure Timer 
-	tempHumReadTimer.interval = 1000;
-	tempHumReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
-	tempHumReadTimer.handler = tempHumReadTimerHandler;
-	SYS_TimerStart(&tempHumReadTimer);
+	if(num_of_temp_elems > 0 || num_of_hum_elems > 0)
+	{ 
+		//Configure Timer 
+		tempHumReadTimer.interval = 1000;
+		tempHumReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
+		tempHumReadTimer.handler = tempHumReadTimerHandler;
+		SYS_TimerStart(&tempHumReadTimer);
+	}	
 }
 
 void temHumModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)

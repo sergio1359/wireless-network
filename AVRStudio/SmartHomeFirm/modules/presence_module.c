@@ -51,7 +51,7 @@ void presenceModule_Init(void)
 		num_of_presen_elems = MAX_PRESENCE_DEVICES;
 	}
 	
-	for(uint8_t i = 0; i<num_of_presen_elems; i++)
+	for(uint8_t i = 0; i < num_of_presen_elems; i++)
 	{
 		portPtr = PORT_FROM_PINADDRESS(configPtr->pinAddress);
 		mask = MASK_FROM_PINADDRESS(configPtr->pinAddress);
@@ -69,11 +69,14 @@ void presenceModule_Init(void)
 	//Set responses opCodes
 	presenceResponse.header.opCode = PresenceReadResponse;
 	
-	//Configure Timer
-	presenceReadTimer.interval = 500;
-	presenceReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
-	presenceReadTimer.handler = presenceReadTimerHandler;
-	SYS_TimerStart(&presenceReadTimer);
+	if(num_of_presen_elems > 0)
+	{
+		//Configure Timer
+		presenceReadTimer.interval = 500;
+		presenceReadTimer.mode = SYS_TIMER_PERIODIC_MODE;
+		presenceReadTimer.handler = presenceReadTimerHandler;
+		SYS_TimerStart(&presenceReadTimer);
+	}	
 }
 
 void presenceModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)

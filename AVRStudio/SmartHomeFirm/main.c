@@ -142,15 +142,6 @@ static void appSendData(void)
 	sendFlag = false;
 }
 
-#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-/*****************************************************************************
-*****************************************************************************/
-void PHY_RandomConf(uint16_t rnd)
-{
-	srand(rnd);
-}
-#endif
-
 /*****************************************************************************
 *****************************************************************************/
 static void appInit(void)
@@ -175,10 +166,6 @@ static void appInit(void)
 	#else
 	HAL_UartPrint("COORDINATOR\r\n");
 	#endif
-
-	#ifdef PHY_ENABLE_RANDOM_NUMBER_GENERATOR
-	PHY_RandomReq();
-	#endif
 	
 	buttonLastPressed = BASE_ButtonPressed();
 	uint8_t joinCounter = 0;
@@ -187,7 +174,7 @@ static void appInit(void)
 		BASE_LedToggle();
 		_delay_ms(200);
 		
-		if(joinCounter++ == (5 * 2)) //2 Seconds
+		if(joinCounter++ == (5 * (1000 / 200))) //2 Seconds
 		{
 			RADIO_StartNetworkJoin();
 			break;
@@ -196,12 +183,12 @@ static void appInit(void)
 		buttonLastPressed = BASE_ButtonPressed();
 	};
 	
-	BASE_LedOn();
-	
 	TIME_Init();
 	OM_Init();
 	RADIO_Init();
-	//MODULES_Init();
+	MODULES_Init();
+	
+	BASE_LedOn();
 	
 	initialized = true;
 }

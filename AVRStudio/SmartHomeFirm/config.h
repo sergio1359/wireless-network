@@ -61,7 +61,7 @@
 /*****************************************************************************
 *****************************************************************************/
 //#define APP_ADDR                0x0000
-#define APP_ADDR                0x8001
+#define APP_ADDR                0x4009
 #define APP_CHANNEL             0x0f
 #define APP_PANID               0x1234
 #define APP_SENDING_INTERVAL    2000
