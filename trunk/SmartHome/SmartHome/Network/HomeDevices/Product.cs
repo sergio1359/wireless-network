@@ -12,6 +12,11 @@ namespace SmartHome.Network.HomeDevices
         public ConnectorType TypeConnector { get; set; }
         public List<Tuple<Type, List<int>>> resultProduct;
 
+        public Product()
+        {
+            resultProduct = new List<Tuple<Type, List<int>>>();
+        }
+
         public static string[] GetProducts
         {
             get
@@ -42,12 +47,21 @@ namespace SmartHome.Network.HomeDevices
 
     public class SensorBoard : Product
     {
-        public SensorBoard()
+        public SensorBoard() : base()
         {
-            base.resultProduct = new List<Tuple<Type, List<int>>>();
             base.resultProduct.Add(Tuple.Create(typeof(Button), new List<int>() { 1 }));
 
             throw new NotImplementedException();
+        }
+    }
+
+    public class TemperatureHumidity : Product
+    {
+        public TemperatureHumidity(): base()
+        {
+            base.resultProduct.Add(Tuple.Create(typeof(TemperatureSensor), new List<int>() { 0 }));
+            base.resultProduct.Add(Tuple.Create(typeof(HumiditySensor), new List<int>() { 0 }));
+            base.TypeConnector = ConnectorType.LogicInput;
         }
     }
 }

@@ -30,8 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,12 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comunications\ErrorCodes.cs" />
-    <Compile Include="Comunications\MessagesProtocol.cs" />
-    <Compile Include="Comunications\Protocol.cs" />
     <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Network\BaseType.cs" />
     <Compile Include="Comunications\OPCode.cs" />
-    <Compile Include="Comunications\IConnexion.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />
     <Compile Include="Network\HomeDevices\HumiditySensor.cs" />
     <Compile Include="Network\HomeDevices\Light.cs" />
@@ -68,10 +70,6 @@
     <Compile Include="Memory\Conversors.cs" />
     <Compile Include="Memory\Crc16.cs" />
     <Compile Include="Memory\Hex.cs" />
-    <Compile Include="Comunications\HID.cs" />
-    <Compile Include="Comunications\Serial.cs" />
-    <Compile Include="Comunications\ToNetwork.cs" />
-    <Compile Include="Comunications\ToSystem.cs" />
     <Compile Include="Network\Operation.cs" />
     <Compile Include="Network\HomeDevices\Button.cs" />
     <Compile Include="Network\HomeDevices\WallPlug.cs" />
@@ -94,9 +92,12 @@
     <Compile Include="Products\ProductsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Themer.cs" />
-    <Compile Include="Comunications\EventArgs.cs" />
+    <Compile Include="Utils\EventArgs.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

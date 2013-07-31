@@ -11,7 +11,7 @@ namespace SmartHome.Network
         public const byte CHANNEL = 0x00;
         public const ushort PANID = 0x00;
 
-        public int ID { set; get; }
+        public int Id { set; get; }
         public byte Channel { set; get; }
         public ushort PanId { set; get; }
         public string SecurityKey { set; get; }

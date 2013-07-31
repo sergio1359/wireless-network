@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C83EF5E-5946-451A-94F1-46E3BE3950DB}</ProjectGuid>
+    <ProjectGuid>{0A81343D-54BD-4607-AE55-0C786BA4B26E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Debug_WF</RootNamespace>
-    <AssemblyName>Debug WF</AssemblyName>
+    <RootNamespace>App_Smart_Home_Prototipo</RootNamespace>
+    <AssemblyName>App Smart Home Prototipo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,16 +44,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Administrator\Screens\OperationScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Administrator\Screens\OperationScreen.Designer.cs">
+      <DependentUpon>OperationScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Electrical\Screens\ConnexionScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Electrical\Screens\ConnexionScreen.Designer.cs">
+      <DependentUpon>ConnexionScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Electrical\Screens\HomeDeviceScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Electrical\Screens\HomeDeviceScreen.Designer.cs">
+      <DependentUpon>HomeDeviceScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Electrical\Screens\NodeScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Electrical\Screens\NodeScreen.Designer.cs">
+      <DependentUpon>NodeScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Electrical\Screens\ZonaScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Electrical\Screens\ZonaScreen.Designer.cs">
+      <DependentUpon>ZonaScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainScreen.Designer.cs">
+      <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Administrator\Screens\OperationScreen.resx">
+      <DependentUpon>OperationScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Electrical\Screens\ConnexionScreen.resx">
+      <DependentUpon>ConnexionScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Electrical\Screens\HomeDeviceScreen.resx">
+      <DependentUpon>HomeDeviceScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Electrical\Screens\NodeScreen.resx">
+      <DependentUpon>NodeScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Electrical\Screens\ZonaScreen.resx">
+      <DependentUpon>ZonaScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainScreen.resx">
+      <DependentUpon>MainScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,6 +127,10 @@
       <Project>{9d782cd5-c9b5-4621-9652-50f7f91ddfeb}</Project>
       <Name>ServiceLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

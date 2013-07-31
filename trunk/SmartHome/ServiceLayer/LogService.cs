@@ -18,6 +18,11 @@ namespace ServiceLayer
             throw new NotImplementedException();
         }
 
+        public string[] GetLog(string category, int from, int to)
+        {
+            throw new NotImplementedException();
+        }
+
         public string[] GetLogCategory(string category)
         {
             throw new NotImplementedException();

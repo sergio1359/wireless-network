@@ -7,22 +7,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using DataLayer.Repositories;
 
 namespace ServiceLayer
 {
     public class HomeDeviceService
     {
-        public int AddHomeDevice(HomeDevice homeDevice)
+        private ConnectorRepository _connectorRepository;
+
+        public HomeDeviceService(ConnectorRepository connectorRepository)
         {
-            NetworkManager.HomeDevices.Add(homeDevice);
+            _connectorRepository = connectorRepository;
+        }
+
+        /// <summary>
+        /// Añade un HomeDevice
+        /// </summary>
+        /// <param name="homeDevice"></param>
+        /// <returns></returns>
+        public int AddHomeDevice(string NameHomeDevice, string TypeHomeDevice)
+        {
+
+            //NetworkManager.HomeDevices.Add(homeDevice);
             return NetworkManager.HomeDevices.Last().Id;
         }
 
-        public void RemoveHomeDevice(HomeDevice homeDevice)
+        public string[] GetTypesHomeDevice()
         {
+            return HomeDevice.HomeDeviceTypes;
+        }
+
+        public void RemoveHomeDevice(int idHomeDevice)
+        {
+            HomeDevice homeDevice = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             if (homeDevice.Connector != null)
-            {
-                //TODO UNLINK
+            { //TODO: MEJORAR ESTO!
+                NodeService ns = new NodeService();
+                ns.UnlinkHomeDevice(idHomeDevice);
             }
 
             NetworkManager.HomeDevices.Remove(homeDevice);
@@ -66,9 +87,9 @@ namespace ServiceLayer
         /// <param name="zona"></param>
         /// <param name="homeDeviceType"></param>
         /// <returns></returns>
-        public List<HomeDevice> GetHomeDevices(Zone zona, string type)
+        public List<HomeDevice> GetHomeDevices(int idZona, string type)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone == zona && hd.HomeDeviceType == type).ToList();
+            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).ToList();
         }
 
         /// <summary>
@@ -78,9 +99,14 @@ namespace ServiceLayer
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public List<HomeDevice> GetHomeDevices(Zone zona, List<string> homeDeviceTypes, bool connected)
+        public List<HomeDevice> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone == zona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToList();
+            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToList();
+        }
+
+        public Connector[] GetConnectorsCapable(HomeDevice hd)
+        {
+            throw new NotImplementedException();
         }
     }
 }

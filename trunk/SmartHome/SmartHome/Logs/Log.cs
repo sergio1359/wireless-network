@@ -9,6 +9,7 @@ namespace SmartHome.Logs
 {
     public class Log : IComparable<Log>
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public string Message { get; set; }
         public LogCategory Category {get; set;}

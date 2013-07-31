@@ -41,7 +41,7 @@ namespace ServiceLayer
         /// <summary>
         /// Desrelaciona un HomeDevice de su conector asociado
         /// </summary>
-        public void Unlink(int idHomeDevice)
+        public void UnlinkHomeDevice(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
             homeDevice.Connector.UnlinkHomeDevice();
@@ -70,12 +70,17 @@ namespace ServiceLayer
             node.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
-        public Connector[] GetFreeConnectors(Node node)
+        /// <summary>
+        /// Devuelve el id del conector, su nombre, tipo y si tiene asociado el id del homeDevice conectado (sino tiene conectado ningun homeDevice tendremos que asociarlo a un ID de tipo null)
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public Dictionary<int, Tuple<string, ConnectorType, ushort>>[] GetFreeConnectors(Node node)
         {
             throw new NotImplementedException();
         }
 
-        public Node[] GetNodes()
+        public Dictionary<int, Tuple<string, Position>> GetNodes()
         {
             throw new NotImplementedException();
         }
@@ -85,6 +90,16 @@ namespace ServiceLayer
             Dictionary<int, Tuple<string, Position>> res = new Dictionary<int,Tuple<string,Position>>();
             NetworkManager.Nodes.Where(n => n.Position.Id == idZone).ToList().ForEach(n => { res.Add(n.Id, new Tuple<string, Position>(n.Name, n.Position)); });
             return res;
+        }
+
+        public string[] GetTypeShields()
+        {
+            return Enum.GetNames(typeof(ShieldType));
+        }
+
+        public string[] GetTypeBases()
+        {
+            return Enum.GetNames(typeof(BaseType));
         }
     }
 }

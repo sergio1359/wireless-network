@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // La información general sobre un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos atributos para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("Debug WF")]
+[assembly: AssemblyTitle("App Smart Home Prototipo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Debug WF")]
+[assembly: AssemblyProduct("App Smart Home Prototipo")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como identificador de typelib si este proyecto se expone a COM
-[assembly: Guid("ceb52d04-6253-42bc-ad11-e0192376d066")]
+[assembly: Guid("4e0f3c59-e9c4-4b85-9292-a178fd4fea29")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //
