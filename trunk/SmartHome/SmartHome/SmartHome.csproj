@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comunications\ErrorCodes.cs" />
+    <Compile Include="Comunications\LowLevelTypes.cs" />
+    <Compile Include="Comunications\Operation.cs" />
+    <Compile Include="Comunications\ProtocolMessages.cs" />
     <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Network\BaseType.cs" />
-    <Compile Include="Comunications\OPCode.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />
     <Compile Include="Network\HomeDevices\HumiditySensor.cs" />
     <Compile Include="Network\HomeDevices\Light.cs" />
