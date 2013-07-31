@@ -15,7 +15,6 @@ namespace SmartHome.Network
         public int Id { get; set; }
         public string Name { get; set; }
         public HomeDevice DestionationHomeDevice { get; set; }
-        //public HomeDevice OriginHomeDevice { get; set; }
         public OPCode OPCode { get; set; }
         public byte[] Args { get; set; }
 

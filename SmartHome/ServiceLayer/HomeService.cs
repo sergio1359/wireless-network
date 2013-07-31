@@ -36,6 +36,15 @@ namespace ServiceLayer
             throw new NotImplementedException();
         }
 
+        public void AllowPendingNode(string MAC)
+        {
+        }
+
+        public void DenyPendingNode(string MAC)
+        {
+
+        }
+
         public void UnlinkNode(int idNode)
         {
             Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
@@ -62,5 +71,12 @@ namespace ServiceLayer
         {
             NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idZone).NameZone= newName;
         }
+
+        public void UpdateConfiguration()
+        {
+
+        }
+
+        
     }
 }

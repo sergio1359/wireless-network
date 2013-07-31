@@ -9,9 +9,6 @@ namespace SmartHome.HomeModel
         public string Name { get; set; }
         public List<Zone> Zones { get; set; }
         public Coordenate Location { get; set; }
-
-
-        
     }
 
     public class Coordenate

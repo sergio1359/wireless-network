@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Debug_WF
+namespace App_Smart_Home_Prototipo
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Debug_WF
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainScreen());
         }
     }
 }
