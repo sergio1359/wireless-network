@@ -89,3 +89,8 @@ _Bool MODULES_HandledByFirmware(uint8_t opcode)
 		   opcode == DateTimeReadResponse	||
 		   opcode == PingRequest;
 }
+
+_Bool MODULES_HandledByBroadcast(uint8_t opcode)
+{
+	return opcode == PingRequest;
+}

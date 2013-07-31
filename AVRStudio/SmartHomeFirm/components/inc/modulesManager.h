@@ -58,6 +58,7 @@ extern inline void* MODULES_DataConf(uint8_t opcode);
 uint8_t MODULES_GetCommandArgsLength(uint8_t* opcode);
 extern inline void MODULES_HandleCommand(OPERATION_HEADER_t* header);
 inline _Bool MODULES_HandledByFirmware(uint8_t opcode);
+inline _Bool MODULES_HandledByBroadcast(uint8_t opcode);
 
 
 #endif /* MODULESMANAGER_H_ */

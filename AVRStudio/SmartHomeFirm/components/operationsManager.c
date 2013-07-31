@@ -103,7 +103,7 @@ void OM_ProccessExternalOperation(INPUT_UART_HEADER_t* input_header, OPERATION_H
 	}else
 	{
 		if(operation_header->destinationAddress == runningConfiguration.topConfiguration.networkConfig.deviceAddress || //MINE (EXTERNAL)
-		   (operation_header->destinationAddress == BROADCAST_ADDRESS && operation_header->opCode == FirmwareVersionRead))
+		   (operation_header->destinationAddress == BROADCAST_ADDRESS && MODULES_HandledByBroadcast(operation_header->opCode)))
 		{
 			MODULES_HandleCommand(operation_header);
 		}else
@@ -127,7 +127,7 @@ void OM_ProccessResponseOperation(OPERATION_HEADER_t* operation_header)
 
 void OM_ProccessResponseWithBodyOperation(OPERATION_HEADER_t* operation_header, uint8_t* bodyPtr, uint8_t bodyLength)
 {
-	if(IS_COORDINATOR)
+	if((IS_COORDINATOR && !MODULES_HandledByFirmware(operation_header->opCode)) || operation_header->destinationAddress == 0)
 	{
 		USART_SendOperationWithBody(&coordinator_UART_header, operation_header, bodyPtr, bodyLength, MODULES_DataConf(operation_header->opCode));
 	}else
