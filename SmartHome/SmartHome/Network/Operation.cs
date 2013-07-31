@@ -15,13 +15,15 @@ namespace SmartHome.Network
         public int Id { get; set; }
         public string Name { get; set; }
         public HomeDevice DestionationHomeDevice { get; set; }
-        public OPCode OPCode { get; set; }
-        public byte[] Args { get; set; }
+        public string OperationName { get; set; }
+        public object[] Args { get; set; }
 
         public List<TimeRestriction> TimeRestrictions { get; set; }
         public List<ConditionalRestriction> ConditionalRestriction { get; set; }
 
-        public void Execute() { }
+        public void Execute() 
+        { 
+        }
 
         public byte[] ToBinaryOperation()
         {
@@ -75,17 +77,6 @@ namespace SmartHome.Network
     {
         public static SortedDictionary<DateTime, List<Operation>> TimeActions = new SortedDictionary<DateTime, List<Operation>>();
 
-    }
-
-    public enum WeekDays : byte
-    {
-        Monday = 0x40,
-        Tuesday = 0x20,
-        Wednesday = 0x10,
-        Thursday = 0x08,
-        Friday = 0x04,
-        Saturday = 0x2,
-        Sunday = 0x01,
     }
 
     public enum Operations

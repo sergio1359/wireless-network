@@ -26,11 +26,12 @@ namespace SmartHome.Memory
             return result;
         }
 
-        public static byte[] ToBinaryDate(this DateTime time, bool littleEndian)
+        public static byte[] ToBinaryDate(this DateTime time, bool littleEndian = true)
         {
 
             List<Byte> result = new List<Byte>();
 
+            //TODO: Corregir!!
             string value = Enum.GetName(typeof(DayOfWeek), time.DayOfWeek);
             result.Add((byte)Enum.Parse(typeof(WeekDays), value));
 
@@ -41,7 +42,7 @@ namespace SmartHome.Memory
             return result.ToArray();
         }
 
-        public static byte[] UshortToByte(this ushort b, bool litteEndian)
+        public static byte[] UshortToByte(this ushort b, bool litteEndian = true)
         {
             byte[] result = new Byte[2];
 
