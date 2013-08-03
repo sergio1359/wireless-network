@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome.Comunications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace SmartHome.Network.HomeDevices
 
         public byte OpenTime { get; set; }
 
-        public void OpenDoor()
+        public OperationMessage OpenDoor()
         {
-            LogicWrite(LogicWriteValues.Set, OpenTime);
+            return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, OpenTime);
         }
     }
 }

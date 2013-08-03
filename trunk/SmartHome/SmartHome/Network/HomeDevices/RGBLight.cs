@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using SmartHome.Comunications;
 
 namespace SmartHome.Network.HomeDevices
 {
@@ -20,40 +21,40 @@ namespace SmartHome.Network.HomeDevices
         public ModeRGBLight Mode { get; set; }
         public Color Color { get; set; }
 
-        public void Invert(byte seconds)
+        public OperationMessage Invert(byte seconds)
         {
             Color invert = Color.FromArgb(this.Color.ToArgb() ^ 0xFFFFFF);
-            ToColor(invert, seconds);
+            return ToColor(invert, seconds);
         }
 
-        public void Random(byte seconds)
+        public OperationMessage Random(byte seconds)
         {
-            ColorWriteRandom(seconds);
+            return OperationMessage.ColorWriteRandom(Id, seconds);
         }
 
-        public void RandomSecuence(Color[] colors, byte seconds)
+        public OperationMessage RandomSecuence(Color[] colors, byte seconds)
         {
-            ColorRandomSecuenceWrite(seconds, colors);
+            return OperationMessage.ColorRandomSecuenceWrite(Id, seconds, colors);
         }
 
-        public void SortedSecuence(Color[] colors, byte seconds)
+        public OperationMessage SortedSecuence(Color[] colors, byte seconds)
         {
-            ColorSortedSecuenceWrite(seconds, colors);
+            return OperationMessage.ColorSortedSecuenceWrite(Id, seconds, colors);
         }
 
-        public void ToColor(Color color, byte seconds)
+        public OperationMessage ToColor(Color color, byte seconds)
         {
-            ColorWrite(color, seconds);
+            return OperationMessage.ColorWrite(Id, color, seconds);
         }
 
-        public void TurnOff()
+        public OperationMessage TurnOff()
         {
-            ToColor(Color.Black, 1);
+            return ToColor(Color.Black, 1);
         }
 
-        public void White()
+        public OperationMessage White()
         {
-            ToColor(Color.White, 1);
+            return ToColor(Color.White, 1);
         }
 
         public override void RefreshState()

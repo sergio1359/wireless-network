@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome.Comunications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,41 +34,41 @@ namespace SmartHome.Network.HomeDevices
         public DimmableType Type { get; set; }
 
 
-        public void On()
+        public OperationMessage On()
         {
-            PercentageDimmer(100);
+            return PercentageDimmer(100);
         }
 
-        public void Off()
+        public OperationMessage Off()
         {
-            PercentageDimmer(0);
+            return PercentageDimmer(0);
         }
 
-        public void OnTime(byte seconds)
+        public OperationMessage OnTime(byte seconds)
         {
-            PercentageDimmer(100, seconds);
+            return PercentageDimmer(100, seconds);
         }
 
-        public void Switch()
+        public OperationMessage Switch()
         {
             if (Value != 0)
             {
-                Off();
+                return Off();
             }
             else
             {
-                PercentageDimmer(lastValue);
+                return PercentageDimmer(lastValue);
             }
         }
 
-        public void PercentageDimmer(int percentage)
+        public OperationMessage PercentageDimmer(int percentage)
         {
-            PercentageDimmer(percentage, 0);
+            return PercentageDimmer(percentage, 0);
         }
 
-        public void PercentageDimmer(int percentage, byte seconds)
+        public OperationMessage PercentageDimmer(int percentage, byte seconds)
         {
-            DimmerWrite((byte)(percentage * byte.MaxValue / 100.0), 0);
+            return OperationMessage.DimmerWrite(Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
             //Value = percentage;
         }
 
