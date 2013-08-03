@@ -27,19 +27,11 @@ namespace SmartHome.Network
 
         public byte[] ToBinaryOperation()
         {
-            List<byte> result = new List<byte>();
+            //get OperationMessage
 
-            //TODO: SourceAddress, ojo con las request (tendremos que volver aqui)
-            result.Add(0x00);
-            result.Add(0x00);
+            //convertir OperationMessage
 
-            //DestinationAddress
-            result.AddRange(DestionationHomeDevice.Connector.Node.Address.UshortToByte(DestionationHomeDevice.Connector.Node.GetBaseConfiguration().LittleEndian));
-
-            result.Add((byte)OPCode);
-            result.AddRange(Args);
-
-            return result.ToArray();
+            throw new NotImplementedException();
         }
 
 

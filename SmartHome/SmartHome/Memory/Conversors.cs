@@ -1,4 +1,5 @@
-﻿using SmartHome.Network;
+﻿using SmartHome.Comunications;
+using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using SmartHome.Products;
 using System;
