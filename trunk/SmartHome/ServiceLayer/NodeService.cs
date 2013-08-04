@@ -48,9 +48,14 @@ namespace ServiceLayer
             homeDevice.UnlinkConnector();
         }
 
-        public Connector[] GetConnectors(Node node)
+        /// <summary>
+        /// Devuelve los conectores que pertenecen a un NODO
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
+        public Dictionary<ushort, Tuple<string, string, bool>> GetConnectors(ushort idNode)
         {
-            throw new NotImplementedException();
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.ToDictionary(c => c.Id, c => new Tuple(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
         }
 
         public string GetNameNode(int idNode)
@@ -71,11 +76,11 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Devuelve el id del conector, su nombre, tipo y si tiene asociado el id del homeDevice conectado (sino tiene conectado ningun homeDevice tendremos que asociarlo a un ID de tipo null)
+        /// Devuelve el id del conector, su nombre, tipo
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public Dictionary<int, Tuple<string, ConnectorType, ushort>>[] GetFreeConnectors(Node node)
+        public Dictionary<ushort, Tuple<string, string>> GetFreeConnectors(ushort idNode)
         {
             throw new NotImplementedException();
         }
