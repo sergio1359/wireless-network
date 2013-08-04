@@ -61,8 +61,10 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="zone"></param>
         /// <returns>Devuelve el Id de la zona añadida</returns>
-        public int AddZone(Zone zone)
+        public int AddZone(string nameZone)
         {
+            Zone zone = new Zone();
+            zone.NameZone = nameZone;
             NetworkManager.Home.Zones.Add(zone);
             return NetworkManager.Home.Zones.Last().Id;
         }
@@ -72,6 +74,9 @@ namespace ServiceLayer
             NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idZone).NameZone= newName;
         }
 
+        /// <summary>
+        /// Generar EEPROMS
+        /// </summary>
         public void UpdateConfiguration()
         {
 
