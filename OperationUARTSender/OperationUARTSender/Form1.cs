@@ -599,17 +599,25 @@ namespace OperationUARTSender
 
                 if (lastOp == null || (lastOp != null && operation.Args[0] == lastOp.Args[0] + 1))
                 {
-                    msgToPrint = String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} OK",
-                        operation.SourceAddress,
-                        fragment,
-                        totalFragment);
-
-                    configReadBuffer.Add(operation);
-                    SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } });
-
-                    if (fragment == totalFragment)
+                    if (operation.Args[0] == 0 && operation.Args[1] == 0) //ERROR
                     {
-                        SaveConfigFile();
+                        msgToPrint = String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> BUSY SENDING CONFIG STATE",
+                                               operation.SourceAddress);
+                    }
+                    else //OK
+                    {
+                        msgToPrint = String.Format("CONFIG READ RESPONSE FROM 0x{0:X4} -> {1}/{2} OK",
+                            operation.SourceAddress,
+                            fragment,
+                            totalFragment);
+
+                        configReadBuffer.Add(operation);
+                        SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.ConfigReadConfirmation, Args = new byte[] { operation.Args[0], 0x00 } });
+
+                        if (fragment == totalFragment)
+                        {
+                            SaveConfigFile();
+                        }
                     }
                 }
                 else
