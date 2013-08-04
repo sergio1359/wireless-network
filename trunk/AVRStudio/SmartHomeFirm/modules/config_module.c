@@ -9,18 +9,7 @@
 #include <util/crc16.h>
 #include <sysTimer.h>
 
-enum
-{
-	OK = 0,
-	ERROR_FRAGMENT_TOTAL_NOT_EXPECTED,
-	ERROR_FRAGMENT_ORDER,
-	ERROR_WAITING_FIRST_FRAGMENT,
-	ERROR_CONFIG_SIZE_TOO_BIG,
-	ERROR_CONFIG_INVALID_CHECKSUM,
-	ERROR_CONFIG_SIZE_NOT_EXPECTED,
-	ERROR_BUSY_RECEIVING_STATE
-}RESPONSE_ERROR_CODES;
-
+#include "APP_SESSION.h"
 
 struct
 {
@@ -58,27 +47,27 @@ struct
 	CONFIG_CHECKSUM_RESPONSE_MESSAGE_t response;
 }checksumResponse;
 
-static _Bool receivingState;
-static _Bool waitingForReset;
-static uint8_t currentRecvFragment;
-static uint8_t totalRecvExpected;
-static uint16_t currentRecvIndex;
 
-static _Bool sendingState;
-static uint8_t currentSendFragment;
-static uint8_t totalSendExpected;
-static uint16_t currentSendIndex;
-static uint16_t currentSendFrameSize;
+enum
+{
+	ERROR_CONFIG_SIZE_TOO_BIG = 5,
+	ERROR_CONFIG_INVALID_CHECKSUM,
+	ERROR_CONFIG_SIZE_NOT_EXPECTED,
+}CONFIG_WRITE_STATUS_CODES;
 
-static RUNNING_CONFIGURATION_t configBuffer;
+static WriteSession_t writeConfigSession;
+
+static ReadSession_t readConfigSession;
+
+static RUNNING_CONFIGURATION_t configWriteBuffer;
 
 static SYS_Timer_t configResetTimer;
 
 static void configResetTimerHandler(SYS_Timer_t *timer);
-static _Bool validateReceivedConfig(void);
+static inline uint8_t validateReceivedConfig(void);
 
 void configModule_Init(void)
-{	
+{
 	//Set responses opCodes
 	firmwareResponse.header.opCode		= FirmwareVersionReadResponse;
 	shieldModelResponse.header.opCode	= ShieldModelReadResponse;
@@ -88,12 +77,15 @@ void configModule_Init(void)
 	checksumResponse.header.opCode		= ConfigChecksumResponse;
 	
 	//Configure Timer
-	configResetTimer.interval = 1000;
+	configResetTimer.interval = 2000;
 	configResetTimer.mode = SYS_TIMER_INTERVAL_MODE;
 	configResetTimer.handler = configResetTimerHandler;
 	
-	receivingState = false;
-	sendingState = false;
+	writeConfigSession.receivingState = false;
+	writeConfigSession.writeBuffer = (uint8_t*)configWriteBuffer.raw;
+	
+	readConfigSession.sendingState = false;
+	readConfigSession.readBuffer = (uint8_t*)runningConfiguration.raw;
 }
 
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -180,60 +172,60 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 		configWriteResponse.response.fragment = msg->fragment;
 		configWriteResponse.response.fragmentTotal = msg->fragmentTotal;
 		
-		if(receivingState)
+		if(writeConfigSession.receivingState)
 		{
-			if(msg->fragmentTotal != totalRecvExpected)
+			if(msg->fragmentTotal != writeConfigSession.totalRecvExpected)
 			{
-				receivingState = false;
+				writeConfigSession.receivingState = false;
 				configWriteResponse.response.code = ERROR_FRAGMENT_TOTAL_NOT_EXPECTED;
-			}else if(msg->fragment == (currentRecvFragment+1))
+			}else if(msg->fragment == (writeConfigSession.currentRecvFragment + 1))
 			{
-				currentRecvFragment++;
+				writeConfigSession.currentRecvFragment++;
 				acceptFragment= true;
 			}else
 			{
-				receivingState = false;
+				writeConfigSession.receivingState = false;
 				configWriteResponse.response.code = ERROR_FRAGMENT_ORDER;
 			}
 		}else if(msg->fragment == 0) //FirstFrame
 		{
-			waitingForReset = false;
-			currentRecvFragment = 0;
-			currentRecvIndex = 0;
+			writeConfigSession.waitingForReset = false;
+			writeConfigSession.currentRecvFragment = 0;
+			writeConfigSession.currentRecvIndex = 0;
 			
-			receivingState = true;
-			totalRecvExpected = msg->fragmentTotal;
+			writeConfigSession.receivingState = true;
+			writeConfigSession.totalRecvExpected = msg->fragmentTotal;
+			
 			acceptFragment = true;
 			configWriteResponse.response.code = OK;
 		}else
 		{
-			receivingState = false;
+			writeConfigSession.receivingState = false;
 			configWriteResponse.response.code = ERROR_WAITING_FIRST_FRAGMENT;
 		}
 		
 		if(acceptFragment)
 		{
-			if((msg->length + currentRecvIndex) >= EEPROM_SIZE)
+			if((msg->length + writeConfigSession.currentRecvIndex) >= EEPROM_SIZE)
 			{
 				configWriteResponse.response.code = ERROR_CONFIG_SIZE_TOO_BIG;
 			}else
 			{
-				memcpy((uint8_t*)&configBuffer.raw[currentRecvIndex], (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);
-				currentRecvIndex += (uint16_t)msg->length;
+				memcpy(&writeConfigSession.writeBuffer[writeConfigSession.currentRecvIndex], (uint8_t*)(msg + 1), sizeof(uint8_t) * msg->length);
+				writeConfigSession.currentRecvIndex += (uint16_t)msg->length;
 				
-				if(currentRecvFragment == msg->fragmentTotal)//ALL RECEIVED
+				if(writeConfigSession.currentRecvFragment == msg->fragmentTotal)//ALL RECEIVED
 				{
-					if(validateReceivedConfig())
+					configWriteResponse.response.code = validateReceivedConfig();
+					if(configWriteResponse.response.code == OK)
 					{
-						EEPROM_Write_Block(configBuffer.raw, 0x00, configBuffer.topConfiguration.configHeader.length);
+						EEPROM_Write_Block(writeConfigSession.writeBuffer, 0x00, configWriteBuffer.topConfiguration.configHeader.length);
 						
-						waitingForReset = true;
-					}else
-					{
-						configWriteResponse.response.code = ERROR_CONFIG_INVALID_CHECKSUM;
+						writeConfigSession.waitingForReset = true;
 					}
-					receivingState = false;
-					totalRecvExpected = 0;
+					
+					writeConfigSession.receivingState = false;
+					writeConfigSession.totalRecvExpected = 0;
 				}
 			}
 		}
@@ -244,15 +236,15 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 
 void configWrite_DataConf(OPERATION_DataConf_t *req)
 {
-	if(waitingForReset)//All receviced. Wainting for reset
+	if (req->sendOk)
 	{
-		if (req->sendOk)
+		if(writeConfigSession.waitingForReset)//All receviced. Wainting for reset
 		{
-			SYS_TimerStart(&configResetTimer);
-		}else
-		{
-			OM_ProccessResponseOperation(&configWriteResponse.header); //Resend last response	
+			SYS_TimerStart(&configResetTimer);	
 		}
+	}else
+	{
+		OM_ProccessResponseOperation(&configWriteResponse.header); //Resend last response
 	}
 }
 
@@ -262,63 +254,66 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == ConfigRead)
 	{
+		configReadResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;		
 		configReadResponse.header.destinationAddress = operation_header->sourceAddress;
-		configReadResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		
-		if(sendingState)
+		if(readConfigSession.sendingState && operation_header->sourceAddress != readConfigSession.destinationAddress)
 		{
-			//TODO: SEND OR LOG ERROR (BUSY SENDING CONFIG STATE)
+			//BUSY SENDING CONFIG STATE
+			configReadResponse.response.fragment = 0;
+			configReadResponse.response.fragmentTotal = 0;
+			configReadResponse.response.length = 0;
 		}else
 		{
-			sendingState = true;
+			readConfigSession.sendingState = true;
+			readConfigSession.destinationAddress = operation_header->sourceAddress;
 			
-			currentSendIndex = 0;
-			currentSendFragment = 0;
-			totalSendExpected = (runningConfiguration.topConfiguration.configHeader.length / MAX_CONTENT_MESSAGE_SIZE);
-			currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - currentSendIndex);
+			readConfigSession.currentSendIndex = 0;
+			readConfigSession.currentSendFragment = 0;
+			readConfigSession.totalSendExpected = (runningConfiguration.topConfiguration.configHeader.length / MAX_CONTENT_MESSAGE_SIZE);
+			readConfigSession.currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - readConfigSession.currentSendIndex);
 			
-			configReadResponse.response.fragment = currentSendFragment;
-			configReadResponse.response.fragmentTotal = totalSendExpected;
-			configReadResponse.response.length = currentSendFrameSize;
+			configReadResponse.response.fragment = readConfigSession.currentSendFragment;
+			configReadResponse.response.fragmentTotal = readConfigSession.totalSendExpected;
+			configReadResponse.response.length = readConfigSession.currentSendFrameSize;
 			
-			//TODO: Add frame from currentSendIndex(0) to currentSendFrameSize
-			OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&runningConfiguration.raw, currentSendFrameSize);
+			OM_ProccessResponseWithBodyOperation(&configReadResponse.header, readConfigSession.readBuffer, readConfigSession.currentSendFrameSize);
 		}
 	}else if(operation_header->opCode == ConfigReadConfirmation)
 	{
-		if(sendingState)
+		if(readConfigSession.sendingState)
 		{
 			CONFIG_READ_CONFIRMATION_MESSAGE_t* msg = (CONFIG_READ_CONFIRMATION_MESSAGE_t*)(operation_header + 1);
 			
-			if(msg->fragment == currentSendFragment && msg->fragmentTotal == totalSendExpected)
+			if(msg->fragment == readConfigSession.currentSendFragment && msg->fragmentTotal == readConfigSession.totalSendExpected)
 			{
 				if(msg->code == 0x00) //'OK'
 				{
-					if(currentSendFragment <= totalSendExpected)	 //Something to send
+					if(readConfigSession.currentSendFragment <= readConfigSession.totalSendExpected)	 //Something to send
 					{
-						currentSendIndex += currentSendFrameSize;
-						currentSendFragment++;
+						readConfigSession.currentSendIndex += readConfigSession.currentSendFrameSize;
+						readConfigSession.currentSendFragment++;
 						
-						currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - currentSendIndex);
+						readConfigSession.currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, runningConfiguration.topConfiguration.configHeader.length - readConfigSession.currentSendIndex);
 						
-						configReadResponse.response.fragment = currentSendFragment;
-						configReadResponse.response.fragmentTotal = totalSendExpected;
-						configReadResponse.response.length = currentSendFrameSize;
+						configReadResponse.response.fragment = readConfigSession.currentSendFragment;
+						configReadResponse.response.fragmentTotal = readConfigSession.totalSendExpected;
+						configReadResponse.response.length = readConfigSession.currentSendFrameSize;
 						
-						OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&runningConfiguration.raw[currentSendIndex], currentSendFrameSize);
+						OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&readConfigSession.readBuffer[readConfigSession.currentSendIndex], readConfigSession.currentSendFrameSize);
 					}else
 					{
 						//Finish
-						sendingState = false;
+						readConfigSession.sendingState = false;
 					}
 				}else
 				{
 					//Something wrong at server size. Abort current session
-					sendingState = false;
+					readConfigSession.sendingState = false;
 				}
 			}else
 			{
-				sendingState = false;
+				readConfigSession.sendingState = false;
 				//TODO: SEND OR LOG ERROR (FRAGMENT OR FRAGMENT TOTAL NOT EXPECTED)
 			}
 		}else
@@ -333,7 +328,10 @@ void configRead_Handler(OPERATION_HEADER_t* operation_header)
 
 void configRead_DataConf(OPERATION_DataConf_t *req)
 {
-	//TODO: Handle Master Responses here
+	if (!req->sendOk)
+	{
+		OM_ProccessResponseWithBodyOperation(&configReadResponse.header,&readConfigSession.readBuffer[readConfigSession.currentSendIndex], readConfigSession.currentSendFrameSize);//Resend last response
+	}
 }
 
 
@@ -359,26 +357,24 @@ void configResetTimerHandler(SYS_Timer_t *timer)
 	(void)timer;
 }
 
-_Bool validateReceivedConfig()
+uint8_t validateReceivedConfig()
 {
-	uint16_t eeprom_size = configBuffer.topConfiguration.configHeader.length;
-	uint16_t eeprom_crc = configBuffer.topConfiguration.configHeader.checkSum;
+	uint16_t eeprom_size = configWriteBuffer.topConfiguration.configHeader.length;
+	uint16_t eeprom_crc = configWriteBuffer.topConfiguration.configHeader.checkSum;
 	
-	if(eeprom_size != 0xFFFF && eeprom_size != 0x00 && eeprom_size == currentRecvIndex)
+	if(eeprom_size != 0xFFFF && eeprom_size != 0x00 && eeprom_size == writeConfigSession.currentRecvIndex)
 	{
-		configBuffer.topConfiguration.configHeader.checkSum = 0;
+		configWriteBuffer.topConfiguration.configHeader.checkSum = 0;
 		
 		uint16_t acc = 0;
 		for(int i = 0; i < eeprom_size; i++)
-		acc = _crc16_update(acc, configBuffer.raw[i]);
+		acc = _crc16_update(acc, configWriteBuffer.raw[i]);
 		
-		configBuffer.topConfiguration.configHeader.checkSum = eeprom_crc;
+		configWriteBuffer.topConfiguration.configHeader.checkSum = eeprom_crc;
 		
-		return eeprom_crc == acc;
+		return (eeprom_crc == acc) ? OK : ERROR_CONFIG_INVALID_CHECKSUM;
 	}else
 	{
-		//TODO: SEND OR LOG ERROR (ERROR CONFIG SIZE NOT EXPECTED)
+		return ERROR_CONFIG_SIZE_NOT_EXPECTED;
 	}
-	
-	return false;
 }

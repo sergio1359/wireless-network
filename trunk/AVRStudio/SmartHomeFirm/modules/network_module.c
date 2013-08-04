@@ -8,6 +8,10 @@
 #include "globals.h"
 #include "nwk.h"
 
+#include "APP_SESSION.h"
+
+#define ROUTE_TABLE_BUFFER_SIZE (NWK_ROUTE_TABLE_SIZE * sizeof(NWK_RouteTableEntry_t))
+
 static struct
 {
 	OPERATION_HEADER_t header;
@@ -32,13 +36,11 @@ static struct
 	PING_RESPONSE_MESSAGE_t response;
 }pingResponse;
 
-static uint8_t routeTableBuffer[NWK_ROUTE_TABLE_SIZE];
-static uint8_t bufferSize = 0;
-static _Bool routeSendingState;
-static uint8_t currentRouteFragment;
-static uint8_t totalRouteExpected;
-static uint16_t currentRouteIndex;
-static uint16_t currentRouteFrameSize;
+static uint8_t routeTableBuffer[ROUTE_TABLE_BUFFER_SIZE];
+static uint8_t currentTableSize = 0;
+
+static ReadSession_t readRouteSession;
+
 
 void networkModule_Init(void)
 {
@@ -47,11 +49,9 @@ void networkModule_Init(void)
 	routeTableResponse.header.opCode	= RouteTableReadResponse;
 	nextHopResponse.header.opCode		= NextHopReadResponse;
 	pingResponse.header.opCode			= PingResponse;
-}
-
-void networkModule_DataConf(OPERATION_DataConf_t *req)
-{
 	
+	readRouteSession.sendingState = false;
+	readRouteSession.readBuffer = (uint8_t*)routeTableBuffer;
 }
 
 void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -59,6 +59,8 @@ void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notificat
 	
 }
 
+
+/*- MacRead --------------------------------------------------*/
 void networkMac_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == MacRead)
@@ -75,6 +77,8 @@ void networkMac_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+
+/*- NextHop --------------------------------------------------*/
 void networkNextHop_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == NextHopRead)
@@ -97,68 +101,75 @@ void networkNextHop_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+
+/*- RouteRead --------------------------------------------------*/
 void networkRoute_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == RouteTableRead)
 	{
-		if(!routeSendingState)
+		
+		routeTableResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		routeTableResponse.header.destinationAddress = operation_header->sourceAddress;
+		
+		if(readRouteSession.sendingState && operation_header->sourceAddress != readRouteSession.destinationAddress)
 		{
-			routeTableResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-			routeTableResponse.header.destinationAddress = operation_header->sourceAddress;
-			
-			NWK_CopyRouteTable(&routeTableBuffer, bufferSize);
-			
-			routeSendingState = true;
-			
-			currentRouteIndex = 0;
-			currentRouteFragment = 0;
-			totalRouteExpected = CEILING(bufferSize , MAX_CONTENT_MESSAGE_SIZE);
-			currentRouteFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, bufferSize - currentRouteIndex);
-			
-			routeTableResponse.response.fragment = currentRouteFragment;
-			routeTableResponse.response.fragmentTotal = totalRouteExpected;
-			routeTableResponse.response.length = currentRouteFrameSize;
-			
-			OM_ProccessResponseWithBodyOperation(&routeTableResponse.header,&routeTableBuffer, currentRouteFrameSize);
+			//BUSY SENDING CONFIG STATE
+			routeTableResponse.response.fragment = 0;
+			routeTableResponse.response.fragmentTotal = 0;
+			routeTableResponse.response.length = 0;
 		}else
 		{
-			//TODO: SEND OR LOG ERROR (BUSY SENDING ROUTE STATE)
+			NWK_CopyRouteTable(&routeTableBuffer, currentTableSize);
+			
+			readRouteSession.sendingState = true;
+			readRouteSession.destinationAddress = operation_header->sourceAddress;
+			
+			readRouteSession.currentSendIndex = 0;
+			readRouteSession.currentSendFragment = 0;
+			readRouteSession.totalSendExpected = CEILING(currentTableSize , MAX_CONTENT_MESSAGE_SIZE);
+			readRouteSession.currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, currentTableSize - readRouteSession.currentSendIndex);
+			
+			routeTableResponse.response.fragment = readRouteSession.currentSendFragment;
+			routeTableResponse.response.fragmentTotal = readRouteSession.totalSendExpected;
+			routeTableResponse.response.length = readRouteSession.currentSendFrameSize;
+			
+			OM_ProccessResponseWithBodyOperation(&routeTableResponse.header, readRouteSession.readBuffer, readRouteSession.currentSendFrameSize);
 		}
 	}else if(operation_header->opCode == RouteTableReadConfirmation)
 	{
-		if(routeSendingState)
+		if(readRouteSession.sendingState)
 		{
 			ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t* msg = (ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t*)(operation_header + 1);
 			
-			if(msg->fragment == currentRouteFragment && msg->fragmentTotal == totalRouteExpected)
+			if(msg->fragment == readRouteSession.currentSendFragment && msg->fragmentTotal == readRouteSession.totalSendExpected)
 			{
 				if(msg->code == 0x00) //'OK'
 				{
-					if(currentRouteFragment < totalRouteExpected)	 //Something to send
+					if(readRouteSession.currentSendFragment <= readRouteSession.totalSendExpected)	 //Something to send
 					{
-						currentRouteIndex += currentRouteFrameSize;
-						currentRouteFragment++;
+						readRouteSession.currentSendIndex += readRouteSession.currentSendFrameSize;
+						readRouteSession.currentSendFragment++;
 						
-						currentRouteFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, bufferSize - currentRouteIndex);
+						readRouteSession.currentSendFrameSize = MIN(MAX_CONTENT_MESSAGE_SIZE, currentTableSize - readRouteSession.currentSendIndex);
 						
-						routeTableResponse.response.fragment = currentRouteFragment;
-						routeTableResponse.response.fragmentTotal = totalRouteExpected;
-						routeTableResponse.response.length = currentRouteFrameSize;
+						routeTableResponse.response.fragment = readRouteSession.currentSendFragment;
+						routeTableResponse.response.fragmentTotal = readRouteSession.totalSendExpected;
+						routeTableResponse.response.length = readRouteSession.currentSendFrameSize;
 						
-						OM_ProccessResponseWithBodyOperation(&routeTableResponse.header,&routeTableBuffer[currentRouteIndex], currentRouteFrameSize);
+						OM_ProccessResponseWithBodyOperation(&routeTableResponse.header,&readRouteSession.readBuffer[readRouteSession.currentSendIndex], readRouteSession.currentSendFrameSize);
 					}else
 					{
 						//Finish
-						routeSendingState = false;
+						readRouteSession.sendingState = false;
 					}
 				}else
 				{
 					//Something wrong at server size. Abort current session
-					routeSendingState = false;
+					readRouteSession.sendingState = false;
 				}
 			}else
 			{
-				routeSendingState = false;
+				readRouteSession.sendingState = false;
 				//TODO: SEND OR LOG ERROR (FRAGMENT OR FRAGMENT TOTAL NOT EXPECTED)
 			}
 		}else
@@ -171,6 +182,16 @@ void networkRoute_Handler(OPERATION_HEADER_t* operation_header)
 	}				
 }
 
+void routeRead_DataConf(OPERATION_DataConf_t *req)
+{
+	if (!req->sendOk)
+	{
+		OM_ProccessResponseWithBodyOperation(&routeTableResponse.header,&readRouteSession.readBuffer[readRouteSession.currentSendIndex], readRouteSession.currentSendFrameSize);//Resend last response
+	}
+}
+
+
+/*- Ping --------------------------------------------------*/
 void networkPing_Handler(OPERATION_HEADER_t* operation_header)
 {
 	if(operation_header->opCode == PingRequest)

@@ -251,6 +251,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="modules\config_module.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\inc\APP_SESSION.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\inc\config_module.h">
       <SubType>compile</SubType>
     </Compile>

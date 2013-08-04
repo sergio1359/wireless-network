@@ -17,15 +17,15 @@
 #define NETWORK_MODULE_DEFINITION  X(NetworkModule, networkModule_Init, networkModule_NotificationInd)
 
 #define COMMANDS_TABLE_NETWORK \
-X(MacRead,							0x20, networkMac_Handler,		networkModule_DataConf,	 MAC_READ_MESSAGE_t,							false)					\
-X(MacReadResponse,					0x21, networkMac_Handler,		networkModule_DataConf,	 MAC_READ_RESPONSE_MESSAGE_t,					false)					\
-X(NextHopRead,						0x22, networkNextHop_Handler,	networkModule_DataConf,  NEXT_HOP_READ_MESSAGE_t,						false)					\
-X(NextHopReadResponse,				0x23, networkNextHop_Handler,	networkModule_DataConf,  NEXT_HOP_READ_RESPONSE_MESSAGE_t,				false)					\
-X(RouteTableRead,					0x24, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_MESSAGE_t,					false)					\
-X(RouteTableReadResponse,			0x25, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,	true)					\
-X(RouteTableReadConfirmation,		0x26, networkRoute_Handler,		networkModule_DataConf,  ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,		false)					\
-X(PingRequest,						0x27, networkPing_Handler,		networkModule_DataConf,	 PING_REQUEST_MESSAGE_t,						false)					\
-X(PingResponse,						0x28, networkPing_Handler,		networkModule_DataConf,	 PING_RESPONSE_MESSAGE_t,						false)					\
+X(MacRead,							0x20, networkMac_Handler,		0x00,					 MAC_READ_MESSAGE_t,							false)					\
+X(MacReadResponse,					0x21, networkMac_Handler,		0x00,					 MAC_READ_RESPONSE_MESSAGE_t,					false)					\
+X(NextHopRead,						0x22, networkNextHop_Handler,	0x00,					 NEXT_HOP_READ_MESSAGE_t,						false)					\
+X(NextHopReadResponse,				0x23, networkNextHop_Handler,	0x00,					 NEXT_HOP_READ_RESPONSE_MESSAGE_t,				false)					\
+X(RouteTableRead,					0x24, networkRoute_Handler,		0x00,					 ROUTE_TABLE_READ_MESSAGE_t,					false)					\
+X(RouteTableReadResponse,			0x25, networkRoute_Handler,		routeRead_DataConf,		 ROUTE_TABLE_READ_RESPONSE_HEADER_MESSAGE_t,	true)					\
+X(RouteTableReadConfirmation,		0x26, networkRoute_Handler,		0x00,					 ROUTE_TABLE_READ_CONFIRMATION_MESSAGE_t,		false)					\
+X(PingRequest,						0x27, networkPing_Handler,		0x00,					 PING_REQUEST_MESSAGE_t,						false)					\
+X(PingResponse,						0x28, networkPing_Handler,		0x00,					 PING_RESPONSE_MESSAGE_t,						false)					\
 X(JoinRequest,						0x2A, 0x00,						0x00,					 JOIN_REQUEST_MESSAGE_t,						false)					\
 X(JoinRequestResponse,				0x2B, 0x00,						0x00,					 JOIN_REQUEST_RESPONSE_MESSAGE_t,				false)					\
 X(JoinAbort,						0x2C, 0x00,						0x00,					 JOIN_ABORT_MESSAGE_t,							false)					\
@@ -113,11 +113,14 @@ typedef struct
 
 void networkModule_Init(void);
 void networkModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void networkModule_DataConf(OPERATION_DataConf_t *req);
 
+/*- Handlers --------------------------------------------------------*/
 void networkMac_Handler(OPERATION_HEADER_t* operation_header);
 void networkNextHop_Handler(OPERATION_HEADER_t* operation_header);
 void networkRoute_Handler(OPERATION_HEADER_t* operation_header);
 void networkPing_Handler(OPERATION_HEADER_t* operation_header);
+
+/*- Data Confirmations --------------------------------------------------------*/
+void routeRead_DataConf(OPERATION_DataConf_t *req);
 
 #endif /* NETWORK_MODULE_H_ */
