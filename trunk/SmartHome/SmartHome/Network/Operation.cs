@@ -7,6 +7,7 @@ using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Memory;
+using System.Reflection;
 
 namespace SmartHome.Network
 {
@@ -23,15 +24,21 @@ namespace SmartHome.Network
 
         public void Execute() 
         { 
+
         }
 
         public byte[] ToBinaryOperation()
         {
-            //get OperationMessage
+            return this.GetOperationMessage().ToBinary();
+        }
 
-            //convertir OperationMessage
+        public OperationMessage GetOperationMessage()
+        {
+            //Get method HAY QUE PONER ATRIBUTOS Y TODAS LAS CONDICIONES QUE QUERAMOS!!
+            MethodInfo method = DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage));
 
-            throw new NotImplementedException();
+            //Execute
+            return (OperationMessage)method.Invoke(DestionationHomeDevice, Args);
         }
 
 
