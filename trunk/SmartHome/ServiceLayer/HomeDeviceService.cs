@@ -13,12 +13,12 @@ namespace ServiceLayer
 {
     public class HomeDeviceService
     {
-        private ConnectorRepository _connectorRepository;
+        //private ConnectorRepository _connectorRepository;
 
-        public HomeDeviceService(ConnectorRepository connectorRepository)
-        {
-            _connectorRepository = connectorRepository;
-        }
+        //public HomeDeviceService(ConnectorRepository connectorRepository)
+        //{
+        //    _connectorRepository = connectorRepository;
+        //}
 
         /// <summary>
         /// Añade un HomeDevice
@@ -27,8 +27,12 @@ namespace ServiceLayer
         /// <returns></returns>
         public int AddHomeDevice(string NameHomeDevice, string TypeHomeDevice)
         {
+            HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(Type.GetType(TypeHomeDevice));
 
-            //NetworkManager.HomeDevices.Add(homeDevice);
+            homeDevice.Name = NameHomeDevice;
+
+            NetworkManager.HomeDevices.Add(homeDevice);
+
             return NetworkManager.HomeDevices.Last().Id;
         }
 
@@ -75,10 +79,10 @@ namespace ServiceLayer
         /// <summary>
         /// Devuelve todos los homeDevices del sistema (estén o no conectados a un nodo)
         /// </summary>
-        /// <returns></returns>
-        public List<HomeDevice> GetHomeDevices()
+        /// <returns>Diccionario de Ids, Nombres, Tipos</returns>
+        public Dictionary<ushort, Tuple<string, string>> GetHomeDevices()
         {
-            return NetworkManager.HomeDevices;
+            return NetworkManager.HomeDevices.ToDictionary(h => h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
 
         /// <summary>
@@ -87,9 +91,9 @@ namespace ServiceLayer
         /// <param name="zona"></param>
         /// <param name="homeDeviceType"></param>
         /// <returns></returns>
-        public List<HomeDevice> GetHomeDevices(int idZona, string type)
+        public Dictionary<ushort, Tuple<string, string>> GetHomeDevices(int idZona, string type)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).ToList();
+            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).ToDictionary(h => h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
 
         /// <summary>
@@ -99,14 +103,21 @@ namespace ServiceLayer
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public List<HomeDevice> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
+        public Dictionary<ushort, Tuple<string, string>> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToList();
+            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToDictionary(h => h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
 
-        public Connector[] GetConnectorsCapable(HomeDevice hd)
+        /// <summary>
+        /// Devuelve los conectores que se pueden conectar con el homeDevice enviado por parametros
+        /// </summary>
+        /// <param name="TypeHomeDevice"></param>
+        /// <returns></returns>
+        public Dictionary<int, Tuple<string, string, bool>> GetConnectorsCapable(ushort idHomeDevice, ushort idNode)
         {
-            throw new NotImplementedException();
+            HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable).ToDictionary(c => c.Id, c => new Tuple<string, string, bool>(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
         }
     }
 }
