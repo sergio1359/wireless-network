@@ -46,7 +46,7 @@ namespace ServiceLayer
 
         }
 
-        public ushort AddOperationOnHomeDevideProgramm(ushort idHomeDevice, ushort idHomeDeviceDestination, string operation, object[] param)
+        public ushort AddOperationOnHomeDevideProgram(ushort idHomeDevice, ushort idHomeDeviceDestination, string operation, object[] param)
         {
 
         }
