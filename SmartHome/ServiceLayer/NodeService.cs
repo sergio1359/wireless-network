@@ -55,7 +55,7 @@ namespace ServiceLayer
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public Dictionary<ushort, Tuple<string, string, bool>> GetConnectors(ushort idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.ToDictionary(c => c.Id, c => new Tuple(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.ToDictionary(c => (ushort)c.Id, c => new Tuple(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
         }
 
         public string GetNameNode(int idNode)
