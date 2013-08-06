@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace App_Smart_Home_Prototipo
 {
     static class Program
     {
+        public static Services Services = new ServiceLayer.Services();
+
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
