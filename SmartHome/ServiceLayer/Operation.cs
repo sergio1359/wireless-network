@@ -10,6 +10,7 @@ namespace ServiceLayer
 {
     public class OperationService
     {
+
         //ENCARGADA DE OPERACIONES BASICAS SOBRE TODAS LAS OEPRACIONES
         #region GENERIC_OPERATION_REGION
 
@@ -18,7 +19,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idHomeDevice"></param>
         /// <returns></returns>
-        public Dictionary<ushort, Tuple<string, ushort>> GetProgramOperations(ushort idHomeDevice)
+        public Dictionary<int, Tuple<string, int>> GetProgramOperations(int idHomeDevice)
         {
             throw new NotImplementedException();
         }
@@ -27,17 +28,17 @@ namespace ServiceLayer
         /// Elimina una operacion
         /// </summary>
         /// <param name="idOperation"></param>
-        public void RemoveOperation(ushort idOperation)
+        public void RemoveOperation(int idOperation)
         {
             NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation);
         }
 
-        public void ExecuteOperation(ushort idOperation)
+        public void ExecuteOperation(int idOperation)
         {
             NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation).Execute();
         }
 
-        public Operation[] GetHomeDeviceOperation(ushort idHomeDevice)
+        public Operation[] GetHomeDeviceOperation(int idHomeDevice)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +48,7 @@ namespace ServiceLayer
             throw new NotImplementedException();
         }
 
-        public ushort AddOperationOnHomeDeviceProgram(ushort idHomeDevice, ushort idHomeDeviceDestination, string operation, object[] param)
+        public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] param)
         {
             HomeDevice homeDevDestino = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDeviceDestination);
 
@@ -63,29 +64,29 @@ namespace ServiceLayer
             HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             homeDev.Operations.Add(op);
 
-            return (ushort)op.Id;
+            return op.Id;
         }
         #endregion
 
         //Gestiona el Themer
         #region THEME_OPERATION
 
-        public Dictionary<ushort, string> GetThemes()
+        public Dictionary<int, string> GetThemes()
         {
             throw new NotImplementedException();
         }
 
-        public void ExecuteTheme(ushort idTheme)
+        public void ExecuteTheme(int idTheme)
         {
             throw new NotImplementedException();
         }
 
-        public Operation[] GetOperationOfTheme(ushort idTheme)
+        public Operation[] GetOperationOfTheme(int idTheme)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveTheme(ushort idTheme)
+        public void RemoveTheme(int idTheme)
         {
             throw new NotImplementedException();
         }
@@ -98,7 +99,7 @@ namespace ServiceLayer
         //{
         //}
 
-        //public Operation[] GetScheduler(ushort idHomeDevice)
+        //public Operation[] GetScheduler(int idHomeDevice)
 
         #endregion
 

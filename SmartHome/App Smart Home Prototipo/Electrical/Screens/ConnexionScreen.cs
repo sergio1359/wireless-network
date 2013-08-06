@@ -15,6 +15,8 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         public ConnexionScreen()
         {
             InitializeComponent();
+
+
         }
     }
 }
