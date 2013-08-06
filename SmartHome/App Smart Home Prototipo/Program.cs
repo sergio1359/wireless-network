@@ -9,7 +9,6 @@ namespace App_Smart_Home_Prototipo
 {
     static class Program
     {
-        public static Services Services = new ServiceLayer.Services();
 
         /// <summary>
         /// Punto de entrada principal para la aplicación.

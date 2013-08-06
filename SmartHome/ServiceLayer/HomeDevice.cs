@@ -11,7 +11,7 @@ using DataLayer.Repositories;
 
 namespace ServiceLayer
 {
-    public class HomeDeviceService
+    public static class HomeDeviceService
     {
 
         /// <summary>
@@ -75,11 +75,21 @@ namespace ServiceLayer
         /// <param name="Y">Relative position 0 to 1 of the X axis</param>
         public static void UpdatePosition(int idHomeDevice, int idZone, float X, float Y)
         {
-            HomeDevice home = NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice);
-            Zone zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idZone);
+            HomeDevice home = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+            Zone zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
 
             home.Position.Zone = zone;
             home.Position.ZoneCoordenates = new PointF(X, Y);
+        }
+
+        public static void UpdateViewPosition(int idHomeDevice, int idView, float X, float Y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Position GetHomeDevicePosition(int idHomeDevice)
+        {
+            return NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position;
         }
 
         /// <summary>

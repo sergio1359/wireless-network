@@ -75,6 +75,11 @@ namespace ServiceLayer
             node.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
+        public static Position GetNodePosition(int idNode)
+        {
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Position;
+        }
+
         /// <summary>
         /// Devuelve el id del conector, su nombre, tipo
         /// </summary>
