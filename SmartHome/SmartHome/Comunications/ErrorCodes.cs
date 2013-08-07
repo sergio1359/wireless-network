@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Comunications
 {
-    public enum StatusCode: byte
+    public enum WriteSessionStatusCodes: byte
     {
         OK = 0,
         ErrorFragmentTotalNotExpected,
         ErrorFragmentOrder,
         ErrorWaitingFirstFragment,
-        ErrorConfigSizeTooBig,
-        ErrorConfigInvalidChecksum,
-        ErrorConfigSizeNotExpected,
         ErrorBusyReceivingState
+    }
+
+    public enum ConfigWriteStatusCodes : byte
+    {
+        ErrorConfigSizeTooBig = 5,
+        ErrorConfigInvalidChecksum,
+        ErrorConfigSizeNotExpected
     }
 }

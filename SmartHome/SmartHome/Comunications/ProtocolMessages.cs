@@ -13,7 +13,7 @@ namespace SmartHome.Comunications
         #region Private Methods
         private static OperationMessage BaseMessage(OPCodes opCode)
         {
-            return BaseMessage(opCode, new byte[0]);
+            return BaseMessage(opCode, null);
         }
 
         private static OperationMessage BaseMessage(OPCodes opCode, ushort homeDeviceAddress)
@@ -77,7 +77,7 @@ namespace SmartHome.Comunications
             return BaseMessage(OPCodes.ConfigRead);
         }
 
-        public static OperationMessage ConfigReadConfirmation(byte fragmentTotal, byte fragment, StatusCode statusCode)
+        public static OperationMessage ConfigReadConfirmation(byte fragmentTotal, byte fragment, ConfigWriteStatusCodes statusCode)
         {
             byte[] args = new byte[]
                 {
@@ -109,7 +109,7 @@ namespace SmartHome.Comunications
             return BaseMessage(OPCodes.RouteTableRead); 
         }
 
-        public static OperationMessage RouteTableReadConfirmation(byte fragmentTotal, byte fragment, byte length, StatusCode statusCode)
+        public static OperationMessage RouteTableReadConfirmation(byte fragmentTotal, byte fragment, byte length, ConfigWriteStatusCodes statusCode)
         {
             byte[] args = new byte[]
                 {
