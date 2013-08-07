@@ -17,6 +17,9 @@ namespace ServiceLayer.DTO
         public string Name { get; set; }
 
         [DataMember]
+        public uint Address { get; set; }
+
+        [DataMember]
         public string Base { get; set; }
 
         [DataMember]

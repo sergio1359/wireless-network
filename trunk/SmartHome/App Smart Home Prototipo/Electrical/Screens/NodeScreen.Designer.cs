@@ -44,17 +44,12 @@
             this.listBoxNodes = new System.Windows.Forms.ListBox();
             this.buttonRemoveNode = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBoxNewBase = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.comboBoxNewShield = new System.Windows.Forms.ComboBox();
+            this.listBoxMACs = new System.Windows.Forms.ListBox();
             this.buttonNewNode = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox
@@ -166,6 +161,7 @@
             this.textBoxNameNode.Name = "textBoxNameNode";
             this.textBoxNameNode.Size = new System.Drawing.Size(144, 20);
             this.textBoxNameNode.TabIndex = 1;
+            this.textBoxNameNode.TextChanged += new System.EventHandler(this.ChangeNodeName);
             // 
             // textBoxAddressNode
             // 
@@ -173,6 +169,7 @@
             this.textBoxAddressNode.Name = "textBoxAddressNode";
             this.textBoxAddressNode.Size = new System.Drawing.Size(144, 20);
             this.textBoxAddressNode.TabIndex = 10;
+            this.textBoxAddressNode.TextChanged += new System.EventHandler(this.ChangeAddress);
             // 
             // groupBox4
             // 
@@ -192,6 +189,7 @@
             this.listBoxNodes.Name = "listBoxNodes";
             this.listBoxNodes.Size = new System.Drawing.Size(224, 147);
             this.listBoxNodes.TabIndex = 6;
+            this.listBoxNodes.SelectedIndexChanged += new System.EventHandler(this.ChangeNode);
             // 
             // buttonRemoveNode
             // 
@@ -202,10 +200,11 @@
             this.buttonRemoveNode.TabIndex = 10;
             this.buttonRemoveNode.Text = "-";
             this.buttonRemoveNode.UseVisualStyleBackColor = true;
+            this.buttonRemoveNode.Click += new System.EventHandler(this.RemoveNode);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox1.Controls.Add(this.listBoxMACs);
             this.groupBox1.Controls.Add(this.buttonNewNode);
             this.groupBox1.Location = new System.Drawing.Point(9, 19);
             this.groupBox1.Name = "groupBox1";
@@ -214,60 +213,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ADD NODES";
             // 
-            // tableLayoutPanel2
+            // listBoxMACs
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxNewBase, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label18, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label19, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxNewShield, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 19);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.63636F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(224, 44);
-            this.tableLayoutPanel2.TabIndex = 32;
-            // 
-            // comboBoxNewBase
-            // 
-            this.comboBoxNewBase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxNewBase.FormattingEnabled = true;
-            this.comboBoxNewBase.Location = new System.Drawing.Point(3, 19);
-            this.comboBoxNewBase.Name = "comboBoxNewBase";
-            this.comboBoxNewBase.Size = new System.Drawing.Size(106, 21);
-            this.comboBoxNewBase.TabIndex = 25;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(115, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(36, 13);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Shield";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(3, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(31, 13);
-            this.label19.TabIndex = 24;
-            this.label19.Text = "Base";
-            // 
-            // comboBoxNewShield
-            // 
-            this.comboBoxNewShield.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxNewShield.FormattingEnabled = true;
-            this.comboBoxNewShield.Location = new System.Drawing.Point(115, 19);
-            this.comboBoxNewShield.Name = "comboBoxNewShield";
-            this.comboBoxNewShield.Size = new System.Drawing.Size(106, 21);
-            this.comboBoxNewShield.TabIndex = 27;
+            this.listBoxMACs.FormattingEnabled = true;
+            this.listBoxMACs.Location = new System.Drawing.Point(6, 18);
+            this.listBoxMACs.Name = "listBoxMACs";
+            this.listBoxMACs.Size = new System.Drawing.Size(224, 43);
+            this.listBoxMACs.TabIndex = 6;
             // 
             // buttonNewNode
             // 
@@ -293,8 +245,6 @@
             this.groupBox2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -317,11 +267,7 @@
         private System.Windows.Forms.ListBox listBoxNodes;
         private System.Windows.Forms.Button buttonRemoveNode;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ComboBox comboBoxNewBase;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox comboBoxNewShield;
         private System.Windows.Forms.Button buttonNewNode;
+        private System.Windows.Forms.ListBox listBoxMACs;
     }
 }

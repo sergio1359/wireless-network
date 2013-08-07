@@ -17,7 +17,7 @@ namespace ServiceLayer
         /// Change the name of the Home
         /// </summary>
         /// <param name="newName"></param>
-        public static void SetHomeName(string newName)
+        public void SetHomeName(string newName)
         {
             NetworkManager.Home.Name = newName;
         }
@@ -26,7 +26,7 @@ namespace ServiceLayer
         /// Get the name of the Home
         /// </summary>
         /// <returns></returns>
-        public static string GetHomeName()
+        public string GetHomeName()
         {
             return NetworkManager.Home.Name;
         }
@@ -36,7 +36,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="latitude"></param>
         /// <param name="longitude"></param>
-        public static void SetHomeLocation(float latitude, float longitude)
+        public void SetHomeLocation(float latitude, float longitude)
         {
             NetworkManager.Home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
         }
@@ -45,7 +45,7 @@ namespace ServiceLayer
         /// Return the location of the home
         /// </summary>
         /// <returns></returns>
-        public static Coordenate GetHomeLocation()
+        public Coordenate GetHomeLocation()
         {
             return NetworkManager.Home.Location;
         }
@@ -54,7 +54,7 @@ namespace ServiceLayer
         /// Return the MAC of the Pending Nodes
         /// </summary>
         /// <returns></returns>
-        public static uint[] GetPendingNodes()
+        public uint[] GetPendingNodes()
         {
             throw new NotImplementedException();
         }
@@ -63,7 +63,7 @@ namespace ServiceLayer
         /// Allow a MAC in the system.
         /// </summary>
         /// <param name="MAC"></param>
-        public static void AllowPendingNode(string MAC)
+        public void AllowPendingNode(string MAC)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +72,7 @@ namespace ServiceLayer
         /// Deny a MAC in the system
         /// </summary>
         /// <param name="MAC"></param>
-        public static void DenyPendingNode(string MAC)
+        public void DenyPendingNode(string MAC)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +81,7 @@ namespace ServiceLayer
         /// Unlink Node of the system.
         /// </summary>
         /// <param name="idNode"></param>
-        public static void UnlinkNode(int idNode)
+        public void UnlinkNode(int idNode)
         {
             Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
             NetworkManager.Nodes.Remove(node);
@@ -91,7 +91,7 @@ namespace ServiceLayer
         /// Return all the zones
         /// </summary>
         /// <returns>Dictionary ID, Name of zones</returns>
-        public static Dictionary<int, string> GetZones()
+        public Dictionary<int, string> GetZones()
         {
             return NetworkManager.Home.Zones.ToDictionary(z => z.Id , z=> z.NameZone);
         }
@@ -101,7 +101,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idZone"></param>
         /// <returns></returns>
-        public static Dictionary<int, string> GetViews(int idZone)
+        public Dictionary<int, string> GetViews(int idZone)
         {
             return NetworkManager.Home.Zones.First(z => z.Id == idZone).Views.ToDictionary(v => v.Id, v => v.NameView);
         }
@@ -111,7 +111,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="zone"></param>
         /// <returns>Devuelve el Id de la zona añadida</returns>
-        public static int AddZone(string nameZone)
+        public int AddZone(string nameZone)
         {
             Zone zone = new Zone();
             zone.NameZone = nameZone;
@@ -120,7 +120,7 @@ namespace ServiceLayer
             return NetworkManager.Home.Zones.Last().Id;
         }
 
-        public static int AddView(int idZone, string nameView)
+        public int AddView(int idZone, string nameView)
         {
             var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
             View newView = new View();
@@ -130,12 +130,12 @@ namespace ServiceLayer
             return newView.Id;
         }
 
-        public static Image GetImageZone(int idZone)
+        public Image GetImageZone(int idZone)
         {
             throw new NotImplementedException();
         }
 
-        public static Image GetImageView(int idView)
+        public Image GetImageView(int idView)
         {
             throw new NotImplementedException();
         }
@@ -145,12 +145,12 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idZone"></param>
         /// <param name="newName"></param>
-        public static void SetNameZone(int idZone, string newName)
+        public void SetNameZone(int idZone, string newName)
         {
             NetworkManager.Home.Zones.First(z => z.Id == idZone).NameZone= newName;
         }
 
-        public static void SetNameView(int idView, string newName)
+        public void SetNameView(int idView, string newName)
         {
             NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
         }
@@ -158,11 +158,9 @@ namespace ServiceLayer
         /// <summary>
         /// Update the EEPROMs of all the nodes
         /// </summary>
-        public static void UpdateConfiguration()
+        public void UpdateConfiguration()
         {
             NetworkManager.GetAllEEPROMS();
         }
-
-        
     }
 }
