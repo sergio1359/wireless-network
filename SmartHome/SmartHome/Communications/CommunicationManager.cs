@@ -17,12 +17,6 @@ namespace SmartHome.Comunications
         {
             serialManager = new SerialManager();
 
-            serialManager.NodeCollectionChanged += serialManager_NodeCollectionChanged;
-        }
-
-        void serialManager_NodeCollectionChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

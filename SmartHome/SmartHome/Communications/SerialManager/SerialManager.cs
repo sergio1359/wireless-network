@@ -1,9 +1,11 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
-using System.Timers;
+using System.Timers; 
+#endregion
 
 namespace SmartHome.Communications.SerialManager
 {
@@ -13,7 +15,8 @@ namespace SmartHome.Communications.SerialManager
 
         private List<NodeConnection> nodes;
 
-        public event EventHandler NodeCollectionChanged;
+        public event EventHandler<NodeConnection> NodeConnectionAdded;
+        public event EventHandler<NodeConnection> NodeConnectionRemoved;
 
         public SerialManager()
         {
@@ -27,34 +30,42 @@ namespace SmartHome.Communications.SerialManager
             checkTimer.Start();
         }
 
-        void checkTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void checkTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var portNames = SerialPort.GetPortNames();
 
-            //Eliminamos los nodos que ya no están conectados fisicamente
+            //Remove the nodes that are not phisically connected
             for (int i = nodes.Count - 1; i >= 0; i--)
             {
                 if (!portNames.Contains(nodes[i].PortName))
                 {
-                    nodes[i].ConnectionStateChanged -= newNode_ConnectionStateChanged;
                     nodes.RemoveAt(i);
+
+                    OnNodeConnectionRemoved(nodes[i]);
                 }
             }
 
-            //Añadimos los nuevos nodos
+            //Add the new nodes
             foreach (string portName in portNames.Where(p => !nodes.Exists(n => n.PortName == p)))
             {
                 var newNode = new NodeConnection(portName);
                 newNode.Identify();
-                newNode.ConnectionStateChanged += newNode_ConnectionStateChanged;
                 nodes.Add(newNode);
+
+                OnNodeConnectionAdded(newNode);
             }
         }
 
-        void newNode_ConnectionStateChanged(object sender, NodeConnection.ConnectionStates newState)
+        private void OnNodeConnectionAdded(NodeConnection node)
         {
-            /*if (NodeCollectionChanged != null)
-                EventHelper.RaiseEventOnUIThread(NodeCollectionChanged, new object[] { this, null });*/
+            if (NodeConnectionAdded != null)
+                NodeConnectionAdded(this, node);
+        }
+
+        private void OnNodeConnectionRemoved(NodeConnection node)
+        {
+            if (NodeConnectionRemoved != null)
+                NodeConnectionRemoved(this, node);
         }
 
         public NodeConnection GetNodeConnection(ushort nodeAddress)
