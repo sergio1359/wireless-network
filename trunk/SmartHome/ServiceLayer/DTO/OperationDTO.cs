@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class NodeDTO
+    public class OperationDTO
     {
         [DataMember]
         public int Id { get; set; }
@@ -16,15 +16,5 @@ namespace ServiceLayer.DTO
         [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
-        public string Base { get; set; }
-
-        [DataMember]
-        public string Shield { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }
