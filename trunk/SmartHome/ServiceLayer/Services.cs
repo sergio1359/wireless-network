@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public class Services
+    public static class Services
     {
+        private static NodeService nodeService;
+
+        public static NodeService NodeService
+        {
+            get
+            {
+                if (nodeService == null)
+                    nodeService = new NodeService();
+                return nodeService;
+            }
+        }
+
         //public HomeService Home;
         //public HomeDeviceService HomeDevices;
         //public LogService Logs;

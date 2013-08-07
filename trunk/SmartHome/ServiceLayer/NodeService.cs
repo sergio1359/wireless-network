@@ -21,14 +21,14 @@ namespace ServiceLayer
         /// 1 == el conector estaba ya ocupado por un home Device
         /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo
         /// 3 == el homeDevice no es compatible con el conector</returns>
-        public static int LinkHomeDevice(int idConnector, int idHomeDevice)
+        public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
             Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.Id == idConnector);
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
 
             if (connector.InUse)
                 return 1;
-
+            
             if (homeDevice.InUse)
                 return 2;
 
@@ -41,7 +41,7 @@ namespace ServiceLayer
         /// <summary>
         /// Desrelaciona un HomeDevice de su conector asociado
         /// </summary>
-        public static void UnlinkHomeDevice(int idHomeDevice)
+        public void UnlinkHomeDevice(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
             homeDevice.Connector.UnlinkHomeDevice();
@@ -53,29 +53,29 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="node"></param>
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
-        public static Dictionary<int, Tuple<string, string, bool>> GetConnectors(int idNode)
+        public Dictionary<int, Tuple<string, string, bool>> GetConnectors(int idNode)
         {
             return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.ToDictionary(c => c.Id, c => new Tuple<string, string, bool>(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
         }
 
-        public static string GetNameNode(int idNode)
+        public string GetNameNode(int idNode)
         {
             return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Name;
         }
 
-        public static int GetAddressNode(int idNode)
+        public int GetAddressNode(int idNode)
         {
             return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Address;
         }
 
-        public static void UpdatePosition(int idNode, int idZone, float X, float Y)
+        public void UpdatePosition(int idNode, int idZone, float X, float Y)
         {
             Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
             node.Position.Zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idNode);
             node.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
-        public static Position GetNodePosition(int idNode)
+        public Position GetNodePosition(int idNode)
         {
             return NetworkManager.Nodes.First(n => n.Id == idNode).Position;
         }
@@ -85,29 +85,29 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public static Dictionary<int, Tuple<string, string>> GetFreeConnectors(int idNode)
+        public Dictionary<int, Tuple<string, string>> GetFreeConnectors(int idNode)
         {
             throw new NotImplementedException();
         }
 
-        public static Dictionary<int, Tuple<string, Position>> GetNodes()
+        public Dictionary<int, Tuple<string, Position>> GetNodes()
         {
             throw new NotImplementedException();
         }
 
-        public static Dictionary<int, Tuple<string, Position>> GetNode(int idZone)
+        public Dictionary<int, Tuple<string, Position>> GetNode(int idZone)
         {
             Dictionary<int, Tuple<string, Position>> res = new Dictionary<int,Tuple<string,Position>>();
             NetworkManager.Nodes.Where(n => n.Position.Id == idZone).ToList().ForEach(n => { res.Add(n.Id, new Tuple<string, Position>(n.Name, n.Position)); });
             return res;
         }
 
-        public static string[] GetTypeShields()
+        public string[] GetTypeShields()
         {
             return Enum.GetNames(typeof(ShieldType));
         }
 
-        public static string[] GetTypeBases()
+        public string[] GetTypeBases()
         {
             return Enum.GetNames(typeof(BaseType));
         }

@@ -8,22 +8,22 @@ namespace ServiceLayer
 {
     public class LogService
     {
-        public static void AddClientLog(string log)
+        public void AddClientLog(string log)
         {
 
         }
 
-        public static string[] GetLog(string category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static string[] GetLog(string category, int from, int to)
+        public string[] GetLog(string category)
         {
             throw new NotImplementedException();
         }
 
-        public static string[] GetLogCategory(string category)
+        public string[] GetLog(string category, int from, int to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetLogCategory(string category)
         {
             throw new NotImplementedException();
         }
