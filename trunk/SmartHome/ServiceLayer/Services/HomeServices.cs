@@ -53,8 +53,8 @@ namespace ServiceLayer
         /// <summary>
         /// Return the MAC of the Pending Nodes
         /// </summary>
-        /// <returns></returns>
-        public uint[] GetPendingNodes()
+        /// <returns>Return string for the MACs</returns>
+        public string[] GetPendingNodes()
         {
             throw new NotImplementedException();
         }
