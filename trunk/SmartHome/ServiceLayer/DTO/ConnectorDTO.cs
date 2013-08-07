@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
-namespace ServiceLayer
+namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class HomeDeviceDTO
+    public class ConnectorDTO
     {
         [DataMember]
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace ServiceLayer
         public string Name { get; set; }
 
         [DataMember]
-        public string Type { get; set; }
+        public string ConnectorType { get; set; }
 
         [DataMember]
         public bool InUse { get; set; }

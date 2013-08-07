@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using DataLayer.Repositories;
+using ServiceLayer.DTO;
 
 namespace ServiceLayer
 {
     public class HomeDeviceService
     {
-
         /// <summary>
         /// Add a new HomeDevice to the system.
         /// </summary>
@@ -95,10 +95,10 @@ namespace ServiceLayer
         /// <summary>
         /// Return all HomeDevices of the system (be or not be connected to a Node)
         /// </summary>
-        /// <returns>Dictionary of Ids, Nombres, Tipos</returns>
-        public Dictionary<int, Tuple<string, string>> GetHomeDevices()
+        /// <returns>Return a HomeDeviceDTO</returns>
+        public HomeDeviceDTO[] GetHomeDevices()
         {
-            return NetworkManager.HomeDevices.ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
+            return NetworkManager.HomeDevices.Select(h => new HomeDeviceDTO() {Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace ServiceLayer
         /// <param name="zona">Identificator of the zone</param>
         /// <param name="homeDeviceType">Identificator of the type</param>
         /// <returns>Return Dictionary with ID, Name and type</returns>
-        public Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, string type)
+        public HomeDeviceDTO[] GetHomeDevices(int idZona, string type)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
+            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).Select(h => new HomeDeviceDTO() { Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
         }
 
         /// <summary>
@@ -119,9 +119,17 @@ namespace ServiceLayer
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
+        public HomeDeviceDTO[] GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
+            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected)
+                                             .Select(h => new HomeDeviceDTO() 
+                                             {
+                                                 Id = h.Id, 
+                                                 Name = h.Name,
+                                                 Type = h.HomeDeviceType,
+                                                 InUse = h.InUse 
+                                             })
+                                             .ToArray();
         }
 
         /// <summary>
@@ -129,11 +137,11 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="TypeHomeDevice"></param>
         /// <returns></returns>
-        public Dictionary<int, Tuple<string, string, bool>> GetConnectorsCapable(int idHomeDevice, int idNode)
+        public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
             HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
 
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable).ToDictionary(c => c.Id, c => new Tuple<string, string, bool>(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable).Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
         }
     }
 }

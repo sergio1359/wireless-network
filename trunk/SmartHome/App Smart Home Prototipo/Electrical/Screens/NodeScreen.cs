@@ -14,16 +14,13 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
     public partial class NodeScreen : Form
     {
 
-
-        
         public NodeScreen()
         {
             InitializeComponent();
 
-            comboBoxNewBase.Items.AddRange(NodeService.GetTypeBases());
-            comboBoxNewShield.Items.AddRange(NodeService.GetTypeShields());
+            comboBoxNewBase.Items.AddRange(Services.NodeService.GetTypeBases());
+            comboBoxNewShield.Items.AddRange(Services.NodeService.GetTypeShields());
 
-            listBoxNodes.Items.AddRange(NodeService.GetNodes().Keys.ToArray());
         }
     }
 }
