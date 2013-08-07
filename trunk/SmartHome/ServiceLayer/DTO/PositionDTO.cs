@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class OperationDTO
+    public class PositionDTO
     {
         [DataMember]
         public int Id { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public float X { get; set; }
 
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        [DataMember]
+        public float Y { get; set; }
     }
 }
