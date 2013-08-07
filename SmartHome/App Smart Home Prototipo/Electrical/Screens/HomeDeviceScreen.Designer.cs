@@ -58,7 +58,7 @@
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Location = new System.Drawing.Point(2, 2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(344, 434);
+            this.groupBox3.Size = new System.Drawing.Size(344, 518);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "HomeDevice";
@@ -93,6 +93,7 @@
             this.buttonNewHomeDevice.TabIndex = 8;
             this.buttonNewHomeDevice.Text = "+";
             this.buttonNewHomeDevice.UseVisualStyleBackColor = true;
+            this.buttonNewHomeDevice.Click += new System.EventHandler(this.AddHomeDevice);
             // 
             // comboBoxNewType
             // 
@@ -128,7 +129,7 @@
             this.groupBox8.Controls.Add(this.buttonRemoveHomeDevice);
             this.groupBox8.Location = new System.Drawing.Point(7, 98);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(328, 116);
+            this.groupBox8.Size = new System.Drawing.Size(328, 202);
             this.groupBox8.TabIndex = 32;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "HOME DEVICES";
@@ -138,18 +139,20 @@
             this.listBoxHomeDevices.FormattingEnabled = true;
             this.listBoxHomeDevices.Location = new System.Drawing.Point(6, 19);
             this.listBoxHomeDevices.Name = "listBoxHomeDevices";
-            this.listBoxHomeDevices.Size = new System.Drawing.Size(224, 82);
+            this.listBoxHomeDevices.Size = new System.Drawing.Size(224, 173);
             this.listBoxHomeDevices.TabIndex = 6;
+            this.listBoxHomeDevices.SelectedValueChanged += new System.EventHandler(this.ChangeHomeDeviceInformation);
             // 
             // buttonRemoveHomeDevice
             // 
             this.buttonRemoveHomeDevice.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonRemoveHomeDevice.Location = new System.Drawing.Point(236, 19);
             this.buttonRemoveHomeDevice.Name = "buttonRemoveHomeDevice";
-            this.buttonRemoveHomeDevice.Size = new System.Drawing.Size(80, 82);
+            this.buttonRemoveHomeDevice.Size = new System.Drawing.Size(80, 173);
             this.buttonRemoveHomeDevice.TabIndex = 10;
             this.buttonRemoveHomeDevice.Text = "-";
             this.buttonRemoveHomeDevice.UseVisualStyleBackColor = true;
+            this.buttonRemoveHomeDevice.Click += new System.EventHandler(this.RemoveHomeDevice);
             // 
             // groupBox6
             // 
@@ -159,7 +162,7 @@
             this.groupBox6.Controls.Add(this.label12);
             this.groupBox6.Controls.Add(this.label3);
             this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Location = new System.Drawing.Point(7, 221);
+            this.groupBox6.Location = new System.Drawing.Point(8, 306);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(328, 204);
             this.groupBox6.TabIndex = 32;
@@ -220,7 +223,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 441);
+            this.ClientSize = new System.Drawing.Size(350, 524);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "HomeDeviceScreen";

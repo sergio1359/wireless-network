@@ -19,7 +19,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             InitializeComponent();
 
-            //listBoxMACs.Items.AddRange(Services.HomeService.GetPendingNodes());
+            listBoxMACs.Items.AddRange(Services.HomeService.GetPendingNodes());
 
             listBoxNodes.Items.AddRange(Services.NodeService.GetNodes());
         }
