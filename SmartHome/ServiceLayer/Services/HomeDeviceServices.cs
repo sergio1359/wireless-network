@@ -102,6 +102,15 @@ namespace ServiceLayer
         }
 
         /// <summary>
+        /// Return all HomeDevices of the system (be or not be connected to a Node)
+        /// </summary>
+        /// <returns>Return a HomeDeviceDTO</returns>
+        public HomeDeviceDTO[] GetHomeDevices(bool IsInUse)
+        {
+            return NetworkManager.HomeDevices.Where(hd => hd.InUse == IsInUse).Select(h => new HomeDeviceDTO() { Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
+        }
+
+        /// <summary>
         /// Return the HomeDevices connected of a concrete zone and type
         /// </summary>
         /// <param name="zona">Identificator of the zone</param>

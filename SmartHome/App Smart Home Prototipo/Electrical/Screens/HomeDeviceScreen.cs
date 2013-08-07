@@ -47,7 +47,18 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void ChangeHomeDeviceInformation(object sender, EventArgs e)
         {
             HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+            textBoxNameHomeDevice.Text = homeDevice.Name;
+            textBoxTypeHomeDevice.Text = homeDevice.Type;
 
+            listBoxOperations.Items.Clear();
+            listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperation(homeDevice.Id));
+        }
+
+        private void ChangeNameHomeDevice(object sender, EventArgs e)
+        {
+            HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+
+            Services.HomeDeviceService.SetNameHomeDevice(homeDevice.Id, textBoxNameHomeDevice.Text);
         }
 
 
