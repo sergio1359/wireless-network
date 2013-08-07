@@ -175,6 +175,7 @@
             this.textBoxNameHomeDevice.Name = "textBoxNameHomeDevice";
             this.textBoxNameHomeDevice.Size = new System.Drawing.Size(153, 20);
             this.textBoxNameHomeDevice.TabIndex = 20;
+            this.textBoxNameHomeDevice.TextChanged += new System.EventHandler(this.ChangeNameHomeDevice);
             // 
             // listBoxOperations
             // 
