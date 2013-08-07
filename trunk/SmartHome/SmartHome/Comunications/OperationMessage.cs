@@ -95,6 +95,7 @@ namespace SmartHome.Comunications
             result.AddRange(BitConverter.GetBytes(SourceAddress));
             result.AddRange(BitConverter.GetBytes(DestinationAddress));
             result.Add((byte)OpCode);
+
             if (Args != null)
                 result.AddRange(Args);
 
@@ -106,8 +107,17 @@ namespace SmartHome.Comunications
             SourceAddress = (ushort)((((ushort)buffer[1 + offset]) << 8) | (ushort)buffer[0 + offset]);
             DestinationAddress = (ushort)((((ushort)buffer[3 + offset]) << 8) | (ushort)buffer[2 + offset]);
             OpCode = (OPCodes)buffer[4 + offset];
-            Args = new byte[buffer.Length - 5 - offset];
-            Buffer.BlockCopy(buffer, 5 + offset, Args, 0, Args.Length);
+
+            int argsSize = buffer.Length - 5 - offset;
+            if (argsSize > 0)
+            {
+                Args = new byte[argsSize];
+                Buffer.BlockCopy(buffer, 5 + offset, Args, 0, Args.Length);
+            }
+            else
+            {
+                Args = null;
+            }
         }
 
         public override string ToString()
