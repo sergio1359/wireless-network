@@ -11,7 +11,7 @@ using DataLayer.Repositories;
 
 namespace ServiceLayer
 {
-    public static class HomeDeviceService
+    public class HomeDeviceService
     {
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace ServiceLayer
         /// <param name="NameHomeDevice">Name of the new HomeDevice</param>
         /// <param name="TypeHomeDevice">Type of HomeDevice</param>
         /// <returns>Return the ID for the new HomeDevice</returns>
-        public static int AddHomeDevice(string NameHomeDevice, string TypeHomeDevice)
+        public int AddHomeDevice(string NameHomeDevice, string TypeHomeDevice)
         {
             HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(Type.GetType(TypeHomeDevice));
 
@@ -35,7 +35,7 @@ namespace ServiceLayer
         /// Return the HomeDevice's types of the system.
         /// </summary>
         /// <returns></returns>
-        public static string[] GetTypesHomeDevice()
+        public string[] GetTypesHomeDevice()
         {
             return HomeDevice.HomeDeviceTypes;
         }
@@ -44,12 +44,12 @@ namespace ServiceLayer
         /// Remove, and unlink if is necesary, a HomeDevice of the system.
         /// </summary>
         /// <param name="idHomeDevice">Identificator of the HomeDevice to be remove.</param>
-        public static void RemoveHomeDevice(int idHomeDevice)
+        public void RemoveHomeDevice(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             if (homeDevice.Connector != null)
             {
-                NodeService.UnlinkHomeDevice(idHomeDevice);
+                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
             }
 
             NetworkManager.HomeDevices.Remove(homeDevice);
@@ -60,7 +60,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idHomeDevice">Identificator of the HomeDevice</param>
         /// <param name="NewName">New Name</param>
-        public static void SetNameHomeDevice(int idHomeDevice, string NewName)
+        public void SetNameHomeDevice(int idHomeDevice, string NewName)
         {
             NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = NewName;
         }
@@ -73,7 +73,7 @@ namespace ServiceLayer
         /// <param name="Zone">new zone</param>
         /// <param name="X">Relative position 0 to 1 of the X axis</param>
         /// <param name="Y">Relative position 0 to 1 of the X axis</param>
-        public static void UpdatePosition(int idHomeDevice, int idZone, float X, float Y)
+        public void UpdatePosition(int idHomeDevice, int idZone, float X, float Y)
         {
             HomeDevice home = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             Zone zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
@@ -82,12 +82,12 @@ namespace ServiceLayer
             home.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
-        public static void UpdateViewPosition(int idHomeDevice, int idView, float X, float Y)
+        public void UpdateViewPosition(int idHomeDevice, int idView, float X, float Y)
         {
             throw new NotImplementedException();
         }
 
-        public static Position GetHomeDevicePosition(int idHomeDevice)
+        public Position GetHomeDevicePosition(int idHomeDevice)
         {
             return NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position;
         }
@@ -96,7 +96,7 @@ namespace ServiceLayer
         /// Return all HomeDevices of the system (be or not be connected to a Node)
         /// </summary>
         /// <returns>Dictionary of Ids, Nombres, Tipos</returns>
-        public static Dictionary<int, Tuple<string, string>> GetHomeDevices()
+        public Dictionary<int, Tuple<string, string>> GetHomeDevices()
         {
             return NetworkManager.HomeDevices.ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
@@ -107,7 +107,7 @@ namespace ServiceLayer
         /// <param name="zona">Identificator of the zone</param>
         /// <param name="homeDeviceType">Identificator of the type</param>
         /// <returns>Return Dictionary with ID, Name and type</returns>
-        public static Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, string type)
+        public Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, string type)
         {
             return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
@@ -119,7 +119,7 @@ namespace ServiceLayer
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public static Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
+        public Dictionary<int, Tuple<string, string>> GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
             return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected).ToDictionary(h => (int)h.Id, h => new Tuple<string, string>(h.Name, h.HomeDeviceType));
         }
@@ -129,7 +129,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="TypeHomeDevice"></param>
         /// <returns></returns>
-        public static Dictionary<int, Tuple<string, string, bool>> GetConnectorsCapable(int idHomeDevice, int idNode)
+        public Dictionary<int, Tuple<string, string, bool>> GetConnectorsCapable(int idHomeDevice, int idNode)
         {
             HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
 
