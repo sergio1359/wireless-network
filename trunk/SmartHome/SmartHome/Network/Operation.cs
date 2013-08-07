@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ using SmartHome.Network.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Memory;
 using System.Reflection;
+using SmartHome.Comunications.Messages; 
+#endregion
 
 namespace SmartHome.Network
 {
