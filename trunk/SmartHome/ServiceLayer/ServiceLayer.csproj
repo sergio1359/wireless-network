@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -52,6 +55,7 @@
     <Compile Include="DTO\NodeDTO.cs" />
     <Compile Include="DTO\OperationDTO.cs" />
     <Compile Include="DTO\PositionDTO.cs" />
+    <Compile Include="DTO\ServiceProfile.cs" />
     <Compile Include="Services\HomeDeviceServices.cs" />
     <Compile Include="Services\HomeServices.cs" />
     <Compile Include="Services\LogService.cs" />

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using ServiceLayer.DTO;
 
 namespace ServiceLayer
 {
@@ -62,6 +64,11 @@ namespace ServiceLayer
                     logService = new LogService();
                 return logService;
             }
+        }
+
+        static Services()
+        {
+            Mapper.Initialize(t => t.AddProfile<ServiceProfile>());
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace ServiceLayer
 {
@@ -57,7 +58,9 @@ namespace ServiceLayer
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
+            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors;
+
+            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
         public string GetNameNode(int idNode)
