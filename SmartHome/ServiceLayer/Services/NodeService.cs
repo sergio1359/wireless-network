@@ -1,4 +1,5 @@
-﻿using SmartHome.HomeModel;
+﻿using ServiceLayer.DTO;
+using SmartHome.HomeModel;
 using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using System;
@@ -53,9 +54,9 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="node"></param>
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
-        public Dictionary<int, Tuple<string, string, bool>> GetConnectors(int idNode)
+        public ConnectorDTO[] GetConnectors(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.ToDictionary(c => c.Id, c => new Tuple<string, string, bool>(c.Name, Enum.GetName(typeof(ConnectorType), c.ConnectorType), c.InUse));
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
         }
 
         public string GetNameNode(int idNode)
@@ -85,21 +86,19 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public Dictionary<int, Tuple<string, string>> GetFreeConnectors(int idNode)
+        public ConnectorDTO[] GetFreeConnectors(int idNode)
         {
-            throw new NotImplementedException();
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false).Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
         }
 
-        public Dictionary<int, Tuple<string, Position>> GetNodes()
+        public NodeDTO[] GetNodes()
         {
-            throw new NotImplementedException();
+            return NetworkManager.Nodes.Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) }).ToArray();
         }
 
-        public Dictionary<int, Tuple<string, Position>> GetNode(int idZone)
+        public NodeDTO[] GetNode(int idZone)
         {
-            Dictionary<int, Tuple<string, Position>> res = new Dictionary<int,Tuple<string,Position>>();
-            NetworkManager.Nodes.Where(n => n.Position.Id == idZone).ToList().ForEach(n => { res.Add(n.Id, new Tuple<string, Position>(n.Name, n.Position)); });
-            return res;
+            return NetworkManager.Nodes.Where(n => n.Position.Id == idZone).Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) }).ToArray();
         }
 
         public string[] GetTypeShields()
