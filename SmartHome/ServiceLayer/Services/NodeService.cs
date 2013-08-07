@@ -39,6 +39,7 @@ namespace ServiceLayer
             return 0;
         }
 
+
         /// <summary>
         /// Desrelaciona un HomeDevice de su conector asociado
         /// </summary>
@@ -61,17 +62,27 @@ namespace ServiceLayer
 
         public string GetNameNode(int idNode)
         {
-            return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Name;
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Name;
+        }
+
+        public void SetNameNode(int idNode, string newName)
+        {
+            NetworkManager.Nodes.First(n => n.Id == idNode).Name = newName;
         }
 
         public int GetAddressNode(int idNode)
         {
-            return NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode).Address;
+            return NetworkManager.Nodes.First(n => n.Id == idNode).Address;
+        }
+
+        public void SetAddressNode(int idNode, ushort newAddress)
+        {
+            NetworkManager.Nodes.First(n => n.Id == idNode).Address = newAddress;
         }
 
         public void UpdatePosition(int idNode, int idZone, float X, float Y)
         {
-            Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
+            Node node = NetworkManager.Nodes.First(n => n.Id == idNode);
             node.Position.Zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idNode);
             node.Position.ZoneCoordenates = new PointF(X, Y);
         }
@@ -93,12 +104,12 @@ namespace ServiceLayer
 
         public NodeDTO[] GetNodes()
         {
-            return NetworkManager.Nodes.Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) }).ToArray();
+            return NetworkManager.Nodes.Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) , Address = n.Address}).ToArray();
         }
 
-        public NodeDTO[] GetNode(int idZone)
+        public NodeDTO[] GetNodes(int idZone)
         {
-            return NetworkManager.Nodes.Where(n => n.Position.Id == idZone).Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) }).ToArray();
+            return NetworkManager.Nodes.Where(n => n.Position.Id == idZone).Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield), Address = n.Address}).ToArray();
         }
 
         public string[] GetTypeShields()

@@ -12,6 +12,17 @@ namespace ServiceLayer
         private static NodeService nodeService;
         private static OperationService operationService;
         private static LogService logService;
+        private static HomeDeviceService homeDeviceService;
+
+        public static HomeDeviceService HomeDeviceService
+        {
+            get
+            {
+                if (homeDeviceService == null)
+                    homeDeviceService = new HomeDeviceService();
+                return homeDeviceService;
+            }
+        }
 
         public static HomeService HomeService
         {
