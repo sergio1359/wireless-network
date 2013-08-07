@@ -8,7 +8,20 @@ namespace ServiceLayer
 {
     public static class Services
     {
+        private static HomeService homeService;
         private static NodeService nodeService;
+        private static OperationService operationService;
+        private static LogService logService;
+
+        public static HomeService HomeService
+        {
+            get
+            {
+                if (homeService == null)
+                    homeService = new HomeService();
+                return homeService;
+            }
+        }
 
         public static NodeService NodeService
         {
@@ -20,19 +33,24 @@ namespace ServiceLayer
             }
         }
 
-        //public HomeService Home;
-        //public HomeDeviceService HomeDevices;
-        //public LogService Logs;
-        //public NodeService Nodes;
-        //public OperationService Operation;
+        public static OperationService OperationService
+        {
+            get
+            {
+                if (operationService == null)
+                    operationService = new OperationService();
+                return operationService;
+            }
+        }
 
-        //public Services()
-        //{
-        //    Home = new HomeService();
-        //    HomeDevices = new HomeDeviceService();
-        //    Logs = new LogService();
-        //    Nodes = new NodeService();
-        //    Operation = new OperationService();
-        //}
+        public static LogService LogService
+        {
+            get
+            {
+                if (logService == null)
+                    logService = new LogService();
+                return logService;
+            }
+        }
     }
 }
