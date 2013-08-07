@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Statements
 using System.Drawing;
-using SmartHome.Comunications;
+using SmartHome.Comunications.Messages; 
+#endregion
 
 namespace SmartHome.Network.HomeDevices
 {

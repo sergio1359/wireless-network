@@ -45,10 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comunications\ErrorCodes.cs" />
-    <Compile Include="Comunications\LowLevelTypes.cs" />
-    <Compile Include="Comunications\OperationMessage.cs" />
-    <Compile Include="Comunications\ProtocolMessages.cs" />
+    <Compile Include="Communications\CommunicationManager.cs" />
+    <Compile Include="Communications\Modules\ModuleBase.cs" />
+    <Compile Include="Communications\Messages\ErrorCodes.cs" />
+    <Compile Include="Communications\Messages\LowLevelTypes.cs" />
+    <Compile Include="Communications\Messages\IMessage.cs" />
+    <Compile Include="Communications\Messages\OperationMessage.cs" />
+    <Compile Include="Communications\Messages\ProtocolMessages.cs" />
+    <Compile Include="Communications\SerialManager\InputHeader.cs" />
+    <Compile Include="Communications\SerialManager\NodeConnection.cs" />
+    <Compile Include="Communications\SerialManager\OutputHeader.cs" />
+    <Compile Include="Communications\SerialManager\SerialManager.cs" />
     <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Network\BaseType.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />
@@ -100,6 +107,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
