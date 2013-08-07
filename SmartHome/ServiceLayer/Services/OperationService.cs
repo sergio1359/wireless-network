@@ -1,4 +1,5 @@
-﻿using SmartHome.Network;
+﻿using ServiceLayer.DTO;
+using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
@@ -38,12 +39,12 @@ namespace ServiceLayer
             NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation).Execute();
         }
 
-        public Operation[] GetHomeDeviceOperation(int idHomeDevice)
+        public OperationDTO[] GetHomeDeviceOperation(int idHomeDevice)
         {
             throw new NotImplementedException();
         }
 
-        public Operation[] GetHomeDeviceOperation(string typeHomeDevice)
+        public OperationDTO[] GetHomeDeviceOperation(string typeHomeDevice)
         {
             throw new NotImplementedException();
         }

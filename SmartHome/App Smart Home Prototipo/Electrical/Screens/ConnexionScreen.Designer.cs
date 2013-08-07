@@ -89,6 +89,7 @@
             this.buttonLinkHomeDevice.TabIndex = 0;
             this.buttonLinkHomeDevice.Text = "LINK HOME DEVICE TO CONNECTOR";
             this.buttonLinkHomeDevice.UseVisualStyleBackColor = true;
+            this.buttonLinkHomeDevice.Click += new System.EventHandler(this.LinkHomeDeviceToConnector);
             // 
             // tableLayoutPanel2
             // 
@@ -132,6 +133,7 @@
             this.listBoxCapableFreeConnector.Name = "listBoxCapableFreeConnector";
             this.listBoxCapableFreeConnector.Size = new System.Drawing.Size(198, 264);
             this.listBoxCapableFreeConnector.TabIndex = 0;
+            this.listBoxCapableFreeConnector.SelectedValueChanged += new System.EventHandler(this.SelectCapableFreeConnector);
             // 
             // panel1
             // 
@@ -161,6 +163,7 @@
             this.comboBoxNode.Name = "comboBoxNode";
             this.comboBoxNode.Size = new System.Drawing.Size(147, 21);
             this.comboBoxNode.TabIndex = 1;
+            this.comboBoxNode.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
             // 
             // label1
             // 
@@ -194,6 +197,7 @@
             this.buttonUnilinkHomeDevice.TabIndex = 0;
             this.buttonUnilinkHomeDevice.Text = "UNLINK";
             this.buttonUnilinkHomeDevice.UseVisualStyleBackColor = true;
+            this.buttonUnilinkHomeDevice.Click += new System.EventHandler(this.UnlinkHomeDevice);
             // 
             // label3
             // 
@@ -212,6 +216,7 @@
             this.listBoxHomeDevicesConnected.Name = "listBoxHomeDevicesConnected";
             this.listBoxHomeDevicesConnected.Size = new System.Drawing.Size(247, 264);
             this.listBoxHomeDevicesConnected.TabIndex = 0;
+            this.listBoxHomeDevicesConnected.SelectedValueChanged += new System.EventHandler(this.SelectNewHomeDevice);
             // 
             // ConnexionScreen
             // 
