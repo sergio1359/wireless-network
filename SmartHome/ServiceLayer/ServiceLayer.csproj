@@ -41,10 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HomeDevice.cs" />
-    <Compile Include="Home.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Operation.cs" />
+    <Compile Include="HomeServices.cs" />
+    <Compile Include="LogService.cs" />
+    <Compile Include="NodeService.cs" />
+    <Compile Include="OperationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.cs" />
   </ItemGroup>
