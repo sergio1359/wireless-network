@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using SmartHome.Network;
-using SmartHome.Network.HomeDevices; 
+using SmartHome.Network.HomeDevices;
+using SmartHome.HomeModel; 
 #endregion
 
 namespace ServiceLayer.DTO
@@ -23,14 +24,14 @@ namespace ServiceLayer.DTO
             Map();
         }
 
-        //TODO: Esto hay que revisarlo en la otra direccion y definir el DTO de posicion y operacion
         private void Map()
         {
             Mapper.CreateMap<Connector, ConnectorDTO>()
                 .ForMember(t => t.ConnectorType, f => f.MapFrom(c => Enum.GetName(typeof(ConnectorType), c.ConnectorType)));
 
             Mapper.CreateMap<HomeDevice, HomeDeviceDTO>()
-                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType));
+                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType))
+                .ForMember(t => t.IdPosition, f => f.MapFrom(hd => hd.Position.Id));
 
             Mapper.CreateMap<Node, NodeDTO>()
                 .ForMember(t => t.Base, f => f.MapFrom(n => Enum.GetName(typeof(BaseType), n.Base)))
@@ -38,7 +39,7 @@ namespace ServiceLayer.DTO
 
             Mapper.CreateMap<Operation, OperationDTO>();
 
-            Mapper.CreateMap<Position, PositionDTO>();
+            Mapper.CreateMap<Position, PositionDTO>(); //TODO
         }
     }
 }

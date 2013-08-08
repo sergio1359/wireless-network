@@ -74,7 +74,7 @@ namespace ServiceLayer
         /// <param name="Zone">new zone</param>
         /// <param name="X">Relative position 0 to 1 of the X axis</param>
         /// <param name="Y">Relative position 0 to 1 of the X axis</param>
-        public void UpdatePosition(int idHomeDevice, int idZone, float X, float Y)
+        public void UpdateZonePosition(int idHomeDevice, int idZone, float X, float Y)
         {
             HomeDevice home = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             Zone zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
