@@ -22,7 +22,6 @@ namespace SmartHome.Network
         public Position Position { get; set; }
         public BaseType Base { get; set; }
         public ShieldType Shield { get; set; }
-        public Security Security { get; set; }
 
         public List<HomeDevice> HomeDevices 
         { 
@@ -50,8 +49,6 @@ namespace SmartHome.Network
             }
 
             Position = new Position();
-
-            Security = new Security();
         }
 
 
