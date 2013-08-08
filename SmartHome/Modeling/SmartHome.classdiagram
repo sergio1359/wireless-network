@@ -49,22 +49,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         </appliedStereotypesInternal>
         <elementDefinition Id="56896c49-a668-4620-940f-981dc0d4ac08" />
         <targetEnds>
-          <association Id="f17dc53e-4a27-4c6a-82f3-7496812f9d2c" isDerived="false" sourceEndRoleName="Node" targetEndRoleName="Security" isLeaf="false" isAbstract="false">
-            <classMoniker Id="9960ca56-be4e-4893-abdb-aaa22421194c" LastKnownName="Security" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="8d055710-8cc2-4290-b948-d77d8d02b913" name="Node" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="30a2a0a4-61da-4adc-b193-5fea552bcd8b" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="3f2bfe5d-5e20-4f1c-89df-ad8c34ad25cc" name="Security" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="ff03af0b-7db4-4382-904a-163a279a331b" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="64b22810-4ffe-4b8c-b665-0a1c908abab4" />
-          </association>
           <association Id="b888d909-3ef8-4b68-8016-11067d23cc0d" isDerived="false" sourceEndRoleName="Node" targetEndRoleName="Position" isLeaf="false" isAbstract="false">
             <classMoniker Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" LastKnownName="Positions" />
             <relationshipOwnedElementsInternal>
@@ -7018,12 +7002,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
     </logicalClassDesignerModelHasPackages>
     <logicalClassDesignerModelHasPackages>
       <package Id="316887fc-7188-447d-b464-6ab6ea034bab" name="Service">
-        <ownedCommentsInternal>
-          <comment Id="2bdd93f6-5b06-44d1-8217-91f8d25092bc">
-            <elementDefinition Id="56947b45-2d94-4cfd-a54e-960d8e16dd6c" />
-            <body>DOING</body>
-          </comment>
-        </ownedCommentsInternal>
         <elementDefinition Id="98cd862f-a870-445a-8b73-0b18a515d438" />
       </package>
     </logicalClassDesignerModelHasPackages>
@@ -9038,48 +9016,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
       <package Id="82d70ba1-4a08-430b-9e00-68130e24dfe7" name="Connection">
         <elementDefinition Id="ddffd40b-f1f3-42a3-80c8-1dbc8085db27" />
         <packagedElements>
-          <packageHasNamedElement>
-            <class Id="de09f5f3-629c-4e62-8070-b499b5341f37" name="SerialPort" isAbstract="false" isLeaf="false" isActiveClass="false">
-              <appliedStereotypesInternal>
-                <stereotypeInstance Id="61bc144a-da4d-4cd2-b70c-e1bfb8fac1c2" name="class" profile="CSharpProfile">
-                  <elementDefinition Id="288697dc-f55e-4b83-8ecf-f5db8003f75a" />
-                  <propertyInstances>
-                    <stereotypeInstanceHasPropertyInstances Id="76a11e0a-522b-434d-a594-d89dc6912c7b">
-                      <propertyInstance Id="9e34ae65-24a7-42eb-bdfb-8cd3476b5a58" name="ClrAttributes">
-                        <elementDefinition Id="dd54199f-f19e-478e-866d-bd31793efa41" />
-                      </propertyInstance>
-                      <elementDefinition Id="a9824c6c-44a1-4cad-b5c4-8a352ba271da" />
-                    </stereotypeInstanceHasPropertyInstances>
-                    <stereotypeInstanceHasPropertyInstances Id="bf087fc0-d035-453e-aa8f-3c5a6810aeaa">
-                      <propertyInstance Id="b5890357-e08b-4ecf-b34b-e4297e7c91d6" name="IsPartial" value="false">
-                        <elementDefinition Id="b505db1d-8bfa-4599-a22c-32bcd295af22" />
-                      </propertyInstance>
-                      <elementDefinition Id="8fdf318e-a243-404c-83ca-0e16a56489ce" />
-                    </stereotypeInstanceHasPropertyInstances>
-                    <stereotypeInstanceHasPropertyInstances Id="b14af048-2570-4001-964f-c0f362efd6e0">
-                      <propertyInstance Id="1d2106e2-d999-46fc-959b-6c5a04fc52db" name="IsStatic" value="false">
-                        <elementDefinition Id="7fac227c-5c37-4102-ae20-f040f3ef08b3" />
-                      </propertyInstance>
-                      <elementDefinition Id="ab798a12-adbb-4e4e-b1c4-5f06567e3220" />
-                    </stereotypeInstanceHasPropertyInstances>
-                    <stereotypeInstanceHasPropertyInstances Id="5ceb65c8-df90-42e9-b2cc-76e375d7a8ac">
-                      <propertyInstance Id="1a624505-166d-44c9-9843-39b122571fbf" name="IsUnsafe" value="false">
-                        <elementDefinition Id="24053265-3348-4d0a-98e2-93152c5ccd14" />
-                      </propertyInstance>
-                      <elementDefinition Id="0c41db67-65a9-4bf8-88dc-36d13cd3ed15" />
-                    </stereotypeInstanceHasPropertyInstances>
-                    <stereotypeInstanceHasPropertyInstances Id="6f8f443e-c7ac-454e-abf4-4f8db49c1460">
-                      <propertyInstance Id="b250a21b-83c5-43a0-b3b6-643c8fff7a2d" name="PackageVisibility" value="internal">
-                        <elementDefinition Id="e681b464-9ef1-49cf-acc2-29ae19c2cfdc" />
-                      </propertyInstance>
-                      <elementDefinition Id="4a8e2170-a3bf-47df-a5bd-9303d44cf4a5" />
-                    </stereotypeInstanceHasPropertyInstances>
-                  </propertyInstances>
-                </stereotypeInstance>
-              </appliedStereotypesInternal>
-              <elementDefinition Id="234090f1-ec9e-4066-8547-323350db9f7c" />
-            </class>
-          </packageHasNamedElement>
           <packageHasNamedElement>
             <enumeration Id="6943a126-5039-4776-9db4-6a7014e38411" name="OPCode" isAbstract="false" isLeaf="false">
               <appliedStereotypesInternal>

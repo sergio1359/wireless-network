@@ -102,17 +102,21 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetFreeConnectors(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false).Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
+            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false);
+
+            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
         public NodeDTO[] GetNodes()
         {
-            return NetworkManager.Nodes.Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield) , Address = n.Address}).ToArray();
+            return Mapper.Map<List<NodeDTO>>(NetworkManager.Nodes).ToArray();
         }
 
         public NodeDTO[] GetNodes(int idZone)
         {
-            return NetworkManager.Nodes.Where(n => n.Position.Id == idZone).Select(n => new NodeDTO() { Id = n.Id, Name = n.Name, Base = Enum.GetName(typeof(BaseType), n.Base), Shield = Enum.GetName(typeof(ShieldType), n.Shield), Address = n.Address}).ToArray();
+            var nodes = NetworkManager.Nodes.Where(n => n.Position.Id == idZone);
+
+            return Mapper.Map<List<NodeDTO>>(nodes).ToArray();
         }
 
         public string[] GetTypeShields()

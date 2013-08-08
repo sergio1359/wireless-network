@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace ServiceLayer
+namespace ServiceLayer.DTO
 {
     [DataContract]
     public class HomeDeviceDTO

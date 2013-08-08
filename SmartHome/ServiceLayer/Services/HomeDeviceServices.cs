@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using DataLayer.Repositories;
 using ServiceLayer.DTO;
+using AutoMapper;
 
 namespace ServiceLayer
 {
@@ -98,7 +99,7 @@ namespace ServiceLayer
         /// <returns>Return a HomeDeviceDTO</returns>
         public HomeDeviceDTO[] GetHomeDevices()
         {
-            return NetworkManager.HomeDevices.Select(h => new HomeDeviceDTO() {Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
+            return Mapper.Map<List<HomeDeviceDTO>>(NetworkManager.HomeDevices).ToArray();
         }
 
         /// <summary>
@@ -107,7 +108,9 @@ namespace ServiceLayer
         /// <returns>Return a HomeDeviceDTO</returns>
         public HomeDeviceDTO[] GetHomeDevices(bool IsInUse)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.InUse == IsInUse).Select(h => new HomeDeviceDTO() { Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == IsInUse);
+
+            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         /// <summary>
@@ -118,7 +121,9 @@ namespace ServiceLayer
         /// <returns>Return Dictionary with ID, Name and type</returns>
         public HomeDeviceDTO[] GetHomeDevices(int idZona, string type)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type).Select(h => new HomeDeviceDTO() { Id = h.Id, Name = h.Name, Type = h.HomeDeviceType, InUse = h.InUse }).ToArray();
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type);
+
+            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         /// <summary>
@@ -130,15 +135,9 @@ namespace ServiceLayer
         /// <returns></returns>
         public HomeDeviceDTO[] GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
-            return NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected)
-                                             .Select(h => new HomeDeviceDTO() 
-                                             {
-                                                 Id = h.Id, 
-                                                 Name = h.Name,
-                                                 Type = h.HomeDeviceType,
-                                                 InUse = h.InUse 
-                                             })
-                                             .ToArray();
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected);
+
+            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         /// <summary>
@@ -150,7 +149,9 @@ namespace ServiceLayer
         {
             HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
 
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable).Select(c => new ConnectorDTO() { Id = c.Id, Name = c.Name, ConnectorType = Enum.GetName(typeof(ConnectorType), c.ConnectorType), InUse = c.InUse }).ToArray();
+            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
+
+            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
     }
 }

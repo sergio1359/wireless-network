@@ -63,45 +63,6 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         </appliedStereotypesInternal>
         <targetEnds>
           <association
-            Id="64b22810-4ffe-4b8c-b665-0a1c908abab4"
-            isDerived="false"
-            sourceEndRoleName="Node"
-            targetEndRoleName="Security"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="2b6f6438-c9b0-4708-86d3-082194fa5ab1"
-              LastKnownName="Security"
-              LastKnownLocation="Modeling.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="30a2a0a4-61da-4adc-b193-5fea552bcd8b"
-                  name="Node"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="ff03af0b-7db4-4382-904a-163a279a331b"
-                  name="Security"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
             Id="3e5b7d00-fbff-4944-9128-35c666aef48f"
             isDerived="false"
             sourceEndRoleName="Node"
