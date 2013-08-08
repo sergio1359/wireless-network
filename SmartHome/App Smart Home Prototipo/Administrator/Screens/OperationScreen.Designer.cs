@@ -68,6 +68,7 @@
             this.listBoxHomeDevices.Name = "listBoxHomeDevices";
             this.listBoxHomeDevices.Size = new System.Drawing.Size(316, 82);
             this.listBoxHomeDevices.TabIndex = 6;
+            this.listBoxHomeDevices.SelectedIndexChanged += new System.EventHandler(this.SelectHomeDevice);
             // 
             // groupBox6
             // 
@@ -95,6 +96,7 @@
             this.buttonRemoveOperation.TabIndex = 31;
             this.buttonRemoveOperation.Text = "-";
             this.buttonRemoveOperation.UseVisualStyleBackColor = true;
+            this.buttonRemoveOperation.Click += new System.EventHandler(this.RemoveOperation);
             // 
             // textBoxNameHomeDevice
             // 
@@ -180,6 +182,7 @@
             this.comboBoxToHomeDevice.Name = "comboBoxToHomeDevice";
             this.comboBoxToHomeDevice.Size = new System.Drawing.Size(157, 21);
             this.comboBoxToHomeDevice.TabIndex = 25;
+            this.comboBoxToHomeDevice.SelectedValueChanged += new System.EventHandler(this.UpdateOperations);
             // 
             // listBoxOperations
             // 

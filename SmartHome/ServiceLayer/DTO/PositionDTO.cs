@@ -14,6 +14,19 @@ namespace ServiceLayer.DTO
         public int Id { get; set; }
 
         [DataMember]
+        public AxisDTO Zone { get; set; }
+
+        [DataMember]
+        public AxisDTO[] Views { get; set; }
+    }
+
+    [DataContract]
+    public class AxisDTO
+    {
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
         public float X { get; set; }
 
         [DataMember]
