@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,8 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         public ZonaScreen()
         {
             InitializeComponent();
+
+            listBoxZones.Items.AddRange(Services.HomeService.GetZones());
         }
     }
 }

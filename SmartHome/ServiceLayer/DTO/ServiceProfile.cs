@@ -39,6 +39,13 @@ namespace ServiceLayer.DTO
 
             Mapper.CreateMap<Operation, OperationDTO>();
 
+            Mapper.CreateMap<Zone, PlaceDTO>()
+                .ForMember(t => t.Name, f => f.MapFrom(z => z.NameZone));
+
+
+            Mapper.CreateMap<View, PlaceDTO>()
+                .ForMember(t => t.Name, f => f.MapFrom(z => z.NameView));;
+
             Mapper.CreateMap<Position, PositionDTO>(); //TODO
         }
     }
