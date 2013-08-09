@@ -124,6 +124,11 @@ namespace ServiceLayer
             return NetworkManager.Home.Zones.Last().Id;
         }
 
+        public void RemoveZone(int idZone)
+        {
+
+        }
+
         public int AddView(int idZone, string nameView)
         {
             var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
@@ -132,6 +137,11 @@ namespace ServiceLayer
             zone.Views.Add(newView);
 
             return newView.Id;
+        }
+
+        public void RemoveView(int idView)
+        {
+
         }
 
         public Image GetImageZone(int idZone)
