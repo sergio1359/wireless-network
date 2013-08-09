@@ -60,11 +60,6 @@ namespace SmartHome.Network.HomeDevices
 
         public HomeDevice() { }
 
-        public HomeDevice(string name)
-        {
-            Name = name;
-        }
-
         public void LinkConnector(Connector connector)
         {
             this.Connector = connector;

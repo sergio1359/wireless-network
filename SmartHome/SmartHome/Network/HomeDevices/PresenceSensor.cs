@@ -11,8 +11,7 @@ namespace SmartHome.Network.HomeDevices
         public byte Sensibility { get; set; }
         public const int DEFAULT_SENSIBILITY = 10;
 
-        public PresenceSensor(string name)
-            : base(name)
+        public PresenceSensor() : base() 
         {
             base.Operations = new List<Operation>();
         }

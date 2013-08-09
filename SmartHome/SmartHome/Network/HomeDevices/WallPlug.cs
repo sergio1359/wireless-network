@@ -22,7 +22,10 @@ namespace SmartHome.Network.HomeDevices
         
         public WallPlugType Type { get; set; }
 
-        public WallPlug(string name) : base(name) { }
+        public WallPlug() : base() 
+        {
+            base.ConnectorCapable = ConnectorType.SwitchHI;
+        }
 
         public override void RefreshState()
         {

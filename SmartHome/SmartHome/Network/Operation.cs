@@ -56,8 +56,6 @@ namespace SmartHome.Network
             //Execute
             return (OperationMessage)method.Invoke(DestionationHomeDevice, Args);
         }
-
-
     }
 
     public class TimeRestriction

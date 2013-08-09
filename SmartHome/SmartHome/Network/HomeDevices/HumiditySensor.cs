@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Network.HomeDevices
 {
-    public class HumiditySensor: HomeDevice
+    public class HumiditySensor : HomeDevice
     {
         public int Humidity { get; set; }
 
-        public HumiditySensor(string name)
-            : base(name)
+        public HumiditySensor() : base() 
         {
-            base.Operations = new List<Operation>();
+            
         }
 
         public override void RefreshState()

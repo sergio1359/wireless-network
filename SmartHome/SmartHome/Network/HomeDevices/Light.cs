@@ -14,10 +14,9 @@ namespace SmartHome.Network.HomeDevices
     {
         public bool IsOn { get; set; }
 
-        public Light(string name)
-            : base(name)
+        public Light() : base() 
         {
-            base.Operations = new List<Operation>();
+            base.ConnectorCapable = ConnectorType.SwitchLOW;
         }
 
         public OperationMessage On()

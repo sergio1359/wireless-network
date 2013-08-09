@@ -12,15 +12,10 @@ namespace SmartHome.Network.HomeDevices
 {
     public class Button: HomeDevice
     {
-        public Button(string Name)
+        public Button() : base() 
         {
-            base.Name = Name;
-            base.Operations = new List<Operation>();
+            base.ConnectorCapable = ConnectorType.LogicInput;
         }
-    
-        public OperationMessage Push()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
