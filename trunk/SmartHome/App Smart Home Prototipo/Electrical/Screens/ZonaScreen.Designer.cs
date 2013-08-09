@@ -43,9 +43,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxNameView = new System.Windows.Forms.TextBox();
-            this.textBoxImageView = new System.Windows.Forms.TextBox();
             this.textBoxNameNode = new System.Windows.Forms.TextBox();
-            this.textBoxImageUrl = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxZones = new System.Windows.Forms.ListBox();
             this.buttonRemoveZone = new System.Windows.Forms.Button();
@@ -91,9 +89,7 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.textBoxNameView);
-            this.groupBox2.Controls.Add(this.textBoxImageView);
             this.groupBox2.Controls.Add(this.textBoxNameNode);
-            this.groupBox2.Controls.Add(this.textBoxImageUrl);
             this.groupBox2.Location = new System.Drawing.Point(6, 267);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(322, 307);
@@ -103,18 +99,18 @@
             // 
             // buttonChangeImageView
             // 
-            this.buttonChangeImageView.Location = new System.Drawing.Point(241, 271);
+            this.buttonChangeImageView.Location = new System.Drawing.Point(48, 271);
             this.buttonChangeImageView.Name = "buttonChangeImageView";
-            this.buttonChangeImageView.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangeImageView.Size = new System.Drawing.Size(182, 23);
             this.buttonChangeImageView.TabIndex = 2;
             this.buttonChangeImageView.Text = "Cambiar";
             this.buttonChangeImageView.UseVisualStyleBackColor = true;
             // 
             // buttonChangeImage
             // 
-            this.buttonChangeImage.Location = new System.Drawing.Point(241, 41);
+            this.buttonChangeImage.Location = new System.Drawing.Point(47, 41);
             this.buttonChangeImage.Name = "buttonChangeImage";
-            this.buttonChangeImage.Size = new System.Drawing.Size(75, 23);
+            this.buttonChangeImage.Size = new System.Drawing.Size(183, 23);
             this.buttonChangeImage.TabIndex = 2;
             this.buttonChangeImage.Text = "Cambiar";
             this.buttonChangeImage.UseVisualStyleBackColor = true;
@@ -128,6 +124,7 @@
             this.buttonRemoveView.TabIndex = 10;
             this.buttonRemoveView.Text = "-";
             this.buttonRemoveView.UseVisualStyleBackColor = true;
+            this.buttonRemoveView.Click += new System.EventHandler(this.DeleteView);
             // 
             // label1
             // 
@@ -147,6 +144,7 @@
             this.buttonNewView.TabIndex = 8;
             this.buttonNewView.Text = "+";
             this.buttonNewView.UseVisualStyleBackColor = true;
+            this.buttonNewView.Click += new System.EventHandler(this.AddView);
             // 
             // label9
             // 
@@ -215,26 +213,13 @@
             this.textBoxNameView.Size = new System.Drawing.Size(182, 20);
             this.textBoxNameView.TabIndex = 1;
             // 
-            // textBoxImageView
-            // 
-            this.textBoxImageView.Location = new System.Drawing.Point(48, 271);
-            this.textBoxImageView.Name = "textBoxImageView";
-            this.textBoxImageView.Size = new System.Drawing.Size(182, 20);
-            this.textBoxImageView.TabIndex = 10;
-            // 
             // textBoxNameNode
             // 
             this.textBoxNameNode.Location = new System.Drawing.Point(47, 17);
             this.textBoxNameNode.Name = "textBoxNameNode";
             this.textBoxNameNode.Size = new System.Drawing.Size(183, 20);
             this.textBoxNameNode.TabIndex = 1;
-            // 
-            // textBoxImageUrl
-            // 
-            this.textBoxImageUrl.Location = new System.Drawing.Point(47, 43);
-            this.textBoxImageUrl.Name = "textBoxImageUrl";
-            this.textBoxImageUrl.Size = new System.Drawing.Size(183, 20);
-            this.textBoxImageUrl.TabIndex = 10;
+            this.textBoxNameNode.TextChanged += new System.EventHandler(this.ChangeZoneName);
             // 
             // groupBox4
             // 
@@ -254,6 +239,7 @@
             this.listBoxZones.Name = "listBoxZones";
             this.listBoxZones.Size = new System.Drawing.Size(224, 147);
             this.listBoxZones.TabIndex = 6;
+            this.listBoxZones.Click += new System.EventHandler(this.LoadZone);
             // 
             // buttonRemoveZone
             // 
@@ -264,6 +250,7 @@
             this.buttonRemoveZone.TabIndex = 10;
             this.buttonRemoveZone.Text = "-";
             this.buttonRemoveZone.UseVisualStyleBackColor = true;
+            this.buttonRemoveZone.Click += new System.EventHandler(this.RemoveZones);
             // 
             // groupBox3
             // 
@@ -295,6 +282,7 @@
             this.buttonAddZona.TabIndex = 8;
             this.buttonAddZona.Text = "+";
             this.buttonAddZona.UseVisualStyleBackColor = true;
+            this.buttonAddZona.Click += new System.EventHandler(this.AddNewZone);
             // 
             // textBoxNewNameZona
             // 
@@ -350,9 +338,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxNameView;
-        private System.Windows.Forms.TextBox textBoxImageView;
         private System.Windows.Forms.TextBox textBoxNameNode;
-        private System.Windows.Forms.TextBox textBoxImageUrl;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ListBox listBoxZones;
         private System.Windows.Forms.Button buttonRemoveZone;
