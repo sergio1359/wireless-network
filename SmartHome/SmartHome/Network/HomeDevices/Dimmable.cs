@@ -41,7 +41,8 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorCapable = ConnectorType.Dimmer;
         }
 
-        [OperationAttribute]        public OperationMessage On()
+        [OperationAttribute]        
+        public OperationMessage On()
         {
             return PercentageDimmer(100);
         }

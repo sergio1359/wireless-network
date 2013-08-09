@@ -26,6 +26,7 @@ namespace ServiceLayer.DTO
 
         private void Map()
         {
+            //TOOD: HAY QUE ECHARLE UN VISTAZO, YO NO ME FIARIA MUCHO DE ESTO ;)
             Mapper.CreateMap<Connector, ConnectorDTO>()
                 .ForMember(t => t.ConnectorType, f => f.MapFrom(c => Enum.GetName(typeof(ConnectorType), c.ConnectorType)));
 
