@@ -8,26 +8,38 @@ using SmartHome.Tools;
 using SmartHome.Memory;
 using System.IO;
 using SmartHome.Network.HomeDevices;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartHome.Network
 {
     public class Node
     {
+        [Key]
         public int Id { get; set; }
+
         public uint Mac { get; set; }
+
         public string Name { get; set; }
+
         public byte NetworkRetries = 3;
+
         public ushort Address { get; set; }
+
         public List<Connector> Connectors { get; set; }
+
         public Position Position { get; set; }
+
         public BaseType Base { get; set; }
+
         public ShieldType Shield { get; set; }
 
+        [NotMapped]
         public List<HomeDevice> HomeDevices 
         { 
             get 
             {
-                throw new NotImplementedException();
+                return this.Connectors.SelectMany(c => c.HomeDevices).ToList();
             }
         } 
 
