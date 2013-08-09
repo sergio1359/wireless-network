@@ -87,7 +87,15 @@ namespace SmartHome.Network.HomeDevices
                 homeDeviceOperations = new Dictionary<Type, string[]>();
 
             if (!homeDeviceOperations.ContainsKey(HomeDeviceType))
-                homeDeviceOperations.Add(HomeDeviceType, HomeDeviceType.GetMethods().Where(m => m.GetCustomAttributes(true).OfType<OperationAttribute>().Where(a => !a.Internal).Count() > 0).Select(m => m.Name).ToArray());
+            {
+                homeDeviceOperations.Add(HomeDeviceType,
+                                        HomeDeviceType.GetMethods()
+                                        .Where(m => m.GetCustomAttributes(true)
+                                            .OfType<OperationAttribute>()
+                                            .Where(a => !a.Internal).Count() > 0)
+                                        .Select(m => m.Name)
+                                        .ToArray());
+            }
 
             return homeDeviceOperations[HomeDeviceType];
         }
