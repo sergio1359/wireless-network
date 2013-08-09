@@ -18,7 +18,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             InitializeComponent();
 
-            comboBoxNewType.Items.AddRange(Services.HomeDeviceService.GetTypesHomeDevice());
+            comboBoxNewType.Items.AddRange(Services.HomeDeviceService.GetHomeDeviceTypes());
 
             UpdateHomeDevices();
         }
