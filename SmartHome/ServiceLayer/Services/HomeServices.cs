@@ -15,6 +15,7 @@ namespace ServiceLayer
     public class HomeService
     {
 
+        #region GeneralHome
         /// <summary>
         /// Change the name of the Home
         /// </summary>
@@ -90,24 +91,22 @@ namespace ServiceLayer
         }
 
         /// <summary>
+        /// Update the EEPROMs of all the nodes
+        /// </summary>
+        public void UpdateConfiguration()
+        {
+            NetworkManager.GetAllEEPROMS();
+        }
+        #endregion
+
+        #region Zones
+        /// <summary>
         /// Return all the zones
         /// </summary>
         /// <returns>Dictionary ID, Name of zones</returns>
         public PlaceDTO[] GetZones()
         {
             return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
-        }
-
-        /// <summary>
-        /// Return all the view of a zone
-        /// </summary>
-        /// <param name="idZone"></param>
-        /// <returns></returns>
-        public PlaceDTO[] GetViews(int idZone)
-        {
-            var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
-
-            return Mapper.Map<List<PlaceDTO>>(views).ToArray();
         }
 
         /// <summary>
@@ -132,6 +131,41 @@ namespace ServiceLayer
         {
             //Borrar todos los views que contenga la zona
         }
+
+        /// <summary>
+        /// Get the image map of a concrete Zone
+        /// </summary>
+        /// <param name="idZone"></param>
+        /// <returns></returns>
+        public Image GetImageZone(int idZone)
+        {
+            return NetworkManager.Home.Zones.First(z => z.Id == idZone).ImageMap;
+        }
+
+        /// <summary>
+        /// Set the name zone
+        /// </summary>
+        /// <param name="idZone"></param>
+        /// <param name="newName"></param>
+        public void SetNameZone(int idZone, string newName)
+        {
+            NetworkManager.Home.Zones.First(z => z.Id == idZone).NameZone = newName;
+        } 
+        #endregion
+
+        #region View
+        /// <summary>
+        /// Return all the view of a zone
+        /// </summary>
+        /// <param name="idZone"></param>
+        /// <returns></returns>
+        public PlaceDTO[] GetViews(int idZone)
+        {
+            var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
+
+            return Mapper.Map<List<PlaceDTO>>(views).ToArray();
+        }
+
 
         /// <summary>
         /// Add a View in a concrete Zone at Home
@@ -159,16 +193,6 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Get the image map of a concrete Zone
-        /// </summary>
-        /// <param name="idZone"></param>
-        /// <returns></returns>
-        public Image GetImageZone(int idZone)
-        {
-            return NetworkManager.Home.Zones.First(z => z.Id == idZone).ImageMap;
-        }
-
-        /// <summary>
         /// Get the Image map of a concrete View
         /// </summary>
         /// <param name="idView"></param>
@@ -179,16 +203,6 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Set the name zone
-        /// </summary>
-        /// <param name="idZone"></param>
-        /// <param name="newName"></param>
-        public void SetNameZone(int idZone, string newName)
-        {
-            NetworkManager.Home.Zones.First(z => z.Id == idZone).NameZone= newName;
-        }
-
-        /// <summary>
         /// Change the name of the View
         /// </summary>
         /// <param name="idView"></param>
@@ -196,14 +210,7 @@ namespace ServiceLayer
         public void SetNameView(int idView, string newName)
         {
             NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
-        }
-
-        /// <summary>
-        /// Update the EEPROMs of all the nodes
-        /// </summary>
-        public void UpdateConfiguration()
-        {
-            NetworkManager.GetAllEEPROMS();
-        }
+        } 
+        #endregion
     }
 }
