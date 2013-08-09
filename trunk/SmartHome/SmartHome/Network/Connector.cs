@@ -5,17 +5,25 @@ using System.Text;
 using SmartHome.Plugins;
 using SmartHome.Network.HomeDevices;
 using SmartHome.Products;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartHome.Network
 {
     public class Connector
     {
+        [Key]
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public ConnectorType ConnectorType { get; set; }
+
         public Node Node { get; set; }
+
         public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
+        [NotMapped]
         public List<HomeDevice> HomeDevices
         {
             get
@@ -24,6 +32,7 @@ namespace SmartHome.Network
             }
         }
 
+        [NotMapped]
         public List<PinPort> PinPorts
         {
             get
@@ -32,6 +41,7 @@ namespace SmartHome.Network
             }
         }
 
+        [NotMapped]
         public bool InUse
         {
             get
@@ -71,7 +81,7 @@ namespace SmartHome.Network
         {
             if (this.ConnectorType == Network.ConnectorType.ConectorSensorBoard)
             {
-                //TODO: hay que destruir los elementos uno a uno.
+                //TODO: hay que destruir los elementos uno a uno. 
                 
             }
 

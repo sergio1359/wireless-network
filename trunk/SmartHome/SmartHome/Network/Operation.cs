@@ -9,21 +9,34 @@ using SmartHome.Network.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Memory;
 using System.Reflection;
-using SmartHome.Comunications.Messages; 
+using SmartHome.Comunications.Messages;
+using System.ComponentModel.DataAnnotations; 
 #endregion
 
 namespace SmartHome.Network
 {
     public class Operation
     {
+        [Key]
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public HomeDevice DestionationHomeDevice { get; set; }
+
         public string OperationName { get; set; }
+
         public object[] Args { get; set; }
 
         public List<TimeRestriction> TimeRestrictions { get; set; }
+
         public List<ConditionalRestriction> ConditionalRestriction { get; set; }
+
+        public Operation()
+        {
+            TimeRestrictions = new List<TimeRestriction>();
+            ConditionalRestriction = new List<ConditionalRestriction>();
+        }
 
         public void Execute() 
         { 

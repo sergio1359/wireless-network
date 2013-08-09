@@ -17,7 +17,6 @@ namespace SmartHome.Network
 
         public static Home Home = new Home();
 
-
         //TODO: esto es solo para el ejemplo que estamos haciendo
         public static void GetAllEEPROMS()
         {
