@@ -34,7 +34,7 @@ namespace SmartHome.Network.HomeDevices
             get
             {
                 if (homeDeviceTypes == null)
-                    homeDeviceTypes = typeof(HomeDevice).Assembly.GetTypes().Where(t => t != typeof(HomeDevice).GetType() && typeof(HomeDevice).GetType().IsAssignableFrom(t)).Select(t => t.Name).ToArray();
+                    homeDeviceTypes = typeof(HomeDevice).Assembly.DefinedTypes.Where(t => t != typeof(HomeDevice).GetType() && typeof(HomeDevice).GetType().IsAssignableFrom(t)).Select(t => t.Name).ToArray();
 
                 return homeDeviceTypes;
             }

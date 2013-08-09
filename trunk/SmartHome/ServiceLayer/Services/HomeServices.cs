@@ -1,4 +1,6 @@
-﻿using SmartHome.HomeModel;
+﻿using AutoMapper;
+using ServiceLayer.DTO;
+using SmartHome.HomeModel;
 using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
 using System;
@@ -91,9 +93,9 @@ namespace ServiceLayer
         /// Return all the zones
         /// </summary>
         /// <returns>Dictionary ID, Name of zones</returns>
-        public Dictionary<int, string> GetZones()
+        public PlaceDTO[] GetZones()
         {
-            return NetworkManager.Home.Zones.ToDictionary(z => z.Id , z=> z.NameZone);
+            return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
         }
 
         /// <summary>
@@ -101,9 +103,11 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idZone"></param>
         /// <returns></returns>
-        public Dictionary<int, string> GetViews(int idZone)
+        public PlaceDTO[] GetViews(int idZone)
         {
-            return NetworkManager.Home.Zones.First(z => z.Id == idZone).Views.ToDictionary(v => v.Id, v => v.NameView);
+            var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
+
+            return Mapper.Map<List<PlaceDTO>>(views).ToArray();
         }
 
         /// <summary>
@@ -132,12 +136,12 @@ namespace ServiceLayer
 
         public Image GetImageZone(int idZone)
         {
-            throw new NotImplementedException();
+            return NetworkManager.Home.Zones.First(z => z.Id == idZone).ImageMap;
         }
 
         public Image GetImageView(int idView)
         {
-            throw new NotImplementedException();
+            return NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).ImageMap;
         }
 
         /// <summary>
