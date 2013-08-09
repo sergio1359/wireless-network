@@ -18,6 +18,11 @@ namespace SmartHome.Network.HomeDevices
         public ModeRGBLight Mode { get; set; }
         public Color Color { get; set; }
 
+        public RGBLight() : base() 
+        {
+            base.ConnectorCapable = ConnectorType.RGB;
+        }
+
         public OperationMessage Invert(byte seconds)
         {
             Color invert = Color.FromArgb(this.Color.ToArgb() ^ 0xFFFFFF);

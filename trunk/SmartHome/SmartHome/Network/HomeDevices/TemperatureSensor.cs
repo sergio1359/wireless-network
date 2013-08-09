@@ -10,8 +10,8 @@ namespace SmartHome.Network.HomeDevices
     {
         public int CelciusTemperature { get; set; }
 
-        public TemperatureSensor(string name)
-            : base(name)
+        public TemperatureSensor()
+            : base()
         {
             base.Operations = new List<Operation>();
         }

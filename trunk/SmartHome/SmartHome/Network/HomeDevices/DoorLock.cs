@@ -16,6 +16,11 @@ namespace SmartHome.Network.HomeDevices
 
         public byte OpenTime { get; set; }
 
+        public DoorLock() : base() 
+        {
+            base.ConnectorCapable = ConnectorType.SwitchLOW;
+        }
+
         public OperationMessage OpenDoor()
         {
             return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, OpenTime);

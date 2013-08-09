@@ -10,6 +10,12 @@ namespace SmartHome.Network.HomeDevices
     {
         public bool Open { get; set; }
 
+        public Switch() : base() 
+        {
+            base.Operations = new List<Operation>();
+            base.ConnectorCapable = ConnectorType.LogicInput;
+        }
+
         public override void RefreshState()
         {
             base.RefreshState();

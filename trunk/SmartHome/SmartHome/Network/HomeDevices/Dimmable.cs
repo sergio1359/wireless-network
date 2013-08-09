@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Comunications.Messages; 
+using SmartHome.Comunications.Messages;
 #endregion
 
 namespace SmartHome.Network.HomeDevices
@@ -36,6 +36,10 @@ namespace SmartHome.Network.HomeDevices
 
         public DimmableType Type { get; set; }
 
+        public Dimmable() : base() 
+        {
+            base.ConnectorCapable = ConnectorType.Dimmer;
+        }
 
         public OperationMessage On()
         {
@@ -72,7 +76,6 @@ namespace SmartHome.Network.HomeDevices
         public OperationMessage PercentageDimmer(int percentage, byte seconds)
         {
             return OperationMessage.DimmerWrite(Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
-            //Value = percentage;
         }
 
         public override void RefreshState()
