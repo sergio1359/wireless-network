@@ -10,6 +10,7 @@ using System.Drawing;
 using DataLayer.Repositories;
 using ServiceLayer.DTO;
 using AutoMapper;
+using System.Reflection;
 
 namespace ServiceLayer
 {
@@ -19,11 +20,13 @@ namespace ServiceLayer
         /// Add a new HomeDevice to the system.
         /// </summary>
         /// <param name="NameHomeDevice">Name of the new HomeDevice</param>
-        /// <param name="TypeHomeDevice">Type of HomeDevice</param>
+        /// <param name="HomeDeviceType">Type of HomeDevice</param>
         /// <returns>Return the ID for the new HomeDevice</returns>
-        public int AddHomeDevice(string NameHomeDevice, string TypeHomeDevice)
+        public int AddHomeDevice(string NameHomeDevice, string HomeDeviceType)
         {
-            HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(Type.GetType(TypeHomeDevice));
+            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == HomeDeviceType);
+
+            HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(deviceType);
 
             homeDevice.Name = NameHomeDevice;
 
@@ -36,9 +39,16 @@ namespace ServiceLayer
         /// Return the HomeDevice's types of the system.
         /// </summary>
         /// <returns></returns>
-        public string[] GetTypesHomeDevice()
+        public string[] GetHomeDeviceTypes()
         {
             return HomeDevice.HomeDeviceTypes;
+        }
+
+        public string[] GetHomeDeviceOperations(string HomeDeviceType)
+        {
+            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == HomeDeviceType);
+
+            return HomeDevice.GetHomeDeviceOperations(deviceType);
         }
 
         /// <summary>
@@ -48,6 +58,7 @@ namespace ServiceLayer
         public void RemoveHomeDevice(int idHomeDevice)
         {
             HomeDevice homeDevice = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+
             if (homeDevice.Connector != null)
             {
                 Services.NodeService.UnlinkHomeDevice(idHomeDevice);
@@ -143,7 +154,7 @@ namespace ServiceLayer
         /// <summary>
         /// Devuelve los conectores que se pueden conectar con el homeDevice enviado por parametros
         /// </summary>
-        /// <param name="TypeHomeDevice"></param>
+        /// <param name="HomeDeviceType"></param>
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {

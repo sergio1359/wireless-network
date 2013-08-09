@@ -21,7 +21,7 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorCapable = ConnectorType.SwitchLOW;
         }
 
-        public OperationMessage OpenDoor()
+        [OperationAttribute]        public OperationMessage OpenDoor()
         {
             return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, OpenTime);
         }

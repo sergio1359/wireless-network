@@ -14,6 +14,10 @@ namespace SmartHome.Network.HomeDevices
 {
     public abstract class HomeDevice
     {
+        private static Dictionary<Type, string[]> homeDeviceOperations = null;
+
+        private static string[] homeDeviceTypes = null;
+
         [Key]
         public ushort Id { get; set; }
 
@@ -28,13 +32,12 @@ namespace SmartHome.Network.HomeDevices
         public List<Operation> Operations { get; set; }
 
         [NotMapped]
-        private static string[] homeDeviceTypes = null;
         public static string[] HomeDeviceTypes
         {
             get
             {
                 if (homeDeviceTypes == null)
-                    homeDeviceTypes = typeof(HomeDevice).Assembly.DefinedTypes.Where(t => t != typeof(HomeDevice) && typeof(HomeDevice).IsAssignableFrom(t)).Select(t => t.Name).ToArray();
+                    homeDeviceTypes = typeof(HomeDevice).Assembly.GetTypes().Where(t => t != typeof(HomeDevice) && typeof(HomeDevice).IsAssignableFrom(t)).Select(t => t.Name).ToArray();
 
                 return homeDeviceTypes;
             }
@@ -75,5 +78,18 @@ namespace SmartHome.Network.HomeDevices
 
         }
 
+        public static string[] GetHomeDeviceOperations(Type HomeDeviceType)
+        {
+            if (HomeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(HomeDeviceType))
+                return null;
+
+            if (homeDeviceOperations == null)
+                homeDeviceOperations = new Dictionary<Type, string[]>();
+
+            if (!homeDeviceOperations.ContainsKey(HomeDeviceType))
+                homeDeviceOperations.Add(HomeDeviceType, HomeDeviceType.GetMethods().Where(m => m.GetCustomAttributes(true).OfType<OperationAttribute>().Where(a => !a.Internal).Count() > 0).Select(m => m.Name).ToArray());
+
+            return homeDeviceOperations[HomeDeviceType];
+        }
     }
 }
