@@ -278,7 +278,13 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
             result.Add(0x00);
-            result.Add(0x00); //TODO: Zero detection
+
+            if(this.node.Connectors.Any(c => c.ConnectorType == ConnectorType.DimmerPassZero))
+                result.Add(this.node.Connectors.First(c => c.ConnectorType == ConnectorType.DimmerPassZero).PinPorts[0].GetPinPortNumber());
+            else
+                result.Add(0x00); //TODO: If not exits. Value default??
+
+            
             foreach (HomeDevice item in node.HomeDevices)
             {
                 if (item is Dimmable)

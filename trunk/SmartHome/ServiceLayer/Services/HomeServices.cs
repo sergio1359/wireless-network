@@ -124,11 +124,21 @@ namespace ServiceLayer
             return NetworkManager.Home.Zones.Last().Id;
         }
 
+        /// <summary>
+        /// Remove a Zone at Home
+        /// </summary>
+        /// <param name="idZone"></param>
         public void RemoveZone(int idZone)
         {
-
+            //Borrar todos los views que contenga la zona
         }
 
+        /// <summary>
+        /// Add a View in a concrete Zone at Home
+        /// </summary>
+        /// <param name="idZone">Identification of the Zone</param>
+        /// <param name="nameView">Name of the View</param>
+        /// <returns>Return the identification of the new View</returns>
         public int AddView(int idZone, string nameView)
         {
             var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
@@ -139,16 +149,30 @@ namespace ServiceLayer
             return newView.Id;
         }
 
+        /// <summary>
+        /// Remove a concrete View
+        /// </summary>
+        /// <param name="idView"></param>
         public void RemoveView(int idView)
         {
-
+            //detalles de borrar un view concreto
         }
 
+        /// <summary>
+        /// Get the image map of a concrete Zone
+        /// </summary>
+        /// <param name="idZone"></param>
+        /// <returns></returns>
         public Image GetImageZone(int idZone)
         {
             return NetworkManager.Home.Zones.First(z => z.Id == idZone).ImageMap;
         }
 
+        /// <summary>
+        /// Get the Image map of a concrete View
+        /// </summary>
+        /// <param name="idView"></param>
+        /// <returns></returns>
         public Image GetImageView(int idView)
         {
             return NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).ImageMap;
@@ -164,6 +188,11 @@ namespace ServiceLayer
             NetworkManager.Home.Zones.First(z => z.Id == idZone).NameZone= newName;
         }
 
+        /// <summary>
+        /// Change the name of the View
+        /// </summary>
+        /// <param name="idView"></param>
+        /// <param name="newName"></param>
         public void SetNameView(int idView, string newName)
         {
             NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;

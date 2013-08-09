@@ -23,7 +23,8 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorCapable = ConnectorType.RGB;
         }
 
-        [OperationAttribute]        public OperationMessage Invert(byte seconds)
+        [OperationAttribute]        
+        public OperationMessage Invert(byte seconds)
         {
             Color invert = Color.FromArgb(this.Color.ToArgb() ^ 0xFFFFFF);
             return ToColor(invert, seconds);

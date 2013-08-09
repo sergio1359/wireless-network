@@ -79,7 +79,7 @@ namespace ServiceLayer
 
 
         /// <summary>
-        /// Update the position of a HomeDevice
+        /// Update the position of a HomeDevice in a Zone
         /// </summary>
         /// <param name="homeDevice">Identificator of the home device to be move</param>
         /// <param name="Zone">new zone</param>
@@ -94,14 +94,21 @@ namespace ServiceLayer
             home.Position.ZoneCoordenates = new PointF(X, Y);
         }
 
+        /// <summary>
+        /// Update the position of a HomeDevice in a View
+        /// </summary>
+        /// <param name="homeDevice">Identificator of the home device to be move</param>
+        /// <param name="Zone">new zone</param>
+        /// <param name="X">Relative position 0 to 1 of the X axis</param>
+        /// <param name="Y">Relative position 0 to 1 of the X axis</param>
         public void UpdateViewPosition(int idHomeDevice, int idView, float X, float Y)
         {
             throw new NotImplementedException();
         }
 
-        public Position GetHomeDevicePosition(int idHomeDevice)
+        public PositionDTO GetHomeDevicePosition(int idHomeDevice)
         {
-            return NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position;
+            return Mapper.Map<PositionDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
         }
 
         /// <summary>

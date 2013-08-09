@@ -16,6 +16,7 @@ namespace SmartHome.Network.HomeDevices
     {
         private static Dictionary<Type, string[]> homeDeviceOperations = null;
 
+        [NotMapped]
         private static string[] homeDeviceTypes = null;
 
         [Key]
