@@ -19,21 +19,25 @@ namespace SmartHome.Network.HomeDevices
             base.ConnectorCapable = ConnectorType.SwitchLOW;
         }
 
+        [OperationAttribute]
         public OperationMessage On()
         {
             return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, 0);
         }
 
+        [OperationAttribute]
         public OperationMessage Off()
         {
             return OperationMessage.LogicWrite(Id, LogicWriteValues.Clear, 0);
         }
 
+        [OperationAttribute]
         public OperationMessage OnTime(byte seconds)
         {
             return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, seconds);
         }
 
+        [OperationAttribute]
         public OperationMessage Switch()
         {
             return OperationMessage.LogicSwitch(Id, 0);
