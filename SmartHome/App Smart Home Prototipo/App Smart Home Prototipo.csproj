@@ -50,6 +50,12 @@
     <Compile Include="Administrator\Screens\OperationScreen.Designer.cs">
       <DependentUpon>OperationScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HomeMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HomeMap.Designer.cs">
+      <DependentUpon>HomeMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Electrical\Screens\ConnexionScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Administrator\Screens\OperationScreen.resx">
       <DependentUpon>OperationScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\HomeMap.resx">
+      <DependentUpon>HomeMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Electrical\Screens\ConnexionScreen.resx">
       <DependentUpon>ConnexionScreen.cs</DependentUpon>
@@ -129,7 +138,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

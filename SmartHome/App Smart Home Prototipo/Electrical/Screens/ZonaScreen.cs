@@ -30,12 +30,14 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void AddNewZone(object sender, EventArgs e)
         {
             Services.HomeService.AddZone(textBoxNewNameZona.Text);
+            UpdateZones();
         }
 
         private void RemoveZones(object sender, EventArgs e)
         {
             PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
             Services.HomeService.RemoveZone(zone.Id);
+            UpdateZones();
         }
 
         private void LoadZone(object sender, EventArgs e)
@@ -58,6 +60,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
             Services.HomeService.AddView(zone.Id, textBoxNewViewName.Text);
+            LoadZone(this, null);
         }
 
         private void DeleteView(object sender, EventArgs e)
@@ -67,6 +70,8 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             textBoxNameView.Text = view.Name;
 
             //TODO PRINT PHOTO
+
+            LoadZone(this, null);
         }
     }
 }
