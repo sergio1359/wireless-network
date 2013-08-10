@@ -1,13 +1,13 @@
 ﻿#region Using Statements
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SerialPortManager.ConnectionManager;
+using SmartHome.Communications.Modules;
 using SmartHome.Communications.SerialManager;
-using SmartHome.Comunications.Messages;
+using SmartHome.Comunications.Modules;
 #endregion
 
 namespace SmartHome.Comunications
@@ -29,6 +29,7 @@ namespace SmartHome.Comunications
 
         const ushort MASTER_ADDRESS = 0x4003;
 
+        #region Private Vars
         private SerialManager serialManager;
 
         private NodeConnection masterConnection;
@@ -39,42 +40,167 @@ namespace SmartHome.Comunications
 
         private Dictionary<ushort, PendingMessage> currentMessages;
 
+        private List<ModuleBase> modulesList;
+
+        #endregion
+
+        /// <summary>
+        /// Raise when a new node was physically plugged to the system
+        /// </summary>
+        public event EventHandler<ushort> NodeConnectionDetected;
+
+        /// <summary>
+        /// Raise when a existing node was physically unplugged from the system
+        /// </summary>
+        public event EventHandler<ushort> NodeConnectionRemoved;
+
         public CommunicationManager()
         {
             this.connectionsInUse = new Dictionary<ushort, NodeConnection>();
             this.pendingMessagesQueue = new Dictionary<ushort, List<PendingMessage>>();
             this.currentMessages = new Dictionary<ushort, PendingMessage>();
 
+            this.modulesList = new List<ModuleBase>();
+            this.modulesList.Add(new NetworkJoin(this));
+            //Sort by priority descendent
+            this.modulesList.Sort((c, l) => c.Priority.CompareTo(l.Priority));
+
             this.serialManager = new SerialManager();
-            this.serialManager.NodeConnectionAdded += this.serialManager_NodeConnectionAdded;
+            this.serialManager.NodeConnectionDetected += this.serialManager_NodeConnectionAdded;
             this.serialManager.NodeConnectionRemoved += this.serialManager_NodeConnectionRemoved;
         }
 
-        void serialManager_NodeConnectionAdded(object sender, NodeConnection e)
+        #region Private Methods
+        private void serialManager_NodeConnectionAdded(object sender, NodeConnection e)
         {
             if (e.NodeAddress == MASTER_ADDRESS)
             {
                 masterConnection = e;
-                connectionsInUse.Add(e.NodeAddress, e);
+                StoreConnection(e);
             }
+
+            if (NodeConnectionDetected != null)
+                NodeConnectionDetected(this, e.NodeAddress);
+
             Debug.WriteLine(string.Format("DONGLE NODE 0x{0:X4} ({1}) Connected!", e.NodeAddress, e.NodeAddress == MASTER_ADDRESS ? "Master" : "Slave"));
         }
 
-        void serialManager_NodeConnectionRemoved(object sender, NodeConnection e)
+        private void serialManager_NodeConnectionRemoved(object sender, NodeConnection e)
         {
             if (masterConnection == e)
             {
                 masterConnection = null;
             }
 
-            if (connectionsInUse.ContainsKey(e.NodeAddress))
-                connectionsInUse.Remove(e.NodeAddress);
+            RemoveConnection(e);
+
+            if (NodeConnectionRemoved != null)
+                NodeConnectionRemoved(this, e.NodeAddress);
 
             //TODO: What to do with the other dictionaries
 
             Debug.WriteLine(string.Format("DONGLE NODE 0x{0:X4} ({1}) Disconnected!", e.NodeAddress, e.NodeAddress == MASTER_ADDRESS ? "Master" : "Slave"));
         }
 
+        void connection_OperationReceived(object sender, InputHeader e)
+        {
+            //Send Message to the placeHolders
+            foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e)))
+            {
+                module.ProccessReceivedMessage(e.Content);
+            }
+        }
+
+        private Task<bool> EnqueueMessage(OutputHeader message, NodeConnection connection)
+        {
+            ushort connectionAddress = connection.NodeAddress;
+
+            TaskCompletionSource<bool> result = new TaskCompletionSource<bool>();
+
+            lock (this)
+            {
+                var currentQueue = this.pendingMessagesQueue[connectionAddress];
+                PendingMessage newMsg = new PendingMessage(result, message);
+                int index = 0;
+                foreach (PendingMessage pendingMsg in currentQueue)
+                {
+                    if (newMsg.Message.Priority > pendingMsg.Message.Priority)
+                    {
+                        currentQueue.Insert(index, newMsg);
+                        break;
+                    }
+                    index++;
+                }
+                if (index == currentQueue.Count)
+                    currentQueue.Add(newMsg);
+
+                this.CheckForSend(connectionAddress);
+            }
+
+            return result.Task;
+        }
+
+        private void CheckForSend(ushort connectionAddress)
+        {
+            lock (this)
+            {
+                var pendingMsg = this.currentMessages[connectionAddress];
+
+                //Not busy
+                if (pendingMsg == null)
+                {
+                    if (this.pendingMessagesQueue[connectionAddress].Count > 0) //SomethingToSend
+                    {
+                        Debug.WriteLine("Sending... " + DateTime.Now.Ticks);
+                        pendingMsg = this.currentMessages[connectionAddress] = this.pendingMessagesQueue[connectionAddress][0];
+                        this.pendingMessagesQueue[connectionAddress].Remove(pendingMsg);
+
+                        Task.Factory.StartNew(async () =>
+                        {
+                            NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection : this.connectionsInUse[connectionAddress];
+
+                            var val = await connection.SendMessage(pendingMsg.Message);
+
+                            this.currentMessages[connectionAddress] = null;
+                            this.CheckForSend(connectionAddress);
+
+                            pendingMsg.TaskSource.SetResult(val);
+                        });
+                    }
+                }
+            }
+        }
+
+        private void StoreConnection(NodeConnection connection)
+        {
+            ushort connectionAddress = connection.NodeAddress;
+
+            if (!this.connectionsInUse.ContainsKey(connectionAddress))
+            {
+                this.connectionsInUse.Add(connectionAddress, connection);
+                this.pendingMessagesQueue.Add(connectionAddress, new List<PendingMessage>());
+                this.currentMessages.Add(connectionAddress, null);
+
+                connection.OperationReceived += connection_OperationReceived;
+            }
+        }
+
+        private void RemoveConnection(NodeConnection connection)
+        {
+            ushort connectionAddress = connection.NodeAddress;
+
+            if (this.connectionsInUse.ContainsKey(connectionAddress))
+            {
+                this.connectionsInUse.Remove(connectionAddress);
+                this.pendingMessagesQueue.Remove(connectionAddress);
+                this.currentMessages.Remove(connectionAddress);
+
+                connection.OperationReceived -= connection_OperationReceived;
+            }
+        }
+        #endregion
+
+        #region Public Methods
         public async Task<bool> SendMessage(OutputHeader message)
         {
             ushort destinationAddress = message.Content.DestinationAddress;
@@ -107,72 +233,7 @@ namespace SmartHome.Comunications
 
             //Enqueue the message
             return await EnqueueMessage(message, connection);
-        }
-
-        private Task<bool> EnqueueMessage(OutputHeader message, NodeConnection connection)
-        {
-            ushort connectionAddress = connection.NodeAddress;
-
-            TaskCompletionSource<bool> result = new TaskCompletionSource<bool>();
-
-            lock (this)
-            {
-                if (!this.pendingMessagesQueue.ContainsKey(connectionAddress))
-                    this.pendingMessagesQueue.Add(connectionAddress, new List<PendingMessage>());
-
-                var currentQueue = this.pendingMessagesQueue[connectionAddress];
-                PendingMessage newMsg = new PendingMessage(result, message);
-                int index = 0;
-                foreach (PendingMessage pendingMsg in currentQueue)
-                {
-                    if (newMsg.Message.Priority > pendingMsg.Message.Priority)
-                    {
-                        currentQueue.Insert(index, newMsg);
-                        break;
-                    }
-                    index++;
-                }
-                if (index == currentQueue.Count)
-                    currentQueue.Add(newMsg);
-
-                this.CheckForSend(connectionAddress);
-            }
-
-            return result.Task;
-        }
-
-        private void CheckForSend(ushort connectionAddress)
-        {
-            lock (this)
-            {
-                if (!this.currentMessages.ContainsKey(connectionAddress))
-                    this.currentMessages.Add(connectionAddress, null);
-
-                var pendingMsg = this.currentMessages[connectionAddress];
-
-                //Not busy
-                if (pendingMsg == null)
-                {
-                    if (this.pendingMessagesQueue[connectionAddress].Count > 0) //SomethingToSend
-                    {
-                        Debug.WriteLine("Sending... " + DateTime.Now.Ticks);
-                        pendingMsg = this.currentMessages[connectionAddress] = this.pendingMessagesQueue[connectionAddress][0];
-                        this.pendingMessagesQueue[connectionAddress].Remove(pendingMsg);
-
-                        Task.Factory.StartNew(async () =>
-                        {
-                            NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection : this.connectionsInUse[connectionAddress];
-
-                            var val = await connection.SendMessage(pendingMsg.Message);
-
-                            this.currentMessages[connectionAddress] = null;
-                            this.CheckForSend(connectionAddress);
-
-                            pendingMsg.TaskSource.SetResult(val);
-                        });
-                    }
-                }
-            }
-        }
+        } 
+        #endregion
     }
 }

@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Comunications.Messages
 {
+    public static class Endpoints
+    {
+        public const int APPLICATION_EP = 1;
+        public const int OTAU_EP = 2;
+    }
+
     public enum WeekDays : byte
     {
         Monday = 0x40,

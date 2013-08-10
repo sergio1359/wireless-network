@@ -16,7 +16,14 @@ namespace SmartHome.Communications.SerialManager
         private List<NodeConnection> validNodes;
         private List<NodeConnection> unidentifiedNodes;
 
-        public event EventHandler<NodeConnection> NodeConnectionAdded;
+        /// <summary>
+        /// Raise when a new node was physically plugged to the system
+        /// </summary>
+        public event EventHandler<NodeConnection> NodeConnectionDetected;
+
+        /// <summary>
+        /// Raise when a existing node was physically unplugged from the system
+        /// </summary>
         public event EventHandler<NodeConnection> NodeConnectionRemoved;
 
         public SerialManager()
@@ -33,6 +40,7 @@ namespace SmartHome.Communications.SerialManager
             checkTimer.Start();
         }
 
+        #region Private Methods
         private void checkTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var portNames = SerialPort.GetPortNames();
@@ -80,21 +88,23 @@ namespace SmartHome.Communications.SerialManager
             unidentifiedNodes.Remove(node);
             validNodes.Add(node);
 
-            OnNodeConnectionAdded(node);
+            OnNodeConnectionDetected(node);
         }
 
-        private void OnNodeConnectionAdded(NodeConnection node)
+        private void OnNodeConnectionDetected(NodeConnection node)
         {
-            if (NodeConnectionAdded != null)
-                NodeConnectionAdded(this, node);
+            if (NodeConnectionDetected != null)
+                NodeConnectionDetected(this, node);
         }
 
         private void OnNodeConnectionRemoved(NodeConnection node)
         {
             if (NodeConnectionRemoved != null)
                 NodeConnectionRemoved(this, node);
-        }
+        } 
+        #endregion
 
+        #region Public Methods
         public NodeConnection GetNodeConnection(ushort nodeAddress)
         {
             return validNodes.FirstOrDefault(n => n.NodeAddress == nodeAddress);
@@ -103,6 +113,7 @@ namespace SmartHome.Communications.SerialManager
         public IEnumerable<NodeConnection> GetAllConections()
         {
             return validNodes.Where(n => n.Identified);
-        }
+        } 
+        #endregion
     }
 }
