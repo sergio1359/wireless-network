@@ -3,15 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using SerialPortManager.ConnectionManager;
-using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
 #endregion
-
 
 namespace SmartHome.Communications.SerialManager
 {
@@ -37,16 +32,20 @@ namespace SmartHome.Communications.SerialManager
         };
         #endregion
 
+        #region Private Vars
         private SerialPort serialPort;
 
         private SerialReceiverStates receiverState;
         private List<byte> currentReceiverMessage;
         private byte checkSum;
 
+        private TaskCompletionSource<bool> pendingConfirmationTask;
+
+        private ConnectionStates connectionState; 
+        #endregion
+
         public event EventHandler<InputHeader> OperationReceived;
         public event EventHandler<ConnectionStates> ConnectionStateChanged;
-
-        private ConnectionStates connectionState;
 
         #region Properties
         public ConnectionStates ConnectionState
@@ -108,7 +107,8 @@ namespace SmartHome.Communications.SerialManager
 
             currentReceiverMessage = new List<byte>();
         }
-
+       
+        #region Private Methods
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte c;
@@ -198,54 +198,7 @@ namespace SmartHome.Communications.SerialManager
             }
         }
 
-        #region Public Methods
-        public void Identify()
-        {
-            this.ConnectionState = ConnectionStates.Identifying;
 
-            this.SendOperation(new OperationMessage()
-            {
-                OpCode = OperationMessage.OPCodes.PingRequest,
-            });
-        }
-        private TaskCompletionSource<bool> pendingConfirmationTask;
-        public async Task<bool> SendMessage(OutputHeader message)
-        {
-            if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
-                throw new InvalidOperationException("Sending in progress");
-
-            pendingConfirmationTask = new TaskCompletionSource<bool>();
-
-            /*bool result = await new Task<Task<bool>>(async () =>
-                {
-                    if (!SendData(message.ToBinary()))
-                        return false;
-                    else
-                        return await pendingConfirmationTask.Task;
-                }).Result;*/
-
-            if (!SendData(message.ToBinary()))
-                return false;
-            else
-                return await pendingConfirmationTask.Task;
-        }
-
-        public bool SendOperation(IMessage operation)
-        {
-            OutputHeader outputMessage = new OutputHeader()
-            {
-                SecurityEnabled = true,
-                RoutingEnabled = true,
-                EndPoint = 1,
-                Retries = 3,
-                Content = operation
-            };
-
-            return SendData(outputMessage.ToBinary());
-        }
-        #endregion
-
-        #region Private Methods
         private bool SendData(byte[] buffer)
         {
             List<byte> frame = new List<byte>();
@@ -303,18 +256,71 @@ namespace SmartHome.Communications.SerialManager
                 operation.Content is OperationMessage &&
                 ((OperationMessage)operation.Content).OpCode == OperationMessage.OPCodes.PingResponse)
             {
+                // Ping response for Indentify
                 this.NodeAddress = ((OperationMessage)operation.Content).SourceAddress;
                 this.Identified = true;
                 this.ConnectionState = ConnectionStates.Connected;
             }
             else if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted && operation.Confirmation != InputHeader.ConfirmationType.None)
             {
+                // Data confirmation response
                 pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
             }
-
-            if (OperationReceived != null)
-                OperationReceived(this, operation);
+            else
+            {
+                // Real operation responde
+                if (OperationReceived != null)
+                    OperationReceived(this, operation);
+            }
         }
         #endregion
+
+        #region Public Methods
+        public void Identify()
+        {
+            this.ConnectionState = ConnectionStates.Identifying;
+
+            this.SendOperation(new OperationMessage()
+            {
+                OpCode = OperationMessage.OPCodes.PingRequest,
+            });
+        }
+        
+        public async Task<bool> SendMessage(OutputHeader message)
+        {
+            if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+                throw new InvalidOperationException("Sending in progress");
+
+            pendingConfirmationTask = new TaskCompletionSource<bool>();
+
+            /*bool result = await new Task<Task<bool>>(async () =>
+                {
+                    if (!SendData(message.ToBinary()))
+                        return false;
+                    else
+                        return await pendingConfirmationTask.Task;
+                }).Result;*/
+
+            if (!SendData(message.ToBinary()))
+                return false;
+            else
+                return await pendingConfirmationTask.Task;
+        }
+
+        public bool SendOperation(IMessage operation)
+        {
+            OutputHeader outputMessage = new OutputHeader()
+            {
+                SecurityEnabled = true,
+                RoutingEnabled = true,
+                EndPoint = 1,
+                Retries = 3,
+                Content = operation
+            };
+
+            return SendData(outputMessage.ToBinary());
+        }
+        #endregion
+
     }
 }

@@ -566,7 +566,6 @@ namespace OperationUARTSender
             else if (operation.OpCode == Operation.OPCodes.JoinAbort)
             {
                 msgToPrint = String.Format("JOIN ABORT RECEIVED FROM 0x{0:X4} -> NUMBER OF RESPONSES: {1}", operation.SourceAddress, operation.Args[0]);
-                SendJoinRequestResponse(operation.SourceAddress);
             }
             else if (operation.OpCode == Operation.OPCodes.JoinAccept)
             {

@@ -52,6 +52,7 @@
     <Compile Include="Communications\Messages\IMessage.cs" />
     <Compile Include="Communications\Messages\OperationMessage.cs" />
     <Compile Include="Communications\Messages\ProtocolMessages.cs" />
+    <Compile Include="Communications\Modules\NetworkJoin.cs" />
     <Compile Include="Communications\SerialManager\InputHeader.cs" />
     <Compile Include="Communications\SerialManager\NodeConnection.cs" />
     <Compile Include="Communications\SerialManager\OutputHeader.cs" />

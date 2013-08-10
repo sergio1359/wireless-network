@@ -13,6 +13,33 @@ namespace SmartHome.Memory
 {
     public static class BinaryExtension
     {
+        public static string ToStrigMac(this byte[] macAddress)
+        {
+            StringBuilder result = new StringBuilder();
+
+            result.AppendFormat("{0:X2}", macAddress[0]);
+            foreach (byte b in macAddress.Skip(1))
+            {
+                result.AppendFormat("-{0:X2}", b);
+            }
+
+            return result.ToString();
+        }
+
+        public static byte[] ToBinaryMac(this string macAddress)
+        {
+            var macSplit = macAddress.Split('-');
+
+            byte[] result = new byte[macSplit.Length];
+
+            for (int i = 0; i < macSplit.Length; i++)
+            {
+                result[i] = Byte.Parse(macSplit[i]);
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Transform a DateTime in a Byte[] sort in Hours, Minutes and Seconds
         /// </summary>
