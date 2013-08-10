@@ -233,7 +233,12 @@ namespace SmartHome.Comunications
 
             //Enqueue the message
             return await EnqueueMessage(message, connection);
-        } 
+        }
+
+        public T FindModule<T>() where T : ModuleBase
+        {
+            return this.modulesList.FirstOrDefault(m => m is T) as T;
+        }
         #endregion
     }
 }

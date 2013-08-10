@@ -30,6 +30,10 @@ namespace SmartHome.Communications.Modules
             }
         }
 
+        public event EventHandler<string> NetworkJoinReceived;
+
+        public event EventHandler<string> NodeJoined;
+
         public NetworkJoin(CommunicationManager manager)
             : base(manager, 0.9f, Endpoints.APPLICATION_EP)
         {
@@ -46,9 +50,9 @@ namespace SmartHome.Communications.Modules
             };
         }
 
-        public void AcceptNode(string macAddress, ushort newAddress, string securityKey)
+        public async Task<bool> AcceptNode(string macAddress, ushort newAddress, string securityKey)
         {
-            this.SendJoinAcceptResponse(macAddress, newAddress, securityKey);
+            return await this.SendJoinAcceptResponse(macAddress, newAddress, securityKey);
         }
 
         public override void ProccessReceivedMessage(IMessage message)
@@ -84,9 +88,14 @@ namespace SmartHome.Communications.Modules
                     sb.AppendFormat("0x{0:X2} ", b);
                 }
 
-                this.pendingRequests.Add(macAddress.ToStrigMac(), new Tuple<ushort, byte[]>(operation.SourceAddress, aesKey));
-
                 Debug.WriteLine(sb.ToString());
+
+                string macString = macAddress.ToStrigMac();
+
+                this.pendingRequests.Add(macString, new Tuple<ushort, byte[]>(operation.SourceAddress, aesKey));
+
+                if (NetworkJoinReceived != null)
+                    NetworkJoinReceived(this, macString);
             }
         }
 
@@ -106,7 +115,7 @@ namespace SmartHome.Communications.Modules
             });
         }
 
-        private void SendJoinAcceptResponse(string macAddress, ushort newAddress, string securityKey)
+        private async Task<bool> SendJoinAcceptResponse(string macAddress, ushort newAddress, string securityKey)
         {
             List<byte> operationArgs = new List<byte>();
 
@@ -120,14 +129,25 @@ namespace SmartHome.Communications.Modules
             operationArgs.AddRange(BitConverter.GetBytes(newAddress));
             operationArgs.AddRange(Encoding.ASCII.GetBytes(securityKey));
 
-            this.SendMessage(new OperationMessage() 
+            bool result = await this.SendMessage(new OperationMessage() 
             { 
                 SourceAddress = 0x00,
                 DestinationAddress = this.pendingRequests[macAddress].Item1,
                 OpCode = OperationMessage.OPCodes.JoinAcceptResponse,
                 Args = operationArgs.ToArray() 
             });
-            
+
+            if (result)
+            {
+                this.pendingRequests.Remove(macAddress);
+
+                Debug.WriteLine(String.Format("JOIN ACCEPTED {0} -> NEW ADDRESS: 0x{1:X2}", macAddress, newAddress));
+
+                if (this.NodeJoined != null)
+                    NodeJoined(this, macAddress);
+            }
+
+            return result;
         }
         #endregion
     }
