@@ -27,7 +27,10 @@ namespace SerialPortManager.ConnectionManager
 
         public OutputHeader(float priority = 0)
         {
-            this.Priority = priority;
+            if (priority > 1)
+                this.Priority = 1;
+            else
+                this.Priority = priority;
         }
 
         public byte[] ToBinary()

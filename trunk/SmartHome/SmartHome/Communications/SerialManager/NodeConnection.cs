@@ -293,14 +293,6 @@ namespace SmartHome.Communications.SerialManager
 
             pendingConfirmationTask = new TaskCompletionSource<bool>();
 
-            /*bool result = await new Task<Task<bool>>(async () =>
-                {
-                    if (!SendData(message.ToBinary()))
-                        return false;
-                    else
-                        return await pendingConfirmationTask.Task;
-                }).Result;*/
-
             if (!SendData(message.ToBinary()))
                 return false;
             else
