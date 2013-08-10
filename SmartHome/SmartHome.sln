@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generate Simple EEPROM", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App Smart Home Prototipo", "App Smart Home Prototipo\App Smart Home Prototipo.csproj", "{0A81343D-54BD-4607-AE55-0C786BA4B26E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawOperationSender", "RawOperationSender\RawOperationSender.csproj", "{2EF13BD9-17EB-4972-9A6F-F6B0908F0F78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{0A81343D-54BD-4607-AE55-0C786BA4B26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A81343D-54BD-4607-AE55-0C786BA4B26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A81343D-54BD-4607-AE55-0C786BA4B26E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF13BD9-17EB-4972-9A6F-F6B0908F0F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF13BD9-17EB-4972-9A6F-F6B0908F0F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF13BD9-17EB-4972-9A6F-F6B0908F0F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF13BD9-17EB-4972-9A6F-F6B0908F0F78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
