@@ -28,6 +28,13 @@ typedef enum _USARTReceiverState_t
   USART_RECEIVER_ERROR_RX_STATE
 } UARTReceiverState_t;
 
+typedef enum INPUTConfirmationTypes_t
+{
+	CONFIRMATION_NONE = 0,
+	CONFIRMATION_OK,
+	CONFIRMATION_ERROR,
+} INPUTConfirmationTypes_t;
+
 typedef struct
 {
 	unsigned int sendOk : 1;	//LSB
@@ -37,20 +44,24 @@ typedef struct
 
 typedef struct
 {
-	unsigned int endPoint : 6;
-	unsigned int routing  : 1;
-	unsigned int security : 1;
+	unsigned int endPoint		: 4;
+	unsigned int confirmation	: 2;
+	unsigned int routing		: 1;
+	unsigned int security		: 1;
 	uint16_t nextHop;
 	int8_t rssi;
 }INPUT_UART_HEADER_t;
 
 typedef struct
 {
-	unsigned int endPoint : 6;
+	unsigned int endPoint : 4;
+	unsigned int reserved : 2;
 	unsigned int routing  : 1;
 	unsigned int security : 1;
 	uint8_t retries;
 }OUTPUT_UART_HEADER_t;
+
+OPERATION_DataConf_t uartDataConf;
 
 void USART_Init(void);
 
