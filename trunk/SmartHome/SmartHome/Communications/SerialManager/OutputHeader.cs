@@ -21,10 +21,13 @@ namespace SerialPortManager.ConnectionManager
         public int Retries { get; set; }
 
         public IMessage Content { get; set; }
+
+        public float Priority { get; private set; }
         #endregion
 
-        public OutputHeader()
+        public OutputHeader(float priority = 0)
         {
+            this.Priority = priority;
         }
 
         public byte[] ToBinary()

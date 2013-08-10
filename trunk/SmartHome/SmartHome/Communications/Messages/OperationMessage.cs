@@ -85,11 +85,11 @@ namespace SmartHome.Comunications.Messages
         #endregion
 
         public ushort SourceAddress { get; set; }
-        public ushort DestinationAddress { get; set; }
+        //public ushort DestinationAddress { get; set; }
         public OPCodes OpCode { get; set; }
         public byte[] Args { get; set; }
 
-        public byte[] ToBinary()
+        public override byte[] ToBinary()
         {
             List<byte> result = new List<byte>();
             result.AddRange(BitConverter.GetBytes(SourceAddress));
@@ -102,7 +102,7 @@ namespace SmartHome.Comunications.Messages
             return result.ToArray();
         }
 
-        public void FromBinary(byte[] buffer, int offset = 0)
+        public override void FromBinary(byte[] buffer, int offset = 0)
         {
             SourceAddress = (ushort)((((ushort)buffer[1 + offset]) << 8) | (ushort)buffer[0 + offset]);
             DestinationAddress = (ushort)((((ushort)buffer[3 + offset]) << 8) | (ushort)buffer[2 + offset]);

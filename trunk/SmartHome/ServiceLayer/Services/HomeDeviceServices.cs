@@ -19,16 +19,16 @@ namespace ServiceLayer
         /// <summary>
         /// Add a new HomeDevice to the system.
         /// </summary>
-        /// <param name="NameHomeDevice">Name of the new HomeDevice</param>
-        /// <param name="HomeDeviceType">Type of HomeDevice</param>
+        /// <param name="nameHomeDevice">Name of the new HomeDevice</param>
+        /// <param name="homeDeviceType">Type of HomeDevice</param>
         /// <returns>Return the ID for the new HomeDevice</returns>
-        public int AddHomeDevice(string NameHomeDevice, string HomeDeviceType)
+        public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == HomeDeviceType);
+            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
 
             HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(deviceType);
 
-            homeDevice.Name = NameHomeDevice;
+            homeDevice.Name = nameHomeDevice;
 
             NetworkManager.HomeDevices.Add(homeDevice);
 
@@ -38,17 +38,10 @@ namespace ServiceLayer
         /// <summary>
         /// Return the HomeDevice's types of the system.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Array with the types names</returns>
         public string[] GetHomeDeviceTypes()
         {
             return HomeDevice.HomeDeviceTypes;
-        }
-
-        public string[] GetHomeDeviceOperations(string HomeDeviceType)
-        {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == HomeDeviceType);
-
-            return HomeDevice.GetHomeDeviceOperations(deviceType);
         }
 
         /// <summary>
@@ -71,10 +64,10 @@ namespace ServiceLayer
         /// Change the name of a one HomeDevice
         /// </summary>
         /// <param name="idHomeDevice">Identificator of the HomeDevice</param>
-        /// <param name="NewName">New Name</param>
-        public void SetNameHomeDevice(int idHomeDevice, string NewName)
+        /// <param name="newName">New Name</param>
+        public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
-            NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = NewName;
+            NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = newName;
         }
 
 
@@ -83,15 +76,15 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="homeDevice">Identificator of the home device to be move</param>
         /// <param name="Zone">new zone</param>
-        /// <param name="X">Relative position 0 to 1 of the X axis</param>
-        /// <param name="Y">Relative position 0 to 1 of the X axis</param>
-        public void UpdateZonePosition(int idHomeDevice, int idZone, float X, float Y)
+        /// <param name="x">Relative position 0 to 1 of the X axis</param>
+        /// <param name="y">Relative position 0 to 1 of the X axis</param>
+        public void UpdateZonePosition(int idHomeDevice, int idZone, float x, float y)
         {
             HomeDevice home = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
             Zone zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
 
             home.Position.Zone = zone;
-            home.Position.ZoneCoordenates = new PointF(X, Y);
+            home.Position.ZoneCoordenates = new PointF(x, y);
         }
 
         /// <summary>
@@ -99,9 +92,9 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="homeDevice">Identificator of the home device to be move</param>
         /// <param name="Zone">new zone</param>
-        /// <param name="X">Relative position 0 to 1 of the X axis</param>
-        /// <param name="Y">Relative position 0 to 1 of the X axis</param>
-        public void UpdateViewPosition(int idHomeDevice, int idView, float X, float Y)
+        /// <param name="x">Relative position 0 to 1 of the X axis</param>
+        /// <param name="y">Relative position 0 to 1 of the X axis</param>
+        public void UpdateViewPosition(int idHomeDevice, int idView, float x, float y)
         {
             throw new NotImplementedException();
         }
@@ -124,9 +117,9 @@ namespace ServiceLayer
         /// Return all HomeDevices of the system (be or not be connected to a Node)
         /// </summary>
         /// <returns>Return a HomeDeviceDTO</returns>
-        public HomeDeviceDTO[] GetHomeDevices(bool IsInUse)
+        public HomeDeviceDTO[] GetHomeDevices(bool isInUse)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == IsInUse);
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == isInUse);
 
             return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }

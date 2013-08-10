@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Comunications.Messages
 {
-    public interface IMessage
+    public abstract class IMessage
     {
-        byte[] ToBinary();
+        public ushort DestinationAddress { get; set; }
 
-        void FromBinary(byte[] buffer, int offset);
+        public abstract byte[] ToBinary();
+
+        public abstract void FromBinary(byte[] buffer, int offset);
     }
 }

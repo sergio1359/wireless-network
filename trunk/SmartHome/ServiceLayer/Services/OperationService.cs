@@ -44,16 +44,25 @@ namespace ServiceLayer
             throw new NotImplementedException();
         }
 
-        public OperationDTO[] GetHomeDeviceOperation(string typeHomeDevice)
+        /// <summary>
+        /// Return the HomeDevice's operation types of the system.
+        /// </summary>
+        /// <returns>Array with the types names</returns>
+        public string[] GetHomeDeviceOperationTypes(string homeDeviceType)
+        {
+            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
+
+            return HomeDevice.GetHomeDeviceOperations(deviceType);
+        }
+        /*
+        public OperationDTO[] GetHomeDeviceOperation(string homeDeviceType)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] param)
         {
             HomeDevice homeDevDestino = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDeviceDestination);
-
-
 
             Operation op = new Operation()
             {

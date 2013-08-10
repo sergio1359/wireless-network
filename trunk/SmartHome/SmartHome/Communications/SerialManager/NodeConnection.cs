@@ -26,13 +26,6 @@ namespace SmartHome.Communications.SerialManager
             NotConnected
         }
 
-        public enum NodeTypes
-        {
-            NotANode,
-            Master,
-            Slave
-        }
-
         private enum SerialReceiverStates
         {
             IDLE_RX_STATE,
@@ -74,7 +67,7 @@ namespace SmartHome.Communications.SerialManager
             }
         }
 
-        public NodeTypes NodeType
+        public bool Identified
         {
             private set;
             get;
@@ -105,7 +98,6 @@ namespace SmartHome.Communications.SerialManager
         static byte[] SOF = { APP_MAGIC_SYMBOL, 0x02 };
         static byte[] EOF = { APP_MAGIC_SYMBOL, 0x03 };
 
-        const ushort MasterAddress = 0x4003;
 
         #endregion
 
@@ -216,6 +208,27 @@ namespace SmartHome.Communications.SerialManager
                 OpCode = OperationMessage.OPCodes.PingRequest,
             });
         }
+        private TaskCompletionSource<bool> pendingConfirmationTask;
+        public async Task<bool> SendMessage(OutputHeader message)
+        {
+            if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+                throw new InvalidOperationException("Sending in progress");
+
+            pendingConfirmationTask = new TaskCompletionSource<bool>();
+
+            /*bool result = await new Task<Task<bool>>(async () =>
+                {
+                    if (!SendData(message.ToBinary()))
+                        return false;
+                    else
+                        return await pendingConfirmationTask.Task;
+                }).Result;*/
+
+            if (!SendData(message.ToBinary()))
+                return false;
+            else
+                return await pendingConfirmationTask.Task;
+        }
 
         public bool SendOperation(IMessage operation)
         {
@@ -281,20 +294,26 @@ namespace SmartHome.Communications.SerialManager
             }
         }
 
-        private void OnOperationReceived(InputHeader oper)
+        private void OnOperationReceived(InputHeader operation)
         {
-            if (ConnectionState == ConnectionStates.Identifying)
+            if (operation.Content.SourceAddress == 0)
+                operation.Content.SourceAddress = this.NodeAddress;
+
+            if (ConnectionState == ConnectionStates.Identifying &&
+                operation.Content is OperationMessage &&
+                ((OperationMessage)operation.Content).OpCode == OperationMessage.OPCodes.PingResponse)
             {
-                if (oper.Content is OperationMessage && ((OperationMessage)oper.Content).OpCode == OperationMessage.OPCodes.MacReadResponse)
-                {
-                    this.NodeAddress = ((OperationMessage)oper.Content).SourceAddress;
-                    this.NodeType = this.NodeAddress == MasterAddress ? NodeTypes.Master : NodeTypes.Slave;
-                    this.ConnectionState = ConnectionStates.Connected;
-                }
+                this.NodeAddress = ((OperationMessage)operation.Content).SourceAddress;
+                this.Identified = true;
+                this.ConnectionState = ConnectionStates.Connected;
+            }
+            else if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted && operation.Confirmation != InputHeader.ConfirmationType.None)
+            {
+                pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
             }
 
             if (OperationReceived != null)
-                OperationReceived(this, oper);
+                OperationReceived(this, operation);
         }
         #endregion
     }
