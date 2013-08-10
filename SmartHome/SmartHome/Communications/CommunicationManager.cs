@@ -151,7 +151,7 @@ namespace SmartHome.Comunications
                 {
                     if (this.pendingMessagesQueue[connectionAddress].Count > 0) //SomethingToSend
                     {
-                        Debug.WriteLine("Sending... " + DateTime.Now.Ticks);
+                        Debug.WriteLine("Sending... " + DateTime.Now.Millisecond);
                         pendingMsg = this.currentMessages[connectionAddress] = this.pendingMessagesQueue[connectionAddress][0];
                         this.pendingMessagesQueue[connectionAddress].Remove(pendingMsg);
 

@@ -42,24 +42,26 @@ namespace RawOperationSender
         {
             var operation = new OperationMessage()
             {
-                DestinationAddress = 0x4004,
+                DestinationAddress = 0x4007,
                 OpCode = OperationMessage.OPCodes.MacRead,
             };
 
-            OutputHeader outputMessage = new OutputHeader(1f)
-            {
-                SecurityEnabled = true,
-                RoutingEnabled = true,
-                EndPoint = 1,
-                Retries = 3,
-                Content = operation
-            };
+            float priotity = 0;
 
             for (int i = 0; i < 8; i++)
             {
                 Task.Factory.StartNew(async () =>
                     {
-                        Debug.WriteLine((await manager.SendMessage(outputMessage)).ToString() + DateTime.Now.Ticks);
+                        OutputHeader outputMessage = new OutputHeader(priotity)
+                        {
+                            SecurityEnabled = true,
+                            RoutingEnabled = true,
+                            EndPoint = 1,
+                            Retries = 3,
+                            Content = operation
+                        };
+                        priotity += 0.1f;
+                        Debug.WriteLine(outputMessage.Priority + " Response: " + (await manager.SendMessage(outputMessage)).ToString() + " " + DateTime.Now.Millisecond);
                     });
             }
         }
