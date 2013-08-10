@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonOpen = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.buttonDigSwitch = new System.Windows.Forms.Button();
             this.buttonTemp = new System.Windows.Forms.Button();
@@ -55,6 +55,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxParamAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonPing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -67,16 +68,16 @@
             this.comboBox1.TabIndex = 0;
             this.comboBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBox1_MouseClick);
             // 
-            // button1
+            // buttonOpen
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(140, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Open";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonOpen.Enabled = false;
+            this.buttonOpen.Location = new System.Drawing.Point(140, 11);
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpen.TabIndex = 1;
+            this.buttonOpen.Text = "Open";
+            this.buttonOpen.UseVisualStyleBackColor = true;
+            this.buttonOpen.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox1
             // 
@@ -100,7 +101,7 @@
             // buttonTemp
             // 
             this.buttonTemp.Enabled = false;
-            this.buttonTemp.Location = new System.Drawing.Point(1042, 112);
+            this.buttonTemp.Location = new System.Drawing.Point(1042, 171);
             this.buttonTemp.Name = "buttonTemp";
             this.buttonTemp.Size = new System.Drawing.Size(99, 37);
             this.buttonTemp.TabIndex = 3;
@@ -111,7 +112,7 @@
             // buttonHum
             // 
             this.buttonHum.Enabled = false;
-            this.buttonHum.Location = new System.Drawing.Point(1042, 53);
+            this.buttonHum.Location = new System.Drawing.Point(1042, 112);
             this.buttonHum.Name = "buttonHum";
             this.buttonHum.Size = new System.Drawing.Size(99, 37);
             this.buttonHum.TabIndex = 3;
@@ -200,7 +201,7 @@
             // buttonCheckSum
             // 
             this.buttonCheckSum.Enabled = false;
-            this.buttonCheckSum.Location = new System.Drawing.Point(1042, 230);
+            this.buttonCheckSum.Location = new System.Drawing.Point(1042, 289);
             this.buttonCheckSum.Name = "buttonCheckSum";
             this.buttonCheckSum.Size = new System.Drawing.Size(99, 37);
             this.buttonCheckSum.TabIndex = 3;
@@ -277,7 +278,7 @@
             // buttonPresence
             // 
             this.buttonPresence.Enabled = false;
-            this.buttonPresence.Location = new System.Drawing.Point(1042, 171);
+            this.buttonPresence.Location = new System.Drawing.Point(1042, 230);
             this.buttonPresence.Name = "buttonPresence";
             this.buttonPresence.Size = new System.Drawing.Size(99, 37);
             this.buttonPresence.TabIndex = 3;
@@ -322,6 +323,17 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Parameter Address:";
             // 
+            // buttonPing
+            // 
+            this.buttonPing.Enabled = false;
+            this.buttonPing.Location = new System.Drawing.Point(1042, 53);
+            this.buttonPing.Name = "buttonPing";
+            this.buttonPing.Size = new System.Drawing.Size(99, 37);
+            this.buttonPing.TabIndex = 3;
+            this.buttonPing.Text = "PING";
+            this.buttonPing.UseVisualStyleBackColor = true;
+            this.buttonPing.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,11 +358,12 @@
             this.Controls.Add(this.buttonFirm);
             this.Controls.Add(this.buttonPresence);
             this.Controls.Add(this.buttonTemp);
+            this.Controls.Add(this.buttonPing);
             this.Controls.Add(this.buttonMAC);
             this.Controls.Add(this.buttonSwitchTime);
             this.Controls.Add(this.buttonDigSwitch);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonOpen);
             this.Controls.Add(this.comboBox1);
             this.Name = "Form1";
             this.Text = "UART Operation Sender";
@@ -362,7 +375,7 @@
         #endregion
 
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonOpen;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button buttonDigSwitch;
         private System.Windows.Forms.Button buttonTemp;
@@ -388,6 +401,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxParamAddress;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonPing;
     }
 }
 

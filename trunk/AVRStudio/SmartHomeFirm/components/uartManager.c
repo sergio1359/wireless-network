@@ -30,11 +30,11 @@ static uint8_t* rxBuffer[RX_BUFFER_SIZE];
 static uint8_t index;
 static uint8_t checkSum;
 
-static OPERATION_DataConf_t uartDataConf;
+static inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize);
 
-inline void sendMagicPackage(INPUT_UART_HEADER_t* input_header, uint8_t* data, uint8_t size, uint8_t* body, uint8_t bodySize);
+static inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size);
 
-inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size);
+static INPUT_UART_HEADER_t uartConfHeader;
 
 
 void USART_Init()
@@ -47,7 +47,9 @@ void USART_Init()
 
 void USART_DataConf(OPERATION_DataConf_t *req)
 {
+	uartConfHeader.confirmation = req->sendOk ? CONFIRMATION_OK : CONFIRMATION_ERROR;
 	
+	sendMagicPackage(&uartConfHeader, 0, 0, 0, 0);
 }
 
 void USART_SendOperation(INPUT_UART_HEADER_t* input_header, OPERATION_HEADER_t* operation_header, void* callback)

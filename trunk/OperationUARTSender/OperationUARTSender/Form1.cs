@@ -265,13 +265,13 @@ namespace OperationUARTSender
             if (comboBox1.Items.Count > 0)
             {
                 comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
-                button1.Enabled = true;
+                buttonOpen.Enabled = true;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.Text == "Open")
+            if (buttonOpen.Text == "Open")
             {
                 if (comboBox1.SelectedIndex > -1)
                 {
@@ -279,12 +279,12 @@ namespace OperationUARTSender
                     serial.PortName = comboBox1.Text;
                     serial.Open();
 
-                    button1.Text = "Close";
+                    buttonOpen.Text = "Close";
                     comboBox1.Enabled = false;
 
                     foreach (var control in this.Controls)
                     {
-                        if (control is Button && control != button1)
+                        if (control is Button && control != buttonOpen)
                         {
                             ((Button)control).Enabled = true;
                         }
@@ -295,12 +295,12 @@ namespace OperationUARTSender
             {
                 serial.Close();
 
-                button1.Text = "Open";
+                buttonOpen.Text = "Open";
                 comboBox1.Enabled = true;
 
                 foreach (var control in this.Controls)
                 {
-                    if (control is Button && control != button1)
+                    if (control is Button && control != buttonOpen)
                     {
                         ((Button)control).Enabled = false;
                     }
@@ -345,6 +345,10 @@ namespace OperationUARTSender
             else if (sender == buttonMAC)
             {
                 SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.MacRead, Args = new byte[] { } });
+            }
+            else if (sender == buttonPing)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.PingRequest, Args = new byte[] { } });
             }
             else if (sender == buttonFirm)
             {

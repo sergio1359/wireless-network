@@ -142,13 +142,14 @@ void OM_ProccessUARTOperation(OUTPUT_UART_HEADER_t* output_header, OPERATION_HEA
 	
 	if(operation_header->destinationAddress == 0) //MINE (INTERNAL)
 	{
+		USART_DataConf(&uartDataConf);
 		MODULES_HandleCommand(operation_header);
 	}else
 	{
 		//TODO: ELIMINAR ESTO, PARA EVITAR UNA POSIBLE VOMITONA DE RAFA :) O NO?
 		operation_header->sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 	
-		RADIO_AddMessageByCopy(operation_header, &USART_DataConf);
+		RADIO_AddMessageByCopy(operation_header, USART_DataConf);
 	}	
 }
 
