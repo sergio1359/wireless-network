@@ -5,10 +5,12 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SerialPortManager.ConnectionManager;
+using SmartHome.Communications.Modules;
 using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
 
@@ -16,10 +18,24 @@ namespace RawOperationSender
 {
     public partial class Form1 : Form
     {
-        CommunicationManager man = new CommunicationManager();
+        CommunicationManager manager = new CommunicationManager();
+        NetworkJoin joinMod;
         public Form1()
         {
             InitializeComponent();
+
+            this.joinMod = manager.FindModule<NetworkJoin>();
+            joinMod.NetworkJoinReceived += joinMod_NetworkJoinReceived;
+            joinMod.NodeJoined += joinMod_NetworkJoinReceived;
+        }
+
+        void joinMod_NetworkJoinReceived(object sender, string e)
+        {
+            this.UIThread(() =>
+            {
+                this.listBox1.Items.Clear();
+                this.listBox1.Items.AddRange(this.joinMod.PendingNodes.ToArray());
+            });
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -43,8 +59,29 @@ namespace RawOperationSender
             {
                 Task.Factory.StartNew(async () =>
                     {
-                        Debug.WriteLine((await man.SendMessage(outputMessage)).ToString() + DateTime.Now.Ticks);
+                        Debug.WriteLine((await manager.SendMessage(outputMessage)).ToString() + DateTime.Now.Ticks);
                     });
+            }
+        }
+
+        private void UIThread(Action code)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(code);
+            }
+            else
+            {
+                code.Invoke();
+            }
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            if (this.listBox1.SelectedIndex >= 0)
+            {
+                ushort newAddress = Convert.ToUInt16(this.textBox1.Text, 16);
+                await joinMod.AcceptNode((string)listBox1.SelectedItem, newAddress, "TestSecurityKey0");
             }
         }
     }
