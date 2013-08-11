@@ -62,7 +62,7 @@ namespace SmartHome.Communications.Modules
             if (operation.OpCode == OperationMessage.OPCodes.JoinRequest)
             {
                 Debug.WriteLine(String.Format("JOIN REQUEST RECEIVED FROM 0x{0:X4}", operation.SourceAddress));
-                this.SendJoinRequestResponse(operation.SourceAddress);
+                this.SendJoinRequestResponse(operation.SourceAddress).Wait();
             }
             else if (operation.OpCode == OperationMessage.OPCodes.JoinAbort)
             {
@@ -100,13 +100,13 @@ namespace SmartHome.Communications.Modules
         }
 
         #region Private Methods
-        private void SendJoinRequestResponse(ushort destinationAddress)
+        private async Task<bool> SendJoinRequestResponse(ushort destinationAddress)
         {
             byte[] RSAKey = new byte[16];
             Random r = new Random();
             r.NextBytes(RSAKey);
 
-            this.SendMessage(new OperationMessage()
+            return await this.SendMessage(new OperationMessage()
             {
                 SourceAddress = 0x00,
                 DestinationAddress = destinationAddress,

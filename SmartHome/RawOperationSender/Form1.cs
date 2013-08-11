@@ -42,7 +42,7 @@ namespace RawOperationSender
         {
             var operation = new OperationMessage()
             {
-                DestinationAddress = 0x4007,
+                DestinationAddress = 0x4004,
                 OpCode = OperationMessage.OPCodes.MacRead,
             };
 
