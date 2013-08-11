@@ -31,8 +31,7 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.ConnectorType, f => f.MapFrom(c => Enum.GetName(typeof(ConnectorType), c.ConnectorType)));
 
             Mapper.CreateMap<HomeDevice, HomeDeviceDTO>()
-                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType))
-                .ForMember(t => t.IdPosition, f => f.MapFrom(hd => hd.Position.Id));
+                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType));
 
             Mapper.CreateMap<Node, NodeDTO>()
                 .ForMember(t => t.Base, f => f.MapFrom(n => Enum.GetName(typeof(BaseType), n.Base)))

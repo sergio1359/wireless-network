@@ -64,7 +64,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             ConnectorDTO connector = (ConnectorDTO)listBoxCapableFreeConnector.SelectedItem;
 
             listBoxCapableFreeConnector.Items.Clear();
-            listBoxCapableFreeConnector.Items.AddRange(Services.HomeDeviceService.GetConnectorsCapable(homeDev.Id, connector.Id));
+            listBoxCapableFreeConnector.Items.AddRange(Services.NodeService.GetConnectorsCapable(homeDev.Id, connector.Id));
 
             buttonLinkHomeDevice.Enabled = true;
         }

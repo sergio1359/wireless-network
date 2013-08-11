@@ -1,5 +1,7 @@
-﻿using SmartHome.Network;
+﻿using SmartHome.HomeModel;
+using SmartHome.Network;
 using SmartHome.Network.HomeDevices;
+using SmartHome.Tools;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,18 +13,17 @@ namespace DataLayer
 {
     public class SmartHomeDBContext : DbContext
     {
-        DbSet<Connector> Connectors { get; set; }
         DbSet<Node> Nodes { get; set; }
-        DbSet<Security> Securities { get; set; }
-        DbSet<Position> Positions { get; set; }
-        DbSet<SmartHome.Network.HomeDevices.HomeDevice> HomeDevices { get; set; }
-        DbSet<Operation> Operations { get; set; }
-        DbSet<TimeRestriction> TimeRestrictions { get; set; }
+        DbSet<HomeDevice> HomeDevices { get; set; }
+        DbSet<Connector> Connectors { get; set; }
+        DbSet<Zone> Zones { get; set; }
+        DbSet<Home> Home { get; set; }
+        DbSet<Theme> Themes { get; set; }
+        
 
         public SmartHomeDBContext()
             : base("SmartHomeDB")
         {
-
             Database.SetInitializer<SmartHomeDBContext>(new DropCreateDatabaseIfModelChanges<SmartHomeDBContext>());
         }
 

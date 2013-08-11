@@ -53,10 +53,10 @@
     <Compile Include="Communications\Messages\OperationMessage.cs" />
     <Compile Include="Communications\Messages\ProtocolMessages.cs" />
     <Compile Include="Communications\Modules\NetworkJoin.cs" />
-    <Compile Include="Communications\SerialManager\InputHeader.cs" />
-    <Compile Include="Communications\SerialManager\NodeConnection.cs" />
-    <Compile Include="Communications\SerialManager\OutputHeader.cs" />
-    <Compile Include="Communications\SerialManager\SerialManager.cs" />
+    <Compile Include="Communications\Modules\SerialManager\InputHeader.cs" />
+    <Compile Include="Communications\Modules\SerialManager\NodeConnection.cs" />
+    <Compile Include="Communications\Modules\SerialManager\OutputHeader.cs" />
+    <Compile Include="Communications\Modules\SerialManager\SerialManager.cs" />
     <Compile Include="Network\ConnectorType.cs" />
     <Compile Include="Network\BaseType.cs" />
     <Compile Include="Network\HomeDevices\DoorLock.cs" />

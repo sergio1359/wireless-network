@@ -63,6 +63,21 @@ namespace ServiceLayer
             return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
+
+        /// <summary>
+        /// Devuelve los conectores que se pueden conectar con el homeDevice enviado por parametros
+        /// </summary>
+        /// <param name="HomeDeviceType"></param>
+        /// <returns></returns>
+        public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
+        {
+            HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+
+            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
+
+            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+        }
+
         public string GetNameNode(int idNode)
         {
             return NetworkManager.Nodes.First(n => n.Id == idNode).Name;

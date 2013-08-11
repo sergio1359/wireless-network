@@ -22,9 +22,6 @@ namespace ServiceLayer.DTO
         [DataMember]
         public bool InUse { get; set; }
 
-        [DataMember]
-        public int IdPosition { get; set; }
-
         public override string ToString()
         {
             return Name;

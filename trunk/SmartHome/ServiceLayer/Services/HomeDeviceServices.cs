@@ -124,17 +124,40 @@ namespace ServiceLayer
             return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
+        public HomeDeviceDTO[] GetHomeDevicesByZone(int idZona)
+        {
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona);
+
+            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+        }
+
         /// <summary>
         /// Return the HomeDevices connected of a concrete zone and type
         /// </summary>
         /// <param name="zona">Identificator of the zone</param>
         /// <param name="homeDeviceType">Identificator of the type</param>
         /// <returns>Return Dictionary with ID, Name and type</returns>
-        public HomeDeviceDTO[] GetHomeDevices(int idZona, string type)
+        public HomeDeviceDTO[] GetHomeDevicesByZone(int idZona, List<string> homeDeviceTypes)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.Connector != null && hd.Position.Zone.Id == idZona && hd.HomeDeviceType == type);
+            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType));
 
             return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+        }
+
+        public HomeDeviceDTO[] GetHomeDevicesByView(int idView)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Return the HomeDevices connected of a concrete zone and type
+        /// </summary>
+        /// <param name="zona">Identificator of the zone</param>
+        /// <param name="homeDeviceType">Identificator of the type</param>
+        /// <returns>Return Dictionary with ID, Name and type</returns>
+        public HomeDeviceDTO[] GetHomeDevicesByView(int idZona, List<string> homeDeviceTypes)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -151,18 +174,5 @@ namespace ServiceLayer
             return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
-        /// <summary>
-        /// Devuelve los conectores que se pueden conectar con el homeDevice enviado por parametros
-        /// </summary>
-        /// <param name="HomeDeviceType"></param>
-        /// <returns></returns>
-        public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
-        {
-            HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
-
-            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
-
-            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
-        }
     }
 }
