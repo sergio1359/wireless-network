@@ -1,12 +1,13 @@
-﻿using SmartHome.HomeModel;
+﻿#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations; 
+#endregion
 
-namespace SmartHome.Network
+namespace SmartHome.DataLayer
 {
     public class Position
     {

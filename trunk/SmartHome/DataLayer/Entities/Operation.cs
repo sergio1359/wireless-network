@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Plugins;
-using SmartHome.Network.HomeDevices;
+using SmartHome.DataLayer.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Memory;
 using System.Reflection;
@@ -13,7 +13,7 @@ using SmartHome.Comunications.Messages;
 using System.ComponentModel.DataAnnotations; 
 #endregion
 
-namespace SmartHome.Network
+namespace SmartHome.DataLayer
 {
     public class Operation
     {

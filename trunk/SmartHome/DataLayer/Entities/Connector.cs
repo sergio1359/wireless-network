@@ -1,14 +1,15 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SmartHome.Plugins;
-using SmartHome.Network.HomeDevices;
 using SmartHome.Products;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema; 
+#endregion
 
-namespace SmartHome.Network
+namespace SmartHome.DataLayer
 {
     public class Connector
     {

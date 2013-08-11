@@ -1,12 +1,14 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations; 
+#endregion
 
-namespace SmartHome.HomeModel
+namespace SmartHome.DataLayer
 {
     public class Zone
     {
@@ -15,8 +17,9 @@ namespace SmartHome.HomeModel
 
         public string Name { get; set; }
 
-        public Image ImageMap { get; set; }
+        public byte[] ImageMap { get; set; }
 
+        [Required]
         public virtual Home Home { get; set; }
 
         public virtual ICollection<View> Views { get; set; }
