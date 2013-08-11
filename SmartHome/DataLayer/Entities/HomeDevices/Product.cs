@@ -1,11 +1,13 @@
-﻿using SmartHome.Products;
+﻿#region Using Statements
+using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
+#endregion
 
-namespace SmartHome.Network.HomeDevices
+namespace SmartHome.DataLayer.HomeDevices
 {
     public class Product
     {

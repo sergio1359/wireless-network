@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,10 @@ using SmartHome.Memory;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SmartHome.Network; 
+#endregion
 
-namespace SmartHome.Network.HomeDevices
+namespace SmartHome.DataLayer.HomeDevices
 {
     public abstract class HomeDevice
     {

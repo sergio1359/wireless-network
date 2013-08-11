@@ -7,26 +7,27 @@ using SmartHome.Products;
 using SmartHome.Tools;
 using SmartHome.Memory;
 using System.IO;
-using SmartHome.Network.HomeDevices;
+using SmartHome.DataLayer.HomeDevices;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SmartHome.Network
+namespace SmartHome.DataLayer
 {
     public class Node
     {
         [Key]
         public int Id { get; set; }
 
-        public uint Mac { get; set; }
+        [Required]
+        [MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
+        public string Mac { get; set; }
 
         public string Name { get; set; }
 
-        public byte NetworkRetries = 3;
+        [Range(0, 30)]
+        public int NetworkRetries { get; set; }
 
         public ushort Address { get; set; }
-
-        public List<Connector> Connectors { get; set; }
 
         public Position Position { get; set; }
 
@@ -34,39 +35,25 @@ namespace SmartHome.Network
 
         public ShieldType Shield { get; set; }
 
+        public virtual ICollection<Connector> Connectors { get; set; }
+
         [NotMapped]
-        public List<HomeDevice> HomeDevices 
-        { 
-            get 
-            {
-                return this.Connectors.SelectMany(c => c.HomeDevices).ToList();
-            }
-        } 
-
-        public Node() { }
-
-        public Node(uint Mac, BaseType baseType, ShieldType shieldType)
+        public IEnumerable<HomeDevice> HomeDevices
         {
-            //CHAPUZA QUE SE HIZO EL DIA QUE QUISIMOS GENERAR UNA EEPROM
-            Base = baseType;
-            Shield = shieldType;
-
-            this.Mac = Mac;
-
-            Connectors = new List<Connector>();
-
-            foreach (var item in ProductConfiguration.GetShieldDictionary(shieldType))
+            get
             {
-                Connectors.Add(new Connector(item.Key, item.Value.Item1, this));
+                return this.Connectors.SelectMany(c => c.HomeDevices);
             }
-
-            Position = new Position();
         }
 
+        public Node()
+        {
+            this.Connectors = new List<Connector>();
+        }
 
         public Base GetBaseConfiguration()
         {
-            return ProductConfiguration.GetBaseConfiguration(Base);
+            return ProductConfiguration.GetBaseConfiguration(this.Base);
         }
 
         public SortedDictionary<DateTime, List<Operation>> GetTimeActions()
@@ -95,7 +82,7 @@ namespace SmartHome.Network
             FirmwareUno fw = new FirmwareUno(this, 0x00); //TODO: Ojo
             byte[] memoryEEPROM = fw.GenerateEEPROM();
             //guardamos el bin
-            File.WriteAllBytes(Mac.ToString()+".bin", memoryEEPROM);
+            File.WriteAllBytes(Mac.ToString() + ".bin", memoryEEPROM);
             //guardamos el hex
             Hex.SaveBin2Hex(memoryEEPROM, Mac.ToString());
         }

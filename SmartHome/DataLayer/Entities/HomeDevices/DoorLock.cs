@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SmartHome.Comunications.Messages; 
 #endregion
 
-namespace SmartHome.Network.HomeDevices
+namespace SmartHome.DataLayer.HomeDevices
 {
     public class DoorLock : HomeDevice
     {
