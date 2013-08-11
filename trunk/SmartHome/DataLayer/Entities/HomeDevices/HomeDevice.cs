@@ -4,13 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Plugins;
-using SmartHome.Comunications;
-using SmartHome.Memory;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SmartHome.Network; 
+using DataLayer.Entities.Enums;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -29,9 +26,9 @@ namespace DataLayer.Entities.HomeDevices
 
         public Connector Connector { get; set; }
 
-        public ConnectorType ConnectorCapable { get; set; }
+        public ConnectorTypes ConnectorCapable { get; set; }
 
-        public Position Position { get; set; }
+        public Location Location { get; set; }
 
         public List<Operation> Operations { get; set; }
 

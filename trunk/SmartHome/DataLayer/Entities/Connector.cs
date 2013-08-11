@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartHome.Plugins;
-using SmartHome.Products;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema; 
+using System.ComponentModel.DataAnnotations.Schema;
+using DataLayer.Entities.HomeDevices;
+using DataLayer.Entities.Enums; 
 #endregion
 
 namespace DataLayer.Entities
@@ -18,7 +18,7 @@ namespace DataLayer.Entities
 
         public string Name { get; set; }
 
-        public ConnectorType ConnectorType { get; set; }
+        public ConnectorTypes ConnectorType { get; set; }
 
         public virtual Node Node { get; set; }
 
@@ -53,7 +53,7 @@ namespace DataLayer.Entities
 
         public Connector() { }
 
-        public Connector(string Name, ConnectorType type, Node node)
+        public Connector(string Name, ConnectorTypes type, Node node)
         {
             this.Name = Name;
             ConnectorType = type;

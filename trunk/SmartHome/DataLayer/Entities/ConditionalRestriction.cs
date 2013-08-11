@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices; 
 #endregion
 
@@ -21,13 +22,8 @@ namespace DataLayer.Entities
 
         public object Value;
 
-        public Operations Operation;
+        public ConditionalOperations Operation;
 
         public virtual HomeDevice HomeDeviceValue;
-
-        public enum Operations
-        {
-
-        }
     }
 }

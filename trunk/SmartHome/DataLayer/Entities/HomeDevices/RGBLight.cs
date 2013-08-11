@@ -1,6 +1,6 @@
 ﻿#region Using Statements
 using System.Drawing;
-using SmartHome.Comunications.Messages; 
+using DataLayer.Entities.Enums; 
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -20,7 +20,7 @@ namespace DataLayer.Entities.HomeDevices
 
         public RGBLight() : base() 
         {
-            base.ConnectorCapable = ConnectorType.RGB;
+            base.ConnectorCapable = ConnectorTypes.RGB;
         }
 
         [OperationAttribute]        

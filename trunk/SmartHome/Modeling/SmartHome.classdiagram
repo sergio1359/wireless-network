@@ -54,7 +54,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         <elementDefinition Id="56896c49-a668-4620-940f-981dc0d4ac08" />
         <targetEnds>
           <association Id="b888d909-3ef8-4b68-8016-11067d23cc0d" isDerived="false" sourceEndRoleName="Node" targetEndRoleName="Position" isLeaf="false" isAbstract="false">
-            <classMoniker Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" LastKnownName="Positions" />
+            <classMoniker Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" LastKnownName="Location" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="9674e4aa-1acb-4c55-b42d-3ab0fdfdc650" name="Node" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -472,7 +472,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" name="Positions" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" name="Location" isAbstract="false" isLeaf="false" isActiveClass="false">
         <appliedStereotypesInternal>
           <stereotypeInstance Id="70b68485-85e5-4b06-907e-3221230bf19c" name="class" profile="CSharpProfile">
             <elementDefinition Id="1d1d1eaf-317b-494b-aea8-44ac7e7e9660" />
@@ -1078,7 +1078,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
         <elementDefinition Id="85ae48ad-4431-44bf-9177-443e38a684e4" />
         <targetEnds>
           <association Id="11b6452b-1845-4f97-ac68-0559af33c0d8" isDerived="false" sourceEndRoleName="HomeDeviceAbstract" targetEndRoleName="Position" isLeaf="false" isAbstract="false">
-            <classMoniker Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" LastKnownName="Positions" />
+            <classMoniker Id="fc95eaa1-9577-437d-9bd0-5ad53ed0a42e" LastKnownName="Location" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="7b59eb84-0c1d-459c-8f5c-f7f2546d5d20" name="HomeDeviceAbstract" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">

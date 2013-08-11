@@ -1,13 +1,13 @@
-﻿using SmartHome.HomeModel;
-using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
-using SmartHome.Tools;
+﻿#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
+#endregion
 
 namespace DataLayer
 {
