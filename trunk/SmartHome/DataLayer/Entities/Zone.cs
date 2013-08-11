@@ -8,7 +8,7 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations; 
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class Zone
     {

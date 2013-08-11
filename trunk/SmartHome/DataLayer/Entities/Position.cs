@@ -7,14 +7,14 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations; 
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class Position
     {
         [Key]
         public int Id { get; set; }
 
-        public Zone Zone { get; set; }
+        public virtual Zone Zone { get; set; }
 
         public PointF ZoneCoordenates { get; set; }
 

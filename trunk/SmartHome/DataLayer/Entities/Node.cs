@@ -7,11 +7,11 @@ using SmartHome.Products;
 using SmartHome.Tools;
 using SmartHome.Memory;
 using System.IO;
-using SmartHome.DataLayer.HomeDevices;
+using DataLayer.Entities.HomeDevices;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class Node
     {

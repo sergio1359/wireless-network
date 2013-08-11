@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     [Table("Home")]
     public class Home

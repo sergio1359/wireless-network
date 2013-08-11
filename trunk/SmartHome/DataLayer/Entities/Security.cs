@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks; 
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class Security
     {

@@ -2,7 +2,7 @@
 
 #endregion
 
-namespace SmartHome.DataLayer.HomeDevices
+namespace DataLayer.Entities.HomeDevices
 {
     public class OperationAttribute : System.Attribute 
     {

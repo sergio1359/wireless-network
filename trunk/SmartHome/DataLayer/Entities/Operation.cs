@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Plugins;
-using SmartHome.DataLayer.HomeDevices;
+using DataLayer.Entities.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Memory;
 using System.Reflection;
@@ -13,7 +13,7 @@ using SmartHome.Comunications.Messages;
 using System.ComponentModel.DataAnnotations; 
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class Operation
     {
@@ -22,20 +22,21 @@ namespace SmartHome.DataLayer
 
         public string Name { get; set; }
 
-        public HomeDevice DestionationHomeDevice { get; set; }
+        public virtual HomeDevice DestionationHomeDevice { get; set; }
 
+        [Required]
         public string OperationName { get; set; }
 
-        public object[] Args { get; set; }
+        public object[] Params { get; set; }
 
-        public List<TimeRestriction> TimeRestrictions { get; set; }
+        public virtual ICollection<TimeRestriction> TimeRestrictions { get; set; }
 
-        public List<ConditionalRestriction> ConditionalRestriction { get; set; }
+        public virtual ICollection<ConditionalRestriction> ConditionalRestriction { get; set; }
 
         public Operation()
         {
-            TimeRestrictions = new List<TimeRestriction>();
-            ConditionalRestriction = new List<ConditionalRestriction>();
+            this.TimeRestrictions = new List<TimeRestriction>();
+            this.ConditionalRestriction = new List<ConditionalRestriction>();
         }
 
         public void Execute() 
@@ -50,50 +51,11 @@ namespace SmartHome.DataLayer
 
         public OperationMessage GetOperationMessage()
         {
-            //Get method HAY QUE PONER ATRIBUTOS Y TODAS LAS CONDICIONES QUE QUERAMOS!!
-            MethodInfo method = DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage));
+            //TODO: Get method HAY QUE PONER ATRIBUTOS Y TODAS LAS CONDICIONES QUE QUERAMOS!!
+            MethodInfo method = this.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage));
 
             //Execute
-            return (OperationMessage)method.Invoke(DestionationHomeDevice, Args);
+            return (OperationMessage)method.Invoke(this.DestionationHomeDevice, this.Params);
         }
-    }
-
-    public class TimeRestriction
-    {
-        public byte MaskWeekDays { get; set; }
-
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
-
-        public DateTime HourStart { get; set; }
-        public DateTime HourEnd { get; set; }
-
-        public TimeRestriction(byte maskWeekDays, int fromHour, int fromMin, int FromSeg, int ToHour, int ToMin, int ToSeg)
-        {
-            MaskWeekDays = maskWeekDays;
-            HourStart = new DateTime(1, 1, 1, fromHour, fromMin, FromSeg);
-            HourEnd = new DateTime(1, 1, 1, ToHour, ToMin, ToSeg);
-        }
-    }
-
-    public class ConditionalRestriction
-    {
-        public HomeDevice HomeDeviceValue;
-        public dynamic Value;
-        public Operations Operation;
-        public string NamePropierty;
-
-
-    }
-
-    public static class Sheduler
-    {
-        public static SortedDictionary<DateTime, List<Operation>> TimeActions = new SortedDictionary<DateTime, List<Operation>>();
-
-    }
-
-    public enum Operations
-    {
-
     }
 }
