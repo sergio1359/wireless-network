@@ -6,11 +6,10 @@ using System.Text;
 using System.Threading.Tasks; 
 #endregion
 
-namespace DataLayer.Entities
+namespace DataLayer.Entities.Enums
 {
-    public enum BaseType: byte
+    public enum ShieldTypes
     {
-        ATMega128RFA1_V1 = 0,
-        ATMega128RFA1_V2 = 1,
+        Debug,
     }
 }

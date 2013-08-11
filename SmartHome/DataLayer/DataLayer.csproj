@@ -46,10 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Entities\BaseType.cs" />
+    <Compile Include="Entities\Enums\BaseTypes.cs" />
     <Compile Include="Entities\ConditionalRestriction.cs" />
     <Compile Include="Entities\Connector.cs" />
-    <Compile Include="Entities\ConnectorType.cs" />
+    <Compile Include="Entities\Enums\ConditionalOperations.cs" />
+    <Compile Include="Entities\Enums\ConnectorTypes.cs" />
     <Compile Include="Entities\Home.cs" />
     <Compile Include="Entities\HomeDevices\Button.cs" />
     <Compile Include="Entities\HomeDevices\Dimmable.cs" />
@@ -69,8 +70,7 @@
     <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Operation.cs" />
     <Compile Include="Entities\Position.cs" />
-    <Compile Include="Entities\Security.cs" />
-    <Compile Include="Entities\ShieldType.cs" />
+    <Compile Include="Entities\Enums\ShieldTypes.cs" />
     <Compile Include="Entities\TimeRestriction.cs" />
     <Compile Include="Entities\View.cs" />
     <Compile Include="Entities\Zone.cs" />
@@ -83,12 +83,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SmartHome\SmartHome.csproj">
-      <Project>{94262822-08ea-4e58-b93d-03cb19a41d22}</Project>
-      <Name>SmartHome</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks; 
 #endregion
 
-namespace DataLayer.Entities
+namespace DataLayer.Entities.Enums
 {
-    public enum ConnectorType
+    public enum ConnectorTypes
     {
         SwitchLOW,
         SwitchHI,

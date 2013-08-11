@@ -1,11 +1,12 @@
-﻿using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
+﻿#region Using Statements
 using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Entities.Enums; 
+#endregion
 
 namespace SmartHome.Memory
 {
@@ -279,8 +280,8 @@ namespace SmartHome.Memory
             List<byte> result = new List<byte>();
             result.Add(0x00);
 
-            if(this.node.Connectors.Any(c => c.ConnectorType == ConnectorType.DimmerPassZero))
-                result.Add(this.node.Connectors.First(c => c.ConnectorType == ConnectorType.DimmerPassZero).PinPorts[0].GetPinPortNumber());
+            if (this.node.Connectors.Any(c => c.ConnectorType == ConnectorTypes.DimmerPassZero))
+                result.Add(this.node.Connectors.First(c => c.ConnectorType == ConnectorTypes.DimmerPassZero).PinPorts[0].GetPinPortNumber());
             else
                 result.Add(0x00); //TODO: If not exits. Value default??
 

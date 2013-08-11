@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using System.Text;
 #endregion
 
 namespace DataLayer.Entities
@@ -34,5 +35,28 @@ namespace DataLayer.Entities
         public float Longitude { get; set; }
 
         public float Latitude { get; set; }
+    }
+
+    [Table("Home")]
+    public class Security
+    {
+        public const byte CHANNEL = 0x0F;
+        public const ushort PANID = 0x1234;
+
+        public byte Channel { set; get; }
+        public ushort PanId { set; get; }
+        public string SecurityKey { set; get; }
+
+        public byte[] GetSecurityKey()
+        {
+            return Encoding.ASCII.GetBytes(this.SecurityKey);
+        }
+
+        public Security()
+        {
+            this.Channel = CHANNEL;
+            this.PanId = PANID;
+            this.SecurityKey = "TestSecurityKey0";
+        }
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartHome.Plugins;
-using SmartHome.Products;
-using SmartHome.Tools;
-using SmartHome.Memory;
 using System.IO;
 using DataLayer.Entities.HomeDevices;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DataLayer.Entities.Enums; 
+#endregion
 
 namespace DataLayer.Entities
 {
@@ -29,11 +28,11 @@ namespace DataLayer.Entities
 
         public ushort Address { get; set; }
 
-        public Position Position { get; set; }
+        public Location Location { get; set; }
 
-        public BaseType Base { get; set; }
+        public BaseTypes Base { get; set; }
 
-        public ShieldType Shield { get; set; }
+        public ShieldTypes Shield { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
 

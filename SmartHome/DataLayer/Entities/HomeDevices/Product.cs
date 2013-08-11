@@ -1,17 +1,17 @@
 ﻿#region Using Statements
-using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using DataLayer.Entities.Enums; 
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
 {
     public class Product
     {
-        public ConnectorType TypeConnector { get; set; }
+        public ConnectorTypes TypeConnector { get; set; }
         public List<Tuple<Type, List<int>>> resultProduct;
 
         public Product()
@@ -63,7 +63,7 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.resultProduct.Add(Tuple.Create(typeof(TemperatureSensor), new List<int>() { 0 }));
             base.resultProduct.Add(Tuple.Create(typeof(HumiditySensor), new List<int>() { 0 }));
-            base.TypeConnector = ConnectorType.LogicInput;
+            base.TypeConnector = ConnectorTypes.LogicInput;
         }
     }
 }

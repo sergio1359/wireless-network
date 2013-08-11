@@ -71,7 +71,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isAbstract="false">
             <classMoniker
               Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-              LastKnownName="Positions"
+              LastKnownName="Location"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -766,7 +766,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
     <packageHasNamedElement>
       <class
         Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-        name="Positions"
+        name="Location"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -2076,7 +2076,7 @@ Son las operaciones a bajo nivel. Van definidas aqui (de manera secreta)</body>
             isAbstract="false">
             <classMoniker
               Id="0e8dcaec-3296-444b-b8f9-768b56655252"
-              LastKnownName="Positions"
+              LastKnownName="Location"
               LastKnownLocation="Modeling.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>

@@ -9,20 +9,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer.Entities
 {
-    public class Position
+    public class Location
     {
         [Key]
         public int Id { get; set; }
 
-        public virtual Zone Zone { get; set; }
+        public float X { get; set; }
 
-        public PointF ZoneCoordenates { get; set; }
+        public float Y { get; set; }
 
-        public Dictionary<View, PointF> Views { get; set; }
+        public bool Mobile { get; set; }
 
-        public bool Movil { get; set; }
+        public virtual View View { get; set; }
 
-        public void CalculatePosition()
+        public void CalculateLocation()
         {
             
         }
