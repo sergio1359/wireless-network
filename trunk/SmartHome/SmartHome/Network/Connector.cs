@@ -19,7 +19,7 @@ namespace SmartHome.Network
 
         public ConnectorType ConnectorType { get; set; }
 
-        public Node Node { get; set; }
+        public virtual Node Node { get; set; }
 
         public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
