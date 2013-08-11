@@ -488,6 +488,17 @@
               </stereotypeInstance>
             </appliedStereotypesInternal>
           </property>
+          <property
+            Id="f810caa2-e7de-4c41-8891-f6cd98e4ddad"
+            name="Id"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
