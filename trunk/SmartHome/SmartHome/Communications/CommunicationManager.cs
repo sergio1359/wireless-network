@@ -102,12 +102,15 @@ namespace SmartHome.Comunications
             Debug.WriteLine(string.Format("DONGLE NODE 0x{0:X4} ({1}) Disconnected!", e.NodeAddress, e.NodeAddress == MASTER_ADDRESS ? "Master" : "Slave"));
         }
 
-        void connection_OperationReceived(object sender, InputHeader e)
+        private void connection_OperationReceived(object sender, InputHeader e)
         {
             //Send Message to the placeHolders
             foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e)))
             {
-                module.ProccessReceivedMessage(e.Content);
+                Task.Factory.StartNew(() =>
+                    {
+                        module.ProccessReceivedMessage(e.Content);
+                    });
             }
         }
 
@@ -156,16 +159,16 @@ namespace SmartHome.Comunications
                         this.pendingMessagesQueue[connectionAddress].Remove(pendingMsg);
 
                         Task.Factory.StartNew(async () =>
-                        {
-                            NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection : this.connectionsInUse[connectionAddress];
+                            {
+                                NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection :this.connectionsInUse[connectionAddress];
 
-                            var val = await connection.SendMessage(pendingMsg.Message);
+                                var val = await connection.SendMessage(pendingMsg.Message);
 
-                            this.currentMessages[connectionAddress] = null;
-                            this.CheckForSend(connectionAddress);
+                                this.currentMessages[connectionAddress] = null;
+                                this.CheckForSend(connectionAddress);
 
-                            pendingMsg.TaskSource.SetResult(val);
-                        });
+                                pendingMsg.TaskSource.SetResult(val);
+                            });
                     }
                 }
             }

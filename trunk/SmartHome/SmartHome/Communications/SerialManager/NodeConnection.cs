@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading.Tasks;
+using System.Timers;
 using SerialPortManager.ConnectionManager;
 using SmartHome.Comunications.Messages;
 #endregion
@@ -41,7 +42,10 @@ namespace SmartHome.Communications.SerialManager
 
         private TaskCompletionSource<bool> pendingConfirmationTask;
 
-        private ConnectionStates connectionState; 
+        private ConnectionStates connectionState;
+
+        private Timer identifyTimeoutTimer;
+        private int retriesCount;
         #endregion
 
         public event EventHandler<InputHeader> OperationReceived;
@@ -97,15 +101,23 @@ namespace SmartHome.Communications.SerialManager
         static byte[] SOF = { APP_MAGIC_SYMBOL, 0x02 };
         static byte[] EOF = { APP_MAGIC_SYMBOL, 0x03 };
 
-
+        const int IDENTIFY_MAX_RETRIES = 4;
+        const int MILLISECONDS_BW_RETRIES = 2000;
         #endregion
 
         public NodeConnection(string PortName)
         {
-            serialPort = new SerialPort(PortName, 38400);
-            serialPort.DataReceived += serialPort_DataReceived;
+            this.serialPort = new SerialPort(PortName, 38400);
+            this.serialPort.DataReceived += serialPort_DataReceived;
 
-            currentReceiverMessage = new List<byte>();
+            this.identifyTimeoutTimer = new Timer()
+            {
+                Interval = MILLISECONDS_BW_RETRIES,
+                AutoReset = false,
+            };
+            this.identifyTimeoutTimer.Elapsed += identifyRetryTimer_Elapsed;
+
+            this.currentReceiverMessage = new List<byte>();
         }
        
         #region Private Methods
@@ -113,38 +125,38 @@ namespace SmartHome.Communications.SerialManager
         {
             byte c;
 
-            while (serialPort.BytesToRead > 0)
+            while (this.serialPort.BytesToRead > 0)
             {
                 bool acceptByte = false;
 
-                c = (byte)serialPort.ReadByte();
+                c = (byte)this.serialPort.ReadByte();
 
-                switch (receiverState)
+                switch (this.receiverState)
                 {
                     case SerialReceiverStates.IDLE_RX_STATE:
                         if (APP_MAGIC_SYMBOL == c)
                         {
-                            receiverState = SerialReceiverStates.SOF_RX_STATE;
-                            currentReceiverMessage.Clear();
-                            checkSum = 0;
+                            this.receiverState = SerialReceiverStates.SOF_RX_STATE;
+                            this.currentReceiverMessage.Clear();
+                            this.checkSum = 0;
                         }
                         break;
 
                     case SerialReceiverStates.SOF_RX_STATE:
                         if (SOF[1] == c)
                         {
-                            receiverState = SerialReceiverStates.DATA_RX_STATE;
+                            this.receiverState = SerialReceiverStates.DATA_RX_STATE;
                         }
                         else
                         {
-                            receiverState = SerialReceiverStates.IDLE_RX_STATE;
+                            this.receiverState = SerialReceiverStates.IDLE_RX_STATE;
                         }
                         break;
 
                     case SerialReceiverStates.DATA_RX_STATE:
                         if (APP_MAGIC_SYMBOL == c)
                         {
-                            receiverState = SerialReceiverStates.MAGIC_RX_STATE;
+                            this.receiverState = SerialReceiverStates.MAGIC_RX_STATE;
                         }
                         else
                         {
@@ -155,33 +167,33 @@ namespace SmartHome.Communications.SerialManager
                     case SerialReceiverStates.MAGIC_RX_STATE:
                         if (APP_MAGIC_SYMBOL == c)
                         {
-                            receiverState = SerialReceiverStates.DATA_RX_STATE;
+                            this.receiverState = SerialReceiverStates.DATA_RX_STATE;
                             acceptByte = true;
                         }
                         else if (EOF[1] == c)
                         {
-                            receiverState = SerialReceiverStates.EOF_RX_STATE;
+                            this.receiverState = SerialReceiverStates.EOF_RX_STATE;
                         }
                         else
                         {
-                            receiverState = SerialReceiverStates.IDLE_RX_STATE;
-                            Debug.Print("INVALID FRAME RECEIVED IN " + PortName);
+                            this.receiverState = SerialReceiverStates.IDLE_RX_STATE;
+                            Debug.Print("INVALID FRAME RECEIVED IN " + this.PortName);
                         }
                         break;
 
                     case SerialReceiverStates.EOF_RX_STATE:
                         if (checkSum == c)
                         {
-                            receiverState = SerialReceiverStates.IDLE_RX_STATE;
+                            this.receiverState = SerialReceiverStates.IDLE_RX_STATE;
                             InputHeader inputMessage = new InputHeader();
-                            inputMessage.FromBinary(currentReceiverMessage.ToArray());
+                            inputMessage.FromBinary(this.currentReceiverMessage.ToArray());
 
                             OnOperationReceived(inputMessage);
                         }
                         else
                         {
-                            receiverState = SerialReceiverStates.IDLE_RX_STATE;
-                            Debug.Print("INVALID CHECKSUM RECEIVED IN " + PortName);
+                            this.receiverState = SerialReceiverStates.IDLE_RX_STATE;
+                            Debug.Print("INVALID CHECKSUM RECEIVED IN " + this.PortName);
                         }
                         break;
 
@@ -193,11 +205,19 @@ namespace SmartHome.Communications.SerialManager
 
                 if (acceptByte)
                 {
-                    currentReceiverMessage.Add(c);
+                    this.currentReceiverMessage.Add(c);
                 }
             }
         }
 
+        private void identifyRetryTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (this.ConnectionState == ConnectionStates.Identifying && this.retriesCount < IDENTIFY_MAX_RETRIES)
+            {
+                this.Identify(false);
+                this.retriesCount++;
+            }
+        }
 
         private bool SendData(byte[] buffer)
         {
@@ -228,21 +248,21 @@ namespace SmartHome.Communications.SerialManager
 
             frame.Add(cs);
 
-            if (!serialPort.IsOpen)
-                serialPort.Open();
+            if (!this.serialPort.IsOpen)
+                this.serialPort.Open();
 
             try
             {
-                serialPort.Write(frame.ToArray(), 0, frame.Count);
+                this.serialPort.Write(frame.ToArray(), 0, frame.Count);
 
-                if (ConnectionState == ConnectionStates.NotConnected)
-                    ConnectionState = ConnectionStates.Connected;
+                if (this.ConnectionState == ConnectionStates.NotConnected)
+                    this.ConnectionState = ConnectionStates.Connected;
 
                 return true;
             }
             catch (InvalidOperationException)
             {
-                ConnectionState = ConnectionStates.NotConnected;
+                this.ConnectionState = ConnectionStates.NotConnected;
                 return false;
             }
         }
@@ -276,7 +296,7 @@ namespace SmartHome.Communications.SerialManager
         #endregion
 
         #region Public Methods
-        public void Identify()
+        public void Identify(bool resetCounter = true)
         {
             this.ConnectionState = ConnectionStates.Identifying;
 
@@ -284,19 +304,24 @@ namespace SmartHome.Communications.SerialManager
             {
                 OpCode = OperationMessage.OPCodes.PingRequest,
             });
+
+            if (resetCounter)
+                this.retriesCount = 0;
+
+            identifyTimeoutTimer.Start();
         }
         
         public async Task<bool> SendMessage(OutputHeader message)
         {
-            if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+            if (this.pendingConfirmationTask != null && !this.pendingConfirmationTask.Task.IsCompleted)
                 throw new InvalidOperationException("Sending in progress");
 
-            pendingConfirmationTask = new TaskCompletionSource<bool>();
+            this.pendingConfirmationTask = new TaskCompletionSource<bool>();
 
-            if (!SendData(message.ToBinary()))
+            if (!this.SendData(message.ToBinary()))
                 return false;
             else
-                return await pendingConfirmationTask.Task;
+                return await this.pendingConfirmationTask.Task;
         }
 
         public bool SendOperation(IMessage operation)
@@ -310,7 +335,7 @@ namespace SmartHome.Communications.SerialManager
                 Content = operation
             };
 
-            return SendData(outputMessage.ToBinary());
+            return this.SendData(outputMessage.ToBinary());
         }
         #endregion
 
