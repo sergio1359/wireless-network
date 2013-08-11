@@ -12,8 +12,10 @@ namespace SmartHome.HomeModel
         [Key]
         public int Id { get; set; }
 
-        public string NameView { get; set; }
+        public string Name { get; set; }
 
         public Image ImageMap { get; set; }
+
+        public virtual Zone Zone;
     }
 }
