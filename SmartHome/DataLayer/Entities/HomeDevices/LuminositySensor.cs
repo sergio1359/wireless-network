@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks; 
 #endregion
 
-namespace SmartHome.DataLayer.HomeDevices
+namespace DataLayer.Entities.HomeDevices
 {
     public class LuminositySensor : HomeDevice
     {

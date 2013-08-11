@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text; 
 #endregion
 
-namespace SmartHome.DataLayer
+namespace DataLayer.Entities
 {
     public class View
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SmartHome.Comunications.Messages; 
 #endregion
 
-namespace SmartHome.DataLayer.HomeDevices
+namespace DataLayer.Entities.HomeDevices
 {
     public class Button: HomeDevice
     {

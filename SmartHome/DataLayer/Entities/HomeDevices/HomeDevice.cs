@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using SmartHome.Network; 
 #endregion
 
-namespace SmartHome.DataLayer.HomeDevices
+namespace DataLayer.Entities.HomeDevices
 {
     public abstract class HomeDevice
     {

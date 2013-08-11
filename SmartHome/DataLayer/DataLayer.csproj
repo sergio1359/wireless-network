@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Entities\BaseType.cs" />
+    <Compile Include="Entities\ConditionalRestriction.cs" />
     <Compile Include="Entities\Connector.cs" />
     <Compile Include="Entities\ConnectorType.cs" />
     <Compile Include="Entities\Home.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Entities\Position.cs" />
     <Compile Include="Entities\Security.cs" />
     <Compile Include="Entities\ShieldType.cs" />
+    <Compile Include="Entities\TimeRestriction.cs" />
     <Compile Include="Entities\View.cs" />
     <Compile Include="Entities\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
