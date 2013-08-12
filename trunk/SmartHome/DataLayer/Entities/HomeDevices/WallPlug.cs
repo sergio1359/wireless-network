@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #endregion
 
@@ -20,6 +21,9 @@ namespace DataLayer.Entities.HomeDevices
         }
 
         public WallPlugType Type { get; set; }
+
+        [NotMapped]
+        public bool? Connected { get; set; }
 
         public WallPlug()
             : base()

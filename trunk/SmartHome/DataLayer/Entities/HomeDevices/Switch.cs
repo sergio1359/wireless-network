@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #endregion
 
@@ -8,7 +9,8 @@ namespace DataLayer.Entities.HomeDevices
 {
     public class Switch : HomeDevice
     {
-        public bool Open { get; set; }
+        [NotMapped]
+        public bool? Open { get; set; }
 
         public Switch()
             : base()

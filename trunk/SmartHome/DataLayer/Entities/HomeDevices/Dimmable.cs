@@ -17,7 +17,7 @@ namespace DataLayer.Entities.HomeDevices
         public DimmableType Type { get; set; }
 
         [NotMapped]
-        public int Value
+        public int? Value
         {
             get
             {
@@ -25,7 +25,7 @@ namespace DataLayer.Entities.HomeDevices
             }
             set
             {
-                this.LastValue = this.value;
+                this.LastValue = this.value.Value;
                 this.value = value;
             }
         }
@@ -33,7 +33,7 @@ namespace DataLayer.Entities.HomeDevices
         [NotMapped]
         public int LastValue { get; private set; }
 
-        private int value;
+        private int? value;
 
         public Dimmable()
             : base()

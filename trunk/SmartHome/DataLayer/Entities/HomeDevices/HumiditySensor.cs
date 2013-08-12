@@ -2,11 +2,13 @@
 
 #endregion
 
+using System.ComponentModel.DataAnnotations.Schema;
 namespace DataLayer.Entities.HomeDevices
 {
     public class HumiditySensor : HomeDevice
     {
-        public int Humidity { get; set; }
+        [NotMapped]
+        public int? Humidity { get; set; }
 
         public HumiditySensor()
             : base()
