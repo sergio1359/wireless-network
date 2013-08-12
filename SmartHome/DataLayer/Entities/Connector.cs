@@ -51,73 +51,9 @@ namespace DataLayer.Entities
             }
         }
 
-        public Connector() { }
-
-        public Connector(string Name, ConnectorTypes type, Node node)
+        public Connector()
         {
-            this.Name = Name;
-            ConnectorType = type;
-            Node = node;
-        }
-
-        /// <summary>
-        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, un conector con el HomeDevice pasado por parametros
-        /// </summary>
-        /// <param name="homeDevice"></param>
-        public void LinkHomeDevice(HomeDevice homeDevice)
-        {
-            MappingHomeDevice.Add(homeDevice, GetPinPort());
-        }
-
-        /// <summary>
-        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, el conector con el producto cuyo nombre es pasado por parametros
-        /// </summary>
-        /// <param name="nameProduct"></param>
-        public void LinkHomeDevice(string nameProduct)
-        {
-            
-        }
-
-        public void UnlinkHomeDevice()
-        {
-            if (this.ConnectorType == Network.ConnectorType.ConectorSensorBoard)
-            {
-                //TODO: hay que destruir los elementos uno a uno. 
-                
-            }
-
-            MappingHomeDevice.Clear();
-        }
-
-        public bool IsCapable(HomeDevice homeDevice)
-        {
-            if (this.ConnectorType == Network.ConnectorType.DimmerPassZero)
-                return false;
-
-            return this.ConnectorType == homeDevice.ConnectorCapable;
-        }
-
-        public List<PinPort> GetPinPort()
-        {
-            return ProductConfiguration.GetShieldDictionary(Node.Shield)[Name].Item2;
-        }
-
-        public PinPortConfiguration GetPinPortConfiguration(HomeDevice homeDevice)
-        {
-            return ProductConfiguration.GetPinPortConfiguration(homeDevice);
-        }
-
-        public Operation[] GetActionsConnector()
-        {
-            if (!InUse)
-            {
-                return new Operation[0];
-            }
-            else
-            {
-                return HomeDevices.SelectMany(hd => hd.Operations).ToArray();
-            }
-
+            MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
         }
     }
 }

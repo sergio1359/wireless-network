@@ -49,42 +49,5 @@ namespace DataLayer.Entities
         {
             this.Connectors = new List<Connector>();
         }
-
-        public Base GetBaseConfiguration()
-        {
-            return ProductConfiguration.GetBaseConfiguration(this.Base);
-        }
-
-        public SortedDictionary<DateTime, List<Operation>> GetTimeActions()
-        {
-            SortedDictionary<DateTime, List<Operation>> res = new SortedDictionary<DateTime, List<Operation>>();
-            foreach (var item in Sheduler.TimeActions)
-            {
-                foreach (var operation in item.Value)
-                {
-                    if (operation.DestionationHomeDevice.Connector.Node.Address == Address)
-                    {
-                        if (res.ContainsKey(item.Key))
-                            res[item.Key].Add(operation);
-                        else
-                            res.Add(item.Key, new List<Operation>() { operation });
-                    }
-                }
-            }
-
-            return res;
-        }
-
-        public void GetEEPROM()
-        {
-            FirmwareUno fw = new FirmwareUno(this, 0x00); //TODO: Ojo
-            byte[] memoryEEPROM = fw.GenerateEEPROM();
-            //guardamos el bin
-            File.WriteAllBytes(Mac.ToString() + ".bin", memoryEEPROM);
-            //guardamos el hex
-            Hex.SaveBin2Hex(memoryEEPROM, Mac.ToString());
-        }
-
-
     }
 }

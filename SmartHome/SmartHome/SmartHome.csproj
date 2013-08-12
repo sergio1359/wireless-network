@@ -42,6 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessEntities\BusinesNode.cs" />
+    <Compile Include="BusinessEntities\BusinessConnector.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessButton.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessDimmable.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessDoorLock.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessHomeDevice.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessHumiditySensor.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessLight.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessLuminositySensor.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\OperationAttribute.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPowerSensor.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPresenceSensor.cs" />
+    <Compile Include="Products\HomeDeviceProduct.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessRGBLight.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitch.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessTemperatureSensor.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessWallPlug.cs" />
+    <Compile Include="BusinessEntities\BusinessOperation.cs" />
     <Compile Include="Communications\CommunicationManager.cs" />
     <Compile Include="Communications\Modules\ModuleBase.cs" />
     <Compile Include="Communications\Messages\ErrorCodes.cs" />

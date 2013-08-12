@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using DataLayer.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DataLayer.Entities.HomeDevices
         public Switch() : base() 
         {
             base.Operations = new List<Operation>();
-            base.ConnectorCapable = ConnectorType.LogicInput;
+            base.ConnectorCapable = ConnectorTypes.LogicInput;
         }
 
         public override void RefreshState()

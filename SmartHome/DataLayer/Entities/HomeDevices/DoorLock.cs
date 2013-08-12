@@ -19,11 +19,5 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.ConnectorCapable = ConnectorTypes.SwitchLOW;
         }
-
-        [OperationAttribute]        
-        public OperationMessage OpenDoor()
-        {
-            return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, OpenTime);
-        }
     }
 }

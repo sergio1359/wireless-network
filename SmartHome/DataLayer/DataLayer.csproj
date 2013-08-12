@@ -59,10 +59,8 @@
     <Compile Include="Entities\HomeDevices\HumiditySensor.cs" />
     <Compile Include="Entities\HomeDevices\Light.cs" />
     <Compile Include="Entities\HomeDevices\LuminositySensor.cs" />
-    <Compile Include="Entities\HomeDevices\OperationAttribute.cs" />
     <Compile Include="Entities\HomeDevices\PowerSensor.cs" />
     <Compile Include="Entities\HomeDevices\PresenceSensor.cs" />
-    <Compile Include="Entities\HomeDevices\Product.cs" />
     <Compile Include="Entities\HomeDevices\RGBLight.cs" />
     <Compile Include="Entities\HomeDevices\Switch.cs" />
     <Compile Include="Entities\HomeDevices\TemperatureSensor.cs" />

@@ -17,35 +17,5 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.ConnectorCapable = ConnectorTypes.SwitchLOW;
         }
-
-        [OperationAttribute]
-        public OperationMessage On()
-        {
-            return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, 0);
-        }
-
-        [OperationAttribute]
-        public OperationMessage Off()
-        {
-            return OperationMessage.LogicWrite(Id, LogicWriteValues.Clear, 0);
-        }
-
-        [OperationAttribute]
-        public OperationMessage OnTime(byte seconds)
-        {
-            return OperationMessage.LogicWrite(Id, LogicWriteValues.Set, seconds);
-        }
-
-        [OperationAttribute]
-        public OperationMessage Switch()
-        {
-            return OperationMessage.LogicSwitch(Id, 0);
-        }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
-        
     }
 }

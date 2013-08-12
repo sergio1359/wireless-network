@@ -23,49 +23,6 @@ namespace DataLayer.Entities.HomeDevices
             base.ConnectorCapable = ConnectorTypes.RGB;
         }
 
-        [OperationAttribute]        
-        public OperationMessage Invert(byte seconds)
-        {
-            Color invert = Color.FromArgb(this.Color.ToArgb() ^ 0xFFFFFF);
-            return ToColor(invert, seconds);
-        }
-
-        [OperationAttribute]
-        public OperationMessage Random(byte seconds)
-        {
-            return OperationMessage.ColorWriteRandom(Id, seconds);
-        }
-
-        [OperationAttribute]
-        public OperationMessage RandomSecuence(Color[] colors, byte seconds)
-        {
-            return OperationMessage.ColorRandomSecuenceWrite(Id, seconds, colors);
-        }
-
-        [OperationAttribute]
-        public OperationMessage SortedSecuence(Color[] colors, byte seconds)
-        {
-            return OperationMessage.ColorSortedSecuenceWrite(Id, seconds, colors);
-        }
-
-        [OperationAttribute]
-        public OperationMessage ToColor(Color color, byte seconds)
-        {
-            return OperationMessage.ColorWrite(Id, color, seconds);
-        }
-
-        [OperationAttribute]
-        public OperationMessage TurnOff()
-        {
-            return ToColor(Color.Black, 1);
-        }
-
-        [OperationAttribute]
-        public OperationMessage White()
-        {
-            return ToColor(Color.White, 1);
-        }
-
         public override void RefreshState()
         {
             base.RefreshState();
