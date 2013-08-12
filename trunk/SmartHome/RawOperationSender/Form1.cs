@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using SerialPortManager.ConnectionManager;
+﻿using SerialPortManager.ConnectionManager;
 using SmartHome.Communications.Modules;
 using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RawOperationSender
 {

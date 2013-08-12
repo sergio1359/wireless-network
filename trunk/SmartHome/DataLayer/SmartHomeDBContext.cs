@@ -1,12 +1,7 @@
 ﻿#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
+using System.Data.Entity;
 #endregion
 
 namespace DataLayer

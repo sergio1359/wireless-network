@@ -1,7 +1,7 @@
 ﻿#region Using Statements
-using System.Drawing;
 using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices

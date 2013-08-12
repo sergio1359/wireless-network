@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataLayer.Entities.Enums;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataLayer.Entities;
-using DataLayer.Entities.Enums;
 
 namespace SmartHome.Products
 {

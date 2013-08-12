@@ -1,13 +1,13 @@
 ﻿#region Using Statements
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using SerialPortManager.ConnectionManager;
 using SmartHome.Communications.Modules;
 using SmartHome.Communications.SerialManager;
 using SmartHome.Comunications.Modules;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 #endregion
 
 namespace SmartHome.Comunications

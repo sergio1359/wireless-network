@@ -1,12 +1,6 @@
 ﻿#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataLayer.Entities.Enums;
-using SmartHome.Comunications.Messages;
 using DataLayer.Entities.HomeDevices;
+using SmartHome.Comunications.Messages;
 #endregion
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
@@ -40,7 +34,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             }
             else
             {
-                return dimmable.PercentageDimmer(dimmable.lastValue);
+                return dimmable.PercentageDimmer(dimmable.LastValue);
             }
         }
 

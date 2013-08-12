@@ -1,11 +1,9 @@
 ﻿#region Using Statements
+using SmartHome.Memory;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartHome.Memory; 
+using System.Linq; 
 #endregion
 
 namespace SmartHome.Comunications.Messages

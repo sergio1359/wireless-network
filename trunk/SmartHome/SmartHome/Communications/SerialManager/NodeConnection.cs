@@ -1,12 +1,12 @@
 ﻿#region Using Statements
+using SerialPortManager.ConnectionManager;
+using SmartHome.Comunications.Messages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading.Tasks;
 using System.Timers;
-using SerialPortManager.ConnectionManager;
-using SmartHome.Comunications.Messages;
 #endregion
 
 namespace SmartHome.Communications.SerialManager
