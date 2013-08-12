@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿#region Using Statements
+using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using SmartHome.Comunications.Messages;
@@ -7,11 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
+#endregion
 
 namespace SmartHome.BusinessEntities
 {
-    public class BusinessOperation
+    public static class BusinessOperation
     {
         public static void Execute(this Operation operation)
         {
@@ -27,7 +29,7 @@ namespace SmartHome.BusinessEntities
         {
             MethodInfo method = operation.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == operation.OperationName 
                 && m.ReturnType == typeof(OperationMessage) 
-                && m.GetCustomAttribute() == OperationAttribute.GetCustomAttribute());
+                && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
 
             return (OperationMessage)method.Invoke(operation.DestionationHomeDevice, operation.Params);
         }

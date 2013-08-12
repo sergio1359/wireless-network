@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessTemperatureSensor
+    public static class BusinessTemperatureSensor
     {
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

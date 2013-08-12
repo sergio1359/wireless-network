@@ -2,6 +2,7 @@
 using DataLayer.Entities.HomeDevices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,15 @@ namespace DataLayer.Entities
 {
     public class Log : IComparable<Log>
     {
+        [Key]
         public int Id { get; set; }
+
         public DateTime Date { get; set; }
+
         public string Message { get; set; }
+
         public LogTypes Category {get; set;}
+
         public virtual HomeDevice HomeDevice {get; set;}
 
 

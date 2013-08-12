@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessSwitch
+    public static class BusinessSwitch
     {
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

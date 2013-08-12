@@ -9,8 +9,8 @@ using DataLayer.Entities.Enums;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessButton
+    public static class BusinessButton : BusinessHomeDevice
     {
-        
+
     }
 }

@@ -17,10 +17,5 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.Operations = new List<Operation>();
         }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

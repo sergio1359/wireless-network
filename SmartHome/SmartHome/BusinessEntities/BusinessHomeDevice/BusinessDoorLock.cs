@@ -11,7 +11,7 @@ using DataLayer.Entities.HomeDevices;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessDoorLock
+    public static class BusinessDoorLock
     {
         [OperationAttribute]        
         public static OperationMessage OpenDoor(this DoorLock doorLock)

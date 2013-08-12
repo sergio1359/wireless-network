@@ -9,11 +9,12 @@ using DataLayer.Entities.Enums;
 
 namespace DataLayer.Entities.HomeDevices
 {
-    public class Light: HomeDevice
+    public class Light : HomeDevice
     {
         public bool IsOn { get; set; }
 
-        public Light() : base() 
+        public Light()
+            : base()
         {
             base.ConnectorCapable = ConnectorTypes.SwitchLOW;
         }

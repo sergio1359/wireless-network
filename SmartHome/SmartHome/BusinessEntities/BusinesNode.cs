@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities
 {
-    public class BusinesNode
+    public static class BusinesNode
     {
         public static Base GetBaseConfiguration(this Node node)
         {
@@ -19,22 +19,7 @@ namespace SmartHome.BusinessEntities
 
         public static SortedDictionary<DateTime, List<Operation>> GetTimeActions(this Node node)
         {
-            SortedDictionary<DateTime, List<Operation>> res = new SortedDictionary<DateTime, List<Operation>>();
-            foreach (var item in Sheduler.TimeActions)
-            {
-                foreach (var operation in item.Value)
-                {
-                    if (operation.DestionationHomeDevice.Connector.Node.Address == Address)
-                    {
-                        if (res.ContainsKey(item.Key))
-                            res[item.Key].Add(operation);
-                        else
-                            res.Add(item.Key, new List<Operation>() { operation });
-                    }
-                }
-            }
-
-            return res;
+            throw new NotImplementedException();
         }
 
         public static void GetEEPROM(this Node node)

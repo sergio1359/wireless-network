@@ -9,9 +9,10 @@ using DataLayer.Entities.Enums;
 
 namespace DataLayer.Entities.HomeDevices
 {
-    public class Button: HomeDevice
+    public class Button : HomeDevice
     {
-        public Button() : base() 
+        public Button()
+            : base()
         {
             base.ConnectorCapable = ConnectorTypes.LogicInput;
         }

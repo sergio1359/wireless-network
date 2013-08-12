@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class PresenceSensor: HomeDevice
+    public static class BusinessPresenceSensor : BusinessHomeDevice
     {
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }
