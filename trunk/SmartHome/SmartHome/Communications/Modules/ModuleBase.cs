@@ -26,7 +26,7 @@ namespace SmartHome.Comunications.Modules
 
         public byte[] OpCodes;
 
-        public bool CheckMessage(InputHeader message)
+        public bool CheckMessage(InputHeader message, bool fromMaster)
         {
             bool result = true;
 
@@ -34,7 +34,7 @@ namespace SmartHome.Comunications.Modules
 
             result &= this.Routed == null ? true : this.Routed == message.RoutingEnabled;
 
-            //result &= this.FromMaster == null ? true : this.FromMaster == ;
+            result &= this.FromMaster == null ? true : this.FromMaster == fromMaster;
 
             result &= this.Endpoint == null ? true : this.Endpoint == message.EndPoint;
 
