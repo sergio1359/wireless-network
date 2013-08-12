@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administrator\Screens\OperationScreen.cs">
+    <Compile Include="Screens\OperationScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Administrator\Screens\OperationScreen.Designer.cs">
+    <Compile Include="Screens\OperationScreen.Designer.cs">
       <DependentUpon>OperationScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\HomeMap.cs">
@@ -56,28 +56,28 @@
     <Compile Include="Controls\HomeMap.Designer.cs">
       <DependentUpon>HomeMap.cs</DependentUpon>
     </Compile>
-    <Compile Include="Electrical\Screens\ConnexionScreen.cs">
+    <Compile Include="Screens\ConnexionScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Electrical\Screens\ConnexionScreen.Designer.cs">
+    <Compile Include="Screens\ConnexionScreen.Designer.cs">
       <DependentUpon>ConnexionScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Electrical\Screens\HomeDeviceScreen.cs">
+    <Compile Include="Screens\HomeDeviceScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Electrical\Screens\HomeDeviceScreen.Designer.cs">
+    <Compile Include="Screens\HomeDeviceScreen.Designer.cs">
       <DependentUpon>HomeDeviceScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Electrical\Screens\NodeScreen.cs">
+    <Compile Include="Screens\NodeScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Electrical\Screens\NodeScreen.Designer.cs">
+    <Compile Include="Screens\NodeScreen.Designer.cs">
       <DependentUpon>NodeScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Electrical\Screens\ZonaScreen.cs">
+    <Compile Include="Screens\ZonaScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Electrical\Screens\ZonaScreen.Designer.cs">
+    <Compile Include="Screens\ZonaScreen.Designer.cs">
       <DependentUpon>ZonaScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="MainScreen.cs">
@@ -88,22 +88,22 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Administrator\Screens\OperationScreen.resx">
+    <EmbeddedResource Include="Screens\OperationScreen.resx">
       <DependentUpon>OperationScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\HomeMap.resx">
       <DependentUpon>HomeMap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Electrical\Screens\ConnexionScreen.resx">
+    <EmbeddedResource Include="Screens\ConnexionScreen.resx">
       <DependentUpon>ConnexionScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Electrical\Screens\HomeDeviceScreen.resx">
+    <EmbeddedResource Include="Screens\HomeDeviceScreen.resx">
       <DependentUpon>HomeDeviceScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Electrical\Screens\NodeScreen.resx">
+    <EmbeddedResource Include="Screens\NodeScreen.resx">
       <DependentUpon>NodeScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Electrical\Screens\ZonaScreen.resx">
+    <EmbeddedResource Include="Screens\ZonaScreen.resx">
       <DependentUpon>ZonaScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen.resx">
@@ -137,9 +137,7 @@
       <Name>ServiceLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

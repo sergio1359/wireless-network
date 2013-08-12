@@ -54,7 +54,7 @@
     <Compile Include="DTO\HomeDeviceDTO.cs" />
     <Compile Include="DTO\NodeDTO.cs" />
     <Compile Include="DTO\OperationDTO.cs" />
-    <Compile Include="DTO\PositionDTO.cs" />
+    <Compile Include="DTO\LocationDTO.cs" />
     <Compile Include="DTO\ServiceProfile.cs" />
     <Compile Include="DTO\ZoneDTO.cs" />
     <Compile Include="Services\HomeDeviceServices.cs" />

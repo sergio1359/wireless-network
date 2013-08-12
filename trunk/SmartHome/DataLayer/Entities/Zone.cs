@@ -17,7 +17,7 @@ namespace DataLayer.Entities
 
         public string Name { get; set; }
 
-        public byte[] ImageMap { get; set; }
+        public View MainView { get; set; }
 
         [Required]
         public virtual Home Home { get; set; }

@@ -8,20 +8,23 @@ using System.Threading.Tasks;
 namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class PositionDTO
+    public class LocationDTO
     {
         [DataMember]
         public int Id { get; set; }
 
         [DataMember]
-        public AxisDTO Zone { get; set; }
+        public string NameZone { get; set; }
 
         [DataMember]
-        public AxisDTO[] Views { get; set; }
+        public ViewDTO MainView { get; set; }
+
+        [DataMember]
+        public ViewDTO[] Views { get; set; }
     }
 
     [DataContract]
-    public class AxisDTO
+    public class ViewDTO
     {
         [DataMember]
         public int Id { get; set; }

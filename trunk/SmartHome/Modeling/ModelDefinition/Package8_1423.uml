@@ -3,12 +3,6 @@
   dslVersion="1.0.0.0"
   Id="097ba324-39cf-4f64-8317-b7053a0edef7"
   name="Tools" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
-  <ownedCommentsInternal>
-    <comment
-      Id="0945540b-a3c2-4c37-8630-b479955596f8">
-      <body>Las time actions estan organizadas por tiempo y esta clase tiene un gestor de eventos para facilitar el uso de las acciones</body>
-    </comment>
-  </ownedCommentsInternal>
   <packagedElements>
     <packageHasNamedElement>
       <class

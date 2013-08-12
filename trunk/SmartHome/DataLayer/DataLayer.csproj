@@ -69,8 +69,10 @@
     <Compile Include="Entities\HomeDevices\WallPlug.cs" />
     <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Operation.cs" />
-    <Compile Include="Entities\Position.cs" />
+    <Compile Include="Entities\PinPort.cs" />
+    <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Enums\ShieldTypes.cs" />
+    <Compile Include="Entities\Theme.cs" />
     <Compile Include="Entities\TimeRestriction.cs" />
     <Compile Include="Entities\View.cs" />
     <Compile Include="Entities\Zone.cs" />

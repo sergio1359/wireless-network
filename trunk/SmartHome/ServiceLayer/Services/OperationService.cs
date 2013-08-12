@@ -1,15 +1,13 @@
 ﻿using ServiceLayer.DTO;
-using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceLayer
+namespace ServiceLayer.Services
 {
-    public class OperationService
+    public class HomeServices
     {
 
         //ENCARGADA DE OPERACIONES BASICAS SOBRE TODAS LAS OEPRACIONES
