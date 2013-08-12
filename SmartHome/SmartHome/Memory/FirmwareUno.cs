@@ -1,14 +1,12 @@
 ﻿#region Using Statements
+using DataLayer.Entities;
+using DataLayer.Entities.Enums;
+using DataLayer.Entities.HomeDevices;
+using SmartHome.BusinessEntities;
 using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataLayer.Entities.Enums;
-using DataLayer.Entities;
-using DataLayer.Entities.HomeDevices;
-using SmartHome.BusinessEntities;
 #endregion
 
 namespace SmartHome.Memory

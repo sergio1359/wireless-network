@@ -1,16 +1,6 @@
-﻿using ServiceLayer.DTO;
+﻿using DataLayer.Entities.Enums;
+using ServiceLayer.DTO;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using DataLayer.Entities;
-using DataLayer.Entities.Enums;
-using DataLayer.Entities.HomeDevices;
-using SmartHome.BusinessEntities.BusinessHomeDevice;
-using SmartHome.BusinessEntities;
 
 namespace ServiceLayer
 {

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using SmartHome.Comunications;
+using SmartHome.Comunications.Messages;
+using SmartHome.Comunications.Modules;
+using SmartHome.Memory;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SerialPortManager.ConnectionManager;
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules;
-using SmartHome.Memory;
 
 namespace SmartHome.Communications.Modules
 {

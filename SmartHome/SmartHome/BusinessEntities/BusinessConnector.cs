@@ -3,11 +3,9 @@ using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Products;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks; 
+
 #endregion
 
 namespace SmartHome.BusinessEntities

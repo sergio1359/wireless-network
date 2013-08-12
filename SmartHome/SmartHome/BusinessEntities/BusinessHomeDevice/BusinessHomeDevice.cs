@@ -1,16 +1,10 @@
 ﻿#region Using Statements
+using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
+using SmartHome.Comunications.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using DataLayer.Entities.Enums;
-using DataLayer.Entities.HomeDevices;
-using DataLayer.Entities;
-using SmartHome.Comunications.Messages;
 using System.Reflection;
 #endregion
 

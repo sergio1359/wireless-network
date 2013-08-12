@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DataLayer.Entities;
-using DataLayer.Entities.HomeDevices;
+﻿using DataLayer.Entities;
 using DataLayer.Entities.Enums;
+using DataLayer.Entities.HomeDevices;
+using System;
+using System.Collections.Generic;
 
 namespace SmartHome.Products
 {

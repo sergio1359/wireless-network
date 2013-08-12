@@ -1,9 +1,4 @@
 ﻿#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 #endregion
@@ -30,16 +25,15 @@ namespace DataLayer.Entities.HomeDevices
             }
             set
             {
-                lastValue = this.value;
+                this.LastValue = this.value;
                 this.value = value;
             }
         }
 
         [NotMapped]
-        public int lastValue;
+        public int LastValue { get; private set; }
 
-        [NotMapped]
-        public int value;
+        private int value;
 
         public Dimmable()
             : base()

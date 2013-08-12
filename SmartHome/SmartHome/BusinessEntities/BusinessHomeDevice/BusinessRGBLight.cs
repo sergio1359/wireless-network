@@ -1,8 +1,7 @@
 ﻿#region Using Statements
-using System.Drawing;
-using DataLayer.Entities.Enums;
+using DataLayer.Entities.HomeDevices;
 using SmartHome.Comunications.Messages;
-using DataLayer.Entities.HomeDevices; 
+using System.Drawing; 
 #endregion
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice

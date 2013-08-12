@@ -1,14 +1,10 @@
 ﻿#region Using Statements
 using DataLayer.Entities;
-using DataLayer.Entities.HomeDevices;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using SmartHome.Comunications.Messages;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks; 
+
 #endregion
 
 namespace SmartHome.BusinessEntities

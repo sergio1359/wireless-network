@@ -1,13 +1,8 @@
 ﻿#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.Entities.Enums;
-using DataLayer.Entities.HomeDevices; 
+using DataLayer.Entities.HomeDevices;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; 
 #endregion
 
 namespace DataLayer.Entities
