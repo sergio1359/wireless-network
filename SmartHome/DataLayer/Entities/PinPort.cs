@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Plugins;
-using SmartHome.Network;
 
-namespace SmartHome.Products
+namespace DataLayer.Entities
 {
     public class PinPort
     {

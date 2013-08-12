@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using SmartHome.Plugins;
-using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
+using SmartHome.DataLayer;
+using DataLayer.Entities;
 
 namespace SmartHome.Products
 {

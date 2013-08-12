@@ -1,7 +1,4 @@
-﻿using SmartHome.HomeModel;
-using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +8,10 @@ using DataLayer.Repositories;
 using ServiceLayer.DTO;
 using AutoMapper;
 using System.Reflection;
+using DataLayer.Entities.HomeDevices;
+using DataLayer.Entities;
 
-namespace ServiceLayer
+namespace ServiceLayer.Services
 {
     public class HomeDeviceService
     {
@@ -99,9 +98,9 @@ namespace ServiceLayer
             throw new NotImplementedException();
         }
 
-        public PositionDTO GetHomeDevicePosition(int idHomeDevice)
+        public LocationDTO GetHomeDevicePosition(int idHomeDevice)
         {
-            return Mapper.Map<PositionDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
+            return Mapper.Map<LocationDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
         }
 
         /// <summary>

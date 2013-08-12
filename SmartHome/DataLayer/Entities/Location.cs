@@ -22,9 +22,5 @@ namespace DataLayer.Entities
 
         public virtual View View { get; set; }
 
-        public void CalculateLocation()
-        {
-            
-        }
     }
 }

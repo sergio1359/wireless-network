@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Plugins;
-using SmartHome.Network;
+using DataLayer.Entities;
 
 namespace SmartHome.Products
 {

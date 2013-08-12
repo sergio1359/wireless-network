@@ -18,11 +18,14 @@ namespace DataLayer.Entities
         [Key]
         public int Id { get; set; }
 
-        public string NameProperty;
-
-        public object Value;
+        public object ValueMine;
 
         public ConditionalOperations Operation;
+
+        /// <summary>
+        /// Property Name of the HomeDeviceValue
+        /// </summary>
+        public string NameProperty;
 
         public virtual HomeDevice HomeDeviceValue;
     }
