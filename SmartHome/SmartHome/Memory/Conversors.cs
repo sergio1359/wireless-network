@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SmartHome.Comunications.Messages;
 using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
+using SmartHome.BusinessEntities;
 
 namespace SmartHome.Memory
 {
@@ -41,16 +42,26 @@ namespace SmartHome.Memory
         }
 
         /// <summary>
-        /// Transform a DateTime in a Byte[] sort in Hours, Minutes and Seconds
+        /// Transform a TimeSpan in a Byte[] sort in Hours, Minutes and Seconds
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
         public static byte[] ToBinaryTime(this DateTime time)
         {
-            Byte[] result = new Byte[3];
+            byte[] result = new byte[3];
             result[0] = (byte)time.Hour;
             result[1] = (byte)time.Minute;
             result[2] = (byte)time.Second;
+
+            return result;
+        }
+
+        public static byte[] ToBinaryTime(this TimeSpan time)
+        {
+            byte[] result = new byte[3];
+            result[0] = (byte)time.Hours;
+            result[1] = (byte)time.Minutes;
+            result[2] = (byte)time.Seconds;
 
             return result;
         }
@@ -102,7 +113,7 @@ namespace SmartHome.Memory
 
             return result;
         }
-        
+
 
         /// <summary>
         /// Devuelve el Connector que tiene el pinPort Asociado, si no existe ningun conector entonces null

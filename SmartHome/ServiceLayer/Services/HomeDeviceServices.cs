@@ -11,7 +11,7 @@ using System.Reflection;
 using DataLayer.Entities.HomeDevices;
 using DataLayer.Entities;
 
-namespace ServiceLayer.Services
+namespace ServiceLayer
 {
     public class HomeDeviceService
     {
@@ -23,15 +23,16 @@ namespace ServiceLayer.Services
         /// <returns>Return the ID for the new HomeDevice</returns>
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
+            throw new NotImplementedException();
+            //Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
 
-            HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(deviceType);
+            //HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(deviceType);
 
-            homeDevice.Name = nameHomeDevice;
+            //homeDevice.Name = nameHomeDevice;
 
-            NetworkManager.HomeDevices.Add(homeDevice);
+            //NetworkManager.HomeDevices.Add(homeDevice);
 
-            return NetworkManager.HomeDevices.Last().Id;
+            //return NetworkManager.HomeDevices.Last().Id;
         }
 
         /// <summary>
@@ -49,14 +50,15 @@ namespace ServiceLayer.Services
         /// <param name="idHomeDevice">Identificator of the HomeDevice to be remove.</param>
         public void RemoveHomeDevice(int idHomeDevice)
         {
-            HomeDevice homeDevice = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+            throw new NotImplementedException();
+            //HomeDevice homeDevice = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
 
-            if (homeDevice.Connector != null)
-            {
-                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
-            }
+            //if (homeDevice.Connector != null)
+            //{
+            //    Services.NodeService.UnlinkHomeDevice(idHomeDevice);
+            //}
 
-            NetworkManager.HomeDevices.Remove(homeDevice);
+            //NetworkManager.HomeDevices.Remove(homeDevice);
         }
 
         /// <summary>
@@ -66,7 +68,8 @@ namespace ServiceLayer.Services
         /// <param name="newName">New Name</param>
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
-            NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = newName;
+            throw new NotImplementedException();
+            //NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = newName;
         }
 
 
@@ -79,11 +82,7 @@ namespace ServiceLayer.Services
         /// <param name="y">Relative position 0 to 1 of the X axis</param>
         public void UpdateZonePosition(int idHomeDevice, int idZone, float x, float y)
         {
-            HomeDevice home = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
-            Zone zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
-
-            home.Position.Zone = zone;
-            home.Position.ZoneCoordenates = new PointF(x, y);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -100,7 +99,8 @@ namespace ServiceLayer.Services
 
         public LocationDTO GetHomeDevicePosition(int idHomeDevice)
         {
-            return Mapper.Map<LocationDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
+            throw new NotImplementedException();
+            //return Mapper.Map<LocationDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
         }
 
         /// <summary>
@@ -109,7 +109,8 @@ namespace ServiceLayer.Services
         /// <returns>Return a HomeDeviceDTO</returns>
         public HomeDeviceDTO[] GetHomeDevices()
         {
-            return Mapper.Map<List<HomeDeviceDTO>>(NetworkManager.HomeDevices).ToArray();
+            throw new NotImplementedException();
+            //return Mapper.Map<List<HomeDeviceDTO>>(NetworkManager.HomeDevices).ToArray();
         }
 
         /// <summary>
@@ -118,16 +119,19 @@ namespace ServiceLayer.Services
         /// <returns>Return a HomeDeviceDTO</returns>
         public HomeDeviceDTO[] GetHomeDevices(bool isInUse)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == isInUse);
 
-            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+            throw new NotImplementedException();
+            //var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == isInUse);
+
+            //return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         public HomeDeviceDTO[] GetHomeDevicesByZone(int idZona)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona);
+            throw new NotImplementedException();
+            //var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona);
 
-            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+            //return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         /// <summary>
@@ -138,9 +142,10 @@ namespace ServiceLayer.Services
         /// <returns>Return Dictionary with ID, Name and type</returns>
         public HomeDeviceDTO[] GetHomeDevicesByZone(int idZona, List<string> homeDeviceTypes)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType));
+            throw new NotImplementedException();
+            //var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.InUse == true && hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType));
 
-            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+            //return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
         public HomeDeviceDTO[] GetHomeDevicesByView(int idView)
@@ -168,9 +173,10 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public HomeDeviceDTO[] GetHomeDevices(int idZona, List<string> homeDeviceTypes, bool connected)
         {
-            var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected);
+            throw new NotImplementedException();
+            //var homeDevices = NetworkManager.HomeDevices.Where(hd => hd.Position.Zone.Id == idZona && homeDeviceTypes.Contains(hd.HomeDeviceType) && hd.InUse == connected);
 
-            return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
+            //return Mapper.Map<List<HomeDeviceDTO>>(homeDevices).ToArray();
         }
 
     }

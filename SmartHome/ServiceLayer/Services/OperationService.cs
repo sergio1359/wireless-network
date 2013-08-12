@@ -1,13 +1,16 @@
-﻿using ServiceLayer.DTO;
+﻿using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
+using ServiceLayer.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
 
-namespace ServiceLayer.Services
+namespace ServiceLayer
 {
-    public class HomeServices
+    public class OperationService
     {
 
         //ENCARGADA DE OPERACIONES BASICAS SOBRE TODAS LAS OEPRACIONES
@@ -29,12 +32,14 @@ namespace ServiceLayer.Services
         /// <param name="idOperation"></param>
         public void RemoveOperation(int idOperation)
         {
-            NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation);
+            throw new NotImplementedException();
+            //NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation);
         }
 
         public void ExecuteOperation(int idOperation)
         {
-            NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation).Execute();
+            throw new NotImplementedException();
+            //NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation).Execute();
         }
 
         public OperationDTO[] GetHomeDeviceOperation(int idHomeDevice)
@@ -46,11 +51,9 @@ namespace ServiceLayer.Services
         /// Return the HomeDevice's operation types of the system.
         /// </summary>
         /// <returns>Array with the types names</returns>
-        public string[] GetHomeDeviceOperationTypes(string homeDeviceType)
+        public string[] GetHomeDeviceOperationTypes(int idHomeDevice)
         {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
-
-            return HomeDevice.GetHomeDeviceOperations(deviceType);
+            throw new NotImplementedException();
         }
         /*
         public OperationDTO[] GetHomeDeviceOperation(string homeDeviceType)
@@ -58,21 +61,22 @@ namespace ServiceLayer.Services
             throw new NotImplementedException();
         }*/
 
-        public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] param)
+        public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
         {
-            HomeDevice homeDevDestino = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDeviceDestination);
+            throw new NotImplementedException();
+            //HomeDevice homeDevDestino = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDeviceDestination);
 
-            Operation op = new Operation()
-            {
-                DestionationHomeDevice = homeDevDestino,
-                OperationName = operation,
-                Args = param
-            };
+            //Operation op = new Operation()
+            //{
+            //    DestionationHomeDevice = homeDevDestino,
+            //    OperationName = operation,
+            //    Args = args
+            //};
 
-            HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
-            homeDev.Operations.Add(op);
+            //HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+            //homeDev.Operations.Add(op);
 
-            return op.Id;
+            //return op.Id;
         }
         #endregion
 

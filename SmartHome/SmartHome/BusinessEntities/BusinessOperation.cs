@@ -31,7 +31,7 @@ namespace SmartHome.BusinessEntities
                 && m.ReturnType == typeof(OperationMessage) 
                 && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
 
-            return (OperationMessage)method.Invoke(operation.DestionationHomeDevice, operation.Params);
+            return (OperationMessage)method.Invoke(operation.DestionationHomeDevice, operation.Args);
         }
     }
 }

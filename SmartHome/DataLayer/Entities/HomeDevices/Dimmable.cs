@@ -35,8 +35,11 @@ namespace DataLayer.Entities.HomeDevices
             }
         }
 
-        private int lastValue;
-        private int value;
+        [NotMapped]
+        public int lastValue;
+
+        [NotMapped]
+        public int value;
 
         public Dimmable()
             : base()
