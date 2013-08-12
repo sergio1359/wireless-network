@@ -11,7 +11,7 @@ using DataLayer.Entities.HomeDevices;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessLight
+    public static class BusinessLight
     {
         [OperationAttribute]
         public static OperationMessage On(this Light light)
@@ -36,11 +36,5 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         {
             return OperationMessage.LogicSwitch(light.Id, 0);
         }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
-        
     }
 }

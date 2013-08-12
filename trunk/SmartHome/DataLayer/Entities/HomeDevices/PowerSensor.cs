@@ -21,11 +21,5 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.ConnectorCapable = ConnectorTypes.Dimmer;
         }
-
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

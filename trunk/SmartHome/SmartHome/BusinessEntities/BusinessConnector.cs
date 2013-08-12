@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities;
+﻿#region Using Statements
+using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Products;
@@ -6,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
+#endregion
 
 namespace SmartHome.BusinessEntities
 {
-    public class BusinessConnector
+    public static class BusinessConnector
     {
         /// <summary>
         /// Conecta, sin realizar ninguna comprobacion de compatibilidad, un conector con el HomeDevice pasado por parametros

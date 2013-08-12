@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessWallPlug
+    public static class BusinessWallPlug
     {
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

@@ -7,7 +7,7 @@ using DataLayer.Entities.HomeDevices;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessRGBLight
+    public static class BusinessRGBLight
     {
 
         [OperationAttribute]        
@@ -52,11 +52,5 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         {
             return rgbLight.ToColor(Color.White, 1);
         }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
-        
     }
 }

@@ -11,7 +11,7 @@ using DataLayer.Entities.HomeDevices;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    class BusinessDimmable
+    public static class BusinessDimmable
     {
         [OperationAttribute]        
         public static OperationMessage On(this Dimmable dimmable)
@@ -20,19 +20,19 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         }
 
         [OperationAttribute]
-        public OperationMessage Off(this Dimmable dimmable)
+        public static OperationMessage Off(this Dimmable dimmable)
         {
             return dimmable.PercentageDimmer(0);
         }
 
         [OperationAttribute]
-        public OperationMessage OnTime(this Dimmable dimmable,byte seconds)
+        public static OperationMessage OnTime(this Dimmable dimmable, byte seconds)
         {
             return dimmable.PercentageDimmer(100, seconds);
         }
 
         [OperationAttribute]
-        public OperationMessage Switch(this Dimmable dimmable)
+        public static OperationMessage Switch(this Dimmable dimmable)
         {
             if (dimmable.Value != 0)
             {
@@ -45,20 +45,15 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         }
 
         [OperationAttribute]
-        public OperationMessage PercentageDimmer(this Dimmable dimmable,int percentage)
+        public static OperationMessage PercentageDimmer(this Dimmable dimmable, int percentage)
         {
             return dimmable.PercentageDimmer(percentage, 0);
         }
 
         [OperationAttribute]
-        public OperationMessage PercentageDimmer(this Dimmable dimmable, int percentage, byte seconds)
+        public static OperationMessage PercentageDimmer(this Dimmable dimmable, int percentage, byte seconds)
         {
             return OperationMessage.DimmerWrite(dimmable.Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
-        }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
         }
     }
 }

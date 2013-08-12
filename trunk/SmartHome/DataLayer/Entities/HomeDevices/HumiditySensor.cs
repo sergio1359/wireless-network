@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -12,14 +12,10 @@ namespace DataLayer.Entities.HomeDevices
     {
         public int Humidity { get; set; }
 
-        public HumiditySensor() : base() 
+        public HumiditySensor()
+            : base()
         {
-            
-        }
 
-        public override void RefreshState()
-        {
-            base.RefreshState();
         }
     }
 }

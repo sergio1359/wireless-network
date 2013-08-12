@@ -15,12 +15,7 @@ namespace DataLayer.Entities.HomeDevices
         public LuminositySensor()
             : base()
         {
-        }
 
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
         }
     }
 }

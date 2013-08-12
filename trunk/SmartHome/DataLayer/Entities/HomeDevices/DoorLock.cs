@@ -15,7 +15,8 @@ namespace DataLayer.Entities.HomeDevices
 
         public byte OpenTime { get; set; }
 
-        public DoorLock() : base() 
+        public DoorLock()
+            : base()
         {
             base.ConnectorCapable = ConnectorTypes.SwitchLOW;
         }

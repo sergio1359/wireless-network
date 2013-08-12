@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
 {
-    class Dimmable : HomeDevice
+    public class Dimmable : HomeDevice
     {
         public enum DimmableType
         {
@@ -18,7 +19,9 @@ namespace DataLayer.Entities.HomeDevices
             Other,
         }
 
-        private int value;
+        public DimmableType Type { get; set; }
+
+        [NotMapped]
         public int Value
         {
             get
@@ -30,12 +33,13 @@ namespace DataLayer.Entities.HomeDevices
                 lastValue = this.value;
                 this.value = value;
             }
-        } //it's a value between 0 to 100
+        }
+
         private int lastValue;
+        private int value;
 
-        public DimmableType Type { get; set; }
-
-        public Dimmable() : base() 
+        public Dimmable()
+            : base()
         {
             base.ConnectorCapable = ConnectorTypes.Dimmer;
         }

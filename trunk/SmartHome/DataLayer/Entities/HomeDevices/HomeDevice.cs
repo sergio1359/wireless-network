@@ -14,11 +14,6 @@ namespace DataLayer.Entities.HomeDevices
 {
     public abstract class HomeDevice
     {
-        private static Dictionary<Type, string[]> homeDeviceOperations = null;
-
-        [NotMapped]
-        private static string[] homeDeviceTypes = null;
-
         [Key]
         public ushort Id { get; set; }
 
@@ -32,6 +27,9 @@ namespace DataLayer.Entities.HomeDevices
 
         public List<Operation> Operations { get; set; }
 
+        private static string[] homeDeviceTypes = null;
+
+        //Properties
         [NotMapped]
         public static string[] HomeDeviceTypes
         {
@@ -64,6 +62,6 @@ namespace DataLayer.Entities.HomeDevices
 
         public HomeDevice() { }
 
-        
+
     }
 }

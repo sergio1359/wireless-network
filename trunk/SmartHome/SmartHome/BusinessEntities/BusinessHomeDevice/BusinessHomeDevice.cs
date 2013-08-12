@@ -10,12 +10,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using DataLayer.Entities;
+using SmartHome.Comunications.Messages;
+using System.Reflection;
 #endregion
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public class BusinessHomeDevice
+    public static class BusinessHomeDevice
     {
+        private static Dictionary<Type, string[]> homeDeviceOperations = null;
+
+        
+
+
+        //Methods
         public static void LinkConnector(this HomeDevice homeDevice, Connector connector)
         {
             homeDevice.Connector = connector;
@@ -48,9 +56,13 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return homeDeviceOperations[HomeDeviceType];
         }
 
-        public virtual void RefreshState()
+        public static void GetStateOperation(this HomeDevice homeDevice)
         {
+            MethodInfo method = homeDevice.GetType().GetMethods().First(m => m.ReturnType == typeof(OperationMessage)
+                && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
 
+            OperationMessage op = (OperationMessage)method.Invoke(homeDevice, null);
+            //TODO WHEN WE HAVE THE SENDER METHOD
         }
     }
 }
