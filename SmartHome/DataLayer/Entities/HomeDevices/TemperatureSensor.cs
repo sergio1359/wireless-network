@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #endregion
 
@@ -7,7 +8,8 @@ namespace DataLayer.Entities.HomeDevices
 {
     public class TemperatureSensor: HomeDevice
     {
-        public int CelciusTemperature { get; set; }
+        [NotMapped]
+        public int? CelciusTemperature { get; set; }
 
         public TemperatureSensor()
             : base()
