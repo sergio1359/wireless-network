@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SmartHome.Plugins;
-using SmartHome.DataLayer;
 using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
+using DataLayer.Entities.Enums;
 
 namespace SmartHome.Products
 {
     public class ProductConfiguration
     {
-        public static Dictionary<string, Tuple<ConnectorType, List<PinPort>>> GetShieldDictionary(ShieldType shieldtype)
+        public static Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>> GetShieldDictionary(ShieldTypes shieldtype)
         {
-            Dictionary<string, Tuple<ConnectorType, List<PinPort>>> pinPorts = new Dictionary<string, Tuple<ConnectorType, List<PinPort>>>();
+            Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>> pinPorts = new Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>>();
             switch (shieldtype)
             {
-                case ShieldType.Debug:
-                    pinPorts.Add("Button",      new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("D7") }));
-                    pinPorts.Add("Light",       new Tuple<ConnectorType, List<PinPort>>(ConnectorType.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
-                    pinPorts.Add("Temperature", new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Humidity",    new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Presence",    new Tuple<ConnectorType, List<PinPort>>(ConnectorType.LogicInput, new List<PinPort>() { new PinPort("B6") }));
+                case ShieldTypes.Debug:
+                    pinPorts.Add("Button",      new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("D7") }));
+                    pinPorts.Add("Light",       new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
+                    pinPorts.Add("Temperature", new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("E2") }));
+                    pinPorts.Add("Humidity",    new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("E2") }));
+                    pinPorts.Add("Presence",    new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("B6") }));
                     break;
                 default:
                     break;
@@ -28,12 +28,12 @@ namespace SmartHome.Products
             return pinPorts;
         }
 
-        public static Base GetBaseConfiguration(BaseType controller)
+        public static Base GetBaseConfiguration(BaseTypes controller)
         {
             Base result = new Base();
             switch (controller)
             {
-                case BaseType.ATMega128RFA1_V1:
+                case BaseTypes.ATMega128RFA1_V1:
                     result.UController = controller;
                     result.DeviceSignature = 128;
                     result.NumPorts = 7;

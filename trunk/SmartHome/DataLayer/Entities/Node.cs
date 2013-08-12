@@ -57,7 +57,6 @@ namespace DataLayer.Entities
 
         public SortedDictionary<DateTime, List<Operation>> GetTimeActions()
         {
-            //Puke, quiero hacer esto con linQ!!
             SortedDictionary<DateTime, List<Operation>> res = new SortedDictionary<DateTime, List<Operation>>();
             foreach (var item in Sheduler.TimeActions)
             {

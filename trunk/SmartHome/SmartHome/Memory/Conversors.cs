@@ -1,6 +1,4 @@
 ﻿using SmartHome.Comunications;
-using SmartHome.Network;
-using SmartHome.Network.HomeDevices;
 using SmartHome.Products;
 using System;
 using System.Collections.Generic;
@@ -8,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartHome.Comunications.Messages;
+using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
 
 namespace SmartHome.Memory
 {

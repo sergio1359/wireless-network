@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayer.Entities.Enums; 
+using DataLayer.Entities.Enums;
+using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices; 
 #endregion
 
 namespace SmartHome.Memory
@@ -134,13 +136,13 @@ namespace SmartHome.Memory
             result.AddRange(node.Address.UshortToByte(baseConfiguration.LittleEndian));
 
             //chanel
-            result.Add(NetworkManager.Security.Channel);
+            result.Add(Home.Security.Channel);
 
             //panID
-            result.AddRange(NetworkManager.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
+            result.AddRange(Home.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
 
             //securityKey
-            result.AddRange(NetworkManager.Security.GetSecurityKey());
+            result.AddRange(Home.Security.GetSecurityKey());
 
             //networkRetriesLimit
             result.Add(node.NetworkRetries);

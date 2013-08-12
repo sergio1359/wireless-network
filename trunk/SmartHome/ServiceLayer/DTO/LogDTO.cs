@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Plugins
+namespace ServiceLayer.DTO
 {
-    public enum PluginState
+    public class LogDTO
     {
-        Available,
-        Unavailable,
-        Active,
     }
 }

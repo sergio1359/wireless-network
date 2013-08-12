@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Plugins;
 using DataLayer.Entities;
+using DataLayer.Entities.Enums;
 
 namespace SmartHome.Products
 {
@@ -12,7 +12,7 @@ namespace SmartHome.Products
     {
         //Identificador de micro
         public UInt32 DeviceSignature { set; get; }
-        public BaseType UController { set; get; }
+        public BaseTypes UController { set; get; }
 
         //numero de puertos que tiene el micro, y cada puerto tiene NumPins pines
         public UInt16 NumPorts { set; get; }

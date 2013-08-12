@@ -130,25 +130,6 @@ namespace ServiceLayer.Services
             //Borrar todos los views que contenga la zona
         }
 
-        /// <summary>
-        /// Get the image map of a concrete Zone
-        /// </summary>
-        /// <param name="idZone"></param>
-        /// <returns></returns>
-        public Image GetImageZone(int idZone)
-        {
-            return NetworkManager.Home.Zones.First(z => z.Id == idZone).ImageMap;
-        }
-
-        /// <summary>
-        /// Set the name zone
-        /// </summary>
-        /// <param name="idZone"></param>
-        /// <param name="newName"></param>
-        public void SetNameZone(int idZone, string newName)
-        {
-            NetworkManager.Home.Zones.First(z => z.Id == idZone).NameZone = newName;
-        } 
         #endregion
 
         #region View

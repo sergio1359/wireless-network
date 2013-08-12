@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataLayer.Entities.Enums;
+using ServiceLayer.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +25,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        public string[] GetLog(string category)
+        public LogDTO[] GetLog(string category)
         {
             throw new NotImplementedException();
         }
@@ -35,7 +37,7 @@ namespace ServiceLayer.Services
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public string[] GetLog(string category, int from, int to)
+        public LogDTO[] GetLog(string category, int from, int to)
         {
             throw new NotImplementedException();
         }
@@ -45,9 +47,14 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        public string[] GetLogCategory(string category)
+        public LogDTO[] GetLogCategory(string category)
         {
             throw new NotImplementedException();
+        }
+
+        public string[] GetCategories()
+        {
+            return Enum.GetNames(typeof(LogTypes));
         }
     }
 }
