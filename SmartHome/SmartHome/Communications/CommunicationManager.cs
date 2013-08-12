@@ -104,8 +104,10 @@ namespace SmartHome.Comunications
 
         private void connection_OperationReceived(object sender, InputHeader e)
         {
+            NodeConnection connection = (NodeConnection)sender;
+
             //Send Message to the placeHolders
-            foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e)))
+            foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e, connection.NodeAddress == MASTER_ADDRESS)))
             {
                 Task.Factory.StartNew(() =>
                     {

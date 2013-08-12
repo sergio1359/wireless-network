@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Threading;
 #endregion
 
 namespace SmartHome.Communications.SerialManager
@@ -44,7 +45,7 @@ namespace SmartHome.Communications.SerialManager
 
         private ConnectionStates connectionState;
 
-        private Timer identifyTimeoutTimer;
+        private System.Timers.Timer identifyTimeoutTimer;
         private int retriesCount;
         #endregion
 
@@ -92,6 +93,12 @@ namespace SmartHome.Communications.SerialManager
                     return serialPort.PortName;
             }
         }
+
+        public int ConfirmationTimeout 
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constants
@@ -102,7 +109,9 @@ namespace SmartHome.Communications.SerialManager
         static byte[] EOF = { APP_MAGIC_SYMBOL, 0x03 };
 
         const int IDENTIFY_MAX_RETRIES = 4;
-        const int MILLISECONDS_BW_RETRIES = 2000;
+        const int MS_BW_IDENTIY_RETRIES = 2000;
+
+        const int CONFIRMATION_TIMEOUT_MS = 4000;
         #endregion
 
         public NodeConnection(string PortName)
@@ -110,9 +119,11 @@ namespace SmartHome.Communications.SerialManager
             this.serialPort = new SerialPort(PortName, 38400);
             this.serialPort.DataReceived += serialPort_DataReceived;
 
-            this.identifyTimeoutTimer = new Timer()
+            this.ConfirmationTimeout = CONFIRMATION_TIMEOUT_MS;
+
+            this.identifyTimeoutTimer = new System.Timers.Timer()
             {
-                Interval = MILLISECONDS_BW_RETRIES,
+                Interval = MS_BW_IDENTIY_RETRIES,
                 AutoReset = false,
             };
             this.identifyTimeoutTimer.Elapsed += identifyRetryTimer_Elapsed;
@@ -281,10 +292,11 @@ namespace SmartHome.Communications.SerialManager
                 this.Identified = true;
                 this.ConnectionState = ConnectionStates.Connected;
             }
-            else if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted && operation.Confirmation != InputHeader.ConfirmationType.None)
+            else if (operation.Confirmation != InputHeader.ConfirmationType.None)
             {
                 // Data confirmation response
-                pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
+                if(pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+                    pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
             }
             else
             {
@@ -321,7 +333,23 @@ namespace SmartHome.Communications.SerialManager
             if (!this.SendData(message.ToBinary()))
                 return false;
             else
-                return await this.pendingConfirmationTask.Task;
+            {
+                //Await for a confirmation with timeout
+                Task delayTask = Task.Delay(this.ConfirmationTimeout);
+                Task firstTask = await Task.WhenAny(this.pendingConfirmationTask.Task, delayTask);
+
+                if (firstTask == delayTask)
+                {
+                    //Timeout
+                    this.pendingConfirmationTask.SetCanceled();
+                    Debug.WriteLine("Confirmation response ABORTED!");
+                    return false;
+                }
+                else
+                {
+                    return pendingConfirmationTask.Task.Result;
+                }
+            }
         }
 
         public bool SendOperation(IMessage operation)
