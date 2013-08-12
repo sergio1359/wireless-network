@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DTO\ConnectorDTO.cs" />
     <Compile Include="DTO\HomeDeviceDTO.cs" />
+    <Compile Include="DTO\LogDTO.cs" />
     <Compile Include="DTO\NodeDTO.cs" />
     <Compile Include="DTO\OperationDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />

@@ -47,10 +47,8 @@ namespace DataLayer.Entities
 
         public OperationMessage GetOperationMessage()
         {
-            //TODO: Get method HAY QUE PONER ATRIBUTOS Y TODAS LAS CONDICIONES QUE QUERAMOS!!
-            MethodInfo method = this.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage));
+            MethodInfo method = this.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage) && m.Attributes == OperationAttribute);
 
-            //Execute
             return (OperationMessage)method.Invoke(this.DestionationHomeDevice, this.Params);
         }
     }

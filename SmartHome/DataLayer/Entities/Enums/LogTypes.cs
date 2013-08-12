@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHome.Logs
+namespace DataLayer.Entities.Enums
 {
-    public enum LogCategory
+    public enum LogTypes
     {
         All,
         Info,

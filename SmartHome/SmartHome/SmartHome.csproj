@@ -54,19 +54,10 @@
     <Compile Include="Communications\SerialManager\NodeConnection.cs" />
     <Compile Include="Communications\SerialManager\OutputHeader.cs" />
     <Compile Include="Communications\SerialManager\SerialManager.cs" />
-    <Compile Include="Plugins\PluginState.cs" />
-    <Compile Include="Logs\Log.cs" />
-    <Compile Include="Logs\LogCategory.cs" />
-    <Compile Include="Logs\LogManager.cs" />
     <Compile Include="Memory\FirmwareUno.cs" />
     <Compile Include="Memory\Conversors.cs" />
     <Compile Include="Memory\Crc16.cs" />
     <Compile Include="Memory\Hex.cs" />
-    <Compile Include="Plugins\AbstractPlugin.cs" />
-    <Compile Include="Plugins\IConfigurator.cs" />
-    <Compile Include="Plugins\PluginLoader.cs" />
-    <Compile Include="Plugins\PluginsContainer.cs" />
-    <Compile Include="Plugins\PluginsController.cs" />
     <Compile Include="Products\Base.cs" />
     <Compile Include="Products\PinPortConfiguration.cs" />
     <Compile Include="Products\ProductsConfiguration.cs" />
@@ -82,6 +73,7 @@
       <Name>DataLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
