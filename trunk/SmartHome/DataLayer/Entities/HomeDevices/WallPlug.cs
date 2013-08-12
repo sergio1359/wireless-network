@@ -26,7 +26,7 @@ namespace DataLayer.Entities.HomeDevices
 
         public WallPlug() : base() 
         {
-            base.ConnectorCapable = ConnectorType.SwitchHI;
+            base.ConnectorCapable = ConnectorTypes.SwitchHI;
         }
 
         public override void RefreshState()

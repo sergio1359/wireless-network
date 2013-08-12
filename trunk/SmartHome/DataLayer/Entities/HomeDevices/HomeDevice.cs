@@ -64,41 +64,6 @@ namespace DataLayer.Entities.HomeDevices
 
         public HomeDevice() { }
 
-        public void LinkConnector(Connector connector)
-        {
-            this.Connector = connector;
-        }
-
-        public void UnlinkConnector()
-        {
-            this.Connector = null;
-        }
-
-        public virtual void RefreshState()
-        {
-
-        }
-
-        public static string[] GetHomeDeviceOperations(Type HomeDeviceType)
-        {
-            if (HomeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(HomeDeviceType))
-                return null;
-
-            if (homeDeviceOperations == null)
-                homeDeviceOperations = new Dictionary<Type, string[]>();
-
-            if (!homeDeviceOperations.ContainsKey(HomeDeviceType))
-            {
-                homeDeviceOperations.Add(HomeDeviceType,
-                                        HomeDeviceType.GetMethods()
-                                        .Where(m => m.GetCustomAttributes(true)
-                                            .OfType<OperationAttribute>()
-                                            .Where(a => !a.Internal).Count() > 0)
-                                        .Select(m => m.Name)
-                                        .ToArray());
-            }
-
-            return homeDeviceOperations[HomeDeviceType];
-        }
+        
     }
 }

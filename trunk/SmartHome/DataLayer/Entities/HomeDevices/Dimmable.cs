@@ -39,53 +39,5 @@ namespace DataLayer.Entities.HomeDevices
         {
             base.ConnectorCapable = ConnectorTypes.Dimmer;
         }
-
-        [OperationAttribute]        
-        public OperationMessage On()
-        {
-            return PercentageDimmer(100);
-        }
-
-        [OperationAttribute]
-        public OperationMessage Off()
-        {
-            return PercentageDimmer(0);
-        }
-
-        [OperationAttribute]
-        public OperationMessage OnTime(byte seconds)
-        {
-            return PercentageDimmer(100, seconds);
-        }
-
-        [OperationAttribute]
-        public OperationMessage Switch()
-        {
-            if (Value != 0)
-            {
-                return Off();
-            }
-            else
-            {
-                return PercentageDimmer(lastValue);
-            }
-        }
-
-        [OperationAttribute]
-        public OperationMessage PercentageDimmer(int percentage)
-        {
-            return PercentageDimmer(percentage, 0);
-        }
-
-        [OperationAttribute]
-        public OperationMessage PercentageDimmer(int percentage, byte seconds)
-        {
-            return OperationMessage.DimmerWrite(Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
-        }
-
-        public override void RefreshState()
-        {
-            base.RefreshState();
-        }
     }
 }

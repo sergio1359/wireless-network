@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using DataLayer.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace DataLayer.Entities.HomeDevices
         public PowerSensor()
             : base()
         {
-            base.ConnectorCapable = ConnectorType.Dimmer;
+            base.ConnectorCapable = ConnectorTypes.Dimmer;
         }
 
 

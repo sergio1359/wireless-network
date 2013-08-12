@@ -34,22 +34,5 @@ namespace DataLayer.Entities
             this.TimeRestrictions = new List<TimeRestriction>();
             this.ConditionalRestriction = new List<ConditionalRestriction>();
         }
-
-        public void Execute() 
-        { 
-
-        }
-
-        public byte[] ToBinaryOperation()
-        {
-            return this.GetOperationMessage().ToBinary();
-        }
-
-        public OperationMessage GetOperationMessage()
-        {
-            MethodInfo method = this.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == OperationName && m.ReturnType == typeof(OperationMessage) && m.Attributes == OperationAttribute);
-
-            return (OperationMessage)method.Invoke(this.DestionationHomeDevice, this.Params);
-        }
     }
 }
