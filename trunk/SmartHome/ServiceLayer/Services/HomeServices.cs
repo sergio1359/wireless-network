@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceLayer.Services
+namespace ServiceLayer
 {
     public class HomeService
     {
@@ -20,7 +20,7 @@ namespace ServiceLayer.Services
         /// <param name="newName"></param>
         public void SetHomeName(string newName)
         {
-            NetworkManager.Home.Name = newName;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public string GetHomeName()
         {
-            return NetworkManager.Home.Name;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -39,7 +39,8 @@ namespace ServiceLayer.Services
         /// <param name="longitude"></param>
         public void SetHomeLocation(float latitude, float longitude)
         {
-            NetworkManager.Home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+            throw new NotImplementedException();
+            //NetworkManager.Home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
         }
 
         /// <summary>
@@ -48,7 +49,8 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
-            return NetworkManager.Home.Location;
+            throw new NotImplementedException();
+            //return NetworkManager.Home.Location;
         }
 
         /// <summary>
@@ -84,8 +86,9 @@ namespace ServiceLayer.Services
         /// <param name="idNode"></param>
         public void UnlinkNode(int idNode)
         {
-            Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
-            NetworkManager.Nodes.Remove(node);
+            throw new NotImplementedException();
+            //Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
+            //NetworkManager.Nodes.Remove(node);
         }
 
         /// <summary>
@@ -93,7 +96,8 @@ namespace ServiceLayer.Services
         /// </summary>
         public void UpdateConfiguration()
         {
-            NetworkManager.GetAllEEPROMS();
+            throw new NotImplementedException();
+            //NetworkManager.GetAllEEPROMS();
         }
         #endregion
 
@@ -104,7 +108,8 @@ namespace ServiceLayer.Services
         /// <returns>Dictionary ID, Name of zones</returns>
         public PlaceDTO[] GetZones()
         {
-            return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
+            throw new NotImplementedException();
+            //return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
         }
 
         /// <summary>
@@ -114,11 +119,12 @@ namespace ServiceLayer.Services
         /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
-            Zone zone = new Zone();
-            zone.NameZone = nameZone;
-            NetworkManager.Home.Zones.Add(zone);
+            throw new NotImplementedException();
+            //Zone zone = new Zone();
+            //zone.Name = nameZone;
+            //NetworkManager.Home.Zones.Add(zone);
 
-            return NetworkManager.Home.Zones.Last().Id;
+            //return NetworkManager.Home.Zones.Last().Id;
         }
 
         /// <summary>
@@ -140,9 +146,10 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public PlaceDTO[] GetViews(int idZone)
         {
-            var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
+            throw new NotImplementedException();
+            //var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
 
-            return Mapper.Map<List<PlaceDTO>>(views).ToArray();
+            //return Mapper.Map<List<PlaceDTO>>(views).ToArray();
         }
 
 
@@ -154,12 +161,13 @@ namespace ServiceLayer.Services
         /// <returns>Return the identification of the new View</returns>
         public int AddView(int idZone, string nameView)
         {
-            var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
-            View newView = new View();
-            newView.NameView = nameView;
-            zone.Views.Add(newView);
+            throw new NotImplementedException();
+            //var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
+            //View newView = new View();
+            //newView.Name = nameView;
+            //zone.Views.Add(newView);
 
-            return newView.Id;
+            //return newView.Id;
         }
 
         /// <summary>
@@ -178,7 +186,8 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public Image GetImageView(int idView)
         {
-            return NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).ImageMap;
+            throw new NotImplementedException();
+            //return NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).ImageMap;
         }
 
         /// <summary>
@@ -188,7 +197,7 @@ namespace ServiceLayer.Services
         /// <param name="newName"></param>
         public void SetNameView(int idView, string newName)
         {
-            NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
+            //NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
         } 
         #endregion
     }

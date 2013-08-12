@@ -7,8 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataLayer.Entities;
+using DataLayer.Entities.Enums;
+using DataLayer.Entities.HomeDevices;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+using SmartHome.BusinessEntities;
 
-namespace ServiceLayer.Services
+namespace ServiceLayer
 {
     public class NodeService
     {
@@ -23,19 +27,21 @@ namespace ServiceLayer.Services
         /// 3 == el homeDevice no es compatible con el conector</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            Connector connector = NetworkManager.Nodes.SelectMany(n => n.Connectors).First(con => con.Id == idConnector);
-            HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
+            throw new NotImplementedException();
 
-            if (connector.InUse)
-                return 1;
+            //Connector connector = //GET CONECTOR BY ID
+            //HomeDevice homeDevice = //GET HOMEDEVICE BY ID
+
+            //if (connector.InUse)
+            //    return 1;
             
-            if (homeDevice.InUse)
-                return 2;
+            //if (homeDevice.InUse)
+            //    return 2;
 
-            connector.LinkHomeDevice(homeDevice);
-            homeDevice.LinkConnector(connector);
+            //connector.LinkHomeDevice(homeDevice);
+            //homeDevice.LinkConnector(connector);
 
-            return 0;
+            //return 0;
         }
 
 
@@ -44,9 +50,11 @@ namespace ServiceLayer.Services
         /// </summary>
         public void UnlinkHomeDevice(int idHomeDevice)
         {
-            HomeDevice homeDevice = NetworkManager.HomeDevices.FirstOrDefault(h => h.Id == idHomeDevice);
-            homeDevice.Connector.UnlinkHomeDevice();
-            homeDevice.UnlinkConnector();
+            throw new NotImplementedException();
+
+            //HomeDevice homeDevice = //GET HOMEDEVICE BY ID
+            //homeDevice.Connector.UnlinkHomeDevice();
+            //homeDevice.UnlinkConnector();
         }
 
         /// <summary>
@@ -56,9 +64,11 @@ namespace ServiceLayer.Services
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors;
+            throw new NotImplementedException();
 
-            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors;
+
+            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
 
@@ -69,43 +79,47 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+            throw new NotImplementedException();
+            //HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
 
-            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
+            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
 
-            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
         public string GetNameNode(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Name;
+            throw new NotImplementedException();
+            //return NetworkManager.Nodes.First(n => n.Id == idNode).Name;
         }
 
         public void SetNameNode(int idNode, string newName)
         {
-            NetworkManager.Nodes.First(n => n.Id == idNode).Name = newName;
+            throw new NotImplementedException();
+            //NetworkManager.Nodes.First(n => n.Id == idNode).Name = newName;
         }
 
         public int GetAddressNode(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Address;
+            throw new NotImplementedException();
+            //return NetworkManager.Nodes.First(n => n.Id == idNode).Address;
         }
 
         public void SetAddressNode(int idNode, ushort newAddress)
         {
-            NetworkManager.Nodes.First(n => n.Id == idNode).Address = newAddress;
+            throw new NotImplementedException();
+            //NetworkManager.Nodes.First(n => n.Id == idNode).Address = newAddress;
         }
 
-        public void UpdatePosition(int idNode, int idZone, float X, float Y)
+        public void UpdatePosition(int idNode, int idMainView, float X, float Y)
         {
-            Node node = NetworkManager.Nodes.First(n => n.Id == idNode);
-            node.Position.Zone = NetworkManager.Home.Zones.FirstOrDefault(z => z.Id == idNode);
-            node.Position.ZoneCoordenates = new PointF(X, Y);
+            throw new NotImplementedException();
         }
 
-        public Position GetNodePosition(int idNode)
+        public LocationDTO GetNodePosition(int idNode)
         {
-            return NetworkManager.Nodes.First(n => n.Id == idNode).Position;
+            throw new NotImplementedException();
+            //return NetworkManager.Nodes.First(n => n.Id == idNode).Position;
         }
 
         /// <summary>
@@ -115,31 +129,34 @@ namespace ServiceLayer.Services
         /// <returns></returns>
         public ConnectorDTO[] GetFreeConnectors(int idNode)
         {
-            var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false);
+            throw new NotImplementedException();
+            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false);
 
-            return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
         }
 
         public NodeDTO[] GetNodes()
         {
-            return Mapper.Map<List<NodeDTO>>(NetworkManager.Nodes).ToArray();
+            throw new NotImplementedException();
+            //return Mapper.Map<List<NodeDTO>>(NetworkManager.Nodes).ToArray();
         }
 
         public NodeDTO[] GetNodes(int idZone)
         {
-            var nodes = NetworkManager.Nodes.Where(n => n.Position.Id == idZone);
+            throw new NotImplementedException();
+            //var nodes = NetworkManager.Nodes.Where(n => n.Position.Id == idZone);
 
-            return Mapper.Map<List<NodeDTO>>(nodes).ToArray();
+            //return Mapper.Map<List<NodeDTO>>(nodes).ToArray();
         }
 
         public string[] GetTypeShields()
         {
-            return Enum.GetNames(typeof(ShieldType));
+            return Enum.GetNames(typeof(ShieldTypes));
         }
 
         public string[] GetTypeBases()
         {
-            return Enum.GetNames(typeof(BaseType));
+            return Enum.GetNames(typeof(BaseTypes));
         }
     }
 }

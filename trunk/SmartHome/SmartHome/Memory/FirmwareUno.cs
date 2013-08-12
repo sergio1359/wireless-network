@@ -135,18 +135,22 @@ namespace SmartHome.Memory
 
             //deviceAddress
             result.AddRange(node.Address.UshortToByte(baseConfiguration.LittleEndian));
+            
+            
+            //TODO!!!!
 
-            //chanel
-            result.Add(Home.Security.Channel);
 
-            //panID
-            result.AddRange(Home.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
+            ////chanel
+            //result.Add(Home.Security.Channel);
 
-            //securityKey
-            result.AddRange(Home.Security.GetSecurityKey());
+            ////panID
+            //result.AddRange(Home.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
+
+            ////securityKey
+            //result.AddRange(Home.Security.GetSecurityKey());
 
             //networkRetriesLimit
-            result.Add(node.NetworkRetries);
+            result.Add((byte)node.NetworkRetries);
 
             return result.ToArray();
         }
@@ -245,8 +249,8 @@ namespace SmartHome.Memory
                 {
                     result.AddRange(pe.Key.UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(tr.MaskWeekDays);
-                    result.AddRange(tr.DateStart.ToBinaryTime());
-                    result.AddRange(tr.HourEnd.ToBinaryTime());
+                    result.AddRange(tr.TimeStart.ToBinaryTime());
+                    result.AddRange(tr.TimeEnd.ToBinaryTime());
                 }
             }
             return result.ToArray();

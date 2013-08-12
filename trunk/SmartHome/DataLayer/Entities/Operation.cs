@@ -23,7 +23,7 @@ namespace DataLayer.Entities
         [Required]
         public string OperationName { get; set; }
 
-        public object[] Params { get; set; }
+        public object[] Args { get; set; }
 
         public virtual ICollection<TimeRestriction> TimeRestrictions { get; set; }
 

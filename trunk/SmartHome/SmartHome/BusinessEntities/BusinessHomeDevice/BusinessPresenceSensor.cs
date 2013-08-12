@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public static class BusinessPresenceSensor : BusinessHomeDevice
+    public static class BusinessPresenceSensor
     {
     }
 }

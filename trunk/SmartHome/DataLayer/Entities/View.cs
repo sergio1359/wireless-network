@@ -19,6 +19,6 @@ namespace DataLayer.Entities
         public byte[] ImageMap { get; set; }
 
         [Required]
-        public virtual Zone Zone;
+        public virtual Zone Zone { get; set; }
     }
 }

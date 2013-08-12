@@ -53,7 +53,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
 
-            Services.HomeService.SetNameZone(zone.Id, textBoxNameNode.Text);
+            Services.HomeService.SetNameView(zone.Id, textBoxNameNode.Text);
         }
 
         private void AddView(object sender, EventArgs e)
