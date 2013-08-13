@@ -28,5 +28,11 @@ namespace SmartHome.BusinessEntities
             //guardamos el hex
             Hex.SaveBin2Hex(memoryEEPROM, node.Mac.ToString());
         }
+
+        public static byte[] GetBinaryConfiguration(this Node node)
+        {
+            FirmwareUno fw = new FirmwareUno(node, 0x00); //TODO: Ojo
+            return fw.GenerateEEPROM();
+        }
     }
 }
