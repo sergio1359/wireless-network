@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Linq.Expressions; 
+#endregion
 
-namespace DataLayer.Repositories
+namespace DataLayer
 {
     public interface IRepository<T> where T : class
     {

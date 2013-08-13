@@ -28,37 +28,37 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void RemoveZones(object sender, EventArgs e)
         {
-            PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
+            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
             Services.HomeService.RemoveZone(zone.Id);
             UpdateZones();
         }
 
         private void LoadZone(object sender, EventArgs e)
         {
-            PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
+            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
             textBoxNameNode.Text = zone.Name;
 
             listBoxViews.Items.Clear();
-            listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id));
+            //listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id));
         }
 
         private void ChangeZoneName(object sender, EventArgs e)
         {
-            PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
+            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
 
             Services.HomeService.SetNameView(zone.Id, textBoxNameNode.Text);
         }
 
         private void AddView(object sender, EventArgs e)
         {
-            PlaceDTO zone = (PlaceDTO)listBoxZones.SelectedItem;
+            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
             Services.HomeService.AddView(zone.Id, textBoxNewViewName.Text);
             LoadZone(this, null);
         }
 
         private void DeleteView(object sender, EventArgs e)
         {
-            PlaceDTO view = (PlaceDTO)listBoxViews.SelectedItem;
+            ZoneDTO view = (ZoneDTO)listBoxViews.SelectedItem;
 
             textBoxNameView.Text = view.Name;
 

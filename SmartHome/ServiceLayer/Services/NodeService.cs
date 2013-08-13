@@ -1,6 +1,8 @@
-﻿using DataLayer.Entities.Enums;
+﻿#region Using Statements
+using DataLayer.Entities.Enums;
 using ServiceLayer.DTO;
-using System;
+using System; 
+#endregion
 
 namespace ServiceLayer
 {
@@ -101,7 +103,7 @@ namespace ServiceLayer
             //NetworkManager.Nodes.First(n => n.Id == idNode).Address = newAddress;
         }
 
-        public void UpdatePosition(int idNode, int idMainView, float X, float Y)
+        public void UpdatePosition(int idLocation, float x, float y)
         {
             throw new NotImplementedException();
         }
@@ -139,12 +141,20 @@ namespace ServiceLayer
             //return Mapper.Map<List<NodeDTO>>(nodes).ToArray();
         }
 
-        public string[] GetTypeShields()
+        /// <summary>
+        /// Obtain the types of shields
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTypesShields()
         {
             return Enum.GetNames(typeof(ShieldTypes));
         }
 
-        public string[] GetTypeBases()
+        /// <summary>
+        /// Obtain the types of bases
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTypesBases()
         {
             return Enum.GetNames(typeof(BaseTypes));
         }

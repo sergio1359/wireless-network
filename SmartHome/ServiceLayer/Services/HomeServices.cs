@@ -1,13 +1,14 @@
-﻿using DataLayer.Entities;
+﻿#region Using Statement
+using DataLayer.Entities;
 using ServiceLayer.DTO;
 using System;
-using System.Drawing;
+using System.Drawing; 
+#endregion
 
 namespace ServiceLayer
 {
     public class HomeService
     {
-
         #region GeneralHome
         /// <summary>
         /// Change the name of the Home
@@ -55,6 +56,7 @@ namespace ServiceLayer
         public string[] GetPendingNodes()
         {
             throw new NotImplementedException();
+            //VICTOR
         }
 
         /// <summary>
@@ -64,6 +66,7 @@ namespace ServiceLayer
         public void AllowPendingNode(string MAC)
         {
             throw new NotImplementedException();
+            //VICTOR
         }
 
         /// <summary>
@@ -73,6 +76,7 @@ namespace ServiceLayer
         public void DenyPendingNode(string MAC)
         {
             throw new NotImplementedException();
+            //VICTOR
         }
 
         /// <summary>
@@ -82,8 +86,6 @@ namespace ServiceLayer
         public void UnlinkNode(int idNode)
         {
             throw new NotImplementedException();
-            //Node node = NetworkManager.Nodes.FirstOrDefault(n => n.Id == idNode);
-            //NetworkManager.Nodes.Remove(node);
         }
 
         /// <summary>
@@ -92,16 +94,15 @@ namespace ServiceLayer
         public void UpdateConfiguration()
         {
             throw new NotImplementedException();
-            //NetworkManager.GetAllEEPROMS();
         }
         #endregion
 
         #region Zones
         /// <summary>
-        /// Return all the zones
+        /// Return all the Zones
         /// </summary>
         /// <returns>Dictionary ID, Name of zones</returns>
-        public PlaceDTO[] GetZones()
+        public ZoneDTO[] GetZones()
         {
             throw new NotImplementedException();
             //return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
@@ -131,22 +132,15 @@ namespace ServiceLayer
             //Borrar todos los views que contenga la zona
         }
 
-        #endregion
-
-        #region View
         /// <summary>
-        /// Return all the view of a zone
+        /// Change the name of the Zone
         /// </summary>
-        /// <param name="idZone"></param>
-        /// <returns></returns>
-        public PlaceDTO[] GetViews(int idZone)
+        /// <param name="idView"></param>
+        /// <param name="newName"></param>
+        public void SetNameZone(int idView, string newName)
         {
-            throw new NotImplementedException();
-            //var views = NetworkManager.Home.Zones.First(z => z.Id == idZone);
-
-            //return Mapper.Map<List<PlaceDTO>>(views).ToArray();
-        }
-
+            //NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
+        } 
 
         /// <summary>
         /// Add a View in a concrete Zone at Home
@@ -175,17 +169,6 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Get the Image map of a concrete View
-        /// </summary>
-        /// <param name="idView"></param>
-        /// <returns></returns>
-        public Image GetImageView(int idView)
-        {
-            throw new NotImplementedException();
-            //return NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).ImageMap;
-        }
-
-        /// <summary>
         /// Change the name of the View
         /// </summary>
         /// <param name="idView"></param>
@@ -193,7 +176,8 @@ namespace ServiceLayer
         public void SetNameView(int idView, string newName)
         {
             //NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
-        } 
+        }
+
         #endregion
     }
 }

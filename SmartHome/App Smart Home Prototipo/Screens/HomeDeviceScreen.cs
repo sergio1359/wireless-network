@@ -2,6 +2,7 @@
 using ServiceLayer.DTO;
 using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Electrical.Screens
 {
@@ -19,7 +20,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void UpdateHomeDevices()
         {
             listBoxHomeDevices.Items.Clear();
-            listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetHomeDevices());
+            listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetHomeDevices().ToArray());
         }
 
         private void AddHomeDevice(object sender, EventArgs e)

@@ -1,5 +1,7 @@
-﻿using AutoMapper;
-using ServiceLayer.DTO;
+﻿#region Using Statements
+using AutoMapper;
+using ServiceLayer.DTO; 
+#endregion
 
 namespace ServiceLayer
 {

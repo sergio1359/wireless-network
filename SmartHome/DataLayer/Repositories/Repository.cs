@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region Using Statements
+using System;
 using System.Data.Entity;
-using System.Linq;
+using System.Linq; 
+#endregion
 
-namespace DataLayer.Repositories
+namespace DataLayer
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
@@ -19,7 +21,7 @@ namespace DataLayer.Repositories
 
         public void Insert(T entity)
         {
-            _Collection.Add(entity);
+           _Collection.Add(entity);
         }
 
         public void Delete(T entity)
