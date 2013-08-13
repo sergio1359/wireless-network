@@ -54,6 +54,7 @@
     <Compile Include="BusinessEntities\BusinessHomeDevice\OperationAttribute.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPowerSensor.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPresenceSensor.cs" />
+    <Compile Include="Communications\Modules\Common\FragmentWriteTransaction.cs" />
     <Compile Include="Products\HomeDeviceProduct.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessRGBLight.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitch.cs" />

@@ -46,13 +46,8 @@ namespace SmartHome.Comunications.Modules
         }
     }
 
-    public abstract class ModuleBase
+    public class OutputParameters
     {
-        /// <summary>
-        /// Indicate the filter used for incoming messages.
-        /// </summary>
-        public Filter Filter { get; private set; }
-
         /// <summary>
         /// 0 is the lowest, and 1 is the higher.
         /// </summary>
@@ -61,24 +56,62 @@ namespace SmartHome.Comunications.Modules
         /// <summary>
         /// Endpoint used for sended messages.
         /// </summary>
-        public int OutputEndpoint { get; private set; }
+        public int Endpoint { get; private set; }
+
+        /// <summary>
+        /// Indicates if the output message will be secured or not
+        /// </summary>
+        public bool SecurityEnabled { get; private set; }
+
+        /// <summary>
+        /// Indicates if the output message can be routed through the network
+        /// </summary>
+        public bool RoutingEnabled { get; private set; }
+
+        /// <summary>
+        /// Maximum number of retries if the sending procces fails
+        /// </summary>
+        /// <remarks>
+        /// This value must be between 0 and 30. If that value is greater than that imposed by the node, the maximum will be taken by the node.
+        /// </remarks>
+        public int MaxRetries { get; private set; }
+
+        public OutputParameters(float priority, int endpoint, bool securityEnabled = true, bool routingEnabled = true, int maxRetries = 3)
+        {
+            this.Priority = Math.Max(Math.Min(priority, 1.0f), 0f);
+            this.Endpoint = endpoint;
+            this.SecurityEnabled = securityEnabled;
+            this.RoutingEnabled = routingEnabled;
+            this.MaxRetries = Math.Min(maxRetries, 30);
+        }
+    }
+
+    public abstract class ModuleBase
+    {
+        /// <summary>
+        /// Indicate the filter used for incoming messages.
+        /// </summary>
+        public Filter Filter { get; private set; }
+
+        public OutputParameters OutputParameters { get; private set; }
 
         private CommunicationManager communicationManager;
 
-        public ModuleBase(CommunicationManager communicationManager, float priotity, int outputEndpoint)
+        public ModuleBase(CommunicationManager communicationManager)
         {
-            this.Filter = new Filter();
             this.communicationManager = communicationManager;
-            this.Priority = priotity;
-            this.OutputEndpoint = outputEndpoint;
+
+            this.Filter = this.ConfigureInputFilter();
+
+            this.OutputParameters = this.ConfigureOutputParameters();
         }
 
         public async Task<bool> SendMessage(IMessage message)
         {
-            OutputHeader outputMessage = new OutputHeader(this.Priority)
+            OutputHeader outputMessage = new OutputHeader(this.OutputParameters.Priority)
             {
-                EndPoint = OutputEndpoint,
-                Retries = 3,
+                EndPoint = this.OutputParameters.Endpoint,
+                Retries = this.OutputParameters.MaxRetries,
                 Content = message,
             };
 
@@ -86,5 +119,9 @@ namespace SmartHome.Comunications.Modules
         }
 
         public abstract void ProccessReceivedMessage(IMessage inputMessage);
+
+        protected abstract Filter ConfigureInputFilter();
+
+        protected abstract OutputParameters ConfigureOutputParameters();
     }
 }

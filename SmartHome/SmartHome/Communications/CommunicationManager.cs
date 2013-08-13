@@ -63,7 +63,7 @@ namespace SmartHome.Comunications
             this.modulesList = new List<ModuleBase>();
             this.modulesList.Add(new NetworkJoin(this));
             //Sort by priority descendent
-            this.modulesList.Sort((c, l) => c.Priority.CompareTo(l.Priority));
+            this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 
             this.serialManager = new SerialManager();
             this.serialManager.NodeConnectionDetected += this.serialManager_NodeConnectionAdded;
