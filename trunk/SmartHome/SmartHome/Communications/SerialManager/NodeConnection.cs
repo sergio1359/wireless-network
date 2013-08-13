@@ -8,6 +8,7 @@ using System.IO.Ports;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Threading;
+using System.IO;
 #endregion
 
 namespace SmartHome.Communications.SerialManager
@@ -259,11 +260,11 @@ namespace SmartHome.Communications.SerialManager
 
             frame.Add(cs);
 
-            if (!this.serialPort.IsOpen)
-                this.serialPort.Open();
-
             try
             {
+                if (!this.serialPort.IsOpen)
+                    this.serialPort.Open();
+
                 this.serialPort.Write(frame.ToArray(), 0, frame.Count);
 
                 if (this.ConnectionState == ConnectionStates.NotConnected)
@@ -271,10 +272,15 @@ namespace SmartHome.Communications.SerialManager
 
                 return true;
             }
-            catch (InvalidOperationException)
+            catch (Exception ex)
             {
-                this.ConnectionState = ConnectionStates.NotConnected;
-                return false;
+                if (ex is UnauthorizedAccessException || ex is IOException)
+                {
+                    this.ConnectionState = ConnectionStates.NotConnected;
+                    return false;
+                }
+
+                throw;
             }
         }
 

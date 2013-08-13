@@ -34,19 +34,9 @@ namespace SmartHome.Communications.Modules
         public event EventHandler<string> NodeJoined;
 
         public NetworkJoin(CommunicationManager manager)
-            : base(manager, 0.9f, Endpoints.APPLICATION_EP)
+            : base(manager)
         {
             this.pendingRequests = new Dictionary<string, Tuple<ushort, byte[]>>();
-
-            this.Filter.Endpoint = Endpoints.APPLICATION_EP;
-            this.Filter.FromMaster = true;
-            this.Filter.OpCodeType = typeof(OperationMessage.OPCodes);
-            this.Filter.OpCodes = new byte[] 
-            { 
-                (byte)OperationMessage.OPCodes.JoinRequest, 
-                (byte)OperationMessage.OPCodes.JoinAccept, 
-                (byte)OperationMessage.OPCodes.JoinAbort,
-            };
         }
 
         public async Task<bool> AcceptNode(string macAddress, ushort newAddress, string securityKey)
@@ -54,6 +44,7 @@ namespace SmartHome.Communications.Modules
             return await this.SendJoinAcceptResponse(macAddress, newAddress, securityKey);
         }
 
+        #region Overridden Methods
         public override void ProccessReceivedMessage(IMessage message)
         {
             OperationMessage operation = (OperationMessage)message;
@@ -91,12 +82,41 @@ namespace SmartHome.Communications.Modules
 
                 string macString = macAddress.ToStrigMac();
 
-                this.pendingRequests.Add(macString, new Tuple<ushort, byte[]>(operation.SourceAddress, aesKey));
+                if (!this.pendingRequests.ContainsKey(macString))
+                {
+                    this.pendingRequests.Add(macString, new Tuple<ushort, byte[]>(operation.SourceAddress, aesKey));
 
-                if (NetworkJoinReceived != null)
-                    NetworkJoinReceived(this, macString);
+                    if (NetworkJoinReceived != null)
+                        NetworkJoinReceived(this, macString);
+                }
             }
         }
+
+        protected override Filter ConfigureInputFilter()
+        {
+            return new Filter()
+            {
+                Endpoint = Endpoints.APPLICATION_EP,
+                FromMaster = true,
+                OpCodeType = typeof(OperationMessage.OPCodes),
+                OpCodes = new byte[] 
+                { 
+                    (byte)OperationMessage.OPCodes.JoinRequest, 
+                    (byte)OperationMessage.OPCodes.JoinAccept, 
+                    (byte)OperationMessage.OPCodes.JoinAbort,
+                },
+            };
+        }
+
+        protected override OutputParameters ConfigureOutputParameters()
+        {
+            return new OutputParameters(
+                priority: 0.9f,
+                endpoint: Endpoints.APPLICATION_EP,
+                securityEnabled: false,
+                routingEnabled: false);
+        } 
+        #endregion
 
         #region Private Methods
         private async Task<bool> SendJoinRequestResponse(ushort destinationAddress)
