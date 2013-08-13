@@ -1,7 +1,9 @@
-﻿using DataLayer.Entities;
+﻿#region Using Statements
+using DataLayer.Entities;
 using ServiceLayer.DTO;
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; 
+#endregion
 
 namespace ServiceLayer
 {
@@ -16,7 +18,7 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idHomeDevice"></param>
         /// <returns></returns>
-        public Dictionary<int, Tuple<string, int>> GetProgramOperations(int idHomeDevice)
+        public OperationDTO[] GetProgramOperations(int idHomeDevice)
         {
             throw new NotImplementedException();
         }
@@ -109,8 +111,6 @@ namespace ServiceLayer
         //public Operation[] GetScheduler(int idHomeDevice)
 
         #endregion
-
-
 
     }
 }

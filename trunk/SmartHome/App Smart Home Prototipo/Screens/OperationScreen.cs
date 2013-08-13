@@ -2,6 +2,7 @@
 using ServiceLayer.DTO;
 using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Administrator.Screens
 {
@@ -13,9 +14,9 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
 
             var homeDevices = Services.HomeDeviceService.GetHomeDevices();
 
-            listBoxHomeDevices.Items.AddRange(homeDevices);
+            listBoxHomeDevices.Items.AddRange(homeDevices.ToArray());
 
-            comboBoxToHomeDevice.Items.AddRange(homeDevices);
+            comboBoxToHomeDevice.Items.AddRange(homeDevices.ToArray());
         }
 
         private void SelectHomeDevice(object sender, EventArgs e)
