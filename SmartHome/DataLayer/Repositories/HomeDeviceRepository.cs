@@ -14,5 +14,10 @@ namespace DataLayer
     public class HomeDeviceRepository: Repository<HomeDevice>
     {
         public HomeDeviceRepository(SmartHomeDBContext context) : base(context) { }
+
+        public IQueryable<HomeDevice> GetHomeDevicesWithLocations()
+        {
+            return _Collection.Include("Location");
+        }
     }
 }

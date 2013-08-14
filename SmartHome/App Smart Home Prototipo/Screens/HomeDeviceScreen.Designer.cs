@@ -45,6 +45,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -156,6 +157,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.button1);
             this.groupBox6.Controls.Add(this.textBoxNameHomeDevice);
             this.groupBox6.Controls.Add(this.listBoxOperations);
             this.groupBox6.Controls.Add(this.textBoxTypeHomeDevice);
@@ -173,9 +175,8 @@
             // 
             this.textBoxNameHomeDevice.Location = new System.Drawing.Point(6, 36);
             this.textBoxNameHomeDevice.Name = "textBoxNameHomeDevice";
-            this.textBoxNameHomeDevice.Size = new System.Drawing.Size(153, 20);
+            this.textBoxNameHomeDevice.Size = new System.Drawing.Size(111, 20);
             this.textBoxNameHomeDevice.TabIndex = 20;
-            this.textBoxNameHomeDevice.TextChanged += new System.EventHandler(this.ChangeNameHomeDevice);
             // 
             // listBoxOperations
             // 
@@ -187,10 +188,10 @@
             // 
             // textBoxTypeHomeDevice
             // 
-            this.textBoxTypeHomeDevice.Location = new System.Drawing.Point(164, 36);
+            this.textBoxTypeHomeDevice.Location = new System.Drawing.Point(123, 36);
             this.textBoxTypeHomeDevice.Name = "textBoxTypeHomeDevice";
             this.textBoxTypeHomeDevice.ReadOnly = true;
-            this.textBoxTypeHomeDevice.Size = new System.Drawing.Size(152, 20);
+            this.textBoxTypeHomeDevice.Size = new System.Drawing.Size(106, 20);
             this.textBoxTypeHomeDevice.TabIndex = 29;
             // 
             // label12
@@ -214,11 +215,21 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(161, 19);
+            this.label11.Location = new System.Drawing.Point(120, 19);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 13);
             this.label11.TabIndex = 21;
             this.label11.Text = "Type";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(235, 33);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 25);
+            this.button1.TabIndex = 30;
+            this.button1.Text = "Change";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.ChangeNameHomeDevice);
             // 
             // HomeDeviceScreen
             // 
@@ -258,5 +269,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button1;
     }
 }

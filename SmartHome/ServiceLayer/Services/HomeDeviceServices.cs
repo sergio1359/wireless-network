@@ -49,15 +49,14 @@ namespace ServiceLayer
         /// <param name="idHomeDevice">Identificator of the HomeDevice to be remove.</param>
         public void RemoveHomeDevice(int idHomeDevice)
         {
-            throw new NotImplementedException();
-            //HomeDevice homeDevice = GET HOME DEVICE BY ID
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
-            //if (homeDevice.Connector != null)
-            //{
-            //    Services.NodeService.UnlinkHomeDevice(idHomeDevice);
-            //}
+            if (homeDevice.Connector != null)
+            {
+                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
+            }
 
-            //DELETE HOME DEVICE BY ID
+            Repositories.HomeDeviceRespository.Delete(homeDevice);
         }
 
         /// <summary>
@@ -67,8 +66,11 @@ namespace ServiceLayer
         /// <param name="newName">New Name</param>
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
-            throw new NotImplementedException();
-            //NetworkManager.HomeDevices.FirstOrDefault(hd => hd.Id == idHomeDevice).Name = newName;
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            homeDevice.Name = newName;
+
+            Repositories.SaveChanges();
         }
 
         /// <summary>
@@ -85,8 +87,9 @@ namespace ServiceLayer
 
         public LocationDTO[] GetHomeDevicePosition(int idHomeDevice)
         {
-            throw new NotImplementedException();
-            //return Mapper.Map<LocationDTO>(NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice).Position);
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            return Mapper.Map<LocationDTO[]>(homeDevice.Location);
         }
 
         /// <summary>
@@ -117,7 +120,7 @@ namespace ServiceLayer
         /// <returns></returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idLocation)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>

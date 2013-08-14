@@ -37,6 +37,11 @@ namespace DataLayer
             }
         }
 
+        public static void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
         static Repositories()
         {
             context = new SmartHomeDBContext();
