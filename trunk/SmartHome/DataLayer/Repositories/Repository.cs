@@ -26,6 +26,7 @@ namespace DataLayer
         public void Delete(T entity)
         {
             _Collection.Remove(entity);
+            _context.SaveChanges();
         }
 
         public IQueryable<T> GetAll()

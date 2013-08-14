@@ -14,5 +14,7 @@ namespace DataLayer
     {
         public NodeRepository(SmartHomeDBContext context) : base(context) { }
 
+
+
     }
 }
