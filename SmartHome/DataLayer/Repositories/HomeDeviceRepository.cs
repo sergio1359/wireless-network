@@ -1,7 +1,9 @@
 ﻿#region Using Statements
 using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks; 
@@ -9,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class LogRepository: Repository<Log>
+    public class HomeDeviceRepository: Repository<HomeDevice>
     {
+        public HomeDeviceRepository(DbContext context) : base(context) { }
     }
 }
