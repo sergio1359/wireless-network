@@ -32,7 +32,7 @@ namespace SmartHome.Communications.Modules.Common
 
         public int FrameSize { get; private set; }
 
-        public int FragmentRemain
+        public int FragmentsRemain
         {
             get
             {
@@ -44,7 +44,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return (FragmentRemain / NumberOfFragments) * 100f;
+                return (this.FragmentsRemain / this.NumberOfFragments) * 100f;
             }
         }
 
@@ -52,7 +52,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return this.outputBuffer.Count != NumberOfFragments;
+                return this.outputBuffer.Count != this.NumberOfFragments;
             }
         }
 
@@ -68,6 +68,7 @@ namespace SmartHome.Communications.Modules.Common
 
         // TODO: Implement this property
         public bool IsWaitingForResponse { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace SmartHome.Communications.Modules.Common
         }
 
         /// <summary>
-        /// Method that start the FragmentWriteTransaccion
+        /// Method that start the FragmentWriteTransaction
         /// </summary>
         /// <returns>True if the operation was successfully sent</returns>
         public async Task<bool> StartTransaction()
@@ -135,7 +136,7 @@ namespace SmartHome.Communications.Modules.Common
             if (response.SourceAddress != this.DestinationAddress)
                 throw new InvalidOperationException("The received OperationMessage has an invalid SourceAddress");
 
-            if (this.outputBuffer.Count == 0)
+            if (this.IsCompleted)
                 throw new InvalidOperationException("The transaction is completed");
 
 
