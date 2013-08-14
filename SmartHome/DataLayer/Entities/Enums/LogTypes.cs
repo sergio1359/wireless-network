@@ -9,5 +9,6 @@ namespace DataLayer.Entities.Enums
         Config,
         Network,
         Other,
+        App,
     }
 }

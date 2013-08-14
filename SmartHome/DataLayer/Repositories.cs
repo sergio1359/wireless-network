@@ -19,6 +19,10 @@ namespace DataLayer
         private static TimeOperationRepository timeOperationRepository;
         private static ZoneRepository zoneRepository;
         private static HomeDeviceRepository homeDeviceRepository;
+        private static ViewRepository viewRepository;
+        private static LogRepository logRepository;
+        private static ConnectorRepository connectorRepository;
+        private static OperationRepository operationRepository;
 
         public static NodeRepository NodeRespository
         {
@@ -81,6 +85,46 @@ namespace DataLayer
             }
         }
 
+        public static ViewRepository ViewRepository
+        {
+            get
+            {
+                if (viewRepository == null)
+                    viewRepository = new ViewRepository(context);
+                return viewRepository;
+            }
+        }
+
+        public static LogRepository LogRepository
+        {
+            get
+            {
+                if (logRepository == null)
+                    logRepository = new LogRepository(context);
+                return logRepository;
+            }
+        }
+
+        public static ConnectorRepository ConnectorRepository
+        {
+            get
+            {
+                if (connectorRepository == null)
+                    connectorRepository = new ConnectorRepository(context);
+                return connectorRepository;
+            }
+        }
+
+        public static OperationRepository OperationRepository
+        {
+            get
+            {
+                if (operationRepository == null)
+                    operationRepository = new OperationRepository(context);
+                return operationRepository;
+            }
+        }
+
         public static void SaveChanges()
         {
             context.SaveChanges();
@@ -91,5 +135,7 @@ namespace DataLayer
             context = new SmartHomeDBContext();
         }
 
+
+        public static Entities.Connector HomeDevice { get; set; }
     }
 }

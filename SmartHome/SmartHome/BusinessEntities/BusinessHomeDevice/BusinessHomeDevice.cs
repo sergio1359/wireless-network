@@ -28,8 +28,9 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             homeDevice.Connector = null;
         }
 
-        public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice, Type HomeDeviceType)
+        public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice)
         {
+            Type HomeDeviceType = homeDevice.GetType();
             if (HomeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(HomeDeviceType))
                 return null;
 

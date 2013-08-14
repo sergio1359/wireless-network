@@ -8,7 +8,7 @@ namespace DataLayer
 {
     public interface IRepository<T> where T : class
     {
-        void Insert(T entity);
+        T Insert(T entity);
         void Delete(T entity);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetAll();

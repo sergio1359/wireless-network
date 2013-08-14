@@ -26,9 +26,9 @@ namespace ServiceLayer
 
             homeDevice.Name = nameHomeDevice;
 
-            Repositories.HomeDeviceRespository.Insert(homeDevice);
+            homeDevice = Repositories.HomeDeviceRespository.Insert(homeDevice);
 
-            return Repositories.HomeDeviceRespository.GetAll().AsEnumerable().Last().Id;
+            return homeDevice.Id;
         }
 
         /// <summary>
