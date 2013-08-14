@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿#region Using Statements
+using System.Runtime.Serialization; 
+#endregion
 
 namespace ServiceLayer.DTO
 {

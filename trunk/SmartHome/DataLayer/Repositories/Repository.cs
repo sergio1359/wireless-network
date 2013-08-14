@@ -11,8 +11,6 @@ namespace DataLayer
         protected DbSet<T> _Collection { get; set; }
         protected DbContext _context;
 
-        public Repository() { } //Lo he tenido que poner porque daba fallo al compilar, compi para los coleguis
-
         public Repository(DbContext context)
         {
             _context = context;
