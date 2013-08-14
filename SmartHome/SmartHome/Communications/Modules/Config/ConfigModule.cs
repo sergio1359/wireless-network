@@ -19,13 +19,13 @@ namespace SmartHome.Communications.Modules.Config
         private Dictionary<ushort, FragmentWriteTransaction> currentWriteTransactions;
 
         /// <summary>
-        /// List of the address from the nodes that are receiving a configuration
+        /// List of the nodes that are receiving a configuration
         /// </summary>
-        public List<ushort> PendingNodes
+        public IEnumerable<TransactionStatus> PendingWriteTransactions
         {
             get
             {
-                return this.currentWriteTransactions.Keys.ToList();
+                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.Percentage });
             }
         }
 

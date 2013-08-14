@@ -11,6 +11,7 @@ namespace DataLayer.Entities.HomeDevices
     public abstract class HomeDevice
     {
         [Key]
+        [Range(0, 0xFFFF)]
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -19,9 +20,15 @@ namespace DataLayer.Entities.HomeDevices
 
         public ConnectorTypes ConnectorCapable { get; set; }
 
-        public Location Location { get; set; }
+        public virtual ICollection<Location> Location { get; set; }
 
-        public List<Operation> Operations { get; set; }
+        [InverseProperty("SourceHomeDevice")]
+        public virtual ICollection<Operation> Operations { get; set; }
+
+        /// <summary>
+        /// When not null, indicates the location of this HomeDevice in the product.
+        /// </summary>
+        public int? ProductTag { get; set; }
 
         private static string[] homeDeviceTypes = null;
 
@@ -56,7 +63,11 @@ namespace DataLayer.Entities.HomeDevices
             }
         }
 
-        public HomeDevice() { }
+        public HomeDevice() 
+        {
+            this.Location = new List<Location>();
+            this.Operations = new List<Operation>();
+        }
 
 
     }

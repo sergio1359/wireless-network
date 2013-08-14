@@ -28,9 +28,6 @@ namespace ServiceLayer
 
             Repositories.HomeDeviceRespository.Insert(homeDevice);
 
-            var aa = Repositories.HomeDeviceRespository.GetAll();
-            var aaaa = aa.Last();
-
             return Repositories.HomeDeviceRespository.GetAll().AsEnumerable().Last().Id;
         }
 

@@ -6,21 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Entities.HomeDevices
 {
+    public enum WallPlugTypes
+    {
+        None,
+        Other,
+        AirFreshener,
+        LightPoint,
+        Matamosquitos,
+        Fan,
+        Heater,
+        Speaker,
+    }
+
+    [Table("WallPlug")]
     public class WallPlug : Light
     {
-        public enum WallPlugType
-        {
-            AirFreshener,
-            LightPoint,
-            Matamosquitos,
-            Fan,
-            Heater,
-            Speaker,
-            Other,
-            None,
-        }
-
-        public WallPlugType Type { get; set; }
+        public WallPlugTypes Type { get; set; }
 
         [NotMapped]
         public bool? Connected { get; set; }

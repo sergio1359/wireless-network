@@ -17,7 +17,7 @@ namespace DataLayer.Entities
 
         public Coordenate Location { get; set; }
 
-        public Security Security = new Security();
+        public Security Security {get; set;}
 
         public virtual ICollection<Zone> Zones { get; set; }
 
@@ -39,8 +39,13 @@ namespace DataLayer.Entities
         public const byte CHANNEL = 0x0F;
         public const ushort PANID = 0x1234;
 
-        public byte Channel { set; get; }
-        public ushort PanId { set; get; }
+        [Range(0, 255)]
+        public int Channel { set; get; }
+
+        [Range(0, 255)]
+        public int PanId { set; get; }
+
+        [MaxLength(16), MinLength(16, ErrorMessage = "Security Key must have 16 characters length")]
         public string SecurityKey { set; get; }
 
         public byte[] GetSecurityKey()

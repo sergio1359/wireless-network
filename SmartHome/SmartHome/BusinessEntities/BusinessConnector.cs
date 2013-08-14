@@ -32,7 +32,7 @@ namespace SmartHome.BusinessEntities
 
         public static void UnlinkHomeDevice(this Connector connector)
         {
-            if (connector.ConnectorType == ConnectorTypes.ConectorSensorBoard)
+            if (connector.ConnectorType == ConnectorTypes.ConnectorSensorBoard)
             {
                 //TODO: hay que destruir los elementos uno a uno. 
 

@@ -13,6 +13,6 @@ namespace DataLayer.Entities.Enums
         LogicInput,
         RGB,
         DimmerPassZero,
-        ConectorSensorBoard
+        ConnectorSensorBoard
     }
 }

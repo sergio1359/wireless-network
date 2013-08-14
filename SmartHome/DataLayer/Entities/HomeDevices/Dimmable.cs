@@ -5,16 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Entities.HomeDevices
 {
+    public enum DimmableTypes
+    {
+        DimmerLight,
+        Fan,
+        Other,
+    }
+
+    [Table("Dimmable")]
     public class Dimmable : HomeDevice
     {
-        public enum DimmableType
-        {
-            DimmerLight,
-            Fan,
-            Other,
-        }
-
-        public DimmableType Type { get; set; }
+        public DimmableTypes Type { get; set; }
 
         [NotMapped]
         public int? Value

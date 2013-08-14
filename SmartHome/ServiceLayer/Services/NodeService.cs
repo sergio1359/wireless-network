@@ -1,7 +1,8 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
 using ServiceLayer.DTO;
-using System; 
+using System;
+using DataLayer.Entities; 
 #endregion
 
 namespace ServiceLayer
