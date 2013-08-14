@@ -117,7 +117,9 @@ namespace ServiceLayer
         /// <returns></returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idLocation)
         {
-            
+            var homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.Id == idLocation));
+
+            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
 
         /// <summary>

@@ -75,10 +75,14 @@
     <Compile Include="Entities\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories.cs" />
+    <Compile Include="Repositories\TimeOperationRepository.cs" />
+    <Compile Include="Repositories\ThemesRepository.cs" />
+    <Compile Include="Repositories\HomeRepository.cs" />
     <Compile Include="Repositories\HomeDeviceRepository.cs" />
     <Compile Include="Repositories\NodeRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\ZoneRepository.cs" />
     <Compile Include="SmartHomeDBContext.cs" />
   </ItemGroup>
   <ItemGroup>

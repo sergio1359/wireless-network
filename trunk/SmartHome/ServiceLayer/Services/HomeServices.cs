@@ -1,8 +1,11 @@
 ﻿#region Using Statement
+using AutoMapper;
+using DataLayer;
 using DataLayer.Entities;
 using ServiceLayer.DTO;
 using System;
-using System.Drawing; 
+using System.Drawing;
+using System.Linq;
 #endregion
 
 namespace ServiceLayer
@@ -10,13 +13,35 @@ namespace ServiceLayer
     public class HomeService
     {
         #region GeneralHome
+
+        public void CreateHome()
+        {
+            if (!Repositories.HomeRespository.IsHomeCreated())
+            {
+                Home home = new Home();
+
+                Repositories.HomeRespository.Insert(home);
+            }
+        }
+
+        public bool ExitsHome()
+        {
+            return Repositories.HomeRespository.IsHomeCreated();
+        }
+
         /// <summary>
         /// Change the name of the Home
         /// </summary>
         /// <param name="newName"></param>
         public void SetHomeName(string newName)
         {
-            throw new NotImplementedException();
+            if (Repositories.HomeRespository.IsHomeCreated())
+            {
+                var home = Repositories.HomeRespository.GetHome();
+                home.Name = newName;
+
+                Repositories.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -25,7 +50,10 @@ namespace ServiceLayer
         /// <returns></returns>
         public string GetHomeName()
         {
-            throw new NotImplementedException();
+            if (Repositories.HomeRespository.IsHomeCreated())
+                return Repositories.HomeRespository.GetHome().Name;
+
+            return "The Home had not been created";
         }
 
         /// <summary>
@@ -35,8 +63,13 @@ namespace ServiceLayer
         /// <param name="longitude"></param>
         public void SetHomeLocation(float latitude, float longitude)
         {
-            throw new NotImplementedException();
-            //NetworkManager.Home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+            if (Repositories.HomeRespository.IsHomeCreated())
+            {
+                Home home = Repositories.HomeRespository.GetHome();
+                home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+
+                Repositories.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -45,8 +78,10 @@ namespace ServiceLayer
         /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
-            throw new NotImplementedException();
-            //return NetworkManager.Home.Location;
+            if (Repositories.HomeRespository.IsHomeCreated())
+                return Repositories.HomeRespository.GetHome().Location;
+
+            return null;
         }
 
         /// <summary>
@@ -104,8 +139,8 @@ namespace ServiceLayer
         /// <returns>Dictionary ID, Name of zones</returns>
         public ZoneDTO[] GetZones()
         {
-            throw new NotImplementedException();
-            //return Mapper.Map<List<PlaceDTO>>(NetworkManager.Home.Zones).ToArray();
+            var zones = Repositories.ZoneRepository.GetAll();
+            return Mapper.Map<ZoneDTO[]>(zones);
         }
 
         /// <summary>
@@ -115,10 +150,10 @@ namespace ServiceLayer
         /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
-            throw new NotImplementedException();
-            //Zone zone = new Zone();
-            //zone.Name = nameZone;
-            //NetworkManager.Home.Zones.Add(zone);
+            throw new NotFiniteNumberException();
+            Zone zone = new Zone();
+            zone.Name = nameZone;
+            Repositories.ZoneRepository.Insert(zone);
 
             //return NetworkManager.Home.Zones.Last().Id;
         }
