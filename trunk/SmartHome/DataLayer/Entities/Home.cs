@@ -27,7 +27,6 @@ namespace DataLayer.Entities
         }
     }
 
-    [Table("Home")]
     public class Coordenate
     {
         public float Longitude { get; set; }
@@ -35,7 +34,6 @@ namespace DataLayer.Entities
         public float Latitude { get; set; }
     }
 
-    [Table("Home")]
     public class Security
     {
         public const byte CHANNEL = 0x0F;

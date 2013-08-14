@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using DataLayer.Entities.HomeDevices; 
 #endregion
 
 namespace DataLayer
 {
     public static class Repositories
     {
-        private static DbContext context;
+        private static SmartHomeDBContext context;
         private static NodeRepository nodeRespository;
         private static HomeDeviceRepository homeDeviceRespository;
 

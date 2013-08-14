@@ -13,6 +13,6 @@ namespace DataLayer
 {
     public class HomeDeviceRepository: Repository<HomeDevice>
     {
-        public HomeDeviceRepository(DbContext context) : base(context) { }
+        public HomeDeviceRepository(SmartHomeDBContext context) : base(context) { }
     }
 }

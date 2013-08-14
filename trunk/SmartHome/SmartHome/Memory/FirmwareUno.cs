@@ -271,7 +271,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                     result.Add(GetLogicConfiguration(item.Connector, item));
                 }
@@ -303,7 +303,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                 }
             }
@@ -326,7 +326,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     foreach (var pinPort in item.Connector.GetPinPort())
                     {
                         result.Add(pinPort.GetPinPortNumber());
@@ -352,7 +352,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                     result.Add(((PresenceSensor)item).Sensibility);
                 }
@@ -376,7 +376,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                 }
             }
@@ -400,7 +400,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                 }
             }
@@ -424,7 +424,7 @@ namespace SmartHome.Memory
 
                     //ConfigList
                     result[0]++;
-                    result.AddRange(item.Id.UshortToByte(baseConfiguration.LittleEndian));
+                    result.AddRange(((ushort)item.Id).UshortToByte(baseConfiguration.LittleEndian));
                     result.Add(item.Connector.GetPinPort()[0].GetPinPortNumber());
                     result.Add(((PowerSensor)item).Sensibility);
                 }
