@@ -7,6 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Entities
 {
+    public enum ConditionalOperations
+    {
+
+    }
+
     [NotMapped]
     public class ConditionalRestriction
     {

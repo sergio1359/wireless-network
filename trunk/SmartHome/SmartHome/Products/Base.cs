@@ -1,6 +1,9 @@
-﻿using DataLayer.Entities.Enums;
+﻿#region Using Statements
+using DataLayer.Entities.Enums;
 using System;
 using System.Linq;
+using DataLayer.Entities; 
+#endregion
 
 namespace SmartHome.Products
 {

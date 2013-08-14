@@ -20,16 +20,10 @@ namespace DataLayer.Entities
 
         public virtual Node Node { get; set; }
 
-        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
+        public virtual ICollection<HomeDevice> HomeDevices { get; set; }
 
         [NotMapped]
-        public List<HomeDevice> HomeDevices
-        {
-            get
-            {
-                return MappingHomeDevice.Keys.ToList();
-            }
-        }
+        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
         [NotMapped]
         public List<PinPort> PinPorts
@@ -51,7 +45,8 @@ namespace DataLayer.Entities
 
         public Connector()
         {
-            MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
+            this.HomeDevices = new List<HomeDevice>();
+            this.MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
         }
     }
 }

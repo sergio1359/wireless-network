@@ -9,6 +9,17 @@ using System.Linq;
 
 namespace DataLayer.Entities
 {
+    public enum BaseTypes : byte
+    {
+        ATMega128RFA1_V1 = 0,
+        ATMega128RFA1_V2 = 1,
+    }
+
+    public enum ShieldTypes
+    {
+        Debug,
+    }
+
     public class Node
     {
         [Key]
@@ -25,11 +36,11 @@ namespace DataLayer.Entities
 
         public ushort Address { get; set; }
 
-        public Location Location { get; set; }
-
         public BaseTypes Base { get; set; }
 
         public ShieldTypes Shield { get; set; }
+
+        public virtual Location Location { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
 

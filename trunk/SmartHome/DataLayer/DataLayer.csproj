@@ -45,10 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Enums\BaseTypes.cs" />
     <Compile Include="Entities\ConditionalRestriction.cs" />
     <Compile Include="Entities\Connector.cs" />
-    <Compile Include="Entities\Enums\ConditionalOperations.cs" />
     <Compile Include="Entities\Enums\ConnectorTypes.cs" />
     <Compile Include="Entities\Home.cs" />
     <Compile Include="Entities\HomeDevices\Button.cs" />
@@ -70,8 +68,8 @@
     <Compile Include="Entities\Operation.cs" />
     <Compile Include="Entities\PinPort.cs" />
     <Compile Include="Entities\Location.cs" />
-    <Compile Include="Entities\Enums\ShieldTypes.cs" />
     <Compile Include="Entities\Theme.cs" />
+    <Compile Include="Entities\TimeOperation.cs" />
     <Compile Include="Entities\TimeRestriction.cs" />
     <Compile Include="Entities\View.cs" />
     <Compile Include="Entities\Zone.cs" />

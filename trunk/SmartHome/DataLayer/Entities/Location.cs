@@ -1,5 +1,7 @@
 ﻿#region Using Statements
-using System.ComponentModel.DataAnnotations; 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DataLayer.Entities.HomeDevices; 
 #endregion
 
 namespace DataLayer.Entities
@@ -16,6 +18,5 @@ namespace DataLayer.Entities
         public bool Mobile { get; set; }
 
         public virtual View View { get; set; }
-
     }
 }

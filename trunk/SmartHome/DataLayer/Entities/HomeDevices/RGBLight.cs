@@ -2,22 +2,25 @@
 using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
 {
+    public enum ModeRGBLight : byte
+    {
+        None = 0x00,
+        RandomSecuence,
+        Solid,
+        SortedSecuence,
+    }
+
+    [Table("RGBLight")]
     public class RGBLight : HomeDevice
     {
         public const int DEFAULT_DEGRADE_TIME = 1;
 
-        public enum ModeRGBLight : byte
-        {
-            None = 0x00,
-            RandomSecuence,
-            Solid,
-            SortedSecuence,
-        }
-
+        [Range(0, 255)]
         public int DefaultDegradeTime { get; set; }
 
         public ModeRGBLight Mode { get; set; }
@@ -28,8 +31,9 @@ namespace DataLayer.Entities.HomeDevices
         public RGBLight()
             : base()
         {
-            this.DefaultDegradeTime = DEFAULT_DEGRADE_TIME;
             base.ConnectorCapable = ConnectorTypes.RGB;
+
+            this.DefaultDegradeTime = DEFAULT_DEGRADE_TIME;
         }
     }
 }

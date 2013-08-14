@@ -13,12 +13,14 @@ namespace DataLayer.Entities
 
         public string Name { get; set; }
 
-        public virtual HomeDevice DestionationHomeDevice { get; set; }
-
         [Required]
         public string OperationName { get; set; }
 
         public object[] Args { get; set; }
+
+        public virtual HomeDevice SourceHomeDevice { get; set; }
+
+        public virtual HomeDevice DestionationHomeDevice { get; set; }
 
         public virtual ICollection<TimeRestriction> TimeRestrictions { get; set; }
 

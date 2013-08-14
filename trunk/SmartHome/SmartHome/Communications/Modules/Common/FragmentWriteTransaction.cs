@@ -40,6 +40,14 @@ namespace SmartHome.Communications.Modules.Common
             }
         }
 
+        public float Percentage
+        {
+            get
+            {
+                return (FragmentRemain / NumberOfFragments) * 100f;
+            }
+        }
+
         public bool IsStarted
         {
             get
