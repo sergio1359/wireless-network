@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace DataLayer
 {
-    public class SmartHomeDBContext : DbContext
+    class SmartHomeDBContext : DbContext
     {
         DbSet<Node> Nodes { get; set; }
         DbSet<HomeDevice> HomeDevices { get; set; }

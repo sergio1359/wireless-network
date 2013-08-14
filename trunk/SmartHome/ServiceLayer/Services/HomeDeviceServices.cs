@@ -1,4 +1,6 @@
 ﻿#region Using Statements
+using AutoMapper;
+using DataLayer;
 using DataLayer.Entities.HomeDevices;
 using ServiceLayer.DTO;
 using System;
@@ -24,9 +26,9 @@ namespace ServiceLayer
 
             homeDevice.Name = nameHomeDevice;
 
-            //ADD HOME DEVICE
-            //OBTENER EL ID DEVUELTO
-            throw new NotImplementedException();
+            Repositories.HomeDeviceRespository.Insert(homeDevice);
+
+            return Repositories.HomeDeviceRespository.GetAll().Last().Id;
         }
 
         /// <summary>
@@ -90,8 +92,9 @@ namespace ServiceLayer
         /// <returns>Return a HomeDeviceDTO</returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices()
         {
-            throw new NotImplementedException();
-            //GET ALL HOME DEVICES
+            var homeDevices = Repositories.HomeDeviceRespository.GetAll();
+
+            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
 
         /// <summary>
