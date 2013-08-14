@@ -47,7 +47,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         [OperationAttribute]
         public static OperationMessage PercentageDimmer(this Dimmable dimmable, int percentage, byte seconds)
         {
-            return OperationMessage.DimmerWrite(dimmable.Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
+            return OperationMessage.DimmerWrite((ushort)dimmable.Id, (byte)(percentage * byte.MaxValue / 100.0), 0);
         }
     }
 }

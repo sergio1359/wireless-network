@@ -11,7 +11,7 @@ namespace DataLayer.Entities.HomeDevices
     public abstract class HomeDevice
     {
         [Key]
-        public ushort Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

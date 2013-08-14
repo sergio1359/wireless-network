@@ -19,25 +19,25 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         [OperationAttribute]
         public static OperationMessage Random(this RGBLight rgbLight, byte seconds)
         {
-            return OperationMessage.ColorWriteRandom(rgbLight.Id, seconds);
+            return OperationMessage.ColorWriteRandom((ushort)rgbLight.Id, seconds);
         }
 
         [OperationAttribute]
         public static OperationMessage RandomSecuence(this RGBLight rgbLight, Color[] colors, byte seconds)
         {
-            return OperationMessage.ColorRandomSecuenceWrite(rgbLight.Id, seconds, colors);
+            return OperationMessage.ColorRandomSecuenceWrite((ushort)rgbLight.Id, seconds, colors);
         }
 
         [OperationAttribute]
         public static OperationMessage SortedSecuence(this RGBLight rgbLight, Color[] colors, byte seconds)
         {
-            return OperationMessage.ColorSortedSecuenceWrite(rgbLight.Id, seconds, colors);
+            return OperationMessage.ColorSortedSecuenceWrite((ushort)rgbLight.Id, seconds, colors);
         }
 
         [OperationAttribute]
         public static OperationMessage ToColor(this RGBLight rgbLight, Color color, byte seconds)
         {
-            return OperationMessage.ColorWrite(rgbLight.Id, color, seconds);
+            return OperationMessage.ColorWrite((ushort)rgbLight.Id, color, seconds);
         }
 
         [OperationAttribute]

@@ -9,9 +9,9 @@ namespace DataLayer
     public abstract class Repository<T> : IRepository<T> where T : class
     {
         protected DbSet<T> _Collection { get; set; }
-        protected DbContext _context;
+        protected SmartHomeDBContext _context;
 
-        public Repository(DbContext context)
+        public Repository(SmartHomeDBContext context)
         {
             _context = context;
             _Collection = context.Set<T>();
@@ -20,6 +20,7 @@ namespace DataLayer
         public void Insert(T entity)
         {
            _Collection.Add(entity);
+           _context.SaveChanges();
         }
 
         public void Delete(T entity)

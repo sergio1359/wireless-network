@@ -6,14 +6,14 @@ using System.Data.Entity;
 
 namespace DataLayer
 {
-    class SmartHomeDBContext : DbContext
+    public class SmartHomeDBContext : DbContext
     {
-        DbSet<Node> Nodes { get; set; }
-        DbSet<HomeDevice> HomeDevices { get; set; }
-        DbSet<Connector> Connectors { get; set; }
-        DbSet<Zone> Zones { get; set; }
-        DbSet<Home> Home { get; set; }
-        DbSet<Theme> Themes { get; set; }
+        public DbSet<Node> Nodes { get; set; }
+        public DbSet<HomeDevice> HomeDevices { get; set; }
+        public DbSet<Connector> Connectors { get; set; }
+        public DbSet<Zone> Zones { get; set; }
+        public DbSet<Home> Home { get; set; }
+        public DbSet<Theme> Themes { get; set; }
         
 
         public SmartHomeDBContext()
