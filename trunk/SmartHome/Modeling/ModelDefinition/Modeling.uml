@@ -2593,7 +2593,7 @@
     <packageHasNamedElement>
       <class
         Id="5b745bee-3d0a-4d6b-805e-1a80d49d9fd6"
-        name="Switch"
+        name="SwitchButton"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">

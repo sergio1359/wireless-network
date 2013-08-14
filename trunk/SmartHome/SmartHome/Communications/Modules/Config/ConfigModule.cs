@@ -36,7 +36,7 @@ namespace SmartHome.Communications.Modules.Config
         }
 
         #region Overridden Methods
-        public override void ProccessReceivedMessage(Comunications.Messages.IMessage inputMessage)
+        public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
         {
             OperationMessage message = (OperationMessage)inputMessage;
 
@@ -60,6 +60,8 @@ namespace SmartHome.Communications.Modules.Config
             {
                 Endpoint = Endpoints.APPLICATION_EP,
                 OpCodeType = typeof(OperationMessage.OPCodes),
+                Secured = true,
+                Routed = true,
                 OpCodes = new byte[] 
                 { 
                     (byte)OperationMessage.OPCodes.ConfigWriteResponse, 

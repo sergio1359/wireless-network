@@ -62,7 +62,8 @@ namespace OperationUARTSender
 
             RSSI = (sbyte)buffer[3];
 
-            Content.FromBinary(buffer, 4);
+            if(buffer.Length > 4)
+                Content.FromBinary(buffer, 4);
         }
     }
 }

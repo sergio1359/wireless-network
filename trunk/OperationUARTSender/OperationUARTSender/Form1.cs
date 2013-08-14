@@ -570,7 +570,7 @@ namespace OperationUARTSender
             else if (operation.OpCode == Operation.OPCodes.JoinAccept)
             {
                 byte[] macAddress = operation.Args.Take(6).ToArray();
-                byte[] aesKey =     operation.Args.Skip(6).ToArray();
+                byte[] aesKey = operation.Args.Skip(6).ToArray();
 
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("JOIN ACCEPT RECEIVED FROM 0x{0:X4} -> MAC: ", operation.SourceAddress);
@@ -710,7 +710,8 @@ namespace OperationUARTSender
                             InputMessage inputMessage = new InputMessage();
                             inputMessage.FromBinary(currentMessage.ToArray());
 
-                            OnOperationReceived(inputMessage);
+                            if (inputMessage.Content.Args != null)
+                                OnOperationReceived(inputMessage);
                         }
                         else
                         {

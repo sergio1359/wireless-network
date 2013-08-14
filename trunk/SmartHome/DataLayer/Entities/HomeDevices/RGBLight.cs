@@ -23,6 +23,7 @@ namespace DataLayer.Entities.HomeDevices
         [Range(0, 255)]
         public int DefaultDegradeTime { get; set; }
 
+        [NotMapped]
         public ModeRGBLight Mode { get; set; }
 
         [NotMapped]

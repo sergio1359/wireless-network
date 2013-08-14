@@ -1314,7 +1314,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="72468740-98ef-4507-973e-63afa0344123" name="Switch" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="72468740-98ef-4507-973e-63afa0344123" name="SwitchButton" isAbstract="false" isLeaf="false" isActiveClass="false">
         <appliedStereotypesInternal>
           <stereotypeInstance Id="3878804c-a03b-4808-802f-47f147e0f941" name="class" profile="CSharpProfile">
             <elementDefinition Id="c423d274-3830-4d58-b6eb-0ae9e1b8bfcc" />
