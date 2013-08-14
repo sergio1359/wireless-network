@@ -4,7 +4,7 @@
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
-    public static class BusinessSwitch
+    public static class BusinessSwitchButton
     {
     }
 }

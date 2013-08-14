@@ -32,6 +32,18 @@ namespace DataLayer.Entities.HomeDevices
         }
 
         [NotMapped]
+        public float? PercentageValue
+        {
+            get
+            {
+                if (this.value.HasValue)
+                    return (this.value / 255f) * 100f;
+                else
+                    return null;
+            }
+        }
+
+        [NotMapped]
         public int LastValue { get; private set; }
 
         private int? value;

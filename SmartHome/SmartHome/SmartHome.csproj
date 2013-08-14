@@ -58,9 +58,10 @@
     <Compile Include="Communications\Modules\Common\FragmentWriteTransaction.cs" />
     <Compile Include="Communications\Modules\Config\ConfigModule.cs" />
     <Compile Include="Communications\Modules\Config\TransactionStatus.cs" />
+    <Compile Include="Communications\Modules\StatusModule.cs" />
     <Compile Include="Products\HomeDeviceProduct.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessRGBLight.cs" />
-    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitch.cs" />
+    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitchButton.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessTemperatureSensor.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessWallPlug.cs" />
     <Compile Include="BusinessEntities\BusinessOperation.cs" />

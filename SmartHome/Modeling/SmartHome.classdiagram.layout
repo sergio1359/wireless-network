@@ -27,7 +27,7 @@
       <associationMoniker Id="b888d909-3ef8-4b68-8016-11067d23cc0d" />
       <relativeChildShapes />
       <moveableDecoratorHostShapes>
-        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.3402777761220932, 12.6875, 0.125, 0.14800345897674561" shapeFieldName="TargetMultiplicity" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.3472222201526165, 12.6875, 0.125, 0.14800345897674561" shapeFieldName="TargetMultiplicity" />
       </moveableDecoratorHostShapes>
       <nodes>
         <classShapeMoniker Id="23480e2d-ef4f-44b6-8127-2b46041e11a5" />
@@ -88,7 +88,7 @@
       </nodes>
     </associationConnector>
     <classShape Id="55320be7-4e1a-4357-8054-4be971485425" absoluteBounds="5, 17.375, 1.5, 1.3828124701976776" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
-      <classMoniker Id="72468740-98ef-4507-973e-63afa0344123" LastKnownName="Switch" />
+      <classMoniker Id="72468740-98ef-4507-973e-63afa0344123" LastKnownName="SwitchButton" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="1a37a044-2304-4476-a056-6042c8a2af98" absoluteBounds="5.0150000000000006, 17.765, 1.4700000000000002, 0.36132811258236563" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="6239eb93-d63f-48c1-9a50-ed7515a6e7aa" absoluteBounds="5.0150000000000006, 18.136328112582365, 1.4700000000000002, 0.52148435761531187" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -143,7 +143,7 @@
       <interfaceRealizationMoniker Id="f49d01c2-499b-450d-8cfc-19a623f585ac" />
       <relativeChildShapes />
       <moveableDecoratorHostShapes>
-        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.54992403482444, 17.161469172885493, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.5568684788549625, 17.161469172885493, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
       </moveableDecoratorHostShapes>
       <nodes>
         <classShapeMoniker Id="da503d13-08f5-4fa1-a587-3917e96773f0" />
@@ -176,7 +176,7 @@
       <interfaceRealizationMoniker Id="ffc6a7fb-a661-43a8-8aa1-26f3fac3c849" />
       <relativeChildShapes />
       <moveableDecoratorHostShapes>
-        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="12.722222220152617, 17.1875, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="12.72916666418314, 17.1875, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
       </moveableDecoratorHostShapes>
       <nodes>
         <classShapeMoniker Id="2ff2c4c6-858b-4abe-bd47-5b6fb9c16161" />
@@ -194,7 +194,7 @@
       <interfaceRealizationMoniker Id="0ec42cf2-3159-4a62-895f-f10417790ea7" />
       <relativeChildShapes />
       <moveableDecoratorHostShapes>
-        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.2987673321366415, 17.159999999999997, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
+        <moveableDecoratorHostShape manuallyPlaced="true" absoluteBounds="8.3057117761671648, 17.159999999999997, 0.125, 0.1341145783662796" shapeFieldName="Stereotype" />
       </moveableDecoratorHostShapes>
       <nodes>
         <classShapeMoniker Id="8a78c242-588b-4566-a75d-cf923d570618" />

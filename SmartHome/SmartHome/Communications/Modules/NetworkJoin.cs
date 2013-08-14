@@ -45,7 +45,7 @@ namespace SmartHome.Communications.Modules
         }
 
         #region Overridden Methods
-        public override void ProccessReceivedMessage(IMessage message)
+        public override void ProcessReceivedMessage(IMessage message)
         {
             OperationMessage operation = (OperationMessage)message;
 

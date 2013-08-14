@@ -61,7 +61,7 @@ namespace SmartHome.Products
                 configuration.Digital = true;
                 configuration.ChangeTypeD = PinPortConfiguration.Trigger.FallingEdge;
             }
-            else if (homeDevice is Switch)
+            else if (homeDevice is SwitchButton)
             {
                 configuration.Output = false;
                 configuration.Digital = true;

@@ -62,6 +62,7 @@ namespace SmartHome.Comunications
 
             this.modulesList = new List<ModuleBase>();
             this.modulesList.Add(new NetworkJoin(this));
+            this.modulesList.Add(new StatusModule(this));
             //Sort by priority descendent
             this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 
@@ -111,7 +112,7 @@ namespace SmartHome.Comunications
             {
                 Task.Factory.StartNew(() =>
                     {
-                        module.ProccessReceivedMessage(e.Content);
+                        module.ProcessReceivedMessage(e.Content);
                     });
             }
         }

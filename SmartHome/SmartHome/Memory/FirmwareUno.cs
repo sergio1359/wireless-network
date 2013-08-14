@@ -261,7 +261,7 @@ namespace SmartHome.Memory
 
             foreach (HomeDevice item in node.HomeDevices)
             {
-                if (item is Button || item is Switch || item is WallPlug || item is Light)
+                if (item is Button || item is SwitchButton || item is WallPlug || item is Light)
                 {
                     //pointerOperation
                     OperationDictionary.Add((ushort)(tempMemory.Count + result.Count), item.Operations.ToArray());

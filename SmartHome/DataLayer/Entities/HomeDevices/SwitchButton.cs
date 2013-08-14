@@ -7,12 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Entities.HomeDevices
 {
-    public class Switch : HomeDevice
+    public class SwitchButton : HomeDevice
     {
         [NotMapped]
         public bool? Open { get; set; }
 
-        public Switch()
+        public SwitchButton()
             : base()
         {
             base.Operations = new List<Operation>();

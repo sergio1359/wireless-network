@@ -30,9 +30,9 @@ namespace SmartHome.Comunications.Modules
         {
             bool result = true;
 
-            result &= this.Secured == null ? true : this.Secured == message.SecurityEnabled;
+            //result &= this.Secured == null ? true : this.Secured == message.SecurityEnabled;
 
-            result &= this.Routed == null ? true : this.Routed == message.RoutingEnabled;
+            //result &= this.Routed == null ? true : this.Routed == message.RoutingEnabled;
 
             result &= this.FromMaster == null ? true : this.FromMaster == fromMaster;
 
@@ -118,7 +118,7 @@ namespace SmartHome.Comunications.Modules
             return await this.communicationManager.SendMessage(outputMessage);
         }
 
-        public abstract void ProccessReceivedMessage(IMessage inputMessage);
+        public abstract void ProcessReceivedMessage(IMessage inputMessage);
 
         protected abstract Filter ConfigureInputFilter();
 
