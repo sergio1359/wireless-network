@@ -40,6 +40,8 @@ namespace ServiceLayer.DTO
             Mapper.CreateMap<Location, LocationDTO>();
 
             Mapper.CreateMap<Log, LogDTO>();
+
+            Mapper.CreateMap<Theme, ThemeDTO>();
         }
     }
 }

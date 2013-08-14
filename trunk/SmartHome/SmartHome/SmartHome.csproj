@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="BusinessEntities\BusinessNode.cs" />
     <Compile Include="BusinessEntities\BusinessConnector.cs" />
-    <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessButton.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessDimmable.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessDoorLock.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessHomeDevice.cs" />
@@ -54,6 +53,7 @@
     <Compile Include="BusinessEntities\BusinessHomeDevice\OperationAttribute.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPowerSensor.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessPresenceSensor.cs" />
+    <Compile Include="BusinessEntities\BusinessTheme.cs" />
     <Compile Include="Communications\Modules\Common\FragmentReadTransaction.cs" />
     <Compile Include="Communications\Modules\Common\FragmentWriteTransaction.cs" />
     <Compile Include="Communications\Modules\Config\ConfigModule.cs" />

@@ -13,7 +13,7 @@ namespace SmartHome.BusinessEntities
     {
         public static void Execute(this Operation operation)
         {
-
+            
         }
 
         public static byte[] ToBinaryOperation(this Operation operation)

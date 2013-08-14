@@ -1,114 +1,124 @@
 ﻿#region Using Statements
+using DataLayer;
 using DataLayer.Entities;
 using ServiceLayer.DTO;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using SmartHome.BusinessEntities;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+using AutoMapper;
+using DataLayer.Entities.HomeDevices;
 #endregion
 
 namespace ServiceLayer
 {
     public class OperationService
     {
-
-        //ENCARGADA DE OPERACIONES BASICAS SOBRE TODAS LAS OEPRACIONES
-        #region GENERIC_OPERATION_REGION
-
-        /// <summary>
-        /// Devuelve las operaciones 
-        /// </summary>
-        /// <param name="idHomeDevice"></param>
-        /// <returns></returns>
-        public OperationDTO[] GetProgramOperations(int idHomeDevice)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Generic Operation
+        
         /// <summary>
         /// Elimina una operacion
         /// </summary>
         /// <param name="idOperation"></param>
         public void RemoveOperation(int idOperation)
         {
-            throw new NotImplementedException();
-            //NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation);
+            var operation = Repositories.OperationRepository.GetById(idOperation);
+
+            Repositories.OperationRepository.Delete(operation);
         }
 
         public void ExecuteOperation(int idOperation)
         {
-            throw new NotImplementedException();
-            //NetworkManager.HomeDevices.SelectMany(hd => hd.Operations).First(op => op.Id == idOperation).Execute();
-        }
-
-        public OperationDTO[] GetHomeDeviceOperation(int idHomeDevice)
-        {
-            throw new NotImplementedException();
+            Repositories.OperationRepository.GetById(idOperation).Execute();
         }
 
         /// <summary>
-        /// Return the HomeDevice's operation types of the system.
+        /// Devuelve las operaciones que un home device puede hacer
         /// </summary>
-        /// <returns>Array with the types names</returns>
-        public string[] GetHomeDeviceOperationTypes(int idHomeDevice)
+        /// <param name="idHomeDevice"></param>
+        /// <returns></returns>
+        public string[] GetHomeDeviceOperation(int idHomeDevice)
         {
-            throw new NotImplementedException();
+            var homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            return homeDevice.GetHomeDeviceOperations();
         }
-        /*
-        public OperationDTO[] GetHomeDeviceOperation(string homeDeviceType)
+        
+        /// <summary>
+        /// Devuelve las operaciones programadas en el homeDevice
+        /// </summary>
+        /// <param name="idHomeDevice"></param>
+        /// <returns></returns>
+        public OperationDTO[] GetHomeDeviceOperationProgram(int idHomeDevice)
         {
-            throw new NotImplementedException();
-        }*/
+            var operations = Repositories.HomeDeviceRespository.GetById(idHomeDevice).Operations;
+
+            return Mapper.Map<OperationDTO[]>(operations);
+        }
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
         {
-            throw new NotImplementedException();
-            //HomeDevice homeDevDestino = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDeviceDestination);
+            HomeDevice homeDevDestino = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination);
 
-            //Operation op = new Operation()
-            //{
-            //    DestionationHomeDevice = homeDevDestino,
-            //    OperationName = operation,
-            //    Args = args
-            //};
+            Operation op = new Operation()
+            {
+                DestionationHomeDevice = homeDevDestino,
+                OperationName = operation,
+                Args = args
+            };
 
-            //HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
-            //homeDev.Operations.Add(op);
+            HomeDevice homeDev = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            homeDev.Operations.Add(op);
 
-            //return op.Id;
+            op = Repositories.OperationRepository.Insert(op);
+
+            Repositories.SaveChanges();
+
+            return op.Id;
         }
         #endregion
 
-        //Gestiona el Themer
-        #region THEME_OPERATION
+        #region Theme Operation
 
-        public Dictionary<int, string> GetThemes()
+        public ThemeDTO[] GetThemes()
         {
-            throw new NotImplementedException();
+            var themes = Repositories.ThemesRespository.GetAll();
+
+            return Mapper.Map<ThemeDTO[]>(themes);
         }
 
         public void ExecuteTheme(int idTheme)
         {
-            throw new NotImplementedException();
+            Repositories.ThemesRespository.GetById(idTheme).ExecuteTheme();
         }
 
-        public Operation[] GetOperationOfTheme(int idTheme)
+        public OperationDTO[] GetOperationsOfTheme(int idTheme)
         {
-            throw new NotImplementedException();
+            var operations = Repositories.ThemesRespository.GetById(idTheme).Operations;
+
+            return Mapper.Map<OperationDTO[]>(operations);
         }
 
         public void RemoveTheme(int idTheme)
         {
-            throw new NotImplementedException();
+            var theme = Repositories.ThemesRespository.GetById(idTheme);
+
+            foreach (var item in theme.Operations)
+            {
+                Services.OperationService.RemoveOperation(item.Id);
+            }
+
+            Repositories.ThemesRespository.Delete(theme);
         }
         #endregion
 
-        //Getion del planificador de operaciones
-        #region SCHEDULER_OPERATION
+        #region SchedulerOperation
 
-        //public Operation[] GetScheduler()
+        //public OperationDTO[] GetScheduler()
         //{
         //}
 
-        //public Operation[] GetScheduler(int idHomeDevice)
+        //public OperationDTO[] GetScheduler(int idHomeDevice)
 
         #endregion
 

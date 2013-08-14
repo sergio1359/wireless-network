@@ -36,7 +36,12 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
 
-            Services.HomeDeviceService.RemoveHomeDevice(homeDevice.Id);
+            if (homeDevice != null)
+            {
+                Services.HomeDeviceService.RemoveHomeDevice(homeDevice.Id);
+
+                UpdateHomeDevices();
+            }
         }
 
         private void ChangeHomeDeviceInformation(object sender, EventArgs e)

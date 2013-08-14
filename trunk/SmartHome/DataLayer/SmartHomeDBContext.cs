@@ -15,6 +15,9 @@ namespace DataLayer
         public DbSet<Home> Home { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<TimeOperation> TimeOperations { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public DbSet<View> Views { get; set; }
         
 
         public SmartHomeDBContext()

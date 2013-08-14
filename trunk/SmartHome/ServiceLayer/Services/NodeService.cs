@@ -2,7 +2,13 @@
 using DataLayer.Entities.Enums;
 using ServiceLayer.DTO;
 using System;
-using DataLayer.Entities; 
+using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
+using DataLayer;
+using SmartHome.BusinessEntities;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+using AutoMapper;
+using System.Linq;
 #endregion
 
 namespace ServiceLayer
@@ -20,48 +26,42 @@ namespace ServiceLayer
         /// 3 == el homeDevice no es compatible con el conector</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            throw new NotImplementedException();
+            Connector connector = Repositories.ConnectorRepository.GetById(idConnector);
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
-            //Connector connector = //GET CONECTOR BY ID
-            //HomeDevice homeDevice = //GET HOMEDEVICE BY ID
-
-            //if (connector.InUse)
-            //    return 1;
+            if (connector.InUse)
+                return 1;
             
-            //if (homeDevice.InUse)
-            //    return 2;
+            if (homeDevice.InUse)
+                return 2;
 
-            //connector.LinkHomeDevice(homeDevice);
-            //homeDevice.LinkConnector(connector);
+            connector.LinkHomeDevice(homeDevice);
+            homeDevice.LinkConnector(connector);
 
-            //return 0;
+            return 0;
         }
 
 
         /// <summary>
-        /// Desrelaciona un HomeDevice de su conector asociado
+        /// Unlink a HomeDevice from the connector associated
         /// </summary>
         public void UnlinkHomeDevice(int idHomeDevice)
         {
-            throw new NotImplementedException();
-
-            //HomeDevice homeDevice = //GET HOMEDEVICE BY ID
-            //homeDevice.Connector.UnlinkHomeDevice();
-            //homeDevice.UnlinkConnector();
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            homeDevice.Connector.UnlinkHomeDevice();
+            homeDevice.UnlinkConnector();
         }
 
         /// <summary>
-        /// Devuelve los conectores que pertenecen a un NODO
+        /// Return the Connector of the Node
         /// </summary>
         /// <param name="node"></param>
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            throw new NotImplementedException();
+            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors;
 
-            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors;
-
-            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            return Mapper.Map<ConnectorDTO[]>(connectors);
         }
 
 
@@ -72,36 +72,38 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            throw new NotImplementedException();
-            //HomeDevice homeDev = NetworkManager.HomeDevices.First(hd => hd.Id == idHomeDevice);
+            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors;
+            var homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
-            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.ConnectorType == homeDev.ConnectorCapable);
+            var connectorsResult = connectors.Where(c => c.HomeDevices.Contains(homeDevice) && c.InUse == false);
 
-            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            return Mapper.Map<ConnectorDTO[]>(connectors);
         }
 
         public string GetNameNode(int idNode)
         {
-            throw new NotImplementedException();
-            //return NetworkManager.Nodes.First(n => n.Id == idNode).Name;
+            return Repositories.NodeRespository.GetById(idNode).Name;            
         }
 
         public void SetNameNode(int idNode, string newName)
         {
-            throw new NotImplementedException();
-            //NetworkManager.Nodes.First(n => n.Id == idNode).Name = newName;
+            var node = Repositories.NodeRespository.GetById(idNode);
+            node.Name = newName;
+
+            Repositories.SaveChanges();
         }
 
         public int GetAddressNode(int idNode)
         {
-            throw new NotImplementedException();
-            //return NetworkManager.Nodes.First(n => n.Id == idNode).Address;
+            return Repositories.NodeRespository.GetById(idNode).Address;
         }
 
         public void SetAddressNode(int idNode, ushort newAddress)
         {
-            throw new NotImplementedException();
-            //NetworkManager.Nodes.First(n => n.Id == idNode).Address = newAddress;
+            var node = Repositories.NodeRespository.GetById(idNode);
+            node.Address = newAddress;
+
+            Repositories.SaveChanges();
         }
 
         public void UpdatePosition(int idLocation, float x, float y)
@@ -111,8 +113,8 @@ namespace ServiceLayer
 
         public LocationDTO GetNodePosition(int idNode)
         {
-            throw new NotImplementedException();
-            //return NetworkManager.Nodes.First(n => n.Id == idNode).Position;
+            var location = Repositories.NodeRespository.GetById(idNode).Location;
+            return Mapper.Map<LocationDTO>(location);
         }
 
         /// <summary>
@@ -122,24 +124,21 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetFreeConnectors(int idNode)
         {
-            throw new NotImplementedException();
-            //var connectors = NetworkManager.Nodes.First(n => n.Id == idNode).Connectors.Where(c => c.InUse == false);
+            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors.Where(c => c.InUse == false);
 
-            //return Mapper.Map<List<ConnectorDTO>>(connectors).ToArray();
+            return Mapper.Map<ConnectorDTO[]>(connectors);
         }
 
         public NodeDTO[] GetNodes()
         {
-            throw new NotImplementedException();
-            //return Mapper.Map<List<NodeDTO>>(NetworkManager.Nodes).ToArray();
+            var nodes = Repositories.NodeRespository.GetAll();
+            return Mapper.Map<NodeDTO[]>(nodes);
         }
 
         public NodeDTO[] GetNodes(int idZone)
         {
-            throw new NotImplementedException();
-            //var nodes = NetworkManager.Nodes.Where(n => n.Position.Id == idZone);
-
-            //return Mapper.Map<List<NodeDTO>>(nodes).ToArray();
+            var nodes = Repositories.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+            return Mapper.Map<NodeDTO[]>(nodes);
         }
 
         /// <summary>

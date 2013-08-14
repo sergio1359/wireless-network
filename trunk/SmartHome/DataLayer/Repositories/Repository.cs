@@ -17,10 +17,12 @@ namespace DataLayer
             _Collection = context.Set<T>();
         }
 
-        public void Insert(T entity)
+        public T Insert(T entity)
         {
-           _Collection.Add(entity);
+           T addEntity = _Collection.Add(entity);
            _context.SaveChanges();
+
+           return addEntity;
         }
 
         public void Delete(T entity)

@@ -150,12 +150,13 @@ namespace ServiceLayer
         /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
-            throw new NotFiniteNumberException();
             Zone zone = new Zone();
             zone.Name = nameZone;
-            Repositories.ZoneRepository.Insert(zone);
+            zone.MainView = new View();
+            zone.MainView.Name = nameZone;
+            zone = Repositories.ZoneRepository.Insert(zone);
 
-            //return NetworkManager.Home.Zones.Last().Id;
+            return zone.Id;
         }
 
         /// <summary>
@@ -164,7 +165,8 @@ namespace ServiceLayer
         /// <param name="idZone"></param>
         public void RemoveZone(int idZone)
         {
-            //Borrar todos los views que contenga la zona
+            //NO ES UN METODO SENCILLO DE PROGRAMAR
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -172,9 +174,13 @@ namespace ServiceLayer
         /// </summary>
         /// <param name="idView"></param>
         /// <param name="newName"></param>
-        public void SetNameZone(int idView, string newName)
+        public void SetNameZone(int idZone, string newName)
         {
-            //NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
+            var zone = Repositories.ZoneRepository.GetById(idZone);
+            zone.Name = newName;
+            zone.MainView.Name = newName;
+
+            Repositories.SaveChanges();
         } 
 
         /// <summary>
@@ -185,13 +191,15 @@ namespace ServiceLayer
         /// <returns>Return the identification of the new View</returns>
         public int AddView(int idZone, string nameView)
         {
-            throw new NotImplementedException();
-            //var zone = NetworkManager.Home.Zones.First(z => z.Id == idZone);
-            //View newView = new View();
-            //newView.Name = nameView;
-            //zone.Views.Add(newView);
+            View view = new View();
+            view.Name = nameView;
 
-            //return newView.Id;
+            Zone zone = Repositories.ZoneRepository.GetById(idZone);
+            zone.Views.Add(view);
+
+            Repositories.SaveChanges();
+
+            return Repositories.ViewRepository.GetAll().AsEnumerable().Last().Id;
         }
 
         /// <summary>
@@ -200,7 +208,9 @@ namespace ServiceLayer
         /// <param name="idView"></param>
         public void RemoveView(int idView)
         {
-            //detalles de borrar un view concreto
+            View view = Repositories.ViewRepository.GetById(idView);
+            if(view != null)
+                Repositories.ViewRepository.Delete(view);
         }
 
         /// <summary>
@@ -210,7 +220,12 @@ namespace ServiceLayer
         /// <param name="newName"></param>
         public void SetNameView(int idView, string newName)
         {
-            //NetworkManager.Home.Zones.SelectMany(z => z.Views).First(v => v.Id == idView).NameView = newName;
+            var view = Repositories.ViewRepository.GetById(idView);
+
+            if (view.Id == view.Zone.MainView.Id) //Si es el MainView
+                view.Zone.Name = newName;
+
+            view.Name = newName;
         }
 
         #endregion
