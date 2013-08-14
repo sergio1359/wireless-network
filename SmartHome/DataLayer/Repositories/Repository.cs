@@ -29,6 +29,11 @@ namespace DataLayer
             _context.SaveChanges();
         }
 
+        public int Count()
+        {
+            return _Collection.Count();
+        }
+
         public IQueryable<T> GetAll()
         {
             return _Collection;
