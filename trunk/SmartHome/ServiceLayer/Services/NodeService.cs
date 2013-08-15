@@ -9,6 +9,10 @@ using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using AutoMapper;
 using System.Linq;
+using SmartHome.Comunications;
+using SmartHome.Communications.Modules.Config;
+using SmartHome.Communications.Modules;
+using System.Threading.Tasks;
 #endregion
 
 namespace ServiceLayer
@@ -56,18 +60,32 @@ namespace ServiceLayer
         /// <returns>Return string for the MACs</returns>
         public string[] GetPendingNodes()
         {
-            throw new NotImplementedException();
-            //VICTOR
+            return CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes.ToArray();
         }
 
         /// <summary>
         /// Allow a MAC in the system.
         /// </summary>
-        /// <param name="MAC"></param>
-        public void AllowPendingNode(string MAC)
+        /// <param name="MAC">The MAC.</param>
+        /// <returns>
+        /// True if the node was allowed successfuly. False otherwise
+        /// </returns>
+        public async Task<bool> AllowPendingNode(string MAC)
         {
-            throw new NotImplementedException();
-            //VICTOR
+            Home home = Repositories.HomeRespository.GetHome();
+
+            Node node = Repositories.NodeRespository.GetByMacAddress(MAC);
+
+            if (node == null)
+            {
+                //TODO: Set other properties. Like: BaseModel, ShieldType, etc.
+                node = Repositories.NodeRespository.Insert(new Node()
+                {
+                    Mac = MAC,
+                });
+            }
+
+            return await CommunicationManager.Instance.FindModule<NetworkJoin>().AcceptNode(MAC, node.Address, home.Security);
         }
 
         /// <summary>

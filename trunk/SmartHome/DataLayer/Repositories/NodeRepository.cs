@@ -14,7 +14,10 @@ namespace DataLayer
     {
         public NodeRepository(SmartHomeDBContext context) : base(context) { }
 
-
+        public Node GetByMacAddress(string macAddress)
+        {
+            return this._Collection.FirstOrDefault(n => n.Mac == macAddress);
+        }
 
     }
 }

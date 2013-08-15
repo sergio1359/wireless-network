@@ -23,7 +23,7 @@ namespace DataLayer
         public SmartHomeDBContext()
             : base("SmartHomeDB")
         {
-            Database.SetInitializer<SmartHomeDBContext>(new DropCreateDatabaseIfModelChanges<SmartHomeDBContext>());
+            Database.SetInitializer<SmartHomeDBContext>(new SmartHomeDBInitializer());
         }
 
     }

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Entities;
 
 namespace SmartHome.Communications.Modules
 {
@@ -39,9 +40,10 @@ namespace SmartHome.Communications.Modules
             this.pendingRequests = new Dictionary<string, Tuple<ushort, byte[]>>();
         }
 
-        public async Task<bool> AcceptNode(string macAddress, ushort newAddress, string securityKey)
+        public async Task<bool> AcceptNode(string macAddress, ushort newAddress, Security security)
         {
-            return await this.SendJoinAcceptResponse(macAddress, newAddress, securityKey);
+            //TODO: Set all Security params.
+            return await this.SendJoinAcceptResponse(macAddress, newAddress, security.SecurityKey);
         }
 
         #region Overridden Methods

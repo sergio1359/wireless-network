@@ -2,6 +2,7 @@
 using App_Smart_Home_Prototipo.Electrical.Screens;
 using System;
 using System.Windows.Forms;
+using ServiceLayer;
 
 namespace App_Smart_Home_Prototipo
 {
@@ -56,7 +57,7 @@ namespace App_Smart_Home_Prototipo
         /// </summary>
         private void RefreshContentAndResetMainScreen()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
 
