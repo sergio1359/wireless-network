@@ -32,7 +32,8 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.Base, f => f.MapFrom(n => Enum.GetName(typeof(BaseTypes), n.Base)))
                 .ForMember(t => t.Shield, f => f.MapFrom(n => Enum.GetName(typeof(ShieldTypes), n.Shield)));
 
-            Mapper.CreateMap<Operation, OperationDTO>();
+            Mapper.CreateMap<Operation, OperationDTO>()
+                .ForMember(t => t.NameOperation, f => f.MapFrom(n => n.OperationName));
 
             Mapper.CreateMap<Zone, ZoneDTO>()
                 .ForMember(t => t.Name, f => f.MapFrom(z => z.Name));

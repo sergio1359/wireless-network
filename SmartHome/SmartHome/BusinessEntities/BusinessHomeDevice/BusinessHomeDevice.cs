@@ -14,18 +14,29 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
     {
         private static Dictionary<Type, string[]> homeDeviceOperations = null;
 
-        
-
-
-        //Methods
-        public static void LinkConnector(this HomeDevice homeDevice, Connector connector)
+        public static HomeDevice CreateHomeDevice(string homeDeviceType)
         {
-            homeDevice.Connector = connector;
+            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
+
+            return (HomeDevice)Activator.CreateInstance(deviceType);
         }
 
-        public static void UnlinkConnector(this HomeDevice homeDevice)
+        public static List<PinPort> GetPinPorts(this HomeDevice homeDevice)
         {
-            homeDevice.Connector = null;
+            if(!homeDevice.InUse)
+                return null;
+            if (homeDevice.ProductTag.Count == 0)//no es un producto
+                return homeDevice.Connector.GetPinPort();
+            else //es un producto
+            {
+                List<PinPort> pinPorts = new List<PinPort>();
+                for (int i = 0; i < homeDevice.ProductTag.Count; i++)
+                {
+                    int element = homeDevice.ProductTag.ElementAt(i);
+                    pinPorts.Add(homeDevice.Connector.GetPinPort()[element]);
+                }
+                return pinPorts;
+            }
         }
 
         public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice)

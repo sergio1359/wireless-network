@@ -29,6 +29,22 @@ namespace SmartHome.BusinessEntities
             Hex.SaveBin2Hex(memoryEEPROM, node.Mac.ToString());
         }
 
+        public static Node CreateNode(BaseTypes baseType, ShieldTypes shieldType)
+        {
+            Node node = new Node()
+            {
+                Base = baseType,
+                Shield = shieldType
+            };
+
+            foreach (var item in ProductConfiguration.GetShieldDictionary(shieldType))
+            {
+                node.Connectors.Add(BusinessConnector.CreateConnector(item.Key, item.Value.Item1));
+            }
+
+            return node;
+        }
+
         public static byte[] GetBinaryConfiguration(this Node node)
         {
             FirmwareUno fw = new FirmwareUno(node, 0x00); //TODO: Ojo

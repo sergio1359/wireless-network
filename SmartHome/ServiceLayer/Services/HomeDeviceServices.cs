@@ -3,6 +3,7 @@ using AutoMapper;
 using DataLayer;
 using DataLayer.Entities.HomeDevices;
 using ServiceLayer.DTO;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
 using System;
 using System.Collections.Generic;
 using System.Linq; 
@@ -20,9 +21,7 @@ namespace ServiceLayer
         /// <returns>Return the ID for the new HomeDevice</returns>
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
-
-            HomeDevice homeDevice = (HomeDevice)Activator.CreateInstance(deviceType);
+            HomeDevice homeDevice = BusinessHomeDevice.CreateHomeDevice(homeDeviceType);
 
             homeDevice.Name = nameHomeDevice;
 

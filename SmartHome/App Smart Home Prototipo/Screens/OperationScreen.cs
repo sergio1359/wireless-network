@@ -26,6 +26,13 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
             textBoxNameHomeDevice.Text = homeDev.Name;
             textBoxTypeHomeDevice.Text = homeDev.Type;
 
+            UpdateOperation();
+        }
+
+        private void UpdateOperation()
+        {
+            HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+
             listBoxOperations.Items.Clear();
             listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperation(homeDev.Id)); //OJO
 
@@ -41,16 +48,28 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
 
             Services.OperationService.RemoveOperation(operation.Id);
 
-            //UpdateOperation
-            SelectHomeDevice(this, null);
+            UpdateOperation();
         }
 
-        private void UpdateOperations(object sender, EventArgs e)
+        private void SelectOperation(object sender, EventArgs e)
         {
-            HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+            OperationDTO operation = (OperationDTO)listBoxOperations.SelectedItem;
 
-            comboBoxOperation.Items.Clear();
-            comboBoxOperation.Items.AddRange(Services.OperationService.GetHomeDeviceOperation(homeDev.Id)); //OJO
+            textBoxNameOperation.Text = operation.Name;
+            comboBoxToHomeDevice.Text = Services.HomeDeviceService.GetHomeDevices().First(hd => hd.Id == operation.IdHomeDevice).ToString();
+            comboBoxOperation.Text = operation.NameOperation;
+            textBoxArgs.Text = "hola mundo";
+
+        }
+
+        private void AddOperation(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EditOperation(object sender, EventArgs e)
+        {
+
         }
     }
 }
