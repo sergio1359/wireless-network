@@ -3,6 +3,7 @@ using App_Smart_Home_Prototipo.Electrical.Screens;
 using System;
 using System.Windows.Forms;
 using ServiceLayer;
+using System.Threading.Tasks;
 
 namespace App_Smart_Home_Prototipo
 {
@@ -10,6 +11,7 @@ namespace App_Smart_Home_Prototipo
     {
         public MainScreen()
         {
+            Task.Factory.StartNew(() => { Services.HomeService.CreateHome(); });
             InitializeComponent();
         }
 

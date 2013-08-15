@@ -58,7 +58,11 @@ namespace SmartHome.BusinessEntities
         {
             if (connector.NameProduct == "") //no esta conectado a un producto
             {
-                //TODO: Eliminar homeDevices del sistema
+                //TODO: Eliminar homeDevices del sistema. Hay que hacer pruebas de esto
+            }
+            else
+            {
+                connector.HomeDevices = new List<HomeDevice>();
             }
 
             connector.HomeDevices.Clear();

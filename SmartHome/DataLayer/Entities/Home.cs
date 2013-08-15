@@ -28,9 +28,9 @@ namespace DataLayer.Entities
 
     public class Coordenate
     {
-        public float Longitude { get; set; }
+        public float? Longitude { get; set; }
 
-        public float Latitude { get; set; }
+        public float? Latitude { get; set; }
     }
 
     public class Security
