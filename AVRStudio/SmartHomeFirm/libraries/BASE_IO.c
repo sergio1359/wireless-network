@@ -8,6 +8,8 @@
 #include "DIGITAL.h"
 #include "globals.h"
 
+#define SHIELD_MODEL 1
+
 VARPIN(LED);
 VARPIN(BUTTON);
 
@@ -31,7 +33,9 @@ void BASE_Init()
 		VARPIN_UPDATE(LED, PINADDRESS('B', 4));
 		
 		VARPIN_OUT(LED);
-	}		
+	}
+	
+	shieldModel = SHIELD_MODEL;	
 }
 
 void BASE_LedOn()

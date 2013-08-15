@@ -101,12 +101,16 @@ typedef struct
 typedef struct
 {
 	uint8_t MacAddress[SERIAL_NUMBER_SIZE];
+	uint8_t BaseModel;
+	uint8_t ShieldModel;
 	uint8_t AES_Key[16];
 }JOIN_ACCEPT_MESSAGE_t;
 
 typedef struct
 {
 	uint16_t Address;
+	uint8_t  PanId;
+	uint8_t  Channel;
 	uint8_t  Network_AES_Key[16];
 }JOIN_ACCEPT_RESPONSE_MESSAGE_t;
 

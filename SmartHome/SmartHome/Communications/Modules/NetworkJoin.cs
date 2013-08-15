@@ -42,8 +42,8 @@ namespace SmartHome.Communications.Modules
 
         public async Task<bool> AcceptNode(string macAddress, ushort newAddress, Security security)
         {
-            //TODO: Set all Security params.
-            return await this.SendJoinAcceptResponse(macAddress, newAddress, security.SecurityKey);
+            //TODO: check if macAddress exists
+            return await this.SendJoinAcceptResponse(macAddress, newAddress, security);
         }
 
         #region Overridden Methods
@@ -63,7 +63,9 @@ namespace SmartHome.Communications.Modules
             else if (operation.OpCode == OperationMessage.OPCodes.JoinAccept)
             {
                 byte[] macAddress = operation.Args.Take(6).ToArray();
-                byte[] aesKey = operation.Args.Skip(6).ToArray();
+                byte baseModel = operation.Args[6];
+                byte shieldModel = operation.Args[7];
+                byte[] aesKey = operation.Args.Skip(8).ToArray();
 
                 StringBuilder sb = new StringBuilder();
                 sb.AppendFormat("JOIN ACCEPT RECEIVED FROM 0x{0:X4} -> MAC: ", operation.SourceAddress);
@@ -72,6 +74,8 @@ namespace SmartHome.Communications.Modules
                 {
                     sb.AppendFormat("0x{0:X2} ", b);
                 }
+
+                sb.AppendFormat("  BASE-MODEL: {0}  SHIELD-MODEL: {1}", baseModel, shieldModel);
 
                 sb.Append("  AES-KEY: ");
 
@@ -127,19 +131,14 @@ namespace SmartHome.Communications.Modules
             Random r = new Random();
             r.NextBytes(RSAKey);
 
-            return await this.SendMessage(new OperationMessage()
-            {
-                SourceAddress = 0x00,
-                DestinationAddress = destinationAddress,
-                OpCode = OperationMessage.OPCodes.JoinRequestResponse,
-                Args = RSAKey
-            });
+            OperationMessage joinResponse = OperationMessage.JoinRequestResponse(RSAKey);
+            joinResponse.DestinationAddress = destinationAddress;
+
+            return await this.SendMessage(joinResponse);
         }
 
-        private async Task<bool> SendJoinAcceptResponse(string macAddress, ushort newAddress, string securityKey)
+        private async Task<bool> SendJoinAcceptResponse(string macAddress, ushort newAddress, Security security)
         {
-            List<byte> operationArgs = new List<byte>();
-
             if (!pendingRequests.ContainsKey(macAddress))
             {
                 throw new InvalidOperationException();
@@ -147,16 +146,10 @@ namespace SmartHome.Communications.Modules
 
             byte[] AESKey = this.pendingRequests[macAddress].Item2;
 
-            operationArgs.AddRange(BitConverter.GetBytes(newAddress));
-            operationArgs.AddRange(Encoding.ASCII.GetBytes(securityKey));
+            OperationMessage joinAcceptResponse = OperationMessage.JoinAcceptResponse(newAddress, (byte)security.PanId, (byte)security.Channel, security.SecurityKey);
+            joinAcceptResponse.DestinationAddress = this.pendingRequests[macAddress].Item1;
 
-            bool result = await this.SendMessage(new OperationMessage() 
-            { 
-                SourceAddress = 0x00,
-                DestinationAddress = this.pendingRequests[macAddress].Item1,
-                OpCode = OperationMessage.OPCodes.JoinAcceptResponse,
-                Args = operationArgs.ToArray() 
-            });
+            bool result = await this.SendMessage(joinAcceptResponse);
 
             if (result)
             {

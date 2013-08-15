@@ -50,7 +50,7 @@ namespace SmartHome.Communications.SerialManager
         private int retriesCount;
         #endregion
 
-        public event EventHandler<InputHeader> OperationReceived;
+        public event EventHandler<InputHeader> MessageReceived;
         public event EventHandler<ConnectionStates> ConnectionStateChanged;
 
         #region Properties
@@ -95,7 +95,7 @@ namespace SmartHome.Communications.SerialManager
             }
         }
 
-        public int ConfirmationTimeout 
+        public int ConfirmationTimeout
         {
             get;
             set;
@@ -103,8 +103,7 @@ namespace SmartHome.Communications.SerialManager
         #endregion
 
         #region Constants
-        // Magic symbol to start SOF end EOF sequences with. Should be duplicated if
-        // occured inside the message.
+        // Magic symbol to start SOF end EOF sequences with. Should be duplicated if occured inside the message.
         const byte APP_MAGIC_SYMBOL = 0x10;
         static byte[] SOF = { APP_MAGIC_SYMBOL, 0x02 };
         static byte[] EOF = { APP_MAGIC_SYMBOL, 0x03 };
@@ -131,7 +130,7 @@ namespace SmartHome.Communications.SerialManager
 
             this.currentReceiverMessage = new List<byte>();
         }
-       
+
         #region Private Methods
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -262,18 +261,22 @@ namespace SmartHome.Communications.SerialManager
 
             try
             {
-                if (!this.serialPort.IsOpen)
-                    this.serialPort.Open();
+                lock (this)
+                {
+                    if (!this.serialPort.IsOpen)
+                        this.serialPort.Open();
 
-                this.serialPort.Write(frame.ToArray(), 0, frame.Count);
+                    this.serialPort.Write(frame.ToArray(), 0, frame.Count);
 
-                if (this.ConnectionState == ConnectionStates.NotConnected)
-                    this.ConnectionState = ConnectionStates.Connected;
+                    if (this.ConnectionState == ConnectionStates.NotConnected)
+                        this.ConnectionState = ConnectionStates.Connected;
 
-                return true;
+                    return true;
+                }
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(this.PortName + " Exception: " + ex.Message);
                 if (ex is UnauthorizedAccessException || ex is IOException)
                 {
                     this.ConnectionState = ConnectionStates.NotConnected;
@@ -297,19 +300,41 @@ namespace SmartHome.Communications.SerialManager
                 this.NodeAddress = ((OperationMessage)operation.Content).SourceAddress;
                 this.Identified = true;
                 this.ConnectionState = ConnectionStates.Connected;
+
+                this.InitializeNode();
             }
             else if (operation.Confirmation != InputHeader.ConfirmationType.None)
             {
+                Debug.WriteLine(this.PortName + " Confirmation received :" + operation.Confirmation.ToString());
+
                 // Data confirmation response
-                if(pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+                if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
                     pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
             }
             else
             {
-                // Real operation responde
-                if (OperationReceived != null)
-                    OperationReceived(this, operation);
+                if (operation.Content is OperationMessage && ((OperationMessage)operation.Content).OpCode == OperationMessage.OPCodes.WakeUp)
+                {
+                    // Node just woke up
+                    this.InitializeNode();
+                }
+
+                // Real operation response
+                if (this.MessageReceived != null)
+                    this.MessageReceived(this, operation);
             }
+        }
+
+        private void InitializeNode()
+        {
+            //Send DateTime. Wait until a second change to ensure exactly syncronization
+            int sec = DateTime.Now.Second;
+            //while (sec == DateTime.Now.Second) ;
+            while (DateTime.Now.Millisecond < 800) ;
+
+            this.SendInternalMessage(OperationMessage.DateTimeWrite(DateTime.Now));
+
+            Debug.WriteLine(this.PortName + " Initialized");
         }
         #endregion
 
@@ -318,7 +343,7 @@ namespace SmartHome.Communications.SerialManager
         {
             this.ConnectionState = ConnectionStates.Identifying;
 
-            this.SendOperation(new OperationMessage()
+            this.SendInternalMessage(new OperationMessage()
             {
                 OpCode = OperationMessage.OPCodes.PingRequest,
             });
@@ -328,13 +353,16 @@ namespace SmartHome.Communications.SerialManager
 
             identifyTimeoutTimer.Start();
         }
-        
+
         public async Task<bool> SendMessage(OutputHeader message)
         {
             if (this.pendingConfirmationTask != null && !this.pendingConfirmationTask.Task.IsCompleted)
                 throw new InvalidOperationException("Sending in progress");
 
             this.pendingConfirmationTask = new TaskCompletionSource<bool>();
+
+            if (message.Content is OperationMessage)
+                Debug.WriteLine(this.PortName + " UART SEND OPCODE" + ((OperationMessage)message.Content).OpCode.ToString());
 
             if (!this.SendData(message.ToBinary()))
                 return false;
@@ -347,8 +375,8 @@ namespace SmartHome.Communications.SerialManager
                 if (firstTask == delayTask)
                 {
                     //Timeout
+                    Debug.WriteLine(this.PortName + " Confirmation response ABORTED!");
                     this.pendingConfirmationTask.SetCanceled();
-                    Debug.WriteLine("Confirmation response ABORTED!");
                     return false;
                 }
                 else
@@ -358,16 +386,27 @@ namespace SmartHome.Communications.SerialManager
             }
         }
 
-        public bool SendOperation(IMessage operation)
+        /// <summary>
+        /// Sends the an message to the node physically connected.
+        /// </summary>
+        /// <param name="operation">The message to be sent.</param>
+        /// <returns></returns>
+        public bool SendInternalMessage(IMessage message)
         {
+            if (message.DestinationAddress != 0 && message.DestinationAddress != this.NodeAddress)
+                throw new InvalidOperationException("This method can be used only to send internal messages");
+
             OutputHeader outputMessage = new OutputHeader()
             {
                 SecurityEnabled = true,
                 RoutingEnabled = true,
                 EndPoint = 1,
                 Retries = 3,
-                Content = operation
+                Content = message
             };
+
+            if (message is OperationMessage)
+                Debug.WriteLine(this.PortName + " UART SEND OPCODE" + ((OperationMessage)message).OpCode.ToString());
 
             return this.SendData(outputMessage.ToBinary());
         }

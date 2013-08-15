@@ -23,8 +23,6 @@
 
 #define FIRMWARE_VERSION 1
 
-#define SHIELD_MODEL 1
-
 #define softReset()        \
 do                          \
 {                           \
@@ -50,6 +48,7 @@ GLOBAL volatile _Bool validConfiguration;
 
 //System info
 GLOBAL volatile uint8_t baseModel;
+GLOBAL volatile uint8_t shieldModel;
 
 /*	Time vars	4 bytes  */
 GLOBAL volatile TIME_t currentTime;

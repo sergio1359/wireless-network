@@ -172,7 +172,10 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 	uint8_t configIndex = findLogicElem(deviceAddress);
 
 	if(configIndex == 0xFF) //UNKNOWN DEVICE ADDRESS
-	return false;
+	{
+		sendDigitalResponse(sourceAddress, deviceAddress, 0xFF);
+		return false;
+	}
 	
 	LOGIC_ELEM_t* currentElem = &logic_elems[configIndex];
 	

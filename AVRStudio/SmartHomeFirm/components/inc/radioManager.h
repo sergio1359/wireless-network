@@ -44,6 +44,7 @@ typedef enum NetworkJoinState_t
 } NetworkJoinState_t;
 
 void  RADIO_Init(void);
+void  RADIO_SendWakeup(void* callback);
 void  RADIO_SendDiscovery(void* callback);
 void  RADIO_StartNetworkJoin(void);
 

@@ -30,6 +30,7 @@ X(ConfigReadResponse,			0x0A, configRead_Handler,		configRead_DataConf,		CONFIG_
 X(ConfigReadConfirmation,		0x0B, configRead_Handler,		0x00,						CONFIG_READ_CONFIRMATION_MESSAGE_t,			false)	\
 X(ConfigChecksum,				0x0C, configChecksum_Handler,	0x00,						CONFIG_CHECKSUM_MESSAGE_t,					false)	\
 X(ConfigChecksumResponse,		0x0D, configChecksum_Handler,	0x00,						CONFIG_CHECKSUM_RESPONSE_MESSAGE_t,			false)	\
+X(WakeUp,						0x0E, configWakeUp_Handler,		0x00,						WAKE_UP_MESSAGE_t,							false)	\
 
 //SYSTEM
 typedef struct
@@ -105,6 +106,10 @@ typedef struct
 	uint16_t checksum;
 }CONFIG_CHECKSUM_RESPONSE_MESSAGE_t;
 
+typedef struct
+{
+}WAKE_UP_MESSAGE_t;
+
 
 void configModule_Init(void);
 void configModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
@@ -117,6 +122,7 @@ void configBaseModel_Handler(OPERATION_HEADER_t* operation_header);
 void configWrite_Handler(OPERATION_HEADER_t* operation_header);
 void configRead_Handler(OPERATION_HEADER_t* operation_header);
 void configChecksum_Handler(OPERATION_HEADER_t* operation_header);
+void configWakeUp_Handler(OPERATION_HEADER_t* operation_header);
 
 /*- Data Confirmations --------------------------------------------------------*/
 void configWrite_DataConf(OPERATION_DataConf_t *req);

@@ -11,6 +11,11 @@
 #include "radioManager.h"
 #include "globals.h"
 
+//WakeUp message struct
+static struct
+{
+	OPERATION_HEADER_t header;
+}wakeupMessage;
 
 INPUT_UART_HEADER_t coordinator_UART_header;
 
@@ -19,12 +24,17 @@ _Bool checkConditions(uint16_t operationAddress);
 
 
 void OM_Init(void)
-{
+{	
 	coordinator_UART_header.endPoint	= 1; //Application endpoint
 	coordinator_UART_header.nextHop		= 0; //No hop
 	coordinator_UART_header.routing		= 0; //
 	coordinator_UART_header.rssi		= 0; //Highest quality
 	coordinator_UART_header.security	= 1; //SecurityEnabled
+	
+	wakeupMessage.header.opCode = WakeUp;
+	wakeupMessage.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	
+	USART_SendOperation(&coordinator_UART_header, &wakeupMessage, 0);
 }
 
 void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header)

@@ -174,7 +174,7 @@ static void appInit(void)
 		BASE_LedToggle();
 		_delay_ms(200);
 		
-		if(joinCounter++ == (5 * (1000 / 200))) //2 Seconds
+		if(joinCounter++ == (3 * (1000 / 200))) //3 Seconds
 		{
 			RADIO_StartNetworkJoin();
 			break;

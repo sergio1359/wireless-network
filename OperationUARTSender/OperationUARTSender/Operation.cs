@@ -24,6 +24,7 @@ namespace OperationUARTSender
             ConfigReadConfirmation,
             ConfigChecksumRead,
             ConfigChecksumResponse,
+            WakeUp,
 
             MacRead = 0x20,
             MacReadResponse,

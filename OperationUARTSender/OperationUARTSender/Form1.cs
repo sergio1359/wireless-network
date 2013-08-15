@@ -484,7 +484,7 @@ namespace OperationUARTSender
                 msgToPrint = String.Format("LOGIC READ FROM 0x{0:X4}: 0x{1:X4} {2}",
                     operation.SourceAddress,
                     ((ushort)operation.Args[1]) << 8 | operation.Args[0],
-                    operation.Args[2] != 0);
+                    (operation.Args[2] == 0xFF) ? "UNKNOWN" : (operation.Args[2] != 0).ToString());
             }
             else if (operation.OpCode == Operation.OPCodes.DateTimeRead) //TIME SYNC REQUEST!
             {
@@ -566,6 +566,10 @@ namespace OperationUARTSender
             else if (operation.OpCode == Operation.OPCodes.JoinAbort)
             {
                 msgToPrint = String.Format("JOIN ABORT RECEIVED FROM 0x{0:X4} -> NUMBER OF RESPONSES: {1}", operation.SourceAddress, operation.Args[0]);
+            }
+            else if (operation.OpCode == Operation.OPCodes.WakeUp)
+            {
+                msgToPrint = String.Format("WAKEUP RECEIVED FROM 0x{0:X4}", operation.SourceAddress);
             }
             else if (operation.OpCode == Operation.OPCodes.JoinAccept)
             {

@@ -36,7 +36,6 @@ static inline uint8_t sendMagicSegment(uint8_t* data, uint8_t size);
 
 static INPUT_UART_HEADER_t uartConfHeader;
 
-
 void USART_Init()
 {
 	uartDataConf.sendOk = 1;

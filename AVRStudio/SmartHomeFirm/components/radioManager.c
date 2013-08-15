@@ -23,6 +23,7 @@
 #define TIME_BW_RETRIES 500 //milliseconds
 
 #define TIMER_JOIN_INTERVAL 50 //milliseconds
+#define RESET_BUTTON_TIME 2500 //milliseconds
 
 typedef struct
 {
@@ -49,11 +50,13 @@ static OPERATION_DataConf_t radioDataConf;
 //Join vars
 static NetworkJoinState_t joinState = JOIN_STATE_INITIAL;
 static uint8_t joinCounter;
+static uint8_t resetButtonCounter;
+static _Bool buttonReleased;
 static uint8_t responsesCount;
 static uint8_t joinAESKey[16];
 static uint8_t AESIndex;
 
-//Discovery and Join shared message struct
+//WakeUp, Discovery and Join shared message struct
 static struct
 {
 	OPERATION_HEADER_t header;
@@ -119,11 +122,22 @@ void RADIO_Init()
 		#endif
 	}
 	
+	PHY_SetTxPower(0x00);//Maximum
+	
 	PHY_SetRxState(true);
 	
 	NWK_OpenEndpoint(APP_ENDPOINT, rfDataInd);
 	
 	currentState = RF_STATE_READY_TO_SEND;
+}
+
+void RADIO_SendWakeup(void* callback)
+{
+	radioMessage.header.opCode				= WakeUp;
+	radioMessage.header.sourceAddress		= runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	radioMessage.header.destinationAddress  = BROADCAST_ADDRESS;
+	
+	RADIO_AddMessageByReference(&radioMessage.header, callback);
 }
 
 void RADIO_SendDiscovery(void* callback)
@@ -389,15 +403,22 @@ static void rfDataInd(NWK_DataInd_t *ind)
 			JOIN_ACCEPT_RESPONSE_MESSAGE_t* msg = (JOIN_ACCEPT_RESPONSE_MESSAGE_t*)(operation_header + 1);
 			
 			//Update network parameters
-			NWK_SetAddr(msg->Address);
 			runningConfiguration.topConfiguration.networkConfig.deviceAddress = msg->Address;
-			
-			#ifdef NWK_ENABLE_SECURITY
+			NWK_SetAddr(msg->Address);
+			//NWK_SetPanId(msg->PanId);
+			//PHY_SetChannel(msg->Channel);
+#ifdef NWK_ENABLE_SECURITY
 			NWK_SetSecurityKey(msg->Network_AES_Key);
-			#endif
+#endif
 			
 			joinState = JOIN_STATE_JOINED;
-		}else
+		}if(operation_header->opCode == JoinAbort &&
+		operation_header->sourceAddress == COORDINATOR_ADDRESS)
+		{
+			//Coordinator reject access
+			softReset();
+		}		
+		else
 		{
 			//TODO: Send or log ERROR (UNEXPECTED_NETWORK_JOIN_ACCEPT_RESPONSE)
 		}
@@ -493,6 +514,8 @@ static void joinStateMachine(void)
 			radioMessage.header.opCode				= JoinAccept;
 			radioMessage.header.sourceAddress		= initialAddress;
 			radioMessage.header.destinationAddress  = COORDINATOR_ADDRESS;
+			radioMessage.joinAcceptBody.BaseModel	= baseModel;
+			radioMessage.joinAcceptBody.ShieldModel	= shieldModel;
 			memcpy((uint8_t*)&radioMessage.joinAcceptBody.AES_Key,(uint8_t*)&joinAESKey, 16); 	//TODO: Fill this field correctly
 			memcpy((uint8_t*)&radioMessage.joinAcceptBody.MacAddress,(uint8_t*)&serialNumber, SERIAL_NUMBER_SIZE);
 			usingSecurity = false;
@@ -540,6 +563,9 @@ static void joinTimerHandler(SYS_Timer_t *timer)
 {
 	BASE_LedToggle();
 	
+	if(!BASE_ButtonPressed())
+		buttonReleased = true;
+	
 	if(joinState == JOIN_STATE_WAIT_REQUEST_RESP || joinState == JOIN_STATE_ABORTED || joinState == JOIN_STATE_JOINED)
 	{
 		if(joinCounter == 0)
@@ -554,6 +580,16 @@ static void joinTimerHandler(SYS_Timer_t *timer)
 		}
 		
 		joinCounter++;
+	}else if(joinState == JOIN_STATE_WAIT_ACCEPT_RESP)
+	{
+		if(BASE_ButtonPressed())
+		{
+			if(buttonReleased && resetButtonCounter++ == (RESET_BUTTON_TIME / TIMER_JOIN_INTERVAL))
+				softReset();
+		}else
+		{
+			resetButtonCounter = 0;
+		}
 	}
 }
 
