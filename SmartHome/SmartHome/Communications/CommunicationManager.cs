@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartHome.Communications.Modules.Config;
 #endregion
 
 namespace SmartHome.Comunications
@@ -77,6 +78,7 @@ namespace SmartHome.Comunications
             this.modulesList.Add(new NetworkJoin(this));
             this.modulesList.Add(new StatusModule(this));
             this.modulesList.Add(new UserModule(this));
+            this.modulesList.Add(new ConfigModule(this));
             //Sort by priority descendent
             this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 

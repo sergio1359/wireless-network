@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataLayer.Entities;
 
 namespace RawOperationSender
 {
@@ -76,7 +77,8 @@ namespace RawOperationSender
             if (this.listBox1.SelectedIndex >= 0)
             {
                 ushort newAddress = Convert.ToUInt16(this.textBox1.Text, 16);
-                await joinMod.AcceptNode((string)listBox1.SelectedItem, newAddress, "TestSecurityKey0");
+
+                await joinMod.AcceptNode((string)listBox1.SelectedItem, newAddress, new Security() { SecurityKey = "TestSecurityKey0" });
             }
         }
     }

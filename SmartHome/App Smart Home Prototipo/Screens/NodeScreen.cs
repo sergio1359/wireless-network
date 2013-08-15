@@ -17,16 +17,22 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void UpdateNodes()
         {
+            listBoxMACs.Items.Clear();
             listBoxMACs.Items.AddRange(Services.NodeService.GetPendingNodes());
 
+            listBoxNodes.Items.Clear();
             listBoxNodes.Items.AddRange(Services.NodeService.GetNodes());
         }
 
 
-        private void AcceptNode(object sender, EventArgs e)
+        private async void AcceptNode(object sender, EventArgs e)
         {
             //TODO GENERATE A MOCK NODE
-            UpdateNodes();
+            if(listBoxMACs.SelectedIndex >= 0)
+            {
+                await Services.NodeService.AllowPendingNode((string)listBoxMACs.SelectedItem);
+                UpdateNodes();
+            }
         }
 
         private void RemoveNode(object sender, EventArgs e)

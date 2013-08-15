@@ -7,7 +7,6 @@ using System.Text;
 
 namespace DataLayer.Entities
 {
-    [Table("Home")]
     public class Home
     {
         [Key]

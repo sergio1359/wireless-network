@@ -14,7 +14,7 @@ using SmartHome.BusinessEntities;
 
 namespace SmartHome.Communications.Modules.Config
 {
-    class ConfigModule : ModuleBase
+    public class ConfigModule : ModuleBase
     {
         private Dictionary<ushort, FragmentWriteTransaction> currentWriteTransactions;
 
