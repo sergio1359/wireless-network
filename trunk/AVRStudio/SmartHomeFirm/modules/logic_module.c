@@ -28,6 +28,8 @@ static struct
 	LOGIC_READ_RESPONSE_MESSAGE_t response;
 }logicResponse;
 
+static _Bool waitingForResponseConf;
+
 static LOGIC_ELEM_t logic_elems[MAX_LOGIC_DEVICES];
 static uint8_t num_of_logic_elems;
 
@@ -37,6 +39,7 @@ static uint8_t timerDivider;
 static void logicTimerHandler(SYS_Timer_t *timer);
 static _Bool proccessDigitalPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static uint8_t findLogicElem(uint16_t deviceAddress);
+static inline void sendDigitalResponse(uint16_t destinationAddress, uint16_t deviceAddress, uint8_t value);
 
 void logicModule_Init()
 {
@@ -82,6 +85,8 @@ void logicModule_Init()
 	//Set responses opCodes
 	logicResponse.header.opCode = LogicReadResponse;
 	
+	waitingForResponseConf = false;
+	
 	if(num_of_logic_elems > 0)
 	{
 		//Configure Timer
@@ -92,11 +97,6 @@ void logicModule_Init()
 		logicTimer.handler = logicTimerHandler;
 		SYS_TimerStart(&logicTimer);		
 	}
-}
-
-void logicModule_DataConf(OPERATION_DataConf_t *req)
-{
-	
 }
 
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification)
@@ -134,6 +134,11 @@ void logic_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+void logicRead_DataConf(OPERATION_DataConf_t *req)
+{
+	waitingForResponseConf = false;
+}
+
 uint8_t findLogicElem(uint16_t deviceAddress)
 {
 	for(uint8_t i = 0; i < num_of_logic_elems; i++)
@@ -143,6 +148,23 @@ uint8_t findLogicElem(uint16_t deviceAddress)
 	}
 	
 	return 0xFF;//Address not found
+}
+
+void sendDigitalResponse(uint16_t destinationAddress, uint16_t deviceAddress, uint8_t value)
+{
+	if(waitingForResponseConf)
+	{
+		//TODO:SEND ERROR MESSAGE (LOGIC RESPONSE OVERBOOKING)	
+	}
+	
+	waitingForResponseConf = true;
+	
+	logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+	logicResponse.header.destinationAddress = destinationAddress;
+	logicResponse.response.address = deviceAddress;
+	logicResponse.response.value = value;
+	
+	OM_ProccessResponseOperation(&logicResponse.header);
 }
 
 _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
@@ -156,12 +178,13 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 	
 	if(read)
 	{
-		logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		/*logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		logicResponse.header.destinationAddress = sourceAddress;
 		logicResponse.response.address = deviceAddress;
 		logicResponse.response.value = currentElem->lastValue;
 		
-		OM_ProccessResponseOperation(&logicResponse.header);
+		OM_ProccessResponseOperation(&logicResponse.header);*/
+		sendDigitalResponse(sourceAddress, deviceAddress, currentElem->lastValue);
 	}
 	else
 	{
@@ -174,15 +197,29 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 		}else
 		{
 			if(value)
-			HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
+			{
+				HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
+			}				
 			else
-			HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
+			{
+				HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
+			}				
 		}
 
 		if(seconds > 0)
+		{
 			currentElem->timerCounter = (uint16_t)seconds*5; //Enable timer
+		}			
 		else
+		{
 			currentElem->timerCounter = 0; //Disable timer
+		}			
+			
+		if(sourceAddress != COORDINATOR_ADDRESS)
+		{
+			//Notify to the coordinator
+			sendDigitalResponse(COORDINATOR_ADDRESS, deviceAddress, (value == 0xFF) ? ~currentElem->lastValue : value);			
+		}
 	}
 	
 	return true;
@@ -223,14 +260,14 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 						operationPtr++;
 					}
 						
-						
 					//Send to coordinator
-					logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+					/*logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 					logicResponse.header.destinationAddress = COORDINATOR_ADDRESS;
 					logicResponse.response.address = currentElem->config->deviceID;
 					logicResponse.response.value = val;
 						
-					OM_ProccessResponseOperation(&logicResponse.header);
+					OM_ProccessResponseOperation(&logicResponse.header);*/
+					sendDigitalResponse(COORDINATOR_ADDRESS, currentElem->config->deviceID, val);
 				}
 			}
 					

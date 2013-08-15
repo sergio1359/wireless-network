@@ -164,6 +164,7 @@ namespace SmartHome.Communications.Modules
                 {
                     rgbHD.Color = color;
                     rgbHD.Mode = modeRGB;
+                    rgbHD.LastStatusUpdate = DateTime.Now;
                 }
             }
         }
@@ -181,7 +182,10 @@ namespace SmartHome.Communications.Modules
                 var dimmerHD = CheckHomeDevice<Dimmable>(nodeAddress, deviceAddress);
 
                 if (dimmerHD != null)
+                {
                     dimmerHD.Value = value;
+                    dimmerHD.LastStatusUpdate = DateTime.Now;
+                }
             }
         }
 
@@ -198,7 +202,10 @@ namespace SmartHome.Communications.Modules
                 var tempHD = CheckHomeDevice<TemperatureSensor>(nodeAddress, deviceAddress);
 
                 if (tempHD != null)
+                {
                     tempHD.CelciusTemperature = value;
+                    tempHD.LastStatusUpdate = DateTime.Now;
+                }
             }
         }
 
@@ -215,7 +222,10 @@ namespace SmartHome.Communications.Modules
                 var humHD = CheckHomeDevice<HumiditySensor>(nodeAddress, deviceAddress);
 
                 if (humHD != null)
+                {
                     humHD.Humidity = value;
+                    humHD.LastStatusUpdate = DateTime.Now;
+                }
             }
         }
 
@@ -234,6 +244,7 @@ namespace SmartHome.Communications.Modules
                 if (presenceHD != null)
                 {
                     //TODO: Raise Presence Event
+                    presenceHD.LastStatusUpdate = DateTime.Now;
                 }
             }
         }
@@ -268,6 +279,9 @@ namespace SmartHome.Communications.Modules
                 {
                     (logicHD as SwitchButton).Open = status;
                 }
+
+                if(logicHD != null)
+                    logicHD.LastStatusUpdate = DateTime.Now;
             }
         }
 
@@ -286,6 +300,7 @@ namespace SmartHome.Communications.Modules
                 if (powerHD != null)
                 {
                     powerHD.Consumption = value;
+                    powerHD.LastStatusUpdate = DateTime.Now;
                 }
             }
         }
@@ -305,6 +320,7 @@ namespace SmartHome.Communications.Modules
                 if (luminHD != null)
                 {
                     luminHD.Luminosity = value;
+                    luminHD.LastStatusUpdate = DateTime.Now;
                 }
             }
         }
