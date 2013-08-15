@@ -132,7 +132,7 @@ namespace SmartHome.Memory
             List<byte> result = new List<byte>();
 
             //deviceAddress
-            result.AddRange(node.Address.UshortToByte(baseConfiguration.LittleEndian));
+            result.AddRange(((ushort)node.Address).UshortToByte(baseConfiguration.LittleEndian));
             
             
             //TODO!!!!

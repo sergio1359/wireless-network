@@ -26,7 +26,7 @@ namespace DataLayer.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
+        //[MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
         public string Mac { get; set; }
 
         public string Name { get; set; }
@@ -34,7 +34,9 @@ namespace DataLayer.Entities
         [Range(0, 30)]
         public int NetworkRetries { get; set; }
 
-        public ushort Address { get; set; }
+        [Required]
+        [Range(1, 65534)]
+        public int Address { get; set; }
 
         public BaseTypes Base { get; set; }
 

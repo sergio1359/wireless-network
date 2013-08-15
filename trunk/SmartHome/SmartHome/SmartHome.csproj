@@ -56,8 +56,9 @@
     <Compile Include="BusinessEntities\BusinessTheme.cs" />
     <Compile Include="Communications\Modules\Common\FragmentReadTransaction.cs" />
     <Compile Include="Communications\Modules\Common\FragmentWriteTransaction.cs" />
-    <Compile Include="Communications\Modules\Config\ConfigModule.cs" />
-    <Compile Include="Communications\Modules\Config\TransactionStatus.cs" />
+    <Compile Include="Communications\Modules\Configuration\ConfigModule.cs" />
+    <Compile Include="Communications\Modules\Configuration\TransactionStatus.cs" />
+    <Compile Include="Communications\Modules\Network\PendingNodeInfo.cs" />
     <Compile Include="Communications\Modules\StatusModule.cs" />
     <Compile Include="Communications\Modules\UserModule.cs" />
     <Compile Include="Products\HomeDeviceProduct.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Communications\Messages\IMessage.cs" />
     <Compile Include="Communications\Messages\OperationMessage.cs" />
     <Compile Include="Communications\Messages\ProtocolMessages.cs" />
-    <Compile Include="Communications\Modules\NetworkJoin.cs" />
+    <Compile Include="Communications\Modules\Network\NetworkJoin.cs" />
     <Compile Include="Communications\SerialManager\InputHeader.cs" />
     <Compile Include="Communications\SerialManager\NodeConnection.cs" />
     <Compile Include="Communications\SerialManager\OutputHeader.cs" />

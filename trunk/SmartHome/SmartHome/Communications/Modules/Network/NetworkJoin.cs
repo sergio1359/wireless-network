@@ -10,24 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities;
 
-namespace SmartHome.Communications.Modules
+namespace SmartHome.Communications.Modules.Network
 {
     public class NetworkJoin : ModuleBase
     {
         /// <summary>
-        /// Dictionary of the MACs, tempAddress and tempAESKey from the nodes that are waiting to be accepted
-        /// </summary>
-        private Dictionary<string, Tuple<ushort, byte[]>> pendingRequests;
-
-        /// <summary>
         /// List of the MACs from the nodes that are pending to join
         /// </summary>
-        public List<string> PendingNodes
+        public List<PendingNodeInfo> PendingNodes
         {
-            get
-            {
-                return this.pendingRequests.Keys.ToList();
-            }
+            get;
+            private set;
         }
 
         public event EventHandler<string> NetworkJoinReceived;
@@ -37,7 +30,7 @@ namespace SmartHome.Communications.Modules
         public NetworkJoin(CommunicationManager manager)
             : base(manager)
         {
-            this.pendingRequests = new Dictionary<string, Tuple<ushort, byte[]>>();
+            this.PendingNodes = new List<PendingNodeInfo>();
         }
 
         public async Task<bool> AcceptNode(string macAddress, ushort newAddress, Security security)
@@ -88,12 +81,27 @@ namespace SmartHome.Communications.Modules
 
                 string macString = macAddress.ToStrigMac();
 
-                if (!this.pendingRequests.ContainsKey(macString))
+                PendingNodeInfo info = this.PendingNodes.FirstOrDefault(n => n.MacAddress == macString);
+
+                if (info == null)
                 {
-                    this.pendingRequests.Add(macString, new Tuple<ushort, byte[]>(operation.SourceAddress, aesKey));
+                    this.PendingNodes.Add(new PendingNodeInfo()
+                        {
+                            MacAddress = macString,
+                            BaseType = baseModel,
+                            ShieldType = shieldModel,
+                            TemporalAddress = operation.SourceAddress,
+                            TemporalAESKey = aesKey,
+                        });
 
                     if (NetworkJoinReceived != null)
                         NetworkJoinReceived(this, macString);
+                }else{
+                    //Refresh params
+                    info.BaseType = baseModel;
+                    info.ShieldType = shieldModel;
+                    info.TemporalAddress = operation.SourceAddress;
+                    info.TemporalAESKey = aesKey;
                 }
             }
         }
@@ -139,26 +147,29 @@ namespace SmartHome.Communications.Modules
 
         private async Task<bool> SendJoinAcceptResponse(string macAddress, ushort newAddress, Security security)
         {
-            if (!pendingRequests.ContainsKey(macAddress))
+            PendingNodeInfo info = this.PendingNodes.FirstOrDefault(n => n.MacAddress == macAddress);
+            if (info == null)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("There is no pending node with the specified MAC Address");
             }
 
-            byte[] AESKey = this.pendingRequests[macAddress].Item2;
-
-            OperationMessage joinAcceptResponse = OperationMessage.JoinAcceptResponse(newAddress, (byte)security.PanId, (byte)security.Channel, security.SecurityKey);
-            joinAcceptResponse.DestinationAddress = this.pendingRequests[macAddress].Item1;
+            OperationMessage joinAcceptResponse = OperationMessage.JoinAcceptResponse(newAddress, (ushort)security.PanId, (byte)security.Channel, security.SecurityKey);
+            joinAcceptResponse.DestinationAddress = info.TemporalAddress;
 
             bool result = await this.SendMessage(joinAcceptResponse);
 
             if (result)
             {
-                this.pendingRequests.Remove(macAddress);
+                this.PendingNodes.Remove(info);
 
-                Debug.WriteLine(String.Format("JOIN ACCEPTED {0} -> NEW ADDRESS: 0x{1:X2}", macAddress, newAddress));
+                Debug.WriteLine(string.Format("JOIN ACCEPTED {0} -> NEW ADDRESS: 0x{1:X2}", macAddress, newAddress));
 
                 if (this.NodeJoined != null)
                     NodeJoined(this, macAddress);
+            }
+            else
+            {
+                Debug.WriteLine(string.Format("THE NODE {0} DOESN'T RECEIVE THE JOIN ACCEPT RESPONSE", macAddress));
             }
 
             return result;

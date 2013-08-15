@@ -4,6 +4,7 @@ using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using System;
+using SmartHome.Communications.Modules.Network;
 #endregion
 
 namespace ServiceLayer.DTO
@@ -28,6 +29,10 @@ namespace ServiceLayer.DTO
             Mapper.CreateMap<HomeDevice, HomeDeviceDTO>()
                 .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType));
 
+            Mapper.CreateMap<Location, LocationDTO>();
+
+            Mapper.CreateMap<Log, LogDTO>();
+
             Mapper.CreateMap<Node, NodeDTO>()
                 .ForMember(t => t.Base, f => f.MapFrom(n => Enum.GetName(typeof(BaseTypes), n.Base)))
                 .ForMember(t => t.Shield, f => f.MapFrom(n => Enum.GetName(typeof(ShieldTypes), n.Shield)));
@@ -35,14 +40,14 @@ namespace ServiceLayer.DTO
             Mapper.CreateMap<Operation, OperationDTO>()
                 .ForMember(t => t.NameOperation, f => f.MapFrom(n => n.OperationName));
 
-            Mapper.CreateMap<Zone, ZoneDTO>()
-                .ForMember(t => t.Name, f => f.MapFrom(z => z.Name));
-
-            Mapper.CreateMap<Location, LocationDTO>();
-
-            Mapper.CreateMap<Log, LogDTO>();
+            Mapper.CreateMap<PendingNodeInfo, PendingNodeInfoDTO>()
+                .ForMember(t => t.BaseType, f => f.MapFrom(n => (BaseTypes)n.BaseType))
+                .ForMember(t => t.ShieldType, f => f.MapFrom(n => (ShieldTypes)n.ShieldType));
 
             Mapper.CreateMap<Theme, ThemeDTO>();
+
+            Mapper.CreateMap<Zone, ZoneDTO>()
+                .ForMember(t => t.Name, f => f.MapFrom(z => z.Name));
         }
     }
 }

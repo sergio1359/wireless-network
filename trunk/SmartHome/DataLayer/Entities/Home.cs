@@ -53,7 +53,7 @@ namespace DataLayer.Entities
         /// <value>
         /// The pan id.
         /// </value>
-        [Range(0, 254)]
+        [Range(0, 65534)]
         public int PanId { set; get; }
 
         [MaxLength(16), MinLength(16, ErrorMessage = "Security Key must have 16 characters length")]

@@ -7,12 +7,14 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataLayer.Entities;
+using SmartHome.Communications.Modules.Network;
+using SmartHome.Communications.Modules.Config;
+using DataLayer;
 
 namespace RawOperationSender
 {
     public partial class Form1 : Form
     {
-        
         NetworkJoin joinMod;
         public Form1()
         {
@@ -21,6 +23,9 @@ namespace RawOperationSender
             this.joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
             joinMod.NetworkJoinReceived += joinMod_NetworkJoinReceived;
             joinMod.NodeJoined += joinMod_NetworkJoinReceived;
+
+            /*var node = Repositories.NodeRespository.GetById(1);
+            CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node);*/
         }
 
         void joinMod_NetworkJoinReceived(object sender, string e)
