@@ -32,7 +32,7 @@ namespace SmartHome.Communications.Modules.Common
 
         public int FrameSize { get; private set; }
 
-        public int FragmentsRemain
+        public int RemainingFragments
         {
             get
             {
@@ -44,7 +44,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return (this.FragmentsRemain / this.NumberOfFragments) * 100f;
+                return (this.RemainingFragments / this.NumberOfFragments) * 100f;
             }
         }
 

@@ -203,7 +203,7 @@ namespace SmartHome.Comunications
                 this.pendingMessagesQueue.Add(connectionAddress, new List<PendingMessage>());
                 this.currentMessages.Add(connectionAddress, null);
 
-                connection.OperationReceived += connection_OperationReceived;
+                connection.MessageReceived += connection_OperationReceived;
             }
         }
 
@@ -217,7 +217,7 @@ namespace SmartHome.Comunications
                 this.pendingMessagesQueue.Remove(connectionAddress);
                 this.currentMessages.Remove(connectionAddress);
 
-                connection.OperationReceived -= connection_OperationReceived;
+                connection.MessageReceived -= connection_OperationReceived;
             }
         }
         #endregion

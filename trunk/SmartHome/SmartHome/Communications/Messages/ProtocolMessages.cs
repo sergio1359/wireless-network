@@ -3,7 +3,8 @@ using SmartHome.Memory;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq; 
+using System.Linq;
+using System.Text; 
 #endregion
 
 namespace SmartHome.Comunications.Messages
@@ -120,6 +121,26 @@ namespace SmartHome.Comunications.Messages
             return BaseMessage(OPCodes.RouteTableReadConfirmation, args);
         }
 
+        public static OperationMessage PingRequest()
+        {
+            return BaseMessage(OPCodes.PingRequest);
+        }
+
+        public static OperationMessage JoinRequestResponse(byte[] RSAKey)
+        {
+            return BaseMessage(OPCodes.JoinRequestResponse, RSAKey);
+        }
+
+        public static OperationMessage JoinAcceptResponse(ushort newAddress, byte panId, byte channel, string securityKey)
+        {
+            List<byte> operationArgs = new List<byte>();
+            operationArgs.AddRange(BitConverter.GetBytes(newAddress));
+            operationArgs.Add(panId);
+            operationArgs.Add(channel);
+            operationArgs.AddRange(Encoding.ASCII.GetBytes(securityKey));
+
+            return BaseMessage(OPCodes.JoinAcceptResponse, operationArgs.ToArray());
+        }
 
 
         public static OperationMessage DateTimeWrite(DateTime dateTime)

@@ -107,10 +107,12 @@ namespace SmartHome.Communications.Modules
 
             processMethod(message.SourceAddress, deviceAddress, value);
         }
-
+        
         private T CheckHomeDevice<T>(ushort nodeAddress, ushort deviceAddress) where T : HomeDevice
         {
+            lock(this){
             var homeDev = Repositories.HomeDeviceRespository.GetById(deviceAddress);
+
 
             if (homeDev == null)
             {
@@ -133,7 +135,7 @@ namespace SmartHome.Communications.Modules
                     return (T)homeDev;
                 }
             }
-
+            }
             return null;
         } 
         #endregion

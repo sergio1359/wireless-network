@@ -77,6 +77,7 @@ enum
   PHY_REQ_RANDOM  = (1 << 4),
   PHY_REQ_ENCRYPT = (1 << 5),
   PHY_REQ_ED      = (1 << 6),
+  PHY_REQ_TX_POW  = (1 << 7),
 };
 
 typedef struct PhyIb_t
@@ -87,6 +88,7 @@ typedef struct PhyIb_t
   uint16_t    panId;
   uint16_t    addr;
   bool        rx;
+  uint8_t     txPower;
 #ifdef PHY_ENABLE_AES_MODULE
   uint8_t     *text;
   uint8_t     *key;
@@ -144,6 +146,14 @@ void PHY_SetRxState(bool rx)
 {
   phyIb.request |= PHY_REQ_RX;
   phyIb.rx = rx;
+}
+
+/*****************************************************************************
+*****************************************************************************/
+void PHY_SetTxPower(uint8_t txPower)
+{
+	phyIb.request |= PHY_REQ_TX_POW;
+	phyIb.txPower = txPower;
 }
 
 /*****************************************************************************
@@ -347,6 +357,11 @@ static void phyHandleSetRequests(void)
   if (requestCopy & PHY_REQ_CHANNEL)
   {
     PHY_CC_CCA_REG_s.channel = phyIb.channel;
+  }
+  
+  if (requestCopy & PHY_REQ_TX_POW)
+  {
+	 PHY_TX_PWR_REG_s.txPwr = phyIb.txPower;
   }
 
   if (requestCopy & PHY_REQ_PANID)

@@ -38,10 +38,22 @@ namespace DataLayer.Entities
         public const byte CHANNEL = 0x0F;
         public const ushort PANID = 0x1234;
 
-        [Range(0, 255)]
+        /// <summary>
+        /// Gets or sets the channel. Valid range of values for the channel parameter on 2.4GHz radios is 11 – 26 (0x0b – 0x1a).
+        /// </summary>
+        /// <value>
+        /// The frequency channel.
+        /// </value>
+        [Range(11, 26)]
         public int Channel { set; get; }
 
-        [Range(0, 255)]
+        /// <summary>
+        /// Gets or sets the pan id.
+        /// </summary>
+        /// <value>
+        /// The pan id.
+        /// </value>
+        [Range(0, 254)]
         public int PanId { set; get; }
 
         [MaxLength(16), MinLength(16, ErrorMessage = "Security Key must have 16 characters length")]

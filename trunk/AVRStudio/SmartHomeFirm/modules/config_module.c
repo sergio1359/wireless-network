@@ -116,15 +116,6 @@ void configFirmware_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
-void sendFirmwareResponse(uint16_t address)
-{
-	firmwareResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-	firmwareResponse.header.destinationAddress = address;
-	firmwareResponse.response.version = FIRMWARE_VERSION;
-	
-	OM_ProccessResponseOperation(&firmwareResponse.header);
-}
-
 /*- Shield Model -------------------------------------------------*/
 void configShield_Handler(OPERATION_HEADER_t* operation_header)
 {
@@ -132,7 +123,7 @@ void configShield_Handler(OPERATION_HEADER_t* operation_header)
 	{
 		shieldModelResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 		shieldModelResponse.header.destinationAddress = operation_header->sourceAddress;
-		shieldModelResponse.response.model = SHIELD_MODEL;
+		shieldModelResponse.response.model = shieldModel;
 		
 		OM_ProccessResponseOperation(&shieldModelResponse.header);
 	}else if(operation_header->opCode == ShieldModelReadResponse)
@@ -351,6 +342,18 @@ void configChecksum_Handler(OPERATION_HEADER_t* operation_header)
 	}
 }
 
+
+/*- WakeUp ---------------------------------------------------*/
+void configWakeUp_Handler(OPERATION_HEADER_t* operation_header)
+{
+	if(operation_header->opCode == WakeUp)
+	{
+		//TODO: NOTIFICATION
+	}		
+}
+
+
+/*- Internal functions ---------------------------------------*/
 void configResetTimerHandler(SYS_Timer_t *timer)
 {
 	softReset();
