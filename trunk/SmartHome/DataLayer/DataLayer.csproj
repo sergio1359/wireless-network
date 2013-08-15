@@ -66,7 +66,6 @@
     <Compile Include="Entities\Enums\LogTypes.cs" />
     <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Operation.cs" />
-    <Compile Include="Entities\PinPort.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Theme.cs" />
     <Compile Include="Entities\TimeOperation.cs" />

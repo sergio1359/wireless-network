@@ -2,6 +2,7 @@
 using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Comunications.Messages;
+using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             else //es un producto
             {
                 List<PinPort> pinPorts = new List<PinPort>();
-                //for (int i = 0; i < homeDevice.ProductTag.Count; i++)
-                //{
-                //    int element = homeDevice.ProductTag.ElementAt(i);
-                //    pinPorts.Add(homeDevice.Connector.GetPinPort()[element]);
-                //}
+
                 return pinPorts;
             }
         }

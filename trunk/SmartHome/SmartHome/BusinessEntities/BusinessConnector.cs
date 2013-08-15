@@ -1,8 +1,10 @@
 ﻿#region Using Statements
+using DataLayer;
 using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +34,7 @@ namespace SmartHome.BusinessEntities
         public static void LinkHomeDevice(this Connector connector, HomeDevice homeDevice)
         {
             connector.HomeDevices = new List<HomeDevice>() { homeDevice };
+            connector.NameProduct = "";
         }
 
         /// <summary>
@@ -39,20 +42,27 @@ namespace SmartHome.BusinessEntities
         /// </summary>
         /// <param name="connector"></param>
         /// <param name="homeDevices"></param>
-        public static void LinkHomeDevice(this Connector connector, List<HomeDevice> homeDevices)
+        public static void LinkHomeDevice(this Connector connector, Type typeProduct)
         {
-            connector.HomeDevices = homeDevices;
+            Product product = Product.GetProduct(typeProduct);
+            connector.HomeDevices = product.GetInstanceProducts();
+
+            connector.NameProduct = product.GetType().Name;
         }
 
+        /// <summary>
+        /// Unlink without check the HomeDevice or the Product connected in the connector
+        /// </summary>
+        /// <param name="connector"></param>
         public static void UnlinkHomeDevice(this Connector connector)
         {
-            if (connector.ConnectorType == ConnectorTypes.ConnectorSensorBoard)
+            if (connector.NameProduct == "") //no esta conectado a un producto
             {
-                //TODO: hay que destruir los elementos uno a uno. 
-
+                //TODO: Eliminar homeDevices del sistema
             }
 
-            connector.MappingHomeDevice.Clear();
+            connector.HomeDevices.Clear();
+            connector.NameProduct = "";
         }
 
         public static bool IsCapable(this Connector connector, HomeDevice homeDevice)
