@@ -36,7 +36,6 @@ namespace ServiceLayer
                 return 2;
 
             connector.LinkHomeDevice(homeDevice);
-            homeDevice.LinkConnector(connector);
 
             return 0;
         }
@@ -49,7 +48,36 @@ namespace ServiceLayer
         {
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
             homeDevice.Connector.UnlinkHomeDevice();
-            homeDevice.UnlinkConnector();
+        }
+
+        /// <summary>
+        /// Return the MAC of the Pending Nodes
+        /// </summary>
+        /// <returns>Return string for the MACs</returns>
+        public string[] GetPendingNodes()
+        {
+            throw new NotImplementedException();
+            //VICTOR
+        }
+
+        /// <summary>
+        /// Allow a MAC in the system.
+        /// </summary>
+        /// <param name="MAC"></param>
+        public void AllowPendingNode(string MAC)
+        {
+            throw new NotImplementedException();
+            //VICTOR
+        }
+
+        /// <summary>
+        /// Deny a MAC in the system
+        /// </summary>
+        /// <param name="MAC"></param>
+        public void DenyPendingNode(string MAC)
+        {
+            throw new NotImplementedException();
+            //VICTOR
         }
 
         /// <summary>

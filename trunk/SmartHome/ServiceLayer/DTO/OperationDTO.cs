@@ -16,6 +16,9 @@ namespace ServiceLayer.DTO
         public int IdHomeDevice { get; set; }
 
         [DataMember]
+        public string NameOperation { get; set; }
+
+        [DataMember]
         public OperationParams[] Params { get; set; }
 
         [DataMember]

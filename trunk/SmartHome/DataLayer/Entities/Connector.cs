@@ -25,14 +25,7 @@ namespace DataLayer.Entities
         [NotMapped]
         public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
 
-        [NotMapped]
-        public List<PinPort> PinPorts
-        {
-            get
-            {
-                return MappingHomeDevice.Values.SelectMany(v => v).ToList(); //TODO: quitar los repetidos
-            }
-        }
+        
 
         [NotMapped]
         public bool InUse

@@ -12,22 +12,36 @@ namespace SmartHome.BusinessEntities
 {
     public static class BusinessConnector
     {
+
+        public static Connector CreateConnector(string name, ConnectorTypes connectorType)
+        {
+            Connector connector = new Connector()
+            {
+                ConnectorType = connectorType,
+                Name = name
+            };
+
+            return connector;
+        }
+        
         /// <summary>
-        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, un conector con el HomeDevice pasado por parametros
+        /// Connect without checks the connector with the homeDevice
         /// </summary>
+        /// <param name="connector"></param>
         /// <param name="homeDevice"></param>
         public static void LinkHomeDevice(this Connector connector, HomeDevice homeDevice)
         {
-            connector.MappingHomeDevice.Add(homeDevice, connector.GetPinPort());
+            connector.HomeDevices = new List<HomeDevice>() { homeDevice };
         }
 
         /// <summary>
-        /// Conecta, sin realizar ninguna comprobacion de compatibilidad, el conector con el producto cuyo nombre es pasado por parametros
+        /// Connect without checks the connector with the list of homeDevice
         /// </summary>
-        /// <param name="nameProduct"></param>
-        public static void LinkHomeDevice(this Connector connector, string nameProduct)
+        /// <param name="connector"></param>
+        /// <param name="homeDevices"></param>
+        public static void LinkHomeDevice(this Connector connector, List<HomeDevice> homeDevices)
         {
-
+            connector.HomeDevices = homeDevices;
         }
 
         public static void UnlinkHomeDevice(this Connector connector)

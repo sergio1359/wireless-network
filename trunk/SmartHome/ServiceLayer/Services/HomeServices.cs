@@ -85,36 +85,6 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Return the MAC of the Pending Nodes
-        /// </summary>
-        /// <returns>Return string for the MACs</returns>
-        public string[] GetPendingNodes()
-        {
-            throw new NotImplementedException();
-            //VICTOR
-        }
-
-        /// <summary>
-        /// Allow a MAC in the system.
-        /// </summary>
-        /// <param name="MAC"></param>
-        public void AllowPendingNode(string MAC)
-        {
-            throw new NotImplementedException();
-            //VICTOR
-        }
-
-        /// <summary>
-        /// Deny a MAC in the system
-        /// </summary>
-        /// <param name="MAC"></param>
-        public void DenyPendingNode(string MAC)
-        {
-            throw new NotImplementedException();
-            //VICTOR
-        }
-
-        /// <summary>
         /// Unlink Node of the system.
         /// </summary>
         /// <param name="idNode"></param>

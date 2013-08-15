@@ -26,9 +26,9 @@ namespace DataLayer.Entities.HomeDevices
         public virtual ICollection<Operation> Operations { get; set; }
 
         /// <summary>
-        /// When not null, indicates the location of this HomeDevice in the product.
+        /// When is not empty, indicates the location of this HomeDevice in the product.
         /// </summary>
-        public int? ProductTag { get; set; }
+        public ICollection<int> ProductTag { get; set; }
 
         private static string[] homeDeviceTypes = null;
 
@@ -67,6 +67,7 @@ namespace DataLayer.Entities.HomeDevices
         {
             this.Location = new List<Location>();
             this.Operations = new List<Operation>();
+            this.ProductTag = new List<int>();
         }
 
 

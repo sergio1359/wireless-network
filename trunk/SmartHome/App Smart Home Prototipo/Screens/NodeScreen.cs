@@ -12,18 +12,32 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             InitializeComponent();
 
-            listBoxMACs.Items.AddRange(Services.HomeService.GetPendingNodes());
+            UpdateNodes();
+        }
+
+        private void UpdateNodes()
+        {
+            listBoxMACs.Items.AddRange(Services.NodeService.GetPendingNodes());
 
             listBoxNodes.Items.AddRange(Services.NodeService.GetNodes());
+        }
+
+
+        private void AcceptNode(object sender, EventArgs e)
+        {
+            //TODO GENERATE A MOCK NODE
+            UpdateNodes();
         }
 
         private void RemoveNode(object sender, EventArgs e)
         {
             int id = ((NodeDTO)listBoxNodes.SelectedItem).Id;
             Services.HomeService.UnlinkNode(id);
+
+            UpdateNodes();
         }
 
-        private void ChangeNode(object sender, EventArgs e)
+        private void SelectNode(object sender, EventArgs e)
         {
             //update textboxs
             NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
@@ -37,21 +51,19 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             listBoxConnectors.Items.AddRange(Services.NodeService.GetConnectors(node.Id));
         }
 
-        private void ChangeNodeName(object sender, EventArgs e)
+        private void ChangeNodeConfiguration(object sender, EventArgs e)
         {
             NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
 
             Services.NodeService.SetNameNode(node.Id, textBoxNameNode.Text);
-        }
-
-        private void ChangeAddress(object sender, EventArgs e)
-        {
-            NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
 
             ushort newAddress = 0;
             if (ushort.TryParse(textBoxAddressNode.Text, out newAddress))
                 Services.NodeService.SetAddressNode(node.Id, newAddress);
+
+            UpdateNodes();
         }
+
 
 
     }

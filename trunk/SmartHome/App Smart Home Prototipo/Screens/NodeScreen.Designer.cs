@@ -30,6 +30,7 @@
         {
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBoxShieldNode = new System.Windows.Forms.TextBox();
             this.textBoxBaseNode = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -69,6 +70,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.textBoxShieldNode);
             this.groupBox2.Controls.Add(this.textBoxBaseNode);
             this.groupBox2.Controls.Add(this.label9);
@@ -86,20 +88,30 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "NODE";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(236, 40);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 62);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Change";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.ChangeNodeConfiguration);
+            // 
             // textBoxShieldNode
             // 
-            this.textBoxShieldNode.Location = new System.Drawing.Point(156, 82);
+            this.textBoxShieldNode.Location = new System.Drawing.Point(123, 82);
             this.textBoxShieldNode.Name = "textBoxShieldNode";
             this.textBoxShieldNode.ReadOnly = true;
-            this.textBoxShieldNode.Size = new System.Drawing.Size(160, 20);
+            this.textBoxShieldNode.Size = new System.Drawing.Size(107, 20);
             this.textBoxShieldNode.TabIndex = 31;
             // 
             // textBoxBaseNode
             // 
-            this.textBoxBaseNode.Location = new System.Drawing.Point(156, 40);
+            this.textBoxBaseNode.Location = new System.Drawing.Point(123, 40);
             this.textBoxBaseNode.Name = "textBoxBaseNode";
             this.textBoxBaseNode.ReadOnly = true;
-            this.textBoxBaseNode.Size = new System.Drawing.Size(160, 20);
+            this.textBoxBaseNode.Size = new System.Drawing.Size(107, 20);
             this.textBoxBaseNode.TabIndex = 30;
             // 
             // label9
@@ -122,7 +134,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(156, 68);
+            this.label8.Location = new System.Drawing.Point(120, 68);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(36, 13);
             this.label8.TabIndex = 15;
@@ -131,7 +143,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(156, 24);
+            this.label7.Location = new System.Drawing.Point(120, 24);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(31, 13);
             this.label7.TabIndex = 13;
@@ -159,17 +171,15 @@
             // 
             this.textBoxNameNode.Location = new System.Drawing.Point(6, 40);
             this.textBoxNameNode.Name = "textBoxNameNode";
-            this.textBoxNameNode.Size = new System.Drawing.Size(144, 20);
+            this.textBoxNameNode.Size = new System.Drawing.Size(111, 20);
             this.textBoxNameNode.TabIndex = 1;
-            this.textBoxNameNode.TextChanged += new System.EventHandler(this.ChangeNodeName);
             // 
             // textBoxAddressNode
             // 
             this.textBoxAddressNode.Location = new System.Drawing.Point(6, 82);
             this.textBoxAddressNode.Name = "textBoxAddressNode";
-            this.textBoxAddressNode.Size = new System.Drawing.Size(144, 20);
+            this.textBoxAddressNode.Size = new System.Drawing.Size(111, 20);
             this.textBoxAddressNode.TabIndex = 10;
-            this.textBoxAddressNode.TextChanged += new System.EventHandler(this.ChangeAddress);
             // 
             // groupBox4
             // 
@@ -189,7 +199,7 @@
             this.listBoxNodes.Name = "listBoxNodes";
             this.listBoxNodes.Size = new System.Drawing.Size(224, 147);
             this.listBoxNodes.TabIndex = 6;
-            this.listBoxNodes.SelectedIndexChanged += new System.EventHandler(this.ChangeNode);
+            this.listBoxNodes.SelectedIndexChanged += new System.EventHandler(this.SelectNode);
             // 
             // buttonRemoveNode
             // 
@@ -224,12 +234,13 @@
             // buttonNewNode
             // 
             this.buttonNewNode.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonNewNode.Location = new System.Drawing.Point(236, 15);
+            this.buttonNewNode.Location = new System.Drawing.Point(236, 18);
             this.buttonNewNode.Name = "buttonNewNode";
-            this.buttonNewNode.Size = new System.Drawing.Size(80, 50);
+            this.buttonNewNode.Size = new System.Drawing.Size(80, 43);
             this.buttonNewNode.TabIndex = 8;
             this.buttonNewNode.Text = "+";
             this.buttonNewNode.UseVisualStyleBackColor = true;
+            this.buttonNewNode.Click += new System.EventHandler(this.AcceptNode);
             // 
             // NodeScreen
             // 
@@ -269,5 +280,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonNewNode;
         private System.Windows.Forms.ListBox listBoxMACs;
+        private System.Windows.Forms.Button button1;
     }
 }

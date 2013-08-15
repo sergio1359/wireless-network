@@ -34,7 +34,10 @@
             this.buttonRemoveOperation = new System.Windows.Forms.Button();
             this.textBoxNameHomeDevice = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBoxNameOperation = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.textBoxArgs = new System.Windows.Forms.TextBox();
             this.comboBoxOperation = new System.Windows.Forms.ComboBox();
             this.buttonAddOperation = new System.Windows.Forms.Button();
@@ -82,7 +85,7 @@
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Location = new System.Drawing.Point(2, 126);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(328, 318);
+            this.groupBox6.Size = new System.Drawing.Size(328, 343);
             this.groupBox6.TabIndex = 34;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "HOME DEVICE";
@@ -102,38 +105,69 @@
             // 
             this.textBoxNameHomeDevice.Location = new System.Drawing.Point(6, 36);
             this.textBoxNameHomeDevice.Name = "textBoxNameHomeDevice";
+            this.textBoxNameHomeDevice.ReadOnly = true;
             this.textBoxNameHomeDevice.Size = new System.Drawing.Size(153, 20);
             this.textBoxNameHomeDevice.TabIndex = 20;
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.button1);
+            this.groupBox5.Controls.Add(this.textBoxNameOperation);
             this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.textBoxArgs);
             this.groupBox5.Controls.Add(this.comboBoxOperation);
             this.groupBox5.Controls.Add(this.buttonAddOperation);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.comboBoxToHomeDevice);
-            this.groupBox5.Location = new System.Drawing.Point(5, 210);
+            this.groupBox5.Location = new System.Drawing.Point(5, 204);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(317, 102);
+            this.groupBox5.Size = new System.Drawing.Size(317, 132);
             this.groupBox5.TabIndex = 30;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "ADD OPERATIONS";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(232, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(79, 47);
+            this.button1.TabIndex = 34;
+            this.button1.Text = "Edit";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.EditOperation);
+            // 
+            // textBoxNameOperation
+            // 
+            this.textBoxNameOperation.Location = new System.Drawing.Point(68, 26);
+            this.textBoxNameOperation.Name = "textBoxNameOperation";
+            this.textBoxNameOperation.Size = new System.Drawing.Size(157, 20);
+            this.textBoxNameOperation.TabIndex = 32;
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 22);
+            this.label14.Location = new System.Drawing.Point(9, 55);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(20, 13);
             this.label14.TabIndex = 23;
             this.label14.Text = "To";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "Name";
+            // 
             // textBoxArgs
             // 
             this.textBoxArgs.Enabled = false;
-            this.textBoxArgs.Location = new System.Drawing.Point(68, 73);
+            this.textBoxArgs.Location = new System.Drawing.Point(68, 106);
             this.textBoxArgs.Name = "textBoxArgs";
             this.textBoxArgs.Size = new System.Drawing.Size(157, 20);
             this.textBoxArgs.TabIndex = 20;
@@ -142,7 +176,7 @@
             // 
             this.comboBoxOperation.Enabled = false;
             this.comboBoxOperation.FormattingEnabled = true;
-            this.comboBoxOperation.Location = new System.Drawing.Point(68, 46);
+            this.comboBoxOperation.Location = new System.Drawing.Point(68, 79);
             this.comboBoxOperation.Name = "comboBoxOperation";
             this.comboBoxOperation.Size = new System.Drawing.Size(157, 21);
             this.comboBoxOperation.TabIndex = 22;
@@ -150,17 +184,18 @@
             // buttonAddOperation
             // 
             this.buttonAddOperation.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAddOperation.Location = new System.Drawing.Point(232, 19);
+            this.buttonAddOperation.Location = new System.Drawing.Point(232, 79);
             this.buttonAddOperation.Name = "buttonAddOperation";
-            this.buttonAddOperation.Size = new System.Drawing.Size(79, 74);
+            this.buttonAddOperation.Size = new System.Drawing.Size(79, 47);
             this.buttonAddOperation.TabIndex = 10;
             this.buttonAddOperation.Text = "+";
             this.buttonAddOperation.UseVisualStyleBackColor = true;
+            this.buttonAddOperation.Click += new System.EventHandler(this.AddOperation);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(9, 76);
+            this.label16.Location = new System.Drawing.Point(9, 109);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(28, 13);
             this.label16.TabIndex = 28;
@@ -169,7 +204,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 49);
+            this.label15.Location = new System.Drawing.Point(6, 82);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(53, 13);
             this.label15.TabIndex = 26;
@@ -178,11 +213,10 @@
             // comboBoxToHomeDevice
             // 
             this.comboBoxToHomeDevice.FormattingEnabled = true;
-            this.comboBoxToHomeDevice.Location = new System.Drawing.Point(68, 19);
+            this.comboBoxToHomeDevice.Location = new System.Drawing.Point(68, 52);
             this.comboBoxToHomeDevice.Name = "comboBoxToHomeDevice";
             this.comboBoxToHomeDevice.Size = new System.Drawing.Size(157, 21);
             this.comboBoxToHomeDevice.TabIndex = 25;
-            this.comboBoxToHomeDevice.SelectedValueChanged += new System.EventHandler(this.UpdateOperations);
             // 
             // listBoxOperations
             // 
@@ -191,6 +225,7 @@
             this.listBoxOperations.Name = "listBoxOperations";
             this.listBoxOperations.Size = new System.Drawing.Size(231, 121);
             this.listBoxOperations.TabIndex = 20;
+            this.listBoxOperations.SelectedValueChanged += new System.EventHandler(this.SelectOperation);
             // 
             // textBoxTypeHomeDevice
             // 
@@ -231,7 +266,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 447);
+            this.ClientSize = new System.Drawing.Size(332, 473);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox6);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -266,5 +301,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBoxNameOperation;
+        private System.Windows.Forms.Label label1;
     }
 }
