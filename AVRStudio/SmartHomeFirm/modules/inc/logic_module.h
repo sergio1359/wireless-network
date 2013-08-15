@@ -18,10 +18,10 @@
 #define LOGIC_MODULE_DEFINITION  X(LogicModule, logicModule_Init, logicModule_NotificationInd)
 
 #define COMMANDS_TABLE_LOGIC														\
-X(LogicWrite,			0x40, logic_Handler,	logicModule_DataConf,	LOGIC_WRITE_MESSAGE_t,			false)	\
-X(LogicSwitch,			0x41, logic_Handler,	logicModule_DataConf,	LOGIC_SWITCH_MESSAGE_t,			false)	\
-X(LogicRead,			0x42, logic_Handler,	logicModule_DataConf,	LOGIC_READ_MESSAGE_t,			false)	\
-X(LogicReadResponse,	0x43, logic_Handler,	logicModule_DataConf,	LOGIC_READ_RESPONSE_MESSAGE_t,	false)	\
+X(LogicWrite,			0x40, logic_Handler,	0x00,					LOGIC_WRITE_MESSAGE_t,			false)	\
+X(LogicSwitch,			0x41, logic_Handler,	0x00,					LOGIC_SWITCH_MESSAGE_t,			false)	\
+X(LogicRead,			0x42, logic_Handler,	0x00,					LOGIC_READ_MESSAGE_t,			false)	\
+X(LogicReadResponse,	0x43, logic_Handler,	logicRead_DataConf,		LOGIC_READ_RESPONSE_MESSAGE_t,	false)	\
 
 //LOGIC PORT MESSAGES
 typedef struct
@@ -69,8 +69,9 @@ typedef struct
 
 void logicModule_Init(void);
 void logicModule_NotificationInd(uint8_t sender, OPERATION_HEADER_t* notification);
-void logicModule_DataConf(OPERATION_DataConf_t *req);
 
 void logic_Handler(OPERATION_HEADER_t* operation_header);
+
+void logicRead_DataConf(OPERATION_DataConf_t *req);
 
 #endif /* LOGIC_MODULE_H_ */

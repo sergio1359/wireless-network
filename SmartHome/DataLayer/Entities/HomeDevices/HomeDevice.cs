@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -33,6 +34,9 @@ namespace DataLayer.Entities.HomeDevices
         private static string[] homeDeviceTypes = null;
 
         //Properties
+        [NotMapped]
+        public DateTime? LastStatusUpdate { get; set; }
+
         [NotMapped]
         public static string[] HomeDeviceTypes
         {
