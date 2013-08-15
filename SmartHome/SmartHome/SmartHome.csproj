@@ -59,6 +59,7 @@
     <Compile Include="Communications\Modules\Config\ConfigModule.cs" />
     <Compile Include="Communications\Modules\Config\TransactionStatus.cs" />
     <Compile Include="Communications\Modules\StatusModule.cs" />
+    <Compile Include="Communications\Modules\UserModule.cs" />
     <Compile Include="Products\HomeDeviceProduct.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessRGBLight.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitchButton.cs" />

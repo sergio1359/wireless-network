@@ -44,6 +44,19 @@ namespace SmartHome.Comunications
 
         #endregion
 
+        private static CommunicationManager instance;
+
+        public static CommunicationManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new CommunicationManager();
+
+                return instance;
+            }
+        }
+
         /// <summary>
         /// Raise when a new node was physically plugged to the system
         /// </summary>
@@ -63,6 +76,7 @@ namespace SmartHome.Comunications
             this.modulesList = new List<ModuleBase>();
             this.modulesList.Add(new NetworkJoin(this));
             this.modulesList.Add(new StatusModule(this));
+            this.modulesList.Add(new UserModule(this));
             //Sort by priority descendent
             this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 

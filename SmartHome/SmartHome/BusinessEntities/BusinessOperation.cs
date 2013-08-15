@@ -4,6 +4,9 @@ using SmartHome.BusinessEntities.BusinessHomeDevice;
 using SmartHome.Comunications.Messages;
 using System.Linq;
 using System.Reflection;
+using SmartHome.Comunications;
+using SmartHome.Communications.Modules;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -11,9 +14,9 @@ namespace SmartHome.BusinessEntities
 {
     public static class BusinessOperation
     {
-        public static void Execute(this Operation operation)
+        public static async Task<bool> Execute(this Operation operation)
         {
-            
+            return await CommunicationManager.Instance.FindModule<UserModule>().SendMessage(operation.GetOperationMessage());
         }
 
         public static byte[] ToBinaryOperation(this Operation operation)
