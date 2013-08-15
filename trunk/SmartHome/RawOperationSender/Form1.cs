@@ -11,13 +11,13 @@ namespace RawOperationSender
 {
     public partial class Form1 : Form
     {
-        CommunicationManager manager = new CommunicationManager();
+        
         NetworkJoin joinMod;
         public Form1()
         {
             InitializeComponent();
 
-            this.joinMod = manager.FindModule<NetworkJoin>();
+            this.joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
             joinMod.NetworkJoinReceived += joinMod_NetworkJoinReceived;
             joinMod.NodeJoined += joinMod_NetworkJoinReceived;
         }
@@ -54,7 +54,7 @@ namespace RawOperationSender
                             Content = operation
                         };
                         priotity += 0.1f;
-                        Debug.WriteLine(outputMessage.Priority + " Response: " + (await manager.SendMessage(outputMessage)).ToString() + " " + DateTime.Now.Millisecond);
+                        Debug.WriteLine(outputMessage.Priority + " Response: " + (await CommunicationManager.Instance.SendMessage(outputMessage)).ToString() + " " + DateTime.Now.Millisecond);
                     });
             }
         }
