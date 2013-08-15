@@ -25,16 +25,16 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         {
             if(!homeDevice.InUse)
                 return null;
-            if (homeDevice.ProductTag.Count == 0)//no es un producto
+            if (!homeDevice.ProductTag.HasValue)//no es un producto
                 return homeDevice.Connector.GetPinPort();
             else //es un producto
             {
                 List<PinPort> pinPorts = new List<PinPort>();
-                for (int i = 0; i < homeDevice.ProductTag.Count; i++)
-                {
-                    int element = homeDevice.ProductTag.ElementAt(i);
-                    pinPorts.Add(homeDevice.Connector.GetPinPort()[element]);
-                }
+                //for (int i = 0; i < homeDevice.ProductTag.Count; i++)
+                //{
+                //    int element = homeDevice.ProductTag.ElementAt(i);
+                //    pinPorts.Add(homeDevice.Connector.GetPinPort()[element]);
+                //}
                 return pinPorts;
             }
         }
