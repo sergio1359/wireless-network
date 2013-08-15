@@ -83,6 +83,7 @@
     <Compile Include="Memory\Crc16.cs" />
     <Compile Include="Memory\Hex.cs" />
     <Compile Include="Products\Base.cs" />
+    <Compile Include="Products\PinPort.cs" />
     <Compile Include="Products\PinPortConfiguration.cs" />
     <Compile Include="Products\ProductsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,12 +20,9 @@ namespace DataLayer.Entities
 
         public virtual Node Node { get; set; }
 
+        public string NameProduct { get; set; }
+
         public virtual ICollection<HomeDevice> HomeDevices { get; set; }
-
-        [NotMapped]
-        public Dictionary<HomeDevice, List<PinPort>> MappingHomeDevice;
-
-        
 
         [NotMapped]
         public bool InUse
@@ -39,7 +36,6 @@ namespace DataLayer.Entities
         public Connector()
         {
             this.HomeDevices = new List<HomeDevice>();
-            this.MappingHomeDevice = new Dictionary<HomeDevice, List<PinPort>>();
         }
     }
 }

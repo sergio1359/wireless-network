@@ -1,5 +1,5 @@
 ﻿
-namespace DataLayer.Entities
+namespace SmartHome.Products
 {
     public class PinPort
     {
