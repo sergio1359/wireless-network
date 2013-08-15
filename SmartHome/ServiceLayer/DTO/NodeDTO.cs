@@ -22,7 +22,7 @@ namespace ServiceLayer.DTO
 
         public override string ToString()
         {
-            return Name;
+            return Name + " (" + Base +") " + string.Format("0x{0:X4}", Address);
         }
     }
 }

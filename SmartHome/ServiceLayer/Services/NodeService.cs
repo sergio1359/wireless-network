@@ -13,6 +13,7 @@ using SmartHome.Comunications;
 using SmartHome.Communications.Modules.Config;
 using SmartHome.Communications.Modules;
 using System.Threading.Tasks;
+using SmartHome.Communications.Modules.Network;
 #endregion
 
 namespace ServiceLayer
@@ -58,9 +59,10 @@ namespace ServiceLayer
         /// Return the MAC of the Pending Nodes
         /// </summary>
         /// <returns>Return string for the MACs</returns>
-        public string[] GetPendingNodes()
+        public PendingNodeInfoDTO[] GetPendingNodes()
         {
-            return CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes.ToArray();
+            var pendingInfo = CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes;
+            return Mapper.Map<PendingNodeInfoDTO[]>(pendingInfo);
         }
 
         /// <summary>
@@ -76,16 +78,27 @@ namespace ServiceLayer
 
             Node node = Repositories.NodeRespository.GetByMacAddress(MAC);
 
-            if (node == null)
-            {
-                //TODO: Set other properties. Like: BaseModel, ShieldType, etc.
-                node = Repositories.NodeRespository.Insert(new Node()
-                {
-                    Mac = MAC,
-                });
-            }
+            NetworkJoin joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
 
-            return await CommunicationManager.Instance.FindModule<NetworkJoin>().AcceptNode(MAC, node.Address, home.Security);
+            PendingNodeInfo info = joinMod.PendingNodes.FirstOrDefault(n => n.MacAddress == MAC);
+
+            if (info != null)
+            {
+                if (node == null)
+                {
+                    node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
+                    node.Mac = info.MacAddress;
+                    node.Address = info.TemporalAddress;
+
+                    node = Repositories.NodeRespository.Insert(node);
+                }
+
+                return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

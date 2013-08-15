@@ -16,6 +16,7 @@ namespace DataLayer
                 {
                     Name = "TestHome",
                     Security = new Security(),
+                    Location = new Coordenate(),
                 });
             /*IList<Home> defaultStandards = new List<Standard>();
 

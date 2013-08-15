@@ -9,6 +9,17 @@
 #ifndef BASE_IO_H_
 #define BASE_IO_H_
 
+typedef enum 
+{
+	ATMega128RFA1_V1,
+	ATMega128RFA1_V2,
+} BASE_MODELS;
+
+typedef enum
+{
+	DEBUG_SHIELD,
+} SHIELD_MODELS;
+
 void BASE_Init();
 
 void BASE_LedOn();

@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.buttonChangeImageView = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.buttonChangeImage = new System.Windows.Forms.Button();
             this.buttonRemoveView = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,19 +47,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxNameView = new System.Windows.Forms.TextBox();
             this.textBoxNameNode = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxZones = new System.Windows.Forms.ListBox();
             this.buttonRemoveZone = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
             this.buttonAddZona = new System.Windows.Forms.Button();
             this.textBoxNewNameZona = new System.Windows.Forms.TextBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -78,6 +78,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "HOME";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Name";
             // 
             // groupBox2
             // 
@@ -107,6 +116,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "ZONE";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(236, 236);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(80, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Cambiar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // buttonChangeImageView
             // 
             this.buttonChangeImageView.Location = new System.Drawing.Point(48, 264);
@@ -115,6 +133,15 @@
             this.buttonChangeImageView.TabIndex = 2;
             this.buttonChangeImageView.Text = "Cambiar";
             this.buttonChangeImageView.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(236, 14);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Cambiar";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // buttonChangeImage
             // 
@@ -231,6 +258,16 @@
             this.textBoxNameNode.TabIndex = 1;
             this.textBoxNameNode.TextChanged += new System.EventHandler(this.ChangeZoneName);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(242, 17);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(80, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Cambiar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.listBoxZones);
@@ -261,6 +298,13 @@
             this.buttonRemoveZone.Text = "-";
             this.buttonRemoveZone.UseVisualStyleBackColor = true;
             this.buttonRemoveZone.Click += new System.EventHandler(this.RemoveZones);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(53, 19);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(183, 20);
+            this.textBox1.TabIndex = 1;
             // 
             // groupBox3
             // 
@@ -309,49 +353,6 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(53, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(183, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Name";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(236, 14);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Cambiar";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(236, 236);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(80, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Cambiar";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(242, 17);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(80, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Cambiar";
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // ZonaScreen
             // 

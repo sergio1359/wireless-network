@@ -66,5 +66,10 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
             LoadZone(this, null);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

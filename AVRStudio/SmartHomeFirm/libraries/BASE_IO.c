@@ -8,8 +8,6 @@
 #include "DIGITAL.h"
 #include "globals.h"
 
-#define SHIELD_MODEL 1
-
 VARPIN(LED);
 VARPIN(BUTTON);
 
@@ -18,7 +16,7 @@ void BASE_Init()
 	if(DS2401_Init())
 	{
 		//BASE V2
-		baseModel = 2;
+		baseModel = ATMega128RFA1_V2;
 		
 		VARPIN_UPDATE(LED, PINADDRESS('D', 6));
 		VARPIN_UPDATE(BUTTON, PINADDRESS('D', 7));
@@ -28,14 +26,14 @@ void BASE_Init()
 	}else
 	{
 		//BASE V1
-		baseModel = 1;
+		baseModel = ATMega128RFA1_V1;
 		
 		VARPIN_UPDATE(LED, PINADDRESS('B', 4));
 		
 		VARPIN_OUT(LED);
 	}
 	
-	shieldModel = SHIELD_MODEL;	
+	shieldModel = DEBUG_SHIELD;	
 }
 
 void BASE_LedOn()

@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using SmartHome.Communications.Modules.Config;
+using SmartHome.Communications.Modules.Network;
 #endregion
 
 namespace SmartHome.Comunications
@@ -238,7 +239,7 @@ namespace SmartHome.Comunications
                 }
                 else if ((connection = this.serialManager.GetNodeConnection(destinationAddress)) != null)
                 {
-                    connectionsInUse.Add(destinationAddress, connection);
+                    this.StoreConnection(connection);
                     message.Content.DestinationAddress = 0;
                 }
                 else if (masterConnection != null)

@@ -10,6 +10,7 @@ using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
 using SmartHome.Comunications.Modules;
 using SmartHome.BusinessEntities;
+using System.IO;
 #endregion
 
 namespace SmartHome.Communications.Modules.Config
@@ -66,6 +67,9 @@ namespace SmartHome.Communications.Modules.Config
                 { 
                     (byte)OperationMessage.OPCodes.ConfigWriteResponse, 
                     (byte)OperationMessage.OPCodes.ConfigReadConfirmation,
+                    (byte)OperationMessage.OPCodes.ConfigChecksumResponse,
+                    (byte)OperationMessage.OPCodes.ConfigWriteResponse,
+                    (byte)OperationMessage.OPCodes.WakeUp,
                 },
             };
         }
@@ -80,12 +84,17 @@ namespace SmartHome.Communications.Modules.Config
         } 
         #endregion
 
-        public void SendConfiguration(Node node)
+        public async void SendConfiguration(Node node)
         {
-            if (!this.currentWriteTransactions.ContainsKey(node.Address))
+            if (!this.currentWriteTransactions.ContainsKey((ushort)node.Address))
             {
-                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), node.Address, node.GetBinaryConfiguration());
-                this.currentWriteTransactions.Add(node.Address, newTransaction);
+                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), (ushort)node.Address, node.GetBinaryConfiguration());
+                this.currentWriteTransactions.Add((ushort)node.Address, newTransaction);
+
+                if (!await newTransaction.StartTransaction())
+                {
+                    //TODO: Check the problem
+                }
             }
         }
     }

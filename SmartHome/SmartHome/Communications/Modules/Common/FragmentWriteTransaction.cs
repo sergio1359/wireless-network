@@ -23,14 +23,21 @@ namespace SmartHome.Communications.Modules.Common
 
         private Type applicationStatusCodeType;
 
+        private int totalFragments;
+
         #region Properties
         public OperationMessage.OPCodes OpCode { get; private set; }
 
         public ushort DestinationAddress { get; private set; }
 
-        public byte NumberOfFragments { get; private set; }
+        public int CurrentFrameSize { get; private set; }
 
-        public int FrameSize { get; private set; }
+        public int NumberOfFragments { 
+            get 
+            { 
+                return this.totalFragments + 1;
+            }
+        }
 
         public int RemainingFragments
         {
@@ -44,7 +51,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return (this.RemainingFragments / this.NumberOfFragments) * 100f;
+                return ((float)(this.NumberOfFragments - this.RemainingFragments) / (float)this.NumberOfFragments) * 100f;
             }
         }
 
@@ -52,7 +59,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return this.outputBuffer.Count != this.NumberOfFragments;
+                return this.outputBuffer.Count != (this.NumberOfFragments);
             }
         }
 
@@ -60,7 +67,7 @@ namespace SmartHome.Communications.Modules.Common
         {
             get
             {
-                return this.outputBuffer.Count == 0;
+                return this.RemainingFragments == 0;
             }
         }
 
@@ -90,22 +97,23 @@ namespace SmartHome.Communications.Modules.Common
 
             this.outputBuffer = new List<OperationMessage>();
 
-            this.NumberOfFragments = (byte)(content.Length / MAX_CONTENT_SIZE);
-            this.FrameSize = 0;
-            for (byte i = 0; i <= this.NumberOfFragments; i++)
+            this.totalFragments = (byte)(content.Length / MAX_CONTENT_SIZE);
+
+            for (byte i = 0; i <= this.totalFragments; i++)
             {
+                this.CurrentFrameSize = Math.Min(MAX_CONTENT_SIZE, content.Length - (i * MAX_CONTENT_SIZE));
+
                 OperationMessage currentOp = new OperationMessage()
                 {
                     SourceAddress = 0x00,
                     DestinationAddress = destinationAddress,
                     OpCode = OperationMessage.OPCodes.ConfigWrite,
-                    Args = new byte[MAX_CONTENT_SIZE + 2]
+                    Args = new byte[this.CurrentFrameSize + 2]
                 };
 
-                this.FrameSize = Math.Min(MAX_CONTENT_SIZE, content.Length - (i * MAX_CONTENT_SIZE));
-                currentOp.Args[0] = (byte)((this.NumberOfFragments << 4) | (i & 0xF));
-                currentOp.Args[1] = (byte)this.FrameSize;
-                Buffer.BlockCopy(content, (i * MAX_CONTENT_SIZE), currentOp.Args, 2, this.FrameSize);
+                currentOp.Args[0] = (byte)((this.totalFragments << 4) | (i & 0xF));
+                currentOp.Args[1] = (byte)this.CurrentFrameSize;
+                Buffer.BlockCopy(content, (i * MAX_CONTENT_SIZE), currentOp.Args, 2, this.CurrentFrameSize);
 
                 this.outputBuffer.Add(currentOp);
             }
@@ -119,6 +127,8 @@ namespace SmartHome.Communications.Modules.Common
         {
             if (this.IsStarted && !this.IsWaitingForResponse)
                 throw new InvalidOperationException("The transaction already been started");
+
+            Debug.WriteLine(String.Format("TRANSACTION WRITE TO 0x{0:X4} STARTED", this.DestinationAddress));
 
             return await callingModule.SendMessage(this.outputBuffer[0]);
         }
@@ -160,11 +170,11 @@ namespace SmartHome.Communications.Modules.Common
                 {
                     object errorCode = (object)response.Args[1];
                     if (Enum.IsDefined(typeof(WriteSessionStatusCodes), errorCode))
-                        Debug.WriteLine("TRANSACTION WRITE ERROR CODE: " + Enum.GetName(typeof(WriteSessionStatusCodes), errorCode));
+                        Debug.WriteLine(String.Format("TRANSACTION WRITE TO 0x{0:X4} ERROR CODE: {1}", this.DestinationAddress, Enum.GetName(typeof(WriteSessionStatusCodes), errorCode)));
                     else if (Enum.IsDefined(typeof(ConfigWriteStatusCodes), errorCode))
-                        Debug.WriteLine("TRANSACTION WRITE APP ERROR CODE: " + Enum.GetName(typeof(ConfigWriteStatusCodes), errorCode));
+                        Debug.WriteLine(String.Format("TRANSACTION WRITE TO 0x{0:X4} APP ERROR CODE: {1}", this.DestinationAddress, Enum.GetName(typeof(ConfigWriteStatusCodes), errorCode)));
                     else
-                        Debug.WriteLine("TRANSACTION WRITE UNKNOWN ERROR CODE: " + errorCode);
+                        Debug.WriteLine(String.Format("TRANSACTION WRITE TO 0x{0:X4} UNKNOWN ERROR CODE: {1}", this.DestinationAddress, errorCode));
 
                     this.IsAborted = true;
                     return false;

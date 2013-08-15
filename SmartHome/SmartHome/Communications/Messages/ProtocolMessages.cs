@@ -131,11 +131,11 @@ namespace SmartHome.Comunications.Messages
             return BaseMessage(OPCodes.JoinRequestResponse, RSAKey);
         }
 
-        public static OperationMessage JoinAcceptResponse(ushort newAddress, byte panId, byte channel, string securityKey)
+        public static OperationMessage JoinAcceptResponse(ushort newAddress, ushort panId, byte channel, string securityKey)
         {
             List<byte> operationArgs = new List<byte>();
             operationArgs.AddRange(BitConverter.GetBytes(newAddress));
-            operationArgs.Add(panId);
+            operationArgs.AddRange(BitConverter.GetBytes(panId));
             operationArgs.Add(channel);
             operationArgs.AddRange(Encoding.ASCII.GetBytes(securityKey));
 

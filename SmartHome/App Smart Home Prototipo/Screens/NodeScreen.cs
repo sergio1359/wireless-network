@@ -59,15 +59,18 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void ChangeNodeConfiguration(object sender, EventArgs e)
         {
-            NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
+            if (listBoxNodes.SelectedIndex >= 0)
+            {
+                NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
 
-            Services.NodeService.SetNameNode(node.Id, textBoxNameNode.Text);
+                Services.NodeService.SetNameNode(node.Id, textBoxNameNode.Text);
 
-            ushort newAddress = 0;
-            if (ushort.TryParse(textBoxAddressNode.Text, out newAddress))
-                Services.NodeService.SetAddressNode(node.Id, newAddress);
+                ushort newAddress = 0;
+                if (ushort.TryParse(textBoxAddressNode.Text, out newAddress))
+                    Services.NodeService.SetAddressNode(node.Id, newAddress);
 
-            UpdateNodes();
+                UpdateNodes();
+            }
         }
 
 

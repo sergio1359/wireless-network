@@ -109,7 +109,7 @@ typedef struct
 typedef struct
 {
 	uint16_t Address;
-	uint8_t  PanId;
+	uint16_t  PanId;
 	uint8_t  Channel;
 	uint8_t  Network_AES_Key[16];
 }JOIN_ACCEPT_RESPONSE_MESSAGE_t;

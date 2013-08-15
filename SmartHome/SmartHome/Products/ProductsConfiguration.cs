@@ -33,6 +33,7 @@ namespace SmartHome.Products
             switch (controller)
             {
                 case BaseTypes.ATMega128RFA1_V1:
+                case BaseTypes.ATMega128RFA1_V2:
                     result.UController = controller;
                     result.DeviceSignature = 128;
                     result.NumPorts = 7;
