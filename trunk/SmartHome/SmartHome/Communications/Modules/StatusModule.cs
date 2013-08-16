@@ -6,21 +6,60 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using DataLayer;
+using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
 using SmartHome.Comunications.Modules;
+using SmartHome.BusinessEntities;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+
 #endregion
 
 namespace SmartHome.Communications.Modules
 {
     class StatusModule : ModuleBase
     {
+        private Timer statusUpdateTimer;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatusModule"/> class.
+        /// </summary>
+        /// <param name="communicationManager">The communication manager.</param>
         public StatusModule(CommunicationManager communicationManager)
             : base(communicationManager)
         {
+            this.statusUpdateTimer = new Timer()
+            {
+                Interval = 1000 * 10, // 10 seconds
+                AutoReset = true,
+            };
+            this.statusUpdateTimer.Elapsed += statusUpdateTimer_Elapsed;
 
+            this.statusUpdateTimer.Start();
+        }
+
+        private async void statusUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var homeDevices = Repositories.HomeDeviceRespository.GetConnectedHomeDevices();
+
+            foreach (var hd in homeDevices)
+            {
+                if (hd.LastStatusUpdate == null)
+                {
+                    //TODO: Call to RefreshState Method with the priority of this module
+                }
+
+                // TESTING
+                /*if (hd is Light)
+                {
+                    var message = ((Light)hd).Switch();
+                    message.DestinationAddress = (ushort)hd.Connector.Node.Address;
+                    await this.SendMessage(message);
+                }*/
+            }
         }
 
         #region Overridden Methods
@@ -107,37 +146,47 @@ namespace SmartHome.Communications.Modules
 
             processMethod(message.SourceAddress, deviceAddress, value);
         }
-        
+
+        /// <summary>
+        /// Checks the home device. If the type is different an error message will be logged
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="nodeAddress">The node address.</param>
+        /// <param name="deviceAddress">The device address.</param>
+        /// <returns></returns>
         private T CheckHomeDevice<T>(ushort nodeAddress, ushort deviceAddress) where T : HomeDevice
         {
-            lock(this){
-            var homeDev = Repositories.HomeDeviceRespository.GetById(deviceAddress);
-
-
-            if (homeDev == null)
+            lock (this)
             {
-                Debug.WriteLine("HD not present in the DB!");
-            }
-            else
-            {
-                var nodeAddressRep = homeDev.Connector.Node.Address;
+                var homeDev = Repositories.HomeDeviceRespository.GetById(deviceAddress);
 
-                if (nodeAddressRep != nodeAddress)
+
+                if (homeDev == null)
                 {
-                    Debug.WriteLine("NodeAddress different from the DB!");
-                }
-                else if (!(homeDev is T))
-                {
-                    Debug.WriteLine("HD of different type from the DB!");
+                    PrintLog(true, "HD not present in the DB!");
                 }
                 else
                 {
-                    return (T)homeDev;
+                    if (homeDev.Connector == null)
+                    {
+                        PrintLog(true, "HomeDevice not connected!");
+                    }
+                    else if (homeDev.Connector.Node.Address != nodeAddress)
+                    {
+                        PrintLog(true, "NodeAddress different from the DB!");
+                    }
+                    else if (!(homeDev is T))
+                    {
+                        PrintLog(true, "HD of different type from the DB!");
+                    }
+                    else
+                    {
+                        return (T)homeDev;
+                    }
                 }
             }
-            }
             return null;
-        } 
+        }
         #endregion
 
         #region Private Process Methods
@@ -146,18 +195,18 @@ namespace SmartHome.Communications.Modules
         {
             if (mode == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("RGB LIGHT READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("RGB LIGHT READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
                 ModeRGBLight modeRGB = (ModeRGBLight)mode;
 
-                Debug.WriteLine(string.Format("RGB LIGHT READING FROM 0x{0:X4} DEVICE {1}: 0x{2:X2}{3:X2}{4:X2} {5}",
+                PrintLog(false, string.Format("RGB LIGHT READING FROM 0x{0:X4} DEVICE {1}: 0x{2:X2}{3:X2}{4:X2} {5}",
                     nodeAddress,
                     deviceAddress,
                     color.R,
                     color.G,
-                    color.B, 
+                    color.B,
                     modeRGB.ToString()));
 
                 var rgbHD = CheckHomeDevice<RGBLight>(nodeAddress, deviceAddress);
@@ -175,11 +224,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("DIMMER READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("DIMMER READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("DIMMER READING FROM 0x{0:X4} DEVICE {1}: {2}", nodeAddress, deviceAddress, value));
+                PrintLog(false, string.Format("DIMMER READING FROM 0x{0:X4} DEVICE {1}: {2}", nodeAddress, deviceAddress, value));
 
                 var dimmerHD = CheckHomeDevice<Dimmable>(nodeAddress, deviceAddress);
 
@@ -195,11 +244,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("TEMPERATURE READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("TEMPERATURE READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("TEMPERATURE READING FROM 0x{0:X4} SENSOR {1}: {2}ºC", nodeAddress, deviceAddress, value));
+                PrintLog(false, string.Format("TEMPERATURE READING FROM 0x{0:X4} SENSOR {1}: {2}ºC", nodeAddress, deviceAddress, value));
 
                 var tempHD = CheckHomeDevice<TemperatureSensor>(nodeAddress, deviceAddress);
 
@@ -215,11 +264,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("HUMIDITY READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("HUMIDITY READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("HUMIDITY READING FROM 0x{0:X4} SENSOR {1}: {2}%", nodeAddress, deviceAddress, value));
+                PrintLog(false, string.Format("HUMIDITY READING FROM 0x{0:X4} SENSOR {1}: {2}%", nodeAddress, deviceAddress, value));
 
                 var humHD = CheckHomeDevice<HumiditySensor>(nodeAddress, deviceAddress);
 
@@ -235,11 +284,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("PRESENCE READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("PRESENCE READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("PRESENCE READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, (value != 0) ? "DETECTED" : "NOT DETECTED"));
+                PrintLog(false, string.Format("PRESENCE READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, (value != 0) ? "DETECTED" : "NOT DETECTED"));
 
                 var presenceHD = CheckHomeDevice<PresenceSensor>(nodeAddress, deviceAddress);
 
@@ -255,34 +304,38 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("LOGIC READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("LOGIC READING FROM 0x{0:X4} DEVICE {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
                 bool status = (value != 0);
 
-                Debug.WriteLine(string.Format("LOGIC READING FROM 0x{0:X4} DEVICE {1}: {2}", nodeAddress, deviceAddress, status ? "HIGH" : "LOW"));
+                PrintLog(false, string.Format("LOGIC READING FROM 0x{0:X4} DEVICE {1}: {2}", nodeAddress, deviceAddress, status ? "HIGH" : "LOW"));
 
-                HomeDevice logicHD;
+                HomeDevice logicHD = CheckHomeDevice<HomeDevice>(nodeAddress, deviceAddress);
 
-                if ((logicHD = CheckHomeDevice<WallPlug>(nodeAddress, deviceAddress)) != null)
+                if (logicHD is WallPlug)
                 {
                     (logicHD as WallPlug).IsOn = status;
                 }
-                else if ((logicHD = CheckHomeDevice<Light>(nodeAddress, deviceAddress)) != null)
+                else if (logicHD is Light)
                 {
                     (logicHD as Light).IsOn = status;
                 }
-                else if ((logicHD = CheckHomeDevice<Button>(nodeAddress, deviceAddress)) != null)
+                else if (logicHD is Button)
                 {
                     //TODO: Raise Button Pressed Event
                 }
-                else if ((logicHD = CheckHomeDevice<SwitchButton>(nodeAddress, deviceAddress)) != null)
+                else if (logicHD is SwitchButton)
                 {
                     (logicHD as SwitchButton).Open = status;
                 }
+                else
+                {
+                    PrintLog(true, "HD type not spected!");
+                }
 
-                if(logicHD != null)
+                if (logicHD != null)
                     logicHD.LastStatusUpdate = DateTime.Now;
             }
         }
@@ -291,11 +344,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("POWER READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("POWER READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("POWER READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, value));
+                PrintLog(false, string.Format("POWER READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, value));
 
                 var powerHD = CheckHomeDevice<PowerSensor>(nodeAddress, deviceAddress);
 
@@ -311,11 +364,11 @@ namespace SmartHome.Communications.Modules
         {
             if (value == 0xFF) //Invalid Reading
             {
-                Debug.WriteLine(string.Format("LUMINOSITY READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
+                PrintLog(true, string.Format("LUMINOSITY READING FROM 0x{0:X4} SENSOR {1}: UNKNOWN", nodeAddress, deviceAddress));
             }
             else
             {
-                Debug.WriteLine(string.Format("LUMINOSITY READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, value));
+                PrintLog(false, string.Format("LUMINOSITY READING FROM 0x{0:X4} SENSOR {1}: {2}", nodeAddress, deviceAddress, value));
 
                 var luminHD = CheckHomeDevice<LuminositySensor>(nodeAddress, deviceAddress);
 
@@ -325,6 +378,11 @@ namespace SmartHome.Communications.Modules
                     luminHD.LastStatusUpdate = DateTime.Now;
                 }
             }
+        }
+
+        private void PrintLog(bool error, string message)
+        {
+            Debug.WriteLine(string.Format("[{0}] {1}: {2}", DateTime.Now.ToLongTimeString(), error ? "ERROR" : "INFO", message));
         }
         #endregion
     }

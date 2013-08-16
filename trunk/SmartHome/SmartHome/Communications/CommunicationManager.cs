@@ -105,17 +105,10 @@ namespace SmartHome.Comunications
 
         private void serialManager_NodeConnectionRemoved(object sender, NodeConnection e)
         {
-            if (masterConnection == e)
-            {
-                masterConnection = null;
-            }
-
             RemoveConnection(e);
 
             if (NodeConnectionRemoved != null)
                 NodeConnectionRemoved(this, e.NodeAddress);
-
-            //TODO: What to do with the other dictionaries
 
             Debug.WriteLine(string.Format("DONGLE NODE 0x{0:X4} ({1}) Disconnected!", e.NodeAddress, e.NodeAddress == MASTER_ADDRESS ? "Master" : "Slave"));
         }
@@ -211,6 +204,11 @@ namespace SmartHome.Comunications
         private void RemoveConnection(NodeConnection connection)
         {
             ushort connectionAddress = connection.NodeAddress;
+
+            if (masterConnection == connection)
+            {
+                masterConnection = null;
+            }
 
             if (this.connectionsInUse.ContainsKey(connectionAddress))
             {

@@ -14,7 +14,6 @@ namespace DataLayer.Entities.HomeDevices
         public TemperatureSensor()
             : base()
         {
-            base.Operations = new List<Operation>();
         }
     }
 }

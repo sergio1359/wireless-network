@@ -20,8 +20,6 @@ namespace ServiceLayer
             {
                 Home home = new Home();
 
-                home.Location = new Coordenate();
-                home.Security = new Security();
                 home.Name = "";
 
                 Repositories.HomeRespository.Insert(home);

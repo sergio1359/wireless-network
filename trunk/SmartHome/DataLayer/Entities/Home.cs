@@ -23,6 +23,8 @@ namespace DataLayer.Entities
         public Home()
         {
             this.Zones = new List<Zone>();
+            this.Location = new Coordenate();
+            this.Security = new Security();
         }
     }
 

@@ -197,6 +197,7 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 		if(value == 0xFF)//Switch action
 		{
 			HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
+			value = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
 		}else
 		{
 			if(value)
@@ -218,11 +219,8 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 			currentElem->timerCounter = 0; //Disable timer
 		}			
 			
-		if(sourceAddress != COORDINATOR_ADDRESS)
-		{
-			//Notify to the coordinator
-			sendDigitalResponse(COORDINATOR_ADDRESS, deviceAddress, (value == 0xFF) ? ~currentElem->lastValue : value);			
-		}
+		//Notify to the coordinator
+		sendDigitalResponse(COORDINATOR_ADDRESS, deviceAddress, value);			
 	}
 	
 	return true;
