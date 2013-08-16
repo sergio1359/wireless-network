@@ -19,5 +19,10 @@ namespace DataLayer
         {
             return _Collection.Include("Location");
         }
+
+        public IQueryable<HomeDevice> GetConnectedHomeDevices()
+        {
+            return _Collection.Where(c => c.Connector != null);
+        }
     }
 }

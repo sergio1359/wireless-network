@@ -53,14 +53,17 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void UpdateCapableFreeConnector(object sender, EventArgs e)
         {
-            HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxFreeHomeDevices.SelectedItem;
+            if (listBoxFreeHomeDevices.SelectedItem != null && comboBoxNode.SelectedItem != null)
+            {
+                HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxFreeHomeDevices.SelectedItem;
 
-            ConnectorDTO connector = (ConnectorDTO)listBoxCapableFreeConnector.SelectedItem;
+                NodeDTO node = (NodeDTO)this.comboBoxNode.SelectedItem;
 
-            listBoxCapableFreeConnector.Items.Clear();
-            listBoxCapableFreeConnector.Items.AddRange(Services.NodeService.GetConnectorsCapable(homeDev.Id, connector.Id));
+                listBoxCapableFreeConnector.Items.Clear();
+                listBoxCapableFreeConnector.Items.AddRange(Services.NodeService.GetConnectorsCapable(homeDev.Id, node.Id));
 
-            buttonLinkHomeDevice.Enabled = true;
+                buttonLinkHomeDevice.Enabled = true;
+            }
         }
 
         private void SelectNewHomeDevice(object sender, EventArgs e)

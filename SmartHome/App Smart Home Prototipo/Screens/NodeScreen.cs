@@ -28,38 +28,44 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private async void AcceptNode(object sender, EventArgs e)
         {
             //TODO GENERATE A MOCK NODE
-            if(listBoxMACs.SelectedIndex >= 0)
+            if (this.listBoxMACs.SelectedItem != null)
             {
-                await Services.NodeService.AllowPendingNode((string)listBoxMACs.SelectedItem);
+                await Services.NodeService.AllowPendingNode(((PendingNodeInfoDTO)listBoxMACs.SelectedItem).MacAddress);
                 UpdateNodes();
             }
         }
 
         private void RemoveNode(object sender, EventArgs e)
         {
-            int id = ((NodeDTO)listBoxNodes.SelectedItem).Id;
-            Services.HomeService.UnlinkNode(id);
+            if (this.listBoxNodes.SelectedItem != null)
+            {
+                int id = ((NodeDTO)listBoxNodes.SelectedItem).Id;
+                Services.HomeService.UnlinkNode(id);
 
-            UpdateNodes();
+                UpdateNodes();
+            }
         }
 
         private void SelectNode(object sender, EventArgs e)
         {
-            //update textboxs
-            NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
-            textBoxNameNode.Text = node.Name;
-            textBoxBaseNode.Text = node.Base;
-            textBoxAddressNode.Text = node.Address.ToString();
-            textBoxShieldNode.Text = node.Shield;
+            if (this.listBoxNodes.SelectedItem != null)
+            {
+                //update textboxs
+                NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
+                textBoxNameNode.Text = node.Name;
+                textBoxBaseNode.Text = node.Base;
+                textBoxAddressNode.Text = node.Address.ToString();
+                textBoxShieldNode.Text = node.Shield;
 
-            //update connectors
-            listBoxConnectors.Items.Clear();
-            listBoxConnectors.Items.AddRange(Services.NodeService.GetConnectors(node.Id));
+                //update connectors
+                listBoxConnectors.Items.Clear();
+                listBoxConnectors.Items.AddRange(Services.NodeService.GetConnectors(node.Id));
+            }
         }
 
         private void ChangeNodeConfiguration(object sender, EventArgs e)
         {
-            if (listBoxNodes.SelectedIndex >= 0)
+            if (this.listBoxNodes.SelectedItem != null)
             {
                 NodeDTO node = (NodeDTO)listBoxNodes.SelectedItem;
 

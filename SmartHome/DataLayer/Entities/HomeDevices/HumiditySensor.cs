@@ -13,7 +13,7 @@ namespace DataLayer.Entities.HomeDevices
         public HumiditySensor()
             : base()
         {
-
+            this.ConnectorCapable = Enums.ConnectorTypes.LogicInput;
         }
     }
 }

@@ -15,8 +15,6 @@ namespace DataLayer
             context.Home.Add(new Home()
                 {
                     Name = "TestHome",
-                    Security = new Security(),
-                    Location = new Coordenate(),
                 });
             /*IList<Home> defaultStandards = new List<Standard>();
 

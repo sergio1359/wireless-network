@@ -134,9 +134,9 @@ namespace ServiceLayer
             var connectors = Repositories.NodeRespository.GetById(idNode).Connectors;
             var homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
-            var connectorsResult = connectors.Where(c => c.HomeDevices.Contains(homeDevice) && c.InUse == false);
+            var connectorsResult = connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
 
-            return Mapper.Map<ConnectorDTO[]>(connectors);
+            return Mapper.Map<ConnectorDTO[]>(connectorsResult);
         }
 
         public string GetNameNode(int idNode)

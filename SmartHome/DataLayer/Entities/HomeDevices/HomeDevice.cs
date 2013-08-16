@@ -17,9 +17,9 @@ namespace DataLayer.Entities.HomeDevices
 
         public string Name { get; set; }
 
-        public Connector Connector { get; set; }
-
         public ConnectorTypes ConnectorCapable { get; set; }
+
+        public virtual Connector Connector { get; set; }
 
         public virtual ICollection<Location> Location { get; set; }
 
@@ -63,7 +63,7 @@ namespace DataLayer.Entities.HomeDevices
         {
             get
             {
-                return Connector != null;
+                return this.Connector != null;
             }
         }
 
