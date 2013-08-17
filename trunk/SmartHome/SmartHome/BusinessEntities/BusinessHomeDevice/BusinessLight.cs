@@ -10,25 +10,33 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         [OperationAttribute]
         public static OperationMessage On(this Light light)
         {
-            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Set, 0);
+            ushort destinationAddress = (ushort)(light.Connector == null ? 0 : light.Connector.Node.Address);
+
+            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Set, 0, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage Off(this Light light)
         {
-            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Clear, 0);
+            ushort destinationAddress = (ushort)(light.Connector == null ? 0 : light.Connector.Node.Address);
+
+            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Clear, 0, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage OnTime(this Light light, byte seconds)
         {
-            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Set, seconds);
+            ushort destinationAddress = (ushort)(light.Connector == null ? 0 : light.Connector.Node.Address);
+
+            return OperationMessage.LogicWrite((ushort)light.Id, LogicWriteValues.Set, seconds, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage Switch(this Light light)
         {
-            return OperationMessage.LogicSwitch((ushort)light.Id, 0);
+            ushort destinationAddress = (ushort)(light.Connector == null ? 0 : light.Connector.Node.Address);
+
+            return OperationMessage.LogicSwitch((ushort)light.Id, 0, destinationAddress);
         }
     }
 }

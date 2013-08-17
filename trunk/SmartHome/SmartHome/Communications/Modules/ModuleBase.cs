@@ -4,6 +4,7 @@ using SmartHome.Comunications.Messages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SmartHome.Comunications.Modules
 {
@@ -123,5 +124,10 @@ namespace SmartHome.Comunications.Modules
         protected abstract Filter ConfigureInputFilter();
 
         protected abstract OutputParameters ConfigureOutputParameters();
+
+        protected void PrintLog(bool error, string message)
+        {
+            Debug.WriteLine(string.Format("[{0}] {1} {2}: {3}", DateTime.Now.ToLongTimeString(), this.GetType(), error ? "ERROR" : "INFO", message));
+        }
     }
 }

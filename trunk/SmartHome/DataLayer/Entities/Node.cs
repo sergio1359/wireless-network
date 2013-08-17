@@ -26,7 +26,7 @@ namespace DataLayer.Entities
         public int Id { get; set; }
 
         [Required]
-        //[MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
+        [MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
         public string Mac { get; set; }
 
         public string Name { get; set; }
@@ -41,6 +41,9 @@ namespace DataLayer.Entities
         public BaseTypes Base { get; set; }
 
         public ShieldTypes Shield { get; set; }
+
+        [Range(1, 65535)]
+        public int? ConfigChecksum { get; set; }
 
         public virtual Location Location { get; set; }
 

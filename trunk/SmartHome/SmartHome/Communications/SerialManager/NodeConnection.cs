@@ -343,10 +343,7 @@ namespace SmartHome.Communications.SerialManager
         {
             this.ConnectionState = ConnectionStates.Identifying;
 
-            this.SendInternalMessage(new OperationMessage()
-            {
-                OpCode = OperationMessage.OPCodes.PingRequest,
-            });
+            this.SendInternalMessage(OperationMessage.PingRequest());
 
             if (resetCounter)
                 this.retriesCount = 0;

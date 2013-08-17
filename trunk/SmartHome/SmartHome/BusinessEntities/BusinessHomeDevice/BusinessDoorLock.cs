@@ -10,7 +10,9 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         [OperationAttribute]        
         public static OperationMessage OpenDoor(this DoorLock doorLock)
         {
-            return OperationMessage.LogicWrite((ushort)doorLock.Id, LogicWriteValues.Set, (byte)doorLock.OpenTime);
+            ushort destinationAddress = (ushort)(doorLock.Connector == null ? 0 : doorLock.Connector.Node.Address);
+
+            return OperationMessage.LogicWrite((ushort)doorLock.Id, LogicWriteValues.Set, (byte)doorLock.OpenTime, destinationAddress);
         }
     }
 }

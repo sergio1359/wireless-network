@@ -53,12 +53,11 @@ namespace SmartHome.Communications.Modules
                 }
 
                 // TESTING
-                /*if (hd is Light)
+                if (hd is Light)
                 {
-                    var message = ((Light)hd).Switch();
-                    message.DestinationAddress = (ushort)hd.Connector.Node.Address;
+                    var message = hd.GetAddressableOperation(((Light)hd).Switch());
                     await this.SendMessage(message);
-                }*/
+                }
             }
         }
 
@@ -378,11 +377,6 @@ namespace SmartHome.Communications.Modules
                     luminHD.LastStatusUpdate = DateTime.Now;
                 }
             }
-        }
-
-        private void PrintLog(bool error, string message)
-        {
-            Debug.WriteLine(string.Format("[{0}] {1}: {2}", DateTime.Now.ToLongTimeString(), error ? "ERROR" : "INFO", message));
         }
         #endregion
     }

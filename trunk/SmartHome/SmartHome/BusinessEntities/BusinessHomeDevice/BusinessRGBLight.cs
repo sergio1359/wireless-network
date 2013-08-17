@@ -19,25 +19,33 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         [OperationAttribute]
         public static OperationMessage Random(this RGBLight rgbLight, byte seconds)
         {
-            return OperationMessage.ColorWriteRandom((ushort)rgbLight.Id, seconds);
+            ushort destinationAddress = (ushort)(rgbLight.Connector == null ? 0 : rgbLight.Connector.Node.Address);
+
+            return OperationMessage.ColorWriteRandom((ushort)rgbLight.Id, seconds, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage RandomSecuence(this RGBLight rgbLight, Color[] colors, byte seconds)
         {
-            return OperationMessage.ColorRandomSecuenceWrite((ushort)rgbLight.Id, seconds, colors);
+            ushort destinationAddress = (ushort)(rgbLight.Connector == null ? 0 : rgbLight.Connector.Node.Address);
+
+            return OperationMessage.ColorRandomSecuenceWrite((ushort)rgbLight.Id, seconds, colors, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage SortedSecuence(this RGBLight rgbLight, Color[] colors, byte seconds)
         {
-            return OperationMessage.ColorSortedSecuenceWrite((ushort)rgbLight.Id, seconds, colors);
+            ushort destinationAddress = (ushort)(rgbLight.Connector == null ? 0 : rgbLight.Connector.Node.Address);
+
+            return OperationMessage.ColorSortedSecuenceWrite((ushort)rgbLight.Id, seconds, colors, destinationAddress);
         }
 
         [OperationAttribute]
         public static OperationMessage ToColor(this RGBLight rgbLight, Color color, byte seconds)
         {
-            return OperationMessage.ColorWrite((ushort)rgbLight.Id, color, seconds);
+            ushort destinationAddress = (ushort)(rgbLight.Connector == null ? 0 : rgbLight.Connector.Node.Address);
+
+            return OperationMessage.ColorWrite((ushort)rgbLight.Id, color, seconds, destinationAddress);
         }
 
         [OperationAttribute]

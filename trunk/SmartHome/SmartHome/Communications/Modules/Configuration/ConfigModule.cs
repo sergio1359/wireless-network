@@ -11,6 +11,8 @@ using SmartHome.Comunications.Messages;
 using SmartHome.Comunications.Modules;
 using SmartHome.BusinessEntities;
 using System.IO;
+using System.Timers;
+using DataLayer;
 #endregion
 
 namespace SmartHome.Communications.Modules.Config
@@ -18,6 +20,10 @@ namespace SmartHome.Communications.Modules.Config
     public class ConfigModule : ModuleBase
     {
         private Dictionary<ushort, FragmentWriteTransaction> currentWriteTransactions;
+
+        private List<ushort> waitingForChecksum;
+
+        private Timer configUpdateTimer;
 
         /// <summary>
         /// List of the nodes that are receiving a configuration
@@ -34,6 +40,39 @@ namespace SmartHome.Communications.Modules.Config
             :base(communicationManager)
         {
             this.currentWriteTransactions = new Dictionary<ushort, FragmentWriteTransaction>();
+
+            this.waitingForChecksum = new List<ushort>();
+
+            this.configUpdateTimer = new Timer()
+            {
+                Interval = 1000 * 1, // 10 seconds
+                AutoReset = true,
+            };
+            this.configUpdateTimer.Elapsed += configUpdateTimer_Elapsed;
+
+            //this.configUpdateTimer.Start();
+        }
+
+        private async void configUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var nodes = Repositories.NodeRespository.GetAll();
+
+            foreach (Node node in nodes)
+            {
+                if (!node.ConfigChecksum.HasValue)
+                {
+                    ushort nodeAddress = (ushort)node.Address;
+
+                    await this.SendMessage(OperationMessage.ConfigChecksumRead(nodeAddress));
+
+                    if (!this.waitingForChecksum.Contains(nodeAddress))
+                        this.waitingForChecksum.Add(nodeAddress);
+                }
+                else
+                {
+                    //ushort checksumDB =
+                }
+            }
         }
 
         #region Overridden Methods
@@ -50,6 +89,28 @@ namespace SmartHome.Communications.Modules.Config
                     if (!nodeTransaction.ProcessResponse(message).Result)
                     {
                         //TODO: Check the problem
+                    }
+                }
+            }
+            else if (message.OpCode == OperationMessage.OPCodes.ConfigChecksumResponse)
+            {
+                ushort checksum = (ushort)(((ushort)message.Args[1]) << 8 | (ushort)message.Args[0]);
+
+                PrintLog(false, string.Format("CHECKSUM RECEIVED FROM 0x{0:X4}: 0x{1:X4}", message.SourceAddress, checksum));
+
+                if (this.waitingForChecksum.Contains(message.SourceAddress))
+                {
+                    this.waitingForChecksum.Remove(message.SourceAddress);
+
+                    Node node = Repositories.NodeRespository.GetById(message.SourceAddress);
+
+                    if (node == null)
+                    {
+                        PrintLog(true, "Node not present in the DB!");
+                    }
+                    else
+                    {
+                        node.ConfigChecksum = checksum;
                     }
                 }
             }

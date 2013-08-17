@@ -225,6 +225,10 @@ namespace SmartHome.Comunications
         public async Task<bool> SendMessage(OutputHeader message)
         {
             ushort destinationAddress = message.Content.DestinationAddress;
+
+            if (destinationAddress == 0)
+                throw new InvalidOperationException("The destination address can not be zero");
+
             NodeConnection connection;
 
             lock (this)
