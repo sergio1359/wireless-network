@@ -67,6 +67,7 @@
     <Compile Include="Entities\Node.cs" />
     <Compile Include="Entities\Operation.cs" />
     <Compile Include="Entities\Location.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Theme.cs" />
     <Compile Include="Entities\TimeOperation.cs" />
     <Compile Include="Entities\TimeRestriction.cs" />

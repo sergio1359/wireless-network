@@ -33,9 +33,18 @@ namespace SmartHome.BusinessEntities
             return ProductConfiguration.GetBaseConfiguration(node.Base);
         }
 
-        public static SortedDictionary<DateTime, List<Operation>> GetTimeActions(this Node node)
+        public static List<TimeOperation> GetTimeActions(this Node node)
         {
-            throw new NotImplementedException(); //TODO: Implemented
+            List<TimeOperation> timeOperations = new List<TimeOperation>();
+
+            foreach (var item in node.HomeDevices)
+            {
+                timeOperations.AddRange(DataLayer.Repositories.TimeOperationRepository.GetOperationInHomeDevice(item.Id));
+            }
+
+            timeOperations.Sort();
+
+            return timeOperations;
         }
 
         //TOCHECK

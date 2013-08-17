@@ -202,15 +202,13 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
 
-            var timeAct = node.GetTimeActions();
+            var timeActions = node.GetTimeActions();
 
-            foreach (var parValue in timeAct)
+            foreach (var item in timeActions)
             {
-                foreach (var item in parValue.Value)
-                {
-                    result.AddRange(parValue.Key.ToBinaryTime());
-                    result.AddRange(item.ToBinaryOperation());
-                }
+                result.Add(item.MaskWeekDays);
+                result.AddRange(item.Time.ToBinaryTime());
+                result.AddRange(item.Operation.ToBinaryOperation());
             }
 
             return result.ToArray();

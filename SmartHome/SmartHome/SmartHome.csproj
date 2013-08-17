@@ -61,7 +61,7 @@
     <Compile Include="Communications\Modules\Network\PendingNodeInfo.cs" />
     <Compile Include="Communications\Modules\StatusModule.cs" />
     <Compile Include="Communications\Modules\UserModule.cs" />
-    <Compile Include="Products\HomeDeviceProduct.cs" />
+    <Compile Include="BusinessEntities\BusinessProduct.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessRGBLight.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessSwitchButton.cs" />
     <Compile Include="BusinessEntities\BusinessHomeDevice\BusinessTemperatureSensor.cs" />

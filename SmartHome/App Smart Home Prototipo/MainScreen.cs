@@ -11,7 +11,6 @@ namespace App_Smart_Home_Prototipo
     {
         public MainScreen()
         {
-            Task.Factory.StartNew(() => { Services.HomeService.CreateHome(); });
             InitializeComponent();
         }
 

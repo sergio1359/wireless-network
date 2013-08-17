@@ -20,7 +20,7 @@ namespace DataLayer.Entities
 
         public virtual Node Node { get; set; }
 
-        public string NameProduct { get; set; }
+        public virtual Product Product { get; set; }
 
         public virtual ICollection<HomeDevice> HomeDevices { get; set; }
 

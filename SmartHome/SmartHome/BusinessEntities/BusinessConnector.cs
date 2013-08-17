@@ -34,7 +34,7 @@ namespace SmartHome.BusinessEntities
         public static void LinkHomeDevice(this Connector connector, HomeDevice homeDevice)
         {
             connector.HomeDevices = new List<HomeDevice>() { homeDevice };
-            connector.NameProduct = null;
+            connector.Product = null;
         }
 
         /// <summary>
@@ -44,10 +44,14 @@ namespace SmartHome.BusinessEntities
         /// <param name="homeDevices"></param>
         public static void LinkHomeDevice(this Connector connector, Type typeProduct)
         {
-            Product product = Product.GetProduct(typeProduct);
+            BusinessProduct product = BusinessProduct.GetProduct(typeProduct);
             connector.HomeDevices = product.GetInstanceProducts();
 
-            connector.NameProduct = product.GetType().Name;
+            connector.Product = new Product()
+            {
+                TypeProduct = typeProduct.Name,
+                NameProduct = "",
+            };
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace SmartHome.BusinessEntities
         /// <param name="connector"></param>
         public static void UnlinkHomeDevice(this Connector connector)
         {
-            if (connector.NameProduct == null) //no esta conectado a un producto
+            if (connector.Product == null) //no esta conectado a un producto
             {
                 //TODO: Eliminar homeDevices del sistema. Hay que hacer pruebas de esto
             }
@@ -66,7 +70,7 @@ namespace SmartHome.BusinessEntities
             }
 
             connector.HomeDevices.Clear();
-            connector.NameProduct = null;
+            connector.Product = null;
         }
 
         public static bool IsCapable(this Connector connector, HomeDevice homeDevice)
