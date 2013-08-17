@@ -114,11 +114,18 @@ namespace ServiceLayer
 
         #region SchedulerOperation
 
-        //public OperationDTO[] GetScheduler()
-        //{
-        //}
+        public TimeOperationDTO[] GetScheduler()
+        {
+            var timeOps = Repositories.TimeOperationRepository.GetAll();
 
-        //public OperationDTO[] GetScheduler(int idHomeDevice)
+            return Mapper.Map<TimeOperationDTO[]>(timeOps);
+        }
+
+        public void RemoveTimeOperation (int idTimeOperation)
+        {
+            TimeOperation timeOp = Repositories.TimeOperationRepository.GetById(idTimeOperation);
+            Repositories.TimeOperationRepository.Delete(timeOp);
+        }
 
         #endregion
 

@@ -11,7 +11,10 @@ namespace DataLayer
     {
         public TimeOperationRepository(SmartHomeDBContext context) : base(context) { }
 
-
+        public IQueryable<TimeOperation> GetOperationInHomeDevice(int idHomeDevice)
+        {
+            return _Collection.Where(to => to.Operation.DestionationHomeDevice.Id == idHomeDevice);
+        }
 
     }
 }

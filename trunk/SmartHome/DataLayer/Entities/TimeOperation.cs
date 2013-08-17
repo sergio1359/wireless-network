@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entities
 {
-    public class TimeOperation
+    public class TimeOperation : IComparable<TimeOperation>
     {
         [Key]
         public int Id { get; set; }
@@ -19,5 +19,11 @@ namespace DataLayer.Entities
         public byte MaskWeekDays { get; set; }
 
         public virtual Operation Operation { get; set; }
+
+
+        public int CompareTo(TimeOperation other)
+        {
+            return TimeSpan.Compare(this.Time, other.Time);
+        }
     }
 }

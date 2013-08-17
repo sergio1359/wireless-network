@@ -1,15 +1,15 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
-using SmartHome.BusinessEntities;
-using SmartHome.BusinessEntities.BusinessHomeDevice;
+using DataLayer.Entities.HomeDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
 #endregion
 
-namespace DataLayer.Entities.HomeDevices
+namespace SmartHome.BusinessEntities
 {
-    public abstract class Product
+    public abstract class BusinessProduct
     {
         private static Type[] products;
         public static Type[] GetProducts
@@ -17,7 +17,7 @@ namespace DataLayer.Entities.HomeDevices
             get
             {
                 if (products == null)
-                    products = typeof(Product).Assembly.GetTypes().Where(t => t != typeof(Product) && typeof(Product).IsAssignableFrom(t)).ToArray();
+                    products = typeof(BusinessProduct).Assembly.GetTypes().Where(t => t != typeof(BusinessProduct) && typeof(BusinessProduct).IsAssignableFrom(t)).ToArray();
                 return products;
             }
         }
@@ -25,15 +25,15 @@ namespace DataLayer.Entities.HomeDevices
         protected List<Tuple<Type, List<int>>> mapProduct;
         protected ConnectorTypes connectorProduct;
 
-        public Product()
+        public BusinessProduct()
         {
             mapProduct = GetProduct();
             connectorProduct = GetConnectorType();
         }
 
-        public static Product GetProduct(Type productType)
+        public static BusinessProduct GetProduct(Type productType)
         {
-            return (Product)Activator.CreateInstance(productType);
+            return (BusinessProduct)Activator.CreateInstance(productType);
         }
 
         public List<HomeDevice> GetInstanceProducts()
@@ -42,7 +42,7 @@ namespace DataLayer.Entities.HomeDevices
 
             for (int i = 0; i < mapProduct.Count; i++)
             {
-                HomeDevice homeDev = BusinessHomeDevice.CreateHomeDevice(mapProduct[i].Item1.Name);
+                HomeDevice homeDev = BusinessHomeDevice.BusinessHomeDevice.CreateHomeDevice(mapProduct[i].Item1.Name);
                 homeDev.ProductTag = i;
 
                 homeDeviceResult.Add(homeDev);
@@ -62,7 +62,7 @@ namespace DataLayer.Entities.HomeDevices
     }
 
 
-    public class SensorBoard : Product
+    public class SensorBoard : BusinessProduct
     {
         protected override List<Tuple<Type, List<int>>> GetProduct()
         {
@@ -77,7 +77,7 @@ namespace DataLayer.Entities.HomeDevices
         }
     }
 
-    public class TemperatureHumidity : Product
+    public class TemperatureHumidity : BusinessProduct
     {
         protected override List<Tuple<Type, List<int>>> GetProduct()
         {

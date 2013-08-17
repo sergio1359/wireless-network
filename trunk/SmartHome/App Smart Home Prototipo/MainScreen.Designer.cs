@@ -52,10 +52,12 @@
             this.comboBoxMapaZonas = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.scheduler1 = new App_Smart_Home_Prototipo.Controls.Scheduler();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -264,12 +266,23 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.scheduler1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(800, 450);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "Scheduler";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // scheduler1
+            // 
+            this.scheduler1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scheduler1.Location = new System.Drawing.Point(3, 3);
+            this.scheduler1.Name = "scheduler1";
+            this.scheduler1.Size = new System.Drawing.Size(797, 444);
+            this.scheduler1.TabIndex = 0;
             // 
             // MainScreen
             // 
@@ -286,6 +299,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -316,6 +330,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxMapaZonas;
+        private Controls.Scheduler scheduler1;
     }
 }
 
