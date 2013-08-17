@@ -67,5 +67,13 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             OperationMessage op = (OperationMessage)method.Invoke(homeDevice, null);
             //TODO WHEN WE HAVE THE SENDER METHOD
         }
+
+        public static OperationMessage GetAddressableOperation(this HomeDevice homeDevice, OperationMessage message)
+        {
+            if (homeDevice.InUse)
+                message.DestinationAddress = (ushort)homeDevice.Connector.Node.Address;
+
+            return message;
+        }
     }
 }

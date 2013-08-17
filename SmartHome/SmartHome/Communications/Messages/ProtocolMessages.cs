@@ -12,30 +12,26 @@ namespace SmartHome.Comunications.Messages
     public partial class OperationMessage
     {
         #region Private Methods
-        private static OperationMessage BaseMessage(OPCodes opCode)
+        private static OperationMessage BaseMessage(ushort nodeAddress, OPCodes opCode)
         {
-            return BaseMessage(opCode, null);
+            return BaseMessage(nodeAddress, opCode, null);
         }
 
-        private static OperationMessage BaseMessage(OPCodes opCode, ushort homeDeviceAddress)
+        private static OperationMessage BaseMessage(ushort nodeAddress, OPCodes opCode, ushort homeDeviceAddress)
         {
-            return BaseMessage(opCode, homeDeviceAddress.UshortToByte());
+            return BaseMessage(nodeAddress, opCode, homeDeviceAddress.UshortToByte());
         }
 
-        private static OperationMessage BaseMessage(OPCodes opCode, ushort homeDeviceAddress, byte[] args)
+        private static OperationMessage BaseMessage(ushort nodeAddress, OPCodes opCode, ushort homeDeviceAddress, byte[] args)
+        {
+            return BaseMessage(nodeAddress, opCode, homeDeviceAddress.UshortToByte().Concat(args).ToArray());
+        }
+
+        private static OperationMessage BaseMessage(ushort nodeAddress, OPCodes opCode, byte[] args)
         {
             return new OperationMessage()
             {
-                OpCode = opCode,
-                Args = homeDeviceAddress.UshortToByte().Concat(args).ToArray(),
-            };
-
-        } 
-
-        private static OperationMessage BaseMessage(OPCodes opCode, byte[] args)
-        {
-            return new OperationMessage()
-            {
+                DestinationAddress = nodeAddress,
                 OpCode = opCode,
                 Args = args
             };
@@ -44,41 +40,41 @@ namespace SmartHome.Comunications.Messages
         #endregion
 
         #region Public Methods
-        public static OperationMessage Reset()
+        public static OperationMessage Reset(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.Reset);
+            return BaseMessage(destinationAddress, OPCodes.Reset);
         }
 
-        public static OperationMessage FirmwareVersionRead()
+        public static OperationMessage FirmwareVersionRead(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.FirmwareVersionRead);
+            return BaseMessage(destinationAddress, OPCodes.FirmwareVersionRead);
         }
 
-        public static OperationMessage ShieldModelRead()
+        public static OperationMessage ShieldModelRead(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.ShieldModelRead);
+            return BaseMessage(destinationAddress, OPCodes.ShieldModelRead);
         }
 
-        public static OperationMessage BaseModelRead()
+        public static OperationMessage BaseModelRead(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.BaseModelRead);
+            return BaseMessage(destinationAddress, OPCodes.BaseModelRead);
         }
 
-        public static OperationMessage ConfigWrite(byte fragmentTotal, byte fragment, byte length, byte[] content)
+        public static OperationMessage ConfigWrite(byte fragmentTotal, byte fragment, byte length, byte[] content, ushort destinationAddress = 0)
         {
             List<byte> args = new List<byte>();
             args.Add((byte)(fragmentTotal << 4 | (fragment & 0xF)));
             args.Add(length);
             args.AddRange(content);
-            return BaseMessage(OPCodes.ConfigWrite, args.ToArray());
+            return BaseMessage(destinationAddress, OPCodes.ConfigWrite, args.ToArray());
         }
 
-        public static OperationMessage ConfigRead()
+        public static OperationMessage ConfigRead(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.ConfigRead);
+            return BaseMessage(destinationAddress, OPCodes.ConfigRead);
         }
 
-        public static OperationMessage ConfigReadConfirmation(byte fragmentTotal, byte fragment, ConfigWriteStatusCodes statusCode)
+        public static OperationMessage ConfigReadConfirmation(byte fragmentTotal, byte fragment, ConfigWriteStatusCodes statusCode, ushort destinationAddress = 0)
         {
             byte[] args = new byte[]
                 {
@@ -86,31 +82,31 @@ namespace SmartHome.Comunications.Messages
                     (byte)statusCode,
                 };
 
-            return BaseMessage(OPCodes.ConfigReadConfirmation, args);
+            return BaseMessage(destinationAddress, OPCodes.ConfigReadConfirmation, args);
         }
 
-        public static OperationMessage ConfigChecksumRead() 
+        public static OperationMessage ConfigChecksumRead(ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.ConfigChecksumRead); 
+            return BaseMessage(destinationAddress, OPCodes.ConfigChecksumRead); 
         }
 
-        public static OperationMessage MACRead() 
+        public static OperationMessage MACRead(ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.MacRead); 
+            return BaseMessage(destinationAddress, OPCodes.MacRead); 
         }
 
-        public static OperationMessage NextHopRead(ushort nodeAddress)
+        public static OperationMessage NextHopRead(ushort nodeAddress, ushort destinationAddress = 0)
         { 
             byte[] args = nodeAddress.UshortToByte();
-            return BaseMessage(OPCodes.NextHopRead, args); 
+            return BaseMessage(destinationAddress, OPCodes.NextHopRead, args); 
         }
 
-        public static OperationMessage RouteTableRead() 
+        public static OperationMessage RouteTableRead(ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.RouteTableRead); 
+            return BaseMessage(destinationAddress, OPCodes.RouteTableRead); 
         }
 
-        public static OperationMessage RouteTableReadConfirmation(byte fragmentTotal, byte fragment, byte length, ConfigWriteStatusCodes statusCode)
+        public static OperationMessage RouteTableReadConfirmation(byte fragmentTotal, byte fragment, byte length, ConfigWriteStatusCodes statusCode, ushort destinationAddress = 0)
         {
             byte[] args = new byte[]
                 {
@@ -118,20 +114,20 @@ namespace SmartHome.Comunications.Messages
                     (byte)statusCode,
                 };
 
-            return BaseMessage(OPCodes.RouteTableReadConfirmation, args);
+            return BaseMessage(destinationAddress, OPCodes.RouteTableReadConfirmation, args);
         }
 
-        public static OperationMessage PingRequest()
+        public static OperationMessage PingRequest(ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.PingRequest);
+            return BaseMessage(destinationAddress, OPCodes.PingRequest);
         }
 
-        public static OperationMessage JoinRequestResponse(byte[] RSAKey)
+        public static OperationMessage JoinRequestResponse(byte[] RSAKey, ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.JoinRequestResponse, RSAKey);
+            return BaseMessage(destinationAddress, OPCodes.JoinRequestResponse, RSAKey);
         }
 
-        public static OperationMessage JoinAcceptResponse(ushort newAddress, ushort panId, byte channel, string securityKey)
+        public static OperationMessage JoinAcceptResponse(ushort newAddress, ushort panId, byte channel, string securityKey, ushort destinationAddress = 0)
         {
             List<byte> operationArgs = new List<byte>();
             operationArgs.AddRange(BitConverter.GetBytes(newAddress));
@@ -139,11 +135,11 @@ namespace SmartHome.Comunications.Messages
             operationArgs.Add(channel);
             operationArgs.AddRange(Encoding.ASCII.GetBytes(securityKey));
 
-            return BaseMessage(OPCodes.JoinAcceptResponse, operationArgs.ToArray());
+            return BaseMessage(destinationAddress, OPCodes.JoinAcceptResponse, operationArgs.ToArray());
         }
 
 
-        public static OperationMessage DateTimeWrite(DateTime dateTime)
+        public static OperationMessage DateTimeWrite(DateTime dateTime, ushort destinationAddress = 0)
         {
             var dow = (byte)Enum.Parse(typeof(WeekDays), dateTime.DayOfWeek.ToString());
 
@@ -161,40 +157,17 @@ namespace SmartHome.Comunications.Messages
                     (byte)dateTime.Second,
                 };
 
-            return BaseMessage(OPCodes.DateTimeWrite, args);
+            return BaseMessage(destinationAddress, OPCodes.DateTimeWrite, args);
         }
 
-        public static OperationMessage DateTimeRead() 
+        public static OperationMessage DateTimeRead(ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.DateTimeRead); 
+            return BaseMessage(destinationAddress, OPCodes.DateTimeRead); 
         }
 
 
 
-        public static OperationMessage LogicWrite(ushort homeDeviceAddress, LogicWriteValues value, byte seconds) 
-        {
-            byte[] args = new byte[]
-                {
-                    (byte)value,
-                    seconds,
-                };
-
-            return BaseMessage(OPCodes.LogicWrite, homeDeviceAddress, args);
-        }
-
-        public static OperationMessage LogicSwitch(ushort homeDeviceAddress, byte seconds)
-        {
-            return BaseMessage(OPCodes.LogicSwitch, homeDeviceAddress, new byte[] { seconds });
-        }
-
-        public static OperationMessage LogicRead(ushort homeDeviceAddress) 
-        {
-            return BaseMessage(OPCodes.LogicRead, homeDeviceAddress);
-        }
-
-
-
-        public static OperationMessage DimmerWrite(ushort homeDeviceAddress, byte value, byte seconds) 
+        public static OperationMessage LogicWrite(ushort homeDeviceAddress, LogicWriteValues value, byte seconds, ushort destinationAddress = 0) 
         {
             byte[] args = new byte[]
                 {
@@ -202,17 +175,40 @@ namespace SmartHome.Comunications.Messages
                     seconds,
                 };
 
-            return BaseMessage(OPCodes.DimmerWrite, homeDeviceAddress, args);
+            return BaseMessage(destinationAddress, OPCodes.LogicWrite, homeDeviceAddress, args);
         }
 
-        public static OperationMessage DimmerRead(ushort homeDeviceAddress) 
+        public static OperationMessage LogicSwitch(ushort homeDeviceAddress, byte seconds, ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.DimmerRead, homeDeviceAddress);
+            return BaseMessage(destinationAddress, OPCodes.LogicSwitch, homeDeviceAddress, new byte[] { seconds });
+        }
+
+        public static OperationMessage LogicRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
+        {
+            return BaseMessage(destinationAddress, OPCodes.LogicRead, homeDeviceAddress);
         }
 
 
 
-        public static OperationMessage ColorWrite(ushort homeDeviceAddress, Color color, byte seconds)
+        public static OperationMessage DimmerWrite(ushort homeDeviceAddress, byte value, byte seconds, ushort destinationAddress = 0) 
+        {
+            byte[] args = new byte[]
+                {
+                    (byte)value,
+                    seconds,
+                };
+
+            return BaseMessage(destinationAddress, OPCodes.DimmerWrite, homeDeviceAddress, args);
+        }
+
+        public static OperationMessage DimmerRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
+        {
+            return BaseMessage(destinationAddress, OPCodes.DimmerRead, homeDeviceAddress);
+        }
+
+
+
+        public static OperationMessage ColorWrite(ushort homeDeviceAddress, Color color, byte seconds, ushort destinationAddress = 0)
         {
             byte[] args = new byte[]
                 {
@@ -222,62 +218,62 @@ namespace SmartHome.Comunications.Messages
                     seconds
                 };
 
-            return BaseMessage(OPCodes.ColorWrite, homeDeviceAddress, args);
+            return BaseMessage(destinationAddress, OPCodes.ColorWrite, homeDeviceAddress, args);
         }
 
-        public static OperationMessage ColorWriteRandom(ushort homeDeviceAddress, byte seconds) 
+        public static OperationMessage ColorWriteRandom(ushort homeDeviceAddress, byte seconds, ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.ColorWriteRandom, homeDeviceAddress, new byte[] { seconds });
+            return BaseMessage(destinationAddress, OPCodes.ColorWriteRandom, homeDeviceAddress, new byte[] { seconds });
         }
 
-        public static OperationMessage ColorRandomSecuenceWrite(ushort homeDeviceAddress, byte seconds, Color[] colors)
-        {
-            List<byte> args = new List<byte>();
-            args.Add(seconds);
-            args.AddRange(colors.SelectMany(c => new byte[] { c.R, c.G, c.B }));
-
-            return BaseMessage(OPCodes.ColorRandomSecuenceWrite, homeDeviceAddress, args.ToArray());
-        }
-
-        public static OperationMessage ColorSortedSecuenceWrite(ushort homeDeviceAddress, byte seconds, Color[] colors)
+        public static OperationMessage ColorRandomSecuenceWrite(ushort homeDeviceAddress, byte seconds, Color[] colors, ushort destinationAddress = 0)
         {
             List<byte> args = new List<byte>();
             args.Add(seconds);
             args.AddRange(colors.SelectMany(c => new byte[] { c.R, c.G, c.B }));
 
-            return BaseMessage(OPCodes.ColorSortedSecuenceWrite, homeDeviceAddress, args.ToArray());
+            return BaseMessage(destinationAddress, OPCodes.ColorRandomSecuenceWrite, homeDeviceAddress, args.ToArray());
         }
 
-        public static OperationMessage ColorRead(ushort homeDeviceAddress) 
+        public static OperationMessage ColorSortedSecuenceWrite(ushort homeDeviceAddress, byte seconds, Color[] colors, ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.ColorRead, homeDeviceAddress); 
+            List<byte> args = new List<byte>();
+            args.Add(seconds);
+            args.AddRange(colors.SelectMany(c => new byte[] { c.R, c.G, c.B }));
+
+            return BaseMessage(destinationAddress, OPCodes.ColorSortedSecuenceWrite, homeDeviceAddress, args.ToArray());
+        }
+
+        public static OperationMessage ColorRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
+        {
+            return BaseMessage(destinationAddress, OPCodes.ColorRead, homeDeviceAddress); 
         }
 
 
 
-        public static OperationMessage PresenceRead(ushort homeDeviceAddress) 
+        public static OperationMessage PresenceRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.PresenceRead, homeDeviceAddress); 
+            return BaseMessage(destinationAddress, OPCodes.PresenceRead, homeDeviceAddress); 
         }
 
-        public static OperationMessage TemperatureRead(ushort homeDeviceAddress) 
+        public static OperationMessage TemperatureRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.TemperatureRead, homeDeviceAddress);
+            return BaseMessage(destinationAddress, OPCodes.TemperatureRead, homeDeviceAddress);
         }
 
-        public static OperationMessage HumidityRead(ushort homeDeviceAddress)
+        public static OperationMessage HumidityRead(ushort homeDeviceAddress, ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.HumidityRead, homeDeviceAddress); 
+            return BaseMessage(destinationAddress, OPCodes.HumidityRead, homeDeviceAddress); 
         }
 
-        public static OperationMessage PowerRead(ushort homeDeviceAddress) 
+        public static OperationMessage PowerRead(ushort homeDeviceAddress, ushort destinationAddress = 0) 
         {
-            return BaseMessage(OPCodes.PowerRead, homeDeviceAddress); 
+            return BaseMessage(destinationAddress, OPCodes.PowerRead, homeDeviceAddress); 
         }
 
-        public static OperationMessage LuminosityRead(ushort homeDeviceAddress)
+        public static OperationMessage LuminosityRead(ushort homeDeviceAddress, ushort destinationAddress = 0)
         {
-            return BaseMessage(OPCodes.LuminosityRead, homeDeviceAddress); 
+            return BaseMessage(destinationAddress, OPCodes.LuminosityRead, homeDeviceAddress); 
         }
 
         #endregion

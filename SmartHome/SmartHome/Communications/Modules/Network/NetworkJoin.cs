@@ -139,8 +139,7 @@ namespace SmartHome.Communications.Modules.Network
             Random r = new Random();
             r.NextBytes(RSAKey);
 
-            OperationMessage joinResponse = OperationMessage.JoinRequestResponse(RSAKey);
-            joinResponse.DestinationAddress = destinationAddress;
+            OperationMessage joinResponse = OperationMessage.JoinRequestResponse(RSAKey, destinationAddress);
 
             return await this.SendMessage(joinResponse);
         }
@@ -153,8 +152,7 @@ namespace SmartHome.Communications.Modules.Network
                 throw new InvalidOperationException("There is no pending node with the specified MAC Address");
             }
 
-            OperationMessage joinAcceptResponse = OperationMessage.JoinAcceptResponse(newAddress, (ushort)security.PanId, (byte)security.Channel, security.SecurityKey);
-            joinAcceptResponse.DestinationAddress = info.TemporalAddress;
+            OperationMessage joinAcceptResponse = OperationMessage.JoinAcceptResponse(newAddress, (ushort)security.PanId, (byte)security.Channel, security.SecurityKey, info.TemporalAddress);
 
             bool result = await this.SendMessage(joinAcceptResponse);
 
