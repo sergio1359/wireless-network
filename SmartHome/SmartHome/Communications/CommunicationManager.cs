@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using SmartHome.Communications.Modules.Config;
 using SmartHome.Communications.Modules.Network;
+using SmartHome.Communications.Modules.Common;
+using System.Configuration;
 #endregion
 
 namespace SmartHome.Comunications
@@ -83,12 +85,43 @@ namespace SmartHome.Comunications
             //Sort by priority descendent
             this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 
+            this.CheckDependencies();
+
             this.serialManager = new SerialManager();
             this.serialManager.NodeConnectionDetected += this.serialManager_NodeConnectionAdded;
             this.serialManager.NodeConnectionRemoved += this.serialManager_NodeConnectionRemoved;
         }
 
         #region Private Methods
+        private void CheckDependencies()
+        {
+            var loadedModulesTypes = this.modulesList.Select(m => m.GetType());
+
+            foreach (var module in this.modulesList)
+            {
+                var requiredModules = module
+                    .GetType()
+                    .GetFields()
+                    .Where(f => f.GetCustomAttributes(false)
+                        .OfType<RequiredModuleAttribute>()
+                        .Count() > 0);
+
+                foreach (var reqModule in requiredModules)
+                {
+                    var reqModuleType = reqModule.FieldType;
+
+                    if (loadedModulesTypes.Contains(reqModuleType))
+                    {
+                        reqModule.SetValue(module, this.modulesList.First(m => m.GetType() == reqModuleType));
+                    }
+                    else
+                    {
+                        throw new InvalidProgramException("The required module " + reqModuleType.Name + " for " + module.GetType().Name + " is not loaded in the system.");
+                    }
+                }
+            }
+        }
+
         private void serialManager_NodeConnectionAdded(object sender, NodeConnection e)
         {
             if (e.NodeAddress == MASTER_ADDRESS)
@@ -113,18 +146,35 @@ namespace SmartHome.Comunications
             Debug.WriteLine(string.Format("DONGLE NODE 0x{0:X4} ({1}) Disconnected!", e.NodeAddress, e.NodeAddress == MASTER_ADDRESS ? "Master" : "Slave"));
         }
 
-        private void connection_OperationReceived(object sender, InputHeader e)
+        private async void connection_OperationReceived(object sender, InputHeader e)
         {
             NodeConnection connection = (NodeConnection)sender;
 
+            List<Task> taskList = new List<Task>();
+
             //Send Message to the placeHolders
-            foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e, connection.NodeAddress == MASTER_ADDRESS)))
+            foreach (var module in this.modulesList.Where(m => m.Filter.CheckMessage(e, GetOriginType(e, connection))))
             {
-                Task.Factory.StartNew(() =>
+                var moduleTask = new Task(() =>
                     {
                         module.ProcessReceivedMessage(e.Content);
                     });
+                moduleTask.Start();
+
+                taskList.Add(moduleTask);
             }
+
+            await Task.WhenAll(taskList);
+        }
+
+        private Filter.OriginTypes GetOriginType(InputHeader message, NodeConnection connection)
+        {
+            if (connection.NodeAddress == message.Content.SourceAddress)
+                return Filter.OriginTypes.FromNode;
+            else if (connection.NodeAddress == MASTER_ADDRESS)
+                return Filter.OriginTypes.FromMaster;
+            else
+                return Filter.OriginTypes.Any;
         }
 
         private Task<bool> EnqueueMessage(OutputHeader message, NodeConnection connection)
@@ -173,7 +223,7 @@ namespace SmartHome.Comunications
 
                         Task.Factory.StartNew(async () =>
                             {
-                                NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection :this.connectionsInUse[connectionAddress];
+                                NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection : this.connectionsInUse[connectionAddress];
 
                                 var val = await connection.SendMessage(pendingMsg.Message);
 

@@ -20,8 +20,10 @@ using SmartHome.BusinessEntities.BusinessHomeDevice;
 
 namespace SmartHome.Communications.Modules
 {
-    class StatusModule : ModuleBase
+    public class StatusModule : ModuleBase
     {
+        public event EventHandler<HomeDevice> StateRefreshed;
+
         private Timer statusUpdateTimer;
 
         /// <summary>
@@ -138,6 +140,12 @@ namespace SmartHome.Communications.Modules
         #endregion
 
         #region Private Common Methods
+        private void OnStateRefresh(HomeDevice hd)
+        {
+            if (StateRefreshed != null)
+                StateRefreshed(hd, hd);
+        }
+
         private void CallProcessMethod(OperationMessage message, Action<ushort, ushort, int> processMethod)
         {
             ushort deviceAddress = (ushort)(((ushort)message.Args[1]) << 8 | message.Args[0]);
@@ -215,6 +223,8 @@ namespace SmartHome.Communications.Modules
                     rgbHD.Color = color;
                     rgbHD.Mode = modeRGB;
                     rgbHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(rgbHD);
                 }
             }
         }
@@ -235,6 +245,8 @@ namespace SmartHome.Communications.Modules
                 {
                     dimmerHD.Value = value;
                     dimmerHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(dimmerHD);
                 }
             }
         }
@@ -255,6 +267,8 @@ namespace SmartHome.Communications.Modules
                 {
                     tempHD.CelciusTemperature = value;
                     tempHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(tempHD);
                 }
             }
         }
@@ -275,6 +289,8 @@ namespace SmartHome.Communications.Modules
                 {
                     humHD.Humidity = value;
                     humHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(humHD);
                 }
             }
         }
@@ -295,6 +311,8 @@ namespace SmartHome.Communications.Modules
                 {
                     //TODO: Raise Presence Event
                     presenceHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(presenceHD);
                 }
             }
         }
@@ -335,7 +353,11 @@ namespace SmartHome.Communications.Modules
                 }
 
                 if (logicHD != null)
+                {
                     logicHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(logicHD);
+                }
             }
         }
 
@@ -355,6 +377,8 @@ namespace SmartHome.Communications.Modules
                 {
                     powerHD.Consumption = value;
                     powerHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(powerHD);
                 }
             }
         }
@@ -375,6 +399,8 @@ namespace SmartHome.Communications.Modules
                 {
                     luminHD.Luminosity = value;
                     luminHD.LastStatusUpdate = DateTime.Now;
+
+                    OnStateRefresh(luminHD);
                 }
             }
         }

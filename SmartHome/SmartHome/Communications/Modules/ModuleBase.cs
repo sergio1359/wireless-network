@@ -10,6 +10,13 @@ namespace SmartHome.Comunications.Modules
 {
     public class Filter
     {
+        public enum OriginTypes
+        {
+            Any,
+            FromMaster,
+            FromNode,
+        }
+
         /// <summary>
         /// Null is the default value. It means that this variable will not be checked for filtering. 
         /// Otherwise, only message with this property will be received.
@@ -19,15 +26,15 @@ namespace SmartHome.Comunications.Modules
 
         public bool? Routed = null;
 
-        public bool? FromMaster = null;
-
         public int? Endpoint = null;
+
+        public OriginTypes Origin;
 
         public Type OpCodeType;
 
         public byte[] OpCodes;
 
-        public bool CheckMessage(InputHeader message, bool fromMaster)
+        public bool CheckMessage(InputHeader message, OriginTypes origin)
         {
             bool result = true;
 
@@ -35,9 +42,9 @@ namespace SmartHome.Comunications.Modules
 
             //result &= this.Routed == null ? true : this.Routed == message.RoutingEnabled;
 
-            result &= this.FromMaster == null ? true : this.FromMaster == fromMaster;
-
             result &= this.Endpoint == null ? true : this.Endpoint == message.EndPoint;
+
+            result &= this.Origin == OriginTypes.Any ? true : this.Origin == origin;
 
             result &= this.OpCodeType == message.Content.OpCode.GetType();
 
@@ -127,7 +134,7 @@ namespace SmartHome.Comunications.Modules
 
         protected void PrintLog(bool error, string message)
         {
-            Debug.WriteLine(string.Format("[{0}] {1} {2}: {3}", DateTime.Now.ToLongTimeString(), this.GetType(), error ? "ERROR" : "INFO", message));
+            Debug.WriteLine(string.Format("[{0}] {1} {2}: {3}", DateTime.Now.ToLongTimeString(), this.GetType().Name, error ? "ERROR" : "INFO", message));
         }
     }
 }

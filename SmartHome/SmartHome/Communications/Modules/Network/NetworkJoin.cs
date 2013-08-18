@@ -1,4 +1,5 @@
-﻿using SmartHome.Comunications;
+﻿#region Using Statements
+using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
 using SmartHome.Comunications.Modules;
 using SmartHome.Memory;
@@ -9,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities;
+using SmartHome.Communications.Modules.Common; 
+#endregion
 
 namespace SmartHome.Communications.Modules.Network
 {
@@ -111,7 +114,7 @@ namespace SmartHome.Communications.Modules.Network
             return new Filter()
             {
                 Endpoint = Endpoints.APPLICATION_EP,
-                FromMaster = true,
+                Origin = Filter.OriginTypes.FromMaster,
                 OpCodeType = typeof(OperationMessage.OPCodes),
                 OpCodes = new byte[] 
                 { 

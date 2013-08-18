@@ -59,6 +59,7 @@
     <Compile Include="Communications\Modules\Configuration\ConfigModule.cs" />
     <Compile Include="Communications\Modules\Configuration\TransactionStatus.cs" />
     <Compile Include="Communications\Modules\Network\PendingNodeInfo.cs" />
+    <Compile Include="Communications\Modules\Common\RequiredModule.cs" />
     <Compile Include="Communications\Modules\StatusModule.cs" />
     <Compile Include="Communications\Modules\UserModule.cs" />
     <Compile Include="BusinessEntities\BusinessProduct.cs" />

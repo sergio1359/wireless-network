@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Threading;
 using System.IO;
+
 #endregion
 
 namespace SmartHome.Communications.SerialManager
