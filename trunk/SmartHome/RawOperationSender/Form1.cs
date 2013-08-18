@@ -10,6 +10,7 @@ using DataLayer.Entities;
 using SmartHome.Communications.Modules.Network;
 using SmartHome.Communications.Modules.Config;
 using DataLayer;
+using System.Collections.Generic;
 
 namespace RawOperationSender
 {
@@ -39,18 +40,16 @@ namespace RawOperationSender
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var operation = new OperationMessage()
-            {
-                DestinationAddress = 0x4004,
-                OpCode = OperationMessage.OPCodes.MacRead,
-            };
+            var operation = OperationMessage.MACRead(0x4004);
 
             float priotity = 0;
+            List<Task> tasks = new List<Task>();
 
             for (int i = 0; i < 8; i++)
             {
-                Task.Factory.StartNew(async () =>
+                var task = new Task(async () =>
                     {
+                        Debug.WriteLine("Message " + priotity + " enqueued");
                         OutputHeader outputMessage = new OutputHeader(priotity)
                         {
                             SecurityEnabled = true,
@@ -62,7 +61,13 @@ namespace RawOperationSender
                         priotity += 0.1f;
                         Debug.WriteLine(outputMessage.Priority + " Response: " + (await CommunicationManager.Instance.SendMessage(outputMessage)).ToString() + " " + DateTime.Now.Millisecond);
                     });
+
+                task.Start();
+
+                tasks.Add(task);
             }
+
+            await Task.WhenAll(tasks);
         }
 
         private void UIThread(Action code)

@@ -9,9 +9,19 @@ namespace SmartHome.BusinessEntities
 {
     public static class BusinessTheme
     {
-        public static void ExecuteTheme(this Theme theme)
+        public static async void ExecuteTheme(this Theme theme)
         {
-            theme.Operations.ForEach(op => op.Execute());
+            List<Task<bool>> taskList = new List<Task<bool>>();
+
+            foreach (var operation in theme.Operations)
+            {
+                var operationTask = operation.Execute();
+                operationTask.Start();
+
+                taskList.Add(operationTask);
+            }
+
+            await Task.WhenAll(taskList);
         }
     }
 }

@@ -94,27 +94,15 @@ void presenceRead_Handler(OPERATION_HEADER_t* operation_header)
 	if(operation_header->opCode == PresenceRead)
 	{
 		PRESENCE_READ_MESSAGE_t* msg = (PRESENCE_READ_MESSAGE_t*)(operation_header + 1);
+		
 		uint8_t elemIndex = findPresenceElem(msg->deviceID);
-		if(elemIndex != 0xFF)
-		{
-			presenceResponse.header.destinationAddress = operation_header->sourceAddress;
-			presenceResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-			presenceResponse.response.deviceID = msg->deviceID;
-			presenceResponse.response.detected = presen_elems[elemIndex].lastValue;
-			
-			OM_ProccessResponseOperation(&presenceResponse.header);
-		}
-		else
-		{
-			//TODO: SEND ERROR (UNKNOWN SENSOR ADDRESS) USING ERROR RESPONSE INSTEAD
-			
-			presenceResponse.header.destinationAddress = operation_header->sourceAddress;
-			presenceResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-			presenceResponse.response.deviceID = msg->deviceID;
-			presenceResponse.response.detected = 0xFF;
-			
-			OM_ProccessResponseOperation(&presenceResponse.header);
-		}
+		
+		presenceResponse.header.destinationAddress = operation_header->sourceAddress;
+		presenceResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
+		presenceResponse.response.deviceID = msg->deviceID;
+		presenceResponse.response.detected = elemIndex == 0xFF ? 0xFF : presen_elems[elemIndex].lastValue;
+		
+		OM_ProccessResponseOperation(&presenceResponse.header);
 	}else if(operation_header->opCode == PresenceReadResponse)
 	{
 		//TODO: NOTIFICATION
