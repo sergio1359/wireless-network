@@ -126,9 +126,10 @@ namespace ServiceLayer
             zone.Name = nameZone;
             zone.MainView = new View();
             zone.MainView.Name = nameZone;
-            zone = Repositories.ZoneRepository.Insert(zone);
+            zone.Home = Repositories.HomeRespository.GetHome();
+            zone.MainView.Zone = zone;
 
-            return zone.Id;
+            return Repositories.ZoneRepository.Insert(zone).Id;
         }
 
         /// <summary>

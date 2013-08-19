@@ -11,6 +11,11 @@ namespace ServiceLayer.DTO
         public ViewDTO MainView { get; set; }
 
         public ViewDTO[] Views { get; set; }
+
+        public override string ToString()
+        {
+            return "Id: " + Id + " " +Name;
+        }
     }
 
     public class ViewDTO
@@ -20,5 +25,10 @@ namespace ServiceLayer.DTO
         public string Name { get; set; }
 
         public Image ImageMap { get; set; }
+
+        public override string ToString()
+        {
+            return "Id: " + Id + " " + Name;
+        }
     }
 }
