@@ -1,5 +1,5 @@
 ﻿#region Using Statements
-using System.Runtime.Serialization; 
+using System.Runtime.Serialization;
 #endregion
 
 namespace ServiceLayer.DTO
@@ -21,7 +21,7 @@ namespace ServiceLayer.DTO
 
         public override string ToString()
         {
-            return Name;
+            return "ID: " + Id + "  " + Name + "(" + Type + ")";
         }
     }
 }

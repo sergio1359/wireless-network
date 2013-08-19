@@ -16,6 +16,8 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void UpdateZones()
         {
+            textBoxHomeName.Text = Services.HomeService.GetHomeName();
+
             listBoxZones.Items.AddRange(Services.HomeService.GetZones());
 
         }

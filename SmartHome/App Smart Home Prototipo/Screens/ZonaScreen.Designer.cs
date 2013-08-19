@@ -51,7 +51,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxZones = new System.Windows.Forms.ListBox();
             this.buttonRemoveZone = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxHomeName = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
             this.buttonAddZona = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBoxHomeName);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -299,12 +299,12 @@
             this.buttonRemoveZone.UseVisualStyleBackColor = true;
             this.buttonRemoveZone.Click += new System.EventHandler(this.RemoveZones);
             // 
-            // textBox1
+            // textBoxHomeName
             // 
-            this.textBox1.Location = new System.Drawing.Point(53, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(183, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBoxHomeName.Location = new System.Drawing.Point(53, 19);
+            this.textBoxHomeName.Name = "textBoxHomeName";
+            this.textBoxHomeName.Size = new System.Drawing.Size(183, 20);
+            this.textBoxHomeName.TabIndex = 1;
             // 
             // groupBox3
             // 
@@ -405,6 +405,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxHomeName;
     }
 }

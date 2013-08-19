@@ -15,7 +15,7 @@ namespace ServiceLayer
     public class OperationService
     {
         #region Generic Operation
-        
+
         /// <summary>
         /// Elimina una operacion
         /// </summary>
@@ -43,7 +43,7 @@ namespace ServiceLayer
 
             return homeDevice.GetHomeDeviceOperations();
         }
-        
+
         /// <summary>
         /// Devuelve las operaciones programadas en el homeDevice
         /// </summary>
@@ -121,7 +121,27 @@ namespace ServiceLayer
             return Mapper.Map<TimeOperationDTO[]>(timeOps);
         }
 
-        public void RemoveTimeOperation (int idTimeOperation)
+        public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
+        {
+            Operation operationInternal = new Operation()
+            {
+                Args = args,
+                Name = name,
+                OperationName = operation,
+                DestionationHomeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination)
+            };
+
+            TimeOperation timeOperation = new TimeOperation()
+            {
+                MaskWeekDays = weekDays,
+                Time = time,
+                Operation = operationInternal
+            };
+
+            return Repositories.TimeOperationRepository.Insert(timeOperation).Id;
+        }
+
+        public void RemoveTimeOperation(int idTimeOperation)
         {
             TimeOperation timeOp = Repositories.TimeOperationRepository.GetById(idTimeOperation);
             Repositories.TimeOperationRepository.Delete(timeOp);
