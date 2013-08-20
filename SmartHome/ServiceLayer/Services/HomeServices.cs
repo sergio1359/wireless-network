@@ -5,6 +5,7 @@ using DataLayer.Entities;
 using ServiceLayer.DTO;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 #endregion
 
@@ -122,14 +123,27 @@ namespace ServiceLayer
         /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
-            Zone zone = new Zone();
-            zone.Name = nameZone;
-            zone.MainView = new View();
-            zone.MainView.Name = nameZone;
-            zone.Home = Repositories.HomeRespository.GetHome();
-            zone.MainView.Zone = zone;
+            Zone zone = new Zone()
+            {
+                Name = nameZone,
+                Home = Repositories.HomeRespository.GetHome(),
+            };
 
-            return Repositories.ZoneRepository.Insert(zone).Id;
+            zone = Repositories.ZoneRepository.Insert(zone);
+
+            View view = new View()
+            {
+                Name = nameZone,
+                Zone = zone
+            };
+
+            Repositories.ViewRepository.Insert(view);
+
+            zone.MainView = view;
+
+            Repositories.SaveChanges();
+
+            return zone.Id;
         }
 
         /// <summary>
@@ -154,36 +168,32 @@ namespace ServiceLayer
             zone.MainView.Name = newName;
 
             Repositories.SaveChanges();
-        } 
-
-        /// <summary>
-        /// Add a View in a concrete Zone at Home
-        /// </summary>
-        /// <param name="idZone">Identification of the Zone</param>
-        /// <param name="nameView">Name of the View</param>
-        /// <returns>Return the identification of the new View</returns>
-        public int AddView(int idZone, string nameView)
-        {
-            View view = new View();
-            view.Name = nameView;
-
-            Zone zone = Repositories.ZoneRepository.GetById(idZone);
-            zone.Views.Add(view);
-
-            Repositories.SaveChanges();
-
-            return Repositories.ViewRepository.GetAll().AsEnumerable().Last().Id;
         }
 
-        /// <summary>
-        /// Remove a concrete View
-        /// </summary>
-        /// <param name="idView"></param>
-        public void RemoveView(int idView)
+        #endregion
+
+        #region Views
+        public byte[] GetViewImage(int idView)
         {
-            View view = Repositories.ViewRepository.GetById(idView);
-            if(view != null)
-                Repositories.ViewRepository.Delete(view);
+            var view = Repositories.ViewRepository.GetById(idView);
+
+            return view.ImageMap;
+        }
+
+        public void SetViewImage(int idView, byte[] newImage)
+        {
+            var view = Repositories.ViewRepository.GetById(idView);
+
+            view.ImageMap = newImage;
+
+            Repositories.SaveChanges();
+        }
+
+        public string GetNameView(int idView)
+        {
+            var view = Repositories.ViewRepository.GetById(idView);
+
+            return view.Name;
         }
 
         /// <summary>
@@ -195,10 +205,46 @@ namespace ServiceLayer
         {
             var view = Repositories.ViewRepository.GetById(idView);
 
-            if (view.Id == view.Zone.MainView.Id) //Si es el MainView
+            if (view.Id == view.Zone.MainView.Id)
                 view.Zone.Name = newName;
 
             view.Name = newName;
+
+            Repositories.SaveChanges();
+        }
+
+        /// <summary>
+        /// Add a View in a concrete Zone at Home
+        /// </summary>
+        /// <param name="idZone">Identification of the Zone</param>
+        /// <param name="nameView">Name of the View</param>
+        /// <returns>Return the identification of the new View</returns>
+        public int AddView(int idZone, string nameView)
+        {
+            Zone zone = Repositories.ZoneRepository.GetById(idZone);
+            View view = new View()
+            {
+                Name = nameView,
+                Zone = zone,
+            };
+            view = Repositories.ViewRepository.Insert(view);
+
+            zone.Views.Add(view);
+
+            Repositories.SaveChanges();
+
+            return view.Id;
+        }
+
+        /// <summary>
+        /// Remove a concrete View
+        /// </summary>
+        /// <param name="idView"></param>
+        public void RemoveView(int idView)
+        {
+            View view = Repositories.ViewRepository.GetById(idView);
+            if (view != null)
+                Repositories.ViewRepository.Delete(view);
         }
 
         #endregion

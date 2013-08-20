@@ -57,6 +57,7 @@
             this.buttonAddZona = new System.Windows.Forms.Button();
             this.textBoxNewNameZona = new System.Windows.Forms.TextBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -124,6 +125,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Cambiar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.ChangeViewName);
             // 
             // buttonChangeImageView
             // 
@@ -133,6 +135,7 @@
             this.buttonChangeImageView.TabIndex = 2;
             this.buttonChangeImageView.Text = "Cambiar";
             this.buttonChangeImageView.UseVisualStyleBackColor = true;
+            this.buttonChangeImageView.Click += new System.EventHandler(this.ChangeViewImage);
             // 
             // button1
             // 
@@ -142,6 +145,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Cambiar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.ChangeZoneName);
             // 
             // buttonChangeImage
             // 
@@ -151,6 +155,7 @@
             this.buttonChangeImage.TabIndex = 2;
             this.buttonChangeImage.Text = "Cambiar";
             this.buttonChangeImage.UseVisualStyleBackColor = true;
+            this.buttonChangeImage.Click += new System.EventHandler(this.ChangeImageZone);
             // 
             // buttonRemoveView
             // 
@@ -206,6 +211,7 @@
             this.listBoxViews.Name = "listBoxViews";
             this.listBoxViews.Size = new System.Drawing.Size(221, 95);
             this.listBoxViews.TabIndex = 10;
+            this.listBoxViews.SelectedIndexChanged += new System.EventHandler(this.LoadView);
             // 
             // label3
             // 
@@ -256,7 +262,6 @@
             this.textBoxNameNode.Name = "textBoxNameNode";
             this.textBoxNameNode.Size = new System.Drawing.Size(183, 20);
             this.textBoxNameNode.TabIndex = 1;
-            this.textBoxNameNode.TextChanged += new System.EventHandler(this.ChangeZoneName);
             // 
             // button3
             // 
@@ -266,7 +271,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Cambiar";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.ChangeHomeName);
             // 
             // groupBox4
             // 
@@ -286,7 +291,7 @@
             this.listBoxZones.Name = "listBoxZones";
             this.listBoxZones.Size = new System.Drawing.Size(224, 121);
             this.listBoxZones.TabIndex = 6;
-            this.listBoxZones.Click += new System.EventHandler(this.LoadZone);
+            this.listBoxZones.SelectedIndexChanged += new System.EventHandler(this.LoadZone);
             // 
             // buttonRemoveZone
             // 
@@ -354,6 +359,10 @@
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "Open Image File";
+            // 
             // ZonaScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,5 +415,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBoxHomeName;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

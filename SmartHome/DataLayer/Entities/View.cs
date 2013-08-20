@@ -15,6 +15,6 @@ namespace DataLayer.Entities
         public byte[] ImageMap { get; set; }
 
         [Required]
-        public virtual Zone Zone { get; set; }
+        public virtual Zone Zone { get; set; } //Se generan dos zones (uno para el mainView y el otro para apuntar a la lista de Views)
     }
 }
