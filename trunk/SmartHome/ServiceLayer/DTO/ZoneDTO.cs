@@ -24,7 +24,7 @@ namespace ServiceLayer.DTO
 
         public string Name { get; set; }
 
-        public Image ImageMap { get; set; }
+        public byte[] ImageMap { get; set; }
 
         public override string ToString()
         {

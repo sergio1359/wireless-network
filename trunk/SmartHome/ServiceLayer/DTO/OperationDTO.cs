@@ -19,7 +19,7 @@ namespace ServiceLayer.DTO
         public string NameOperation { get; set; }
 
         [DataMember]
-        public OperationParams[] Params { get; set; }
+        public OperationParamsDTO[] Params { get; set; }
 
         [DataMember]
         public TimeRestrictionDTO[] TimeRestrictions { get; set; }
@@ -53,7 +53,7 @@ namespace ServiceLayer.DTO
     }
 
     [DataContract]
-    public class OperationParams
+    public class OperationParamsDTO
     {
         [DataMember]
         public string Type { get; set; }

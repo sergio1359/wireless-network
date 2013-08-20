@@ -49,6 +49,8 @@ namespace ServiceLayer.DTO
             Mapper.CreateMap<Zone, ZoneDTO>()
                 .ForMember(t => t.Name, f => f.MapFrom(z => z.Name));
 
+            Mapper.CreateMap<View, ViewDTO>();
+
             Mapper.CreateMap<TimeOperation, TimeOperationDTO>();
         }
     }

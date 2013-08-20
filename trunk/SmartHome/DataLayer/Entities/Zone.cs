@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations; 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; 
 #endregion
 
 namespace DataLayer.Entities
@@ -12,7 +13,7 @@ namespace DataLayer.Entities
 
         public string Name { get; set; }
 
-        public View MainView { get; set; }
+        public virtual View MainView { get; set; }
 
         [Required]
         public virtual Home Home { get; set; }

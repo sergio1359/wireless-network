@@ -40,9 +40,6 @@
             this.configurarHogarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.configuracionDeOperacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configuracionDeThemesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configuracionDePlanificadorDeTareasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.otrasConfiguracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -50,7 +47,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxMapaZonas = new System.Windows.Forms.ComboBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.scheduler1 = new App_Smart_Home_Prototipo.Controls.Scheduler();
             this.toolStrip1.SuspendLayout();
@@ -142,10 +138,7 @@
             // 
             this.toolStripDropDownButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configuracionDeOperacionesToolStripMenuItem,
-            this.configuracionDeThemesToolStripMenuItem,
-            this.configuracionDePlanificadorDeTareasToolStripMenuItem,
-            this.otrasConfiguracionesToolStripMenuItem});
+            this.configuracionDeOperacionesToolStripMenuItem});
             this.toolStripDropDownButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton3.Image")));
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
@@ -155,27 +148,9 @@
             // configuracionDeOperacionesToolStripMenuItem
             // 
             this.configuracionDeOperacionesToolStripMenuItem.Name = "configuracionDeOperacionesToolStripMenuItem";
-            this.configuracionDeOperacionesToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
+            this.configuracionDeOperacionesToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.configuracionDeOperacionesToolStripMenuItem.Text = "Configuracion de Operaciones";
             this.configuracionDeOperacionesToolStripMenuItem.Click += new System.EventHandler(this.OpenConfigOperation);
-            // 
-            // configuracionDeThemesToolStripMenuItem
-            // 
-            this.configuracionDeThemesToolStripMenuItem.Name = "configuracionDeThemesToolStripMenuItem";
-            this.configuracionDeThemesToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.configuracionDeThemesToolStripMenuItem.Text = "Configuracion de Themes";
-            // 
-            // configuracionDePlanificadorDeTareasToolStripMenuItem
-            // 
-            this.configuracionDePlanificadorDeTareasToolStripMenuItem.Name = "configuracionDePlanificadorDeTareasToolStripMenuItem";
-            this.configuracionDePlanificadorDeTareasToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.configuracionDePlanificadorDeTareasToolStripMenuItem.Text = "Configuracion de Planificador de tareas";
-            // 
-            // otrasConfiguracionesToolStripMenuItem
-            // 
-            this.otrasConfiguracionesToolStripMenuItem.Name = "otrasConfiguracionesToolStripMenuItem";
-            this.otrasConfiguracionesToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.otrasConfiguracionesToolStripMenuItem.Text = "Otras configuraciones";
             // 
             // tabControl1
             // 
@@ -183,7 +158,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 28);
             this.tabControl1.Name = "tabControl1";
@@ -255,15 +229,6 @@
             this.comboBoxMapaZonas.Size = new System.Drawing.Size(391, 21);
             this.comboBoxMapaZonas.TabIndex = 1;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(800, 450);
-            this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "Themer";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.scheduler1);
@@ -318,12 +283,8 @@
         private System.Windows.Forms.ToolStripMenuItem configurarHogarToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem configuracionDeOperacionesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configuracionDeThemesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configuracionDePlanificadorDeTareasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otrasConfiguracionesToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ComboBox comboBoxMapaVistas;

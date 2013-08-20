@@ -134,8 +134,5 @@ namespace DataLayer
         {
             context = new SmartHomeDBContext();
         }
-
-
-        public static Entities.Connector HomeDevice { get; set; }
     }
 }
