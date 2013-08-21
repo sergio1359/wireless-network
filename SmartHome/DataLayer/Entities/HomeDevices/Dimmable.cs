@@ -1,6 +1,8 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using DataLayer.Entities.HomeDevices.Status;
+using System;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -18,35 +20,30 @@ namespace DataLayer.Entities.HomeDevices
         public DimmableTypes Type { get; set; }
 
         [NotMapped]
-        public int? Value
+        public float? Value
         {
             get
             {
-                return this.value;
+                return this.ReadProperty<float>("Value");
             }
             set
             {
-                this.LastValue = this.value.Value;
-                this.value = value;
+                if (value.HasValue)
+                    value = Math.Min(1f, Math.Max(0f, value.Value));
+
+                this.StoreProperty("LastValue", this.Value);
+                this.StoreProperty("Value", value);
             }
         }
 
         [NotMapped]
-        public float? PercentageValue
+        public float? LastValue
         {
             get
             {
-                if (this.value.HasValue)
-                    return (this.value / 255f) * 100f;
-                else
-                    return null;
+                return this.ReadProperty<float>("LastValue");
             }
         }
-
-        [NotMapped]
-        public int LastValue { get; private set; }
-
-        private int? value;
 
         public Dimmable()
             : base()

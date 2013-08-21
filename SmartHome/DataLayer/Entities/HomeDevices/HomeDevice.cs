@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System;
+using DataLayer.Entities.HomeDevices.Status;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -33,9 +34,18 @@ namespace DataLayer.Entities.HomeDevices
 
         private static string[] homeDeviceTypes = null;
 
-        //Properties
         [NotMapped]
-        public DateTime? LastStatusUpdate { get; set; }
+        public DateTime? LastStatusUpdate 
+        {
+            get
+            {
+                return this.ReadProperty<DateTime>("LastStatusUpdate");
+            }
+            set
+            {
+                this.StoreProperty("LastStatusUpdate", value);
+            }
+        }
 
         [NotMapped]
         public static string[] HomeDeviceTypes
@@ -43,7 +53,10 @@ namespace DataLayer.Entities.HomeDevices
             get
             {
                 if (homeDeviceTypes == null)
-                    homeDeviceTypes = typeof(HomeDevice).Assembly.GetTypes().Where(t => t != typeof(HomeDevice) && typeof(HomeDevice).IsAssignableFrom(t)).Select(t => t.Name).ToArray();
+                    homeDeviceTypes = typeof(HomeDevice).Assembly.GetTypes()
+                                                                .Where(t => t != typeof(HomeDevice) && typeof(HomeDevice).IsAssignableFrom(t))
+                                                                .Select(t => t.Name)
+                                                                .ToArray();
 
                 return homeDeviceTypes;
             }
@@ -67,7 +80,7 @@ namespace DataLayer.Entities.HomeDevices
             }
         }
 
-        public HomeDevice() 
+        public HomeDevice()
         {
             this.Location = new List<Location>();
             this.Operations = new List<Operation>();
