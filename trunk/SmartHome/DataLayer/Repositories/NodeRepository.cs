@@ -19,6 +19,11 @@ namespace DataLayer
             return this._Collection.FirstOrDefault(n => n.Mac == macAddress);
         }
 
+        public Node GetByNetworkAddress(int nodeAddress)
+        {
+            return this._Collection.FirstOrDefault(n => n.Address == nodeAddress);
+        }
+
         public int GetNewAddress()
         {
             var existingAddress = this._Collection.Select(n => n.Address);

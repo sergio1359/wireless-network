@@ -49,12 +49,12 @@ namespace SmartHome.Communications.Modules.Config
 
             this.configUpdateTimer = new Timer()
             {
-                Interval = 1000 * 1,    // 10 seconds
+                Interval = 1000 * 1,    // 30 seconds
                 AutoReset = false,      
             };
             this.configUpdateTimer.Elapsed += configUpdateTimer_Elapsed;
 
-            this.configUpdateTimer.Start();
+            //this.configUpdateTimer.Start();
         }
 
         private async void configUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -95,7 +95,7 @@ namespace SmartHome.Communications.Modules.Config
                     }
                     else if (nodeTransaction.IsCompleted)
                     {
-                        Node updatedNode = Repositories.NodeRespository.GetById(nodeTransaction.DestinationAddress);
+                        Node updatedNode = Repositories.NodeRespository.GetByNetworkAddress(nodeTransaction.DestinationAddress);
                         //TODO: Update the new Checksum
                         //updatedNode.ConfigChecksum = checksum;
                     }
@@ -111,7 +111,7 @@ namespace SmartHome.Communications.Modules.Config
                 {
                     this.waitingForChecksum.Remove(message.SourceAddress);
 
-                    Node node = Repositories.NodeRespository.GetById(message.SourceAddress);
+                    Node node = Repositories.NodeRespository.GetByNetworkAddress(message.SourceAddress);
 
                     if (node == null)
                     {
