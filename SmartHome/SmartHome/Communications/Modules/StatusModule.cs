@@ -15,7 +15,6 @@ using SmartHome.Comunications.Messages;
 using SmartHome.Comunications.Modules;
 using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
-
 #endregion
 
 namespace SmartHome.Communications.Modules

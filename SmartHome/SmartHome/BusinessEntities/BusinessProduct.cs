@@ -22,7 +22,7 @@ namespace SmartHome.BusinessEntities
             }
         }
 
-        protected List<Tuple<Type, List<int>>> mapProduct;
+        protected List<Tuple<Type, int[]>> mapProduct;
         protected ConnectorTypes connectorProduct;
 
         public BusinessProduct()
@@ -51,12 +51,12 @@ namespace SmartHome.BusinessEntities
             return homeDeviceResult;
         }
 
-        public List<int> GetPinPortMap(int tagProduct)
+        public int[] GetPinPortMap(int tagProduct)
         {
             return mapProduct[tagProduct].Item2;
         }
 
-        protected abstract List<Tuple<Type, List<int>>> GetProduct();
+        protected abstract List<Tuple<Type, int[]>> GetProduct();
 
         protected abstract ConnectorTypes GetConnectorType();
     }
@@ -64,10 +64,10 @@ namespace SmartHome.BusinessEntities
 
     public class SensorBoard : BusinessProduct
     {
-        protected override List<Tuple<Type, List<int>>> GetProduct()
+        protected override List<Tuple<Type, int[]>> GetProduct()
         {
-            List<Tuple<Type, List<int>>> result = new List<Tuple<Type, List<int>>>();
-            result.Add(Tuple.Create(typeof(Button), new List<int>() { 1 }));
+            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
+            result.Add(Tuple.Create(typeof(Button), new int[]{ 1 }));
             return result;
         }
 
@@ -79,11 +79,11 @@ namespace SmartHome.BusinessEntities
 
     public class TemperatureHumidity : BusinessProduct
     {
-        protected override List<Tuple<Type, List<int>>> GetProduct()
+        protected override List<Tuple<Type, int[]>> GetProduct()
         {
-            List<Tuple<Type, List<int>>> result = new List<Tuple<Type, List<int>>>();
-            result.Add(Tuple.Create(typeof(TemperatureSensor), new List<int>() { 0 }));
-            result.Add(Tuple.Create(typeof(HumiditySensor), new List<int>() { 0 }));
+            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
+            result.Add(Tuple.Create(typeof(TemperatureSensor), new int[] { 0 }));
+            result.Add(Tuple.Create(typeof(HumiditySensor), new int[] { 0 }));
             return result;
         }
 

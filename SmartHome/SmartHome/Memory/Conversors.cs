@@ -16,10 +16,9 @@ namespace SmartHome.Memory
         {
             StringBuilder result = new StringBuilder();
 
-            result.AppendFormat("{0:X2}", macAddress[0]);
-            foreach (byte b in macAddress.Skip(1))
+            foreach (byte b in macAddress)
             {
-                result.AppendFormat("-{0:X2}", b);
+                result.AppendFormat("{0:X2}", b);
             }
 
             return result.ToString();
@@ -27,16 +26,10 @@ namespace SmartHome.Memory
 
         public static byte[] ToBinaryMac(this string macAddress)
         {
-            var macSplit = macAddress.Split('-');
-
-            byte[] result = new byte[macSplit.Length];
-
-            for (int i = 0; i < macSplit.Length; i++)
-            {
-                result[i] = Byte.Parse(macSplit[i]);
-            }
-
-            return result;
+            return Enumerable.Range(0, macAddress.Length)
+                     .Where(x => x % 2 == 0)
+                     .Select(x => Convert.ToByte(macAddress.Substring(x, 2), 16))
+                     .ToArray();
         }
 
         /// <summary>

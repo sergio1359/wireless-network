@@ -88,7 +88,7 @@ namespace ServiceLayer
                 {
                     node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
                     node.Mac = info.MacAddress;
-                    node.Address = info.TemporalAddress;
+                    node.Address = Repositories.NodeRespository.GetNewAddress();
 
                     node = Repositories.NodeRespository.Insert(node);
                 }

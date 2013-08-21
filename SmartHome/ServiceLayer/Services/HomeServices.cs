@@ -173,6 +173,12 @@ namespace ServiceLayer
         #endregion
 
         #region Views
+        public ViewDTO[] GetViews(int idZone)
+        {
+            var zone = Repositories.ZoneRepository.GetById(idZone);
+            return Mapper.Map<ViewDTO[]>(zone.Views);
+        }
+
         public byte[] GetViewImage(int idView)
         {
             var view = Repositories.ViewRepository.GetById(idView);

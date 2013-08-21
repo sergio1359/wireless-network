@@ -19,5 +19,17 @@ namespace DataLayer
             return this._Collection.FirstOrDefault(n => n.Mac == macAddress);
         }
 
+        public int GetNewAddress()
+        {
+            var existingAddress = this._Collection.Select(n => n.Address);
+
+            for (int i = 2; i < 0xFFFF; i++)
+            {
+                if (!existingAddress.Contains(i))
+                    return i;
+            }
+
+            throw new IndexOutOfRangeException("A valid address can't be found");
+        }
     }
 }
