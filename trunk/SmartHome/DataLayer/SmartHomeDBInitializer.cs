@@ -8,7 +8,7 @@ using DataLayer.Entities;
 
 namespace DataLayer
 {
-    public class SmartHomeDBInitializer : DropCreateDatabaseIfModelChanges<SmartHomeDBContext>
+    public class SmartHomeDBInitializer : DropCreateDatabaseAlways<SmartHomeDBContext>//DropCreateDatabaseIfModelChanges<SmartHomeDBContext>
     {
         protected override void Seed(SmartHomeDBContext context)
         {
