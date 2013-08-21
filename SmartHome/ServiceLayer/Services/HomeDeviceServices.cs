@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using AutoMapper;
 using DataLayer;
+using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using ServiceLayer.DTO;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
@@ -47,10 +48,11 @@ namespace ServiceLayer
         {
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
+            if (homeDevice == null)
+                return;
+
             if (homeDevice.Connector != null)
-            {
                 Services.NodeService.UnlinkHomeDevice(idHomeDevice);
-            }
 
             Repositories.HomeDeviceRespository.Delete(homeDevice);
         }
@@ -63,6 +65,9 @@ namespace ServiceLayer
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                return;
 
             homeDevice.Name = newName;
 
@@ -78,12 +83,23 @@ namespace ServiceLayer
         /// <param name="y">Relative position 0 to 1 of the X axis</param>
         public void UpdateLocation(int idLocation, float x, float y)
         {
-            throw new NotImplementedException();
+            Location location = Repositories.LocationRepository.GetById(idLocation);
+
+            if (location == null)
+                return;
+
+            location.X = x;
+            location.Y = y;
+
+            Repositories.SaveChanges();
         }
 
-        public LocationDTO[] GetHomeDevicePosition(int idHomeDevice)
+        public LocationDTO[] GetHomeDeviceLocations(int idHomeDevice)
         {
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                return null;
 
             return Mapper.Map<LocationDTO[]>(homeDevice.Location);
         }
@@ -112,11 +128,14 @@ namespace ServiceLayer
         /// <summary>
         /// Return connected HomeDevice in a View of the of the system
         /// </summary>
-        /// <param name="idLocation"></param>
+        /// <param name="idView"></param>
         /// <returns></returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idLocation)
+        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView)
         {
-            var homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.Id == idLocation));
+            if (Repositories.ViewRepository.GetById(idView) == null)
+                return null;
+
+            var homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
 
             return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
@@ -124,24 +143,24 @@ namespace ServiceLayer
         /// <summary>
         /// Return the HomeDevices connected of a concrete zone and type
         /// </summary>
-        /// <param name="idLocation">Identificator of the localization</param>
+        /// <param name="idView">Identificator of the localization</param>
         /// <param name="homeDeviceType">List of types of the HomeDevices</param>
         /// <returns>Return Dictionary with ID, Name and type</returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idLocation, List<string> homeDeviceTypes)
+        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView, List<string> homeDeviceTypes)
         {
-            return GetHomeDevices(idLocation).Where(hd => homeDeviceTypes.Contains(hd.Type));
+            return GetHomeDevices(idView).Where(hd => homeDeviceTypes.Contains(hd.Type));
         }
 
         /// <summary>
         /// Return the HomeDevices connected of a concrete zone, a list of types and if are connected or not.
         /// </summary>
-        /// <param name="idLocation"></param>
+        /// <param name="idView"></param>
         /// <param name="homeDeviceTypes"></param>
         /// <param name="connected"></param>
         /// <returns></returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idLocation, List<string> homeDeviceTypes, bool connected)
+        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView, List<string> homeDeviceTypes, bool connected)
         {
-            return GetHomeDevices(idLocation, homeDeviceTypes).Where(hd => hd.InUse == connected);
+            return GetHomeDevices(idView, homeDeviceTypes).Where(hd => hd.InUse == connected);
         }
 
     }

@@ -28,15 +28,19 @@ namespace ServiceLayer
         /// <returns>0 == OK, 
         /// 1 == el conector estaba ya ocupado por un home Device
         /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo
-        /// 3 == el homeDevice no es compatible con el conector</returns>
+        /// 3 == el homeDevice no es compatible con el conector
+        /// 4 == el connector o el homeDevice no existe</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
             Connector connector = Repositories.ConnectorRepository.GetById(idConnector);
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
+            if (connector == null || homeDevice == null)
+                return 4;
+
             if (connector.InUse)
                 return 1;
-            
+
             if (homeDevice.InUse)
                 return 2;
 
@@ -52,6 +56,10 @@ namespace ServiceLayer
         public void UnlinkHomeDevice(int idHomeDevice)
         {
             HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                return;
+
             homeDevice.Connector.UnlinkHomeDevice();
         }
 
@@ -102,23 +110,18 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Deny a MAC in the system
-        /// </summary>
-        /// <param name="MAC"></param>
-        public void DenyPendingNode(string MAC)
-        {
-            throw new NotImplementedException();
-            //VICTOR
-        }
-
-        /// <summary>
         /// Return the Connector of the Node
         /// </summary>
         /// <param name="node"></param>
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors;
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return null;
+
+            var connectors = node.Connectors;
 
             return Mapper.Map<ConnectorDTO[]>(connectors);
         }
@@ -131,8 +134,13 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors;
-            var homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            Node node = Repositories.NodeRespository.GetById(idNode);
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (node == null || homeDevice == null)
+                return null;
+
+            var connectors = node.Connectors;
 
             var connectorsResult = connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
 
@@ -141,12 +149,21 @@ namespace ServiceLayer
 
         public string GetNameNode(int idNode)
         {
-            return Repositories.NodeRespository.GetById(idNode).Name;            
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return null;
+
+            return node.Name;
         }
 
         public void SetNameNode(int idNode, string newName)
         {
-            var node = Repositories.NodeRespository.GetById(idNode);
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return;
+
             node.Name = newName;
 
             Repositories.SaveChanges();
@@ -154,38 +171,34 @@ namespace ServiceLayer
 
         public int GetAddressNode(int idNode)
         {
-            return Repositories.NodeRespository.GetById(idNode).Address;
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return -1;
+
+            return node.Address;
         }
 
         public void SetAddressNode(int idNode, ushort newAddress)
         {
-            var node = Repositories.NodeRespository.GetById(idNode);
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return;
+
             node.Address = newAddress;
 
             Repositories.SaveChanges();
         }
 
-        public void UpdatePosition(int idLocation, float x, float y)
-        {
-            throw new NotImplementedException();
-        }
-
         public LocationDTO GetNodePosition(int idNode)
         {
-            var location = Repositories.NodeRespository.GetById(idNode).Location;
-            return Mapper.Map<LocationDTO>(location);
-        }
+            Node node = Repositories.NodeRespository.GetById(idNode);
 
-        /// <summary>
-        /// Devuelve el id del conector, su nombre, tipo
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public ConnectorDTO[] GetFreeConnectors(int idNode)
-        {
-            var connectors = Repositories.NodeRespository.GetById(idNode).Connectors.Where(c => c.InUse == false);
+            if (node == null)
+                return null;
 
-            return Mapper.Map<ConnectorDTO[]>(connectors);
+            return Mapper.Map<LocationDTO>(node.Location);
         }
 
         public NodeDTO[] GetNodes()
@@ -196,6 +209,9 @@ namespace ServiceLayer
 
         public NodeDTO[] GetNodes(int idZone)
         {
+            if (Repositories.ZoneRepository.GetById(idZone) == null)
+                return null;
+
             var nodes = Repositories.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
             return Mapper.Map<NodeDTO[]>(nodes);
         }

@@ -23,6 +23,7 @@ namespace DataLayer
         private static LogRepository logRepository;
         private static ConnectorRepository connectorRepository;
         private static OperationRepository operationRepository;
+        private static LocationRepository locationRepository;
 
         public static NodeRepository NodeRespository
         {
@@ -34,6 +35,15 @@ namespace DataLayer
             }
         }
 
+        public static LocationRepository LocationRepository
+        {
+            get
+            {
+                if (locationRepository == null)
+                    locationRepository = new LocationRepository(context);
+                return locationRepository;
+            }
+        }
         
         public static HomeDeviceRepository HomeDeviceRespository
         {
