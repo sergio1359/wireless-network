@@ -19,6 +19,8 @@ namespace DataLayer.Entities.HomeDevices
             : base()
         {
             base.Operations = new List<Operation>();
+
+            base.ConnectorCapable = Enums.ConnectorTypes.LogicInput;
         }
     }
 }

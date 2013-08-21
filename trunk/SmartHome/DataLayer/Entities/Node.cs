@@ -26,7 +26,7 @@ namespace DataLayer.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(6), MinLength(6, ErrorMessage = "Mac must have 6 characters length")]
+        [MaxLength(12), MinLength(12, ErrorMessage = "Mac must have 12 characters length")]
         public string Mac { get; set; }
 
         public string Name { get; set; }

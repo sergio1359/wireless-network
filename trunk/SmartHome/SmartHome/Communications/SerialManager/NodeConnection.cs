@@ -359,7 +359,7 @@ namespace SmartHome.Communications.SerialManager
             this.pendingConfirmationTask = new TaskCompletionSource<bool>();
 
             if (message.Content is OperationMessage)
-                Debug.WriteLine(this.PortName + " UART SEND OPCODE" + ((OperationMessage)message.Content).OpCode.ToString());
+                Debug.WriteLine(this.PortName + " UART SEND OPCODE " + ((OperationMessage)message.Content).OpCode.ToString());
 
             if (!this.SendData(message.ToBinary()))
                 return false;
@@ -403,7 +403,7 @@ namespace SmartHome.Communications.SerialManager
             };
 
             if (message is OperationMessage)
-                Debug.WriteLine(this.PortName + " UART SEND OPCODE" + ((OperationMessage)message).OpCode.ToString());
+                Debug.WriteLine(this.PortName + " UART SEND OPCODE " + ((OperationMessage)message).OpCode.ToString());
 
             return this.SendData(outputMessage.ToBinary());
         }

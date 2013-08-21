@@ -8,11 +8,12 @@ namespace DataLayer.Entities.Enums
     {
         SwitchLOW,
         SwitchHI,
-        PWMTTL,
         Dimmer,
         LogicInput,
         RGB,
         DimmerPassZero,
+        PowerSensor,
+        PresenceSensor,
         ConnectorSensorBoard
     }
 }

@@ -32,9 +32,12 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void RemoveZones(object sender, EventArgs e)
         {
-            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
-            Services.HomeService.RemoveZone(zone.Id);
-            UpdateScreen();
+            if (listBoxZones.SelectedItem != null)
+            {
+                ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
+                Services.HomeService.RemoveZone(zone.Id);
+                UpdateScreen();
+            }
         }
 
         private void LoadZone(object sender, EventArgs e)
@@ -44,42 +47,54 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void LoadZone()
         {
-            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
-            textBoxNameNode.Text = zone.Name;
-
-            if (zone.MainView.ImageMap.Length != 0) 
+            if (listBoxZones.SelectedItem != null)
             {
-                MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(zone.MainView.Id));
-                pictureBox.Image = Image.FromStream(ms); 
-            }
+                ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
+                textBoxNameNode.Text = zone.Name;
 
-            listBoxViews.Items.Clear();
-            listBoxViews.Items.AddRange(zone.Views);
+                if (zone.MainView.ImageMap.Length != 0)
+                {
+                    MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(zone.MainView.Id));
+                    pictureBox.Image = Image.FromStream(ms);
+                }
+
+                listBoxViews.Items.Clear();
+                listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id));
+            }
         }
 
         private void ChangeZoneName(object sender, EventArgs e)
         {
-            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
+            if (listBoxZones.SelectedItem != null)
+            {
+                ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
 
-            Services.HomeService.SetNameView(zone.MainView.Id, textBoxNameNode.Text);
+                Services.HomeService.SetNameView(zone.MainView.Id, textBoxNameNode.Text);
 
-            UpdateScreen();
+                UpdateScreen();
+            }
         }
 
         private void AddView(object sender, EventArgs e)
         {
-            ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
-            Services.HomeService.AddView(zone.Id, textBoxNewViewName.Text);
-            LoadZone();
+            if (listBoxZones.SelectedItem != null)
+            {
+                ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
+                Services.HomeService.AddView(zone.Id, textBoxNewViewName.Text);
+                LoadZone();
+            }
         }
 
         private void DeleteView(object sender, EventArgs e)
         {
-            ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
+            if (listBoxViews.SelectedItem != null)
+            {
+                ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
 
-            Services.HomeService.RemoveView(view.Id);
+                Services.HomeService.RemoveView(view.Id);
 
-            LoadZone();
+                LoadZone();
+            }
         }
 
         private void ChangeHomeName(object sender, EventArgs e)
@@ -91,14 +106,17 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void LoadView(object sender, EventArgs e)
         {
-            ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
-
-            textBoxNameView.Text = view.Name;
-
-            if (view.ImageMap.Length != 0)
+            if (listBoxViews.SelectedItem != null)
             {
-                MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(view.Id));
-                pictureBox.Image = Image.FromStream(ms);
+                ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
+
+                textBoxNameView.Text = view.Name;
+
+                if (view.ImageMap.Length != 0)
+                {
+                    MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(view.Id));
+                    pictureBox.Image = Image.FromStream(ms);
+                }
             }
         }
 
@@ -136,11 +154,14 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void ChangeViewName(object sender, EventArgs e)
         {
-            ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
+            if (listBoxViews.SelectedItem != null)
+            {
+                ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
 
-            Services.HomeService.SetNameView(view.Id, textBoxNameView.Text);
+                Services.HomeService.SetNameView(view.Id, textBoxNameView.Text);
 
-            LoadZone();
+                LoadZone();
+            }
         }
     }
 }

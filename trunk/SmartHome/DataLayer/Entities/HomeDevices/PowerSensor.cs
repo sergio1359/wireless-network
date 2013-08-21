@@ -21,9 +21,9 @@ namespace DataLayer.Entities.HomeDevices
         public PowerSensor()
             : base()
         {
-            base.ConnectorCapable = ConnectorTypes.Dimmer;
-
             this.Sensibility = DEFAULT_SENSIBILITY;
+
+            base.ConnectorCapable = ConnectorTypes.PowerSensor;
         }
     }
 }
