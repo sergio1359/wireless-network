@@ -75,6 +75,7 @@
     <Compile Include="Entities\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories.cs" />
+    <Compile Include="Repositories\LocationRepository.cs" />
     <Compile Include="Repositories\HomeDeviceRepository.cs" />
     <Compile Include="Repositories\OperationRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />

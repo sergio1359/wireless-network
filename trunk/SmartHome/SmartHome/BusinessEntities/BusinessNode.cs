@@ -52,7 +52,7 @@ namespace SmartHome.BusinessEntities
         public static void ChangeShield(this Node node, ShieldTypes newShield)
         {
             //Unlink all home devices
-            node.Connectors.ToList().ForEach(c => c.UnlinkHomeDevice());
+            node.UnlinkAllConnectors();
 
             //Delete connectors
             node.Connectors.Clear();
@@ -62,6 +62,11 @@ namespace SmartHome.BusinessEntities
             {
                 node.Connectors.Add(BusinessConnector.CreateConnector(item.Key, item.Value.Item1));
             }
+        }
+
+        public static void UnlinkAllConnectors(this Node node)
+        {
+            node.Connectors.ToList().ForEach(c => c.UnlinkHomeDevice());
         }
 
         public static byte[] GetBinaryConfiguration(this Node node)

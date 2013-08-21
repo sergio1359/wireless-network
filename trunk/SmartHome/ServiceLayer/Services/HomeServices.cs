@@ -7,6 +7,9 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using SmartHome.BusinessEntities;
+using SmartHome.Comunications;
+using SmartHome.Communications.Modules.Config;
 #endregion
 
 namespace ServiceLayer
@@ -14,37 +17,16 @@ namespace ServiceLayer
     public class HomeService
     {
         #region GeneralHome
-
-        public void CreateHome()
-        {
-            if (!Repositories.HomeRespository.IsHomeCreated())
-            {
-                Home home = new Home();
-
-                home.Name = "";
-
-                Repositories.HomeRespository.Insert(home);
-            }
-        }
-
-        public bool ExitsHome()
-        {
-            return Repositories.HomeRespository.IsHomeCreated();
-        }
-
         /// <summary>
         /// Change the name of the Home
         /// </summary>
         /// <param name="newName"></param>
         public void SetHomeName(string newName)
         {
-            if (Repositories.HomeRespository.IsHomeCreated())
-            {
-                var home = Repositories.HomeRespository.GetHome();
-                home.Name = newName;
+            var home = Repositories.HomeRespository.GetHome();
+            home.Name = newName;
 
-                Repositories.SaveChanges();
-            }
+            Repositories.SaveChanges();
         }
 
         /// <summary>
@@ -53,10 +35,7 @@ namespace ServiceLayer
         /// <returns></returns>
         public string GetHomeName()
         {
-            if (Repositories.HomeRespository.IsHomeCreated())
-                return Repositories.HomeRespository.GetHome().Name;
-
-            return "The Home had not been created";
+            return Repositories.HomeRespository.GetHome().Name;
         }
 
         /// <summary>
@@ -66,13 +45,10 @@ namespace ServiceLayer
         /// <param name="longitude"></param>
         public void SetHomeLocation(float latitude, float longitude)
         {
-            if (Repositories.HomeRespository.IsHomeCreated())
-            {
-                Home home = Repositories.HomeRespository.GetHome();
-                home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+            Home home = Repositories.HomeRespository.GetHome();
+            home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
 
-                Repositories.SaveChanges();
-            }
+            Repositories.SaveChanges();
         }
 
         /// <summary>
@@ -81,10 +57,7 @@ namespace ServiceLayer
         /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
-            if (Repositories.HomeRespository.IsHomeCreated())
-                return Repositories.HomeRespository.GetHome().Location;
-
-            return null;
+            return Repositories.HomeRespository.GetHome().Location;
         }
 
         /// <summary>
@@ -93,15 +66,27 @@ namespace ServiceLayer
         /// <param name="idNode"></param>
         public void UnlinkNode(int idNode)
         {
-            throw new NotImplementedException();
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                return;
+
+            node.UnlinkAllConnectors();
+
+            Repositories.NodeRespository.Delete(node);
         }
 
         /// <summary>
-        /// Update the EEPROMs of all the nodes
+        /// Force UpdateConfiguration
         /// </summary>
-        public void UpdateConfiguration()
+        public void UpdateConfiguration(int idNode)
         {
-            throw new NotImplementedException();
+            Node node = Repositories.NodeRespository.GetById(idNode);
+
+            if(node == null)
+                return;
+
+            CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node);
         }
         #endregion
 
@@ -163,7 +148,11 @@ namespace ServiceLayer
         /// <param name="newName"></param>
         public void SetNameZone(int idZone, string newName)
         {
-            var zone = Repositories.ZoneRepository.GetById(idZone);
+            Zone zone = Repositories.ZoneRepository.GetById(idZone);
+
+            if (zone == null)
+                return;
+
             zone.Name = newName;
             zone.MainView.Name = newName;
 
@@ -175,20 +164,30 @@ namespace ServiceLayer
         #region Views
         public ViewDTO[] GetViews(int idZone)
         {
-            var zone = Repositories.ZoneRepository.GetById(idZone);
+            Zone zone = Repositories.ZoneRepository.GetById(idZone);
+
+            if (zone == null)
+                return null;
+
             return Mapper.Map<ViewDTO[]>(zone.Views);
         }
 
         public byte[] GetViewImage(int idView)
         {
-            var view = Repositories.ViewRepository.GetById(idView);
+            View view = Repositories.ViewRepository.GetById(idView);
+
+            if (view == null)
+                return null;
 
             return view.ImageMap;
         }
 
         public void SetViewImage(int idView, byte[] newImage)
         {
-            var view = Repositories.ViewRepository.GetById(idView);
+            View view = Repositories.ViewRepository.GetById(idView);
+
+            if (view == null)
+                return;
 
             view.ImageMap = newImage;
 
@@ -197,7 +196,10 @@ namespace ServiceLayer
 
         public string GetNameView(int idView)
         {
-            var view = Repositories.ViewRepository.GetById(idView);
+            View view = Repositories.ViewRepository.GetById(idView);
+
+            if (view == null)
+                return null;
 
             return view.Name;
         }
@@ -209,7 +211,10 @@ namespace ServiceLayer
         /// <param name="newName"></param>
         public void SetNameView(int idView, string newName)
         {
-            var view = Repositories.ViewRepository.GetById(idView);
+            View view = Repositories.ViewRepository.GetById(idView);
+
+            if (view == null)
+                return;
 
             if (view.Id == view.Zone.MainView.Id)
                 view.Zone.Name = newName;
@@ -228,6 +233,10 @@ namespace ServiceLayer
         public int AddView(int idZone, string nameView)
         {
             Zone zone = Repositories.ZoneRepository.GetById(idZone);
+
+            if (zone == null)
+                return -1;
+
             View view = new View()
             {
                 Name = nameView,
@@ -249,6 +258,7 @@ namespace ServiceLayer
         public void RemoveView(int idView)
         {
             View view = Repositories.ViewRepository.GetById(idView);
+
             if (view != null)
                 Repositories.ViewRepository.Delete(view);
         }

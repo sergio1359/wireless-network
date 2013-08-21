@@ -22,14 +22,20 @@ namespace ServiceLayer
         /// <param name="idOperation"></param>
         public void RemoveOperation(int idOperation)
         {
-            var operation = Repositories.OperationRepository.GetById(idOperation);
+            Operation operation = Repositories.OperationRepository.GetById(idOperation);
+
+            if (operation == null)
+                return;
 
             Repositories.OperationRepository.Delete(operation);
         }
 
         public void ExecuteOperation(int idOperation)
         {
-            Repositories.OperationRepository.GetById(idOperation).Execute();
+            Operation operation = Repositories.OperationRepository.GetById(idOperation);
+
+            if (operation != null)
+                operation.Execute();
         }
 
         /// <summary>
@@ -39,7 +45,10 @@ namespace ServiceLayer
         /// <returns></returns>
         public string[] GetHomeDeviceOperation(int idHomeDevice)
         {
-            var homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                return null;
 
             return homeDevice.GetHomeDeviceOperations();
         }
@@ -51,14 +60,21 @@ namespace ServiceLayer
         /// <returns></returns>
         public OperationDTO[] GetHomeDeviceOperationProgram(int idHomeDevice)
         {
-            var operations = Repositories.HomeDeviceRespository.GetById(idHomeDevice).Operations;
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
 
-            return Mapper.Map<OperationDTO[]>(operations);
+            if (homeDevice == null)
+                return null;
+
+            return Mapper.Map<OperationDTO[]>(homeDevice.Operations);
         }
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
         {
             HomeDevice homeDevDestino = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+            HomeDevice homeDev = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDev == null || homeDevDestino == null)
+                return -1;
 
             Operation op = new Operation()
             {
@@ -67,7 +83,6 @@ namespace ServiceLayer
                 Args = args
             };
 
-            HomeDevice homeDev = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
             homeDev.Operations.Add(op);
 
             op = Repositories.OperationRepository.Insert(op);
@@ -89,19 +104,28 @@ namespace ServiceLayer
 
         public void ExecuteTheme(int idTheme)
         {
-            Repositories.ThemesRespository.GetById(idTheme).ExecuteTheme();
+            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
+
+            if (theme != null)
+                theme.ExecuteTheme();
         }
 
         public OperationDTO[] GetOperationsOfTheme(int idTheme)
         {
-            var operations = Repositories.ThemesRespository.GetById(idTheme).Operations;
+            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
 
-            return Mapper.Map<OperationDTO[]>(operations);
+            if (theme == null)
+                return null;
+
+            return Mapper.Map<OperationDTO[]>(theme.Operations);
         }
 
         public void RemoveTheme(int idTheme)
         {
-            var theme = Repositories.ThemesRespository.GetById(idTheme);
+            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
+
+            if (theme == null)
+                return;
 
             foreach (var item in theme.Operations)
             {
@@ -123,12 +147,17 @@ namespace ServiceLayer
 
         public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
         {
+            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+
+            if(homeDevice == null)
+                return -1;
+
             Operation operationInternal = new Operation()
             {
                 Args = args,
                 Name = name,
                 OperationName = operation,
-                DestionationHomeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination)
+                DestionationHomeDevice = homeDevice
             };
 
             TimeOperation timeOperation = new TimeOperation()
@@ -144,6 +173,10 @@ namespace ServiceLayer
         public void RemoveTimeOperation(int idTimeOperation)
         {
             TimeOperation timeOp = Repositories.TimeOperationRepository.GetById(idTimeOperation);
+
+            if (timeOp == null)
+                return;
+
             Repositories.TimeOperationRepository.Delete(timeOp);
         }
 

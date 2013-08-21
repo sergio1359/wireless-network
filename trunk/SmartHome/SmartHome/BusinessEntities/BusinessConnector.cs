@@ -14,7 +14,6 @@ namespace SmartHome.BusinessEntities
 {
     public static class BusinessConnector
     {
-
         public static Connector CreateConnector(string name, ConnectorTypes connectorType)
         {
             Connector connector = new Connector()
@@ -60,16 +59,16 @@ namespace SmartHome.BusinessEntities
         /// <param name="connector"></param>
         public static void UnlinkHomeDevice(this Connector connector)
         {
-            if (connector.Product == null) //no esta conectado a un producto
+            if (connector.Product != null) //is HomeDevice
             {
-                //TODO: Eliminar homeDevices del sistema. Hay que hacer pruebas de esto
-            }
-            else
-            {
-                connector.HomeDevices = new List<HomeDevice>();
+                foreach (var item in connector.HomeDevices)
+                {
+                    Repositories.HomeDeviceRespository.Delete(item);
+                }
             }
 
-            connector.HomeDevices.Clear();
+            connector.HomeDevices = new List<HomeDevice>();
+
             connector.Product = null;
         }
 
