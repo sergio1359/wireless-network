@@ -283,8 +283,10 @@ namespace SmartHome.Memory
             List<byte> result = new List<byte>();
             result.Add(0x00);
 
-            if (this.node.Connectors.Any(c => c.ConnectorType == ConnectorTypes.DimmerPassZero))
-                result.Add(this.node.Connectors.First(c => c.ConnectorType == ConnectorTypes.DimmerPassZero).GetPinPort()[0].GetPinPortNumber());
+            PinPort dimmableZero = ProductConfiguration.GetDimmerPassZeroPinPort(this.node.Shield);
+
+            if ( dimmableZero != null)
+                result.Add(dimmableZero.GetPinPortNumber());
             else
                 result.Add(0x00); //TODO: If not exits. Value default??
 

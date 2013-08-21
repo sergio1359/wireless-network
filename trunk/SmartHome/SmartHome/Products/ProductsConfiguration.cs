@@ -1,24 +1,27 @@
-﻿using DataLayer.Entities;
+﻿#region Using Statements
+using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using System;
 using System.Collections.Generic;
+using System.Linq; 
+#endregion
 
 namespace SmartHome.Products
 {
     public class ProductConfiguration
     {
-        public static Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>> GetShieldDictionary(ShieldTypes shieldtype)
+        public static Dictionary<string, Tuple<ConnectorTypes, PinPort[]>> GetShieldDictionary(ShieldTypes shieldtype)
         {
-            Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>> pinPorts = new Dictionary<string, Tuple<ConnectorTypes, List<PinPort>>>();
+            Dictionary<string, Tuple<ConnectorTypes, PinPort[]>> pinPorts = new Dictionary<string, Tuple<ConnectorTypes, PinPort[]>>();
             switch (shieldtype)
             {
                 case ShieldTypes.Debug:
-                    pinPorts.Add("Button",      new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("D7") }));
-                    pinPorts.Add("Light",       new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.SwitchLOW, new List<PinPort>() { new PinPort("D6") }));
-                    pinPorts.Add("Temperature", new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Humidity",    new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("E2") }));
-                    pinPorts.Add("Presence",    new Tuple<ConnectorTypes, List<PinPort>>(ConnectorTypes.LogicInput, new List<PinPort>() { new PinPort("B6") }));
+                    pinPorts.Add("Button",      new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("D7") }));
+                    pinPorts.Add("Light",       new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.SwitchLOW,  new PinPort[] { new PinPort("D6") }));
+                    pinPorts.Add("Temperature", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
+                    pinPorts.Add("Humidity",    new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
+                    pinPorts.Add("Presence",    new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("B6") }));
                     break;
                 default:
                     break;
@@ -86,7 +89,7 @@ namespace SmartHome.Products
                 configuration.Digital = true;
                 configuration.ChangeTypeD = PinPortConfiguration.Trigger.RisingEdge;
             }
-            else if(homeDevice is DoorLock)
+            else if (homeDevice is DoorLock)
             {
                 configuration.Output = true;
                 configuration.Digital = true;
@@ -110,6 +113,23 @@ namespace SmartHome.Products
             configuration.Threshold = 0x00;
 
             return configuration;
+        }
+
+        /// <summary>
+        /// Return the PinPort of a shield, if not exits return null
+        /// </summary>
+        /// <param name="shield"></param>
+        /// <returns></returns>
+        public static PinPort GetDimmerPassZeroPinPort(ShieldTypes shield)
+        {
+            var dictionary = GetShieldDictionary(shield);
+
+            if (dictionary.Values.Any(elem => elem.Item1 == ConnectorTypes.DimmerPassZero))
+            {
+                return dictionary.Values.First(elem => elem.Item1 == ConnectorTypes.DimmerPassZero).Item2[0];
+            }
+
+            return null;
         }
     }
 }

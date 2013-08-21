@@ -81,7 +81,7 @@ namespace SmartHome.BusinessEntities
             return connector.ConnectorType == homeDevice.ConnectorCapable;
         }
 
-        public static List<PinPort> GetPinPort(this Connector connector)
+        public static PinPort[] GetPinPort(this Connector connector)
         {
             return ProductConfiguration.GetShieldDictionary(connector.Node.Shield)[connector.Name].Item2;
         }
