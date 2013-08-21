@@ -22,7 +22,8 @@ namespace SmartHome.BusinessEntities
 
             foreach (var item in ProductConfiguration.GetShieldDictionary(shieldType))
             {
-                node.Connectors.Add(BusinessConnector.CreateConnector(item.Key, item.Value.Item1));
+                if(item.Value.Item1 != DataLayer.Entities.Enums.ConnectorTypes.DimmerPassZero)
+                    node.Connectors.Add(BusinessConnector.CreateConnector(item.Key, item.Value.Item1));
             }
 
             return node;

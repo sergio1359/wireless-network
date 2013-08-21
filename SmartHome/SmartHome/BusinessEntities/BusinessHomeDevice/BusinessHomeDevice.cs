@@ -22,7 +22,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return (HomeDevice)Activator.CreateInstance(deviceType);
         }
 
-        public static List<PinPort> GetPinPorts(this HomeDevice homeDevice)
+        public static PinPort[] GetPinPorts(this HomeDevice homeDevice)
         {
             if(!homeDevice.InUse)
                 return null;
@@ -31,8 +31,8 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             else //es un producto
             {
                 List<PinPort> pinPorts = new List<PinPort>();
-
-                return pinPorts;
+                //TODO
+                return pinPorts.ToArray();
             }
         }
 
