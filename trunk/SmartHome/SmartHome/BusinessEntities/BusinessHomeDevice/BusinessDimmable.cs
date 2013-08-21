@@ -34,7 +34,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             }
             else
             {
-                return dimmable.PercentageDimmer(dimmable.PercentageValue.Value);
+                return dimmable.PercentageDimmer(dimmable.Value.Value);
             }
         }
 

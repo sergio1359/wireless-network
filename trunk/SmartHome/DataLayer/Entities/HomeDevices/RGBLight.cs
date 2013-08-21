@@ -3,6 +3,7 @@ using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
+using DataLayer.Entities.HomeDevices.Status;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -24,10 +25,30 @@ namespace DataLayer.Entities.HomeDevices
         public int DefaultDegradeTime { get; set; }
 
         [NotMapped]
-        public ModeRGBLight Mode { get; set; }
+        public ModeRGBLight? Mode
+        {
+            get
+            {
+                return this.ReadProperty<ModeRGBLight>("Mode");
+            }
+            set
+            {
+                this.StoreProperty("Mode", value);
+            }
+        }
 
         [NotMapped]
-        public Color Color { get; set; }
+        public Color? Color
+        {
+            get
+            {
+                return this.ReadProperty<Color>("Color");
+            }
+            set
+            {
+                this.StoreProperty("Color", value);
+            }
+        }
 
         public RGBLight()
             : base()

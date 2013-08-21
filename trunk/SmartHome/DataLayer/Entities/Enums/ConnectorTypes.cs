@@ -14,6 +14,9 @@ namespace DataLayer.Entities.Enums
         DimmerPassZero,
         PowerSensor,
         PresenceSensor,
-        ConnectorSensorBoard
+        ConnectorSensorBoard,
+        LuminositySensor,
+        HumiditySensor,
+        TemperatureSensor
     }
 }

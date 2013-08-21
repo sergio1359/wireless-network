@@ -2,7 +2,7 @@
 using DataLayer.Entities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using DataLayer.Entities.HomeDevices.Status;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -16,7 +16,17 @@ namespace DataLayer.Entities.HomeDevices
         public int Sensibility { set; get; }
 
         [NotMapped]
-        public int? Consumption { set; get; }
+        public int? Consumption
+        {
+            get
+            {
+                return this.ReadProperty<int>("Consumption");
+            }
+            set
+            {
+                this.StoreProperty("Consumption", value);
+            }
+        }
 
         public PowerSensor()
             : base()

@@ -9,13 +9,6 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
     public static class BusinessRGBLight
     {
 
-        [OperationAttribute]        
-        public static OperationMessage Invert(this RGBLight rgbLight, byte seconds)
-        {
-            Color invert = Color.FromArgb(rgbLight.Color.ToArgb() ^ 0xFFFFFF);
-            return rgbLight.ToColor(invert, seconds);
-        }
-
         [OperationAttribute]
         public static OperationMessage Random(this RGBLight rgbLight, byte seconds)
         {
