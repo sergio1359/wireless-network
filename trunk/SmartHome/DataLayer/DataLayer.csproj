@@ -91,6 +91,7 @@
     <Compile Include="Repositories\ZoneRepository.cs" />
     <Compile Include="SmartHomeDBContext.cs" />
     <Compile Include="SmartHomeDBInitializer.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
