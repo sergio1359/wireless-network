@@ -23,10 +23,13 @@ namespace ServiceLayer
         /// <param name="newName"></param>
         public void SetHomeName(string newName)
         {
-            var home = Repositories.HomeRespository.GetHome();
-            home.Name = newName;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Home home = repository.HomeRespository.GetHome();
+                home.Name = newName;
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -35,7 +38,12 @@ namespace ServiceLayer
         /// <returns></returns>
         public string GetHomeName()
         {
-            return Repositories.HomeRespository.GetHome().Name;
+            string result;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                result = repository.HomeRespository.GetHome().Name;
+            }
+            return result;
         }
 
         /// <summary>
@@ -45,10 +53,13 @@ namespace ServiceLayer
         /// <param name="longitude"></param>
         public void SetHomeLocation(float latitude, float longitude)
         {
-            Home home = Repositories.HomeRespository.GetHome();
-            home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Home home = repository.HomeRespository.GetHome();
+                home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -57,7 +68,12 @@ namespace ServiceLayer
         /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
-            return Repositories.HomeRespository.GetHome().Location;
+            Coordenate coordenates;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                coordenates = repository.HomeRespository.GetHome().Location;
+            }
+            return coordenates;
         }
 
         /// <summary>
@@ -66,14 +82,17 @@ namespace ServiceLayer
         /// <param name="idNode"></param>
         public void UnlinkNode(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Node node = repository.NodeRespository.GetById(idNode);
 
-            if (node == null)
-                return;
+                if (node == null)
+                    return;
 
-            node.UnlinkAllConnectors();
+                node.UnlinkAllConnectors();
 
-            Repositories.NodeRespository.Delete(node);
+                repository.NodeRespository.Delete(node);
+            }
         }
 
         /// <summary>
@@ -81,12 +100,15 @@ namespace ServiceLayer
         /// </summary>
         public void UpdateConfiguration(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Node node = repository.NodeRespository.GetById(idNode);
 
-            if(node == null)
-                return;
+                if (node == null)
+                    return;
 
-            CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node);
+                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node);
+            }
         }
         #endregion
 
@@ -97,7 +119,11 @@ namespace ServiceLayer
         /// <returns>Dictionary ID, Name of zones</returns>
         public ZoneDTO[] GetZones()
         {
-            var zones = Repositories.ZoneRepository.GetAll();
+            IQueryable<Zone> zones;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                zones = repository.ZoneRepository.GetAll();
+            }
             return Mapper.Map<ZoneDTO[]>(zones);
         }
 

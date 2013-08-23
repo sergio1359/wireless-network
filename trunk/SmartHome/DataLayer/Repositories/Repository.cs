@@ -19,16 +19,12 @@ namespace DataLayer
 
         public T Insert(T entity)
         {
-           T addEntity = _Collection.Add(entity);
-           _context.SaveChanges();
-
-           return addEntity;
+           return _Collection.Add(entity);
         }
 
         public void Delete(T entity)
         {
             _Collection.Remove(entity);
-            _context.SaveChanges();
         }
 
         public int Count()
