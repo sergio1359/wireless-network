@@ -114,7 +114,7 @@ namespace ServiceLayer
 
             using (UnitOfWork repository = new UnitOfWork())
             {
-                homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
                     return null;
@@ -160,10 +160,10 @@ namespace ServiceLayer
 
             using (UnitOfWork repository = new UnitOfWork())
             {
-                if (Repositories.ViewRepository.GetById(idView) == null)
+                if (repository.ViewRepository.GetById(idView) == null)
                     return null;
 
-                homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
+                homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
             }
 
             return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
