@@ -63,7 +63,7 @@ namespace SmartHome.BusinessEntities
             {
                 foreach (var item in connector.HomeDevices)
                 {
-                    Repositories.HomeDeviceRespository.Delete(item);
+                    //TODO: Repositories.HomeDeviceRespository.Delete(item);
                 }
             }
 

@@ -32,19 +32,26 @@ namespace ServiceLayer
         /// 4 == el connector o el homeDevice no existe</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            Connector connector = Repositories.ConnectorRepository.GetById(idConnector);
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            Connector connector;
+            HomeDevice homeDevice;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                connector = repository.ConnectorRepository.GetById(idConnector);
+                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-            if (connector == null || homeDevice == null)
-                return 4;
+                if (connector == null || homeDevice == null)
+                    return 4;
 
-            if (connector.InUse)
-                return 1;
+                if (connector.InUse)
+                    return 1;
 
-            if (homeDevice.InUse)
-                return 2;
+                if (homeDevice.InUse)
+                    return 2;
 
-            connector.LinkHomeDevice(homeDevice);
+                connector.LinkHomeDevice(homeDevice);
+
+                repository.Commit();
+            }
 
             return 0;
         }
@@ -55,12 +62,17 @@ namespace ServiceLayer
         /// </summary>
         public void UnlinkHomeDevice(int idHomeDevice)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-            if (homeDevice == null)
-                return;
+                if (homeDevice == null)
+                    return;
 
-            homeDevice.Connector.UnlinkHomeDevice();
+                homeDevice.Connector.UnlinkHomeDevice();
+
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -82,30 +94,34 @@ namespace ServiceLayer
         /// </returns>
         public async Task<bool> AllowPendingNode(string MAC)
         {
-            Home home = Repositories.HomeRespository.GetHome();
-
-            Node node = Repositories.NodeRespository.GetByMacAddress(MAC);
-
-            NetworkJoin joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
-
-            PendingNodeInfo info = joinMod.PendingNodes.FirstOrDefault(n => n.MacAddress == MAC);
-
-            if (info != null)
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                if (node == null)
+                Home home = repository.HomeRespository.GetHome();
+
+                Node node = repository.NodeRespository.GetByMacAddress(MAC);
+
+                NetworkJoin joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
+
+                PendingNodeInfo info = joinMod.PendingNodes.FirstOrDefault(n => n.MacAddress == MAC);
+
+                if (info != null)
                 {
-                    node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
-                    node.Mac = info.MacAddress;
-                    node.Address = Repositories.NodeRespository.GetNewAddress();
+                    if (node == null)
+                    {
+                        node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
+                        node.Mac = info.MacAddress;
+                        node.Address = repository.NodeRespository.GetNewAddress();
 
-                    node = Repositories.NodeRespository.Insert(node);
+                        node = repository.NodeRespository.Insert(node);
+                        repository.Commit();
+                    }
+
+                    return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
                 }
-
-                return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
-            }
-            else
-            {
-                return false;
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -116,14 +132,15 @@ namespace ServiceLayer
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
-
+            Node node;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                node = repository.NodeRespository.GetById(idNode);
+            }
             if (node == null)
                 return null;
 
-            var connectors = node.Connectors;
-
-            return Mapper.Map<ConnectorDTO[]>(connectors);
+            return Mapper.Map<ConnectorDTO[]>(node.Connectors);
         }
 
 
@@ -134,22 +151,28 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
-
+            Node node;
+            HomeDevice homeDevice;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                node = repository.NodeRespository.GetById(idNode);
+                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            }
             if (node == null || homeDevice == null)
                 return null;
 
-            var connectors = node.Connectors;
-
-            var connectorsResult = connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
+            var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
 
             return Mapper.Map<ConnectorDTO[]>(connectorsResult);
         }
 
         public string GetNameNode(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            Node node;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                node = repository.NodeRespository.GetById(idNode);
+            }
 
             if (node == null)
                 return null;
@@ -159,19 +182,26 @@ namespace ServiceLayer
 
         public void SetNameNode(int idNode, string newName)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Node node = repository.NodeRespository.GetById(idNode);
 
-            if (node == null)
-                return;
+                if (node == null)
+                    return;
 
-            node.Name = newName;
+                node.Name = newName;
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         public int GetAddressNode(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            Node node;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                node = repository.NodeRespository.GetById(idNode);
+            }
 
             if (node == null)
                 return -1;
@@ -181,19 +211,26 @@ namespace ServiceLayer
 
         public void SetAddressNode(int idNode, ushort newAddress)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Node node = repository.NodeRespository.GetById(idNode);
 
-            if (node == null)
-                return;
+                if (node == null)
+                    return;
 
-            node.Address = newAddress;
+                node.Address = newAddress;
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         public LocationDTO GetNodePosition(int idNode)
         {
-            Node node = Repositories.NodeRespository.GetById(idNode);
+            Node node;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                node = repository.NodeRespository.GetById(idNode);
+            }
 
             if (node == null)
                 return null;
@@ -203,16 +240,24 @@ namespace ServiceLayer
 
         public NodeDTO[] GetNodes()
         {
-            var nodes = Repositories.NodeRespository.GetAll();
+            IQueryable<Node> nodes;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                nodes = repository.NodeRespository.GetAll();
+            }
             return Mapper.Map<NodeDTO[]>(nodes);
         }
 
         public NodeDTO[] GetNodes(int idZone)
         {
-            if (Repositories.ZoneRepository.GetById(idZone) == null)
-                return null;
+            IQueryable<Node> nodes;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                if (repository.ZoneRepository.GetById(idZone) == null)
+                    return null;
 
-            var nodes = Repositories.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+                nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+            }
             return Mapper.Map<NodeDTO[]>(nodes);
         }
 

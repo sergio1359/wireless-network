@@ -22,8 +22,11 @@ namespace ServiceLayer
             log.Date = DateTime.Now;
             log.Category = LogTypes.App;
             log.Message = logText;
-
-            Repositories.LogRepository.Insert(log);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                repository.LogRepository.Insert(log);
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -33,15 +36,16 @@ namespace ServiceLayer
         /// <returns>If category don't exist then null return</returns>
         public LogDTO[] GetLog(string category)
         {
-            LogTypes type;
-            if (Enum.TryParse(category, out type))
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                var logs = Repositories.LogRepository.GetLogByCategory(type);
-
-                return Mapper.Map<LogDTO[]>(logs);
+                LogTypes type;
+                if (Enum.TryParse(category, out type))
+                {
+                    var logs = repository.LogRepository.GetLogByCategory(type);
+                    return Mapper.Map<LogDTO[]>(logs);
+                }
             }
-            else
-                return null;
+            return null;
         }
 
         /// <summary>
@@ -55,13 +59,13 @@ namespace ServiceLayer
         {
             if (from >= to)
                 return null;
-            
-            var logs = GetLog(category).Skip(from).Take(to-from);
+
+            var logs = GetLog(category).Skip(from).Take(to - from);
 
             if (logs == null)
                 return null;
 
-            return Mapper.Map<LogDTO[]>(logs);
+            return logs.ToArray();
         }
 
         public string[] GetCategories()

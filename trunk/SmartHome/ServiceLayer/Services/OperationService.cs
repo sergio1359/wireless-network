@@ -8,6 +8,7 @@ using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using AutoMapper;
 using DataLayer.Entities.HomeDevices;
+using System.Linq;
 #endregion
 
 namespace ServiceLayer
@@ -22,20 +23,27 @@ namespace ServiceLayer
         /// <param name="idOperation"></param>
         public void RemoveOperation(int idOperation)
         {
-            Operation operation = Repositories.OperationRepository.GetById(idOperation);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Operation operation = repository.OperationRepository.GetById(idOperation);
 
-            if (operation == null)
-                return;
+                if (operation == null)
+                    return;
 
-            Repositories.OperationRepository.Delete(operation);
+                repository.OperationRepository.Delete(operation);
+                repository.Commit();
+            }
         }
 
         public void ExecuteOperation(int idOperation)
         {
-            Operation operation = Repositories.OperationRepository.GetById(idOperation);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Operation operation = repository.OperationRepository.GetById(idOperation);
 
-            if (operation != null)
-                operation.Execute();
+                if (operation != null)
+                    operation.Execute();
+            }
         }
 
         /// <summary>
@@ -45,7 +53,11 @@ namespace ServiceLayer
         /// <returns></returns>
         public string[] GetHomeDeviceOperation(int idHomeDevice)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            HomeDevice homeDevice;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            }
 
             if (homeDevice == null)
                 return null;
@@ -60,7 +72,11 @@ namespace ServiceLayer
         /// <returns></returns>
         public OperationDTO[] GetHomeDeviceOperationProgram(int idHomeDevice)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            HomeDevice homeDevice;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            }
 
             if (homeDevice == null)
                 return null;
@@ -70,26 +86,30 @@ namespace ServiceLayer
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
         {
-            HomeDevice homeDevDestino = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination);
-            HomeDevice homeDev = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
-
-            if (homeDev == null || homeDevDestino == null)
-                return -1;
-
-            Operation op = new Operation()
+            int idRes = -1;
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                DestionationHomeDevice = homeDevDestino,
-                OperationName = operation,
-                Args = args
-            };
+                HomeDevice homeDevDestino = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+                HomeDevice homeDev = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-            homeDev.Operations.Add(op);
+                if (homeDev == null || homeDevDestino == null)
+                    return -1;
 
-            op = Repositories.OperationRepository.Insert(op);
+                Operation op = new Operation()
+                {
+                    DestionationHomeDevice = homeDevDestino,
+                    OperationName = operation,
+                    Args = args
+                };
 
-            Repositories.SaveChanges();
+                homeDev.Operations.Add(op);
 
-            return op.Id;
+                idRes = repository.OperationRepository.Insert(op).Id;
+
+                repository.Commit();
+            }
+
+            return idRes;
         }
         #endregion
 
@@ -97,22 +117,33 @@ namespace ServiceLayer
 
         public ThemeDTO[] GetThemes()
         {
-            var themes = Repositories.ThemesRespository.GetAll();
+            IQueryable<Theme> themes;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                themes = repository.ThemesRespository.GetAll();
+            }
 
             return Mapper.Map<ThemeDTO[]>(themes);
         }
 
         public void ExecuteTheme(int idTheme)
         {
-            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Theme theme = repository.ThemesRespository.GetById(idTheme);
 
-            if (theme != null)
-                theme.ExecuteTheme();
+                if (theme != null)
+                    theme.ExecuteTheme();
+            }
         }
 
         public OperationDTO[] GetOperationsOfTheme(int idTheme)
         {
-            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
+            Theme theme;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                theme = repository.ThemesRespository.GetById(idTheme);
+            }
 
             if (theme == null)
                 return null;
@@ -122,17 +153,22 @@ namespace ServiceLayer
 
         public void RemoveTheme(int idTheme)
         {
-            Theme theme = Repositories.ThemesRespository.GetById(idTheme);
-
-            if (theme == null)
-                return;
-
-            foreach (var item in theme.Operations)
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                Services.OperationService.RemoveOperation(item.Id);
-            }
+                Theme theme = repository.ThemesRespository.GetById(idTheme);
 
-            Repositories.ThemesRespository.Delete(theme);
+                if (theme == null)
+                    return;
+
+                foreach (var item in theme.Operations)
+                {
+                    Services.OperationService.RemoveOperation(item.Id);
+                }
+
+                repository.ThemesRespository.Delete(theme);
+
+                repository.Commit();
+            }
         }
         #endregion
 
@@ -140,44 +176,56 @@ namespace ServiceLayer
 
         public TimeOperationDTO[] GetScheduler()
         {
-            var timeOps = Repositories.TimeOperationRepository.GetAll();
+            IQueryable<TimeOperation> timeOps;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                timeOps = repository.TimeOperationRepository.GetAll();
+            }
 
             return Mapper.Map<TimeOperationDTO[]>(timeOps);
         }
 
         public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDeviceDestination);
-
-            if(homeDevice == null)
-                return -1;
-
-            Operation operationInternal = new Operation()
+            int idRes = -1;
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                Args = args,
-                Name = name,
-                OperationName = operation,
-                DestionationHomeDevice = homeDevice
-            };
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
 
-            TimeOperation timeOperation = new TimeOperation()
-            {
-                MaskWeekDays = weekDays,
-                Time = time,
-                Operation = operationInternal
-            };
+                if (homeDevice == null)
+                    return -1;
 
-            return Repositories.TimeOperationRepository.Insert(timeOperation).Id;
+                Operation operationInternal = new Operation()
+                {
+                    Args = args,
+                    Name = name,
+                    OperationName = operation,
+                    DestionationHomeDevice = homeDevice
+                };
+
+                TimeOperation timeOperation = new TimeOperation()
+                {
+                    MaskWeekDays = weekDays,
+                    Time = time,
+                    Operation = operationInternal
+                };
+                idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
+            }
+            return idRes;
         }
 
         public void RemoveTimeOperation(int idTimeOperation)
         {
-            TimeOperation timeOp = Repositories.TimeOperationRepository.GetById(idTimeOperation);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                TimeOperation timeOp = repository.TimeOperationRepository.GetById(idTimeOperation);
 
-            if (timeOp == null)
-                return;
+                if (timeOp == null)
+                    return;
 
-            Repositories.TimeOperationRepository.Delete(timeOp);
+                repository.TimeOperationRepository.Delete(timeOp);
+                repository.Commit();
+            }
         }
 
         #endregion
