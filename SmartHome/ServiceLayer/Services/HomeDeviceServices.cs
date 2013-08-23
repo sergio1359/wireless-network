@@ -7,7 +7,7 @@ using ServiceLayer.DTO;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 #endregion
 
 namespace ServiceLayer
@@ -23,10 +23,13 @@ namespace ServiceLayer
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
             HomeDevice homeDevice = BusinessHomeDevice.CreateHomeDevice(homeDeviceType);
-
             homeDevice.Name = nameHomeDevice;
 
-            homeDevice = Repositories.HomeDeviceRespository.Insert(homeDevice);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevice = repository.HomeDeviceRespository.Insert(homeDevice);
+                repository.Commit();
+            }
 
             return homeDevice.Id;
         }
@@ -46,15 +49,20 @@ namespace ServiceLayer
         /// <param name="idHomeDevice">Identificator of the HomeDevice to be remove.</param>
         public void RemoveHomeDevice(int idHomeDevice)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-            if (homeDevice == null)
-                return;
+                if (homeDevice == null)
+                    return;
 
-            if (homeDevice.Connector != null)
-                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
+                if (homeDevice.Connector != null)
+                    Services.NodeService.UnlinkHomeDevice(idHomeDevice);
 
-            Repositories.HomeDeviceRespository.Delete(homeDevice);
+                repository.HomeDeviceRespository.Delete(homeDevice);
+
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -64,14 +72,17 @@ namespace ServiceLayer
         /// <param name="newName">New Name</param>
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-            if (homeDevice == null)
-                return;
+                if (homeDevice == null)
+                    return;
 
-            homeDevice.Name = newName;
+                homeDevice.Name = newName;
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -83,23 +94,31 @@ namespace ServiceLayer
         /// <param name="y">Relative position 0 to 1 of the X axis</param>
         public void UpdateLocation(int idLocation, float x, float y)
         {
-            Location location = Repositories.LocationRepository.GetById(idLocation);
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Location location = repository.LocationRepository.GetById(idLocation);
 
-            if (location == null)
-                return;
+                if (location == null)
+                    return;
 
-            location.X = x;
-            location.Y = y;
+                location.X = x;
+                location.Y = y;
 
-            Repositories.SaveChanges();
+                repository.Commit();
+            }
         }
 
         public LocationDTO[] GetHomeDeviceLocations(int idHomeDevice)
         {
-            HomeDevice homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+            HomeDevice homeDevice;
 
-            if (homeDevice == null)
-                return null;
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevice = Repositories.HomeDeviceRespository.GetById(idHomeDevice);
+
+                if (homeDevice == null)
+                    return null;
+            }
 
             return Mapper.Map<LocationDTO[]>(homeDevice.Location);
         }
@@ -110,7 +129,12 @@ namespace ServiceLayer
         /// <returns>Return a HomeDeviceDTO</returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices()
         {
-            var homeDevices = Repositories.HomeDeviceRespository.GetAll();
+            IQueryable<HomeDevice> homeDevices;
+
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevices = repository.HomeDeviceRespository.GetAll();
+            }
 
             return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
@@ -132,10 +156,15 @@ namespace ServiceLayer
         /// <returns></returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView)
         {
-            if (Repositories.ViewRepository.GetById(idView) == null)
-                return null;
+            IQueryable<HomeDevice> homeDevices;
 
-            var homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                if (Repositories.ViewRepository.GetById(idView) == null)
+                    return null;
+
+                homeDevices = Repositories.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
+            }
 
             return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
