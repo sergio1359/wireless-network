@@ -24,6 +24,16 @@ namespace DataLayer
             return this._Collection.FirstOrDefault(n => n.Address == nodeAddress);
         }
 
+        public Node GetByNetworkAddressWithConnectedHomeDevices(int nodeAddress)
+        {
+            return this.GetAllWithConnectedHomeDevices().FirstOrDefault(n => n.Address == nodeAddress);
+        }
+
+        public IQueryable<Node> GetAllWithConnectedHomeDevices()
+        {
+            return this._Collection.Include("Connectors.HomeDevices.Operations");
+        }
+
         public int GetNewAddress()
         {
             var existingAddress = this._Collection.Select(n => n.Address);

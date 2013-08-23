@@ -110,17 +110,15 @@ namespace ServiceLayer
 
         public LocationDTO[] GetHomeDeviceLocations(int idHomeDevice)
         {
-            HomeDevice homeDevice;
-
             using (UnitOfWork repository = new UnitOfWork())
             {
-                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
                     return null;
-            }
 
-            return Mapper.Map<LocationDTO[]>(homeDevice.Location);
+                return Mapper.Map<LocationDTO[]>(homeDevice.Location);
+            }
         }
 
         /// <summary>
@@ -129,14 +127,12 @@ namespace ServiceLayer
         /// <returns>Return a HomeDeviceDTO</returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices()
         {
-            IQueryable<HomeDevice> homeDevices;
-
             using (UnitOfWork repository = new UnitOfWork())
             {
-                homeDevices = repository.HomeDeviceRespository.GetAll();
-            }
+                var homeDevices = repository.HomeDeviceRespository.GetAll();
 
-            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
+                return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
+            }
         }
 
         /// <summary>
@@ -156,17 +152,15 @@ namespace ServiceLayer
         /// <returns></returns>
         public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView)
         {
-            IQueryable<HomeDevice> homeDevices;
-
             using (UnitOfWork repository = new UnitOfWork())
             {
                 if (repository.ViewRepository.GetById(idView) == null)
                     return null;
 
-                homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
-            }
+                var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
 
-            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
+                return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
+            }
         }
 
         /// <summary>

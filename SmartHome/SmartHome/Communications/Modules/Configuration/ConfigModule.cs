@@ -19,7 +19,10 @@ namespace SmartHome.Communications.Modules.Config
 {
     public class ConfigModule : ModuleBase
     {
-        private Dictionary<ushort, FragmentWriteTransaction> currentWriteTransactions;
+        /// <summary>
+        /// This dictionary contains the current config write transactions and the checksum valu for each of them.
+        /// </summary>
+        private Dictionary<ushort, Tuple<ushort, FragmentWriteTransaction>> currentWriteTransactions;
 
         private List<ushort> waitingForChecksum;
 
@@ -34,14 +37,14 @@ namespace SmartHome.Communications.Modules.Config
         {
             get
             {
-                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.Percentage });
+                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.Item2.Percentage });
             }
         }
 
         public ConfigModule(CommunicationManager communicationManager)
             : base(communicationManager)
         {
-            this.currentWriteTransactions = new Dictionary<ushort, FragmentWriteTransaction>();
+            this.currentWriteTransactions = new Dictionary<ushort, Tuple<ushort, FragmentWriteTransaction>>();
 
             this.waitingForChecksum = new List<ushort>();
 
@@ -49,33 +52,36 @@ namespace SmartHome.Communications.Modules.Config
 
             this.configUpdateTimer = new Timer()
             {
-                Interval = 1000 * 1,    // 30 seconds
-                AutoReset = false,      
+                Interval = 1000 * 5,    // 30 seconds
+                AutoReset = false,
             };
             this.configUpdateTimer.Elapsed += configUpdateTimer_Elapsed;
 
-            //this.configUpdateTimer.Start();
+            this.configUpdateTimer.Start();
         }
 
         private async void configUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var nodes = Repositories.NodeRespository.GetAll();
-
-            foreach (Node node in nodes)
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                if (this.firstTime || !node.ConfigChecksum.HasValue)
+                var nodes = repository.NodeRespository.GetAll();
+
+                foreach (Node node in nodes)
                 {
-                    ushort nodeAddress = (ushort)node.Address;
+                    if (this.firstTime || !node.ConfigChecksum.HasValue)
+                    {
+                        ushort nodeAddress = (ushort)node.Address;
 
-                    bool sent = await this.SendMessage(OperationMessage.ConfigChecksumRead(nodeAddress));
+                        bool sent = await this.SendMessage(OperationMessage.ConfigChecksumRead(nodeAddress));
 
-                    if (sent && !this.waitingForChecksum.Contains(nodeAddress))
-                        this.waitingForChecksum.Add(nodeAddress);
+                        if (sent && !this.waitingForChecksum.Contains(nodeAddress))
+                            this.waitingForChecksum.Add(nodeAddress);
+                    }
                 }
             }
 
             this.firstTime = false;
-            this.configUpdateTimer.Start();
+            //this.configUpdateTimer.Start();
         }
 
         #region Overridden Methods
@@ -88,16 +94,26 @@ namespace SmartHome.Communications.Modules.Config
                 if (this.currentWriteTransactions.ContainsKey(message.SourceAddress))
                 {
                     //TODO: Check other params to avoid exceptions
-                    var nodeTransaction = this.currentWriteTransactions[message.SourceAddress];
+                    var currentTransactionVars = this.currentWriteTransactions[message.SourceAddress];
+                    var nodeTransaction = currentTransactionVars.Item2;
+
                     if (!nodeTransaction.ProcessResponse(message).Result)
                     {
                         //TODO: Check the problem
                     }
                     else if (nodeTransaction.IsCompleted)
                     {
-                        Node updatedNode = Repositories.NodeRespository.GetByNetworkAddress(nodeTransaction.DestinationAddress);
-                        //TODO: Update the new Checksum
-                        //updatedNode.ConfigChecksum = checksum;
+                        using (UnitOfWork repository = new UnitOfWork())
+                        {
+                            Node updatedNode = repository.NodeRespository.GetByNetworkAddress(nodeTransaction.DestinationAddress);
+
+                            //TODO: Update the new Checksum
+                            updatedNode.ConfigChecksum = currentTransactionVars.Item1;
+
+                            repository.Commit();
+
+                            PrintLog(false, string.Format("The node 0x{0:X4} has been updated successfully", updatedNode.Address));
+                        }
                     }
                 }
             }
@@ -111,15 +127,26 @@ namespace SmartHome.Communications.Modules.Config
                 {
                     this.waitingForChecksum.Remove(message.SourceAddress);
 
-                    Node node = Repositories.NodeRespository.GetByNetworkAddress(message.SourceAddress);
+                    Node node;
+                    Home home;
+
+                    using (UnitOfWork repository = new UnitOfWork())
+                    {
+                        node = repository.NodeRespository.GetByNetworkAddressWithConnectedHomeDevices(message.SourceAddress);
+                        home = repository.HomeRespository.GetHome();
+                    }
 
                     if (node == null)
                     {
                         PrintLog(true, "Node not present in the DB!");
                     }
-                    else if(!node.ConfigChecksum.HasValue || node.ConfigChecksum != checksum)
+                    else if (!node.ConfigChecksum.HasValue || node.ConfigChecksum != checksum)
                     {
-                        this.SendConfiguration(node);
+                        this.SendConfiguration(node, home);
+                    }
+                    else
+                    {
+                        PrintLog(false, string.Format("The node 0x{0:X4} is up to date", node.Address));
                     }
                 }
             }
@@ -154,12 +181,14 @@ namespace SmartHome.Communications.Modules.Config
         }
         #endregion
 
-        public async void SendConfiguration(Node node)
+        public async void SendConfiguration(Node node, Home home)
         {
             if (!this.currentWriteTransactions.ContainsKey((ushort)node.Address))
             {
-                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), (ushort)node.Address, node.GetBinaryConfiguration());
-                this.currentWriteTransactions.Add((ushort)node.Address, newTransaction);
+                var configuration = node.GetBinaryConfiguration(home);
+
+                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), (ushort)node.Address, configuration.Item2);
+                this.currentWriteTransactions.Add((ushort)node.Address, new Tuple<ushort, FragmentWriteTransaction>(configuration.Item1, newTransaction));
 
                 if (!await newTransaction.StartTransaction())
                 {

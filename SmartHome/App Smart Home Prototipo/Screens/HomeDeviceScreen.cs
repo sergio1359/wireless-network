@@ -34,33 +34,42 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
         private void RemoveHomeDevice(object sender, EventArgs e)
         {
-            HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
-
-            if (homeDevice != null)
+            if (listBoxHomeDevices.SelectedItem != null)
             {
-                Services.HomeDeviceService.RemoveHomeDevice(homeDevice.Id);
+                HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
 
-                UpdateHomeDevices();
+                if (homeDevice != null)
+                {
+                    Services.HomeDeviceService.RemoveHomeDevice(homeDevice.Id);
+
+                    UpdateHomeDevices();
+                }
             }
         }
 
         private void ChangeHomeDeviceInformation(object sender, EventArgs e)
         {
-            HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
-            textBoxNameHomeDevice.Text = homeDevice.Name;
-            textBoxTypeHomeDevice.Text = homeDevice.Type;
+            if (listBoxHomeDevices.SelectedItem != null)
+            {
+                HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+                textBoxNameHomeDevice.Text = homeDevice.Name;
+                textBoxTypeHomeDevice.Text = homeDevice.Type;
 
-            listBoxOperations.Items.Clear();
-            listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperationProgram(homeDevice.Id));
+                listBoxOperations.Items.Clear();
+                listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperationProgram(homeDevice.Id));
+            }
         }
 
         private void ChangeNameHomeDevice(object sender, EventArgs e)
         {
-            HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+            if (listBoxHomeDevices.SelectedItem != null)
+            {
+                HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
 
-            Services.HomeDeviceService.SetNameHomeDevice(homeDevice.Id, textBoxNameHomeDevice.Text);
+                Services.HomeDeviceService.SetNameHomeDevice(homeDevice.Id, textBoxNameHomeDevice.Text);
 
-            UpdateHomeDevices();
+                UpdateHomeDevices();
+            }
         }
 
 

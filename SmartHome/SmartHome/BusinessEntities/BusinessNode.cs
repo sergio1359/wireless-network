@@ -5,7 +5,8 @@ using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq; 
+using System.Linq;
+using DataLayer; 
 #endregion
 
 namespace SmartHome.BusinessEntities
@@ -38,9 +39,12 @@ namespace SmartHome.BusinessEntities
         {
             List<TimeOperation> timeOperations = new List<TimeOperation>();
 
-            foreach (var item in node.HomeDevices)
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                timeOperations.AddRange(DataLayer.Repositories.TimeOperationRepository.GetOperationInHomeDevice(item.Id));
+                foreach (var item in node.HomeDevices)
+                {
+                    timeOperations.AddRange(repository.TimeOperationRepository.GetOperationInHomeDevice(item.Id));
+                }
             }
 
             timeOperations.Sort();
@@ -69,16 +73,15 @@ namespace SmartHome.BusinessEntities
             node.Connectors.ToList().ForEach(c => c.UnlinkHomeDevice());
         }
 
-        public static byte[] GetBinaryConfiguration(this Node node)
+        public static Tuple<ushort, byte[]> GetBinaryConfiguration(this Node node, Home home)
         {
             FirmwareUno fw = new FirmwareUno(node, 0x00); //TODO: Ojo
-            return fw.GenerateEEPROM();
+            return fw.GenerateEEPROM(home);
         }
 
-        public static void GetEEPROM(this Node node)
+        public static void GetEEPROM(this Node node, Home home)
         {
-            FirmwareUno fw = new FirmwareUno(node, 0x00); //TODO: Ojo
-            byte[] memoryEEPROM = fw.GenerateEEPROM();
+            var memoryEEPROM = GetBinaryConfiguration(node, home).Item2;
             //guardamos el bin
             File.WriteAllBytes(node.Mac.ToString() + ".bin", memoryEEPROM);
             //guardamos el hex

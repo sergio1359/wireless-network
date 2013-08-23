@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System;
 using DataLayer.Entities.HomeDevices.Status;
+using System.Data.Objects;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
@@ -67,7 +68,8 @@ namespace DataLayer.Entities.HomeDevices
         {
             get
             {
-                return this.GetType().Name;
+                return ObjectContext.GetObjectType(this.GetType()).Name;
+                //return this.GetType().Name;
             }
         }
 

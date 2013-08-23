@@ -33,7 +33,12 @@ namespace SmartHome.Memory
         }
 
 
-        public byte[] GenerateEEPROM()
+        /// <summary>
+        /// Generates the EEPROM configuration.
+        /// </summary>
+        /// <param name="home">The home.</param>
+        /// <returns>A tuple containing the checksum (Item1) and the raw bytes (Item2)</returns>
+        public Tuple<ushort, byte[]> GenerateEEPROM(Home home)
         {
             tempMemory = new List<Byte>();
 
@@ -43,7 +48,7 @@ namespace SmartHome.Memory
             tempMemory.AddRange(ConfigHeader());
 
             //NetworkConfig
-            tempMemory.AddRange(NetworkConfig());
+            tempMemory.AddRange(NetworkConfig(home));
 
             ushort pointerStartDinamicIndex = (ushort)tempMemory.Count;
             dinamicIndex = new List<ushort>();
@@ -96,7 +101,9 @@ namespace SmartHome.Memory
             memory[3] = crc[0];
             memory[4] = crc[1];
 
-            return memory;
+            ushort crcResult = BitConverter.ToUInt16(crc, 0);
+
+            return new Tuple<ushort,byte[]>(crcResult, memory);
         }
 
         private byte[] ConfigHeader()
@@ -127,7 +134,7 @@ namespace SmartHome.Memory
         }
 
         //Cogemos por defecto la configuration del NetworkManager
-        private byte[] NetworkConfig()
+        private byte[] NetworkConfig(Home home)
         {
             List<byte> result = new List<byte>();
 
@@ -139,13 +146,13 @@ namespace SmartHome.Memory
 
 
             ////chanel
-            //result.Add(Home.Security.Channel);
+            result.Add((byte)home.Security.Channel);
 
             ////panID
-            //result.AddRange(Home.Security.PanId.UshortToByte(baseConfiguration.LittleEndian));
+            result.AddRange(((ushort)home.Security.PanId).UshortToByte(baseConfiguration.LittleEndian));
 
             ////securityKey
-            //result.AddRange(Home.Security.GetSecurityKey());
+            result.AddRange(home.Security.GetSecurityKey());
 
             //networkRetriesLimit
             result.Add((byte)node.NetworkRetries);

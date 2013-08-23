@@ -53,16 +53,15 @@ namespace ServiceLayer
         /// <returns></returns>
         public string[] GetHomeDeviceOperation(int idHomeDevice)
         {
-            HomeDevice homeDevice;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+                if (homeDevice == null)
+                    return null;
+
+                return homeDevice.GetHomeDeviceOperations();
             }
-
-            if (homeDevice == null)
-                return null;
-
-            return homeDevice.GetHomeDeviceOperations();
         }
 
         /// <summary>
@@ -72,16 +71,15 @@ namespace ServiceLayer
         /// <returns></returns>
         public OperationDTO[] GetHomeDeviceOperationProgram(int idHomeDevice)
         {
-            HomeDevice homeDevice;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+                if (homeDevice == null)
+                    return null;
+
+                return Mapper.Map<OperationDTO[]>(homeDevice.Operations);
             }
-
-            if (homeDevice == null)
-                return null;
-
-            return Mapper.Map<OperationDTO[]>(homeDevice.Operations);
         }
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
@@ -176,13 +174,14 @@ namespace ServiceLayer
 
         public TimeOperationDTO[] GetScheduler()
         {
-            IQueryable<TimeOperation> timeOps;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                timeOps = repository.TimeOperationRepository.GetAll();
-            }
+                IEnumerable<TimeOperation> timeOps;
 
-            return Mapper.Map<TimeOperationDTO[]>(timeOps);
+                timeOps = repository.TimeOperationRepository.GetAll();
+
+                return Mapper.Map<TimeOperationDTO[]>(timeOps);
+            }
         }
 
         public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
