@@ -100,15 +100,18 @@ namespace ServiceLayer
         /// </summary>
         public void UpdateConfiguration(int idNode)
         {
+            Node node;
+            Home home;
+
             using (UnitOfWork repository = new UnitOfWork())
             {
-                Node node = repository.NodeRespository.GetById(idNode);
-
+                node = repository.NodeRespository.GetById(idNode);
+                home = repository.HomeRespository.GetHome();
+            }
                 if (node == null)
                     return;
 
-                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node);
-            }
+                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);            
         }
         #endregion
 

@@ -22,7 +22,7 @@ namespace DataLayer
 
         public IQueryable<HomeDevice> GetConnectedHomeDevices()
         {
-            return _Collection.Where(c => c.Connector != null);
+            return _Collection.Include("Connector.Node").Where(c => c.Connector != null);
         }
     }
 }

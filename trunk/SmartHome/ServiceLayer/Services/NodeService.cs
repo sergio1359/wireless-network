@@ -32,12 +32,10 @@ namespace ServiceLayer
         /// 4 == el connector o el homeDevice no existe</returns>
         public int LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            Connector connector;
-            HomeDevice homeDevice;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                connector = repository.ConnectorRepository.GetById(idConnector);
-                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                var connector = repository.ConnectorRepository.GetById(idConnector);
+                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (connector == null || homeDevice == null)
                     return 4;
@@ -116,7 +114,14 @@ namespace ServiceLayer
                         repository.Commit();
                     }
 
-                    return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
+                    bool acceptResult = await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
+
+                    if (acceptResult)
+                    {
+                        CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
+                    }
+
+                    return acceptResult;
                 }
                 else
                 {
@@ -132,15 +137,15 @@ namespace ServiceLayer
         /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
         public ConnectorDTO[] GetConnectors(int idNode)
         {
-            Node node;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
-            }
-            if (node == null)
-                return null;
+                var node = repository.NodeRespository.GetById(idNode);
 
-            return Mapper.Map<ConnectorDTO[]>(node.Connectors);
+                if (node == null)
+                    return null;
+
+                return Mapper.Map<ConnectorDTO[]>(node.Connectors);
+            }
         }
 
 
@@ -151,33 +156,31 @@ namespace ServiceLayer
         /// <returns></returns>
         public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            Node node;
-            HomeDevice homeDevice;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
-                homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                var node = repository.NodeRespository.GetById(idNode);
+                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+                if (node == null || homeDevice == null)
+                    return null;
+
+                var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
+
+                return Mapper.Map<ConnectorDTO[]>(connectorsResult);
             }
-            if (node == null || homeDevice == null)
-                return null;
-
-            var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
-
-            return Mapper.Map<ConnectorDTO[]>(connectorsResult);
         }
 
         public string GetNameNode(int idNode)
         {
-            Node node;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
+                var node = repository.NodeRespository.GetById(idNode);
+
+                if (node == null)
+                    return null;
+
+                return node.Name;
             }
-
-            if (node == null)
-                return null;
-
-            return node.Name;
         }
 
         public void SetNameNode(int idNode, string newName)
@@ -197,16 +200,15 @@ namespace ServiceLayer
 
         public int GetAddressNode(int idNode)
         {
-            Node node;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
+                var node = repository.NodeRespository.GetById(idNode);
+
+                if (node == null)
+                    return -1;
+
+                return node.Address;
             }
-
-            if (node == null)
-                return -1;
-
-            return node.Address;
         }
 
         public void SetAddressNode(int idNode, ushort newAddress)
@@ -226,39 +228,38 @@ namespace ServiceLayer
 
         public LocationDTO GetNodePosition(int idNode)
         {
-            Node node;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
+                var node = repository.NodeRespository.GetById(idNode);
+
+                if (node == null)
+                    return null;
+
+                return Mapper.Map<LocationDTO>(node.Location);
             }
-
-            if (node == null)
-                return null;
-
-            return Mapper.Map<LocationDTO>(node.Location);
         }
 
         public NodeDTO[] GetNodes()
         {
-            IQueryable<Node> nodes;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                nodes = repository.NodeRespository.GetAll();
+                var nodes = repository.NodeRespository.GetAll();
+
+                return Mapper.Map<NodeDTO[]>(nodes);
             }
-            return Mapper.Map<NodeDTO[]>(nodes);
         }
 
         public NodeDTO[] GetNodes(int idZone)
         {
-            IQueryable<Node> nodes;
             using (UnitOfWork repository = new UnitOfWork())
             {
                 if (repository.ZoneRepository.GetById(idZone) == null)
                     return null;
 
-                nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+                var nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+
+                return Mapper.Map<NodeDTO[]>(nodes);
             }
-            return Mapper.Map<NodeDTO[]>(nodes);
         }
 
         /// <summary>

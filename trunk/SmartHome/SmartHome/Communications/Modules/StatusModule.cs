@@ -35,7 +35,7 @@ namespace SmartHome.Communications.Modules
             this.statusUpdateTimer = new Timer()
             {
                 Interval = 1000 * 10, // 10 seconds
-                AutoReset = true,
+                AutoReset = false,
             };
             this.statusUpdateTimer.Elapsed += statusUpdateTimer_Elapsed;
 
@@ -44,7 +44,12 @@ namespace SmartHome.Communications.Modules
 
         private async void statusUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var homeDevices = Repositories.HomeDeviceRespository.GetConnectedHomeDevices();
+            List<HomeDevice> homeDevices;
+
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                homeDevices = repository.HomeDeviceRespository.GetConnectedHomeDevices().ToList();
+            }
 
             foreach (var hd in homeDevices)
             {
@@ -60,6 +65,8 @@ namespace SmartHome.Communications.Modules
                     await this.SendMessage(message);
                 }
             }
+
+            this.statusUpdateTimer.Start();
         }
 
         #region Overridden Methods
@@ -162,9 +169,9 @@ namespace SmartHome.Communications.Modules
         /// <returns></returns>
         private T CheckHomeDevice<T>(ushort nodeAddress, ushort deviceAddress) where T : HomeDevice
         {
-            lock (this)
+            using (UnitOfWork repository = new UnitOfWork())
             {
-                var homeDev = Repositories.HomeDeviceRespository.GetById(deviceAddress);
+                var homeDev = repository.HomeDeviceRespository.GetById(deviceAddress);
 
 
                 if (homeDev == null)
