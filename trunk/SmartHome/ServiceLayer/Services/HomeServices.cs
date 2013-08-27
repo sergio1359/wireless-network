@@ -88,6 +88,8 @@ namespace ServiceLayer
                 node.UnlinkAllConnectors();
 
                 repository.NodeRespository.Delete(node);
+
+                repository.Commit();
             }
         }
 
@@ -322,7 +324,10 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view != null)
+                {
                     repository.ViewRepository.Delete(view);
+                    repository.Commit();
+                }
             }
         }
 

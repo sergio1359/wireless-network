@@ -27,11 +27,11 @@ namespace ServiceLayer
             {
                 Operation operation = repository.OperationRepository.GetById(idOperation);
 
-                if (operation == null)
-                    return;
-
-                repository.OperationRepository.Delete(operation);
-                repository.Commit();
+                if (operation != null)
+                {
+                    repository.OperationRepository.Delete(operation);
+                    repository.Commit();
+                }
             }
         }
 
@@ -153,17 +153,17 @@ namespace ServiceLayer
             {
                 Theme theme = repository.ThemesRespository.GetById(idTheme);
 
-                if (theme == null)
-                    return;
-
-                foreach (var item in theme.Operations)
+                if (theme != null)
                 {
-                    Services.OperationService.RemoveOperation(item.Id);
-                }
+                    foreach (var item in theme.Operations)
+                    {
+                        Services.OperationService.RemoveOperation(item.Id);
+                    }
 
-                repository.ThemesRespository.Delete(theme);
+                    repository.ThemesRespository.Delete(theme);
 
-                repository.Commit();
+                    repository.Commit();
+                }                
             }
         }
         #endregion
@@ -205,7 +205,11 @@ namespace ServiceLayer
                     Time = time,
                     Operation = operationInternal
                 };
-                return repository.TimeOperationRepository.Insert(timeOperation).Id;
+                int idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
+
+                repository.Commit();
+
+                return idRes;
             }
         }
 
@@ -215,11 +219,11 @@ namespace ServiceLayer
             {
                 TimeOperation timeOp = repository.TimeOperationRepository.GetById(idTimeOperation);
 
-                if (timeOp == null)
-                    return;
-
-                repository.TimeOperationRepository.Delete(timeOp);
-                repository.Commit();
+                if (timeOp != null)
+                {
+                    repository.TimeOperationRepository.Delete(timeOp);
+                    repository.Commit();
+                }
             }
         }
 

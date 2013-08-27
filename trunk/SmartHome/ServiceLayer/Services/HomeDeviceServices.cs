@@ -56,7 +56,7 @@ namespace ServiceLayer
                 if (homeDevice == null)
                     return;
 
-                if (homeDevice.Connector != null)
+                if (homeDevice.InUse)
                     Services.NodeService.UnlinkHomeDevice(idHomeDevice);
 
                 repository.HomeDeviceRespository.Delete(homeDevice);
