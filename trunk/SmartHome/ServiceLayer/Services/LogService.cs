@@ -18,12 +18,14 @@ namespace ServiceLayer
         /// <param name="log"></param>
         public void AddClientLog(string logText)
         {
-            Log log = new Log();
-            log.Date = DateTime.Now;
-            log.Category = LogTypes.App;
-            log.Message = logText;
             using (UnitOfWork repository = new UnitOfWork())
             {
+                Log log = new Log()
+                {
+                    Category = LogTypes.App,
+                    Date = DateTime.Now,
+                    Message = logText
+                };
                 repository.LogRepository.Insert(log);
                 repository.Commit();
             }
@@ -44,8 +46,9 @@ namespace ServiceLayer
                     var logs = repository.LogRepository.GetLogByCategory(type);
                     return Mapper.Map<LogDTO[]>(logs);
                 }
+
+                return null;
             }
-            return null;
         }
 
         /// <summary>

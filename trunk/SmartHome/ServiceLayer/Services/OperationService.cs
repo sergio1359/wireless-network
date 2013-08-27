@@ -84,7 +84,6 @@ namespace ServiceLayer
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operation, object[] args)
         {
-            int idRes = -1;
             using (UnitOfWork repository = new UnitOfWork())
             {
                 HomeDevice homeDevDestino = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
@@ -102,12 +101,14 @@ namespace ServiceLayer
 
                 homeDev.Operations.Add(op);
 
-                idRes = repository.OperationRepository.Insert(op).Id;
+                int idRes = repository.OperationRepository.Insert(op).Id;
 
                 repository.Commit();
+
+                return idRes;
             }
 
-            return idRes;
+            
         }
         #endregion
 
@@ -115,13 +116,11 @@ namespace ServiceLayer
 
         public ThemeDTO[] GetThemes()
         {
-            IQueryable<Theme> themes;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                themes = repository.ThemesRespository.GetAll();
+                var themes = repository.ThemesRespository.GetAll();
+                return Mapper.Map<ThemeDTO[]>(themes);
             }
-
-            return Mapper.Map<ThemeDTO[]>(themes);
         }
 
         public void ExecuteTheme(int idTheme)
@@ -137,16 +136,15 @@ namespace ServiceLayer
 
         public OperationDTO[] GetOperationsOfTheme(int idTheme)
         {
-            Theme theme;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                theme = repository.ThemesRespository.GetById(idTheme);
+                Theme theme = repository.ThemesRespository.GetById(idTheme);
+
+                if (theme == null)
+                    return null;
+
+                return Mapper.Map<OperationDTO[]>(theme.Operations);
             }
-
-            if (theme == null)
-                return null;
-
-            return Mapper.Map<OperationDTO[]>(theme.Operations);
         }
 
         public void RemoveTheme(int idTheme)
@@ -186,7 +184,6 @@ namespace ServiceLayer
 
         public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
         {
-            int idRes = -1;
             using (UnitOfWork repository = new UnitOfWork())
             {
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
@@ -208,9 +205,8 @@ namespace ServiceLayer
                     Time = time,
                     Operation = operationInternal
                 };
-                idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
+                return repository.TimeOperationRepository.Insert(timeOperation).Id;
             }
-            return idRes;
         }
 
         public void RemoveTimeOperation(int idTimeOperation)
