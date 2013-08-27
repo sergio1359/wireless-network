@@ -38,12 +38,10 @@ namespace ServiceLayer
         /// <returns></returns>
         public string GetHomeName()
         {
-            string result;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                result = repository.HomeRespository.GetHome().Name;
+                return repository.HomeRespository.GetHome().Name;
             }
-            return result;
         }
 
         /// <summary>
@@ -68,12 +66,10 @@ namespace ServiceLayer
         /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
-            Coordenate coordenates;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                coordenates = repository.HomeRespository.GetHome().Location;
+                return repository.HomeRespository.GetHome().Location;
             }
-            return coordenates;
         }
 
         /// <summary>
@@ -100,18 +96,16 @@ namespace ServiceLayer
         /// </summary>
         public void UpdateConfiguration(int idNode)
         {
-            Node node;
-            Home home;
-
             using (UnitOfWork repository = new UnitOfWork())
             {
-                node = repository.NodeRespository.GetById(idNode);
-                home = repository.HomeRespository.GetHome();
-            }
+                Node node = repository.NodeRespository.GetById(idNode);
+                Home home = repository.HomeRespository.GetHome();
+
                 if (node == null)
                     return;
 
-                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);            
+                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);   
+            }         
         }
         #endregion
 
@@ -122,12 +116,12 @@ namespace ServiceLayer
         /// <returns>Dictionary ID, Name of zones</returns>
         public ZoneDTO[] GetZones()
         {
-            IQueryable<Zone> zones;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                zones = repository.ZoneRepository.GetAll();
+                var zones = repository.ZoneRepository.GetAll();
+
+                return Mapper.Map<ZoneDTO[]>(zones);
             }
-            return Mapper.Map<ZoneDTO[]>(zones);
         }
 
         /// <summary>
@@ -137,10 +131,9 @@ namespace ServiceLayer
         /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
-            Zone zone;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                zone = new Zone()
+                Zone zone = new Zone()
                 {
                     Name = nameZone,
                     Home = repository.HomeRespository.GetHome(),
@@ -159,19 +152,32 @@ namespace ServiceLayer
                 zone.MainView = view;
 
                 repository.Commit();
-            }
 
-            return zone.Id;
+                return zone.Id;
+            }
         }
 
         /// <summary>
-        /// Remove a Zone at Home
+        /// Remove a Zone at Home CHECK
         /// </summary>
         /// <param name="idZone"></param>
         public void RemoveZone(int idZone)
         {
-            //NO ES UN METODO SENCILLO DE PROGRAMAR
-            throw new NotImplementedException();
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Zone zone = repository.ZoneRepository.GetById(idZone);
+
+                repository.ViewRepository.Delete(zone.MainView);
+
+                for (int i = 0; i < zone.Views.Count; i++)
+                {
+                    repository.ViewRepository.Delete(zone.Views.ElementAt(i));
+                }
+
+                repository.ZoneRepository.Delete(zone);
+
+                repository.Commit();
+            }
         }
 
         /// <summary>
@@ -200,29 +206,28 @@ namespace ServiceLayer
         #region Views
         public ViewDTO[] GetViews(int idZone)
         {
-            Zone zone;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                zone = repository.ZoneRepository.GetById(idZone);
-            }
-            if (zone == null)
-                return null;
+                Zone zone = repository.ZoneRepository.GetById(idZone);
 
-            return Mapper.Map<ViewDTO[]>(zone.Views);
+                if (zone == null)
+                    return null;
+
+                return Mapper.Map<ViewDTO[]>(zone.Views);
+            }
         }
 
         public byte[] GetViewImage(int idView)
         {
-            View view;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                view = repository.ViewRepository.GetById(idView);
+                View view = repository.ViewRepository.GetById(idView);
+
+                if (view == null)
+                    return null;
+
+                return view.ImageMap;
             }
-
-            if (view == null)
-                return null;
-
-            return view.ImageMap;
         }
 
         public void SetViewImage(int idView, byte[] newImage)
@@ -242,15 +247,15 @@ namespace ServiceLayer
 
         public string GetNameView(int idView)
         {
-            View view;
             using (UnitOfWork repository = new UnitOfWork())
             {
-                view = repository.ViewRepository.GetById(idView);
-            }
-            if (view == null)
-                return null;
+                View view = repository.ViewRepository.GetById(idView);
 
-            return view.Name;
+                if (view == null)
+                    return null;
+
+                return view.Name;
+            }
         }
 
         /// <summary>
@@ -284,7 +289,6 @@ namespace ServiceLayer
         /// <returns>Return the identification of the new View</returns>
         public int AddView(int idZone, string nameView)
         {
-            View view;
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Zone zone = repository.ZoneRepository.GetById(idZone);
@@ -292,7 +296,7 @@ namespace ServiceLayer
                 if (zone == null)
                     return -1;
 
-                view = new View()
+                View view = new View()
                 {
                     Name = nameView,
                     Zone = zone,
@@ -302,8 +306,9 @@ namespace ServiceLayer
                 zone.Views.Add(view);
 
                 repository.Commit();
+
+                return view.Id;
             }
-            return view.Id;
         }
 
         /// <summary>
