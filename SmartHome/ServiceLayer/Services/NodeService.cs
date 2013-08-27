@@ -64,12 +64,11 @@ namespace ServiceLayer
             {
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (homeDevice == null)
-                    return;
-
-                homeDevice.Connector.UnlinkHomeDevice();
-
-                repository.Commit();
+                if (homeDevice != null)
+                {
+                    homeDevice.Connector.UnlinkHomeDevice();
+                    repository.Commit();
+                }
             }
         }
 
@@ -190,11 +189,10 @@ namespace ServiceLayer
                 Node node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return;
-
-                node.Name = newName;
-
-                repository.Commit();
+                {
+                    node.Name = newName;
+                    repository.Commit();
+                }
             }
         }
 
@@ -218,11 +216,10 @@ namespace ServiceLayer
                 Node node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return;
-
-                node.Address = newAddress;
-
-                repository.Commit();
+                {
+                    node.Address = newAddress;
+                    repository.Commit();
+                }
             }
         }
 
