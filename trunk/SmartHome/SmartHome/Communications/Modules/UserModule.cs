@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Entities.HomeDevices;
 using SmartHome.Communications.Modules.Common;
 using SmartHome.Comunications;
 using SmartHome.Comunications.Messages;
@@ -14,6 +15,11 @@ namespace SmartHome.Communications.Modules
 {
     class UserModule : ModuleBase
     {
+        [RequiredModule]
+        public StatusModule statusModule;
+
+        private Dictionary<HomeDevice, TaskCompletionSource<bool>> pendingRequests;
+
         public UserModule(CommunicationManager communicationManager)
             : base(communicationManager)
         {
@@ -21,6 +27,13 @@ namespace SmartHome.Communications.Modules
         }
 
         #region Overridden Methods
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            statusModule.StateRefreshed += statusModule_StateRefreshed;
+        }
+
         public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
         {
             //Do Nothing
@@ -47,5 +60,21 @@ namespace SmartHome.Communications.Modules
                 routingEnabled: true);
         } 
         #endregion
+
+        #region Private Methods
+        void statusModule_StateRefreshed(object sender, HomeDevice e)
+        {
+            if (this.pendingRequests.ContainsKey(e))
+            {
+                this.pendingRequests[e].SetResult(true);
+            }
+        }
+        #endregion
+
+        public async Task<bool> RefreshHomeDevice(HomeDevice homeDevice, float timeout)
+        {
+            //TODO: To be implemented
+            return false;
+        }
     }
 }
