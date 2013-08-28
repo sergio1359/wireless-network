@@ -17,12 +17,19 @@ using DataLayer;
 
 namespace SmartHome.Communications.Modules.Config
 {
+    internal class ConfigTransaction
+    {
+        public ushort Checksum;
+        public DateTime TimeFlag;
+        public FragmentWriteTransaction FragmentWriteTransaction;
+    }
+
     public class ConfigModule : ModuleBase
     {
         /// <summary>
         /// This dictionary contains the current config write transactions and the checksum valu for each of them.
         /// </summary>
-        private Dictionary<ushort, Tuple<ushort, FragmentWriteTransaction>> currentWriteTransactions;
+        private Dictionary<ushort, ConfigTransaction> currentWriteTransactions;
 
         private List<ushort> waitingForChecksum;
 
@@ -37,14 +44,14 @@ namespace SmartHome.Communications.Modules.Config
         {
             get
             {
-                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.Item2.Percentage });
+                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.FragmentWriteTransaction.Percentage });
             }
         }
 
         public ConfigModule(CommunicationManager communicationManager)
             : base(communicationManager)
         {
-            this.currentWriteTransactions = new Dictionary<ushort, Tuple<ushort, FragmentWriteTransaction>>();
+            this.currentWriteTransactions = new Dictionary<ushort, ConfigTransaction>();
 
             this.waitingForChecksum = new List<ushort>();
 
@@ -85,6 +92,7 @@ namespace SmartHome.Communications.Modules.Config
         }
 
         #region Overridden Methods
+
         public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
         {
             OperationMessage message = (OperationMessage)inputMessage;
@@ -95,25 +103,31 @@ namespace SmartHome.Communications.Modules.Config
                 {
                     //TODO: Check other params to avoid exceptions
                     var currentTransactionVars = this.currentWriteTransactions[message.SourceAddress];
-                    var nodeTransaction = currentTransactionVars.Item2;
+                    var nodeTransaction = currentTransactionVars.FragmentWriteTransaction;
 
-                    if (!nodeTransaction.ProcessResponse(message).Result)
-                    {
-                        //TODO: Check the problem
-                    }
-                    else if (nodeTransaction.IsCompleted)
+                    if (nodeTransaction.IsCompleted)
                     {
                         using (UnitOfWork repository = new UnitOfWork())
                         {
                             Node updatedNode = repository.NodeRespository.GetByNetworkAddress(nodeTransaction.DestinationAddress);
 
-                            //TODO: Update the new Checksum
-                            updatedNode.ConfigChecksum = currentTransactionVars.Item1;
+                            if (updatedNode.LastChecksumUpdate == currentTransactionVars.TimeFlag)
+                            {
+                                updatedNode.ConfigChecksum = currentTransactionVars.Checksum;
+                                updatedNode.LastChecksumUpdate = currentTransactionVars.TimeFlag;
 
-                            repository.Commit();
+                                repository.Commit();
 
-                            PrintLog(false, string.Format("The node 0x{0:X4} has been updated successfully", updatedNode.Address));
+                                PrintLog(false, string.Format("The node 0x{0:X4} has been updated successfully", updatedNode.Address));
+                            }
+                            else
+                            {
+                                this.SendConfiguration(updatedNode, repository.HomeRespository.GetHome());
+                            }
                         }
+                    }else if (!nodeTransaction.ProcessResponse(message).Result)
+                    {
+                        //TODO: Check the problem
                     }
                 }
             }
@@ -188,11 +202,17 @@ namespace SmartHome.Communications.Modules.Config
                 var configuration = node.GetBinaryConfiguration(home);
 
                 var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), (ushort)node.Address, configuration.Item2);
-                this.currentWriteTransactions.Add((ushort)node.Address, new Tuple<ushort, FragmentWriteTransaction>(configuration.Item1, newTransaction));
+                this.currentWriteTransactions.Add((ushort)node.Address, new ConfigTransaction()
+                {
+                    Checksum = configuration.Item1,
+                    FragmentWriteTransaction = newTransaction,
+                    TimeFlag = (DateTime)node.LastChecksumUpdate,
+                });
 
                 if (!await newTransaction.StartTransaction())
                 {
                     //TODO: Check the problem
+                    PrintLog(true, string.Format("An error occurred on configuration update for node 0x{0:X4}", node.Address));
                 }
             }
         }

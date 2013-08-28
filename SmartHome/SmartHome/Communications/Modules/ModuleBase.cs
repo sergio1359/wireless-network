@@ -128,6 +128,11 @@ namespace SmartHome.Comunications.Modules
 
         public abstract void ProcessReceivedMessage(IMessage inputMessage);
 
+        public virtual void Initialize()
+        { 
+
+        }
+
         protected abstract Filter ConfigureInputFilter();
 
         protected abstract OutputParameters ConfigureOutputParameters();
