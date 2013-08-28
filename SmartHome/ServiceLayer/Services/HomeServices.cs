@@ -8,7 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using SmartHome.BusinessEntities;
-using SmartHome.Comunications;
+using SmartHome.Communications;
 using SmartHome.Communications.Modules.Config;
 #endregion
 

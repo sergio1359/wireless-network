@@ -10,9 +10,9 @@ using System.Timers;
 using DataLayer;
 using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules;
+using SmartHome.Communications;
+using SmartHome.Communications.Messages;
+using SmartHome.Communications.Modules;
 using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 #endregion
@@ -70,7 +70,7 @@ namespace SmartHome.Communications.Modules
         }
 
         #region Overridden Methods
-        public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
+        public override void ProcessReceivedMessage(Communications.Messages.IMessage inputMessage)
         {
             OperationMessage message = (OperationMessage)inputMessage;
 

@@ -1,5 +1,5 @@
 ﻿
-namespace SmartHome.Comunications.Messages
+namespace SmartHome.Communications.Messages
 {
     public abstract class IMessage
     {

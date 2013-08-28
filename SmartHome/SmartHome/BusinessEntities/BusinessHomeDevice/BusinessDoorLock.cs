@@ -1,6 +1,6 @@
 ﻿#region Using Statements
 using DataLayer.Entities.HomeDevices;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 #endregion
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice

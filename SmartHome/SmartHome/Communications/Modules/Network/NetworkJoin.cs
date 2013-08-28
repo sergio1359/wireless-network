@@ -1,7 +1,7 @@
 ﻿#region Using Statements
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules;
+using SmartHome.Communications;
+using SmartHome.Communications.Messages;
+using SmartHome.Communications.Modules;
 using SmartHome.Memory;
 using System;
 using System.Collections.Generic;

@@ -222,9 +222,9 @@ int main(void)
 	
 	USART_Init();
 	
-	CONFIG_Init();
-	
 	BASE_Init();
+	
+	CONFIG_Init();
 	
 	/*
 	TIME_t debugTime;

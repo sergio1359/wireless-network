@@ -1,20 +1,18 @@
 ﻿#region Using Statements
 using SerialPortManager.ConnectionManager;
-using SmartHome.Communications.Modules;
-using SmartHome.Communications.SerialManager;
-using SmartHome.Comunications.Modules;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartHome.Communications.Modules;
 using SmartHome.Communications.Modules.Config;
 using SmartHome.Communications.Modules.Network;
 using SmartHome.Communications.Modules.Common;
 using System.Configuration;
 #endregion
 
-namespace SmartHome.Comunications
+namespace SmartHome.Communications
 {
     public class CommunicationManager
     {
@@ -119,6 +117,8 @@ namespace SmartHome.Comunications
                         throw new InvalidProgramException("The required module " + reqModuleType.Name + " for " + module.GetType().Name + " is not loaded in the system.");
                     }
                 }
+
+                module.Initialize();
             }
         }
 
@@ -272,6 +272,10 @@ namespace SmartHome.Comunications
         #endregion
 
         #region Public Methods
+        public void Initialize()
+        {
+        }
+
         public async Task<bool> SendMessage(OutputHeader message)
         {
             ushort destinationAddress = message.Content.DestinationAddress;

@@ -1,10 +1,10 @@
 ﻿#region Using Statements
 using DataLayer.Entities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using System.Linq;
 using System.Reflection;
-using SmartHome.Comunications;
+using SmartHome.Communications;
 using SmartHome.Communications.Modules;
 using System.Threading.Tasks;
 

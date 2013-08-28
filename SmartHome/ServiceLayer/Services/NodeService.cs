@@ -9,7 +9,7 @@ using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using AutoMapper;
 using System.Linq;
-using SmartHome.Comunications;
+using SmartHome.Communications;
 using SmartHome.Communications.Modules.Config;
 using SmartHome.Communications.Modules;
 using System.Threading.Tasks;

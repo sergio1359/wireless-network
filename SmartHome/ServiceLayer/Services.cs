@@ -66,6 +66,8 @@ namespace ServiceLayer
         static Services()
         {
             Mapper.Initialize(t => t.AddProfile<ServiceProfile>());
+
+            SmartHome.Communications.CommunicationManager.Instance.Initialize();
         }
     }
 }

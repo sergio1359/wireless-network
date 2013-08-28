@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities;
 using SmartHome.Communications.Modules.Common;
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules;
+using SmartHome.Communications;
+using SmartHome.Communications.Messages;
+using SmartHome.Communications.Modules;
 using SmartHome.BusinessEntities;
 using System.IO;
 using System.Timers;
@@ -93,7 +93,7 @@ namespace SmartHome.Communications.Modules.Config
 
         #region Overridden Methods
 
-        public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
+        public override void ProcessReceivedMessage(Communications.Messages.IMessage inputMessage)
         {
             OperationMessage message = (OperationMessage)inputMessage;
 

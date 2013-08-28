@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SmartHome.Comunications.Messages
+namespace SmartHome.Communications.Messages
 {
     public partial class OperationMessage : IMessage
     {

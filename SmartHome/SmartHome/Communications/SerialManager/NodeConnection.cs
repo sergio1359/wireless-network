@@ -1,6 +1,6 @@
 ﻿#region Using Statements
 using SerialPortManager.ConnectionManager;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.IO;
 
 #endregion
 
-namespace SmartHome.Communications.SerialManager
+namespace SmartHome.Communications
 {
     public class NodeConnection
     {
@@ -35,7 +35,7 @@ namespace SmartHome.Communications.SerialManager
         };
         #endregion
 
-        #region Private Vars
+        #region Private Fields
         private SerialPort serialPort;
 
         private SerialReceiverStates receiverState;

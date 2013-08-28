@@ -1,7 +1,7 @@
 ﻿using SerialPortManager.ConnectionManager;
 using SmartHome.Communications.Modules;
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications;
+using SmartHome.Communications.Messages;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;

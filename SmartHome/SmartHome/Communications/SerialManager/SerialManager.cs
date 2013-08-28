@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using System.Timers; 
+using System.Timers;
 #endregion
 
-namespace SmartHome.Communications.SerialManager
+namespace SmartHome.Communications
 {
     public class SerialManager
     {
