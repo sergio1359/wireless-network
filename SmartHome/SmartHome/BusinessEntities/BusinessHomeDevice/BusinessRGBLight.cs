@@ -8,7 +8,6 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
     public static class BusinessRGBLight
     {
-
         [OperationAttribute]
         public static OperationMessage Random(this RGBLight rgbLight, byte seconds)
         {
@@ -51,6 +50,13 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         public static OperationMessage White(this RGBLight rgbLight)
         {
             return rgbLight.ToColor(Color.White, 1);
+        }
+
+        public static OperationMessage RefreshState(this RGBLight rgbLight)
+        {
+            ushort destinationAddress = (ushort)(rgbLight.Connector == null ? 0 : rgbLight.Connector.Node.Address);
+
+            return OperationMessage.ColorRead((ushort)rgbLight.Id, destinationAddress);
         }
     }
 }

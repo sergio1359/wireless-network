@@ -47,7 +47,7 @@ namespace ServiceLayer
                     return 2;
 
                 //UPDATE CHECKSUM
-                connector.Node.ConfigChecksum = null;
+                connector.Node.UpdateChecksum(null);
 
                 connector.LinkHomeDevice(homeDevice);
 
@@ -70,7 +70,7 @@ namespace ServiceLayer
                 if (homeDevice != null)
                 {
                     //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.ConfigChecksum = null;
+                    homeDevice.Connector.Node.UpdateChecksum(null);
 
                     homeDevice.Connector.UnlinkHomeDevice();
                     repository.Commit();
@@ -217,7 +217,7 @@ namespace ServiceLayer
                 if (node == null)
                 {
                     //UPDATE CHECKSUM
-                    node.ConfigChecksum = null;
+                    node.UpdateChecksum(null);
 
                     node.Address = newAddress;
                     repository.Commit();
@@ -278,5 +278,53 @@ namespace ServiceLayer
         {
             return Enum.GetNames(typeof(BaseTypes));
         }
+
+        public bool LinkProduct(int idConnector, string typeProduct)
+        {
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Connector connector = repository.ConnectorRepository.GetById(idConnector);
+
+                if (connector == null)
+                    return false;
+
+                if (connector.InUse)
+                    return false;
+
+                Type type = Type.GetType(typeProduct);
+
+                connector.LinkHomeDevice(type);
+                return true;
+            }
+        }
+
+        public bool UnlinkProduct(int idConnector)
+        {
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Connector connector = repository.ConnectorRepository.GetById(idConnector);
+
+                if (connector == null)
+                    return false;
+
+                connector.UnlinkHomeDevice();
+                return true;
+            }
+        }
+
+        public ConnectorDTO[] GetConnectorProductsConnected()
+        {
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
+
+                return Mapper.Map<ConnectorDTO[]>(connectors);
+            }
+        }
+
+        //public ConnectorDTO[] GetConnectorCapableProducts(int idNode, string type)
+        //{
+
+        //}
     }
 }
