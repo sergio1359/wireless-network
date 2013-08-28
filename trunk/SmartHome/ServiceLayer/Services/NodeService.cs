@@ -119,14 +119,7 @@ namespace ServiceLayer
                         repository.Commit();
                     }
 
-                    bool acceptResult = await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
-
-                    if (acceptResult)
-                    {
-                        CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
-                    }
-
-                    return acceptResult;
+                    return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
                 }
                 else
                 {

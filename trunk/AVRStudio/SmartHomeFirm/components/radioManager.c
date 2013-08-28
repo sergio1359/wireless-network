@@ -404,6 +404,12 @@ static void rfDataInd(NWK_DataInd_t *ind)
 			
 			//Update network parameters
 			runningConfiguration.topConfiguration.networkConfig.deviceAddress = msg->Address;
+			runningConfiguration.topConfiguration.networkConfig.channel = msg->Channel;
+			runningConfiguration.topConfiguration.networkConfig.panId = msg->PanId;
+			memcpy((uint8_t *)runningConfiguration.topConfiguration.networkConfig.securityKey, msg->Network_AES_Key, 16);
+			
+			CONFIG_SaveTemporalConfig();
+			
 			NWK_SetAddr(msg->Address);
 			//NWK_SetPanId(msg->PanId);
 			//PHY_SetChannel(msg->Channel);
