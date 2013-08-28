@@ -46,6 +46,9 @@ namespace ServiceLayer
                 if (homeDevice.InUse)
                     return 2;
 
+                //UPDATE CHECKSUM
+                connector.Node.ConfigChecksum = null;
+
                 connector.LinkHomeDevice(homeDevice);
 
                 repository.Commit();
@@ -66,6 +69,9 @@ namespace ServiceLayer
 
                 if (homeDevice != null)
                 {
+                    //UPDATE CHECKSUM
+                    homeDevice.Connector.Node.ConfigChecksum = null;
+
                     homeDevice.Connector.UnlinkHomeDevice();
                     repository.Commit();
                 }
@@ -217,6 +223,9 @@ namespace ServiceLayer
 
                 if (node == null)
                 {
+                    //UPDATE CHECKSUM
+                    node.ConfigChecksum = null;
+
                     node.Address = newAddress;
                     repository.Commit();
                 }
