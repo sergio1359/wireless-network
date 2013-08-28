@@ -44,23 +44,13 @@ namespace DataLayer.Entities
         public ShieldTypes Shield { get; set; }
 
         [Range(1, 65535)]
-        private int? configChecksum { get; set; }
-
-        [NotMapped]
         public int? ConfigChecksum
         {
-            get
-            {
-                return configChecksum;
-            }
-            set
-            {
-                TimeLatestUpdateChecksum = DateTime.Now;
-                configChecksum = value;
-            }
+            get;
+            set;
         }
 
-        public DateTime TimeLatestUpdateChecksum { get; private set; }
+        public DateTime? LastChecksumUpdate { get; set; }
 
         public virtual Location Location { get; set; }
 
@@ -78,6 +68,12 @@ namespace DataLayer.Entities
         public Node()
         {
             this.Connectors = new List<Connector>();
+        }
+
+        public void UpdateChecksum(int? checksum)
+        {
+            this.ConfigChecksum = checksum;
+            this.LastChecksumUpdate = DateTime.Now;
         }
     }
 }
