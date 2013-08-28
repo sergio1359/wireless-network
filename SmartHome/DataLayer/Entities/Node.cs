@@ -1,10 +1,11 @@
 ﻿#region Using Statements
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq; 
+using System.Linq;
 #endregion
 
 namespace DataLayer.Entities
@@ -43,7 +44,23 @@ namespace DataLayer.Entities
         public ShieldTypes Shield { get; set; }
 
         [Range(1, 65535)]
-        public int? ConfigChecksum { get; set; }
+        private int? configChecksum { get; set; }
+
+        [NotMapped]
+        public int? ConfigChecksum
+        {
+            get
+            {
+                return configChecksum;
+            }
+            set
+            {
+                TimeLatestUpdateChecksum = DateTime.Now;
+                configChecksum = value;
+            }
+        }
+
+        public DateTime TimeLatestUpdateChecksum { get; private set; }
 
         public virtual Location Location { get; set; }
 

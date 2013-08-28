@@ -57,7 +57,12 @@ namespace ServiceLayer
                     return;
 
                 if (homeDevice.InUse)
+                {
+                    //UPDATE CHECKSUM
+                    homeDevice.Connector.Node.ConfigChecksum = null;
+
                     Services.NodeService.UnlinkHomeDevice(idHomeDevice);
+                }
 
                 repository.HomeDeviceRespository.Delete(homeDevice);
 

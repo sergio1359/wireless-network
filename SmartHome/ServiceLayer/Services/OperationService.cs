@@ -29,6 +29,12 @@ namespace ServiceLayer
 
                 if (operation != null)
                 {
+                    if (operation.SourceHomeDevice.InUse)
+                    {
+                        //UPDATE CHECKSUM
+                        operation.SourceHomeDevice.Connector.Node.ConfigChecksum = null;
+                    }
+
                     repository.OperationRepository.Delete(operation);
                     repository.Commit();
                 }
@@ -207,6 +213,12 @@ namespace ServiceLayer
                 };
                 int idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
 
+                if (homeDevice.InUse)
+                {
+                    //UPDATE CHECKSUM
+                    homeDevice.Connector.Node.ConfigChecksum = null;
+                }
+
                 repository.Commit();
 
                 return idRes;
@@ -221,6 +233,12 @@ namespace ServiceLayer
 
                 if (timeOp != null)
                 {
+                    if (timeOp.Operation.DestionationHomeDevice.InUse)
+                    {
+                        //UPDATE CHECKSUM
+                        timeOp.Operation.DestionationHomeDevice.Connector.Node.ConfigChecksum = null;
+                    }
+
                     repository.TimeOperationRepository.Delete(timeOp);
                     repository.Commit();
                 }
