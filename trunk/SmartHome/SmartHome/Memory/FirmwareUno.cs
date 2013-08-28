@@ -110,16 +110,14 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
 
-            //TODO: Set correct model
-            //base model = 2 (ATMega128RFA1_V2)
-            result.Add(0x01);
+            //base model
+            result.Add((byte)this.node.Base);
 
             //firmware version = 1
             result.Add(0x01);
 
-            //TODO: Set correct model
-            //shield model = 0
-            result.Add(0x00);
+            //shield mode
+            result.Add((byte)this.node.Shield);
 
             //Default Lenght (unknow at the moment)
             result.Add(0x00);
@@ -148,10 +146,6 @@ namespace SmartHome.Memory
 
             //deviceAddress
             result.AddRange(((ushort)node.Address).UshortToByte(baseConfiguration.LittleEndian));
-            
-            
-            //TODO!!!!
-
 
             ////chanel
             result.Add((byte)home.Security.Channel);

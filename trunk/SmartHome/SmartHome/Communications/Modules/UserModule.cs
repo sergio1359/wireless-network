@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.Communications.Modules.Common;
-using SmartHome.Comunications;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules; 
+using SmartHome.Communications;
+using SmartHome.Communications.Messages;
+using SmartHome.Communications.Modules;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+using System.Diagnostics;
 #endregion
 
 namespace SmartHome.Communications.Modules
@@ -23,7 +25,7 @@ namespace SmartHome.Communications.Modules
         public UserModule(CommunicationManager communicationManager)
             : base(communicationManager)
         {
-
+            this.pendingRequests = new Dictionary<HomeDevice, TaskCompletionSource<bool>>();
         }
 
         #region Overridden Methods
@@ -34,7 +36,7 @@ namespace SmartHome.Communications.Modules
             statusModule.StateRefreshed += statusModule_StateRefreshed;
         }
 
-        public override void ProcessReceivedMessage(Comunications.Messages.IMessage inputMessage)
+        public override void ProcessReceivedMessage(Communications.Messages.IMessage inputMessage)
         {
             //Do Nothing
         }
@@ -71,9 +73,52 @@ namespace SmartHome.Communications.Modules
         }
         #endregion
 
-        public async Task<bool> RefreshHomeDevice(HomeDevice homeDevice, float timeout)
+        public async Task<bool> RefreshHomeDevice(HomeDevice homeDevice, TimeSpan timeout)
         {
             //TODO: To be implemented
+            OperationMessage refreshMessage = homeDevice.RefreshState();
+
+            //If the home device can't be updated. Return true.
+            if (refreshMessage == null)
+                return true;
+
+            if (!this.pendingRequests.ContainsKey(homeDevice))
+            {
+                this.pendingRequests.Add(homeDevice, new TaskCompletionSource<bool>());
+
+                bool sent = await this.SendMessage(refreshMessage);
+
+                if (sent)
+                {
+                    var pendingConfirmationTask = this.pendingRequests[homeDevice];
+
+                    //Await for a confirmation with timeout
+                    Task delayTask = Task.Delay((int)timeout.TotalMilliseconds);
+                    Task firstTask = await Task.WhenAny(pendingConfirmationTask.Task, delayTask);
+
+                    bool result = false;
+
+                    if (firstTask == delayTask)
+                    {
+                        //Timeout
+                        this.PrintLog(true, "TIMEOUT during HD update");
+                        pendingConfirmationTask.SetCanceled();
+                        this.pendingRequests.Remove(homeDevice);
+                    }
+                    else
+                    {
+                        result = pendingConfirmationTask.Task.Result;
+                        this.pendingRequests.Remove(homeDevice);
+                    }
+
+                    return result;
+                }
+            }
+            else
+            {
+                return await this.pendingRequests[homeDevice].Task;
+            }
+
             return false;
         }
     }

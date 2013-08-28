@@ -1,12 +1,11 @@
 ﻿using SerialPortManager.ConnectionManager;
-using SmartHome.Communications.SerialManager;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace SmartHome.Comunications.Modules
+namespace SmartHome.Communications.Modules
 {
     public class Filter
     {

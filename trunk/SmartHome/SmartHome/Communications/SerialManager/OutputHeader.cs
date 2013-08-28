@@ -1,5 +1,5 @@
 ﻿#region Using Statements
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using System.Collections.Generic;
 #endregion
 

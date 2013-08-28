@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartHome.Comunications.Messages;
-using SmartHome.Comunications.Modules;
+using SmartHome.Communications.Messages;
+using SmartHome.Communications.Modules;
 #endregion
 
 namespace SmartHome.Communications.Modules.Common

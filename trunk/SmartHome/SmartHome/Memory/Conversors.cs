@@ -1,7 +1,7 @@
 ﻿using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using SmartHome.BusinessEntities;
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using SmartHome.Products;
 using System;
 using System.Collections.Generic;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text; 
 #endregion
 
-namespace SmartHome.Comunications.Messages
+namespace SmartHome.Communications.Messages
 {
     public partial class OperationMessage
     {

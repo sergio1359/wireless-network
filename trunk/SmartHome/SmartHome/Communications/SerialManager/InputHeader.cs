@@ -1,10 +1,10 @@
 ﻿#region Using Statements
-using SmartHome.Comunications.Messages;
+using SmartHome.Communications.Messages;
 using System;
 using System.Collections.Generic;
 #endregion
 
-namespace SmartHome.Communications.SerialManager
+namespace SmartHome.Communications
 {
     public class InputHeader
     {
