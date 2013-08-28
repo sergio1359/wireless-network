@@ -36,6 +36,30 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             }
         }
 
+        public static OperationMessage RefreshState(this HomeDevice homeDevice)
+        {
+            if (homeDevice is WallPlug)
+                return (homeDevice as WallPlug).RefreshState();
+            else if (homeDevice is Light)
+                return (homeDevice as Light).RefreshState();
+            else if (homeDevice is Dimmable)
+                return (homeDevice as Dimmable).RefreshState();
+            else if (homeDevice is HumiditySensor)
+                return (homeDevice as HumiditySensor).RefreshState();
+            else if (homeDevice is PowerSensor)
+                return (homeDevice as PowerSensor).RefreshState();
+            else if (homeDevice is PresenceSensor)
+                return (homeDevice as PresenceSensor).RefreshState();
+            else if (homeDevice is RGBLight)
+                return (homeDevice as RGBLight).RefreshState();
+            else if (homeDevice is SwitchButton)
+                return (homeDevice as SwitchButton).RefreshState();
+            else if (homeDevice is TemperatureSensor)
+                return (homeDevice as TemperatureSensor).RefreshState();
+            else
+                return null;
+        }
+
         public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice)
         {
             Type HomeDeviceType = homeDevice.GetType();
