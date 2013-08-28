@@ -4,7 +4,9 @@ using DataLayer;
 using DataLayer.Entities;
 using DataLayer.Entities.HomeDevices;
 using ServiceLayer.DTO;
+using SmartHome.BusinessEntities;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
+using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +61,7 @@ namespace ServiceLayer
                 if (homeDevice.InUse)
                 {
                     //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.ConfigChecksum = null;
+                    homeDevice.Connector.Node.UpdateChecksum(null);
 
                     Services.NodeService.UnlinkHomeDevice(idHomeDevice);
                 }
@@ -189,6 +191,11 @@ namespace ServiceLayer
         public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView, List<string> homeDeviceTypes, bool connected)
         {
             return GetHomeDevices(idView, homeDeviceTypes).Where(hd => hd.InUse == connected);
+        }
+
+        public string[] GetNameProducts()
+        {
+            return BusinessProduct.GetProducts.Select(p => p.Name).ToArray();
         }
 
     }

@@ -44,12 +44,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.listBoxHomeDevicesConnected = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonLinkProduct = new System.Windows.Forms.Button();
             this.listBoxConnectorsAvailable = new System.Windows.Forms.ListBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxNodeProduct = new System.Windows.Forms.ComboBox();
+            this.comboBoxListProduct = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonUnlinkProduct = new System.Windows.Forms.Button();
             this.listBoxUnlinkProducts = new System.Windows.Forms.ListBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -236,10 +236,10 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.buttonLinkProduct);
             this.groupBox3.Controls.Add(this.listBoxConnectorsAvailable);
-            this.groupBox3.Controls.Add(this.comboBox2);
-            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.comboBoxNodeProduct);
+            this.groupBox3.Controls.Add(this.comboBoxListProduct);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
@@ -251,14 +251,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "LINK PRODUCT";
             // 
-            // button1
+            // buttonLinkProduct
             // 
-            this.button1.Location = new System.Drawing.Point(6, 147);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(280, 51);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "LINK PRODUCT";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonLinkProduct.Enabled = false;
+            this.buttonLinkProduct.Location = new System.Drawing.Point(6, 147);
+            this.buttonLinkProduct.Name = "buttonLinkProduct";
+            this.buttonLinkProduct.Size = new System.Drawing.Size(280, 51);
+            this.buttonLinkProduct.TabIndex = 1;
+            this.buttonLinkProduct.Text = "LINK PRODUCT";
+            this.buttonLinkProduct.UseVisualStyleBackColor = true;
             // 
             // listBoxConnectorsAvailable
             // 
@@ -269,27 +270,27 @@
             this.listBoxConnectorsAvailable.TabIndex = 0;
             this.listBoxConnectorsAvailable.SelectedValueChanged += new System.EventHandler(this.SelectNewHomeDevice);
             // 
-            // comboBox2
+            // comboBoxNodeProduct
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(70, 48);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(211, 21);
-            this.comboBox2.TabIndex = 1;
-            this.comboBox2.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
+            this.comboBoxNodeProduct.FormattingEnabled = true;
+            this.comboBoxNodeProduct.Location = new System.Drawing.Point(70, 48);
+            this.comboBoxNodeProduct.Name = "comboBoxNodeProduct";
+            this.comboBoxNodeProduct.Size = new System.Drawing.Size(211, 21);
+            this.comboBoxNodeProduct.TabIndex = 1;
+            this.comboBoxNodeProduct.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
             // 
-            // comboBox1
+            // comboBoxListProduct
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(70, 16);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(211, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
+            this.comboBoxListProduct.FormattingEnabled = true;
+            this.comboBoxListProduct.Location = new System.Drawing.Point(70, 16);
+            this.comboBoxListProduct.Name = "comboBoxListProduct";
+            this.comboBoxListProduct.Size = new System.Drawing.Size(211, 21);
+            this.comboBoxListProduct.TabIndex = 1;
+            this.comboBoxListProduct.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button2);
+            this.groupBox4.Controls.Add(this.buttonUnlinkProduct);
             this.groupBox4.Controls.Add(this.listBoxUnlinkProducts);
             this.groupBox4.Location = new System.Drawing.Point(0, 198);
             this.groupBox4.Name = "groupBox4";
@@ -298,14 +299,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "UNLINK PRODUCT";
             // 
-            // button2
+            // buttonUnlinkProduct
             // 
-            this.button2.Location = new System.Drawing.Point(6, 174);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(276, 53);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "UNLINK PRODUCT";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonUnlinkProduct.Enabled = false;
+            this.buttonUnlinkProduct.Location = new System.Drawing.Point(6, 174);
+            this.buttonUnlinkProduct.Name = "buttonUnlinkProduct";
+            this.buttonUnlinkProduct.Size = new System.Drawing.Size(276, 53);
+            this.buttonUnlinkProduct.TabIndex = 1;
+            this.buttonUnlinkProduct.Text = "UNLINK PRODUCT";
+            this.buttonUnlinkProduct.UseVisualStyleBackColor = true;
             // 
             // listBoxUnlinkProducts
             // 
@@ -385,12 +387,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBoxHomeDevicesConnected;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonLinkProduct;
         private System.Windows.Forms.ListBox listBoxConnectorsAvailable;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxNodeProduct;
+        private System.Windows.Forms.ComboBox comboBoxListProduct;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonUnlinkProduct;
         private System.Windows.Forms.ListBox listBoxUnlinkProducts;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;

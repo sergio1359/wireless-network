@@ -53,5 +53,12 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
             return OperationMessage.DimmerWrite((ushort)dimmable.Id, (byte)(percentage * byte.MaxValue / 100.0), 0, destinationAddress);
         }
+
+        public static OperationMessage RefreshState(this Dimmable dimmable)
+        {
+            ushort destinationAddress = (ushort)(dimmable.Connector == null ? 0 : dimmable.Connector.Node.Address);
+
+            return OperationMessage.DimmerRead((ushort)dimmable.Id, destinationAddress);
+        }
     }
 }

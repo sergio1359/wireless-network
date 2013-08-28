@@ -14,6 +14,11 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
             comboBoxNode.Items.AddRange(Services.NodeService.GetNodes());
 
+            //Products
+            comboBoxListProduct.Items.AddRange(Services.HomeDeviceService.GetNameProducts());
+            comboBoxNodeProduct.Items.AddRange(Services.NodeService.GetNodes());
+            
+
             UpdateForm();
         }
 

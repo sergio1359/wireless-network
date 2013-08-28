@@ -38,5 +38,12 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
             return OperationMessage.LogicSwitch((ushort)light.Id, 0, destinationAddress);
         }
+
+        public static OperationMessage RefreshState(this Light light)
+        {
+            ushort destinationAddress = (ushort)(light.Connector == null ? 0 : light.Connector.Node.Address);
+
+            return OperationMessage.LogicRead((ushort)light.Id, destinationAddress);
+        }
     }
 }

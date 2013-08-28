@@ -32,7 +32,7 @@ namespace ServiceLayer
                     if (operation.SourceHomeDevice.InUse)
                     {
                         //UPDATE CHECKSUM
-                        operation.SourceHomeDevice.Connector.Node.ConfigChecksum = null;
+                        operation.SourceHomeDevice.Connector.Node.UpdateChecksum(null);
                     }
 
                     repository.OperationRepository.Delete(operation);
@@ -216,7 +216,7 @@ namespace ServiceLayer
                 if (homeDevice.InUse)
                 {
                     //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.ConfigChecksum = null;
+                    homeDevice.Connector.Node.UpdateChecksum(null);
                 }
 
                 repository.Commit();
@@ -236,7 +236,7 @@ namespace ServiceLayer
                     if (timeOp.Operation.DestionationHomeDevice.InUse)
                     {
                         //UPDATE CHECKSUM
-                        timeOp.Operation.DestionationHomeDevice.Connector.Node.ConfigChecksum = null;
+                        timeOp.Operation.DestionationHomeDevice.Connector.Node.UpdateChecksum(null);
                     }
 
                     repository.TimeOperationRepository.Delete(timeOp);
