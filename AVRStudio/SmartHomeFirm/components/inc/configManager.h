@@ -14,6 +14,10 @@
 
 #include "config.h"
 
+#define CONFIG_MAX_SIZE (EEPROM_SIZE/4)
+
+#define IS_TEMPORAL_CONFIG (runningConfiguration.topConfiguration.configHeader.firmVersion == 0xFF)
+
 #define TIME_OPERATION_LIST_START_ADDRESS				runningConfiguration.topConfiguration.dinamicIndex.timeOperationList
 #define OPERATION_LIST_START_ADDR						runningConfiguration.topConfiguration.dinamicIndex.operationList
 #define OPERATION_TIME_RESTRIC_LIST_START_ADDRESS		runningConfiguration.topConfiguration.dinamicIndex.operationTimeRestrictionList
@@ -35,10 +39,18 @@ typedef struct{
 	unsigned UARTDebug : 1;
 	unsigned batteryInstalled : 1;
 	unsigned reserved : 5; //MSB
+}SYSTEM_BIT_FLAGS_t;
+
+typedef union
+{
+	SYSTEM_BIT_FLAGS_t flags;
+	uint8_t raw;
 }SYSTEM_FLAGS_t;
 
 typedef struct{
+	uint8_t baseModel;	//Desired base model for the current config
 	uint8_t firmVersion;	//Desired firmware version for the current config
+	uint8_t shieldModel;	//Desired shield model for the current config
 	uint16_t length;		//Size of the current config
 	uint16_t checkSum;		//Crc16
 	WEEKDAY_t updateWeekDay;
@@ -107,11 +119,13 @@ typedef struct {
 typedef union
 {
 	TOP_CONFIGURATION_t  topConfiguration;
-	uint8_t raw[EEPROM_SIZE/4];
+	uint8_t raw[CONFIG_MAX_SIZE];
 }RUNNING_CONFIGURATION_t;
 
 
 void CONFIG_Init(void);
+
+void CONFIG_SaveTemporalConfig();
 
 inline uint16_t CONFIG_GetOperationAddress(OPERATION_HEADER_t* operation_header);
 

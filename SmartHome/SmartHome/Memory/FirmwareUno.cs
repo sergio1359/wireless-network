@@ -91,15 +91,15 @@ namespace SmartHome.Memory
             //Calculamos el tamaño en bytes
             ushort sizeMemory = (ushort)memory.Length;
 
-            memory[1] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[0];
-            memory[2] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[1];
+            memory[3] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[0];
+            memory[4] = sizeMemory.UshortToByte(baseConfiguration.LittleEndian)[1];
 
             //Generar el CRC
             byte[] crc = new Crc16().ComputeChecksumBytes(memory, baseConfiguration.LittleEndian);
 
-            //sustituimos el valor de CRC que esta en la posicion de memoria 0x02 0x03, no hace falta contar con endianidad
-            memory[3] = crc[0];
-            memory[4] = crc[1];
+            //sustituimos el valor de CRC que esta en la posicion de memoria 0x05 0x06, no hace falta contar con endianidad
+            memory[5] = crc[0];
+            memory[6] = crc[1];
 
             ushort crcResult = BitConverter.ToUInt16(crc, 0);
 
@@ -110,8 +110,16 @@ namespace SmartHome.Memory
         {
             List<byte> result = new List<byte>();
 
+            //TODO: Set correct model
+            //base model = 2 (ATMega128RFA1_V2)
+            result.Add(0x01);
+
             //firmware version = 1
             result.Add(0x01);
+
+            //TODO: Set correct model
+            //shield model = 0
+            result.Add(0x00);
 
             //Default Lenght (unknow at the moment)
             result.Add(0x00);
