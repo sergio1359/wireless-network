@@ -187,7 +187,7 @@ namespace ServiceLayer
             {
                 Node node = repository.NodeRespository.GetById(idNode);
 
-                if (node == null)
+                if (node != null)
                 {
                     node.Name = newName;
                     repository.Commit();
@@ -214,7 +214,7 @@ namespace ServiceLayer
             {
                 Node node = repository.NodeRespository.GetById(idNode);
 
-                if (node == null)
+                if (node != null)
                 {
                     //UPDATE CHECKSUM
                     node.UpdateChecksum(null);
