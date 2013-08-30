@@ -4,7 +4,7 @@ using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 #endregion
 
 namespace SmartHome.Products
@@ -17,14 +17,15 @@ namespace SmartHome.Products
             switch (shieldtype)
             {
                 case ShieldTypes.Debug:
-                    pinPorts.Add("Button",      new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("D7") }));
-                    pinPorts.Add("Light",       new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.SwitchLOW,  new PinPort[] { new PinPort("D6") }));
+                    pinPorts.Add("Button", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("D7") }));
+                    pinPorts.Add("Light", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.SwitchLOW, new PinPort[] { new PinPort("D6") }));
                     pinPorts.Add("Temperature", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
-                    pinPorts.Add("Humidity",    new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
-                    pinPorts.Add("Presence",    new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("B6") }));
+                    pinPorts.Add("Humidity", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
+                    pinPorts.Add("Presence", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("B6") }));
+                    pinPorts.Add("SensorConnector", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.ConnectorSensorBoard, new PinPort[] { new PinPort("A0"), new PinPort("A1"), new PinPort("A2"), new PinPort("A3"), new PinPort("A4"), new PinPort("A5") }));
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
 
             return pinPorts;
