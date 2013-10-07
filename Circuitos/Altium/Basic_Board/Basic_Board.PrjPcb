@@ -206,14 +206,6 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
-[GeneratedDocument1]
-DocumentPath=Project Outputs for Basic_Board\Design Rule Check - Basic_Board.html
-DItemRevisionGUID=
-
-[GeneratedDocument2]
-DocumentPath=..\Libraries\U.FL-R-SMT.PcbLib.htm
-DItemRevisionGUID=
-
 [OutputGroup1]
 Name=Netlist Outputs
 Description=
