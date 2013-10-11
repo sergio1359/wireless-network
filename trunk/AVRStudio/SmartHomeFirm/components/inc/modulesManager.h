@@ -20,6 +20,7 @@
 #include "time_module.h"
 #include "temhum_module.h"
 #include "presence_module.h"
+#include "dimmer_module.h"
 
 #define EXTENSION_OPCODE 0xFF
 
@@ -30,6 +31,7 @@ CONFIG_MODULE_DEFINITION  \
 TIME_MODULE_DEFINITION	  \
 TEMHUM_MODULE_DEFINITION  \
 PRESENCE_MODULE_DEFINITION  \
+DIMMER_MODULE_DEFINITION  \
 
 #define X(a, b, c) a,
 typedef enum  {
@@ -45,6 +47,7 @@ COMMANDS_TABLE_CONFIG   \
 COMMANDS_TABLE_TIME		\
 COMMANDS_TABLE_TEMHUM   \
 COMMANDS_TABLE_PRESENCE \
+COMMANDS_TABLE_DIMMER	\
 
 #define X(a, b, c, d, e, f) a = b,
 typedef enum  {
