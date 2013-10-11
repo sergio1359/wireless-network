@@ -233,6 +233,9 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\inc\EEPROM.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\inc\INTERRUPT.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\inc\IO.h">
       <SubType>compile</SubType>
     </Compile>
@@ -245,16 +248,25 @@ avr-objcopy -O binary -R .eeprom WSNDemo.elf WSNDemo.bin</PostBuildEvent>
     <Compile Include="libraries\DISPLAY.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="libraries\INTERRUPT.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libraries\RTC.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\config_module.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\dimmer_module.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\inc\APP_SESSION.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\inc\config_module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\inc\dimmer_module.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\inc\logic_module.h">
