@@ -23,7 +23,7 @@
  * [PE7 : INT7]
  */
 
-static volatile void (*intFunc[EXTERNAL_NUM_INTERRUPTS])();
+static volatile void (*intFunc[EXTERNAL_NUM_INTERRUPTS])(void);
 
 void INTERRUPT_Attach(uint8_t interruptNum, void (*userFunc)(void), INTRERRUPT_MODE_t mode)
 {

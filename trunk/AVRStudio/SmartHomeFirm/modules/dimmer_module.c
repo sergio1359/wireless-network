@@ -54,6 +54,8 @@ static void dimmerTimerHandler(SYS_Timer_t *timer);
 static _Bool proccessDimmerPortAction(uint16_t address, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress);
 static uint8_t findDimmerElem(uint16_t deviceAddress);
 static inline void sendDimmerResponse(uint16_t destinationAddress, uint16_t deviceAddress, uint8_t value);
+static inline void changeElemValue(uint8_t elemIndex, uint8_t newValue);
+static inline void checkCompElems(uint8_t firstElemIndex, uint16_t* compPtr);
 
 void dimmerModule_Init()
 {
@@ -64,7 +66,7 @@ void dimmerModule_Init()
 	
 	num_of_dimmer_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable];			//First byte is number of configs
 	zeroCrossPin		= runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable + 1];		//Second byte is the Zero Cross pin
-	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable + 2];		//At thrid byte the list start
+	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable + 2];		//At third byte the list start
 	
 	if(num_of_dimmer_elems > MAX_DIMMER_DEVICES)
 	{
@@ -78,12 +80,12 @@ void dimmerModule_Init()
 		mask = MASK_FROM_PINADDRESS(configPtr->pinAddress);
 
 		HAL_GPIO_PORT_out(portPtr, mask);
-		HAL_GPIO_PORT_clr(portPtr, mask);
+		HAL_GPIO_PORT_clr(portPtr, mask); // Off at startup
 		
 		dimmer_elems[i].config = configPtr;
 		dimmer_elems[i].portPtr = portPtr;
 		dimmer_elems[i].mask = mask;
-		dimmer_elems[i].currentValue = 130; //Off at startup
+		dimmer_elems[i].currentValue = 0;
 		configPtr++;
 	}
 	
@@ -100,13 +102,13 @@ void dimmerModule_Init()
 		dimmerTimer.handler = dimmerTimerHandler;
 		SYS_TimerStart(&dimmerTimer);
 		
-		//Initialize TIMER5
-		OCR5A = 0xFFFF;
-		//Nortmal mode
-		TCCR5B |= (1 << CS11);              // Prescaler 8
-		TIMSK5 |= (1 << OCIE5A);            // Enable TC5 interrupt
+		//Initialize TIMER5 in normal mode
+		OCR5A = 0xFFFF;				// For elem 0 & 3
+		OCR5B = 0xFFFF;				// For elem 1 & 4
+		OCR5C = 0xFFFF;				// For elem 2 & 5
+		TCCR5B |= (1 << CS51);		// Prescaler 8
 		
-		//TODO: Initialize zero crossing interrupt
+		//Initialize zero crossing interrupt
 		INTERRUPT_Attach(zeroCrossPin, dimmerZeroCrossInterrupt, RISING);
 	}
 }
@@ -172,7 +174,49 @@ void sendDimmerResponse(uint16_t destinationAddress, uint16_t deviceAddress, uin
 	OM_ProccessResponseOperation(&dimmerResponse.header);
 }
 
-_Bool proccessDimmerPortAction(uint16_t deviceAddress, _Bool read, uint8_t value, uint8_t seconds, uint16_t sourceAddress)
+void changeElemValue(uint8_t elemIndex, uint8_t newValue)
+{
+	DIMMER_ELEM_t* elem = &dimmer_elems[elemIndex];
+	
+	elem->previousValue = elem->currentValue;
+	
+	if(newValue < 5)
+	{
+		//Full OFF
+		HAL_GPIO_PORT_clr(elem->portPtr, elem->mask);
+		elem->currentValue = 0;
+		elem->timerValue = 0; //Never changes
+	}else if(newValue >= 128)
+	{
+		//Full ON
+		HAL_GPIO_PORT_set(elem->portPtr, elem->mask);
+		elem->currentValue = 128;
+		elem->timerValue = 0; //Never changes
+	}else
+	{
+		//Dimming
+		elem->currentValue = newValue;
+		elem->timerValue = TIME_FRAGMENT * (128 - elem->currentValue);
+	
+		if((elemIndex == 0 || elemIndex == 3) && OCR5A == 0xFFFF)
+		{
+			OCR5A = elem->timerValue;
+			TIMSK5 |= (1 << OCIE5A);			// Enable TC5A interrupt		
+		}
+		else if((elemIndex == 1 || elemIndex == 4) && OCR5B == 0xFFFF)
+		{
+			OCR5B = elem->timerValue;
+			TIMSK5 |= (1 << OCIE5B);            // Enable TC5B interrupt
+		}
+		else if((elemIndex == 2 || elemIndex == 5) && OCR5C == 0xFFFF)
+		{
+			OCR5C = elem->timerValue;
+			TIMSK5 |= (1 << OCIE5C);            // Enable TC5C interrupt
+		}
+	}	
+}
+
+_Bool proccessDimmerPortAction(uint16_t deviceAddress, _Bool read, uint8_t newValue, uint8_t seconds, uint16_t sourceAddress)
 {
 	uint8_t configIndex = findDimmerElem(deviceAddress);
 
@@ -190,12 +234,10 @@ _Bool proccessDimmerPortAction(uint16_t deviceAddress, _Bool read, uint8_t value
 	}
 	else
 	{
-		//TODO: Maybe its better to use a conversion, to avoid inverted logic.
-		uint8_t correctedValue = value;
+		changeElemValue(configIndex, newValue);
 		
 		if(seconds > 0)
 		{
-			currentElem->previousValue = currentElem->currentValue;
 			currentElem->timerCounter = (uint16_t)seconds*5; //Enable timer
 		}
 		else
@@ -203,12 +245,8 @@ _Bool proccessDimmerPortAction(uint16_t deviceAddress, _Bool read, uint8_t value
 			currentElem->timerCounter = 0; //Disable timer
 		}
 		
-		currentElem->currentValue = correctedValue;
-		
-		
-		
 		//Notify to the coordinator
-		sendDimmerResponse(COORDINATOR_ADDRESS, deviceAddress, correctedValue);
+		sendDimmerResponse(COORDINATOR_ADDRESS, deviceAddress, newValue);
 	}
 }
 
@@ -222,57 +260,69 @@ static void dimmerTimerHandler(SYS_Timer_t *timer)
 		if(currentElem->timerCounter > 1)
 		{
 			currentElem->timerCounter--;
-		}else if(currentElem->timerCounter == 1) //Time to proccess
+		}else if(currentElem->timerCounter == 1) //Time to process
 		{
-			//Set previous value
-			currentElem->currentValue = currentElem->previousValue;
+			//Disable timer
+			currentElem->timerCounter = 0;
 			
-			currentElem->timerCounter = 0; //Disable timer
+			//Set previous value
+			changeElemValue(i, currentElem->previousValue);
 		}
 	}
 	
 	(void)timer;
 }
 
-static uint8_t updatedElements;
+void checkCompElems(uint8_t firstElemIndex, uint16_t* compPtr)
+{
+	DIMMER_ELEM_t* firstElem = &dimmer_elems[firstElemIndex];
+	DIMMER_ELEM_t* secondElem = num_of_dimmer_elems >= (firstElemIndex + 3) ? &dimmer_elems[firstElemIndex + 3] : 0;
+	_Bool updateSecondElem = (secondElem && secondElem->timerValue == (*compPtr));
+	
+	if(firstElem->timerValue == (*compPtr))
+	{
+		//Send a pulse
+		HAL_GPIO_PORT_set(firstElem->portPtr, firstElem->mask);
+		
+		if(secondElem)
+		(*compPtr) = secondElem->timerValue;
+	}
+	
+	if(updateSecondElem)
+	{
+		//Send a pulse
+		HAL_GPIO_PORT_set(secondElem->portPtr, secondElem->mask);
+		
+		(*compPtr) = firstElem->timerValue;
+	}
+	
+	_delay_us(10);
+	
+	HAL_GPIO_PORT_clr(firstElem->portPtr, firstElem->mask);
+	
+	if(updateSecondElem)
+	{
+		HAL_GPIO_PORT_clr(secondElem->portPtr, secondElem->mask);
+	}
+}
 
 void dimmerZeroCrossInterrupt()
 {
-	updatedElements = 0;
-	
 	//Restart counter
 	TCNT5 = 0;
 }
 
 ISR(TIMER5_COMPA_vect)
 {
-	uint8_t minimumValue = 130 * TIME_FRAGMENT;
-	
-	//Find the next elem with the nearest objective value
-	for(uint8_t i = 0; i < num_of_dimmer_elems; i++)
-	{
-		DIMMER_ELEM_t* currentElem = &dimmer_elems[i];
-		
-		if(currentElem->timerValue == OCR5A)
-		{
-			updatedElements++;
-			//Send a pulse
-			HAL_GPIO_PORT_set(currentElem->portPtr, currentElem->mask);
-			_delay_us(10);
-			HAL_GPIO_PORT_clr(currentElem->portPtr, currentElem->mask);
-		}else if(currentElem->timerValue > OCR5A)
-		{
-			//Pending elems
-			
-		}
-		
-		if(minimumValue > currentElem->timerValue)
-			minimumValue = currentElem->timerValue;
-	}
-	
-	//If all updated. Set the minimun value for the next round
-	if(updatedElements == num_of_dimmer_elems)
-	{
-		OCR5A = minimumValue;
-	}
+	checkCompElems(0, OCR5A);
+}
+
+ISR(TIMER5_COMPB_vect)
+{
+	checkCompElems(1, OCR5B);
+}
+
+ISR(TIMER5_COMPC_vect)
+{
+	checkCompElems(2, OCR5C);
 }
