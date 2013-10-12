@@ -286,12 +286,13 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 			if(currentElem->timerCounter > 1)
 			{
 				currentElem->timerCounter--;
-			}else if(currentElem->timerCounter == 1) //Time to proccess
+			}else if(currentElem->timerCounter == 1) //Time to process
 			{
+				//Disable timer
+				currentElem->timerCounter = 0;
+				
 				//Invert current value
 				HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
-				
-				currentElem->timerCounter = 0; //Disable timer
 			}
 		}
 	}
