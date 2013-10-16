@@ -56,22 +56,22 @@ namespace SmartHome.BusinessEntities
             return mapProduct[tagProduct].Item2;
         }
 
-        protected abstract List<Tuple<Type, int[]>> GetProduct();
+        public abstract List<Tuple<Type, int[]>> GetProduct();
 
-        protected abstract ConnectorTypes GetConnectorType();
+        public abstract ConnectorTypes GetConnectorType();
     }
 
 
     public class SensorBoard : BusinessProduct
     {
-        protected override List<Tuple<Type, int[]>> GetProduct()
+        public override List<Tuple<Type, int[]>> GetProduct()
         {
             List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
             result.Add(Tuple.Create(typeof(Button), new int[]{ 1 }));
             return result;
         }
 
-        protected override ConnectorTypes GetConnectorType()
+        public override ConnectorTypes GetConnectorType()
         {
             return ConnectorTypes.ConnectorSensorBoard;
         }
@@ -79,7 +79,7 @@ namespace SmartHome.BusinessEntities
 
     public class TemperatureHumidity : BusinessProduct
     {
-        protected override List<Tuple<Type, int[]>> GetProduct()
+        public override List<Tuple<Type, int[]>> GetProduct()
         {
             List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
             result.Add(Tuple.Create(typeof(TemperatureSensor), new int[] { 0 }));
@@ -87,7 +87,7 @@ namespace SmartHome.BusinessEntities
             return result;
         }
 
-        protected override ConnectorTypes GetConnectorType()
+        public override ConnectorTypes GetConnectorType()
         {
             return ConnectorTypes.LogicInput;
         }

@@ -80,6 +80,16 @@ namespace SmartHome.BusinessEntities
             return connector.ConnectorType == homeDevice.ConnectorCapable;
         }
 
+        public static bool IsCapable(this Connector connector, Type productName)
+        {
+            if (connector.ConnectorType == ConnectorTypes.DimmerPassZero)
+                return false;
+
+            BusinessProduct product =  (BusinessProduct) Activator.CreateInstance(productName) ;
+
+            return connector.ConnectorType == product.GetConnectorType();
+        }
+
         public static PinPort[] GetPinPort(this Connector connector)
         {
             return ProductConfiguration.GetShieldDictionary(connector.Node.Shield)[connector.Name].Item2;
