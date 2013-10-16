@@ -80,5 +80,20 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             buttonLinkHomeDevice.Enabled = true;
         }
+
+        private void ConnectorProductAvailable(object sender, EventArgs e)
+        {
+            if (comboBoxNodeProduct.SelectedItem != null && comboBoxListProduct.SelectedItem != null)
+            {
+                string product = (string)comboBoxListProduct.SelectedItem;
+
+                NodeDTO node = (NodeDTO)comboBoxNodeProduct.SelectedItem;
+
+                listBoxConnectorsAvailable.Items.Clear();
+                listBoxConnectorsAvailable.Items.AddRange(Services.NodeService.GetConnectorCapableProducts(node.Id, product));
+
+                buttonLinkProduct.Enabled = true;
+            }
+        }
     }
 }

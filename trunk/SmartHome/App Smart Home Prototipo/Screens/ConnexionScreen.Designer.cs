@@ -277,7 +277,7 @@
             this.comboBoxNodeProduct.Name = "comboBoxNodeProduct";
             this.comboBoxNodeProduct.Size = new System.Drawing.Size(211, 21);
             this.comboBoxNodeProduct.TabIndex = 1;
-            this.comboBoxNodeProduct.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
+            this.comboBoxNodeProduct.SelectedValueChanged += new System.EventHandler(this.ConnectorProductAvailable);
             // 
             // comboBoxListProduct
             // 
@@ -286,7 +286,7 @@
             this.comboBoxListProduct.Name = "comboBoxListProduct";
             this.comboBoxListProduct.Size = new System.Drawing.Size(211, 21);
             this.comboBoxListProduct.TabIndex = 1;
-            this.comboBoxListProduct.SelectedValueChanged += new System.EventHandler(this.UpdateCapableFreeConnector);
+            this.comboBoxListProduct.SelectedValueChanged += new System.EventHandler(this.ConnectorProductAvailable);
             // 
             // groupBox4
             // 

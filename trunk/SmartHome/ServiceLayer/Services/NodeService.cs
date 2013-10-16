@@ -322,9 +322,20 @@ namespace ServiceLayer
             }
         }
 
-        //public ConnectorDTO[] GetConnectorCapableProducts(int idNode, string type)
-        //{
+        public ConnectorDTO[] GetConnectorCapableProducts(int idNode, string product)
+        {
+            using (UnitOfWork repository = new UnitOfWork())
+            {
+                Node node = repository.NodeRespository.GetById(idNode);
+                Type typeProduct = Type.GetType(product);
 
-        //}
+                if (node == null || typeProduct == null)
+                    return null;
+
+                var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
+
+                return Mapper.Map<ConnectorDTO[]>(connectors);
+            }
+        }
     }
 }

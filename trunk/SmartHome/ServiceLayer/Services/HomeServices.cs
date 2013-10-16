@@ -87,6 +87,11 @@ namespace ServiceLayer
 
                 node.UnlinkAllConnectors();
 
+                //foreach (Connector connector in node.Connectors)
+                //{
+                //    repository.ConnectorRepository.Delete(connector);
+                //}
+
                 repository.NodeRespository.Delete(node);
 
                 repository.Commit();
