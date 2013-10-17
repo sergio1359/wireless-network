@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace ServiceLayer
 {
-    public class NodeService
+    public class NodeServices
     {
         /// <summary>
         /// Conecta un conector con un home device

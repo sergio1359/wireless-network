@@ -22,12 +22,12 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             textBoxHomeName.Text = Services.HomeService.GetHomeName();
 
             listBoxZones.Items.Clear();
-            listBoxZones.Items.AddRange(Services.HomeService.GetZones().ToArray());
+            listBoxZones.Items.AddRange(Services.ZoneService.GetZones().ToArray());
         }
 
         private void AddNewZone(object sender, EventArgs e)
         {
-            Services.HomeService.AddZone(textBoxNewNameZona.Text);
+            Services.ZoneService.AddZone(textBoxNewNameZona.Text);
             UpdateScreen();
         }
 
@@ -36,7 +36,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             if (listBoxZones.SelectedItem != null)
             {
                 ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
-                Services.HomeService.RemoveZone(zone.Id);
+                Services.ZoneService.RemoveZone(zone.Id);
                 UpdateScreen();
             }
         }
@@ -55,12 +55,12 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
                 if (zone.MainView.ImageMap.Length != 0)
                 {
-                    MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(zone.MainView.Id));
+                    MemoryStream ms = new MemoryStream(Services.ViewService.GetViewImage(zone.MainView.Id));
                     pictureBox.Image = Image.FromStream(ms);
                 }
 
                 listBoxViews.Items.Clear();
-                listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id).ToArray());
+                listBoxViews.Items.AddRange(Services.ViewService.GetViews(zone.Id).ToArray());
             }
         }
 
@@ -70,7 +70,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             {
                 ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
 
-                Services.HomeService.SetNameView(zone.MainView.Id, textBoxNameNode.Text);
+                Services.ViewService.SetNameView(zone.MainView.Id, textBoxNameNode.Text);
 
                 UpdateScreen();
             }
@@ -81,7 +81,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             if (listBoxZones.SelectedItem != null)
             {
                 ZoneDTO zone = (ZoneDTO)listBoxZones.SelectedItem;
-                Services.HomeService.AddView(zone.Id, textBoxNewViewName.Text);
+                Services.ViewService.AddView(zone.Id, textBoxNewViewName.Text);
                 LoadZone();
             }
         }
@@ -92,7 +92,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             {
                 ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
 
-                Services.HomeService.RemoveView(view.Id);
+                Services.ViewService.RemoveView(view.Id);
 
                 LoadZone();
             }
@@ -115,7 +115,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
                 if (view.ImageMap.Length != 0)
                 {
-                    MemoryStream ms = new MemoryStream(Services.HomeService.GetViewImage(view.Id));
+                    MemoryStream ms = new MemoryStream(Services.ViewService.GetViewImage(view.Id));
                     pictureBox.Image = Image.FromStream(ms);
                 }
             }
@@ -132,7 +132,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 MemoryStream ms = new MemoryStream();
                 image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
-                Services.HomeService.SetViewImage(zone.MainView.Id, ms.ToArray());
+                Services.ViewService.SetViewImage(zone.MainView.Id, ms.ToArray());
 
                 LoadZone();
             }
@@ -159,7 +159,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             {
                 ViewDTO view = (ViewDTO)listBoxViews.SelectedItem;
 
-                Services.HomeService.SetNameView(view.Id, textBoxNameView.Text);
+                Services.ViewService.SetNameView(view.Id, textBoxNameView.Text);
 
                 LoadZone();
             }

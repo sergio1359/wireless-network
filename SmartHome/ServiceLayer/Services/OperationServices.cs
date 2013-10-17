@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ServiceLayer
 {
-    public class OperationService
+    public class OperationServices
     {
         #region Generic Operation
 

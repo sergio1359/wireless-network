@@ -63,11 +63,13 @@
     <Compile Include="DTO\ZoneDTO.cs" />
     <Compile Include="Services\HomeDeviceServices.cs" />
     <Compile Include="Services\HomeServices.cs" />
-    <Compile Include="Services\LogService.cs" />
-    <Compile Include="Services\NodeService.cs" />
-    <Compile Include="Services\OperationService.cs" />
+    <Compile Include="Services\LogServices.cs" />
+    <Compile Include="Services\NodeServices.cs" />
+    <Compile Include="Services\OperationServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.cs" />
+    <Compile Include="Services\ViewServices.cs" />
+    <Compile Include="Services\ZoneServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
