@@ -20,7 +20,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void UpdateHomeDevices()
         {
             listBoxHomeDevices.Items.Clear();
-            listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetHomeDevices().ToArray());
+            listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices().ToArray());
         }
 
         private void AddHomeDevice(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 textBoxTypeHomeDevice.Text = homeDevice.Type;
 
                 listBoxOperations.Items.Clear();
-                listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperationProgram(homeDevice.Id));
+                listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperationProgram(homeDevice.Id).ToArray());
             }
         }
 

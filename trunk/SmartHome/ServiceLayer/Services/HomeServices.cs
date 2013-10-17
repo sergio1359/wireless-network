@@ -10,6 +10,7 @@ using System.Linq;
 using SmartHome.BusinessEntities;
 using SmartHome.Communications;
 using SmartHome.Communications.Modules.Config;
+using System.Collections.Generic;
 #endregion
 
 namespace ServiceLayer
@@ -17,10 +18,7 @@ namespace ServiceLayer
     public class HomeService
     {
         #region GeneralHome
-        /// <summary>
-        /// Change the name of the Home
-        /// </summary>
-        /// <param name="newName"></param>
+
         public void SetHomeName(string newName)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -32,10 +30,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Get the name of the Home
-        /// </summary>
-        /// <returns></returns>
         public string GetHomeName()
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -44,26 +38,21 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Define the location of a Home
-        /// </summary>
-        /// <param name="latitude"></param>
-        /// <param name="longitude"></param>
         public void SetHomeLocation(float latitude, float longitude)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Home home = repository.HomeRespository.GetHome();
-                home.Location = new Coordenate() { Latitude = latitude, Longitude = longitude };
+                home.Location = new Coordenate() 
+                { 
+                    Latitude = latitude, 
+                    Longitude = longitude 
+                };
 
                 repository.Commit();
             }
         }
 
-        /// <summary>
-        /// Return the location of the home
-        /// </summary>
-        /// <returns></returns>
         public Coordenate GetHomeLocation()
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -72,10 +61,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Unlink Node of the system.
-        /// </summary>
-        /// <param name="idNode"></param>
         public void UnlinkNode(int idNode)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -85,12 +70,7 @@ namespace ServiceLayer
                 if (node == null)
                     return;
 
-                node.UnlinkAllConnectors();
-
-                //foreach (Connector connector in node.Connectors)
-                //{
-                //    repository.ConnectorRepository.Delete(connector);
-                //}
+                node.UnlinkAllConnectors();//CHECK: works??
 
                 repository.NodeRespository.Delete(node);
 
@@ -98,10 +78,7 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Force UpdateConfiguration
-        /// </summary>
-        public void UpdateConfiguration(int idNode)
+        public void ForceUpdateNodeConfiguration(int idNode)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -117,25 +94,20 @@ namespace ServiceLayer
         #endregion
 
         #region Zones
-        /// <summary>
-        /// Return all the Zones
-        /// </summary>
-        /// <returns>Dictionary ID, Name of zones</returns>
-        public ZoneDTO[] GetZones()
+
+        public IEnumerable<ZoneDTO> GetZones()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 var zones = repository.ZoneRepository.GetAll();
 
-                return Mapper.Map<ZoneDTO[]>(zones);
+                return Mapper.Map<IEnumerable<ZoneDTO>>(zones);
             }
         }
 
         /// <summary>
-        /// Add a zone in the system
+        /// Add a Zone at Home and return it id.
         /// </summary>
-        /// <param name="zone"></param>
-        /// <returns>Devuelve el Id de la zona añadida</returns>
         public int AddZone(string nameZone)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -164,11 +136,7 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Remove a Zone at Home CHECK
-        /// </summary>
-        /// <param name="idZone"></param>
-        public void RemoveZone(int idZone)
+        public void RemoveZone(int idZone) //CHECK method
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -187,11 +155,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Change the name of the Zone
-        /// </summary>
-        /// <param name="idView"></param>
-        /// <param name="newName"></param>
         public void SetNameZone(int idZone, string newName)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -211,7 +174,7 @@ namespace ServiceLayer
         #endregion
 
         #region Views
-        public ViewDTO[] GetViews(int idZone)
+        public IEnumerable<ZoneDTO> GetViews(int idZone)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -220,7 +183,7 @@ namespace ServiceLayer
                 if (zone == null)
                     return null;
 
-                return Mapper.Map<ViewDTO[]>(zone.Views);
+                return Mapper.Map<IEnumerable<ZoneDTO>>(zone.Views);
             }
         }
 
@@ -265,11 +228,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Change the name of the View
-        /// </summary>
-        /// <param name="idView"></param>
-        /// <param name="newName"></param>
         public void SetNameView(int idView, string newName)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -289,11 +247,8 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Add a View in a concrete Zone at Home
+        /// Add a View in a concrete Zone at Home, return the View's id
         /// </summary>
-        /// <param name="idZone">Identification of the Zone</param>
-        /// <param name="nameView">Name of the View</param>
-        /// <returns>Return the identification of the new View</returns>
         public int AddView(int idZone, string nameView)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -318,10 +273,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Remove a concrete View
-        /// </summary>
-        /// <param name="idView"></param>
         public void RemoveView(int idView)
         {
             using (UnitOfWork repository = new UnitOfWork())

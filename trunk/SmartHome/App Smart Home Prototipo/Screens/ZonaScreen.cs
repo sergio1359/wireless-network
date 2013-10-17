@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Electrical.Screens
 {
@@ -21,7 +22,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             textBoxHomeName.Text = Services.HomeService.GetHomeName();
 
             listBoxZones.Items.Clear();
-            listBoxZones.Items.AddRange(Services.HomeService.GetZones());
+            listBoxZones.Items.AddRange(Services.HomeService.GetZones().ToArray());
         }
 
         private void AddNewZone(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 }
 
                 listBoxViews.Items.Clear();
-                listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id));
+                listBoxViews.Items.AddRange(Services.HomeService.GetViews(zone.Id).ToArray());
             }
         }
 

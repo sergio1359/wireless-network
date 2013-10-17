@@ -17,10 +17,6 @@ namespace ServiceLayer
     {
         #region Generic Operation
 
-        /// <summary>
-        /// Elimina una operacion
-        /// </summary>
-        /// <param name="idOperation"></param>
         public void RemoveOperation(int idOperation)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -52,11 +48,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Devuelve las operaciones que un home device puede hacer
-        /// </summary>
-        /// <param name="idHomeDevice"></param>
-        /// <returns></returns>
         public string[] GetHomeDeviceOperation(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -70,12 +61,7 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Devuelve las operaciones programadas en el homeDevice
-        /// </summary>
-        /// <param name="idHomeDevice"></param>
-        /// <returns></returns>
-        public OperationDTO[] GetHomeDeviceOperationProgram(int idHomeDevice)
+        public IEnumerable<OperationDTO> GetHomeDeviceOperationProgram(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -84,7 +70,7 @@ namespace ServiceLayer
                 if (homeDevice == null)
                     return null;
 
-                return Mapper.Map<OperationDTO[]>(homeDevice.Operations);
+                return Mapper.Map<IEnumerable<OperationDTO>>(homeDevice.Operations);
             }
         }
 
@@ -120,12 +106,12 @@ namespace ServiceLayer
 
         #region Theme Operation
 
-        public ThemeDTO[] GetThemes()
+        public IEnumerable<ThemeDTO> GetThemes()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 var themes = repository.ThemesRespository.GetAll();
-                return Mapper.Map<ThemeDTO[]>(themes);
+                return Mapper.Map<IEnumerable<ThemeDTO>>(themes);
             }
         }
 
@@ -140,7 +126,7 @@ namespace ServiceLayer
             }
         }
 
-        public OperationDTO[] GetOperationsOfTheme(int idTheme)
+        public IEnumerable<OperationDTO> GetOperationsOfTheme(int idTheme)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -149,7 +135,7 @@ namespace ServiceLayer
                 if (theme == null)
                     return null;
 
-                return Mapper.Map<OperationDTO[]>(theme.Operations);
+                return Mapper.Map<IEnumerable<OperationDTO>>(theme.Operations);
             }
         }
 
@@ -176,7 +162,7 @@ namespace ServiceLayer
 
         #region SchedulerOperation
 
-        public TimeOperationDTO[] GetScheduler()
+        public IEnumerable<TimeOperationDTO> GetScheduler()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -184,7 +170,7 @@ namespace ServiceLayer
 
                 timeOps = repository.TimeOperationRepository.GetAll();
 
-                return Mapper.Map<TimeOperationDTO[]>(timeOps);
+                return Mapper.Map<IEnumerable<TimeOperationDTO>>(timeOps);
             }
         }
 

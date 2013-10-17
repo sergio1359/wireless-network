@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServiceLayer;
 using ServiceLayer.DTO;
+using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Controls
 {
@@ -18,7 +19,7 @@ namespace App_Smart_Home_Prototipo.Controls
         {
             InitializeComponent();
 
-            comboBoxToHomeDevice.Items.AddRange(Services.HomeDeviceService.GetHomeDevices().ToArray());
+            comboBoxToHomeDevice.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices().ToArray());
 
             UpdateScheduler();
         }
@@ -26,7 +27,7 @@ namespace App_Smart_Home_Prototipo.Controls
         private void UpdateScheduler()
         {
             listBoxOperation.Items.Clear();
-            listBoxOperation.Items.AddRange(Services.OperationService.GetScheduler());
+            listBoxOperation.Items.AddRange(Services.OperationService.GetScheduler().ToArray());
         }
 
         private void AddOperationScheduler(object sender, EventArgs e)

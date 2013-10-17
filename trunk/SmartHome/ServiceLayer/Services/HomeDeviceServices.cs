@@ -16,12 +16,6 @@ namespace ServiceLayer
 {
     public class HomeDeviceService
     {
-        /// <summary>
-        /// Add a new HomeDevice to the system.
-        /// </summary>
-        /// <param name="nameHomeDevice">Name of the new HomeDevice</param>
-        /// <param name="homeDeviceType">Type of HomeDevice</param>
-        /// <returns>Return the ID for the new HomeDevice</returns>
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
             HomeDevice homeDevice = BusinessHomeDevice.CreateHomeDevice(homeDeviceType);
@@ -36,19 +30,11 @@ namespace ServiceLayer
             return homeDevice.Id;
         }
 
-        /// <summary>
-        /// Return the HomeDevice's types of the system.
-        /// </summary>
-        /// <returns>Array with the types names</returns>
         public string[] GetHomeDeviceTypes()
         {
             return HomeDevice.HomeDeviceTypes;
         }
 
-        /// <summary>
-        /// Remove, and unlink if is necesary, a HomeDevice of the system.
-        /// </summary>
-        /// <param name="idHomeDevice">Identificator of the HomeDevice to be remove.</param>
         public void RemoveHomeDevice(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -72,11 +58,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Change the name of a one HomeDevice
-        /// </summary>
-        /// <param name="idHomeDevice">Identificator of the HomeDevice</param>
-        /// <param name="newName">New Name</param>
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -93,12 +74,11 @@ namespace ServiceLayer
         }
 
         /// <summary>
-        /// Update the position of a HomeDevice in a Zone
+        /// 
         /// </summary>
-        /// <param name="idHomeDevice">Identificator of the home device to be move</param>
-        /// <param name="idView">new zone</param>
+        /// <param name="idLocation"></param>
         /// <param name="x">Relative position 0 to 1 of the X axis</param>
-        /// <param name="y">Relative position 0 to 1 of the X axis</param>
+        /// <param name="y">Relative position 0 to 1 of the Y axis</param>
         public void UpdateLocation(int idLocation, float x, float y)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -115,7 +95,7 @@ namespace ServiceLayer
             }
         }
 
-        public LocationDTO[] GetHomeDeviceLocations(int idHomeDevice)
+        public IEnumerable<LocationDTO> GetHomeDeviceLocations(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -124,15 +104,11 @@ namespace ServiceLayer
                 if (homeDevice == null)
                     return null;
 
-                return Mapper.Map<LocationDTO[]>(homeDevice.Location);
+                return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Location);
             }
         }
 
-        /// <summary>
-        /// Return all HomeDevices of the system (be or not be connected to a Node)
-        /// </summary>
-        /// <returns>Return a HomeDeviceDTO</returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices()
+        public IEnumerable<HomeDeviceDTO> GetAllHomeDevices()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -142,61 +118,34 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Return all HomeDevices specifying if are or not in use
-        /// </summary>
-        /// <param name="isInUse"></param>
-        /// <returns></returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(bool isInUse)
+        public IEnumerable<HomeDeviceDTO> GetAllHomeDevices(bool inUse)
         {
-            return GetHomeDevices().Where(hd => hd.InUse == isInUse);
+            return GetAllHomeDevices().Where(hd => hd.InUse == inUse);
         }
 
-        /// <summary>
-        /// Return connected HomeDevice in a View of the of the system
-        /// </summary>
-        /// <param name="idView"></param>
-        /// <returns></returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView)
+        public IEnumerable<HomeDeviceDTO> GetAllHomeDevicesInAView(int idView)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 if (repository.ViewRepository.GetById(idView) == null)
                     return null;
 
-                var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations().Where(hd => hd.Location.Any(l => l.View.Id == idView));
+                var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations()
+                    .Where(hd => hd.Location.Any(l => l.View.Id == idView));
 
                 return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
             }
         }
 
-        /// <summary>
-        /// Return the HomeDevices connected of a concrete zone and type
-        /// </summary>
-        /// <param name="idView">Identificator of the localization</param>
-        /// <param name="homeDeviceType">List of types of the HomeDevices</param>
-        /// <returns>Return Dictionary with ID, Name and type</returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView, List<string> homeDeviceTypes)
+        public IEnumerable<HomeDeviceDTO> GetHomeDevicesInAView(int idView, List<string> homeDeviceTypes)
         {
-            return GetHomeDevices(idView).Where(hd => homeDeviceTypes.Contains(hd.Type));
-        }
-
-        /// <summary>
-        /// Return the HomeDevices connected of a concrete zone, a list of types and if are connected or not.
-        /// </summary>
-        /// <param name="idView"></param>
-        /// <param name="homeDeviceTypes"></param>
-        /// <param name="connected"></param>
-        /// <returns></returns>
-        public IEnumerable<HomeDeviceDTO> GetHomeDevices(int idView, List<string> homeDeviceTypes, bool connected)
-        {
-            return GetHomeDevices(idView, homeDeviceTypes).Where(hd => hd.InUse == connected);
+            return GetAllHomeDevicesInAView(idView)
+                .Where(hd => homeDeviceTypes.Contains(hd.Type));
         }
 
         public string[] GetNameProducts()
         {
             return BusinessProduct.GetProducts.Select(p => p.Name).ToArray();
         }
-
     }
 }

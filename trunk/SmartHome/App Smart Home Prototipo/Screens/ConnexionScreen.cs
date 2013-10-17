@@ -12,11 +12,11 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             InitializeComponent();
 
-            comboBoxNode.Items.AddRange(Services.NodeService.GetNodes());
+            comboBoxNode.Items.AddRange(Services.NodeService.GetNodes().ToArray());
 
             //Products
             comboBoxListProduct.Items.AddRange(Services.HomeDeviceService.GetNameProducts());
-            comboBoxNodeProduct.Items.AddRange(Services.NodeService.GetNodes());
+            comboBoxNodeProduct.Items.AddRange(Services.NodeService.GetNodes().ToArray());
             
 
             UpdateForm();
@@ -25,10 +25,10 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void UpdateForm()
         {
             listBoxFreeHomeDevices.Items.Clear();
-            listBoxFreeHomeDevices.Items.AddRange(Services.HomeDeviceService.GetHomeDevices(false).ToArray());
+            listBoxFreeHomeDevices.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices(false).ToArray());
 
             listBoxHomeDevicesConnected.Items.Clear();
-            listBoxHomeDevicesConnected.Items.AddRange(Services.HomeDeviceService.GetHomeDevices(true).ToArray());
+            listBoxHomeDevicesConnected.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices(true).ToArray());
 
             listBoxCapableFreeConnector.Items.Clear();
 
@@ -65,7 +65,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 NodeDTO node = (NodeDTO)this.comboBoxNode.SelectedItem;
 
                 listBoxCapableFreeConnector.Items.Clear();
-                listBoxCapableFreeConnector.Items.AddRange(Services.NodeService.GetConnectorsCapable(homeDev.Id, node.Id));
+                listBoxCapableFreeConnector.Items.AddRange(Services.NodeService.GetConnectorsCapable(homeDev.Id, node.Id).ToArray());
 
                 buttonLinkHomeDevice.Enabled = true;
             }
@@ -90,7 +90,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 NodeDTO node = (NodeDTO)comboBoxNodeProduct.SelectedItem;
 
                 listBoxConnectorsAvailable.Items.Clear();
-                listBoxConnectorsAvailable.Items.AddRange(Services.NodeService.GetConnectorCapableProducts(node.Id, product));
+                listBoxConnectorsAvailable.Items.AddRange(Services.NodeService.GetConnectorCapableProducts(node.Id, product).ToArray());
 
                 buttonLinkProduct.Enabled = true;
             }

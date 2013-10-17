@@ -2,6 +2,7 @@
 using ServiceLayer.DTO;
 using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Electrical.Screens
 {
@@ -18,10 +19,10 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         private void UpdateNodes()
         {
             listBoxMACs.Items.Clear();
-            listBoxMACs.Items.AddRange(Services.NodeService.GetPendingNodes());
+            listBoxMACs.Items.AddRange(Services.NodeService.GetPendingNodes().ToArray());
 
             listBoxNodes.Items.Clear();
-            listBoxNodes.Items.AddRange(Services.NodeService.GetNodes());
+            listBoxNodes.Items.AddRange(Services.NodeService.GetNodes().ToArray());
         }
 
 
@@ -59,7 +60,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
                 //update connectors
                 listBoxConnectors.Items.Clear();
-                listBoxConnectors.Items.AddRange(Services.NodeService.GetConnectors(node.Id));
+                listBoxConnectors.Items.AddRange(Services.NodeService.GetConnectors(node.Id).ToArray());
             }
         }
 

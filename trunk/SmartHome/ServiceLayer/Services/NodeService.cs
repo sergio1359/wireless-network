@@ -14,6 +14,7 @@ using SmartHome.Communications.Modules.Config;
 using SmartHome.Communications.Modules;
 using System.Threading.Tasks;
 using SmartHome.Communications.Modules.Network;
+using System.Collections.Generic;
 #endregion
 
 namespace ServiceLayer
@@ -57,10 +58,6 @@ namespace ServiceLayer
             return 0;
         }
 
-
-        /// <summary>
-        /// Unlink a HomeDevice from the connector associated
-        /// </summary>
         public void UnlinkHomeDevice(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -78,23 +75,12 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Return the MAC of the Pending Nodes
-        /// </summary>
-        /// <returns>Return string for the MACs</returns>
-        public PendingNodeInfoDTO[] GetPendingNodes()
+        public IEnumerable<PendingNodeInfoDTO> GetPendingNodes()
         {
             var pendingInfo = CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes;
-            return Mapper.Map<PendingNodeInfoDTO[]>(pendingInfo);
+            return Mapper.Map<IEnumerable<PendingNodeInfoDTO>>(pendingInfo);
         }
 
-        /// <summary>
-        /// Allow a MAC in the system.
-        /// </summary>
-        /// <param name="MAC">The MAC.</param>
-        /// <returns>
-        /// True if the node was allowed successfuly. False otherwise
-        /// </returns>
         public async Task<bool> AllowPendingNode(string MAC)
         {
             using (UnitOfWork repository = new UnitOfWork())
@@ -128,12 +114,7 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// Return the Connector of the Node
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns>Dicionario IDConnector, nombre, tipo, en uso</returns>
-        public ConnectorDTO[] GetConnectors(int idNode)
+        public IEnumerable<ConnectorDTO> GetConnectors(int idNode)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -142,17 +123,11 @@ namespace ServiceLayer
                 if (node == null)
                     return null;
 
-                return Mapper.Map<ConnectorDTO[]>(node.Connectors);
+                return Mapper.Map<IEnumerable<ConnectorDTO>>(node.Connectors);
             }
         }
 
-
-        /// <summary>
-        /// Devuelve los conectores que se pueden conectar con el homeDevice enviado por parametros
-        /// </summary>
-        /// <param name="HomeDeviceType"></param>
-        /// <returns></returns>
-        public ConnectorDTO[] GetConnectorsCapable(int idHomeDevice, int idNode)
+        public IEnumerable<ConnectorDTO> GetConnectorsCapable(int idHomeDevice, int idNode)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -164,7 +139,7 @@ namespace ServiceLayer
 
                 var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
 
-                return Mapper.Map<ConnectorDTO[]>(connectorsResult);
+                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectorsResult);
             }
         }
 
@@ -238,17 +213,17 @@ namespace ServiceLayer
             }
         }
 
-        public NodeDTO[] GetNodes()
+        public IEnumerable<NodeDTO> GetNodes()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 var nodes = repository.NodeRespository.GetAll();
 
-                return Mapper.Map<NodeDTO[]>(nodes);
+                return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
             }
         }
 
-        public NodeDTO[] GetNodes(int idZone)
+        public IEnumerable<NodeDTO> GetNodes(int idZone)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -257,23 +232,15 @@ namespace ServiceLayer
 
                 var nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
 
-                return Mapper.Map<NodeDTO[]>(nodes);
+                return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
             }
         }
 
-        /// <summary>
-        /// Obtain the types of shields
-        /// </summary>
-        /// <returns></returns>
         public string[] GetTypesShields()
         {
             return Enum.GetNames(typeof(ShieldTypes));
         }
 
-        /// <summary>
-        /// Obtain the types of bases
-        /// </summary>
-        /// <returns></returns>
         public string[] GetTypesBases()
         {
             return Enum.GetNames(typeof(BaseTypes));
@@ -312,17 +279,17 @@ namespace ServiceLayer
             }
         }
 
-        public ConnectorDTO[] GetConnectorProductsConnected()
+        public IEnumerable<ConnectorDTO> GetConnectorProductsConnected()
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
 
-                return Mapper.Map<ConnectorDTO[]>(connectors);
+                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
             }
         }
 
-        public ConnectorDTO[] GetConnectorCapableProducts(int idNode, string product)
+        public IEnumerable<ConnectorDTO> GetConnectorCapableProducts(int idNode, string product)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -334,7 +301,7 @@ namespace ServiceLayer
 
                 var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
 
-                return Mapper.Map<ConnectorDTO[]>(connectors);
+                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
             }
         }
     }
