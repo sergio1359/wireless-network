@@ -8,10 +8,32 @@ namespace ServiceLayer
     public static class Services
     {
         private static HomeService homeService;
-        private static NodeService nodeService;
-        private static OperationService operationService;
-        private static LogService logService;
+        private static NodeServices nodeService;
+        private static OperationServices operationService;
+        private static LogServices logService;
         private static HomeDeviceService homeDeviceService;
+        private static ZoneServices zoneService;
+        private static ViewServices viewService;
+
+        public static ViewServices ViewService
+        {
+            get
+            {
+                if (viewService == null)
+                    viewService = new ViewServices();
+                return viewService;
+            }
+        }
+
+        public static ZoneServices ZoneService
+        {
+            get
+            {
+                if (zoneService == null)
+                    zoneService = new ZoneServices();
+                return zoneService;
+            }
+        }
 
         public static HomeDeviceService HomeDeviceService
         {
@@ -33,32 +55,32 @@ namespace ServiceLayer
             }
         }
 
-        public static NodeService NodeService
+        public static NodeServices NodeService
         {
             get
             {
                 if (nodeService == null)
-                    nodeService = new NodeService();
+                    nodeService = new NodeServices();
                 return nodeService;
             }
         }
 
-        public static OperationService OperationService
+        public static OperationServices OperationService
         {
             get
             {
                 if (operationService == null)
-                    operationService = new OperationService();
+                    operationService = new OperationServices();
                 return operationService;
             }
         }
 
-        public static LogService LogService
+        public static LogServices LogService
         {
             get
             {
                 if (logService == null)
-                    logService = new LogService();
+                    logService = new LogServices();
                 return logService;
             }
         }

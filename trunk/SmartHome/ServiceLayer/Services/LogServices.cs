@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace ServiceLayer
 {
-    public class LogService
+    public class LogServices
     {
         public void AddLog(string logText)
         {

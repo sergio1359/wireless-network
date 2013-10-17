@@ -73,10 +73,6 @@ namespace ServiceLayer
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="idLocation"></param>
         /// <param name="x">Relative position 0 to 1 of the X axis</param>
         /// <param name="y">Relative position 0 to 1 of the Y axis</param>
         public void UpdateLocation(int idLocation, float x, float y)
