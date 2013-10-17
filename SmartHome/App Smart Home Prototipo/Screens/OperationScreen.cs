@@ -12,7 +12,7 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
         {
             InitializeComponent();
 
-            var homeDevices = Services.HomeDeviceService.GetHomeDevices();
+            var homeDevices = Services.HomeDeviceService.GetAllHomeDevices();
 
             listBoxHomeDevices.Items.AddRange(homeDevices.ToArray());
 
@@ -56,7 +56,7 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
             OperationDTO operation = (OperationDTO)listBoxOperations.SelectedItem;
 
             textBoxNameOperation.Text = operation.Name;
-            comboBoxToHomeDevice.Text = Services.HomeDeviceService.GetHomeDevices().First(hd => hd.Id == operation.IdHomeDevice).ToString();
+            comboBoxToHomeDevice.Text = Services.HomeDeviceService.GetAllHomeDevices().First(hd => hd.Id == operation.IdHomeDevice).ToString();
             comboBoxOperation.Text = operation.NameOperation;
             textBoxArgs.Text = "hola mundo";
 
