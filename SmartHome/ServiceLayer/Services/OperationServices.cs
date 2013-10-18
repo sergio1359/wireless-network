@@ -21,17 +21,17 @@ namespace ServiceLayer
             {
                 Operation operation = repository.OperationRepository.GetById(idOperation);
 
-                if (operation != null)
-                {
-                    if (operation.SourceHomeDevice.InUse)
-                    {
-                        //UPDATE CHECKSUM
-                        operation.SourceHomeDevice.Connector.Node.UpdateChecksum(null);
-                    }
+                if (operation == null)
+                    throw new ArgumentException("Operation id doesn't exist");
 
-                    repository.OperationRepository.Delete(operation);
-                    repository.Commit();
+                if (operation.SourceHomeDevice.InUse)
+                {
+                    //UPDATE CHECKSUM
+                    operation.SourceHomeDevice.Connector.Node.UpdateChecksum(null);
                 }
+
+                repository.OperationRepository.Delete(operation);
+                repository.Commit();
             }
         }
 
@@ -41,8 +41,10 @@ namespace ServiceLayer
             {
                 Operation operation = repository.OperationRepository.GetById(idOperation);
 
-                if (operation != null)
-                    operation.Execute();
+                if (operation == null)
+                    throw new ArgumentException("Operation id doesn't exist");
+
+                operation.Execute();
             }
         }
 
@@ -53,7 +55,7 @@ namespace ServiceLayer
                 var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
-                    return null;
+                    throw new ArgumentException("HomeDevice id doesn't exist");
 
                 return homeDevice.GetHomeDeviceOperations();
             }
@@ -66,7 +68,7 @@ namespace ServiceLayer
                 var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
-                    return null;
+                    throw new ArgumentException("HomeDevice id doesn't exist");
 
                 return Mapper.Map<IEnumerable<OperationDTO>>(homeDevice.Operations);
             }
@@ -76,20 +78,23 @@ namespace ServiceLayer
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
-                HomeDevice homeDevDestino = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
-                HomeDevice homeDev = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                HomeDevice homeDeviceDestination = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (homeDev == null || homeDevDestino == null)
-                    return -1;
+                if (homeDevice == null)
+                    throw new ArgumentException("HomeDevice id doesn't exist");
+
+                if (homeDeviceDestination == null)
+                    throw new ArgumentException("HomeDevice destination id doesn't exist");
 
                 Operation op = new Operation()
                 {
-                    DestionationHomeDevice = homeDevDestino,
+                    DestionationHomeDevice = homeDeviceDestination,
                     OperationName = operation,
                     Args = args
                 };
 
-                homeDev.Operations.Add(op);
+                homeDevice.Operations.Add(op);
 
                 int idRes = repository.OperationRepository.Insert(op).Id;
 

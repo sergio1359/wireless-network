@@ -30,8 +30,10 @@ namespace ServiceLayer
             {
                 Theme theme = repository.ThemesRespository.GetById(idTheme);
 
-                if (theme != null)
-                    theme.ExecuteTheme();
+                if (theme == null)
+                    throw new ArgumentException("Theme id doesn't exist");
+
+                theme.ExecuteTheme();
             }
         }
 
@@ -42,7 +44,7 @@ namespace ServiceLayer
                 Theme theme = repository.ThemesRespository.GetById(idTheme);
 
                 if (theme == null)
-                    return null;
+                    throw new ArgumentException("Theme id doesn't exist");
 
                 return Mapper.Map<IEnumerable<OperationDTO>>(theme.Operations);
             }
@@ -54,17 +56,16 @@ namespace ServiceLayer
             {
                 Theme theme = repository.ThemesRespository.GetById(idTheme);
 
-                if (theme != null)
+                if (theme == null)
+                    throw new ArgumentException("Theme id doesn't exist");
+
+                foreach (var item in theme.Operations)
                 {
-                    foreach (var item in theme.Operations)
-                    {
-                        Services.OperationService.RemoveOperation(item.Id);
-                    }
-
-                    repository.ThemesRespository.Delete(theme);
-
-                    repository.Commit();
+                    Services.OperationService.RemoveOperation(item.Id);
                 }
+
+                repository.ThemesRespository.Delete(theme);
+                repository.Commit();
             }
         }
     }

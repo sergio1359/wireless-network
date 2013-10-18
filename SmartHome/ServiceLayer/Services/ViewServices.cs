@@ -19,7 +19,7 @@ namespace ServiceLayer
                 Zone zone = repository.ZoneRepository.GetById(idZone);
 
                 if (zone == null)
-                    return null;
+                    throw new ArgumentException("Zone id doesn't exist");
 
                 return Mapper.Map<IEnumerable<ZoneDTO>>(zone.Views);
             }
@@ -32,7 +32,7 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view == null)
-                    return null;
+                    throw new ArgumentException("View id doesn't exist");
 
                 return view.ImageMap;
             }
@@ -45,7 +45,7 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view == null)
-                    return;
+                    throw new ArgumentException("View id doesn't exist");
 
                 view.ImageMap = newImage;
 
@@ -60,7 +60,7 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view == null)
-                    return null;
+                    throw new ArgumentException("View id doesn't exist");
 
                 return view.Name;
             }
@@ -73,7 +73,7 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view == null)
-                    return;
+                    throw new ArgumentException("View id doesn't exist");
 
                 if (view.Id == view.Zone.MainView.Id)
                     view.Zone.Name = newName;
@@ -94,7 +94,7 @@ namespace ServiceLayer
                 Zone zone = repository.ZoneRepository.GetById(idZone);
 
                 if (zone == null)
-                    return -1;
+                    throw new ArgumentException("Zone id doesn't exist");
 
                 View view = new View()
                 {
@@ -118,10 +118,10 @@ namespace ServiceLayer
                 View view = repository.ViewRepository.GetById(idView);
 
                 if (view != null)
-                {
-                    repository.ViewRepository.Delete(view);
-                    repository.Commit();
-                }
+                    throw new ArgumentException("View id doesn't exist");
+
+                repository.ViewRepository.Delete(view);
+                repository.Commit();
             }
         }
     }

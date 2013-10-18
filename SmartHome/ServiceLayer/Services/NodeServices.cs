@@ -21,31 +21,27 @@ namespace ServiceLayer
 {
     public class NodeServices
     {
-        /// <summary>
-        /// Conecta un conector con un home device
-        /// </summary>
-        /// <param name="connector"></param>
-        /// <param name="homeDevice"></param>
-        /// <returns>0 == OK, 
-        /// 1 == el conector estaba ya ocupado por un home Device
-        /// 2 == el homeDevice ya estaba conectado en un conector diferente al nuevo
-        /// 3 == el homeDevice no es compatible con el conector
-        /// 4 == el connector o el homeDevice no existe</returns>
-        public int LinkHomeDevice(int idConnector, int idHomeDevice)
+
+        public void LinkHomeDevice(int idConnector, int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
-                var connector = repository.ConnectorRepository.GetById(idConnector);
-                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                Connector connector = repository.ConnectorRepository.GetById(idConnector);
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (connector == null || homeDevice == null)
-                    return 4;
+                //TODO: falta chequear que el homedevice sea compatible con el conector
+
+                if (connector == null)
+                    throw new ArgumentException("Connector Id doesn't exist");
+
+                if (homeDevice == null)
+                    throw new ArgumentException("HomeDevice Id doesn't exist");
 
                 if (connector.InUse)
-                    return 1;
+                    throw new ArgumentException("The connector has been occuped by other home device");
 
                 if (homeDevice.InUse)
-                    return 2;
+                    throw new ArgumentException("The HomeDevice has been occuped by other connector");
 
                 //UPDATE CHECKSUM
                 connector.Node.UpdateChecksum(null);
@@ -54,8 +50,6 @@ namespace ServiceLayer
 
                 repository.Commit();
             }
-
-            return 0;
         }
 
         public void UnlinkHomeDevice(int idHomeDevice)
@@ -64,14 +58,14 @@ namespace ServiceLayer
             {
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (homeDevice != null)
-                {
-                    //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.UpdateChecksum(null);
+                if (homeDevice == null)
+                    throw new ArgumentException("HomeDevice Id doesn't exist");
 
-                    homeDevice.Connector.UnlinkHomeDevice();
-                    repository.Commit();
-                }
+                //UPDATE CHECKSUM
+                homeDevice.Connector.Node.UpdateChecksum(null);
+
+                homeDevice.Connector.UnlinkHomeDevice();
+                repository.Commit();
             }
         }
 
@@ -118,10 +112,10 @@ namespace ServiceLayer
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
-                var node = repository.NodeRespository.GetById(idNode);
+                Node node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return null;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 return Mapper.Map<IEnumerable<ConnectorDTO>>(node.Connectors);
             }
@@ -131,11 +125,14 @@ namespace ServiceLayer
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
-                var node = repository.NodeRespository.GetById(idNode);
-                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                Node node = repository.NodeRespository.GetById(idNode);
+                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (node == null || homeDevice == null)
-                    return null;
+                if (node == null)
+                    throw new ArgumentException("Node Id doesn't exist");
+
+                if (homeDevice == null)
+                    throw new ArgumentException("HomeDevice Id doesn't exist");
 
                 var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
 
@@ -150,7 +147,7 @@ namespace ServiceLayer
                 var node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return null;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 return node.Name;
             }
@@ -162,11 +159,11 @@ namespace ServiceLayer
             {
                 Node node = repository.NodeRespository.GetById(idNode);
 
-                if (node != null)
-                {
-                    node.Name = newName;
-                    repository.Commit();
-                }
+                if (node == null)
+                    throw new ArgumentException("Node Id doesn't exist");
+
+                node.Name = newName;
+                repository.Commit();
             }
         }
 
@@ -177,7 +174,7 @@ namespace ServiceLayer
                 var node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return -1;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 return node.Address;
             }
@@ -189,14 +186,14 @@ namespace ServiceLayer
             {
                 Node node = repository.NodeRespository.GetById(idNode);
 
-                if (node != null)
-                {
-                    //UPDATE CHECKSUM
-                    node.UpdateChecksum(null);
+                if (node == null)
+                    throw new ArgumentException("Node Id doesn't exist");
 
-                    node.Address = newAddress;
-                    repository.Commit();
-                }
+                //UPDATE CHECKSUM
+                node.UpdateChecksum(null);
+
+                node.Address = newAddress;
+                repository.Commit();
             }
         }
 
@@ -207,7 +204,7 @@ namespace ServiceLayer
                 var node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return null;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 return Mapper.Map<LocationDTO>(node.Location);
             }
@@ -228,7 +225,7 @@ namespace ServiceLayer
             using (UnitOfWork repository = new UnitOfWork())
             {
                 if (repository.ZoneRepository.GetById(idZone) == null)
-                    return null;
+                    throw new ArgumentException("Zone Id doesn't exist");
 
                 var nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
 
@@ -246,36 +243,34 @@ namespace ServiceLayer
             return Enum.GetNames(typeof(BaseTypes));
         }
 
-        public bool LinkProduct(int idConnector, string typeProduct)
+        public void LinkProduct(int idConnector, string typeProduct)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Connector connector = repository.ConnectorRepository.GetById(idConnector);
 
                 if (connector == null)
-                    return false;
+                    throw new ArgumentException("Connector Id doesn't exist");
 
                 if (connector.InUse)
-                    return false;
+                    throw new ArgumentException("Connector has been in use by other product or HomeDevice");
 
                 Type type = Type.GetType(typeProduct);
 
                 connector.LinkHomeDevice(type);
-                return true;
             }
         }
 
-        public bool UnlinkProduct(int idConnector)
+        public void UnlinkProduct(int idConnector)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Connector connector = repository.ConnectorRepository.GetById(idConnector);
 
                 if (connector == null)
-                    return false;
+                    throw new ArgumentException("Connector Id doesn't exist");
 
                 connector.UnlinkHomeDevice();
-                return true;
             }
         }
 
@@ -294,10 +289,19 @@ namespace ServiceLayer
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Node node = repository.NodeRespository.GetById(idNode);
-                Type typeProduct = Type.GetType(product);
+                Type typeProduct;
 
-                if (node == null || typeProduct == null)
-                    return null;
+                if (node == null)
+                    throw new ArgumentException("Node Id doesn't exist");
+
+                try
+                {
+                    typeProduct = Type.GetType(product);
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException("Type product doesn't exist");
+                }
 
                 var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
 

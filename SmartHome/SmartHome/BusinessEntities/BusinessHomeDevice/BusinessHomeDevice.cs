@@ -17,9 +17,16 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
         public static HomeDevice CreateHomeDevice(string homeDeviceType)
         {
-            Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType); //TODO: que pasa si el tipo no existe??
+            try
+            {
+                Type deviceType = typeof(HomeDevice).Assembly.GetTypes().First(t => t.Name == homeDeviceType);
 
-            return (HomeDevice)Activator.CreateInstance(deviceType);
+                return (HomeDevice)Activator.CreateInstance(deviceType);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("The type " + homeDeviceType + " not exist in the system");
+            }
         }
 
         public static PinPort[] GetPinPorts(this HomeDevice homeDevice)

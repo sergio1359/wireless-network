@@ -39,19 +39,19 @@ namespace ServiceLayer
                     return Mapper.Map<IEnumerable<LogDTO>>(logs);
                 }
 
-                return null;
+                throw new ArgumentException("Log cagetory doesn't exist");
             }
         }
 
         public IEnumerable<LogDTO> GetLog(string category, int from, int to)
         {
             if (from >= to)
-                return null;
+                throw new ArgumentException("from is bigger than to");
 
             var logs = GetLog(category).Skip(from).Take(to - from);
 
             if (logs == null)
-                return null;
+                throw new ArgumentException("Log Id doesn't exist");
 
             return logs;
         }

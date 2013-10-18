@@ -79,7 +79,7 @@ namespace ServiceLayer
                 Zone zone = repository.ZoneRepository.GetById(idZone);
 
                 if (zone == null)
-                    return;
+                    throw new ArgumentException("Zone id doesn't exist");
 
                 zone.Name = newName;
                 zone.MainView.Name = newName;
