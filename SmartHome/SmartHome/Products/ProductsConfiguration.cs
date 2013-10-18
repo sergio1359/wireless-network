@@ -19,6 +19,7 @@ namespace SmartHome.Products
                 case ShieldTypes.Debug:
                     pinPorts.Add("Button", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("D7") }));
                     pinPorts.Add("DimmerZero", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.DimmerPassZero, new PinPort[] { new PinPort("D0") }));
+                    pinPorts.Add("DimmerLight", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.Dimmer, new PinPort[] { new PinPort("D1") }));
                     pinPorts.Add("Light", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.SwitchLOW, new PinPort[] { new PinPort("D6") }));
                     pinPorts.Add("Temperature", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
                     pinPorts.Add("Humidity", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));

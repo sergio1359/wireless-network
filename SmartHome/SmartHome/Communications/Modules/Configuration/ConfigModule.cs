@@ -88,7 +88,7 @@ namespace SmartHome.Communications.Modules.Config
             }
 
             this.firstTime = false;
-            //this.configUpdateTimer.Start();
+            this.configUpdateTimer.Start();
         }
 
         #region Overridden Methods

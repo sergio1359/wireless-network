@@ -63,5 +63,10 @@ namespace App_Smart_Home_Prototipo
 
 
         #endregion
+
+        private void GenerateEEPROM(object sender, EventArgs e)
+        {
+
+        }
     }
 }
