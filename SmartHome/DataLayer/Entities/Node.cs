@@ -54,6 +54,7 @@ namespace DataLayer.Entities
 
         public virtual Location Location { get; set; }
 
+        [Required]
         public virtual ICollection<Connector> Connectors { get; set; }
 
         [NotMapped]

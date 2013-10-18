@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 #endregion
 
 namespace DataLayer
@@ -23,7 +23,9 @@ namespace DataLayer
         private LogRepository logRepository;
         private ConnectorRepository connectorRepository;
         private OperationRepository operationRepository;
-        private LocationRepository locationRepository; 
+        private LocationRepository locationRepository;
+        private ConditionalRestrictionRepository conditionalRestrictionRepository;
+        private TimeRestrictionRepository timeRestrictionRepository;
         #endregion
 
         #region Properties
@@ -136,12 +138,37 @@ namespace DataLayer
                     operationRepository = new OperationRepository(context);
                 return operationRepository;
             }
-        } 
+        }
+
+        public TimeRestrictionRepository TimeRestrictionRepository
+        {
+            get
+            {
+                if (timeRestrictionRepository == null)
+                    timeRestrictionRepository = new TimeRestrictionRepository(context);
+                return timeRestrictionRepository;
+            }
+        }
+
+        public ConditionalRestrictionRepository ConditionalRestrictionRepository
+        {
+            get
+            {
+                if (conditionalRestrictionRepository == null)
+                    conditionalRestrictionRepository = new ConditionalRestrictionRepository(context);
+                return conditionalRestrictionRepository;
+            }
+        }
         #endregion
 
         public UnitOfWork()
         {
             this.context = new SmartHomeDBContext();
+        }
+
+        internal UnitOfWork(SmartHomeDBContext context)
+        {
+            this.context = context;
         }
 
         #region Public Methods
@@ -153,7 +180,7 @@ namespace DataLayer
         public void Dispose()
         {
             this.context.Dispose();
-        } 
+        }
         #endregion
     }
 }

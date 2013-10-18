@@ -34,6 +34,19 @@ namespace DataLayer
             return this._Collection.Include("Connectors.HomeDevices.Operations");
         }
 
+        public override void Delete(Node entityNode)
+        {
+            UnitOfWork repository = new UnitOfWork(this._context);
+            for (int i = entityNode.Connectors.Count - 1; i <= 0; i--)
+            {
+                repository.ConnectorRepository.Delete(entityNode.Connectors.ElementAt(i));
+            }
+
+            repository.LocationRepository.Delete(entityNode.Location);
+
+            base.Delete(entityNode);
+        }
+
         public int GetNewAddress()
         {
             var existingAddress = this._Collection.Select(n => n.Address);
