@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServiceLayer;
 using ServiceLayer.DTO;
-using System.Linq;
 
 namespace App_Smart_Home_Prototipo.Controls
 {
