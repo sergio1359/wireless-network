@@ -227,11 +227,12 @@ void configWrite_Handler(OPERATION_HEADER_t* operation_header)
 
 void configWrite_DataConf(OPERATION_DataConf_t *req)
 {
+	//TODO: There is a problem when we send the config by radio. Something is wrong here
 	if (req->sendOk)
 	{
 		if(writeConfigSession.waitingForReset)//All receviced. Wainting for reset
 		{
-			SYS_TimerStart(&configResetTimer);	
+			//SYS_TimerStart(&configResetTimer);	
 		}
 	}else
 	{

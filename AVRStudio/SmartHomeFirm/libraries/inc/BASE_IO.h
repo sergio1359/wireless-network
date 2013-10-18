@@ -9,6 +9,8 @@
 #ifndef BASE_IO_H_
 #define BASE_IO_H_
 
+#include <avr/io.h>
+
 typedef enum 
 {
 	ATMega128RFA1_V1,
@@ -26,5 +28,7 @@ void BASE_LedOn();
 void BASE_LedOff();
 
 _Bool BASE_ButtonPressed();
+
+uint8_t BASE_PinAddressToINT(uint8_t pinAddress);
 
 #endif /* BASE_IO_H_ */

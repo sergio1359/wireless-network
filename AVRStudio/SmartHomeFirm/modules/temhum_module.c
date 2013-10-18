@@ -60,6 +60,9 @@ void temHumModule_Init(void)
 	TEMHUM_CONFIG_t* configTempPtr;
 	TEMHUM_CONFIG_t* configHumPtr;
 	
+	if(!validConfiguration)
+	return;
+	
 	num_of_temp_elems  = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Temperature];		//First byte is number of configs
 	num_of_hum_elems   = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Humidity];		
 	

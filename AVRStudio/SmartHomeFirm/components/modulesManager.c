@@ -48,16 +48,13 @@ bool command_is_dinamic[] = {
 
 void MODULES_Init(void)
 {
-	if(validConfiguration)
-	{
-		for(uint8_t i = 0; i<(sizeof(modules_Inits) / sizeof(void*));i++)
-		(*modules_Inits[i])();
-	}
+	for(uint8_t i = 0; i<(sizeof(modules_Inits) / sizeof(void*)); i++)
+	(*modules_Inits[i])();
 }
 
 void MODULES_Notify(uint8_t moduleId, OPERATION_HEADER_t* header)
 {
-	for(uint8_t i = 0; i<(sizeof(modules_NotificationInd) / sizeof(void*));i++)
+	for(uint8_t i = 0; i<(sizeof(modules_NotificationInd) / sizeof(void*)); i++)
 	{
 		if(i != moduleId)// Doesn't notify to the sender
 		(*modules_NotificationInd[i])(moduleId, header);

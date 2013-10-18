@@ -43,7 +43,7 @@ typedef enum NetworkJoinState_t
 	JOIN_STATE_WAIT_ACCEPT_RESP,
 } NetworkJoinState_t;
 
-void  RADIO_Init(void);
+void RADIO_Init(_Bool forceDefaultParams);
 void  RADIO_SendWakeup(void* callback);
 void  RADIO_SendDiscovery(void* callback);
 void  RADIO_StartNetworkJoin(void);

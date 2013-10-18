@@ -42,6 +42,9 @@ void presenceModule_Init(void)
 	uint8_t* portPtr;
 	uint8_t mask;
 	
+	if(!validConfiguration)
+	return;
+	
 	num_of_presen_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Presence];		//First byte is number of configs
 	configPtr			= &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Presence + 1];	//At second byte the list start
 	

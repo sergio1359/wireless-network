@@ -195,6 +195,8 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 			}
 		}
 		
+		//TODO: Remove this
+		/*
 		DISPLAY_Clear();
 		DISPLAY_WriteString("SENT TO: 0x");
 		DISPLAY_WriteNumberHEX(currentNeighborAddress >> 8);
@@ -223,7 +225,7 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 			case TIME_SYNC_WAITING_SYNC_RESPONSE:
 			DISPLAY_WriteString("SYNC RESPONSE");
 			break;
-		}		
+		}	*/	
 	}
 	
 	(void)timer;
