@@ -18,7 +18,16 @@ namespace ServiceLayer
     {
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
-            HomeDevice homeDevice = BusinessHomeDevice.CreateHomeDevice(homeDeviceType);
+            HomeDevice homeDevice;
+            try
+            {
+                homeDevice = BusinessHomeDevice.CreateHomeDevice(homeDeviceType);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Home Device " + homeDeviceType + " unsupported");
+            }
+            
             homeDevice.Name = nameHomeDevice;
 
             using (UnitOfWork repository = new UnitOfWork())
@@ -42,7 +51,7 @@ namespace ServiceLayer
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
-                    return;
+                    throw new ArgumentException("Home Device id doesn't exist");
 
                 if (homeDevice.InUse)
                 {
@@ -65,7 +74,7 @@ namespace ServiceLayer
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
-                    return;
+                    throw new ArgumentException("Home device id doesn't exist");
 
                 homeDevice.Name = newName;
 
@@ -82,7 +91,7 @@ namespace ServiceLayer
                 Location location = repository.LocationRepository.GetById(idLocation);
 
                 if (location == null)
-                    return;
+                    throw new ArgumentException("Location id doesn't exist");
 
                 location.X = x;
                 location.Y = y;
@@ -98,7 +107,7 @@ namespace ServiceLayer
                 var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
                 if (homeDevice == null)
-                    return null;
+                    throw new ArgumentException("Home device id doesn't exist");
 
                 return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Location);
             }
@@ -124,7 +133,7 @@ namespace ServiceLayer
             using (UnitOfWork repository = new UnitOfWork())
             {
                 if (repository.ViewRepository.GetById(idView) == null)
-                    return null;
+                    throw new ArgumentException("View id doesn't exist");
 
                 var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations()
                     .Where(hd => hd.Location.Any(l => l.View.Id == idView));

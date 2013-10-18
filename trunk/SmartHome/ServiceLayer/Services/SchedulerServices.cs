@@ -34,7 +34,7 @@ namespace ServiceLayer
                 HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
 
                 if (homeDevice == null)
-                    return -1;
+                    throw new ArgumentException("HomeDevice id doesn't exist");
 
                 Operation operationInternal = new Operation()
                 {
@@ -68,19 +68,19 @@ namespace ServiceLayer
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
-                TimeOperation timeOp = repository.TimeOperationRepository.GetById(idTimeOperation);
+                TimeOperation timeOperation = repository.TimeOperationRepository.GetById(idTimeOperation);
 
-                if (timeOp != null)
+                if (timeOperation == null)
+                    throw new ArgumentException("TimeOperation id doesn't exist");
+
+                if (timeOperation.Operation.DestionationHomeDevice.InUse)
                 {
-                    if (timeOp.Operation.DestionationHomeDevice.InUse)
-                    {
-                        //UPDATE CHECKSUM
-                        timeOp.Operation.DestionationHomeDevice.Connector.Node.UpdateChecksum(null);
-                    }
-
-                    repository.TimeOperationRepository.Delete(timeOp);
-                    repository.Commit();
+                    //UPDATE CHECKSUM
+                    timeOperation.Operation.DestionationHomeDevice.Connector.Node.UpdateChecksum(null);
                 }
+
+                repository.TimeOperationRepository.Delete(timeOperation);
+                repository.Commit();
             }
         }
     }

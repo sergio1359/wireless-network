@@ -66,7 +66,7 @@ namespace ServiceLayer
                 Node node = repository.NodeRespository.GetById(idNode);
 
                 if (node == null)
-                    return;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 node.UnlinkAllConnectors();//CHECK: works??
 
@@ -84,7 +84,7 @@ namespace ServiceLayer
                 Home home = repository.HomeRespository.GetHome();
 
                 if (node == null)
-                    return;
+                    throw new ArgumentException("Node Id doesn't exist");
 
                 CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
             }
