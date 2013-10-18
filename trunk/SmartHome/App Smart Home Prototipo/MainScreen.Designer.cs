@@ -91,6 +91,7 @@
             this.updateHomeToolStripMenuItem.Name = "updateHomeToolStripMenuItem";
             this.updateHomeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.updateHomeToolStripMenuItem.Text = "Generate EEPROMs";
+            this.updateHomeToolStripMenuItem.Click += new System.EventHandler(this.GenerateEEPROM);
             // 
             // toolStripDropDownButton2
             // 
