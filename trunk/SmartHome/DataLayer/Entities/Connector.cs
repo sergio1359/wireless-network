@@ -18,6 +18,7 @@ namespace DataLayer.Entities
 
         public ConnectorTypes ConnectorType { get; set; }
 
+        [Required]
         public virtual Node Node { get; set; }
 
         public virtual Product Product { get; set; }

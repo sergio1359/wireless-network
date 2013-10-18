@@ -28,11 +28,8 @@ namespace DataLayer
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            ////Haarcascade Remove
-            //modelBuilder.Entity<Node>()
-            //    .HasRequired(s => s.Connectors)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(true);
+            //Haarcascade Remove
+            //modelBuilder.Entity<Node>().HasMany(c => c.Connectors).WithRequired().WillCascadeOnDelete();
 
 
             base.OnModelCreating(modelBuilder);

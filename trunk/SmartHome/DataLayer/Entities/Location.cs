@@ -17,6 +17,7 @@ namespace DataLayer.Entities
 
         public bool Mobile { get; set; }
 
+        [Required]
         public virtual View View { get; set; }
     }
 }

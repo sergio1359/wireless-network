@@ -23,7 +23,7 @@ namespace DataLayer.Entities.HomeDevices
 
         public virtual Connector Connector { get; set; }
 
-        public virtual ICollection<Location> Location { get; set; }
+        public virtual ICollection<Location> Locations { get; set; }
 
         [InverseProperty("SourceHomeDevice")]
         public virtual ICollection<Operation> Operations { get; set; }
@@ -84,7 +84,7 @@ namespace DataLayer.Entities.HomeDevices
 
         public HomeDevice()
         {
-            this.Location = new List<Location>();
+            this.Locations = new List<Location>();
             this.Operations = new List<Operation>();
         }
 

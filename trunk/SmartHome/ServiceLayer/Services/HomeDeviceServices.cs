@@ -109,7 +109,7 @@ namespace ServiceLayer
                 if (homeDevice == null)
                     throw new ArgumentException("Home device id doesn't exist");
 
-                return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Location);
+                return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Locations);
             }
         }
 
@@ -136,7 +136,7 @@ namespace ServiceLayer
                     throw new ArgumentException("View id doesn't exist");
 
                 var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations()
-                    .Where(hd => hd.Location.Any(l => l.View.Id == idView));
+                    .Where(hd => hd.Locations.Any(l => l.View.Id == idView));
 
                 return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
             }

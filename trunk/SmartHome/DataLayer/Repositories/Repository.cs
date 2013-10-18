@@ -22,7 +22,7 @@ namespace DataLayer
            return _Collection.Add(entity);
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             _Collection.Remove(entity);
         }

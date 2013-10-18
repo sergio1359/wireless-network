@@ -24,5 +24,21 @@ namespace DataLayer
         {
             return _Collection.Include("Connector.Node").Where(c => c.Connector != null);
         }
+
+        public override void Delete(HomeDevice entityHomeDevice)
+        {
+            UnitOfWork repository = new UnitOfWork(this._context);
+            for (int i = entityHomeDevice.Operations.Count - 1; i <= 0; i--)
+            {
+                repository.OperationRepository.Delete(entityHomeDevice.Operations.ElementAt(i));
+            }
+
+            for (int i = entityHomeDevice.Locations.Count - 1; i >= 0; i--)
+            {
+                repository.LocationRepository.Delete(entityHomeDevice.Locations.ElementAt(i));
+            }            
+
+            base.Delete(entityHomeDevice);
+        }
     }
 }

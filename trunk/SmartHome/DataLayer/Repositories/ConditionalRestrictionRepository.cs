@@ -9,14 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class HomeRepository : Repository<Home>
+    public class ConditionalRestrictionRepository : Repository<ConditionalRestriction>
     {
-        public HomeRepository(SmartHomeDBContext context) : base(context) { }
+        public ConditionalRestrictionRepository(SmartHomeDBContext context) : base(context) { }
 
-        public Home GetHome()
-        {
-            return _Collection.First();
-        }
+
 
     }
 }
