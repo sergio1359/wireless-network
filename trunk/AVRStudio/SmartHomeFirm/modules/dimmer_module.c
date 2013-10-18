@@ -22,6 +22,8 @@
 #define MIN_COUNTER TIME_FRAGMENT * 5
 #define MAX_COUNTER TIME_FRAGMENT * 128
 
+#define OVR_COUNTER TIME_FRAGMENT * 129
+
 /*---------MODULE DEFINITIONS-------*/
 #define MAX_DIMMER_DEVICES 6
 
@@ -64,6 +66,9 @@ void dimmerModule_Init()
 	uint8_t mask;
 	uint8_t zeroCrossPin;
 	
+	if(!validConfiguration)
+		return;
+	
 	num_of_dimmer_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable];			//First byte is number of configs
 	zeroCrossPin		= runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable + 1];		//Second byte is the Zero Cross pin
 	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Dimmable + 2];		//At third byte the list start
@@ -72,6 +77,13 @@ void dimmerModule_Init()
 	{
 		//TODO: SEND ERROR (MAX NUMBER OF DEVICES EXCEEDED)
 		num_of_dimmer_elems = MAX_DIMMER_DEVICES;
+	}
+	
+	zeroCrossPin = BASE_PinAddressToINT(zeroCrossPin);
+	if(zeroCrossPin == 0xFF)
+	{
+		//TODO: SEND ERROR (INVALID ZEROCROSS PINPORT ADDRESS)
+		return;
 	}
 	
 	for(uint8_t i = 0; i<num_of_dimmer_elems; i++)
@@ -103,10 +115,11 @@ void dimmerModule_Init()
 		SYS_TimerStart(&dimmerTimer);
 		
 		//Initialize TIMER5 in normal mode
-		OCR5A = 0xFFFF;				// For elem 0 & 3
-		OCR5B = 0xFFFF;				// For elem 1 & 4
-		OCR5C = 0xFFFF;				// For elem 2 & 5
+		OCR5A = OVR_COUNTER;		// For elem 0 & 3
+		OCR5B = OVR_COUNTER;		// For elem 1 & 4
+		OCR5C = OVR_COUNTER;		// For elem 2 & 5
 		TCCR5B |= (1 << CS51);		// Prescaler 8
+		TIMSK5 |= (1 << TOIE5);		// Enable overflow interrupt
 		
 		//Initialize zero crossing interrupt
 		INTERRUPT_Attach(zeroCrossPin, dimmerZeroCrossInterrupt, RISING);
@@ -198,17 +211,17 @@ void changeElemValue(uint8_t elemIndex, uint8_t newValue)
 		elem->currentValue = newValue;
 		elem->timerValue = TIME_FRAGMENT * (128 - elem->currentValue);
 	
-		if((elemIndex == 0 || elemIndex == 3) && OCR5A == 0xFFFF)
+		if((elemIndex == 0 || elemIndex == 3) && (TIMSK5 & (1 << OCIE5A))== 0)
 		{
 			OCR5A = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5A);			// Enable TC5A interrupt		
 		}
-		else if((elemIndex == 1 || elemIndex == 4) && OCR5B == 0xFFFF)
+		else if((elemIndex == 1 || elemIndex == 4) && (TIMSK5 & (1 << OCIE5B))== 0)
 		{
 			OCR5B = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5B);            // Enable TC5B interrupt
 		}
-		else if((elemIndex == 2 || elemIndex == 5) && OCR5C == 0xFFFF)
+		else if((elemIndex == 2 || elemIndex == 5) && (TIMSK5 & (1 << OCIE5C))== 0)
 		{
 			OCR5C = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5C);            // Enable TC5C interrupt
@@ -314,15 +327,24 @@ void dimmerZeroCrossInterrupt()
 
 ISR(TIMER5_COMPA_vect)
 {
-	checkCompElems(0, OCR5A);
+	checkCompElems(0, &OCR5A);
 }
 
 ISR(TIMER5_COMPB_vect)
 {
-	checkCompElems(1, OCR5B);
+	checkCompElems(1, &OCR5B);
 }
 
 ISR(TIMER5_COMPC_vect)
 {
-	checkCompElems(2, OCR5C);
+	checkCompElems(2, &OCR5C);
 }
+
+ISR(TIMER1_OVF_vect)
+{
+	//If timer overflows, then zero-crossing detection is not working as spected reload the timer with the overflow value.
+	//Then only zero-crossing interrupt can reset the counter again. Another option to avoid overhead is disable the timer itself, and enable it
+	//in the setValue function
+	
+	TCNT5 = OVR_COUNTER;
+}	

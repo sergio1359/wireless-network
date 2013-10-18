@@ -21,23 +21,39 @@ void CONFIG_Init(void)
 	uint8_t shield_model = runningConfiguration.topConfiguration.configHeader.shieldModel;
 	uint8_t firmware_version = runningConfiguration.topConfiguration.configHeader.firmVersion;
 	
+	_Bool can_be_read = 1;
+	
 	//Check size errors
 	if(eeprom_size == 0x00 || eeprom_size == 0xFFFF)
 	{
 		//TODO:SEND ERROR MESSAGE (ERROR EEPROM EMPTY OR CORRUPTED)
+		can_be_read = 0;
 	}else if(eeprom_size > CONFIG_MAX_SIZE)
 	{
 		//TODO:SEND ERROR MESSAGE (ERROR CONFIG SIZE TOO BIG)
-	}else if(base_model != baseModel)
-	{
-		//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID BASE MODEL)
-	}else if (shield_model != shieldModel)
-	{
-		//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID SHIELD MODEL)
-	}else if (firmware_version != FIRMWARE_VERSION)
-	{
-		//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID FIRMWARE VERSION)
+		can_be_read = 0;
 	}else
+	{
+		if(!IS_TEMPORAL_CONFIG)
+		{
+			if (firmware_version != FIRMWARE_VERSION)
+			{
+				//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID FIRMWARE VERSION)
+				can_be_read = 0;
+			}
+			else if(base_model != baseModel)
+			{
+				//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID BASE MODEL)
+				can_be_read = 0;
+			}else if (shield_model != shieldModel)
+			{
+				//TODO:SEND ERROR MESSAGE (ERROR CONFIG INVALID SHIELD MODEL)
+				can_be_read = 0;
+			}
+		}
+	}
+	
+	if(can_be_read)
 	{
 		//Copy Startup-configuration to Running-configuration
 		EEPROM_Read_Block(runningConfiguration.raw, 0x00, eeprom_size);

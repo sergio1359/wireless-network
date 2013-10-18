@@ -86,7 +86,7 @@ static void joinTimerHandler(SYS_Timer_t *timer);
 
 
 
-void RADIO_Init()
+void RADIO_Init(_Bool forceDefaultParams)
 {
 	//Keep Join network parameters
 	if(joinState == JOIN_STATE_JOINED)
@@ -100,7 +100,7 @@ void RADIO_Init()
 	
 	usingSecurity = true;
 	
-	if(validConfiguration)
+	if(!forceDefaultParams && (validConfiguration || IS_TEMPORAL_CONFIG))
 	{
 		NWK_SetAddr(runningConfiguration.topConfiguration.networkConfig.deviceAddress);
 		NWK_SetPanId(runningConfiguration.topConfiguration.networkConfig.panId);
@@ -460,9 +460,8 @@ static void joinStateMachine(void)
 				break;
 			}
 		
-			//Use default radio settings forcing validConfiguration to false value
-			validConfiguration = false;
-			RADIO_Init();
+			//Use default radio settings
+			RADIO_Init(1);
 		
 			responsesCount = 0;
 			joinCounter = 0;

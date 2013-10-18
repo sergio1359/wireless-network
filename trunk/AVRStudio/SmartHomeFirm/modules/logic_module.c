@@ -47,6 +47,9 @@ void logicModule_Init()
 	uint8_t* portPtr;
 	uint8_t mask;
 	
+	if(!validConfiguration)
+	return;
+	
 	num_of_logic_elems = runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic];			//First byte is number of configs
 	configPtr		   = &runningConfiguration.raw[runningConfiguration.topConfiguration.dinamicIndex.configModule_Logic + 1];		//At second byte the list start
 	

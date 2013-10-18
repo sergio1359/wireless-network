@@ -185,7 +185,7 @@ static void appInit(void)
 	
 	TIME_Init();
 	OM_Init();
-	RADIO_Init();
+	RADIO_Init(false);
 	MODULES_Init();
 	
 	BASE_LedOn();

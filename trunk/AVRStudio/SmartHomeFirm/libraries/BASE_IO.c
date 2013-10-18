@@ -55,3 +55,36 @@ _Bool BASE_ButtonPressed()
 {
 	return VARPIN_ISSET(BUTTON) && !VARPIN_READ(BUTTON);
 }
+
+uint8_t BASE_PinAddressToINT(uint8_t pinAddress)
+{
+	switch(pinAddress)
+	{
+		case PINADDRESS('D', 0):
+		return 0;
+		
+		case PINADDRESS('D', 1):
+		return 1;
+		
+		case PINADDRESS('D', 2):
+		return 2;
+		
+		case PINADDRESS('D', 3):
+		return 3;
+		
+		case PINADDRESS('E', 4):
+		return 4;
+		
+		case PINADDRESS('E', 5):
+		return 5;
+		
+		case PINADDRESS('E', 6):
+		return 6;
+		
+		case PINADDRESS('E', 7):
+		return 7;
+		
+		default:
+		return 255;
+	}
+}
