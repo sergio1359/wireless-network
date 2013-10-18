@@ -14,6 +14,28 @@ namespace ServiceLayer
         private static HomeDeviceService homeDeviceService;
         private static ZoneServices zoneService;
         private static ViewServices viewService;
+        private static SchedulerServices schedulerService;
+        private static ThemeServices themeService;
+
+        public static SchedulerServices SchedulerService
+        {
+            get
+            {
+                if (schedulerService == null)
+                    schedulerService = new SchedulerServices();
+                return schedulerService;
+            }
+        }
+
+        public static ThemeServices ThemeService
+        {
+            get
+            {
+                if (themeService == null)
+                    themeService = new ThemeServices();
+                return themeService;
+            }
+        }
 
         public static ViewServices ViewService
         {

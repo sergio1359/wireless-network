@@ -68,6 +68,8 @@
     <Compile Include="Services\OperationServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.cs" />
+    <Compile Include="Services\SchedulerServices.cs" />
+    <Compile Include="Services\ThemeServices.cs" />
     <Compile Include="Services\ViewServices.cs" />
     <Compile Include="Services\ZoneServices.cs" />
   </ItemGroup>

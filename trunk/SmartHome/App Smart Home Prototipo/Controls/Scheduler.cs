@@ -27,7 +27,7 @@ namespace App_Smart_Home_Prototipo.Controls
         private void UpdateScheduler()
         {
             listBoxOperation.Items.Clear();
-            listBoxOperation.Items.AddRange(Services.OperationService.GetScheduler().ToArray());
+            listBoxOperation.Items.AddRange(Services.SchedulerService.GetScheduler().ToArray());
         }
 
         private void AddOperationScheduler(object sender, EventArgs e)
@@ -52,7 +52,7 @@ namespace App_Smart_Home_Prototipo.Controls
 
             int idHomeDevice = (comboBoxToHomeDevice.SelectedItem as HomeDeviceDTO).Id;
 
-            Services.OperationService.AddScheduler(weekDays, time, textBoxNameOperation.Text, idHomeDevice, comboBoxOperation.Text);
+            Services.SchedulerService.AddScheduler(weekDays, time, textBoxNameOperation.Text, idHomeDevice, comboBoxOperation.Text);
 
             UpdateScheduler();
         }
@@ -61,7 +61,7 @@ namespace App_Smart_Home_Prototipo.Controls
         {
             int idTimeOperation = (listBoxOperation.SelectedItem as TimeOperationDTO).Id;
 
-            Services.OperationService.RemoveTimeOperation(idTimeOperation);
+            Services.SchedulerService.RemoveTimeOperation(idTimeOperation);
 
             UpdateScheduler();
         }
