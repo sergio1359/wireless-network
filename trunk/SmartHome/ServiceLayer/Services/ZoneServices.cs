@@ -58,14 +58,7 @@ namespace ServiceLayer
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Zone zone = repository.ZoneRepository.GetById(idZone);
-
-                repository.ViewRepository.Delete(zone.MainView);
-
-                for (int i = 0; i < zone.Views.Count; i++)
-                {
-                    repository.ViewRepository.Delete(zone.Views.ElementAt(i));
-                }
-
+                
                 repository.ZoneRepository.Delete(zone);
 
                 repository.Commit();
