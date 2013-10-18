@@ -68,7 +68,7 @@ namespace ServiceLayer
                 if (node == null)
                     throw new ArgumentException("Node Id doesn't exist");
 
-                node.UnlinkAllConnectors();//CHECK: works??
+                node.UnlinkAllConnectors();
 
                 repository.NodeRespository.Delete(node);
 

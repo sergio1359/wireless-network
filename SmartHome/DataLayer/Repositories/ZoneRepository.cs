@@ -17,6 +17,8 @@ namespace DataLayer
         {
             UnitOfWork repository = new UnitOfWork(this._context);
 
+            repository.ViewRepository.Delete(entityZone.MainView);
+
             for (int i = entityZone.Views.Count - 1; i >= 0; i--)
             {
                 repository.ViewRepository.Delete(entityZone.Views.ElementAt(i));
