@@ -40,7 +40,7 @@ namespace RawOperationSender
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var operation = OperationMessage.MACRead(0x4004);
+            var operation = OperationMessage.MACRead(0x0002);
 
             float priotity = 0;
             List<Task> tasks = new List<Task>();
@@ -90,6 +90,26 @@ namespace RawOperationSender
 
                 await joinMod.AcceptNode((string)listBox1.SelectedItem, newAddress, new Security() { SecurityKey = "TestSecurityKey0" });
             }
+        }
+
+        byte dimmerValue = 0;
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            var operation = OperationMessage.DimmerWrite(1, dimmerValue, 0, 0x02);
+
+            Debug.WriteLine("Dimmer at " + dimmerValue);
+            OutputHeader outputMessage = new OutputHeader(0)
+            {
+                SecurityEnabled = true,
+                RoutingEnabled = true,
+                EndPoint = 1,
+                Retries = 3,
+                Content = operation
+            };
+
+            await CommunicationManager.Instance.SendMessage(outputMessage);
+
+            dimmerValue = (byte)((dimmerValue + 10) % 130);
         }
     }
 }

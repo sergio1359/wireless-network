@@ -59,7 +59,8 @@ namespace SmartHome.Communications.Modules.Config
 
             this.configUpdateTimer = new Timer()
             {
-                Interval = 1000 * 5,    // 30 seconds
+                //Interval = 1000 * 30,    // 30 seconds
+                Interval = 1000 * 5,
                 AutoReset = false,
             };
             this.configUpdateTimer.Elapsed += configUpdateTimer_Elapsed;
@@ -88,7 +89,7 @@ namespace SmartHome.Communications.Modules.Config
             }
 
             this.firstTime = false;
-            this.configUpdateTimer.Start();
+            //this.configUpdateTimer.Start();
         }
 
         #region Overridden Methods
