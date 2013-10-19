@@ -88,26 +88,20 @@ namespace RawOperationSender
             {
                 ushort newAddress = Convert.ToUInt16(this.textBox1.Text, 16);
 
-                await joinMod.AcceptNode((string)listBox1.SelectedItem, newAddress, new Security() { SecurityKey = "TestSecurityKey0" });
+                var nodeInfo = (PendingNodeInfo)listBox1.SelectedItem;
+
+                await joinMod.AcceptNode(nodeInfo.MacAddress, newAddress, new Security() { SecurityKey = "TestSecurityKey0" });
             }
         }
 
         byte dimmerValue = 0;
         private async void button3_Click(object sender, EventArgs e)
         {
-            var operation = OperationMessage.DimmerWrite(1, dimmerValue, 0, 0x02);
+            var userMod = CommunicationManager.Instance.FindModule<UserModule>();
 
             Debug.WriteLine("Dimmer at " + dimmerValue);
-            OutputHeader outputMessage = new OutputHeader(0)
-            {
-                SecurityEnabled = true,
-                RoutingEnabled = true,
-                EndPoint = 1,
-                Retries = 3,
-                Content = operation
-            };
 
-            await CommunicationManager.Instance.SendMessage(outputMessage);
+           await userMod.SendMessage(OperationMessage.DimmerWrite(1, dimmerValue, 0, 0x02));
 
             dimmerValue = (byte)((dimmerValue + 10) % 130);
         }

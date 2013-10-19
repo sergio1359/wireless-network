@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 #endregion
 
 namespace DataLayer
 {
-    public class NodeRepository: Repository<Node>
+    public class NodeRepository : Repository<Node>
     {
         public NodeRepository(SmartHomeDBContext context) : base(context) { }
 
@@ -42,7 +42,8 @@ namespace DataLayer
                 repository.ConnectorRepository.Delete(entityNode.Connectors.ElementAt(i));
             }
 
-            repository.LocationRepository.Delete(entityNode.Location);
+            if (entityNode.Location != null)
+                repository.LocationRepository.Delete(entityNode.Location);
 
             base.Delete(entityNode);
         }
