@@ -54,9 +54,13 @@ namespace OperationUARTSender
             LogicRead,
             LogicReadResponse,
 
+            DimmerWrite = 0x46,
+            DimmerRead,
+            DimmerReadResponse,
+
             ColorWrite = 0x50,
             ColorWriteRandom = 0x51,
-            ColorSecuenceWrite = 0x52,
+            ColorRandomSecuenceWrite = 0x52,
             ColorSortedSecuenceWrite = 0x53,
             ColorRead = 0x54,
             ColorReadResponse = 0x55,

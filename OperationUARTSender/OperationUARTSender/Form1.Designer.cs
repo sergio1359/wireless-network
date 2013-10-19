@@ -56,6 +56,10 @@
             this.textBoxParamAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonPing = new System.Windows.Forms.Button();
+            this.buttonDimmerWrite = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -334,11 +338,44 @@
             this.buttonPing.UseVisualStyleBackColor = true;
             this.buttonPing.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
+            // buttonDimmerWrite
+            // 
+            this.buttonDimmerWrite.Enabled = false;
+            this.buttonDimmerWrite.Location = new System.Drawing.Point(1149, 289);
+            this.buttonDimmerWrite.Name = "buttonDimmerWrite";
+            this.buttonDimmerWrite.Size = new System.Drawing.Size(99, 37);
+            this.buttonDimmerWrite.TabIndex = 8;
+            this.buttonDimmerWrite.Text = "DIMMER WRT";
+            this.buttonDimmerWrite.UseVisualStyleBackColor = true;
+            this.buttonDimmerWrite.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(1149, 238);
+            this.trackBar1.Maximum = 128;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(99, 45);
+            this.trackBar1.TabIndex = 9;
+            this.trackBar1.TickFrequency = 10;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1185, 270);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "OFF";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1163, 341);
+            this.ClientSize = new System.Drawing.Size(1260, 341);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.buttonDimmerWrite);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonClean);
@@ -367,6 +404,7 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "Form1";
             this.Text = "UART Operation Sender";
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,6 +440,9 @@
         private System.Windows.Forms.TextBox textBoxParamAddress;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonPing;
+        private System.Windows.Forms.Button buttonDimmerWrite;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label label3;
     }
 }
 

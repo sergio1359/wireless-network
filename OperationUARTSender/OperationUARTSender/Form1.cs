@@ -370,6 +370,10 @@ namespace OperationUARTSender
             {
                 SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.Reset, Args = new byte[] { } });
             }
+            else if (sender == buttonDimmerWrite)
+            {
+                SendOperation(new Operation() { SourceAddress = 0x00, DestinationAddress = DestinationAddress, OpCode = Operation.OPCodes.DimmerWrite, Args = new byte[] { 0x01, 0x00, (byte)trackBar1.Value, 0 } });
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -485,6 +489,13 @@ namespace OperationUARTSender
                     operation.SourceAddress,
                     ((ushort)operation.Args[1]) << 8 | operation.Args[0],
                     (operation.Args[2] == 0xFF) ? "UNKNOWN" : (operation.Args[2] != 0).ToString());
+            }
+            else if (operation.OpCode == Operation.OPCodes.DimmerReadResponse)
+            {
+                msgToPrint = String.Format("DIMMER READ FROM 0x{0:X4}: 0x{1:X4} {2}",
+                    operation.SourceAddress,
+                    ((ushort)operation.Args[1]) << 8 | operation.Args[0],
+                    (operation.Args[2] == 0xFF) ? "UNKNOWN" : operation.Args[2].ToString());
             }
             else if (operation.OpCode == Operation.OPCodes.DateTimeRead) //TIME SYNC REQUEST!
             {
@@ -738,5 +749,20 @@ namespace OperationUARTSender
         }
 
         #endregion
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            int value = ((TrackBar)sender).Value;
+
+            if (value < 5)
+                label3.Text = "OFF";
+            else
+                label3.Text = (int)this.Map(value, 0, 128, 0, 100) + "%";
+        }
+
+        private float Map(float value, float fromSource, float toSource, float fromTarget, float toTarget)
+        {
+            return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
+        }
     }
 }
