@@ -60,6 +60,11 @@ void temHumModule_Init(void)
 	TEMHUM_CONFIG_t* configTempPtr;
 	TEMHUM_CONFIG_t* configHumPtr;
 	
+	//Set responses opCodes
+	temperatureResponse.header.opCode = TemperatureReadResponse;
+	humidityResponse.header.opCode = HumidityReadResponse;
+	
+	//EEPROM config loading
 	if(!validConfiguration)
 	return;
 	
@@ -98,10 +103,6 @@ void temHumModule_Init(void)
 		
 		configTempPtr++;
  	}
-	 
-	//Set responses opCodes
-	temperatureResponse.header.opCode = TemperatureReadResponse;
-	humidityResponse.header.opCode = HumidityReadResponse; 
 	 
 	if(num_of_temp_elems > 0 || num_of_hum_elems > 0)
 	{ 

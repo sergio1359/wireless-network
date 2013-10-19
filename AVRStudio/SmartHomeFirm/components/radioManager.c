@@ -461,7 +461,7 @@ static void joinStateMachine(void)
 			}
 		
 			//Use default radio settings
-			RADIO_Init(1);
+			RADIO_Init(true);
 		
 			responsesCount = 0;
 			joinCounter = 0;
