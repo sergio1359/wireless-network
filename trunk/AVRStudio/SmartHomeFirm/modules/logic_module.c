@@ -47,6 +47,12 @@ void logicModule_Init()
 	uint8_t* portPtr;
 	uint8_t mask;
 	
+	//Set responses opCodes
+	logicResponse.header.opCode = LogicReadResponse;
+	
+	waitingForResponseConf = false;
+	
+	//EEPROM config loading
 	if(!validConfiguration)
 	return;
 	
@@ -84,11 +90,6 @@ void logicModule_Init()
 		logic_elems[i].timerCounter = 0;
 		configPtr++;
 	}
-	
-	//Set responses opCodes
-	logicResponse.header.opCode = LogicReadResponse;
-	
-	waitingForResponseConf = false;
 	
 	if(num_of_logic_elems > 0)
 	{

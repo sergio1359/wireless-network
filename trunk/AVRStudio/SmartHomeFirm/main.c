@@ -66,8 +66,8 @@ _Bool sendFlag = false;
 *****************************************************************************/
 static void appNetworkStatusTimerHandler(SYS_Timer_t *timer)
 {
-	if(!IS_COORDINATOR)
-		sendFlag = true;
+	/*if(!IS_COORDINATOR)
+		sendFlag = true;*/
 	
 	(void)timer;
 }

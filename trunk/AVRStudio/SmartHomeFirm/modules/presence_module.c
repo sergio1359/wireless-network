@@ -42,6 +42,10 @@ void presenceModule_Init(void)
 	uint8_t* portPtr;
 	uint8_t mask;
 	
+	//Set responses opCodes
+	presenceResponse.header.opCode = PresenceReadResponse;
+	
+	//EEPROM config loading
 	if(!validConfiguration)
 	return;
 	
@@ -68,9 +72,6 @@ void presenceModule_Init(void)
 		
 		configPtr++;
 	}
-	
-	//Set responses opCodes
-	presenceResponse.header.opCode = PresenceReadResponse;
 	
 	if(num_of_presen_elems > 0)
 	{

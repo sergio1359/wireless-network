@@ -19,6 +19,9 @@
 
 #define TIME_FRAGMENT ((F_CPU / 1000000ul) / TIMER_PRESCALER) * TIMER_INTERVAL_50Hz
 
+#define START_TIMER (TCCR5B |= (1 << CS51))		// Prescaler 8
+#define STOP_TIMER (TCCR5B &= ~(1 << CS51))		// Prescaler 8
+
 #define MIN_COUNTER TIME_FRAGMENT * 5
 #define MAX_COUNTER TIME_FRAGMENT * 128
 
@@ -32,9 +35,9 @@ typedef struct
 	DIMMER_CONFIG_t* config;
 	uint8_t* portPtr;
 	uint8_t mask;
-	uint16_t timerCounter;
-	uint8_t previousValue;
-	uint8_t currentValue;//0-128
+	uint16_t timerCounter;	//0 - (128 * TIME_FRAGMENT)
+	uint8_t previousValue;	//0 - 128
+	uint8_t currentValue;	//0 - 128
 	uint16_t timerValue;
 }DIMMER_ELEM_t;
 
@@ -66,6 +69,12 @@ void dimmerModule_Init()
 	uint8_t mask;
 	uint8_t zeroCrossPin;
 	
+	//Set responses opCodes
+	dimmerResponse.header.opCode = DimmerReadResponse;
+	
+	waitingForResponseConf = false;
+	
+	//EEPROM config loading
 	if(!validConfiguration)
 		return;
 	
@@ -98,13 +107,9 @@ void dimmerModule_Init()
 		dimmer_elems[i].portPtr = portPtr;
 		dimmer_elems[i].mask = mask;
 		dimmer_elems[i].currentValue = 0;
+		dimmer_elems[i].timerValue = 0;
 		configPtr++;
 	}
-	
-	//Set responses opCodes
-	dimmerResponse.header.opCode = DimmerReadResponse;
-	
-	waitingForResponseConf = false;
 	
 	if(num_of_dimmer_elems > 0)
 	{
@@ -118,7 +123,6 @@ void dimmerModule_Init()
 		OCR5A = OVR_COUNTER;		// For elem 0 & 3
 		OCR5B = OVR_COUNTER;		// For elem 1 & 4
 		OCR5C = OVR_COUNTER;		// For elem 2 & 5
-		TCCR5B |= (1 << CS51);		// Prescaler 8
 		TIMSK5 |= (1 << TOIE5);		// Enable overflow interrupt
 		
 		//Initialize zero crossing interrupt
@@ -187,6 +191,27 @@ void sendDimmerResponse(uint16_t destinationAddress, uint16_t deviceAddress, uin
 	OM_ProccessResponseOperation(&dimmerResponse.header);
 }
 
+void setComparator(uint8_t elemIndex, _Bool enabled)
+{
+	if(enabled)
+	{
+		if(elemIndex == 0)
+			TIMSK5 |= (1 << OCIE5A);
+		else if(elemIndex == 1)
+			TIMSK5 |= (1 << OCIE5B);
+		else
+			TIMSK5 |= (1 << OCIE5C);
+	}else
+	{
+		if(elemIndex == 0)
+			TIMSK5 &= ~(1 << OCIE5A);
+		else if(elemIndex == 1)
+			TIMSK5 &= ~(1 << OCIE5B);
+		else
+			TIMSK5 &= ~(1 << OCIE5C);
+	}
+}
+
 void changeElemValue(uint8_t elemIndex, uint8_t newValue)
 {
 	DIMMER_ELEM_t* elem = &dimmer_elems[elemIndex];
@@ -199,29 +224,47 @@ void changeElemValue(uint8_t elemIndex, uint8_t newValue)
 		HAL_GPIO_PORT_clr(elem->portPtr, elem->mask);
 		elem->currentValue = 0;
 		elem->timerValue = 0; //Never changes
+		
+		//Stop the comparator if the partner elem doesn't use it
+		if( (elemIndex < 3 && dimmer_elems[elemIndex + 3].timerValue == 0) || 
+			(elemIndex >= 3 && dimmer_elems[elemIndex - 3].timerValue == 0))
+		{
+				setComparator(elemIndex, false);
+		}			
 	}else if(newValue >= 128)
 	{
 		//Full ON
 		HAL_GPIO_PORT_set(elem->portPtr, elem->mask);
 		elem->currentValue = 128;
 		elem->timerValue = 0; //Never changes
+		
+		//Stop the comparator if the partner elem doesn't use it
+		if( (elemIndex < 3 && dimmer_elems[elemIndex + 3].timerValue == 0) ||
+			(elemIndex >= 3 && dimmer_elems[elemIndex - 3].timerValue == 0))
+		{
+			setComparator(elemIndex, false);
+		}
 	}else
 	{
 		//Dimming
 		elem->currentValue = newValue;
 		elem->timerValue = TIME_FRAGMENT * (128 - elem->currentValue);
 	
-		if((elemIndex == 0 || elemIndex == 3) && (TIMSK5 & (1 << OCIE5A))== 0)
+		//Initialize the comparator if the partner elem didn't do it
+		if((elemIndex == 0 && dimmer_elems[3].timerValue == 0)
+		|| (elemIndex == 3 && dimmer_elems[0].timerValue == 0))
 		{
 			OCR5A = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5A);			// Enable TC5A interrupt		
 		}
-		else if((elemIndex == 1 || elemIndex == 4) && (TIMSK5 & (1 << OCIE5B))== 0)
+		else if((elemIndex == 1 && dimmer_elems[4].timerValue == 0)
+			 || (elemIndex == 4 && dimmer_elems[1].timerValue == 0))
 		{
 			OCR5B = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5B);            // Enable TC5B interrupt
 		}
-		else if((elemIndex == 2 || elemIndex == 5) && (TIMSK5 & (1 << OCIE5C))== 0)
+		else if((elemIndex == 2 && dimmer_elems[5].timerValue == 0)
+			 || (elemIndex == 5 && dimmer_elems[2].timerValue == 0))
 		{
 			OCR5C = elem->timerValue;
 			TIMSK5 |= (1 << OCIE5C);            // Enable TC5C interrupt
@@ -290,15 +333,18 @@ void checkCompElems(uint8_t firstElemIndex, uint16_t* compPtr)
 {
 	DIMMER_ELEM_t* firstElem = &dimmer_elems[firstElemIndex];
 	DIMMER_ELEM_t* secondElem = num_of_dimmer_elems >= (firstElemIndex + 3) ? &dimmer_elems[firstElemIndex + 3] : 0;
+	_Bool updateFisrtElem = (firstElem->timerValue == (*compPtr));
 	_Bool updateSecondElem = (secondElem && secondElem->timerValue == (*compPtr));
 	
-	if(firstElem->timerValue == (*compPtr))
+	if(updateFisrtElem)
 	{
 		//Send a pulse
 		HAL_GPIO_PORT_set(firstElem->portPtr, firstElem->mask);
 		
 		if(secondElem)
-		(*compPtr) = secondElem->timerValue;
+		{
+			(*compPtr) = secondElem->timerValue;	
+		}
 	}
 	
 	if(updateSecondElem)
@@ -309,13 +355,19 @@ void checkCompElems(uint8_t firstElemIndex, uint16_t* compPtr)
 		(*compPtr) = firstElem->timerValue;
 	}
 	
-	_delay_us(10);
-	
-	HAL_GPIO_PORT_clr(firstElem->portPtr, firstElem->mask);
-	
-	if(updateSecondElem)
+	if(updateFisrtElem || updateSecondElem)
 	{
-		HAL_GPIO_PORT_clr(secondElem->portPtr, secondElem->mask);
+		_delay_us(10);
+		
+		if(updateFisrtElem)
+		{
+			HAL_GPIO_PORT_clr(firstElem->portPtr, firstElem->mask);
+		}
+				
+		if(updateSecondElem)
+		{
+			HAL_GPIO_PORT_clr(secondElem->portPtr, secondElem->mask);
+		}	
 	}
 }
 
@@ -323,6 +375,7 @@ void dimmerZeroCrossInterrupt()
 {
 	//Restart counter
 	TCNT5 = 0;
+	START_TIMER;
 }
 
 ISR(TIMER5_COMPA_vect)
@@ -340,11 +393,11 @@ ISR(TIMER5_COMPC_vect)
 	checkCompElems(2, &OCR5C);
 }
 
-ISR(TIMER1_OVF_vect)
+ISR(TIMER5_OVF_vect)
 {
 	//If timer overflows, then zero-crossing detection is not working as spected reload the timer with the overflow value.
 	//Then only zero-crossing interrupt can reset the counter again. Another option to avoid overhead is disable the timer itself, and enable it
 	//in the setValue function
 	
-	TCNT5 = OVR_COUNTER;
+	STOP_TIMER;
 }	
