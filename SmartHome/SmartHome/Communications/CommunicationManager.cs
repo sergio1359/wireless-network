@@ -223,8 +223,17 @@ namespace SmartHome.Communications
 
                         Task.Factory.StartNew(async () =>
                             {
-                                NodeConnection connection = masterConnection.NodeAddress == connectionAddress ? masterConnection : this.connectionsInUse[connectionAddress];
+                                NodeConnection connection;
 
+                                if (masterConnection != null && masterConnection.NodeAddress == connectionAddress)
+                                {
+                                    connection = masterConnection;
+                                }
+                                else
+                                {
+                                    connection = this.connectionsInUse[connectionAddress];
+                                }
+                                
                                 var val = await connection.SendMessage(pendingMsg.Message);
 
                                 this.currentMessages[connectionAddress] = null;

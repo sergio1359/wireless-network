@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace SmartHome.Communications.Modules
 {
-    class UserModule : ModuleBase
+    public class UserModule : ModuleBase
     {
         [RequiredModule]
         public StatusModule statusModule;

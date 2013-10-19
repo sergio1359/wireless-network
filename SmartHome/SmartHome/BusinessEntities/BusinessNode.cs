@@ -18,7 +18,8 @@ namespace SmartHome.BusinessEntities
             Node node = new Node()
             {
                 Base = baseType,
-                Shield = shieldType
+                Shield = shieldType,
+                NetworkRetries = 3,
             };
 
             foreach (var item in ProductConfiguration.GetShieldDictionary(shieldType))
