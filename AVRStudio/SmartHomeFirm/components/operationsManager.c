@@ -65,7 +65,7 @@ void OM_ProccessInternalOperation(OPERATION_HEADER_t* operation_header)
 	}
 	/* END OF TESTING REGION */
 	
-	uint16_t operationConfigAddress = CONFIG_GetOperationConfigAddress(operation_header);
+	uint16_t operationConfigAddress = CONFIG_GetOperationAddress(operation_header);
 	if(!checkTimeRestrictions(operationConfigAddress) || !checkConditions(operationConfigAddress)) //Restriction not satisfied
 		return;
 	

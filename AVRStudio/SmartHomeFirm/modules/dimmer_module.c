@@ -22,6 +22,8 @@
 #define START_TIMER (TCCR5B |= (1 << CS51))		// Prescaler 8
 #define STOP_TIMER (TCCR5B &= ~(1 << CS51))		// Prescaler 8
 
+#define DIMMER_INCREMENT 5
+
 #define MIN_COUNTER TIME_FRAGMENT * 5
 #define MAX_COUNTER TIME_FRAGMENT * 128
 
@@ -38,6 +40,7 @@ typedef struct
 	uint16_t timerCounter;	//0 - (128 * TIME_FRAGMENT)
 	uint8_t previousValue;	//0 - 128
 	uint8_t currentValue;	//0 - 128
+	uint8_t objetiveValue;	//0 - 128
 	uint16_t timerValue;
 }DIMMER_ELEM_t;
 
@@ -53,6 +56,7 @@ static DIMMER_ELEM_t dimmer_elems[MAX_DIMMER_DEVICES];
 static uint8_t num_of_dimmer_elems;
 
 static SYS_Timer_t dimmerTimer;
+static uint8_t timerDivider;
 
 static void dimmerZeroCrossInterrupt();
 static void dimmerTimerHandler(SYS_Timer_t *timer);
@@ -113,8 +117,10 @@ void dimmerModule_Init()
 	
 	if(num_of_dimmer_elems > 0)
 	{
-		//Configure Timers
-		dimmerTimer.interval = 200; // 5 times per second
+		//Configure System Timer
+		timerDivider = 0;
+		
+		dimmerTimer.interval = 50; // 20 times per second
 		dimmerTimer.mode = SYS_TIMER_PERIODIC_MODE;
 		dimmerTimer.handler = dimmerTimerHandler;
 		SYS_TimerStart(&dimmerTimer);
@@ -216,8 +222,6 @@ void changeElemValue(uint8_t elemIndex, uint8_t newValue)
 {
 	DIMMER_ELEM_t* elem = &dimmer_elems[elemIndex];
 	
-	elem->previousValue = elem->currentValue;
-	
 	if(newValue < 5)
 	{
 		//Full OFF
@@ -286,11 +290,15 @@ _Bool proccessDimmerPortAction(uint16_t deviceAddress, _Bool read, uint8_t newVa
 	
 	if(read)
 	{
-		sendDimmerResponse(sourceAddress, deviceAddress, currentElem->currentValue);
+		sendDimmerResponse(sourceAddress, deviceAddress, currentElem->objetiveValue);
 	}
 	else
 	{
-		changeElemValue(configIndex, newValue);
+		currentElem->previousValue = currentElem->objetiveValue;
+		currentElem->objetiveValue = newValue;
+#if NOT_CHANGE_CONTROL
+			changeElemValue(configIndex, newValue);
+#endif
 		
 		if(seconds > 0)
 		{
@@ -312,19 +320,41 @@ static void dimmerTimerHandler(SYS_Timer_t *timer)
 	{
 		DIMMER_ELEM_t* currentElem = &dimmer_elems[i];
 		
-		// Timer check
-		if(currentElem->timerCounter > 1)
+#if !NOT_CHANGE_CONTROL
+		//Change controller
+		if(currentElem->objetiveValue > currentElem->currentValue)
 		{
-			currentElem->timerCounter--;
-		}else if(currentElem->timerCounter == 1) //Time to process
+			int nextValue = MIN(currentElem->objetiveValue, currentElem->currentValue + DIMMER_INCREMENT);
+			changeElemValue(i, nextValue);
+		}else if(currentElem->objetiveValue < currentElem->currentValue)
 		{
-			//Disable timer
-			currentElem->timerCounter = 0;
-			
-			//Set previous value
-			changeElemValue(i, currentElem->previousValue);
+			int nextValue = MAX(currentElem->objetiveValue, currentElem->currentValue - DIMMER_INCREMENT);
+			changeElemValue(i, nextValue);
 		}
+#endif
+		
+		if(timerDivider == 0)
+		{	
+			// Timer check
+			if(currentElem->timerCounter > 1)
+			{
+				currentElem->timerCounter--;
+			}else if(currentElem->timerCounter == 1) //Time to process
+			{
+				//Disable timer
+				currentElem->timerCounter = 0;
+			
+				//Set previous value
+				currentElem->objetiveValue = currentElem->previousValue;
+				#if NOT_CHANGE_CONTROL
+				changeElemValue(configIndex, currentElem->objetiveValue);
+				#endif
+			}
+		}		
 	}
+	
+	if(timerDivider++ == 3)//4 * 50ms = 200 ms
+		timerDivider = 0;
 	
 	(void)timer;
 }
@@ -395,9 +425,8 @@ ISR(TIMER5_COMPC_vect)
 
 ISR(TIMER5_OVF_vect)
 {
-	//If timer overflows, then zero-crossing detection is not working as spected reload the timer with the overflow value.
-	//Then only zero-crossing interrupt can reset the counter again. Another option to avoid overhead is disable the timer itself, and enable it
-	//in the setValue function
+	//If timer overflows, then zero-crossing detection is not working as spected, then, stop the timer.
+	//Now only zero-crossing interrupt will restart the counter again.
 	
 	STOP_TIMER;
 }	

@@ -99,7 +99,7 @@ void CONFIG_SaveTemporalConfig()
 	EEPROM_Write_Block(&runningConfiguration, 0x00, eeprom_size);
 }
 
-uint16_t CONFIG_GetOperationConfigAddress(OPERATION_HEADER_t* operation_header)
+uint16_t CONFIG_GetOperationAddress(OPERATION_HEADER_t* operation_header)
 {
 	return (uint16_t)operation_header - (uint16_t)&runningConfiguration;
 }
