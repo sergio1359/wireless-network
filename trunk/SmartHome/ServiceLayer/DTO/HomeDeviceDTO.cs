@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 #endregion
 
@@ -20,20 +21,29 @@ namespace ServiceLayer.DTO
         public bool InUse { get; set; }
 
         [DataMember]
-        public StateHomeDeviceDTO[] State { get; set; }
+        public IEnumerable<StateHomeDeviceDTO> State { get; set; }
+
+        public HomeDeviceDTO()
+        {
+            State = new List<StateHomeDeviceDTO>();
+        }
 
         public override string ToString()
         {
             return "ID: " + Id + "  " + Name + "(" + Type + ")";
         }
+    }
 
-        public class StateHomeDeviceDTO
-        {
-            public string NamePropierty { get; set; }
+    [DataContract]
+    public class StateHomeDeviceDTO
+    {
+        [DataMember]
+        public string NamePropierty { get; set; }
 
-            public string Type { get; set; }
+        [DataMember]
+        public string Type { get; set; }
 
-            public string Value { get; set; }
-        }
+        [DataMember]
+        public string Value { get; set; }
     }
 }

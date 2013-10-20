@@ -4,7 +4,11 @@ using DataLayer.Entities;
 using DataLayer.Entities.Enums;
 using DataLayer.Entities.HomeDevices;
 using System;
+using System.Linq;
 using SmartHome.Communications.Modules.Network;
+using System.Reflection;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
+using System.Collections.Generic;
 #endregion
 
 namespace ServiceLayer.DTO
@@ -27,7 +31,13 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.ConnectorType, f => f.MapFrom(c => Enum.GetName(typeof(ConnectorTypes), c.ConnectorType)));
 
             Mapper.CreateMap<HomeDevice, HomeDeviceDTO>()
-                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceTypeName));
+                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceTypeName))
+                .ForMember(t => t.State, f => f.MapFrom(hd => Mapper.Map<IEnumerable<StateHomeDeviceDTO>>(hd.GetStateValue())));
+
+            Mapper.CreateMap<PropertyInfoHomeDevice, StateHomeDeviceDTO>()
+                .ForMember(t => t.NamePropierty, f => f.MapFrom(pi => pi.Name))
+                .ForMember(t => t.Type, f => f.MapFrom(pi => pi.Type.Name))
+                .ForMember(t => t.Value, f => f.MapFrom(pi => pi.Value != null ? pi.Value.ToString() : "null"));
 
             Mapper.CreateMap<Location, LocationDTO>();
 
