@@ -19,11 +19,6 @@ namespace SmartHome.BusinessEntities
             return await CommunicationManager.Instance.FindModule<UserModule>().SendMessage(operation.GetOperationMessage());
         }
 
-        public static byte[] ToBinaryOperation(this Operation operation)
-        {
-            return operation.GetOperationMessage().ToBinary();
-        }
-
         public static OperationMessage GetOperationMessage(this Operation operation)
         {
             MethodInfo method = operation.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == operation.OperationName 
@@ -31,6 +26,11 @@ namespace SmartHome.BusinessEntities
                 && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
 
             return (OperationMessage)method.Invoke(operation.DestionationHomeDevice, operation.Args);
+        }
+
+        public static byte[] ToBinaryOperation(this Operation operation)
+        {
+            return operation.GetOperationMessage().ToBinary();
         }
     }
 }

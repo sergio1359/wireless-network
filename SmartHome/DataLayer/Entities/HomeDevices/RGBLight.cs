@@ -25,6 +25,7 @@ namespace DataLayer.Entities.HomeDevices
         public int DefaultDegradeTime { get; set; }
 
         [NotMapped]
+        [PropertyAttribute]
         public ModeRGBLight? Mode
         {
             get
@@ -38,6 +39,7 @@ namespace DataLayer.Entities.HomeDevices
         }
 
         [NotMapped]
+        [PropertyAttribute]
         public Color? Color
         {
             get

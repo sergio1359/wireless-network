@@ -9,6 +9,7 @@ namespace DataLayer.Entities.HomeDevices
     public class HumiditySensor : HomeDevice
     {
         [NotMapped]
+        [PropertyAttribute]
         public int? Humidity
         {
             get

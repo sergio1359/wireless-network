@@ -34,7 +34,7 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
             HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
 
             listBoxOperations.Items.Clear();
-            listBoxOperations.Items.AddRange(Services.OperationService.GetHomeDeviceOperation(homeDev.Id)); //OJO
+            listBoxOperations.Items.AddRange(Services.OperationService.GetExecutableHomeDeviceNameOperations(homeDev.Id)); //OJO
 
             //Clear add operation
             textBoxArgs.Text = "";

@@ -21,6 +21,7 @@ namespace DataLayer.Entities.HomeDevices
     [Table("WallPlug")]
     public class WallPlug : Light
     {
+        [PropertyAttribute]
         public WallPlugTypes Type { get; set; }
 
         public WallPlug()

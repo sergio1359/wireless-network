@@ -19,9 +19,21 @@ namespace ServiceLayer.DTO
         [DataMember]
         public bool InUse { get; set; }
 
+        [DataMember]
+        public StateHomeDeviceDTO[] State { get; set; }
+
         public override string ToString()
         {
             return "ID: " + Id + "  " + Name + "(" + Type + ")";
+        }
+
+        public class StateHomeDeviceDTO
+        {
+            public string NamePropierty { get; set; }
+
+            public string Type { get; set; }
+
+            public string Value { get; set; }
         }
     }
 }

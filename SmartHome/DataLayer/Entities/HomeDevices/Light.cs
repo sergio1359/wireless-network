@@ -9,6 +9,7 @@ namespace DataLayer.Entities.HomeDevices
     public class Light : HomeDevice
     {
         [NotMapped]
+        [PropertyAttribute]
         public bool? IsOn
         {
             get
