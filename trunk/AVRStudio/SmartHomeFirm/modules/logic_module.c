@@ -282,10 +282,8 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 		currentElem->debouncerValue = val;
 		
 		//If is OUTPUT Check TimerToggle
-		if( configBitsPtr->maskIO == 1 && timerDivider++ == 3) //4 * 50ms = 200 ms
+		if( configBitsPtr->maskIO == 1 && timerDivider == 0)
 		{
-			timerDivider = 0;
-			
 			// Timer check (Outputs)
 			if(currentElem->timerCounter > 1)
 			{
@@ -300,6 +298,9 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 			}
 		}
 	}
+	
+	if(timerDivider++ == 3)//4 * 50ms = 200 ms
+		timerDivider = 0;
 	
 	(void)timer;
 }
