@@ -10,6 +10,7 @@ namespace DataLayer.Entities.HomeDevices
     public class SwitchButton : HomeDevice
     {
         [NotMapped]
+        [PropertyAttribute]
         public bool? Open
         {
             get

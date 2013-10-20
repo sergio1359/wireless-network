@@ -17,9 +17,11 @@ namespace DataLayer.Entities.HomeDevices
     [Table("Dimmable")]
     public class Dimmable : HomeDevice
     {
+        [PropertyAttribute]
         public DimmableTypes Type { get; set; }
 
         [NotMapped]
+        [PropertyAttribute]
         public float? Value
         {
             get

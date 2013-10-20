@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SmartHome.BusinessEntities;
+using SmartHome.Communications.Modules;
 #endregion
 
 namespace SmartHome.BusinessEntities.BusinessHomeDevice
@@ -64,7 +66,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             else if (homeDevice is TemperatureSensor)
                 return (homeDevice as TemperatureSensor).RefreshState();
             else
-                return null;
+                throw new ArgumentException("HomeDevice not valid");
         }
 
         public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice)
@@ -90,21 +92,22 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return homeDeviceOperations[HomeDeviceType];
         }
 
-        public static void GetStateOperation(this HomeDevice homeDevice)
-        {
-            MethodInfo method = homeDevice.GetType().GetMethods().First(m => m.ReturnType == typeof(OperationMessage)
-                && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
-
-            OperationMessage op = (OperationMessage)method.Invoke(homeDevice, null);
-            //TODO WHEN WE HAVE THE SENDER METHOD
-        }
-
         public static OperationMessage GetAddressableOperation(this HomeDevice homeDevice, OperationMessage message)
         {
             if (homeDevice.InUse)
                 message.DestinationAddress = (ushort)homeDevice.Connector.Node.Address;
 
             return message;
+        }
+
+        
+
+        public static PropertyInfo[] GetStateValue(this HomeDevice homeDevice)
+        {
+            return homeDevice.HomeDeviceType.GetProperties().Where(p => p.GetCustomAttributes(true)
+                                            .OfType<PropertyAttribute>()
+                                            .Where(a => !a.Internal).Count() > 0)
+                                            .ToArray();
         }
     }
 }

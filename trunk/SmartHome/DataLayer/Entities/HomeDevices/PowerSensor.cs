@@ -16,6 +16,7 @@ namespace DataLayer.Entities.HomeDevices
         public int Sensibility { set; get; }
 
         [NotMapped]
+        [PropertyAttribute]
         public int? Consumption
         {
             get

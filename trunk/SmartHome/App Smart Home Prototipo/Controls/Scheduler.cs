@@ -71,7 +71,7 @@ namespace App_Smart_Home_Prototipo.Controls
 
             comboBoxOperation.Items.Clear();
 
-            comboBoxOperation.Items.AddRange( Services.OperationService.GetHomeDeviceOperation(idHomeDevice));
+            comboBoxOperation.Items.AddRange( Services.OperationService.GetExecutableHomeDeviceNameOperations(idHomeDevice));
         }
 
 

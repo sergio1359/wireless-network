@@ -64,12 +64,20 @@ namespace DataLayer.Entities.HomeDevices
         }
 
         [NotMapped]
-        public string HomeDeviceType
+        public string HomeDeviceTypeName
         {
             get
             {
-                return ObjectContext.GetObjectType(this.GetType()).Name;
-                //return this.GetType().Name;
+                return this.HomeDeviceType.Name;
+            }
+        }
+
+        [NotMapped]
+        public Type HomeDeviceType
+        {
+            get
+            {
+                return ObjectContext.GetObjectType(this.GetType());
             }
         }
 

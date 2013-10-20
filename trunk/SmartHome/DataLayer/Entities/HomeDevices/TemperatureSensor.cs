@@ -9,6 +9,7 @@ namespace DataLayer.Entities.HomeDevices
     public class TemperatureSensor: HomeDevice
     {
         [NotMapped]
+        [PropertyAttribute]
         public int? CelciusTemperature
         {
             get

@@ -58,6 +58,7 @@
     <Compile Include="Entities\HomeDevices\LuminositySensor.cs" />
     <Compile Include="Entities\HomeDevices\PowerSensor.cs" />
     <Compile Include="Entities\HomeDevices\PresenceSensor.cs" />
+    <Compile Include="Entities\HomeDevices\PropertyAttribute.cs" />
     <Compile Include="Entities\HomeDevices\RGBLight.cs" />
     <Compile Include="Entities\HomeDevices\Status\StatusProvider.cs" />
     <Compile Include="Entities\HomeDevices\SwitchButton.cs" />

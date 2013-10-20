@@ -27,7 +27,7 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.ConnectorType, f => f.MapFrom(c => Enum.GetName(typeof(ConnectorTypes), c.ConnectorType)));
 
             Mapper.CreateMap<HomeDevice, HomeDeviceDTO>()
-                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceType));
+                .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceTypeName));
 
             Mapper.CreateMap<Location, LocationDTO>();
 
