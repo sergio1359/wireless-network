@@ -33,7 +33,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
         public static PinPort[] GetPinPorts(this HomeDevice homeDevice)
         {
-            if(!homeDevice.InUse)
+            if (!homeDevice.InUse)
                 return null;
             if (!homeDevice.ProductTag.HasValue)//no es un producto
                 return homeDevice.Connector.GetPinPort();
@@ -100,14 +100,40 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return message;
         }
 
-        
 
-        public static PropertyInfo[] GetStateValue(this HomeDevice homeDevice)
+
+        public static List<PropertyInfoHomeDevice> GetStateValue(this HomeDevice homeDevice)
         {
-            return homeDevice.HomeDeviceType.GetProperties().Where(p => p.GetCustomAttributes(true)
+            List<PropertyInfoHomeDevice> PropiertyValues = new List<PropertyInfoHomeDevice> ();
+
+            var filterProperties = homeDevice.HomeDeviceType.GetProperties().Where(p => p.GetCustomAttributes(true)
                                             .OfType<PropertyAttribute>()
-                                            .Where(a => !a.Internal).Count() > 0)
-                                            .ToArray();
+                                            .Where(a => !a.Internal).Count() > 0);
+
+            foreach (var item in filterProperties)
+            {
+                Type type = item.PropertyType;
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    type = type.GetGenericArguments()[0];
+                }
+
+                PropiertyValues.Add(new PropertyInfoHomeDevice()
+                {
+                    Name = item.Name,
+                    Type = type,
+                    Value = item.GetValue(homeDevice, null)
+                });
+            }
+
+            return PropiertyValues;
         }
+    }
+
+    public class PropertyInfoHomeDevice
+    {
+        public Type Type { get; set; }
+        public string Name { get; set; }
+        public object Value { get; set; }
     }
 }
