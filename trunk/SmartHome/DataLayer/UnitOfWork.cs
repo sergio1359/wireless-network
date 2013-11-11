@@ -13,19 +13,19 @@ namespace DataLayer
         #region Private Fields
         private SmartHomeDBContext context;
 
-        private NodeRepository nodeRepository;
-        private HomeRepository homeRepository;
-        private ThemesRepository themesRespository;
-        private TimeOperationRepository timeOperationRepository;
-        private ZoneRepository zoneRepository;
-        private HomeDeviceRepository homeDeviceRepository;
-        private ViewRepository viewRepository;
-        private LogRepository logRepository;
-        private ConnectorRepository connectorRepository;
-        private OperationRepository operationRepository;
-        private LocationRepository locationRepository;
-        private ConditionalRestrictionRepository conditionalRestrictionRepository;
-        private TimeRestrictionRepository timeRestrictionRepository;
+        private Lazy<NodeRepository> nodeRepository;
+        private Lazy<HomeRepository> homeRepository;
+        private Lazy<ThemesRepository> themesRespository;
+        private Lazy<TimeOperationRepository> timeOperationRepository;
+        private Lazy<ZoneRepository> zoneRepository;
+        private Lazy<HomeDeviceRepository> homeDeviceRepository;
+        private Lazy<ViewRepository> viewRepository;
+        private Lazy<LogRepository> logRepository;
+        private Lazy<ConnectorRepository> connectorRepository;
+        private Lazy<OperationRepository> operationRepository;
+        private Lazy<LocationRepository> locationRepository;
+        private Lazy<ConditionalRestrictionRepository> conditionalRestrictionRepository;
+        private Lazy<TimeRestrictionRepository> timeRestrictionRepository;
         #endregion
 
         #region Properties
@@ -33,10 +33,7 @@ namespace DataLayer
         {
             get
             {
-                if (nodeRepository == null)
-                    nodeRepository = new NodeRepository(context);
-
-                return nodeRepository;
+                return nodeRepository.Value;
             }
         }
 
@@ -44,9 +41,7 @@ namespace DataLayer
         {
             get
             {
-                if (locationRepository == null)
-                    locationRepository = new LocationRepository(context);
-                return locationRepository;
+                return locationRepository.Value;
             }
         }
 
@@ -54,9 +49,7 @@ namespace DataLayer
         {
             get
             {
-                if (homeDeviceRepository == null)
-                    homeDeviceRepository = new HomeDeviceRepository(context);
-                return homeDeviceRepository;
+                return homeDeviceRepository.Value;
             }
         }
 
@@ -64,9 +57,7 @@ namespace DataLayer
         {
             get
             {
-                if (homeRepository == null)
-                    homeRepository = new HomeRepository(context);
-                return homeRepository;
+                return homeRepository.Value;
             }
         }
 
@@ -74,9 +65,7 @@ namespace DataLayer
         {
             get
             {
-                if (themesRespository == null)
-                    themesRespository = new ThemesRepository(context);
-                return themesRespository;
+                return themesRespository.Value;
             }
         }
 
@@ -84,9 +73,7 @@ namespace DataLayer
         {
             get
             {
-                if (timeOperationRepository == null)
-                    timeOperationRepository = new TimeOperationRepository(context);
-                return timeOperationRepository;
+                return timeOperationRepository.Value;
             }
         }
 
@@ -94,9 +81,7 @@ namespace DataLayer
         {
             get
             {
-                if (zoneRepository == null)
-                    zoneRepository = new ZoneRepository(context);
-                return zoneRepository;
+                return zoneRepository.Value;
             }
         }
 
@@ -104,9 +89,7 @@ namespace DataLayer
         {
             get
             {
-                if (viewRepository == null)
-                    viewRepository = new ViewRepository(context);
-                return viewRepository;
+                return viewRepository.Value;
             }
         }
 
@@ -114,9 +97,7 @@ namespace DataLayer
         {
             get
             {
-                if (logRepository == null)
-                    logRepository = new LogRepository(context);
-                return logRepository;
+                return logRepository.Value;
             }
         }
 
@@ -124,9 +105,7 @@ namespace DataLayer
         {
             get
             {
-                if (connectorRepository == null)
-                    connectorRepository = new ConnectorRepository(context);
-                return connectorRepository;
+                return connectorRepository.Value;
             }
         }
 
@@ -134,9 +113,7 @@ namespace DataLayer
         {
             get
             {
-                if (operationRepository == null)
-                    operationRepository = new OperationRepository(context);
-                return operationRepository;
+                return operationRepository.Value;
             }
         }
 
@@ -144,9 +121,7 @@ namespace DataLayer
         {
             get
             {
-                if (timeRestrictionRepository == null)
-                    timeRestrictionRepository = new TimeRestrictionRepository(context);
-                return timeRestrictionRepository;
+                return timeRestrictionRepository.Value;
             }
         }
 
@@ -154,16 +129,33 @@ namespace DataLayer
         {
             get
             {
-                if (conditionalRestrictionRepository == null)
-                    conditionalRestrictionRepository = new ConditionalRestrictionRepository(context);
-                return conditionalRestrictionRepository;
+                return conditionalRestrictionRepository.Value;
             }
         }
         #endregion
 
+        public static UnitOfWork GetInstance()
+        {
+            return new UnitOfWork();
+        }
+
         public UnitOfWork()
         {
             this.context = new SmartHomeDBContext();
+
+            nodeRepository = new Lazy<NodeRepository>(() => new NodeRepository(this.context));
+            homeRepository = new Lazy<HomeRepository>(() => new HomeRepository(this.context));
+            themesRespository = new Lazy<ThemesRepository>(() => new ThemesRepository(this.context));
+            timeOperationRepository = new Lazy<TimeOperationRepository>(() => new TimeOperationRepository(this.context));
+            zoneRepository = new Lazy<ZoneRepository>(() => new ZoneRepository(this.context));
+            homeDeviceRepository = new Lazy<HomeDeviceRepository>(() => new HomeDeviceRepository(this.context));
+            viewRepository = new Lazy<ViewRepository>(() => new ViewRepository(this.context));
+            logRepository = new Lazy<LogRepository>(() => new LogRepository(this.context));
+            connectorRepository = new Lazy<ConnectorRepository>(() => new ConnectorRepository(this.context));
+            operationRepository = new Lazy<OperationRepository>(() => new OperationRepository(this.context));
+            locationRepository = new Lazy<LocationRepository>(() => new LocationRepository(this.context));
+            conditionalRestrictionRepository = new Lazy<ConditionalRestrictionRepository>(() => new ConditionalRestrictionRepository(this.context));
+            timeRestrictionRepository = new Lazy<TimeRestrictionRepository>(() => new TimeRestrictionRepository(this.context));
         }
 
         internal UnitOfWork(SmartHomeDBContext context)
