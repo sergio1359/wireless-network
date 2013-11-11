@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System;
 using DataLayer.Entities.HomeDevices.Status;
-using System.Data.Objects;
+using System.Data.Entity.Core.Objects;
 #endregion
 
 namespace DataLayer.Entities.HomeDevices
