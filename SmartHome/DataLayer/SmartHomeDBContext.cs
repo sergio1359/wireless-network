@@ -25,15 +25,5 @@ namespace DataLayer
         {
             Database.SetInitializer<SmartHomeDBContext>(new SmartHomeDBInitializer());
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //Haarcascade Remove
-            //modelBuilder.Entity<Node>().HasMany(c => c.Connectors).WithRequired().WillCascadeOnDelete();
-
-
-            base.OnModelCreating(modelBuilder);
-        }
-
     }
 }
