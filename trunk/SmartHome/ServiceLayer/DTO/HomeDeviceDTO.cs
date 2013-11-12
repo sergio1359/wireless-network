@@ -45,5 +45,10 @@ namespace ServiceLayer.DTO
 
         [DataMember]
         public string Value { get; set; }
+
+        public override string ToString()
+        {
+            return NamePropierty + ": " + Value;
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace SmartHome.Memory
         private Node node;
         private Dictionary<ushort, Operation[]> OperationDictionary;
         private Dictionary<ushort, Operation> OperationTimeRestictionDictionary;
-        private Dictionary<ushort, Operation> OperationConditionRestrictionsDictionary;
         private List<ushort> dinamicIndex;
         private byte systemFlags;
         private List<byte> tempMemory;
@@ -26,7 +25,6 @@ namespace SmartHome.Memory
         {
             this.node = node;
             OperationTimeRestictionDictionary = new Dictionary<ushort, Operation>();
-            OperationConditionRestrictionsDictionary = new Dictionary<ushort, Operation>();
             OperationDictionary = new Dictionary<ushort, Operation[]>();
             this.systemFlags = systemFlags;
             baseConfiguration = node.GetBaseConfiguration();

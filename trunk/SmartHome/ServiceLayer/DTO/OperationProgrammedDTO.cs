@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class OperationDTO
+    public class OperationProgrammedDTO
     {
         [DataMember]
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace ServiceLayer.DTO
         public string NameOperation { get; set; }
 
         [DataMember]
-        public OperationParamsDTO[] Params { get; set; }
+        public ParamDTO[] Params { get; set; }
 
         [DataMember]
         public TimeRestrictionDTO[] TimeRestrictions { get; set; }
@@ -28,18 +28,5 @@ namespace ServiceLayer.DTO
         {
             return Name;
         }
-    }
-
-    [DataContract]
-    public class OperationParamsDTO
-    {
-        [DataMember]
-        public string Type { get; set; }
-
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public object Value { get; set; }
     }
 }

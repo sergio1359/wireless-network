@@ -37,7 +37,7 @@ namespace ServiceLayer
             }
         }
 
-        public IEnumerable<OperationDTO> GetOperationsOfTheme(int idTheme)
+        public IEnumerable<OperationProgrammedDTO> GetOperationsOfTheme(int idTheme)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -46,7 +46,7 @@ namespace ServiceLayer
                 if (theme == null)
                     throw new ArgumentException("Theme id doesn't exist");
 
-                return Mapper.Map<IEnumerable<OperationDTO>>(theme.Operations);
+                return Mapper.Map<IEnumerable<OperationProgrammedDTO>>(theme.Operations);
             }
         }
 

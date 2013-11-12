@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using System.Reflection;
 using DataLayer;
 using DataLayer.Entities;
 using ServiceLayer.DTO;
@@ -57,7 +58,7 @@ namespace ServiceLayer
                 if (homeDeviceDestination == null)
                     throw new ArgumentException("HomeDevice destination id doesn't exist");
 
-                if (!homeDeviceDestination.GetHomeDeviceOperations().Contains(operationName))
+                if (!homeDeviceDestination.GetHomeDeviceNameOperations().Contains(operationName))
                     throw new ArgumentException("OperationName is not available on this HomeDevice");
 
                 Operation operation = new Operation()
@@ -73,18 +74,41 @@ namespace ServiceLayer
 
         public string[] GetExecutableHomeDeviceNameOperations(int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice id doesn't exist");
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                return homeDevice.GetHomeDeviceOperations();
-            }
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice id doesn't exist");
+
+            return homeDevice.GetHomeDeviceNameOperations();
         }
 
-        public IEnumerable<OperationDTO> GetHomeDeviceOperationProgram(int idHomeDevice)
+        public OperationDefinitionDTO GetDefinitionOperation(int idHomeDevice, string nameOperation)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice id doesn't exist");
+
+            MethodInfo method = homeDevice.GetArgsOperation(nameOperation);
+
+            OperationDefinitionDTO operationResult = new OperationDefinitionDTO
+            {
+                NameOperation = method.Name,
+                ReturnValueType = method.ReturnType.ToString(),
+                Args =
+                    method.GetParameters()
+                        .Select(p => new ParamDTO {Name = p.Name, Type = p.ParameterType.ToString()})
+                        .ToArray(),
+            };
+
+            return operationResult;
+        }
+
+        public IEnumerable<OperationProgrammedDTO> GetHomeDeviceOperationProgram(int idHomeDevice)
         {
             using (UnitOfWork repository = new UnitOfWork())
             {
@@ -93,7 +117,7 @@ namespace ServiceLayer
                 if (homeDevice == null)
                     throw new ArgumentException("HomeDevice id doesn't exist");
 
-                return Mapper.Map<IEnumerable<OperationDTO>>(homeDevice.Operations);
+                return Mapper.Map<IEnumerable<OperationProgrammedDTO>>(homeDevice.Operations);
             }
         }
 
