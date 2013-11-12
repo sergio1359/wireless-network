@@ -33,7 +33,7 @@ namespace DataLayer.Entities.HomeDevices
         /// </summary>
         public int? ProductTag { get; set; }
 
-        private static string[] homeDeviceTypes = null;
+        private static Type[] homeDeviceTypes = null;
 
         [NotMapped]
         public DateTime? LastStatusUpdate 
@@ -49,14 +49,13 @@ namespace DataLayer.Entities.HomeDevices
         }
 
         [NotMapped]
-        public static string[] HomeDeviceTypes
+        public static Type[] HomeDeviceTypes
         {
             get
             {
                 if (homeDeviceTypes == null)
                     homeDeviceTypes = typeof(HomeDevice).Assembly.GetTypes()
                                                                 .Where(t => t != typeof(HomeDevice) && typeof(HomeDevice).IsAssignableFrom(t))
-                                                                .Select(t => t.Name)
                                                                 .ToArray();
 
                 return homeDeviceTypes;

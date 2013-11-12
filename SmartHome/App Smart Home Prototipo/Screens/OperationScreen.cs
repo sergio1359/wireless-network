@@ -44,7 +44,7 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
 
         private void RemoveOperation(object sender, EventArgs e)
         {
-            OperationDTO operation = (OperationDTO)listBoxOperations.SelectedItem;
+            OperationProgrammedDTO operation = (OperationProgrammedDTO)listBoxOperations.SelectedItem;
 
             Services.OperationService.RemoveOperation(operation.Id);
 
@@ -53,7 +53,7 @@ namespace App_Smart_Home_Prototipo.Administrator.Screens
 
         private void SelectOperation(object sender, EventArgs e)
         {
-            OperationDTO operation = (OperationDTO)listBoxOperations.SelectedItem;
+            OperationProgrammedDTO operation = (OperationProgrammedDTO)listBoxOperations.SelectedItem;
 
             textBoxNameOperation.Text = operation.Name;
             comboBoxToHomeDevice.Text = Services.HomeDeviceService.GetAllHomeDevices().First(hd => hd.Id == operation.IdHomeDevice).ToString();

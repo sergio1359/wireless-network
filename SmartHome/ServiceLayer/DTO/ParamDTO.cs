@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 namespace ServiceLayer.DTO
 {
     [DataContract]
-    public class TimeOperationDTO
+    public class ParamDTO
     {
         [DataMember]
-        public int Id { get; set; }
+        public string Type { get; set; }
 
         [DataMember]
-        public byte WeekDays { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public TimeSpan Time { get; set; }
-
-        [DataMember]
-        public OperationProgrammedDTO[] Operation { get; set; }
+        public object Value { get; set; }
     }
 }

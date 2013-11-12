@@ -44,13 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\ConnectorDTO.cs" />
+    <Compile Include="DTO\OperationDefinitionDTO.cs" />
+    <Compile Include="DTO\ParamDTO.cs" />
     <Compile Include="DTO\TimeRestrictionDTO.cs" />
     <Compile Include="DTO\PendingNodeInfoDTO.cs" />
     <Compile Include="DTO\ThemeDTO.cs" />
     <Compile Include="DTO\HomeDeviceDTO.cs" />
     <Compile Include="DTO\LogDTO.cs" />
     <Compile Include="DTO\NodeDTO.cs" />
-    <Compile Include="DTO\OperationDTO.cs" />
+    <Compile Include="DTO\OperationProgrammedDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />
     <Compile Include="DTO\ServiceProfile.cs" />
     <Compile Include="DTO\TimeOperationDTO.cs" />

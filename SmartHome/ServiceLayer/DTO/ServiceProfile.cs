@@ -34,7 +34,7 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.Type, f => f.MapFrom(hd => hd.HomeDeviceTypeName))
                 .ForMember(t => t.State, f => f.MapFrom(hd => Mapper.Map<IEnumerable<StateHomeDeviceDTO>>(hd.GetStateValue())));
 
-            Mapper.CreateMap<PropertyInfoHomeDevice, StateHomeDeviceDTO>()
+            Mapper.CreateMap<PropertyParam, StateHomeDeviceDTO>()
                 .ForMember(t => t.NamePropierty, f => f.MapFrom(pi => pi.Name))
                 .ForMember(t => t.Type, f => f.MapFrom(pi => pi.Type.Name))
                 .ForMember(t => t.Value, f => f.MapFrom(pi => pi.Value != null ? pi.Value.ToString() : "null"));
@@ -47,7 +47,7 @@ namespace ServiceLayer.DTO
                 .ForMember(t => t.Base, f => f.MapFrom(n => Enum.GetName(typeof(BaseTypes), n.Base)))
                 .ForMember(t => t.Shield, f => f.MapFrom(n => Enum.GetName(typeof(ShieldTypes), n.Shield)));
 
-            Mapper.CreateMap<Operation, OperationDTO>()
+            Mapper.CreateMap<Operation, OperationProgrammedDTO>()
                 .ForMember(t => t.NameOperation, f => f.MapFrom(n => n.OperationName));
 
             Mapper.CreateMap<PendingNodeInfo, PendingNodeInfoDTO>()

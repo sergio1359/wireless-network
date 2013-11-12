@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SmartHome.BusinessEntities;
+using SmartHome.BusinessEntities.BusinessHomeDevice;
 using SmartHome.Communications.Modules;
 #endregion
 
@@ -15,7 +15,16 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 {
     public static class BusinessHomeDevice
     {
-        private static Dictionary<Type, string[]> homeDeviceOperations = null;
+        private static Dictionary<Type, MethodInfo[]> _homeDeviceOperations;
+        private static Dictionary<Type, MethodInfo[]> _HomeDeviceOperations
+        {
+            get
+            {
+                if(_homeDeviceOperations == null)
+                    GetExecutableMethods();
+                return _homeDeviceOperations;
+            }
+        }
 
         public static HomeDevice CreateHomeDevice(string homeDeviceType)
         {
@@ -69,27 +78,23 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                 throw new ArgumentException("HomeDevice not valid");
         }
 
-        public static string[] GetHomeDeviceOperations(this HomeDevice homeDevice)
+        public static MethodInfo[] GetHomeDeviceMethodOperations(this HomeDevice homeDevice)
         {
-            Type HomeDeviceType = homeDevice.GetType();
+            Type HomeDeviceType = homeDevice.HomeDeviceType;
             if (HomeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(HomeDeviceType))
-                return null;
+                throw new ArgumentException("This homeDevice is not a valid home Device");
 
-            if (homeDeviceOperations == null)
-                homeDeviceOperations = new Dictionary<Type, string[]>();
+            return _HomeDeviceOperations[HomeDeviceType];
+        }
 
-            if (!homeDeviceOperations.ContainsKey(HomeDeviceType))
-            {
-                homeDeviceOperations.Add(HomeDeviceType,
-                                        HomeDeviceType.GetMethods()
-                                        .Where(m => m.GetCustomAttributes(true)
-                                            .OfType<OperationAttribute>()
-                                            .Where(a => !a.Internal).Count() > 0)
-                                        .Select(m => m.Name)
-                                        .ToArray());
-            }
+        public static string[] GetHomeDeviceNameOperations(this HomeDevice homeDevice)
+        {
+            return GetHomeDeviceMethodOperations(homeDevice).Select(m => m.Name).ToArray();
+        }
 
-            return homeDeviceOperations[HomeDeviceType];
+        public static MethodInfo GetArgsOperation(this HomeDevice homeDevice, string nameOperation)
+        {
+            return GetHomeDeviceMethodOperations(homeDevice).First(m => m.Name == nameOperation);
         }
 
         public static OperationMessage GetAddressableOperation(this HomeDevice homeDevice, OperationMessage message)
@@ -100,11 +105,9 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return message;
         }
 
-
-
-        public static List<PropertyInfoHomeDevice> GetStateValue(this HomeDevice homeDevice)
+        public static List<PropertyParam> GetStateValue(this HomeDevice homeDevice)
         {
-            List<PropertyInfoHomeDevice> PropiertyValues = new List<PropertyInfoHomeDevice> ();
+            List<PropertyParam> PropiertyValues = new List<PropertyParam>();
 
             var filterProperties = homeDevice.HomeDeviceType.GetProperties().Where(p => p.GetCustomAttributes(true)
                                             .OfType<PropertyAttribute>()
@@ -118,7 +121,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                     type = type.GetGenericArguments()[0];
                 }
 
-                PropiertyValues.Add(new PropertyInfoHomeDevice()
+                PropiertyValues.Add(new PropertyParam()
                 {
                     Name = item.Name,
                     Type = type,
@@ -128,9 +131,36 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
             return PropiertyValues;
         }
+
+        private static void GetExecutableMethods()
+        {
+            _homeDeviceOperations = new Dictionary<Type, MethodInfo[]>();
+            foreach (var homeDeviceType in HomeDevice.HomeDeviceTypes)
+            {
+                var methods = homeDeviceType.GetExtensionMethods(Assembly.GetAssembly(Type.GetType("BusinessHomeDevice")))
+                    .Where(m => m.GetCustomAttributes(true)
+                                            .OfType<OperationAttribute>()
+                                            .Where(a => !a.Internal).Count() > 0)
+                    .ToArray();
+
+                _homeDeviceOperations.Add(homeDeviceType, methods);
+            }
+        }
+
+        private static IEnumerable<MethodInfo> GetExtensionMethods(this Type type, Assembly extensionsAssembly)
+        {
+            var query = from t in extensionsAssembly.GetTypes()
+                        where !t.IsGenericType && !t.IsNested
+                        from m in t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                        where m.IsDefined(typeof(System.Runtime.CompilerServices.ExtensionAttribute), false)
+                        where m.GetParameters()[0].ParameterType == type
+                        select m;
+
+            return query;
+        }
     }
 
-    public class PropertyInfoHomeDevice
+    public class PropertyParam
     {
         public Type Type { get; set; }
         public string Name { get; set; }

@@ -48,12 +48,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxMapaZonas = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.scheduler1 = new App_Smart_Home_Prototipo.Controls.Scheduler();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.sendOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -61,7 +61,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2,
-            this.toolStripDropDownButton3});
+            this.toolStripDropDownButton3,
+            this.toolStripSplitButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(832, 25);
@@ -232,7 +233,6 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.scheduler1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(800, 450);
@@ -240,15 +240,23 @@
             this.tabPage4.Text = "Scheduler";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // scheduler1
+            // toolStripSplitButton1
             // 
-            this.scheduler1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.scheduler1.Location = new System.Drawing.Point(3, 3);
-            this.scheduler1.Name = "scheduler1";
-            this.scheduler1.Size = new System.Drawing.Size(797, 444);
-            this.scheduler1.TabIndex = 0;
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendOperationsToolStripMenuItem});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(58, 22);
+            this.toolStripSplitButton1.Text = "Debug";
+            // 
+            // sendOperationsToolStripMenuItem
+            // 
+            this.sendOperationsToolStripMenuItem.Name = "sendOperationsToolStripMenuItem";
+            this.sendOperationsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.sendOperationsToolStripMenuItem.Text = "SendOperations";
+            this.sendOperationsToolStripMenuItem.Click += new System.EventHandler(this.OpenSenderOperation);
             // 
             // MainScreen
             // 
@@ -265,7 +273,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,7 +299,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxMapaZonas;
-        private Controls.Scheduler scheduler1;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem sendOperationsToolStripMenuItem;
     }
 }
 

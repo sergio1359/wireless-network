@@ -2,6 +2,7 @@
 using App_Smart_Home_Prototipo.Electrical.Screens;
 using System;
 using System.Windows.Forms;
+using App_Smart_Home_Prototipo.Screens;
 using ServiceLayer;
 using System.Threading.Tasks;
 
@@ -49,6 +50,17 @@ namespace App_Smart_Home_Prototipo
             opers.ShowDialog();
             RefreshContentAndResetMainScreen();
         }
+
+        private void GenerateEEPROM(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OpenSenderOperation(object sender, EventArgs e)
+        {
+            SenderScreen form = new SenderScreen();
+            form.ShowDialog();
+        }
         #endregion
 
 
@@ -64,9 +76,6 @@ namespace App_Smart_Home_Prototipo
 
         #endregion
 
-        private void GenerateEEPROM(object sender, EventArgs e)
-        {
 
-        }
     }
 }

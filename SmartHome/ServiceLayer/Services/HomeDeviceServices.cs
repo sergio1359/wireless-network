@@ -41,7 +41,9 @@ namespace ServiceLayer
 
         public string[] GetHomeDeviceTypes()
         {
-            return HomeDevice.HomeDeviceTypes;
+            return HomeDevice.HomeDeviceTypes
+                .Select(t => t.Name)
+                .ToArray();
         }
 
         public void RemoveHomeDevice(int idHomeDevice)
