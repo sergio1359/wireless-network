@@ -27,14 +27,13 @@ namespace ServiceLayer
             {
                 throw new ArgumentException("Home Device " + homeDeviceType + " unsupported");
             }
-            
+
             homeDevice.Name = nameHomeDevice;
 
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                homeDevice = repository.HomeDeviceRespository.Insert(homeDevice);
-                repository.Commit();
-            }
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            homeDevice = repository.HomeDeviceRespository.Insert(homeDevice);
+            repository.Commit();
 
             return homeDevice.Id;
         }
@@ -48,81 +47,76 @@ namespace ServiceLayer
 
         public void RemoveHomeDevice(int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                throw new ArgumentException("Home Device id doesn't exist");
+
+            if (homeDevice.InUse)
             {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                //UPDATE CHECKSUM
+                homeDevice.Connector.Node.UpdateChecksum(null);
 
-                if (homeDevice == null)
-                    throw new ArgumentException("Home Device id doesn't exist");
-
-                if (homeDevice.InUse)
-                {
-                    //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.UpdateChecksum(null);
-
-                    Services.NodeService.UnlinkHomeDevice(idHomeDevice);
-                }
-
-                repository.HomeDeviceRespository.Delete(homeDevice);
-
-                repository.Commit();
+                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
             }
+
+            repository.HomeDeviceRespository.Delete(homeDevice);
+
+            repository.Commit();
         }
 
         public void SetNameHomeDevice(int idHomeDevice, string newName)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (homeDevice == null)
-                    throw new ArgumentException("Home device id doesn't exist");
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                homeDevice.Name = newName;
+            if (homeDevice == null)
+                throw new ArgumentException("Home device id doesn't exist");
 
-                repository.Commit();
-            }
+            homeDevice.Name = newName;
+
+            repository.Commit();
         }
 
         /// <param name="x">Relative position 0 to 1 of the X axis</param>
         /// <param name="y">Relative position 0 to 1 of the Y axis</param>
         public void UpdateLocation(int idLocation, float x, float y)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Location location = repository.LocationRepository.GetById(idLocation);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (location == null)
-                    throw new ArgumentException("Location id doesn't exist");
+            Location location = repository.LocationRepository.GetById(idLocation);
 
-                location.X = x;
-                location.Y = y;
+            if (location == null)
+                throw new ArgumentException("Location id doesn't exist");
 
-                repository.Commit();
-            }
+            location.X = x;
+            location.Y = y;
+
+            repository.Commit();
         }
 
         public IEnumerable<LocationDTO> GetHomeDeviceLocations(int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (homeDevice == null)
-                    throw new ArgumentException("Home device id doesn't exist");
+            var homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Locations);
-            }
+            if (homeDevice == null)
+                throw new ArgumentException("Home device id doesn't exist");
+
+            return Mapper.Map<IEnumerable<LocationDTO>>(homeDevice.Locations);
         }
 
         public IEnumerable<HomeDeviceDTO> GetAllHomeDevices()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var homeDevices = repository.HomeDeviceRespository.GetAll();
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
-            }
+            var homeDevices = repository.HomeDeviceRespository.GetAll();
+
+            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
 
         public IEnumerable<HomeDeviceDTO> GetAllHomeDevices(bool inUse)
@@ -132,16 +126,15 @@ namespace ServiceLayer
 
         public IEnumerable<HomeDeviceDTO> GetAllHomeDevicesInAView(int idView)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                if (repository.ViewRepository.GetById(idView) == null)
-                    throw new ArgumentException("View id doesn't exist");
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations()
-                    .Where(hd => hd.Locations.Any(l => l.View.Id == idView));
+            if (repository.ViewRepository.GetById(idView) == null)
+                throw new ArgumentException("View id doesn't exist");
 
-                return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
-            }
+            var homeDevices = repository.HomeDeviceRespository.GetHomeDevicesWithLocations()
+                .Where(hd => hd.Locations.Any(l => l.View.Id == idView));
+
+            return Mapper.Map<IEnumerable<HomeDeviceDTO>>(homeDevices);
         }
 
         public IEnumerable<HomeDeviceDTO> GetHomeDevicesInAView(int idView, List<string> homeDeviceTypes)
@@ -152,7 +145,8 @@ namespace ServiceLayer
 
         public string[] GetNameProducts()
         {
-            return BusinessProduct.GetProducts.Select(p => p.Name).ToArray();
+            return BusinessProduct.GetProducts.Select(p => p.Name)
+                .ToArray();
         }
     }
 }

@@ -26,58 +26,55 @@ namespace ServiceLayer
         /// </summary>
         public int AddZone(string nameZone)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Zone zone = new Zone
             {
-                Zone zone = new Zone()
-                {
-                    Name = nameZone,
-                    Home = repository.HomeRespository.GetHome(),
-                };
+                Name = nameZone,
+                Home = repository.HomeRespository.GetHome(),
+            };
 
-                zone = repository.ZoneRepository.Insert(zone);
+            zone = repository.ZoneRepository.Insert(zone);
 
-                View view = new View()
-                {
-                    Name = nameZone,
-                    Zone = zone
-                };
+            View view = new View
+            {
+                Name = nameZone,
+                Zone = zone
+            };
 
-                repository.ViewRepository.Insert(view);
+            repository.ViewRepository.Insert(view);
 
-                zone.MainView = view;
+            zone.MainView = view;
 
-                repository.Commit();
+            repository.Commit();
 
-                return zone.Id;
-            }
+            return zone.Id;
         }
 
         public void RemoveZone(int idZone) //CHECK method
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Zone zone = repository.ZoneRepository.GetById(idZone);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                repository.ZoneRepository.Delete(zone);
+            Zone zone = repository.ZoneRepository.GetById(idZone);
 
-                repository.Commit();
-            }
+            repository.ZoneRepository.Delete(zone);
+
+            repository.Commit();
         }
 
         public void SetNameZone(int idZone, string newName)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Zone zone = repository.ZoneRepository.GetById(idZone);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (zone == null)
-                    throw new ArgumentException("Zone id doesn't exist");
+            Zone zone = repository.ZoneRepository.GetById(idZone);
 
-                zone.Name = newName;
-                zone.MainView.Name = newName;
+            if (zone == null)
+                throw new ArgumentException("Zone id doesn't exist");
 
-                repository.Commit();
-            }
+            zone.Name = newName;
+            zone.MainView.Name = newName;
+
+            repository.Commit();
         }
     }
 }

@@ -15,32 +15,31 @@ namespace ServiceLayer
     {
         public void AddLog(string logText)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Log log = new Log
             {
-                Log log = new Log()
-                {
-                    Category = LogTypes.App,
-                    Date = DateTime.Now,
-                    Message = logText
-                };
-                repository.LogRepository.Insert(log);
-                repository.Commit();
-            }
+                Category = LogTypes.App,
+                Date = DateTime.Now,
+                Message = logText
+            };
+
+            repository.LogRepository.Insert(log);
+            repository.Commit();
         }
 
         public IEnumerable<LogDTO> GetLog(string category)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                LogTypes type;
-                if (Enum.TryParse(category, out type))
-                {
-                    var logs = repository.LogRepository.GetLogByCategory(type);
-                    return Mapper.Map<IEnumerable<LogDTO>>(logs);
-                }
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                throw new ArgumentException("Log cagetory doesn't exist");
+            LogTypes type;
+            if (Enum.TryParse(category, out type))
+            {
+                var logs = repository.LogRepository.GetLogByCategory(type);
+                return Mapper.Map<IEnumerable<LogDTO>>(logs);
             }
+
+            throw new ArgumentException("Log cagetory doesn't exist");
         }
 
         public IEnumerable<LogDTO> GetLog(string category, int from, int to)
