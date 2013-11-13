@@ -18,58 +18,54 @@ namespace ServiceLayer
     {
         public void RemoveOperation(int idOperation)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Operation operation = repository.OperationRepository.GetById(idOperation);
+
+            if (operation == null)
+                throw new ArgumentException("Operation id doesn't exist");
+
+            if (operation.SourceHomeDevice.InUse)
             {
-                Operation operation = repository.OperationRepository.GetById(idOperation);
-
-                if (operation == null)
-                    throw new ArgumentException("Operation id doesn't exist");
-
-                if (operation.SourceHomeDevice.InUse)
-                {
-                    //UPDATE CHECKSUM
-                    operation.SourceHomeDevice.Connector.Node.UpdateChecksum(null);
-                }
-
-                repository.OperationRepository.Delete(operation);
-                repository.Commit();
+                //UPDATE CHECKSUM
+                operation.SourceHomeDevice.Connector.Node.UpdateChecksum(null);
             }
+
+            repository.OperationRepository.Delete(operation);
+            repository.Commit();
         }
 
         public void ExecuteOperation(int idOperation)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Operation operation = repository.OperationRepository.GetById(idOperation);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (operation == null)
-                    throw new ArgumentException("Operation id doesn't exist");
+            Operation operation = repository.OperationRepository.GetById(idOperation);
 
-                operation.Execute();
-            }
+            if (operation == null)
+                throw new ArgumentException("Operation id doesn't exist");
+
+            operation.Execute();
         }
 
         public void ExecuteOperation(int idHomeDeviceDestination, string operationName, object[] args)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+            HomeDevice homeDeviceDestination = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+
+            if (homeDeviceDestination == null)
+                throw new ArgumentException("HomeDevice destination id doesn't exist");
+
+            if (!homeDeviceDestination.GetHomeDeviceNameOperations().Contains(operationName))
+                throw new ArgumentException("OperationName is not available on this HomeDevice");
+
+            Operation operation = new Operation
             {
-                HomeDevice homeDeviceDestination = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+                DestionationHomeDevice = homeDeviceDestination,
+                OperationName = operationName,
+                Args = args
+            };
 
-                if (homeDeviceDestination == null)
-                    throw new ArgumentException("HomeDevice destination id doesn't exist");
-
-                if (!homeDeviceDestination.GetHomeDeviceNameOperations().Contains(operationName))
-                    throw new ArgumentException("OperationName is not available on this HomeDevice");
-
-                Operation operation = new Operation()
-                {
-                    DestionationHomeDevice = homeDeviceDestination,
-                    OperationName = operationName,
-                    Args = args
-                };                
-
-                operation.Execute();
-            }
+            operation.Execute();
         }
 
         public string[] GetExecutableHomeDeviceNameOperations(int idHomeDevice)
@@ -101,7 +97,7 @@ namespace ServiceLayer
                 ReturnValueType = method.ReturnType.ToString(),
                 Args =
                     method.GetParameters()
-                        .Select(p => new ParamDTO {Name = p.Name, Type = p.ParameterType.ToString()})
+                        .Select(p => new ParamDTO { Name = p.Name, Type = p.ParameterType.ToString() })
                         .ToArray(),
             };
 
@@ -110,45 +106,43 @@ namespace ServiceLayer
 
         public IEnumerable<OperationProgrammedDTO> GetHomeDeviceOperationProgram(int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice id doesn't exist");
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                return Mapper.Map<IEnumerable<OperationProgrammedDTO>>(homeDevice.Operations);
-            }
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice id doesn't exist");
+
+            return Mapper.Map<IEnumerable<OperationProgrammedDTO>>(homeDevice.Operations);
         }
 
         public int AddOperationOnHomeDeviceProgram(int idHomeDevice, int idHomeDeviceDestination, string operationName, object[] args)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            HomeDevice homeDeviceDestination = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice id doesn't exist");
+
+            if (homeDeviceDestination == null)
+                throw new ArgumentException("HomeDevice destination id doesn't exist");
+
+            Operation operation = new Operation
             {
-                HomeDevice homeDeviceDestination = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+                DestionationHomeDevice = homeDeviceDestination,
+                OperationName = operationName,
+                Args = args
+            };
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice id doesn't exist");
+            homeDevice.Operations.Add(operation);
 
-                if (homeDeviceDestination == null)
-                    throw new ArgumentException("HomeDevice destination id doesn't exist");
+            int idRes = repository.OperationRepository.Insert(operation).Id;
 
-                Operation operation = new Operation()
-                {
-                    DestionationHomeDevice = homeDeviceDestination,
-                    OperationName = operationName,
-                    Args = args
-                };
+            repository.Commit();
 
-                homeDevice.Operations.Add(operation);
-
-                int idRes = repository.OperationRepository.Insert(operation).Id;
-
-                repository.Commit();
-
-                return idRes;
-            }
+            return idRes;
         }
     }
 }

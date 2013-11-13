@@ -14,74 +14,66 @@ namespace ServiceLayer
     {
         public IEnumerable<ZoneDTO> GetViews(int idZone)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Zone zone = repository.ZoneRepository.GetById(idZone);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (zone == null)
-                    throw new ArgumentException("Zone id doesn't exist");
+            Zone zone = repository.ZoneRepository.GetById(idZone);
 
-                return Mapper.Map<IEnumerable<ZoneDTO>>(zone.Views);
-            }
+            if (zone == null)
+                throw new ArgumentException("Zone id doesn't exist");
+
+            return Mapper.Map<IEnumerable<ZoneDTO>>(zone.Views);
         }
 
         public byte[] GetViewImage(int idView)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                View view = repository.ViewRepository.GetById(idView);
+            UnitOfWork repository = UnitOfWork.GetInstance();
+            View view = repository.ViewRepository.GetById(idView);
 
-                if (view == null)
-                    throw new ArgumentException("View id doesn't exist");
+            if (view == null)
+                throw new ArgumentException("View id doesn't exist");
 
-                return view.ImageMap;
-            }
+            return view.ImageMap;
         }
 
         public void SetViewImage(int idView, byte[] newImage)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                View view = repository.ViewRepository.GetById(idView);
+            UnitOfWork repository = UnitOfWork.GetInstance();
+            View view = repository.ViewRepository.GetById(idView);
 
-                if (view == null)
-                    throw new ArgumentException("View id doesn't exist");
+            if (view == null)
+                throw new ArgumentException("View id doesn't exist");
 
-                view.ImageMap = newImage;
+            view.ImageMap = newImage;
 
-                repository.Commit();
-            }
+            repository.Commit();
         }
 
         public string GetNameView(int idView)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                View view = repository.ViewRepository.GetById(idView);
+            UnitOfWork repository = UnitOfWork.GetInstance();
+            View view = repository.ViewRepository.GetById(idView);
 
-                if (view == null)
-                    throw new ArgumentException("View id doesn't exist");
+            if (view == null)
+                throw new ArgumentException("View id doesn't exist");
 
-                return view.Name;
-            }
+            return view.Name;
         }
 
         public void SetNameView(int idView, string newName)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                View view = repository.ViewRepository.GetById(idView);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (view == null)
-                    throw new ArgumentException("View id doesn't exist");
+            View view = repository.ViewRepository.GetById(idView);
 
-                if (view.Id == view.Zone.MainView.Id)
-                    view.Zone.Name = newName;
+            if (view == null)
+                throw new ArgumentException("View id doesn't exist");
 
-                view.Name = newName;
+            if (view.Id == view.Zone.MainView.Id)
+                view.Zone.Name = newName;
 
-                repository.Commit();
-            }
+            view.Name = newName;
+
+            repository.Commit();
         }
 
         /// <summary>
@@ -89,40 +81,38 @@ namespace ServiceLayer
         /// </summary>
         public int AddView(int idZone, string nameView)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Zone zone = repository.ZoneRepository.GetById(idZone);
+
+            if (zone == null)
+                throw new ArgumentException("Zone id doesn't exist");
+
+            View view = new View()
             {
-                Zone zone = repository.ZoneRepository.GetById(idZone);
+                Name = nameView,
+                Zone = zone,
+            };
+            view = repository.ViewRepository.Insert(view);
 
-                if (zone == null)
-                    throw new ArgumentException("Zone id doesn't exist");
+            zone.Views.Add(view);
 
-                View view = new View()
-                {
-                    Name = nameView,
-                    Zone = zone,
-                };
-                view = repository.ViewRepository.Insert(view);
+            repository.Commit();
 
-                zone.Views.Add(view);
-
-                repository.Commit();
-
-                return view.Id;
-            }
+            return view.Id;
         }
 
         public void RemoveView(int idView)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                View view = repository.ViewRepository.GetById(idView);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (view != null)
-                    throw new ArgumentException("View id doesn't exist");
+            View view = repository.ViewRepository.GetById(idView);
 
-                repository.ViewRepository.Delete(view);
-                repository.Commit();
-            }
+            if (view == null)
+                throw new ArgumentException("View id doesn't exist");
+
+            repository.ViewRepository.Delete(view);
+            repository.Commit();
         }
     }
 }

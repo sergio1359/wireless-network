@@ -17,71 +17,66 @@ namespace ServiceLayer
     {
         public IEnumerable<TimeOperationDTO> GetScheduler()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                IEnumerable<TimeOperation> timeOps;
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                timeOps = repository.TimeOperationRepository.GetAll();
+            var timeOps = repository.TimeOperationRepository.GetAll();
 
-                return Mapper.Map<IEnumerable<TimeOperationDTO>>(timeOps);
-            }
+            return Mapper.Map<IEnumerable<TimeOperationDTO>>(timeOps);
         }
 
         public int AddScheduler(byte weekDays, TimeSpan time, string name, int idHomeDeviceDestination, string operation, object[] args = null)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice id doesn't exist");
+
+            Operation operationInternal = new Operation
             {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDeviceDestination);
+                Args = args,
+                Name = name,
+                OperationName = operation,
+                DestionationHomeDevice = homeDevice
+            };
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice id doesn't exist");
+            TimeOperation timeOperation = new TimeOperation
+            {
+                MaskWeekDays = weekDays,
+                Time = time,
+                Operation = operationInternal
+            };
+            int idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
 
-                Operation operationInternal = new Operation()
-                {
-                    Args = args,
-                    Name = name,
-                    OperationName = operation,
-                    DestionationHomeDevice = homeDevice
-                };
-
-                TimeOperation timeOperation = new TimeOperation()
-                {
-                    MaskWeekDays = weekDays,
-                    Time = time,
-                    Operation = operationInternal
-                };
-                int idRes = repository.TimeOperationRepository.Insert(timeOperation).Id;
-
-                if (homeDevice.InUse)
-                {
-                    //UPDATE CHECKSUM
-                    homeDevice.Connector.Node.UpdateChecksum(null);
-                }
-
-                repository.Commit();
-
-                return idRes;
+            if (homeDevice.InUse)
+            {
+                //UPDATE CHECKSUM
+                homeDevice.Connector.Node.UpdateChecksum(null);
             }
+
+            repository.Commit();
+
+            return idRes;
         }
 
         public void RemoveTimeOperation(int idTimeOperation)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            TimeOperation timeOperation = repository.TimeOperationRepository.GetById(idTimeOperation);
+
+            if (timeOperation == null)
+                throw new ArgumentException("TimeOperation id doesn't exist");
+
+            if (timeOperation.Operation.DestionationHomeDevice.InUse)
             {
-                TimeOperation timeOperation = repository.TimeOperationRepository.GetById(idTimeOperation);
-
-                if (timeOperation == null)
-                    throw new ArgumentException("TimeOperation id doesn't exist");
-
-                if (timeOperation.Operation.DestionationHomeDevice.InUse)
-                {
-                    //UPDATE CHECKSUM
-                    timeOperation.Operation.DestionationHomeDevice.Connector.Node.UpdateChecksum(null);
-                }
-
-                repository.TimeOperationRepository.Delete(timeOperation);
-                repository.Commit();
+                //UPDATE CHECKSUM
+                timeOperation.Operation.DestionationHomeDevice.Connector.Node.UpdateChecksum(null);
             }
+
+            repository.TimeOperationRepository.Delete(timeOperation);
+            repository.Commit();
         }
     }
 }

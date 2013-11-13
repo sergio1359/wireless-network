@@ -19,75 +19,69 @@ namespace ServiceLayer
     {
         public void SetHomeName(string newName)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Home home = repository.HomeRespository.GetHome();
-                home.Name = newName;
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                repository.Commit();
-            }
+            Home home = repository.HomeRespository.GetHome();
+            home.Name = newName;
+
+            repository.Commit();
         }
 
         public string GetHomeName()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                return repository.HomeRespository.GetHome().Name;
-            }
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            return repository.HomeRespository.GetHome().Name;
         }
 
         public void SetHomeLocation(float latitude, float longitude)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Home home = repository.HomeRespository.GetHome();
-                home.Location = new Coordenate()
-                {
-                    Latitude = latitude,
-                    Longitude = longitude
-                };
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                repository.Commit();
-            }
+            Home home = repository.HomeRespository.GetHome();
+            home.Location = new Coordenate
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            repository.Commit();
         }
 
         public Coordenate GetHomeLocation()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                return repository.HomeRespository.GetHome().Location;
-            }
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            return repository.HomeRespository.GetHome().Location;
         }
 
         public void UnlinkNode(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
 
-                node.UnlinkAllConnectors();
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
 
-                repository.NodeRespository.Delete(node);
+            node.UnlinkAllConnectors();
 
-                repository.Commit();
-            }
+            repository.NodeRespository.Delete(node);
+
+            repository.Commit();
         }
 
         public void ForceUpdateNodeConfiguration(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
-                Home home = repository.HomeRespository.GetHome();
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
+            Home home = repository.HomeRespository.GetHome();
 
-                CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
         }
     }
 }

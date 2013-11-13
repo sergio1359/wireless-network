@@ -24,49 +24,47 @@ namespace ServiceLayer
 
         public void LinkHomeDevice(int idConnector, int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Connector connector = repository.ConnectorRepository.GetById(idConnector);
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                //TODO: falta chequear que el homedevice sea compatible con el conector
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (connector == null)
-                    throw new ArgumentException("Connector Id doesn't exist");
+            //TODO: falta chequear que el homedevice sea compatible con el conector
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice Id doesn't exist");
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
 
-                if (connector.InUse)
-                    throw new ArgumentException("The connector has been occuped by other home device");
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice Id doesn't exist");
 
-                if (homeDevice.InUse)
-                    throw new ArgumentException("The HomeDevice has been occuped by other connector");
+            if (connector.InUse)
+                throw new ArgumentException("The connector has been occuped by other home device");
 
-                //UPDATE CHECKSUM
-                connector.Node.UpdateChecksum(null);
+            if (homeDevice.InUse)
+                throw new ArgumentException("The HomeDevice has been occuped by other connector");
 
-                connector.LinkHomeDevice(homeDevice);
+            //UPDATE CHECKSUM
+            connector.Node.UpdateChecksum(null);
 
-                repository.Commit();
-            }
+            connector.LinkHomeDevice(homeDevice);
+
+            repository.Commit();
         }
 
         public void UnlinkHomeDevice(int idHomeDevice)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice Id doesn't exist");
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                //UPDATE CHECKSUM
-                homeDevice.Connector.Node.UpdateChecksum(null);
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice Id doesn't exist");
 
-                homeDevice.Connector.UnlinkHomeDevice();
-                repository.Commit();
-            }
+            //UPDATE CHECKSUM
+            homeDevice.Connector.Node.UpdateChecksum(null);
+
+            homeDevice.Connector.UnlinkHomeDevice();
+            repository.Commit();
         }
 
         public IEnumerable<PendingNodeInfoDTO> GetPendingNodes()
@@ -77,160 +75,148 @@ namespace ServiceLayer
 
         public async Task<bool> AllowPendingNode(string MAC)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Home home = repository.HomeRespository.GetHome();
+
+            Node node = repository.NodeRespository.GetByMacAddress(MAC);
+
+            NetworkJoin joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
+
+            PendingNodeInfo info = joinMod.PendingNodes.FirstOrDefault(n => n.MacAddress == MAC);
+
+            if (info != null)
             {
-                Home home = repository.HomeRespository.GetHome();
-
-                Node node = repository.NodeRespository.GetByMacAddress(MAC);
-
-                NetworkJoin joinMod = CommunicationManager.Instance.FindModule<NetworkJoin>();
-
-                PendingNodeInfo info = joinMod.PendingNodes.FirstOrDefault(n => n.MacAddress == MAC);
-
-                if (info != null)
+                if (node == null)
                 {
-                    if (node == null)
-                    {
-                        node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
-                        node.Mac = info.MacAddress;
-                        node.Address = repository.NodeRespository.GetNewAddress();
+                    node = BusinessNode.CreateNode((BaseTypes)info.BaseType, (ShieldTypes)info.ShieldType);
+                    node.Mac = info.MacAddress;
+                    node.Address = repository.NodeRespository.GetNewAddress();
 
-                        node = repository.NodeRespository.Insert(node);
-                        repository.Commit();
-                    }
+                    node = repository.NodeRespository.Insert(node);
+                    repository.Commit();
+                }
 
-                    return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
-                }
-                else
-                {
-                    return false;
-                }
+                return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
             }
+
+            return false;
         }
 
         public IEnumerable<ConnectorDTO> GetConnectors(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
 
-                return Mapper.Map<IEnumerable<ConnectorDTO>>(node.Connectors);
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(node.Connectors);
         }
 
         public IEnumerable<ConnectorDTO> GetConnectorsCapable(int idHomeDevice, int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
-                HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
 
-                if (homeDevice == null)
-                    throw new ArgumentException("HomeDevice Id doesn't exist");
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
 
-                var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice Id doesn't exist");
 
-                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectorsResult);
-            }
+            var connectorsResult = node.Connectors.Where(c => c.IsCapable(homeDevice) && c.InUse == false);
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectorsResult);
         }
 
         public string GetNameNode(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            var node = repository.NodeRespository.GetById(idNode);
 
-                return node.Name;
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            return node.Name;
         }
 
         public void SetNameNode(int idNode, string newName)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
 
-                node.Name = newName;
-                repository.Commit();
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            node.Name = newName;
+            repository.Commit();
         }
 
         public int GetAddressNode(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            var node = repository.NodeRespository.GetById(idNode);
 
-                return node.Address;
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            return node.Address;
         }
 
         public void SetAddressNode(int idNode, ushort newAddress)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Node node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            Node node = repository.NodeRespository.GetById(idNode);
 
-                //UPDATE CHECKSUM
-                node.UpdateChecksum(null);
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
 
-                node.Address = newAddress;
-                repository.Commit();
-            }
+            //UPDATE CHECKSUM
+            node.UpdateChecksum(null);
+
+            node.Address = newAddress;
+            repository.Commit();
         }
 
         public LocationDTO GetNodePosition(int idNode)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var node = repository.NodeRespository.GetById(idNode);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
+            var node = repository.NodeRespository.GetById(idNode);
 
-                return Mapper.Map<LocationDTO>(node.Location);
-            }
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            return Mapper.Map<LocationDTO>(node.Location);
         }
 
         public IEnumerable<NodeDTO> GetNodes()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var nodes = repository.NodeRespository.GetAll();
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
-            }
+            var nodes = repository.NodeRespository.GetAll();
+
+            return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
         }
 
         public IEnumerable<NodeDTO> GetNodes(int idZone)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                if (repository.ZoneRepository.GetById(idZone) == null)
-                    throw new ArgumentException("Zone Id doesn't exist");
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                var nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+            if (repository.ZoneRepository.GetById(idZone) == null)
+                throw new ArgumentException("Zone Id doesn't exist");
 
-                return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
-            }
+            var nodes = repository.NodeRespository.GetAll().Where(n => n.Location.Id == idZone);
+
+            return Mapper.Map<IEnumerable<NodeDTO>>(nodes);
         }
 
         public string[] GetTypesShields()
@@ -245,68 +231,64 @@ namespace ServiceLayer
 
         public void LinkProduct(int idConnector, string typeProduct)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Connector connector = repository.ConnectorRepository.GetById(idConnector);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (connector == null)
-                    throw new ArgumentException("Connector Id doesn't exist");
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
 
-                if (connector.InUse)
-                    throw new ArgumentException("Connector has been in use by other product or HomeDevice");
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
 
-                Type type = Type.GetType(typeProduct);
+            if (connector.InUse)
+                throw new ArgumentException("Connector has been in use by other product or HomeDevice");
 
-                connector.LinkHomeDevice(type);
-            }
+            Type type = Type.GetType(typeProduct);
+
+            connector.LinkHomeDevice(type);
         }
 
         public void UnlinkProduct(int idConnector)
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                Connector connector = repository.ConnectorRepository.GetById(idConnector);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                if (connector == null)
-                    throw new ArgumentException("Connector Id doesn't exist");
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
 
-                connector.UnlinkHomeDevice();
-            }
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
+
+            connector.UnlinkHomeDevice();
         }
 
         public IEnumerable<ConnectorDTO> GetConnectorProductsConnected()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
-            }
+            var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
         }
 
         public IEnumerable<ConnectorDTO> GetConnectorCapableProducts(int idNode, string product)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Node node = repository.NodeRespository.GetById(idNode);
+            Type typeProduct;
+
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            try
             {
-                Node node = repository.NodeRespository.GetById(idNode);
-                Type typeProduct;
-
-                if (node == null)
-                    throw new ArgumentException("Node Id doesn't exist");
-
-                try
-                {
-                    typeProduct = Type.GetType(product);
-                }
-                catch (Exception)
-                {
-                    throw new ArgumentException("Type product doesn't exist");
-                }
-
-                var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
-
-                return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
+                typeProduct = Type.GetType(product);
             }
+            catch (Exception)
+            {
+                throw new ArgumentException("Type product doesn't exist");
+            }
+
+            var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
         }
     }
 }
