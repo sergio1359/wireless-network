@@ -33,7 +33,7 @@ namespace SmartHome.Memory
         }
 
         /// <summary>
-        /// Transform a TimeSpan in a Byte[] sort in Hours, Minutes and Seconds
+        /// Converts a TimeSpan in a Byte[] sort in Hours, Minutes and Seconds
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>

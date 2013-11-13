@@ -7,6 +7,8 @@ namespace ServiceLayer
 {
     public static class Services
     {
+        #region private fields
+
         private static HomeService homeService;
         private static NodeServices nodeService;
         private static OperationServices operationService;
@@ -16,6 +18,10 @@ namespace ServiceLayer
         private static ViewServices viewService;
         private static SchedulerServices schedulerService;
         private static ThemeServices themeService;
+
+        #endregion
+
+        #region public property
 
         public static SchedulerServices SchedulerService
         {
@@ -106,6 +112,8 @@ namespace ServiceLayer
                 return logService;
             }
         }
+
+        #endregion
 
         static Services()
         {

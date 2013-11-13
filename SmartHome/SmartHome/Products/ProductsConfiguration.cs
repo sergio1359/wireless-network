@@ -45,9 +45,9 @@ namespace SmartHome.Products
                     result.NumPorts = 7;
                     result.NumPins = 8;
 
-                    result.AnalogPorts = new string[8] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
-                    result.PWMPorts = new string[8] { "B4", "B5", "B6", "B7", "E3", "E4", "E5", "G5" };  //VERSION MINOLO:{ "B4", "B7", "G5" } el B7 y el G5 estan compartidos con el mismo timer
-                    result.UnavailablePorts = new string[2] { "G3", "G4" };  //TODO: de momento estos pero hay que chequear
+                    result.AnalogPorts = new string[] { "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7" };
+                    result.PWMPorts = new string[] { "B4", "B5", "B6", "B7", "E3", "E4", "E5", "G5" };  //VERSION MINOLO:{ "B4", "B7", "G5" } el B7 y el G5 estan compartidos con el mismo timer
+                    result.UnavailablePorts = new string[] { "G3", "G4" };  //TODO: de momento estos pero hay que chequear
 
                     result.LittleEndian = true;
                     break;
@@ -103,17 +103,18 @@ namespace SmartHome.Products
 
         public static PinPortConfiguration DefaultPinPortConfiguration()
         {
-            PinPortConfiguration configuration = new PinPortConfiguration();
+            PinPortConfiguration configuration = new PinPortConfiguration
+            {
+                Digital = PinPortConfiguration.DEFAULT_DIGITAL,
+                Output = PinPortConfiguration.DEFAULT_OUTPUT,
 
-            configuration.Digital = PinPortConfiguration.DEFAULT_DIGITAL;
-            configuration.Output = PinPortConfiguration.DEFAULT_OUTPUT;
+                ChangeTypeD = PinPortConfiguration.Trigger.None,
+                DefaultValueD = false,
 
-            configuration.ChangeTypeD = PinPortConfiguration.Trigger.None;
-            configuration.DefaultValueD = false;
-
-            configuration.DefaultValueA = 0x00;
-            configuration.Increment = 0x00;
-            configuration.Threshold = 0x00;
+                DefaultValueA = 0x00,
+                Increment = 0x00,
+                Threshold = 0x00,
+            };
 
             return configuration;
         }
