@@ -16,11 +16,11 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
     public static class BusinessHomeDevice
     {
         private static Dictionary<Type, MethodInfo[]> _homeDeviceOperations;
-        private static Dictionary<Type, MethodInfo[]> _HomeDeviceOperations
+        private static Dictionary<Type, MethodInfo[]> HomeDeviceOperations
         {
             get
             {
-                if(_homeDeviceOperations == null)
+                if (_homeDeviceOperations == null)
                     GetExecutableMethods();
                 return _homeDeviceOperations;
             }
@@ -46,45 +46,44 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                 return null;
             if (!homeDevice.ProductTag.HasValue)//no es un producto
                 return homeDevice.Connector.GetPinPort();
-            else //es un producto
-            {
-                List<PinPort> pinPorts = new List<PinPort>();
-                //TODO
-                return pinPorts.ToArray();
-            }
+
+            //Is Product
+            List<PinPort> pinPorts = new List<PinPort>();
+            //TODO
+            return pinPorts.ToArray();
         }
 
         public static OperationMessage RefreshState(this HomeDevice homeDevice)
         {
             if (homeDevice is WallPlug)
                 return (homeDevice as WallPlug).RefreshState();
-            else if (homeDevice is Light)
+            if (homeDevice is Light)
                 return (homeDevice as Light).RefreshState();
-            else if (homeDevice is Dimmable)
+            if (homeDevice is Dimmable)
                 return (homeDevice as Dimmable).RefreshState();
-            else if (homeDevice is HumiditySensor)
+            if (homeDevice is HumiditySensor)
                 return (homeDevice as HumiditySensor).RefreshState();
-            else if (homeDevice is PowerSensor)
+            if (homeDevice is PowerSensor)
                 return (homeDevice as PowerSensor).RefreshState();
-            else if (homeDevice is PresenceSensor)
+            if (homeDevice is PresenceSensor)
                 return (homeDevice as PresenceSensor).RefreshState();
-            else if (homeDevice is RGBLight)
+            if (homeDevice is RGBLight)
                 return (homeDevice as RGBLight).RefreshState();
-            else if (homeDevice is SwitchButton)
+            if (homeDevice is SwitchButton)
                 return (homeDevice as SwitchButton).RefreshState();
-            else if (homeDevice is TemperatureSensor)
+            if (homeDevice is TemperatureSensor)
                 return (homeDevice as TemperatureSensor).RefreshState();
-            else
-                throw new ArgumentException("HomeDevice not valid");
+
+            throw new ArgumentException("HomeDevice not valid");
         }
 
         public static MethodInfo[] GetHomeDeviceMethodOperations(this HomeDevice homeDevice)
         {
-            Type HomeDeviceType = homeDevice.HomeDeviceType;
-            if (HomeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(HomeDeviceType))
+            Type homeDeviceType = homeDevice.HomeDeviceType;
+            if (homeDeviceType == null || !typeof(HomeDevice).IsAssignableFrom(homeDeviceType))
                 throw new ArgumentException("This homeDevice is not a valid home Device");
 
-            return _HomeDeviceOperations[HomeDeviceType];
+            return HomeDeviceOperations[homeDeviceType];
         }
 
         public static string[] GetHomeDeviceNameOperations(this HomeDevice homeDevice)
@@ -107,7 +106,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
         public static List<PropertyParam> GetStateValue(this HomeDevice homeDevice)
         {
-            List<PropertyParam> PropiertyValues = new List<PropertyParam>();
+            List<PropertyParam> propiertyValues = new List<PropertyParam>();
 
             var filterProperties = homeDevice.HomeDeviceType.GetProperties().Where(p => p.GetCustomAttributes(true)
                                             .OfType<PropertyAttribute>()
@@ -121,7 +120,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                     type = type.GetGenericArguments()[0];
                 }
 
-                PropiertyValues.Add(new PropertyParam()
+                propiertyValues.Add(new PropertyParam
                 {
                     Name = item.Name,
                     Type = type,
@@ -129,7 +128,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                 });
             }
 
-            return PropiertyValues;
+            return propiertyValues;
         }
 
         private static void GetExecutableMethods()
@@ -137,7 +136,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             _homeDeviceOperations = new Dictionary<Type, MethodInfo[]>();
             foreach (var homeDeviceType in HomeDevice.HomeDeviceTypes)
             {
-                var methods = homeDeviceType.GetExtensionMethods(Assembly.GetAssembly(Type.GetType("BusinessHomeDevice")))
+                var methods = homeDeviceType.GetExtensionMethods(Assembly.GetAssembly(homeDeviceType))
                     .Where(m => m.GetCustomAttributes(true)
                                             .OfType<OperationAttribute>()
                                             .Where(a => !a.Internal).Count() > 0)

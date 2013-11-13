@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace ServiceLayer.DTO
+﻿namespace ServiceLayer.DTO
 {
     public class ZoneDTO
     {
