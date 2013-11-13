@@ -14,12 +14,11 @@ namespace ServiceLayer
     {
         public IEnumerable<ZoneDTO> GetZones()
         {
-            using (UnitOfWork repository = new UnitOfWork())
-            {
-                var zones = repository.ZoneRepository.GetAll();
+            UnitOfWork repository = UnitOfWork.GetInstance();
 
-                return Mapper.Map<IEnumerable<ZoneDTO>>(zones);
-            }
+            var zones = repository.ZoneRepository.GetAll();
+
+            return Mapper.Map<IEnumerable<ZoneDTO>>(zones);
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace ServiceLayer
             using (UnitOfWork repository = new UnitOfWork())
             {
                 Zone zone = repository.ZoneRepository.GetById(idZone);
-                
+
                 repository.ZoneRepository.Delete(zone);
 
                 repository.Commit();
