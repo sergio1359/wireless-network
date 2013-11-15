@@ -4,8 +4,8 @@ namespace SmartHome.Products
     public class PinPort
     {
         //Direction
-        public char Port { set; get; }
-        public byte Pin { set; get; }
+        public char Port {private set; get; }
+        public byte Pin {private set; get; }
 
         public PinPort(char Port, byte Pin)
         {

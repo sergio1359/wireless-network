@@ -7,9 +7,15 @@ using System.Text;
 
 namespace SmartHome.Memory
 {
-    class Hex
+    static class Hex
     {
-        public static string Bin2Hex(byte[] input)
+        public static void SaveBin2Hex(byte[] input, string fileName)
+        {
+            string hexstr = Bin2Hex(input);
+            File.WriteAllText(fileName + ".hex", hexstr);
+        }
+
+        private static string Bin2Hex(byte[] input)
         {
             //Start Char ':'    |   Length(1)   |   Address(2)  |   Rec Type(1)  |   Data(n)  |   Checksum(1)
 
@@ -40,11 +46,6 @@ namespace SmartHome.Memory
             result.AppendLine(":00000001FF");
 
             return result.ToString();
-        }
-        public static void SaveBin2Hex(byte[] input, string fileName)
-        {
-            string hexstr = Hex.Bin2Hex(input);
-            File.WriteAllText(fileName + ".hex", hexstr);
         }
     }
 }

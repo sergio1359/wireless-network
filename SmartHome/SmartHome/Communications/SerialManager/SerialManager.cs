@@ -30,7 +30,7 @@ namespace SmartHome.Communications
             validNodes = new List<NodeConnection>();
             unidentifiedNodes = new List<NodeConnection>();
 
-            checkTimer = new Timer()
+            checkTimer = new Timer
             {
                 Interval = 1000,
                 AutoReset = false,

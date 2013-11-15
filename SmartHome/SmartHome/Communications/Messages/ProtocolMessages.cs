@@ -29,7 +29,7 @@ namespace SmartHome.Communications.Messages
 
         private static OperationMessage BaseMessage(ushort nodeAddress, OPCodes opCode, byte[] args)
         {
-            return new OperationMessage()
+            return new OperationMessage
             {
                 DestinationAddress = nodeAddress,
                 OpCode = opCode,
@@ -108,11 +108,11 @@ namespace SmartHome.Communications.Messages
 
         public static OperationMessage RouteTableReadConfirmation(byte fragmentTotal, byte fragment, byte length, ConfigWriteStatusCodes statusCode, ushort destinationAddress = 0)
         {
-            byte[] args = new byte[]
-                {
-                    (byte)(fragmentTotal << 4 | (fragment & 0xF)),
-                    (byte)statusCode,
-                };
+            byte[] args =
+            {
+                (byte)(fragmentTotal << 4 | (fragment & 0xF)),
+                (byte)statusCode,
+            };
 
             return BaseMessage(destinationAddress, OPCodes.RouteTableReadConfirmation, args);
         }
@@ -145,17 +145,17 @@ namespace SmartHome.Communications.Messages
 
             byte[] year = ((ushort)dateTime.Year).UshortToByte();
 
-            byte[] args = new byte[]
-                {
-                    (byte)dow,
-                    (byte)dateTime.Day,
-                    (byte)dateTime.Month,
-                    (byte)year[0],
-                    (byte)year[1],
-                    (byte)dateTime.Hour,
-                    (byte)dateTime.Minute,
-                    (byte)dateTime.Second,
-                };
+            byte[] args =
+            {
+                (byte)dow,
+                (byte)dateTime.Day,
+                (byte)dateTime.Month,
+                (byte)year[0],
+                (byte)year[1],
+                (byte)dateTime.Hour,
+                (byte)dateTime.Minute,
+                (byte)dateTime.Second,
+            };
 
             return BaseMessage(destinationAddress, OPCodes.DateTimeWrite, args);
         }
@@ -169,7 +169,7 @@ namespace SmartHome.Communications.Messages
 
         public static OperationMessage LogicWrite(ushort homeDeviceAddress, LogicWriteValues value, byte seconds, ushort destinationAddress = 0) 
         {
-            byte[] args = new byte[]
+            byte[] args =
                 {
                     (byte)value,
                     seconds,
@@ -192,7 +192,7 @@ namespace SmartHome.Communications.Messages
 
         public static OperationMessage DimmerWrite(ushort homeDeviceAddress, byte value, byte seconds, ushort destinationAddress = 0) 
         {
-            byte[] args = new byte[]
+            byte[] args = 
                 {
                     (byte)value,
                     seconds,

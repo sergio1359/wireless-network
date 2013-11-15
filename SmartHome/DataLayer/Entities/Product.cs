@@ -12,14 +12,8 @@ namespace DataLayer.Entities
         [Key]
         public int Id { get; set; }
 
-        /// <summary>
-        /// Type of product build
-        /// </summary>
         public string TypeProduct { get; set; }
 
-        /// <summary>
-        /// Name of the concrete product
-        /// </summary>
         public string NameProduct { get; set; }
     }
 }

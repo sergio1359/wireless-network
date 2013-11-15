@@ -58,7 +58,5 @@ namespace SmartHome.Memory
             }
             return result;
         }
-
-        
     }
 }
