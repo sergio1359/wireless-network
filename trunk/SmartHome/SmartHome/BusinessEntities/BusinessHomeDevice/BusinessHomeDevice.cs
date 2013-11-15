@@ -134,9 +134,10 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         private static void LoadExecutableMethods()
         {
             _homeDeviceOperations = new Dictionary<Type, MethodInfo[]>();
+
             foreach (var homeDeviceType in HomeDevice.HomeDeviceTypes)
             {
-                var methods = homeDeviceType.GetEvenExtensionMethods(Assembly.GetAssembly(homeDeviceType))
+                var methods = homeDeviceType.GetEvenExtensionMethods(Assembly.GetAssembly(typeof(BusinessHomeDevice)))
                     .Where(m => m.GetCustomAttributes(true)
                                             .OfType<OperationAttribute>()
                                             .Where(a => !a.Internal).Count() > 0)
@@ -148,14 +149,10 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
 
         private static IEnumerable<MethodInfo> GetEvenExtensionMethods(this Type type, Assembly extensionsAssembly)
         {
-            var query = from t in extensionsAssembly.GetTypes()
-                        where !t.IsGenericType && !t.IsNested
-                        from m in t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-                        where m.IsDefined(typeof(System.Runtime.CompilerServices.ExtensionAttribute), false)
-                        where m.GetParameters()[0].ParameterType == type
-                        select m;
-
-            return query;
+            return extensionsAssembly.GetTypes().Where(t => !t.IsGenericType && !t.IsNested)
+                .SelectMany(m => m.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+                .Where(m => m.IsDefined(typeof (System.Runtime.CompilerServices.ExtensionAttribute), false))
+                .Where(m => m.GetParameters()[0].ParameterType == type);
         }
     }
 

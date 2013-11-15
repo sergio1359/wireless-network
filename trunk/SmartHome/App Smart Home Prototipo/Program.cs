@@ -5,9 +5,6 @@ namespace App_Smart_Home_Prototipo
 {
     static class Program
     {
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
         [STAThread]
         static void Main()
         {
