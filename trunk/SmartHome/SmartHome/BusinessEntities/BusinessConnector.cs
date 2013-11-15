@@ -16,7 +16,7 @@ namespace SmartHome.BusinessEntities
     {
         public static Connector CreateConnector(string name, ConnectorTypes connectorType)
         {
-            Connector connector = new Connector()
+            Connector connector = new Connector
             {
                 ConnectorType = connectorType,
                 Name = name
@@ -24,7 +24,7 @@ namespace SmartHome.BusinessEntities
 
             return connector;
         }
-        
+
         /// <summary>
         /// Connect without checks the connector with the homeDevice
         /// </summary>
@@ -32,7 +32,7 @@ namespace SmartHome.BusinessEntities
         /// <param name="homeDevice"></param>
         public static void LinkHomeDevice(this Connector connector, HomeDevice homeDevice)
         {
-            connector.HomeDevices = new List<HomeDevice>() { homeDevice };
+            connector.HomeDevices = new List<HomeDevice> { homeDevice };
             connector.Product = null;
         }
 
@@ -40,13 +40,13 @@ namespace SmartHome.BusinessEntities
         /// Connect without checks the connector with the list of homeDevice
         /// </summary>
         /// <param name="connector"></param>
-        /// <param name="homeDevices"></param>
+        /// <param name="typeProduct"></param>
         public static void LinkHomeDevice(this Connector connector, Type typeProduct)
         {
             BusinessProduct product = BusinessProduct.GetProduct(typeProduct);
             connector.HomeDevices = product.GetInstanceProducts();
 
-            connector.Product = new Product()
+            connector.Product = new Product
             {
                 TypeProduct = typeProduct.Name,
                 NameProduct = "",
@@ -85,7 +85,7 @@ namespace SmartHome.BusinessEntities
             if (connector.ConnectorType == ConnectorTypes.DimmerPassZero)
                 return false;
 
-            BusinessProduct product =  (BusinessProduct) Activator.CreateInstance(productName) ;
+            BusinessProduct product = (BusinessProduct)Activator.CreateInstance(productName);
 
             return connector.ConnectorType == product.GetConnectorType();
         }
@@ -106,11 +106,9 @@ namespace SmartHome.BusinessEntities
             {
                 return new Operation[0];
             }
-            else
-            {
-                return connector.HomeDevices.SelectMany(hd => hd.Operations).ToArray();
-            }
 
+            return connector.HomeDevices.SelectMany(hd => hd.Operations)
+                    .ToArray();
         }
     }
 }

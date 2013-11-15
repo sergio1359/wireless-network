@@ -11,24 +11,24 @@ namespace SmartHome.BusinessEntities
 {
     public abstract class BusinessProduct
     {
-        private static Type[] products;
+        private static Type[] _products;
         public static Type[] GetProducts
         {
             get
             {
-                if (products == null)
-                    products = typeof(BusinessProduct).Assembly.GetTypes().Where(t => t != typeof(BusinessProduct) && typeof(BusinessProduct).IsAssignableFrom(t)).ToArray();
-                return products;
+                if (_products == null)
+                    _products = typeof(BusinessProduct).Assembly.GetTypes().Where(t => t != typeof(BusinessProduct) && typeof(BusinessProduct).IsAssignableFrom(t)).ToArray();
+                return _products;
             }
         }
 
-        protected List<Tuple<Type, int[]>> mapProduct;
-        protected ConnectorTypes connectorProduct;
+        protected List<Tuple<Type, int[]>> MapProduct;
+        protected ConnectorTypes ConnectorProduct;
 
-        public BusinessProduct()
+        protected BusinessProduct()
         {
-            mapProduct = GetProduct();
-            connectorProduct = GetConnectorType();
+            MapProduct = GetProduct();
+            ConnectorProduct = GetConnectorType();
         }
 
         public static BusinessProduct GetProduct(Type productType)
@@ -36,13 +36,23 @@ namespace SmartHome.BusinessEntities
             return (BusinessProduct)Activator.CreateInstance(productType);
         }
 
+        public static Type GetProductType(string productName)
+        {
+            Type type = Type.GetType(productName);
+
+            if(!_products.Any(t => t.Name == type.Name))
+                throw new ArgumentException("Product name isn't exist");
+
+            return type;
+        }
+
         public List<HomeDevice> GetInstanceProducts()
         {
             List<HomeDevice> homeDeviceResult = new List<HomeDevice>();
 
-            for (int i = 0; i < mapProduct.Count; i++)
+            for (int i = 0; i < MapProduct.Count; i++)
             {
-                HomeDevice homeDev = BusinessHomeDevice.BusinessHomeDevice.CreateHomeDevice(mapProduct[i].Item1.Name);
+                HomeDevice homeDev = BusinessHomeDevice.BusinessHomeDevice.CreateHomeDevice(MapProduct[i].Item1.Name);
                 homeDev.ProductTag = i;
 
                 homeDeviceResult.Add(homeDev);
@@ -53,7 +63,7 @@ namespace SmartHome.BusinessEntities
 
         public int[] GetPinPortMap(int tagProduct)
         {
-            return mapProduct[tagProduct].Item2;
+            return MapProduct[tagProduct].Item2;
         }
 
         public abstract List<Tuple<Type, int[]>> GetProduct();
@@ -66,8 +76,10 @@ namespace SmartHome.BusinessEntities
     {
         public override List<Tuple<Type, int[]>> GetProduct()
         {
-            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
-            result.Add(Tuple.Create(typeof(Button), new int[]{ 1 }));
+            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>
+            {
+                Tuple.Create(typeof (Button), new int[] {1})
+            };
             return result;
         }
 
@@ -81,9 +93,11 @@ namespace SmartHome.BusinessEntities
     {
         public override List<Tuple<Type, int[]>> GetProduct()
         {
-            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>();
-            result.Add(Tuple.Create(typeof(TemperatureSensor), new int[] { 0 }));
-            result.Add(Tuple.Create(typeof(HumiditySensor), new int[] { 0 }));
+            List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>
+            {
+                Tuple.Create(typeof (TemperatureSensor), new int[] {0}),
+                Tuple.Create(typeof (HumiditySensor), new int[] {0})
+            };
             return result;
         }
 

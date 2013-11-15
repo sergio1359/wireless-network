@@ -59,7 +59,7 @@ namespace ServiceLayer
                 //UPDATE CHECKSUM
                 homeDevice.Connector.Node.UpdateChecksum(null);
 
-                Services.NodeService.UnlinkHomeDevice(idHomeDevice);
+                Services.HomeDeviceService.UnlinkHomeDevice(idHomeDevice);
             }
 
             repository.HomeDeviceRespository.Delete(homeDevice);
@@ -143,10 +143,115 @@ namespace ServiceLayer
                 .Where(hd => homeDeviceTypes.Contains(hd.Type));
         }
 
+        public void LinkHomeDevice(int idConnector, int idHomeDevice)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+            //TODO: falta chequear que el homedevice sea compatible con el conector
+
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
+
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice Id doesn't exist");
+
+            if (connector.InUse)
+                throw new ArgumentException("The connector has been occuped by other home device");
+
+            if (homeDevice.InUse)
+                throw new ArgumentException("The HomeDevice has been occuped by other connector");
+
+            //UPDATE CHECKSUM
+            connector.Node.UpdateChecksum(null);
+
+            connector.LinkHomeDevice(homeDevice);
+
+            repository.Commit();
+        }
+
+        public void UnlinkHomeDevice(int idHomeDevice)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
+
+            if (homeDevice == null)
+                throw new ArgumentException("HomeDevice Id doesn't exist");
+
+            //UPDATE CHECKSUM
+            homeDevice.Connector.Node.UpdateChecksum(null);
+
+            homeDevice.Connector.UnlinkHomeDevice();
+            repository.Commit();
+        }
+
+        //PRODUCT REGION
         public string[] GetNameProducts()
         {
             return BusinessProduct.GetProducts.Select(p => p.Name)
                 .ToArray();
+        }
+
+        public void LinkProduct(int idConnector, string productName)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
+
+            if(connector == null)
+                throw new ArgumentException("The connector isn't exist");
+
+            if(connector.InUse)
+                throw  new Exception("The connector is being used by other homeDevice or product");
+
+            Type product = BusinessProduct.GetProductType(productName);
+
+            if (!connector.IsCapable(product))
+                throw new Exception("This product is not capable with the connector");
+
+            connector.LinkHomeDevice(product);
+
+            repository.Commit();
+        }
+
+        public void UnlinkProduct(int idConnector)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
+
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
+
+            connector.UnlinkHomeDevice();
+        }
+
+        public IEnumerable<ConnectorDTO> GetProductsConnected()
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
+        }
+
+        public IEnumerable<ConnectorDTO> GetConnectorsCapableProduct(int idNode, string productName)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Node node = repository.NodeRespository.GetById(idNode);
+
+            if (node == null)
+                throw new ArgumentException("Node doesn't exist");
+
+            Type product = BusinessProduct.GetProductType(productName);
+
+            var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(product));
+
+            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
         }
     }
 }
