@@ -35,8 +35,6 @@ namespace SmartHome.Memory
         /// <summary>
         /// Converts a TimeSpan in a Byte[] sort in Hours, Minutes and Seconds
         /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
         public static byte[] ToBinaryTime(this DateTime time)
         {
             byte[] result = new byte[3];
@@ -91,7 +89,6 @@ namespace SmartHome.Memory
             return result;
         }
 
-        //Some adds to easy the conversion
         public static List<PinPort> GetPinPortList(this Node node)
         {
             var dic = ProductConfiguration.GetShieldDictionary(node.Shield);
@@ -106,27 +103,15 @@ namespace SmartHome.Memory
         }
 
 
-        /// <summary>
-        /// Devuelve el Connector que tiene el pinPort Asociado, si no existe ningun conector entonces null
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="pinPort"></param>
-        /// <returns></returns>
+        /// <returns>If not exist, null</returns>
         public static Connector GetConnector(this Node node, PinPort pinPort)
         {
             if (!node.GetPinPortList().Contains(pinPort))
             {
                 return null;
             }
-            else
-            {
-                foreach (Connector connector in node.Connectors)
-                {
-                    if (connector.GetPinPort().Contains(pinPort))
-                        return connector;
-                }
-            }
-            return null;
+
+            return node.Connectors.FirstOrDefault(connector => connector.GetPinPort().Contains(pinPort));
         }
     }
 

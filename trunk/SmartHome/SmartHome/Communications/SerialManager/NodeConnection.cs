@@ -121,7 +121,7 @@ namespace SmartHome.Communications
 
             this.ConfirmationTimeout = CONFIRMATION_TIMEOUT_MS;
 
-            this.identifyTimeoutTimer = new System.Timers.Timer()
+            this.identifyTimeoutTimer = new Timer
             {
                 Interval = MS_BW_IDENTIY_RETRIES,
                 AutoReset = false,

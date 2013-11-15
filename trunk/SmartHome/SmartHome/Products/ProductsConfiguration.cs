@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SmartHome.Products
 {
-    public class ProductConfiguration
+    public static class ProductConfiguration
     {
         public static Dictionary<string, Tuple<ConnectorTypes, PinPort[]>> GetShieldDictionary(ShieldTypes shieldtype)
         {

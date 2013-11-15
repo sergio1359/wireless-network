@@ -21,7 +21,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             get
             {
                 if (_homeDeviceOperations == null)
-                    GetExecutableMethods();
+                    LoadExecutableMethods();
                 return _homeDeviceOperations;
             }
         }
@@ -131,12 +131,12 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             return propiertyValues;
         }
 
-        private static void GetExecutableMethods()
+        private static void LoadExecutableMethods()
         {
             _homeDeviceOperations = new Dictionary<Type, MethodInfo[]>();
             foreach (var homeDeviceType in HomeDevice.HomeDeviceTypes)
             {
-                var methods = homeDeviceType.GetExtensionMethods(Assembly.GetAssembly(homeDeviceType))
+                var methods = homeDeviceType.GetEvenExtensionMethods(Assembly.GetAssembly(homeDeviceType))
                     .Where(m => m.GetCustomAttributes(true)
                                             .OfType<OperationAttribute>()
                                             .Where(a => !a.Internal).Count() > 0)
@@ -146,7 +146,7 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
             }
         }
 
-        private static IEnumerable<MethodInfo> GetExtensionMethods(this Type type, Assembly extensionsAssembly)
+        private static IEnumerable<MethodInfo> GetEvenExtensionMethods(this Type type, Assembly extensionsAssembly)
         {
             var query = from t in extensionsAssembly.GetTypes()
                         where !t.IsGenericType && !t.IsNested
