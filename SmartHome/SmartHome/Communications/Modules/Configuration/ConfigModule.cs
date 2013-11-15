@@ -214,6 +214,7 @@ namespace SmartHome.Communications.Modules.Config
                 {
                     //TODO: Check the problem
                     PrintLog(true, string.Format("An error occurred on configuration update for node 0x{0:X4}", node.Address));
+                    this.currentWriteTransactions.Remove((ushort)node.Address);
                 }
             }
         }
