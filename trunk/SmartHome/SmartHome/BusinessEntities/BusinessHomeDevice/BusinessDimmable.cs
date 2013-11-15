@@ -39,19 +39,13 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
         }
 
         [OperationAttribute]
-        public static OperationMessage PercentageDimmer(this Dimmable dimmable, float percentage)
+        public static OperationMessage PercentageDimmer(this Dimmable dimmable, float percentage, byte seconds = 0)
         {
-            return dimmable.PercentageDimmer(percentage, 0);
-        }
-
-        [OperationAttribute]
-        public static OperationMessage PercentageDimmer(this Dimmable dimmable, float percentage, byte seconds)
-        {
-            int value = (int)(percentage * 100);
+            byte value = (byte)(percentage * 100);
 
             ushort destinationAddress = (ushort)(dimmable.Connector == null ? 0 : dimmable.Connector.Node.Address);
 
-            return OperationMessage.DimmerWrite((ushort)dimmable.Id, (byte)(percentage * byte.MaxValue / 100.0), 0, destinationAddress);
+            return OperationMessage.DimmerWrite((ushort)dimmable.Id, value, seconds, destinationAddress);
         }
 
         public static OperationMessage RefreshState(this Dimmable dimmable)

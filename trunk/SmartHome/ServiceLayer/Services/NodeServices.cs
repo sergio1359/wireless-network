@@ -182,5 +182,18 @@ namespace ServiceLayer
         {
             return Enum.GetNames(typeof(BaseTypes));
         }
+
+        public void ForceUpdateNodeConfiguration(int idNode)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Node node = repository.NodeRespository.GetById(idNode);
+            Home home = repository.HomeRespository.GetHome();
+
+            if (node == null)
+                throw new ArgumentException("Node Id doesn't exist");
+
+            CommunicationManager.Instance.FindModule<ConfigModule>().SendConfiguration(node, home);
+        }
     }
 }

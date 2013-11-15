@@ -80,6 +80,16 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             }
         }
 
+        private void ForceConfiguration(object sender, EventArgs e)
+        {
+            if (this.listBoxNodes.SelectedItem != null)
+            {
+                NodeDTO node = (NodeDTO) listBoxNodes.SelectedItem;
+
+                Services.NodeService.ForceUpdateNodeConfiguration(node.Id);
+            }
+        }
+
 
 
     }

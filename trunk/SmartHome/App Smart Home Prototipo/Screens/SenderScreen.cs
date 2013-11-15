@@ -79,7 +79,7 @@ namespace App_Smart_Home_Prototipo.Screens
                     control = new ByteControl();
                     control.NameProperty = param.Name;
                     break;
-                case "System.Float":
+                case "System.Single":
                     control = new FloatControl();
                     control.NameProperty = param.Name;
                     break;
