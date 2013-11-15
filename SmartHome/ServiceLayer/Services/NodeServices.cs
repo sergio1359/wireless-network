@@ -21,52 +21,6 @@ namespace ServiceLayer
 {
     public class NodeServices
     {
-
-        public void LinkHomeDevice(int idConnector, int idHomeDevice)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            Connector connector = repository.ConnectorRepository.GetById(idConnector);
-            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
-
-            //TODO: falta chequear que el homedevice sea compatible con el conector
-
-            if (connector == null)
-                throw new ArgumentException("Connector Id doesn't exist");
-
-            if (homeDevice == null)
-                throw new ArgumentException("HomeDevice Id doesn't exist");
-
-            if (connector.InUse)
-                throw new ArgumentException("The connector has been occuped by other home device");
-
-            if (homeDevice.InUse)
-                throw new ArgumentException("The HomeDevice has been occuped by other connector");
-
-            //UPDATE CHECKSUM
-            connector.Node.UpdateChecksum(null);
-
-            connector.LinkHomeDevice(homeDevice);
-
-            repository.Commit();
-        }
-
-        public void UnlinkHomeDevice(int idHomeDevice)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(idHomeDevice);
-
-            if (homeDevice == null)
-                throw new ArgumentException("HomeDevice Id doesn't exist");
-
-            //UPDATE CHECKSUM
-            homeDevice.Connector.Node.UpdateChecksum(null);
-
-            homeDevice.Connector.UnlinkHomeDevice();
-            repository.Commit();
-        }
-
         public IEnumerable<PendingNodeInfoDTO> GetPendingNodes()
         {
             var pendingInfo = CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes;
@@ -227,68 +181,6 @@ namespace ServiceLayer
         public string[] GetTypesBases()
         {
             return Enum.GetNames(typeof(BaseTypes));
-        }
-
-        public void LinkProduct(int idConnector, string typeProduct)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            Connector connector = repository.ConnectorRepository.GetById(idConnector);
-
-            if (connector == null)
-                throw new ArgumentException("Connector Id doesn't exist");
-
-            if (connector.InUse)
-                throw new ArgumentException("Connector has been in use by other product or HomeDevice");
-
-            Type type = Type.GetType(typeProduct);
-
-            connector.LinkHomeDevice(type);
-        }
-
-        public void UnlinkProduct(int idConnector)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            Connector connector = repository.ConnectorRepository.GetById(idConnector);
-
-            if (connector == null)
-                throw new ArgumentException("Connector Id doesn't exist");
-
-            connector.UnlinkHomeDevice();
-        }
-
-        public IEnumerable<ConnectorDTO> GetConnectorProductsConnected()
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            var connectors = repository.NodeRespository.GetAll().SelectMany(n => n.Connectors).Where(c => c.Product != null);
-
-            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
-        }
-
-        public IEnumerable<ConnectorDTO> GetConnectorCapableProducts(int idNode, string product)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            Node node = repository.NodeRespository.GetById(idNode);
-            Type typeProduct;
-
-            if (node == null)
-                throw new ArgumentException("Node Id doesn't exist");
-
-            try
-            {
-                typeProduct = Type.GetType(product);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Type product doesn't exist");
-            }
-
-            var connectors = node.Connectors.Where(c => !c.InUse && c.IsCapable(typeProduct));
-
-            return Mapper.Map<IEnumerable<ConnectorDTO>>(connectors);
         }
     }
 }

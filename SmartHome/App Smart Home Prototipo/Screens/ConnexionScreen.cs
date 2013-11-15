@@ -42,7 +42,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
             ConnectorDTO connector = (ConnectorDTO)listBoxCapableFreeConnector.SelectedItem;
 
-            Services.NodeService.LinkHomeDevice(connector.Id, homeDev.Id);
+            Services.HomeDeviceService.LinkHomeDevice(connector.Id, homeDev.Id);
 
             UpdateForm();
         }
@@ -51,7 +51,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
         {
             HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxHomeDevicesConnected.SelectedItem;
 
-            Services.NodeService.UnlinkHomeDevice(homeDev.Id);
+            Services.HomeDeviceService.UnlinkHomeDevice(homeDev.Id);
 
             UpdateForm();
         }
@@ -90,7 +90,7 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 NodeDTO node = (NodeDTO)comboBoxNodeProduct.SelectedItem;
 
                 listBoxConnectorsAvailable.Items.Clear();
-                listBoxConnectorsAvailable.Items.AddRange(Services.NodeService.GetConnectorCapableProducts(node.Id, product).ToArray());
+                listBoxConnectorsAvailable.Items.AddRange(Services.HomeDeviceService.GetConnectorsCapableProduct(node.Id, product).ToArray());
 
                 buttonLinkProduct.Enabled = true;
             }
