@@ -62,7 +62,7 @@ namespace App_Smart_Home_Prototipo.Screens
                 OperationDefinitionDTO operation = Services.OperationService.GetDefinitionOperation(homeDevice.Id, operationName);
 
                 tableLayoutPanel3.Controls.Clear();
-                for (int i = 0; i < operation.Args.Count(); i++)
+                for (int i = 1; i < operation.Args.Count(); i++) //1 because we don't add the "this" expression
                 {
                     SetControl(operation.Args[i], i);
                 }
@@ -75,21 +75,21 @@ namespace App_Smart_Home_Prototipo.Screens
             dynamic control = new Control();
             switch (param.Type)
             {
-                case "byte":
+                case "System.Byte":
                     control = new ByteControl();
                     control.NameProperty = param.Name;
                     break;
-                case "float":
+                case "System.Float":
                     control = new FloatControl();
                     control.NameProperty = param.Name;
                     break;
-                case "color":
+                case "System.Drawing.Color":
                     control = new ColorControl();
                     control.NameProperty = param.Name;
                     break;
             }
 
-            tableLayoutPanel3.Controls.Add(control, 0, position);
+            tableLayoutPanel3.Controls.Add(control, 0, position-1);
         }
 
         private void SendOperation(object sender, EventArgs e)
@@ -114,14 +114,12 @@ namespace App_Smart_Home_Prototipo.Screens
         {
             if (control is FloatControl)
                 return (control as FloatControl).Value;
-            else if (control is ByteControl)
+            if (control is ByteControl)
                 return (control as ByteControl).Value;
-            else if (control is ColorControl)
+            if (control is ColorControl)
                 return (control as ColorControl).Value;
-            else
-            {
-                throw new Exception("DEBUG");
-            }
+            
+            throw new Exception("Not Implemented or problem DEBUG");
         }
 
         private void RefreshDevices(object sender, EventArgs e)

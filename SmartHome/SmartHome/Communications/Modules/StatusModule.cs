@@ -59,11 +59,11 @@ namespace SmartHome.Communications.Modules
                 }
 
                 // TESTING
-                if (hd is Light)
-                {
-                    var message = hd.GetAddressableOperation(((Light)hd).Switch());
-                    await this.SendMessage(message);
-                }
+                //if (hd is Light)
+                //{
+                //    var message = hd.GetAddressableOperation(((Light)hd).Switch());
+                //    await this.SendMessage(message);
+                //}
             }
 
             this.statusUpdateTimer.Start();

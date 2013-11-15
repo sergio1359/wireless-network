@@ -62,7 +62,7 @@ namespace ServiceLayer
             {
                 DestionationHomeDevice = homeDeviceDestination,
                 OperationName = operationName,
-                Args = args
+                Args = new object[]{homeDeviceDestination}.Concat(args).ToArray(),
             };
 
             operation.Execute();

@@ -56,7 +56,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(214, 29);
+            this.label2.Location = new System.Drawing.Point(154, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 2;
@@ -70,7 +70,7 @@
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
             this.Name = "FloatControl";
-            this.Size = new System.Drawing.Size(230, 96);
+            this.Size = new System.Drawing.Size(195, 96);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
