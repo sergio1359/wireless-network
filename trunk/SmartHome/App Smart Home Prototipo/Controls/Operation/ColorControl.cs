@@ -33,6 +33,7 @@ namespace App_Smart_Home_Prototipo.Controls
             {
                 Value = colorDialog1.Color;
                 label2.Text = colorDialog1.Color.ToString();
+                label2.ForeColor = colorDialog1.Color;
             }
         }
 

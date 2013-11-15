@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using DataLayer.Entities;
+using DataLayer.Entities.HomeDevices;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
 using SmartHome.Communications.Messages;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace SmartHome.BusinessEntities
 
         public static OperationMessage GetOperationMessage(this Operation operation)
         {
-            MethodInfo method = operation.DestionationHomeDevice.GetType().GetMethods().First(m => m.Name == operation.OperationName 
+            MethodInfo method = operation.DestionationHomeDevice.GetHomeDeviceMethodOperations().First(m => m.Name == operation.OperationName 
                 && m.ReturnType == typeof(OperationMessage) 
                 && m.GetCustomAttributes(typeof(OperationAttribute)).Any());
 
