@@ -66,8 +66,15 @@ namespace App_Smart_Home_Prototipo.Screens
                 }
 
                 //GET OPERATIONS
+                var previousOperationName = this.operationList.SelectedItem as string;
+
                 this.operationList.Items.Clear();
                 this.operationList.Items.AddRange(Services.OperationService.GetExecutableHomeDeviceNameOperations(updateHomeDevice.Id));
+
+                if (!string.IsNullOrEmpty(previousOperationName))
+                {
+                    this.operationList.SelectedItem = this.operationList.Items.OfType<string>().FirstOrDefault(o => o == previousOperationName);
+                }
             }
         }
 
