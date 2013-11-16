@@ -24,40 +24,44 @@ namespace App_Smart_Home_Prototipo.Screens
 
         private void RefreshDevices()
         {
-            listBoxHomeDevices.Items.Clear();
-            listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices(true).ToArray());
+            this.listBoxHomeDevices.SelectedIndex = -1;
+            this.listBoxHomeDevices.Items.Clear();
+            this.listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices(true).ToArray());
+
+            if (this.listBoxHomeDevices.Items.Count > 0)
+                this.listBoxHomeDevices.SelectedIndex = 0;
         }
 
 
         private void SetStateHomeDevice(object sender, EventArgs e)
         {
-            if (listBoxHomeDevices.SelectedItem != null)
+            if (this.listBoxHomeDevices.SelectedItem != null)
             {
                 //GET HOME DEVICE
-                HomeDeviceDTO updateHomeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
+                HomeDeviceDTO updateHomeDevice = (HomeDeviceDTO)this.listBoxHomeDevices.SelectedItem;
 
                 if (updateHomeDevice.State.Count() >= 1)
-                    labelState1.Text = updateHomeDevice.State.ToList()[0].ToString();
+                    this.labelState1.Text = updateHomeDevice.State.ToList()[0].ToString();
 
                 if (updateHomeDevice.State.Count() >= 2)
-                    labelState1.Text = updateHomeDevice.State.ToList()[1].ToString();
+                    this.labelState1.Text = updateHomeDevice.State.ToList()[1].ToString();
 
                 if (updateHomeDevice.State.Count() >= 3)
-                    labelState1.Text = updateHomeDevice.State.ToList()[2].ToString();
+                    this.labelState1.Text = updateHomeDevice.State.ToList()[2].ToString();
 
                 //GET OPERATIONS
-                operationList.Items.Clear();
-                operationList.Items.AddRange(Services.OperationService.GetExecutableHomeDeviceNameOperations(updateHomeDevice.Id));
+                this.operationList.Items.Clear();
+                this.operationList.Items.AddRange(Services.OperationService.GetExecutableHomeDeviceNameOperations(updateHomeDevice.Id));
             }
         }
 
         private void SetSenderOperationForm(object sender, EventArgs e)
         {
-            if (operationList.SelectedItem != null && listBoxHomeDevices.SelectedItem != null)
+            if (this.operationList.SelectedItem != null && listBoxHomeDevices.SelectedItem != null)
             {
                 HomeDeviceDTO homeDevice = (HomeDeviceDTO)listBoxHomeDevices.SelectedItem;
 
-                string operationName = (string)operationList.SelectedItem;
+                string operationName = (string)this.operationList.SelectedItem;
 
                 OperationDefinitionDTO operation = Services.OperationService.GetDefinitionOperation(homeDevice.Id, operationName);
 
@@ -89,21 +93,21 @@ namespace App_Smart_Home_Prototipo.Screens
                     break;
             }
 
-            tableLayoutPanel3.Controls.Add(control, 0, position-1);
+            this.tableLayoutPanel3.Controls.Add(control, 0, position - 1);
         }
 
         private void SendOperation(object sender, EventArgs e)
         {
-            if (operationList.SelectedItem != null && listBoxHomeDevices.SelectedItem != null)
+            if (this.operationList.SelectedItem != null && this.listBoxHomeDevices.SelectedItem != null)
             {
-                HomeDeviceDTO homeDevice = (HomeDeviceDTO) listBoxHomeDevices.SelectedItem;
+                HomeDeviceDTO homeDevice = (HomeDeviceDTO) this.listBoxHomeDevices.SelectedItem;
                 string nameOperation = (string) operationList.SelectedItem;
 
-                object[] args = new object[tableLayoutPanel3.Controls.Count];
+                object[] args = new object[this.tableLayoutPanel3.Controls.Count];
 
-                for (int i = 0; i < tableLayoutPanel3.Controls.Count; i++)
+                for (int i = 0; i < this.tableLayoutPanel3.Controls.Count; i++)
                 {
-                    args[i] = GetValue(tableLayoutPanel3.Controls[i]);
+                    args[i] = GetValue(this.tableLayoutPanel3.Controls[i]);
                 }
 
                 Services.OperationService.ExecuteOperation(homeDevice.Id, nameOperation, args);
