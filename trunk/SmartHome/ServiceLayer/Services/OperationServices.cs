@@ -10,6 +10,7 @@ using SmartHome.BusinessEntities.BusinessHomeDevice;
 using AutoMapper;
 using DataLayer.Entities.HomeDevices;
 using System.Linq;
+using System.Runtime.CompilerServices;
 #endregion
 
 namespace ServiceLayer
@@ -91,13 +92,17 @@ namespace ServiceLayer
 
             MethodInfo method = homeDevice.GetArgsOperation(nameOperation);
 
+            // For extension method. Remove the frist parameter (extension parameter)
+            IEnumerable<ParameterInfo> methodParameters = method.IsDefined(typeof(ExtensionAttribute), true) ?
+                method.GetParameters().Skip(1) :
+                method.GetParameters();
+
             OperationDefinitionDTO operationResult = new OperationDefinitionDTO
             {
                 NameOperation = method.Name,
                 ReturnValueType = method.ReturnType.ToString(),
-                Args =
-                    method.GetParameters()
-                        .Select(p => new ParamDTO { Name = p.Name, Type = p.ParameterType.ToString() })
+                Args = methodParameters
+                        .Select(p => new ParamDTO { Name = p.Name, Type = p.ParameterType.ToString(), Value = p.DefaultValue })
                         .ToArray(),
             };
 

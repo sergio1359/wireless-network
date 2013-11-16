@@ -161,8 +161,6 @@ namespace SmartHome.Communications.Modules.Network
 
             if (result)
             {
-                this.PendingNodes.Remove(info);
-
                 Debug.WriteLine(string.Format("JOIN ACCEPTED {0} -> NEW ADDRESS: 0x{1:X2}", macAddress, newAddress));
 
                 if (this.NodeJoined != null)
@@ -172,6 +170,8 @@ namespace SmartHome.Communications.Modules.Network
             {
                 Debug.WriteLine(string.Format("THE NODE {0} DOESN'T RECEIVE THE JOIN ACCEPT RESPONSE", macAddress));
             }
+
+            this.PendingNodes.Remove(info);
 
             return result;
         }

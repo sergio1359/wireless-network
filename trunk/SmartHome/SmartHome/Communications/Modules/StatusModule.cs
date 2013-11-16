@@ -53,9 +53,9 @@ namespace SmartHome.Communications.Modules
 
             foreach (var hd in homeDevices)
             {
-                if (hd.LastStatusUpdate == null)
+                if (!hd.LastStatusUpdate.HasValue)
                 {
-                    //TODO: Call to RefreshState Method with the priority of this module
+                    // Call to RefreshState Method with the priority of this module
                     OperationMessage refreshMessage = hd.RefreshState();
                     await this.SendMessage(refreshMessage);
                 }
@@ -251,7 +251,7 @@ namespace SmartHome.Communications.Modules
 
                 if (dimmerHD != null)
                 {
-                    dimmerHD.Value = value;
+                    dimmerHD.Value = value / 100f;
                     dimmerHD.LastStatusUpdate = DateTime.Now;
 
                     OnStateRefresh(dimmerHD);

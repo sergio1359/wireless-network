@@ -20,16 +20,31 @@ namespace App_Smart_Home_Prototipo.Screens
         {
             InitializeComponent();
             RefreshDevices();
+
+            Services.HomeDeviceService.StatusChanged += HomeDeviceService_StatusChanged;
+        }
+
+        void HomeDeviceService_StatusChanged(object sender, HomeDeviceDTO hd)
+        {
+            this.UIThread(() =>
+                {
+                    this.RefreshDevices();
+                });
         }
 
         private void RefreshDevices()
         {
+            var selectedItem = this.listBoxHomeDevices.SelectedItem as HomeDeviceDTO;
+            int previusHDId = selectedItem != null ? selectedItem.Id : -1;
+
             this.listBoxHomeDevices.SelectedIndex = -1;
             this.listBoxHomeDevices.Items.Clear();
             this.listBoxHomeDevices.Items.AddRange(Services.HomeDeviceService.GetAllHomeDevices(true).ToArray());
 
-            if (this.listBoxHomeDevices.Items.Count > 0)
-                this.listBoxHomeDevices.SelectedIndex = 0;
+            if (previusHDId != -1 && this.listBoxHomeDevices.Items.Count > 0)
+            {
+                this.listBoxHomeDevices.SelectedItem = this.listBoxHomeDevices.Items.OfType<HomeDeviceDTO>().FirstOrDefault(hd => hd.Id == previusHDId);
+            }
         }
 
 
@@ -37,17 +52,18 @@ namespace App_Smart_Home_Prototipo.Screens
         {
             if (this.listBoxHomeDevices.SelectedItem != null)
             {
-                //GET HOME DEVICE
                 HomeDeviceDTO updateHomeDevice = (HomeDeviceDTO)this.listBoxHomeDevices.SelectedItem;
 
-                if (updateHomeDevice.State.Count() >= 1)
-                    this.labelState1.Text = updateHomeDevice.State.ToList()[0].ToString();
+                // UPDATE STATUS
+                this.flowLayoutPanelState.Controls.Clear();
 
-                if (updateHomeDevice.State.Count() >= 2)
-                    this.labelState1.Text = updateHomeDevice.State.ToList()[1].ToString();
-
-                if (updateHomeDevice.State.Count() >= 3)
-                    this.labelState1.Text = updateHomeDevice.State.ToList()[2].ToString();
+                foreach (var stateVar in updateHomeDevice.State)
+                {
+                    this.flowLayoutPanelState.Controls.Add(new Label()
+                    {
+                        Text = stateVar.ToString()
+                    });
+                }
 
                 //GET OPERATIONS
                 this.operationList.Items.Clear();
@@ -66,7 +82,7 @@ namespace App_Smart_Home_Prototipo.Screens
                 OperationDefinitionDTO operation = Services.OperationService.GetDefinitionOperation(homeDevice.Id, operationName);
 
                 tableLayoutPanel3.Controls.Clear();
-                for (int i = 1; i < operation.Args.Count(); i++) //1 because we don't add the "this" expression
+                for (int i = 0; i < operation.Args.Count(); i++)
                 {
                     SetControl(operation.Args[i], i);
                 }
@@ -100,8 +116,8 @@ namespace App_Smart_Home_Prototipo.Screens
         {
             if (this.operationList.SelectedItem != null && this.listBoxHomeDevices.SelectedItem != null)
             {
-                HomeDeviceDTO homeDevice = (HomeDeviceDTO) this.listBoxHomeDevices.SelectedItem;
-                string nameOperation = (string) operationList.SelectedItem;
+                HomeDeviceDTO homeDevice = (HomeDeviceDTO)this.listBoxHomeDevices.SelectedItem;
+                string nameOperation = (string)operationList.SelectedItem;
 
                 object[] args = new object[this.tableLayoutPanel3.Controls.Count];
 
@@ -122,7 +138,7 @@ namespace App_Smart_Home_Prototipo.Screens
                 return (control as ByteControl).Value;
             if (control is ColorControl)
                 return (control as ColorControl).Value;
-            
+
             throw new Exception("Not Implemented or problem DEBUG");
         }
 

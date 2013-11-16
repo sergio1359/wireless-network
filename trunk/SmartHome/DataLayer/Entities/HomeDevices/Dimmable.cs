@@ -17,7 +17,6 @@ namespace DataLayer.Entities.HomeDevices
     [Table("Dimmable")]
     public class Dimmable : HomeDevice
     {
-        [PropertyAttribute]
         public DimmableTypes Type { get; set; }
 
         [NotMapped]
@@ -33,12 +32,16 @@ namespace DataLayer.Entities.HomeDevices
                 if (value.HasValue)
                     value = Math.Min(1f, Math.Max(0f, value.Value));
 
-                this.StoreProperty("LastValue", this.Value);
-                this.StoreProperty("Value", value);
+                if (this.Value != value)
+                {
+                    this.StoreProperty("LastValue", this.Value);
+                    this.StoreProperty("Value", value);
+                }
             }
         }
 
         [NotMapped]
+        [PropertyAttribute]
         public float? LastValue
         {
             get

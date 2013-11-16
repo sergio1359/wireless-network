@@ -33,18 +33,14 @@
             this.listBoxHomeDevices = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelState3 = new System.Windows.Forms.Label();
-            this.labelState2 = new System.Windows.Forms.Label();
-            this.labelState1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
             this.operationList = new System.Windows.Forms.ListBox();
+            this.flowLayoutPanelState = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,57 +98,13 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox1.Controls.Add(this.flowLayoutPanelState);
             this.groupBox1.Location = new System.Drawing.Point(237, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(228, 362);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "STATE";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.labelState3, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.labelState2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.labelState1, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 19);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(215, 337);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // labelState3
-            // 
-            this.labelState3.AutoSize = true;
-            this.labelState3.Location = new System.Drawing.Point(3, 224);
-            this.labelState3.Name = "labelState3";
-            this.labelState3.Size = new System.Drawing.Size(35, 13);
-            this.labelState3.TabIndex = 2;
-            this.labelState3.Text = "label3";
-            // 
-            // labelState2
-            // 
-            this.labelState2.AutoSize = true;
-            this.labelState2.Location = new System.Drawing.Point(3, 112);
-            this.labelState2.Name = "labelState2";
-            this.labelState2.Size = new System.Drawing.Size(35, 13);
-            this.labelState2.TabIndex = 1;
-            this.labelState2.Text = "label2";
-            // 
-            // labelState1
-            // 
-            this.labelState1.AutoSize = true;
-            this.labelState1.Location = new System.Drawing.Point(3, 0);
-            this.labelState1.Name = "labelState1";
-            this.labelState1.Size = new System.Drawing.Size(35, 13);
-            this.labelState1.TabIndex = 0;
-            this.labelState1.Text = "label1";
             // 
             // groupBox2
             // 
@@ -202,6 +154,14 @@
             this.operationList.TabIndex = 0;
             this.operationList.SelectedIndexChanged += new System.EventHandler(this.SetSenderOperationForm);
             // 
+            // flowLayoutPanelState
+            // 
+            this.flowLayoutPanelState.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanelState.Location = new System.Drawing.Point(7, 19);
+            this.flowLayoutPanelState.Name = "flowLayoutPanelState";
+            this.flowLayoutPanelState.Size = new System.Drawing.Size(215, 343);
+            this.flowLayoutPanelState.TabIndex = 0;
+            // 
             // SenderScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,8 +173,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -227,13 +185,10 @@
         private System.Windows.Forms.ListBox listBoxHomeDevices;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListBox operationList;
-        private System.Windows.Forms.Label labelState3;
-        private System.Windows.Forms.Label labelState2;
-        private System.Windows.Forms.Label labelState1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelState;
     }
 }
