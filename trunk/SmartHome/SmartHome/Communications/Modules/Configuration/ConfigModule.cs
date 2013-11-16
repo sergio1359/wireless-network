@@ -44,8 +44,19 @@ namespace SmartHome.Communications.Modules.Config
         {
             get
             {
-                return this.currentWriteTransactions.Select(wt => new TransactionStatus() { NodeAddress = wt.Key, Percentage = wt.Value.FragmentWriteTransaction.Percentage });
+                return this.currentWriteTransactions.Select(wt => GetTransactionStatus(ref wt));
             }
+        }
+
+        private static TransactionStatus GetTransactionStatus(ref KeyValuePair<ushort, ConfigTransaction> wt)
+        {
+            return new TransactionStatus() { 
+                NodeAddress = wt.Key,
+                Percentage = wt.Value.FragmentWriteTransaction.Percentage,
+                State = wt.Value.FragmentWriteTransaction.IsAborted ? TransisionStates.Aborted :
+                        wt.Value.FragmentWriteTransaction.IsCompleted ? TransisionStates.Completed :
+                        wt.Value.FragmentWriteTransaction.IsStarted ? TransisionStates.InProgress : TransisionStates.WaitingToStart
+            };
         }
 
         public ConfigModule(CommunicationManager communicationManager)
@@ -65,7 +76,7 @@ namespace SmartHome.Communications.Modules.Config
             };
             this.configUpdateTimer.Elapsed += configUpdateTimer_Elapsed;
 
-            this.configUpdateTimer.Start();
+            //this.configUpdateTimer.Start();
         }
 
         private async void configUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -198,23 +209,34 @@ namespace SmartHome.Communications.Modules.Config
 
         public async void SendConfiguration(Node node, Home home)
         {
-            if (!this.currentWriteTransactions.ContainsKey((ushort)node.Address))
+            ushort nodeAddress = (ushort)node.Address;
+
+            bool isNewTransaction = !this.currentWriteTransactions.ContainsKey(nodeAddress);
+            bool isAbortedOrCompletedTransaction = isNewTransaction ?
+                false : 
+                this.currentWriteTransactions[nodeAddress].FragmentWriteTransaction.IsAborted ||
+                this.currentWriteTransactions[nodeAddress].FragmentWriteTransaction.IsCompleted;
+
+            if (isNewTransaction || isAbortedOrCompletedTransaction)
             {
+                // If the last transaction was aborted or completed. Remove it to allow a new one.
+                if (isAbortedOrCompletedTransaction)
+                    this.currentWriteTransactions.Remove(nodeAddress);
+
                 var configuration = node.GetBinaryConfiguration(home);
 
-                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), (ushort)node.Address, configuration.Item2);
-                this.currentWriteTransactions.Add((ushort)node.Address, new ConfigTransaction()
+                var newTransaction = new FragmentWriteTransaction(this, OperationMessage.OPCodes.ConfigWrite, typeof(ConfigWriteStatusCodes), nodeAddress, configuration.Item2);
+                this.currentWriteTransactions.Add(nodeAddress, new ConfigTransaction()
                 {
                     Checksum = configuration.Item1,
                     FragmentWriteTransaction = newTransaction,
-                    TimeFlag = (DateTime)node.LastChecksumUpdate,
+                    TimeFlag = (DateTime)(node.LastChecksumUpdate ?? DateTime.MinValue),
                 });
 
                 if (!await newTransaction.StartTransaction())
                 {
                     //TODO: Check the problem
-                    PrintLog(true, string.Format("An error occurred on configuration update for node 0x{0:X4}", node.Address));
-                    this.currentWriteTransactions.Remove((ushort)node.Address);
+                    PrintLog(true, string.Format("An error occurred on configuration update for node 0x{0:X4}", nodeAddress));
                 }
             }
         }
