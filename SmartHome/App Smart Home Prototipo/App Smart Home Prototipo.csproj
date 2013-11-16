@@ -106,6 +106,7 @@
     <Compile Include="Screens\NodeScreen.Designer.cs">
       <DependentUpon>NodeScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\ScreenHelper.cs" />
     <Compile Include="Screens\SenderScreen.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -10,12 +10,28 @@ using SmartHome.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SmartHome.Communications.Modules;
 #endregion
 
 namespace ServiceLayer
 {
     public class HomeDeviceService
     {
+#if DEBUG
+        public event EventHandler<HomeDeviceDTO> StatusChanged;
+
+        public HomeDeviceService()
+        {
+            SmartHome.Communications.CommunicationManager.Instance.FindModule<StatusModule>().StateRefreshed += (s, hd) =>
+                {
+                    if (this.StatusChanged != null)
+                    {
+                        this.StatusChanged(this, Mapper.Map<HomeDeviceDTO>(hd));
+                    }
+                };
+        }
+#endif
+
         public int AddHomeDevice(string nameHomeDevice, string homeDeviceType)
         {
             HomeDevice homeDevice;

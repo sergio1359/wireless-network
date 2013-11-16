@@ -48,10 +48,16 @@ namespace ServiceLayer
                     node.Address = repository.NodeRespository.GetNewAddress();
 
                     node = repository.NodeRespository.Insert(node);
+                }
+
+                bool accepted = await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
+
+                if (accepted)
+                {
                     repository.Commit();
                 }
 
-                return await joinMod.AcceptNode(MAC, (ushort)node.Address, home.Security);
+                return accepted;
             }
 
             return false;
