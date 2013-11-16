@@ -56,6 +56,8 @@ namespace SmartHome.Communications.Modules
                 if (hd.LastStatusUpdate == null)
                 {
                     //TODO: Call to RefreshState Method with the priority of this module
+                    OperationMessage refreshMessage = hd.RefreshState();
+                    await this.SendMessage(refreshMessage);
                 }
 
                 // TESTING
