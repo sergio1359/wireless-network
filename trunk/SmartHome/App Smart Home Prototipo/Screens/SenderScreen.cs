@@ -61,7 +61,8 @@ namespace App_Smart_Home_Prototipo.Screens
                 {
                     this.flowLayoutPanelState.Controls.Add(new Label()
                     {
-                        Text = stateVar.ToString()
+                        Text = stateVar.ToString(),
+                        Width = this.flowLayoutPanelState.Width
                     });
                 }
 

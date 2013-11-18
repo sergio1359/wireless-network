@@ -42,18 +42,24 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
             ConnectorDTO connector = (ConnectorDTO)listBoxCapableFreeConnector.SelectedItem;
 
-            Services.HomeDeviceService.LinkHomeDevice(connector.Id, homeDev.Id);
+            if (homeDev != null && connector != null)
+            {
+                Services.HomeDeviceService.LinkHomeDevice(connector.Id, homeDev.Id);
 
-            UpdateForm();
+                UpdateForm();
+            }
         }
 
         private void UnlinkHomeDevice(object sender, EventArgs e)
         {
             HomeDeviceDTO homeDev = (HomeDeviceDTO)listBoxHomeDevicesConnected.SelectedItem;
 
-            Services.HomeDeviceService.UnlinkHomeDevice(homeDev.Id);
+            if (homeDev != null)
+            {
+                Services.HomeDeviceService.UnlinkHomeDevice(homeDev.Id);
 
-            UpdateForm();
+                UpdateForm();
+            }
         }
 
         private void UpdateCapableFreeConnector(object sender, EventArgs e)
