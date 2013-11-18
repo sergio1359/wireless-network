@@ -18,12 +18,17 @@ namespace SmartHome.Communications
     {
         private class PendingMessage
         {
+            private static int instanceCounter;
+
+            public int Id;
+
             public TaskCompletionSource<bool> TaskSource;
 
             public OutputHeader Message;
 
             public PendingMessage(TaskCompletionSource<bool> taskSource, OutputHeader message)
             {
+                this.Id = instanceCounter++;
                 this.TaskSource = taskSource;
                 this.Message = message;
             }
@@ -43,6 +48,8 @@ namespace SmartHome.Communications
         private Dictionary<ushort, PendingMessage> currentMessages;
 
         private List<ModuleBase> modulesList;
+
+        private Object thisLock = new Object();
 
         #endregion
 
@@ -80,7 +87,8 @@ namespace SmartHome.Communications
             this.modulesList.Add(new StatusModule(this));
             this.modulesList.Add(new UserModule(this));
             this.modulesList.Add(new ConfigModule(this));
-            //Sort by priority descendent
+
+            // Sort by priority descendant
             this.modulesList.Sort((c, l) => c.OutputParameters.Priority.CompareTo(l.OutputParameters.Priority));
 
             this.CheckDependencies();
@@ -183,7 +191,7 @@ namespace SmartHome.Communications
 
             TaskCompletionSource<bool> result = new TaskCompletionSource<bool>();
 
-            lock (this)
+            lock (thisLock)
             {
                 var currentQueue = this.pendingMessagesQueue[connectionAddress];
                 PendingMessage newMsg = new PendingMessage(result, message);
@@ -200,48 +208,94 @@ namespace SmartHome.Communications
                 if (index == currentQueue.Count)
                     currentQueue.Add(newMsg);
 
-                this.CheckForSend(connectionAddress);
+                // If the new message is alone in the queue
+                if (currentQueue.Count == 1)
+                {
+                    // Connection is bussy. We need to wait
+                    if (!this.CheckForSend(connectionAddress))
+                    {
+                        Debug.Print(newMsg.Id + " waiting (1)...");
+                    }
+                }
+                else
+                {
+                    Debug.Print(newMsg.Id + " waiting (" + (index + 1) + ")...");
+                }
             }
 
             return result.Task;
         }
 
-        private void CheckForSend(ushort connectionAddress)
+        /// <summary>
+        /// Checks if there are pending messages to send for an given connection.
+        /// </summary>
+        /// <param name="connectionAddress">The connection address.</param>
+        /// <returns>Returns [false] if the connection is bussy. And [true] otherwise</returns>
+        private bool CheckForSend(ushort connectionAddress)
         {
-            lock (this)
+            lock (thisLock)
             {
-                var pendingMsg = this.currentMessages[connectionAddress];
+                var currentMsg = this.currentMessages[connectionAddress];
 
                 //Not busy
-                if (pendingMsg == null)
+                if (currentMsg == null)
                 {
                     if (this.pendingMessagesQueue[connectionAddress].Count > 0) //SomethingToSend
                     {
-                        Debug.WriteLine("Sending... " + DateTime.Now.Millisecond);
-                        pendingMsg = this.currentMessages[connectionAddress] = this.pendingMessagesQueue[connectionAddress][0];
-                        this.pendingMessagesQueue[connectionAddress].Remove(pendingMsg);
+                        var nextMsg = this.currentMessages[connectionAddress] = this.pendingMessagesQueue[connectionAddress][0];
+                        this.pendingMessagesQueue[connectionAddress].Remove(nextMsg);
+
+                        Debug.Print(nextMsg.Id + " sending...");
 
                         Task.Factory.StartNew(async () =>
                             {
-                                NodeConnection connection;
-
-                                if (masterConnection != null && masterConnection.NodeAddress == connectionAddress)
+                                try
                                 {
-                                    connection = masterConnection;
+                                    NodeConnection connection;
+
+                                    if (masterConnection != null && masterConnection.NodeAddress == connectionAddress)
+                                    {
+                                        connection = masterConnection;
+                                    }
+                                    else
+                                    {
+                                        connection = this.connectionsInUse[connectionAddress];
+                                    }
+
+                                    var val = await connection.SendMessage(nextMsg.Message);
+
+                                    Debug.Print(nextMsg.Id + " sent (Result: " + val + ")");
+
+                                    nextMsg.TaskSource.SetResult(val);
+
+                                    this.currentMessages[connectionAddress] = null;
+                                    this.CheckForSend(connectionAddress);
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    connection = this.connectionsInUse[connectionAddress];
+                                    Debug.Print("!!------------------- EXCEPTION: " + ex.Message);
+
+#if !DEBUG
+                                    nextMsg.TaskSource.SetResult(false);
+
+                                    this.currentMessages[connectionAddress] = null;
+                                    this.CheckForSend(connectionAddress);
+#endif
                                 }
-                                
-                                var val = await connection.SendMessage(pendingMsg.Message);
-
-                                this.currentMessages[connectionAddress] = null;
-                                this.CheckForSend(connectionAddress);
-
-                                pendingMsg.TaskSource.SetResult(val);
                             });
+
+                        return true;
                     }
+                    else
+                    {
+                        Debug.Print("Nothing to send");
+                        return true;
+                    }
+                }
+                else
+                {
+                    // Connection is bussy
+                    return false;
                 }
             }
         }
