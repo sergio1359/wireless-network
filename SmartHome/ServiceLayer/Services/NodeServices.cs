@@ -21,6 +21,20 @@ namespace ServiceLayer
 {
     public class NodeServices
     {
+#if DEBUG
+        public event EventHandler<string> NetworkJoinRequestReceived
+        {
+            add
+            {
+                CommunicationManager.Instance.FindModule<NetworkJoin>().NetworkJoinReceived += value;
+            }
+            remove
+            {
+                CommunicationManager.Instance.FindModule<NetworkJoin>().NetworkJoinReceived -= value;
+            }
+        }
+#endif
+
         public IEnumerable<PendingNodeInfoDTO> GetPendingNodes()
         {
             var pendingInfo = CommunicationManager.Instance.FindModule<NetworkJoin>().PendingNodes;
