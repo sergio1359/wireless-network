@@ -486,8 +486,8 @@ static void joinStateMachine(void)
 			break;
 		
 		case JOIN_STATE_WAIT_REQUEST_RESP:
-			//Wait until joinCounter reaches a defined value (5 seconds). Then check the number of responses. If "numberResponses == 1" SEND ACCEPT. Otherwise SEND ABORT.
-			if(joinCounter > 5 * (1000 / TIMER_JOIN_INTERVAL))
+			//Wait until joinCounter reaches a defined value (8 seconds). Then check the number of responses. If "numberResponses == 1" SEND ACCEPT. Otherwise SEND ABORT.
+			if(joinCounter > 8 * (1000 / TIMER_JOIN_INTERVAL))
 			{
 				if(responsesCount == 1)
 				{

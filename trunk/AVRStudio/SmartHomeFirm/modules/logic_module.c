@@ -185,12 +185,6 @@ _Bool proccessDigitalPortAction(uint16_t deviceAddress, _Bool read, uint8_t valu
 	
 	if(read)
 	{
-		/*logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-		logicResponse.header.destinationAddress = sourceAddress;
-		logicResponse.response.address = deviceAddress;
-		logicResponse.response.value = currentElem->lastValue;
-		
-		OM_ProccessResponseOperation(&logicResponse.header);*/
 		sendDigitalResponse(sourceAddress, deviceAddress, currentElem->lastValue);
 	}
 	else
@@ -238,63 +232,68 @@ static void logicTimerHandler(SYS_Timer_t *timer)
 		CONFIG_MODULE_ELEM_HEADER_t* operationsInfoPtr = &currentElem->config->operationsInfo;
 		LOGIC_BITS_CONFIG_t* configBitsPtr = &currentElem->config->configBits;
 
-		_Bool changeOcurred = 0;
-		uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
-				
-		//Debouncer
-		if(val == currentElem->debouncerValue)//Valid value
+		//Check inputs
+		if(configBitsPtr->maskIO == 0)
 		{
-			//Check changes for inputs with changeType distinct of NO_EDGE
-			if (configBitsPtr->maskIO == 0 && configBitsPtr->changeType != NO_EDGE )
+			_Bool changeOcurred = 0;
+			uint8_t val = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
+				
+			//Debouncer
+			if(val == currentElem->debouncerValue)//Valid value
 			{
-				//Check for valid changes
-				switch(configBitsPtr->changeType)
+				//Check changes for inputs with changeType distinct of NO_EDGE
+				if (configBitsPtr->changeType != NO_EDGE )
 				{
-					case FALLING_EDGE:	changeOcurred = (  currentElem->lastValue & ~val ); break;
-					case RISIN_EDGE:	changeOcurred = ( ~currentElem->lastValue &  val ); break;
-					case BOTH_EDGE:		changeOcurred = (  currentElem->lastValue != val ); break;
-				}
-					
-				if(changeOcurred)
-				{
-					//TODO: USE OPERATION MANAGER!
-					OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
-					for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
+					//Check for valid changes
+					switch(configBitsPtr->changeType)
 					{
-						OM_ProccessInternalOperation(operationPtr);
-						operationPtr++;
+						case FALLING_EDGE:	changeOcurred = (  currentElem->lastValue & ~val ); break;
+						case RISIN_EDGE:	changeOcurred = ( ~currentElem->lastValue &  val ); break;
+						case BOTH_EDGE:		changeOcurred = (  currentElem->lastValue != val ); break;
 					}
-						
-					//Send to coordinator
-					/*logicResponse.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
-					logicResponse.header.destinationAddress = COORDINATOR_ADDRESS;
-					logicResponse.response.address = currentElem->config->deviceID;
-					logicResponse.response.value = val;
-						
-					OM_ProccessResponseOperation(&logicResponse.header);*/
-					sendDigitalResponse(COORDINATOR_ADDRESS, currentElem->config->deviceID, val);
-				}
-			}
 					
-			currentElem->lastValue = val;					
+					if(changeOcurred)
+					{
+						//TODO: USE OPERATION MANAGER!
+						OPERATION_HEADER_t* operationPtr = &runningConfiguration.raw[operationsInfoPtr->pointerOperationList];
+						for(int c = 0; c < operationsInfoPtr->numberOfOperations; c++)
+						{
+							OM_ProccessInternalOperation(operationPtr);
+							operationPtr++;
+						}
+						
+						//Notify to the coordinator
+						sendDigitalResponse(COORDINATOR_ADDRESS, currentElem->config->deviceID, val);
+					}
+				}
+					
+				currentElem->lastValue = val;					
+			}
+				
+			currentElem->debouncerValue = val;
 		}
-				
-		currentElem->debouncerValue = val;
-		
-		//If is OUTPUT Check TimerToggle
-		if( configBitsPtr->maskIO == 1 && timerDivider == 0)
-		{
-			// Timer check (Outputs)
-			if(currentElem->timerCounter > 1)
+		else
+		{			
+			//If is OUTPUT Check TimerToggle
+			if(timerDivider == 0)
 			{
-				currentElem->timerCounter--;
-			}else if(currentElem->timerCounter == 1) //Time to process
-			{
-				//Disable timer
-				currentElem->timerCounter = 0;
+				// Timer check (Outputs)
+				if(currentElem->timerCounter > 1)
+				{
+					currentElem->timerCounter--;
+				}else if(currentElem->timerCounter == 1) //Time to process
+				{
+					//Disable timer
+					currentElem->timerCounter = 0;
 				
-				//Invert current value
-				HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
+					//Invert current value
+					HAL_GPIO_PORT_toggle(currentElem->portPtr, currentElem->mask);
+				
+					currentElem->lastValue = HAL_GPIO_PORT_read(currentElem->portPtr, currentElem->mask) == 0 ? 0 : 1;
+				
+					//Notify to the coordinator
+					sendDigitalResponse(COORDINATOR_ADDRESS, currentElem->config->deviceID, currentElem->lastValue);
+				}
 			}
 		}
 	}
