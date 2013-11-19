@@ -37,6 +37,7 @@ typedef enum INPUTConfirmationTypes_t
 
 typedef struct
 {
+	uint8_t messageId; //Message internal ID. TODO: Use this ID to avoid incorrect confirmations confusion
 	unsigned int sendOk : 1;	//LSB
 	unsigned int retries : 7;	//MSB
 	OPERATION_HEADER_t* header;
@@ -44,22 +45,24 @@ typedef struct
 
 typedef struct
 {
+	uint8_t messageId; //Message internal ID. TODO: Use this ID to avoid incorrect confirmations confusion
 	unsigned int endPoint		: 4;
 	unsigned int confirmation	: 2;
 	unsigned int routing		: 1;
 	unsigned int security		: 1;
 	uint16_t nextHop;
 	int8_t rssi;
-}INPUT_UART_HEADER_t;
+}INPUT_UART_HEADER_t; //To the PC
 
 typedef struct
 {
+	uint8_t messageId; //Message internal ID. TODO: Use this ID to avoid incorrect confirmations confusion
 	unsigned int endPoint : 4;
 	unsigned int reserved : 2;
 	unsigned int routing  : 1;
 	unsigned int security : 1;
 	uint8_t retries;
-}OUTPUT_UART_HEADER_t;
+}OUTPUT_UART_HEADER_t; //From the PC
 
 OPERATION_DataConf_t uartDataConf;
 

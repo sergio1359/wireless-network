@@ -27,6 +27,7 @@
 
 typedef struct
 {
+	uint8_t messageId;
 	OPERATION_HEADER_t* operationPtr;
 	void         (*confirm)(struct OPERATION_DataConf_t *req);
 }RADIO_ELEM_t;	
@@ -68,7 +69,7 @@ static struct
 }radioMessage;
 
 //Radio Send functions
-inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback);
+inline _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback, uint8_t messageId);
 inline unsigned int freeSpace(unsigned int start, unsigned int end, unsigned int size);
 inline _Bool isInCopiesBuffer(uint8_t* message);
 static void resetRadioState(NWK_DataReq_t *req);
@@ -137,7 +138,7 @@ void RADIO_SendWakeup(void* callback)
 	radioMessage.header.sourceAddress		= runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 	radioMessage.header.destinationAddress  = BROADCAST_ADDRESS;
 	
-	RADIO_AddMessageByReference(&radioMessage.header, callback);
+	RADIO_AddMessageByReference(&radioMessage.header, callback, 0xFF);
 }
 
 void RADIO_SendDiscovery(void* callback)
@@ -146,7 +147,7 @@ void RADIO_SendDiscovery(void* callback)
 	radioMessage.header.sourceAddress		= runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 	radioMessage.header.destinationAddress  = BROADCAST_ADDRESS;
 	
-	RADIO_AddMessageByReference(&radioMessage.header, callback);
+	RADIO_AddMessageByReference(&radioMessage.header, callback, 0xFF);
 }
 
 void RADIO_StartNetworkJoin()
@@ -172,10 +173,11 @@ void RADIO_StartNetworkJoin()
 	SYS_TimerStop(&joinTimer);
 }
 
-_Bool RADIO_AddMessageByReference(OPERATION_HEADER_t* message, void* callback)
+_Bool RADIO_AddMessageByReference(OPERATION_HEADER_t* message, void* callback, uint8_t messageId)
 {
 	if(freeSpace(pendingMessages_Buffer.start, pendingMessages_Buffer.end, PENDING_BUFFER_SIZE) >= 1)
 	{
+		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end].messageId = messageId;
 		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end].operationPtr = message;
 		pendingMessages_Buffer.buffer[pendingMessages_Buffer.end].confirm = callback;
 		pendingMessages_Buffer.end++;
@@ -191,15 +193,15 @@ _Bool RADIO_AddMessageByReference(OPERATION_HEADER_t* message, void* callback)
 	}
 }
 
-_Bool RADIO_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback)
+_Bool RADIO_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback, uint8_t messageId)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode), 0, 0, callback);
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode), 0, 0, callback, messageId);
 }
 
 
-_Bool RADIO_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback)
+_Bool RADIO_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback, uint8_t messageId)
 {
-	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize, callback);
+	return addMessageByCopy(message, sizeof(OPERATION_HEADER_t) + MODULES_GetCommandArgsLength(&message->opCode) - bodySize, body, bodySize, callback, messageId);
 }
 
 
@@ -209,7 +211,7 @@ _Bool RADIO_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body,
 /************************************************************************/
 
 
-_Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback)
+_Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body, uint8_t bodySize, void* callback, uint8_t messageId)
 {
 	if(freeSpace(copiesMessages_Buffer.start, copiesMessages_Buffer.end, COPIES_BUFFER_SIZE) >= (size + bodySize))
 	{	
@@ -229,7 +231,7 @@ _Bool addMessageByCopy(OPERATION_HEADER_t* message, uint8_t size, uint8_t* body,
 			copiesMessages_Buffer.end &= COPIES_BUFFER_SIZE_MASK;
 		}
 
-		return RADIO_AddMessageByReference(initialPtr, callback);
+		return RADIO_AddMessageByReference(initialPtr, callback, messageId);
 	}else
 	{
 		//TODO: Send or Log ERROR (COPIES_BUFFER_FULL)
@@ -255,6 +257,7 @@ void resetRadioState(NWK_DataReq_t *req)
 {
 	if( pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].confirm != 0)
 	{
+		radioDataConf.messageId = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].messageId;
 		radioDataConf.header = pendingMessages_Buffer.buffer[pendingMessages_Buffer.start].operationPtr;
 		radioDataConf.retries = failRetries;
 		radioDataConf.sendOk = (NWK_SUCCESS_STATUS == req->status);
@@ -480,7 +483,7 @@ static void joinStateMachine(void)
 			radioMessage.header.destinationAddress  = COORDINATOR_ADDRESS;
 			usingSecurity = false;
 		
-			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf);
+			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf, 0xFF);
 		
 			joinState = JOIN_STATE_WAIT_REQUEST_CONF;
 			break;
@@ -509,7 +512,7 @@ static void joinStateMachine(void)
 			radioMessage.joinAbortBody.NumberOfResponses = responsesCount;
 			usingSecurity = false;
 		
-			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf);
+			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf, 0xFF);
 		
 			joinState = JOIN_STATE_WAIT_ABORT_CONF;
 			break;
@@ -525,7 +528,7 @@ static void joinStateMachine(void)
 			memcpy((uint8_t*)&radioMessage.joinAcceptBody.MacAddress,(uint8_t*)&serialNumber, SERIAL_NUMBER_SIZE);
 			usingSecurity = false;
 		
-			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf);
+			RADIO_AddMessageByReference(&radioMessage.header, handleJoinConf, 0xFF);
 		
 			joinState = JOIN_STATE_WAIT_ACCEPT_CONF;
 			break;
@@ -535,6 +538,12 @@ static void joinStateMachine(void)
 
 static void handleJoinConf(OPERATION_DataConf_t *req)
 {
+	if(req->messageId != 0xFF)
+	{
+		//TODO:  Send or log ERROR (UNEXPECTED_NETWORK_JOIN_DATACONF)
+		//return;
+	}
+	
 	switch(joinState)
 	{
 		case JOIN_STATE_WAIT_REQUEST_CONF:

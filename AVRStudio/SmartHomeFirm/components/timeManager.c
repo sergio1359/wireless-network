@@ -191,7 +191,7 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 				timeSyncRequest.header.sourceAddress = runningConfiguration.topConfiguration.networkConfig.deviceAddress;
 				
 				timeSyncState = TIME_SYNC_WAITING_SYNC_CONFIRM;
-				RADIO_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf);	
+				RADIO_AddMessageByReference(&timeSyncRequest.header, timeSync_DataConf, 0xFF);	
 			}
 		}
 		
@@ -233,6 +233,12 @@ static void timeSyncTimerHandler(SYS_Timer_t *timer)
 
 static void timeSync_DataConf(OPERATION_DataConf_t *req)
 {
+	if(req->messageId != 0xFF)
+	{
+		//TODO:  Send or log ERROR (UNEXPECTED_TIME_SYNC_DATACONF)
+		//return;		
+	}
+	
 	if(timeSyncState == TIME_SYNC_WAITING_DISCOVERY_CONFIRM)
 	{
 		if (req->sendOk)

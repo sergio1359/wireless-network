@@ -48,8 +48,8 @@ void  RADIO_SendWakeup(void* callback);
 void  RADIO_SendDiscovery(void* callback);
 void  RADIO_StartNetworkJoin(void);
 
-_Bool RADIO_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback);
-_Bool RADIO_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback);
-_Bool RADIO_AddMessageByReference(OPERATION_HEADER_t* message, void* callback);
+_Bool RADIO_AddMessageByCopy(OPERATION_HEADER_t* message, void* callback, uint8_t messageId);
+_Bool RADIO_AddMessageWithBodyByCopy(OPERATION_HEADER_t* message, uint8_t* body, uint8_t bodySize, void* callback, uint8_t messageId);
+_Bool RADIO_AddMessageByReference(OPERATION_HEADER_t* message, void* callback, uint8_t messageId);
 
 #endif /* RADIO_H_ */

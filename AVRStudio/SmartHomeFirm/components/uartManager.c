@@ -46,6 +46,7 @@ void USART_Init()
 
 void USART_DataConf(OPERATION_DataConf_t *req)
 {
+	uartConfHeader.messageId = req->messageId;
 	uartConfHeader.confirmation = req->sendOk ? CONFIRMATION_OK : CONFIRMATION_ERROR;
 	
 	sendMagicPackage(&uartConfHeader, 0, 0, 0, 0);
