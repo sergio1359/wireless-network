@@ -21,8 +21,8 @@ namespace SmartHome.Products
                     pinPorts.Add("DimmerZero", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.DimmerPassZero, new PinPort[] { new PinPort("D0") }));
                     pinPorts.Add("DimmerLight", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.Dimmer, new PinPort[] { new PinPort("D1") }));
                     pinPorts.Add("Light", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.SwitchLOW, new PinPort[] { new PinPort("D6") }));
-                    pinPorts.Add("Temperature", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
-                    pinPorts.Add("Humidity", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("E2") }));
+                    pinPorts.Add("Temperature", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.TemperatureSensor, new PinPort[] { new PinPort("E2") }));
+                    pinPorts.Add("Humidity", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.HumiditySensor, new PinPort[] { new PinPort("E2") }));
                     pinPorts.Add("Presence", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.LogicInput, new PinPort[] { new PinPort("B6") }));
                     pinPorts.Add("RGBPort", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.RGB, new PinPort[] { new PinPort("C1"), new PinPort("C2"), new PinPort("C3") }));
                     pinPorts.Add("SensorConnector", new Tuple<ConnectorTypes, PinPort[]>(ConnectorTypes.ConnectorSensorBoard, new PinPort[] { new PinPort("A0"), new PinPort("A1"), new PinPort("A2"), new PinPort("A3"), new PinPort("A4"), new PinPort("A5") }));

@@ -13,6 +13,20 @@ namespace App_Smart_Home_Prototipo
         public MainScreen()
         {
             InitializeComponent();
+
+            Services.NodeService.NetworkJoinRequestReceived += NodeService_NetworkJoinRequestReceived;
+        }
+
+        async void NodeService_NetworkJoinRequestReceived(object sender, string mac)
+        {
+            var dialogResult = MessageBox.Show("A node with MAC " + mac + " request a network join. Allow?", "Network Join Request Received", MessageBoxButtons.YesNo);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                if (!await Services.NodeService.AllowPendingNode(mac))
+                {
+                    MessageBox.Show("A problem occurs trying to allow node " + mac);
+                }
+            }
         }
 
         #region ToolBar
