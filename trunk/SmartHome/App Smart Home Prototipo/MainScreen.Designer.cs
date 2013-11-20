@@ -40,6 +40,8 @@
             this.configurarHogarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.configuracionDeOperacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.sendOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -48,8 +50,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxMapaZonas = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.sendOperationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -62,7 +62,7 @@
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2,
             this.toolStripDropDownButton3,
-            this.toolStripSplitButton1});
+            this.toolStripDropDownButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(832, 25);
@@ -154,6 +154,24 @@
             this.configuracionDeOperacionesToolStripMenuItem.Text = "Configuracion de Operaciones";
             this.configuracionDeOperacionesToolStripMenuItem.Click += new System.EventHandler(this.OpenConfigOperation);
             // 
+            // toolStripDropDownButton4
+            // 
+            this.toolStripDropDownButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendOperationsToolStripMenuItem});
+            this.toolStripDropDownButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton4.Image")));
+            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
+            this.toolStripDropDownButton4.Size = new System.Drawing.Size(55, 22);
+            this.toolStripDropDownButton4.Text = "Debug";
+            // 
+            // sendOperationsToolStripMenuItem
+            // 
+            this.sendOperationsToolStripMenuItem.Name = "sendOperationsToolStripMenuItem";
+            this.sendOperationsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.sendOperationsToolStripMenuItem.Text = "SendOperations";
+            this.sendOperationsToolStripMenuItem.Click += new System.EventHandler(this.OpenSenderOperation);
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -240,24 +258,6 @@
             this.tabPage4.Text = "Scheduler";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // toolStripSplitButton1
-            // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sendOperationsToolStripMenuItem});
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(58, 22);
-            this.toolStripSplitButton1.Text = "Debug";
-            // 
-            // sendOperationsToolStripMenuItem
-            // 
-            this.sendOperationsToolStripMenuItem.Name = "sendOperationsToolStripMenuItem";
-            this.sendOperationsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.sendOperationsToolStripMenuItem.Text = "SendOperations";
-            this.sendOperationsToolStripMenuItem.Click += new System.EventHandler(this.OpenSenderOperation);
-            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,7 +299,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxMapaZonas;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton4;
         private System.Windows.Forms.ToolStripMenuItem sendOperationsToolStripMenuItem;
     }
 }
