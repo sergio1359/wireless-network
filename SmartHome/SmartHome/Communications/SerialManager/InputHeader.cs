@@ -22,6 +22,8 @@ namespace SmartHome.Communications
 
         public ConfirmationType Confirmation { get; set; }
 
+        public int MessageId { get; set; }
+
         public int EndPoint { get; set; }
 
         public int NextHop { get; set; }
@@ -52,6 +54,8 @@ namespace SmartHome.Communications
 
             headerByte |= (byte)(EndPoint & 0x0F);
 
+            result.Add((byte)MessageId);
+
             result.Add(headerByte);
 
             result.AddRange(BitConverter.GetBytes(NextHop));
@@ -66,21 +70,23 @@ namespace SmartHome.Communications
 
         public void FromBinary(byte[] buffer)
         {
-            SecurityEnabled = (buffer[0] & 0x80) != 0;
+            MessageId = buffer[0];
 
-            RoutingEnabled = (buffer[0] & 0x40) != 0;
+            SecurityEnabled = (buffer[1] & 0x80) != 0;
 
-            Confirmation = (ConfirmationType)((buffer[0] >> 4) & 0x03);
+            RoutingEnabled = (buffer[1] & 0x40) != 0;
 
-            EndPoint = (buffer[0] & 0x0F);
+            Confirmation = (ConfirmationType)((buffer[1] >> 4) & 0x03);
 
-            NextHop = (ushort)((((ushort)buffer[2]) << 8) | (ushort)buffer[1]);
+            EndPoint = (buffer[1] & 0x0F);
 
-            RSSI = (sbyte)buffer[3];
+            NextHop = (ushort)((((ushort)buffer[3]) << 8) | (ushort)buffer[2]);
 
-            if (buffer.Length > 4)
+            RSSI = (sbyte)buffer[4];
+
+            if (buffer.Length > 5)
             {
-                Content.FromBinary(buffer, 4);
+                Content.FromBinary(buffer, 5);
             }
         }
     }
