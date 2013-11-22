@@ -12,6 +12,8 @@ namespace SerialPortManager.ConnectionManager
 
         public bool RoutingEnabled { get; set; }
 
+        public int MessageId { get; set; }
+
         public int EndPoint { get; set; }
 
         public int Retries { get; set; }
@@ -43,6 +45,8 @@ namespace SerialPortManager.ConnectionManager
 
             headerByte |= (byte)(EndPoint & 0x0F);
 
+            result.Add((byte)MessageId);
+
             result.Add(headerByte);
 
             result.Add((byte)Retries);
@@ -55,16 +59,18 @@ namespace SerialPortManager.ConnectionManager
 
         public void FromBinary(byte[] buffer)
         {
-            SecurityEnabled = (buffer[0] & 0x80) != 0;
+            MessageId = buffer[0];
 
-            RoutingEnabled = (buffer[0] & 0x40) != 0;
+            SecurityEnabled = (buffer[1] & 0x80) != 0;
 
-            EndPoint = (buffer[0] & 0x0F);
+            RoutingEnabled = (buffer[1] & 0x40) != 0;
 
-            Retries = buffer[1];
+            EndPoint = (buffer[1] & 0x0F);
+
+            Retries = buffer[2];
 
             if (Content != null)
-                Content.FromBinary(buffer, 2);
+                Content.FromBinary(buffer, 3);
         }
     }
 }

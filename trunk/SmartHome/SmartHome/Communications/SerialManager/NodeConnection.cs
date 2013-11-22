@@ -282,8 +282,10 @@ namespace SmartHome.Communications
                     this.ConnectionState = ConnectionStates.NotConnected;
                     return false;
                 }
-
-                throw;
+                else
+                {
+                    throw ex;
+                }
             }
         }
 
@@ -291,6 +293,7 @@ namespace SmartHome.Communications
         {
             if (operation.Content.SourceAddress == 0)
                 operation.Content.SourceAddress = this.NodeAddress;
+
 
             if (ConnectionState == ConnectionStates.Identifying &&
                 operation.Content is OperationMessage &&
@@ -305,17 +308,30 @@ namespace SmartHome.Communications
             }
             else if (operation.Confirmation != InputHeader.ConfirmationType.None)
             {
-                Debug.WriteLine(this.PortName + " Confirmation received :" + operation.Confirmation.ToString());
+                if (operation.MessageId == this.currentMessageId)
+                {
+                    Debug.WriteLine(this.PortName + " Confirmation received: " + operation.Confirmation.ToString());
 
-                // Data confirmation response
-                if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
-                    pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
+                    // Data confirmation response
+                    if (pendingConfirmationTask != null && !pendingConfirmationTask.Task.IsCompleted)
+                        pendingConfirmationTask.SetResult(operation.Confirmation == InputHeader.ConfirmationType.Ok);
+                }
+                else if (operation.MessageId < this.currentMessageId)
+                {
+                    Debug.WriteLine(this.PortName + " Old confirmation received: " + operation.Confirmation.ToString());
+                }
+                else if (operation.MessageId == 255)
+                {
+                    Debug.WriteLine(this.PortName + " Internal confirmation received: " + operation.Confirmation.ToString());
+                }
             }
             else
             {
+                Debug.WriteLine(this.PortName + " Operation Message received: " + ((OperationMessage)operation.Content).OpCode.ToString());
+
                 if (operation.Content is OperationMessage && ((OperationMessage)operation.Content).OpCode == OperationMessage.OPCodes.WakeUp)
                 {
-                    // Node just woke up
+                    // Node just wake up
                     this.InitializeNode();
                 }
 
@@ -350,6 +366,7 @@ namespace SmartHome.Communications
 
             identifyTimeoutTimer.Start();
         }
+        private int currentMessageId = 0;
 
         public async Task<bool> SendMessage(OutputHeader message)
         {
@@ -357,12 +374,17 @@ namespace SmartHome.Communications
                 throw new InvalidOperationException("Sending in progress");
 
             this.pendingConfirmationTask = new TaskCompletionSource<bool>();
+            
+            this.currentMessageId = (currentMessageId + 1) % 254; //255 is reserved for internal messages
+            message.MessageId = this.currentMessageId;
 
             if (message.Content is OperationMessage)
                 Debug.WriteLine(this.PortName + " UART SEND OPCODE " + ((OperationMessage)message.Content).OpCode.ToString());
 
             if (!this.SendData(message.ToBinary()))
+            {
                 return false;
+            }
             else
             {
                 //Await for a confirmation with timeout
@@ -372,7 +394,7 @@ namespace SmartHome.Communications
                 if (firstTask == delayTask)
                 {
                     //Timeout
-                    Debug.WriteLine(this.PortName + " Confirmation response ABORTED!");
+                    Debug.WriteLine(this.PortName + " Confirmation response aborted TIMEOUT!");
                     this.pendingConfirmationTask.SetCanceled();
                     return false;
                 }
@@ -388,13 +410,14 @@ namespace SmartHome.Communications
         /// </summary>
         /// <param name="operation">The message to be sent.</param>
         /// <returns></returns>
-        public bool SendInternalMessage(IMessage message)
+        private bool SendInternalMessage(IMessage message)
         {
             if (message.DestinationAddress != 0 && message.DestinationAddress != this.NodeAddress)
                 throw new InvalidOperationException("This method can be used only to send internal messages");
 
             OutputHeader outputMessage = new OutputHeader()
             {
+                MessageId = 255, // Internal use only
                 SecurityEnabled = true,
                 RoutingEnabled = true,
                 EndPoint = 1,
