@@ -260,6 +260,7 @@
             this.buttonLinkProduct.TabIndex = 1;
             this.buttonLinkProduct.Text = "LINK PRODUCT";
             this.buttonLinkProduct.UseVisualStyleBackColor = true;
+            this.buttonLinkProduct.Click += new System.EventHandler(this.LinkProduct);
             // 
             // listBoxConnectorsAvailable
             // 
@@ -308,6 +309,7 @@
             this.buttonUnlinkProduct.TabIndex = 1;
             this.buttonUnlinkProduct.Text = "UNLINK PRODUCT";
             this.buttonUnlinkProduct.UseVisualStyleBackColor = true;
+            this.buttonUnlinkProduct.Click += new System.EventHandler(this.UnlinkProduct);
             // 
             // listBoxUnlinkProducts
             // 
@@ -316,7 +318,7 @@
             this.listBoxUnlinkProducts.Name = "listBoxUnlinkProducts";
             this.listBoxUnlinkProducts.Size = new System.Drawing.Size(275, 134);
             this.listBoxUnlinkProducts.TabIndex = 0;
-            this.listBoxUnlinkProducts.SelectedValueChanged += new System.EventHandler(this.SelectNewHomeDevice);
+            this.listBoxUnlinkProducts.SelectedValueChanged += new System.EventHandler(this.SelectUnlikProduct);
             // 
             // label7
             // 

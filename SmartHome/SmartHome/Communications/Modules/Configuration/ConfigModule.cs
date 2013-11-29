@@ -81,7 +81,7 @@ namespace SmartHome.Communications.Modules.Config
 
         private async void configUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            using (UnitOfWork repository = UnitOfWork.GetInstance())
             {
                 var nodes = repository.NodeRespository.GetAll();
 
@@ -119,7 +119,7 @@ namespace SmartHome.Communications.Modules.Config
 
                     if (nodeTransaction.IsCompleted)
                     {
-                        using (UnitOfWork repository = new UnitOfWork())
+                        using (UnitOfWork repository = UnitOfWork.GetInstance())
                         {
                             Node updatedNode = repository.NodeRespository.GetByNetworkAddress(nodeTransaction.DestinationAddress);
 
@@ -156,7 +156,7 @@ namespace SmartHome.Communications.Modules.Config
                     Node node;
                     Home home;
 
-                    using (UnitOfWork repository = new UnitOfWork())
+                    using (UnitOfWork repository = UnitOfWork.GetInstance())
                     {
                         node = repository.NodeRespository.GetByNetworkAddressWithConnectedHomeDevices(message.SourceAddress);
                         home = repository.HomeRespository.GetHome();

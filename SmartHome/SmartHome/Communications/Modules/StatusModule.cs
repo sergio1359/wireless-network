@@ -46,7 +46,7 @@ namespace SmartHome.Communications.Modules
         {
             List<HomeDevice> homeDevices;
 
-            using (UnitOfWork repository = new UnitOfWork())
+            using (UnitOfWork repository = UnitOfWork.GetInstance())
             {
                 homeDevices = repository.HomeDeviceRespository.GetConnectedHomeDevices().ToList();
             }
@@ -57,6 +57,10 @@ namespace SmartHome.Communications.Modules
                 {
                     // Call to RefreshState Method with the priority of this module
                     OperationMessage refreshMessage = hd.RefreshState();
+
+                    if (refreshMessage == null)
+                        return;
+
                     await this.SendMessage(refreshMessage);
                 }
 
@@ -171,7 +175,7 @@ namespace SmartHome.Communications.Modules
         /// <returns></returns>
         private T CheckHomeDevice<T>(ushort nodeAddress, ushort deviceAddress) where T : HomeDevice
         {
-            using (UnitOfWork repository = new UnitOfWork())
+            using (UnitOfWork repository = UnitOfWork.GetInstance())
             {
                 var homeDev = repository.HomeDeviceRespository.GetById(deviceAddress);
 

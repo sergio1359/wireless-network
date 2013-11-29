@@ -59,17 +59,21 @@ namespace SmartHome.BusinessEntities
         /// <param name="connector"></param>
         public static void UnlinkHomeDevice(this Connector connector)
         {
-            if (connector.Product != null) //is HomeDevice
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            if (connector.Product != null) //is Product
             {
                 foreach (var item in connector.HomeDevices)
                 {
-                    //TODO: Repositories.HomeDeviceRespository.Delete(item);
+                    repository.HomeDeviceRespository.Delete(item);
                 }
             }
 
             connector.HomeDevices = new List<HomeDevice>();
 
             connector.Product = null;
+
+            repository.Commit();
         }
 
         public static bool IsCapable(this Connector connector, HomeDevice homeDevice)

@@ -39,9 +39,9 @@ namespace SmartHome.BusinessEntities
 
         public static Type GetProductType(string productName)
         {
-            Type type = Assembly.GetAssembly(typeof (BusinessProduct)).GetTypes().FirstOrDefault(t => t.Name == productName);
+            Type type = Assembly.GetAssembly(typeof(BusinessProduct)).GetTypes().FirstOrDefault(t => t.Name == productName);
 
-            if(type == null)
+            if (type == null)
                 throw new ArgumentException("Product name isn't exist");
 
             return type;
@@ -79,7 +79,9 @@ namespace SmartHome.BusinessEntities
         {
             List<Tuple<Type, int[]>> result = new List<Tuple<Type, int[]>>
             {
-                Tuple.Create(typeof (Button), new int[] {1})
+                Tuple.Create(typeof (Button), new [] {0}),
+                Tuple.Create(typeof (Light), new [] {1}),
+                Tuple.Create(typeof (Dimmable), new [] {2}),
             };
             return result;
         }
