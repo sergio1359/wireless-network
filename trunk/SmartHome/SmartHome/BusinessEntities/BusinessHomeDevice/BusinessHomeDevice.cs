@@ -73,6 +73,8 @@ namespace SmartHome.BusinessEntities.BusinessHomeDevice
                 return (homeDevice as SwitchButton).RefreshState();
             if (homeDevice is TemperatureSensor)
                 return (homeDevice as TemperatureSensor).RefreshState();
+            if (homeDevice is Button)
+                return null;
 
             throw new ArgumentException("HomeDevice not valid");
         }

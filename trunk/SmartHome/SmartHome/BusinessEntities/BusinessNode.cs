@@ -40,7 +40,7 @@ namespace SmartHome.BusinessEntities
         {
             List<TimeOperation> timeOperations = new List<TimeOperation>();
 
-            using (UnitOfWork repository = new UnitOfWork())
+            using (UnitOfWork repository = UnitOfWork.GetInstance())
             {
                 foreach (var item in node.HomeDevices)
                 {

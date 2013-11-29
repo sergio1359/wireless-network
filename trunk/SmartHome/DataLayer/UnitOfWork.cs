@@ -139,10 +139,22 @@ namespace DataLayer
             return new UnitOfWork();
         }
 
-        public UnitOfWork()
+        private UnitOfWork()
         {
             this.context = new SmartHomeDBContext();
 
+            InicializeLazyLoading();
+        }
+
+        internal UnitOfWork(SmartHomeDBContext context)
+        {
+            this.context = context;
+
+            InicializeLazyLoading();
+        }
+
+        private void InicializeLazyLoading()
+        {
             nodeRepository = new Lazy<NodeRepository>(() => new NodeRepository(this.context));
             homeRepository = new Lazy<HomeRepository>(() => new HomeRepository(this.context));
             themesRespository = new Lazy<ThemesRepository>(() => new ThemesRepository(this.context));
@@ -154,13 +166,9 @@ namespace DataLayer
             connectorRepository = new Lazy<ConnectorRepository>(() => new ConnectorRepository(this.context));
             operationRepository = new Lazy<OperationRepository>(() => new OperationRepository(this.context));
             locationRepository = new Lazy<LocationRepository>(() => new LocationRepository(this.context));
-            conditionalRestrictionRepository = new Lazy<ConditionalRestrictionRepository>(() => new ConditionalRestrictionRepository(this.context));
+            conditionalRestrictionRepository =
+                new Lazy<ConditionalRestrictionRepository>(() => new ConditionalRestrictionRepository(this.context));
             timeRestrictionRepository = new Lazy<TimeRestrictionRepository>(() => new TimeRestrictionRepository(this.context));
-        }
-
-        internal UnitOfWork(SmartHomeDBContext context)
-        {
-            this.context = context;
         }
 
         #region Public Methods

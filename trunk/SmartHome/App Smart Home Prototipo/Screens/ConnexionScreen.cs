@@ -32,6 +32,10 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
 
             listBoxCapableFreeConnector.Items.Clear();
 
+            listBoxUnlinkProducts.Items.Clear();
+            listBoxUnlinkProducts.Items.AddRange(Services.HomeDeviceService.GetProductsConnected().ToArray());
+
+            buttonUnlinkProduct.Enabled = false;
             buttonLinkHomeDevice.Enabled = false;
             buttonUnilinkHomeDevice.Enabled = false;
         }
@@ -87,6 +91,11 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
             buttonLinkHomeDevice.Enabled = true;
         }
 
+        private void SelectUnlikProduct(object sender, EventArgs e)
+        {
+            buttonUnlinkProduct.Enabled = true;
+        }
+
         private void ConnectorProductAvailable(object sender, EventArgs e)
         {
             if (comboBoxNodeProduct.SelectedItem != null && comboBoxListProduct.SelectedItem != null)
@@ -99,6 +108,32 @@ namespace App_Smart_Home_Prototipo.Electrical.Screens
                 listBoxConnectorsAvailable.Items.AddRange(Services.HomeDeviceService.GetConnectorsCapableProduct(node.Id, product).ToArray());
 
                 buttonLinkProduct.Enabled = true;
+            }
+        }
+
+        private void LinkProduct(object sender, EventArgs e)
+        {
+            if (listBoxConnectorsAvailable.SelectedItem != null && comboBoxListProduct.SelectedItem != null)
+            {
+                string product = (string)comboBoxListProduct.SelectedItem;
+
+                ConnectorDTO connector = (ConnectorDTO)listBoxConnectorsAvailable.SelectedItem;
+
+                Services.HomeDeviceService.LinkProduct(connector.Id, product);
+
+                UpdateForm();
+            }
+        }
+
+        private void UnlinkProduct(object sender, EventArgs e)
+        {
+            if (listBoxUnlinkProducts.SelectedItem != null)
+            {
+                ConnectorDTO connector = (ConnectorDTO) listBoxUnlinkProducts.SelectedItem;
+
+                Services.HomeDeviceService.UnlinkFromConnector(connector.Id);
+
+                UpdateForm();
             }
         }
     }
