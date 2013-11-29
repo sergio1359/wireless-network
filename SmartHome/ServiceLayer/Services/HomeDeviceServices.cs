@@ -197,10 +197,28 @@ namespace ServiceLayer
             if (homeDevice == null)
                 throw new ArgumentException("HomeDevice Id doesn't exist");
 
+            homeDevice.Connector.UnlinkHomeDevice();
+
             //UPDATE CHECKSUM
             homeDevice.Connector.Node.UpdateChecksum(null);
 
-            homeDevice.Connector.UnlinkHomeDevice();
+            repository.Commit();
+        }
+
+        public void UnlinkFromConnector(int idConnector)
+        {
+            UnitOfWork repository = UnitOfWork.GetInstance();
+
+            Connector connector = repository.ConnectorRepository.GetById(idConnector);
+
+            if (connector == null)
+                throw new ArgumentException("Connector Id doesn't exist");
+
+            //UPDATE CHECKSUM
+            connector.Node.UpdateChecksum(null);
+
+            connector.UnlinkHomeDevice();
+
             repository.Commit();
         }
 
@@ -221,28 +239,16 @@ namespace ServiceLayer
                 throw new ArgumentException("The connector isn't exist");
 
             if(connector.InUse)
-                throw  new Exception("The connector is being used by other homeDevice or product");
+                throw  new Exception("The connector is being used by other HomeDevice or product");
 
             Type product = BusinessProduct.GetProductType(productName);
 
             if (!connector.IsCapable(product))
-                throw new Exception("This product is not capable with the connector");
+                throw new Exception("The product is not capable with this connector");
 
             connector.LinkHomeDevice(product);
 
             repository.Commit();
-        }
-
-        public void UnlinkProduct(int idConnector)
-        {
-            UnitOfWork repository = UnitOfWork.GetInstance();
-
-            Connector connector = repository.ConnectorRepository.GetById(idConnector);
-
-            if (connector == null)
-                throw new ArgumentException("Connector Id doesn't exist");
-
-            connector.UnlinkHomeDevice();
         }
 
         public IEnumerable<ConnectorDTO> GetProductsConnected()

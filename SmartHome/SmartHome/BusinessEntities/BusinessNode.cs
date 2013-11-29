@@ -15,7 +15,7 @@ namespace SmartHome.BusinessEntities
     {
         public static Node CreateNode(BaseTypes baseType, ShieldTypes shieldType)
         {
-            Node node = new Node()
+            Node node = new Node
             {
                 Base = baseType,
                 Shield = shieldType,
@@ -36,7 +36,7 @@ namespace SmartHome.BusinessEntities
             return ProductConfiguration.GetBaseConfiguration(node.Base);
         }
 
-        public static List<TimeOperation> GetTimeActions(this Node node)
+        public static IEnumerable<TimeOperation> GetTimeActions(this Node node)
         {
             List<TimeOperation> timeOperations = new List<TimeOperation>();
 

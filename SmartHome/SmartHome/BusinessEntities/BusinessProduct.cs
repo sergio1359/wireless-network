@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SmartHome.BusinessEntities.BusinessHomeDevice;
+using System.Reflection;
 #endregion
 
 namespace SmartHome.BusinessEntities
@@ -38,9 +39,9 @@ namespace SmartHome.BusinessEntities
 
         public static Type GetProductType(string productName)
         {
-            Type type = Type.GetType(productName);
+            Type type = Assembly.GetAssembly(typeof (BusinessProduct)).GetTypes().FirstOrDefault(t => t.Name == productName);
 
-            if(!_products.Any(t => t.Name == type.Name))
+            if(type == null)
                 throw new ArgumentException("Product name isn't exist");
 
             return type;
