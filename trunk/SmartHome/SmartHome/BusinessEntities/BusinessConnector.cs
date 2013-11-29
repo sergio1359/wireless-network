@@ -100,15 +100,13 @@ namespace SmartHome.BusinessEntities
             return ProductConfiguration.GetPinPortConfiguration(homeDevice);
         }
 
-        public static Operation[] GetActionsConnector(this Connector connector)
+        public static IEnumerable<Operation> GetActionsConnector(this Connector connector)
         {
             if (!connector.InUse)
-            {
-                return new Operation[0];
-            }
+                return Enumerable.Empty<Operation>();
 
             return connector.HomeDevices.SelectMany(hd => hd.Operations)
-                    .ToArray();
+                    .ToList();
         }
     }
 }

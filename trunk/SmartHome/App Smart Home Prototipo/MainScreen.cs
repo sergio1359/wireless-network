@@ -20,7 +20,7 @@ namespace App_Smart_Home_Prototipo
         async void NodeService_NetworkJoinRequestReceived(object sender, string mac)
         {
             var dialogResult = MessageBox.Show("A node with MAC " + mac + " request a network join. Allow?", "Network Join Request Received", MessageBoxButtons.YesNo);
-            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
                 if (!await Services.NodeService.AllowPendingNode(mac))
                 {
