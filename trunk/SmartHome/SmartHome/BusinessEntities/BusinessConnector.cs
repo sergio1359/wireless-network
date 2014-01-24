@@ -61,11 +61,15 @@ namespace SmartHome.BusinessEntities
         {
             UnitOfWork repository = UnitOfWork.GetInstance();
 
+            connector = repository.ConnectorRepository.GetById(connector.Id);
+
             if (connector.Product != null) //is Product
             {
-                foreach (var item in connector.HomeDevices)
+                var HomeDevices = connector.HomeDevices.ToList();
+
+                for (int i = connector.HomeDevices.Count - 1; i >= 0; i--)
                 {
-                    repository.HomeDeviceRespository.Delete(item);
+                    repository.HomeDeviceRespository.Delete(HomeDevices[i]);
                 }
             }
 
