@@ -28,17 +28,22 @@ namespace DataLayer
         public override void Delete(HomeDevice entityHomeDevice)
         {
             UnitOfWork repository = new UnitOfWork(this._context);
+
+            HomeDevice homeDevice = repository.HomeDeviceRespository.GetById(entityHomeDevice.Id);
+
             for (int i = entityHomeDevice.Operations.Count - 1; i >= 0; i--)
             {
-                repository.OperationRepository.Delete(entityHomeDevice.Operations.ElementAt(i));
+                repository.OperationRepository.Delete(homeDevice.Operations.ElementAt(i));
             }
 
             for (int i = entityHomeDevice.Locations.Count - 1; i >= 0; i--)
             {
-                repository.LocationRepository.Delete(entityHomeDevice.Locations.ElementAt(i));
-            }            
+                repository.LocationRepository.Delete(homeDevice.Locations.ElementAt(i));
+            }
 
-            base.Delete(entityHomeDevice);
+            base.Delete(homeDevice);
+
+            repository.Commit();
         }
     }
 }

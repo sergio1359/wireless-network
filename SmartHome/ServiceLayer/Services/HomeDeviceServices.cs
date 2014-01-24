@@ -197,10 +197,12 @@ namespace ServiceLayer
             if (homeDevice == null)
                 throw new ArgumentException("HomeDevice Id doesn't exist");
 
+            Connector connector = homeDevice.Connector;
+            
             homeDevice.Connector.UnlinkHomeDevice();
 
             //UPDATE CHECKSUM
-            homeDevice.Connector.Node.UpdateChecksum(null);
+            connector.Node.UpdateChecksum(null);
 
             repository.Commit();
         }
