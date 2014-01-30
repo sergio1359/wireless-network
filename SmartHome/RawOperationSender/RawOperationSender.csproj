@@ -90,9 +90,9 @@
       <Project>{da87d067-5dff-44cc-8859-8f7586563dd7}</Project>
       <Name>DataLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj">
+    <ProjectReference Include="..\ServiceLayer\BusinessLogicLayer.csproj">
       <Project>{9d782cd5-c9b5-4621-9652-50f7f91ddfeb}</Project>
-      <Name>ServiceLayer</Name>
+      <Name>BusinessLogicLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmartHome\SmartHome.csproj">
       <Project>{94262822-08ea-4e58-b93d-03cb19a41d22}</Project>
