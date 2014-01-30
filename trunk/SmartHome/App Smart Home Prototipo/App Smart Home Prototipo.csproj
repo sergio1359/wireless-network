@@ -188,9 +188,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ServiceLayer\ServiceLayer.csproj">
+    <ProjectReference Include="..\ServiceLayer\BusinessLogicLayer.csproj">
       <Project>{9d782cd5-c9b5-4621-9652-50f7f91ddfeb}</Project>
-      <Name>ServiceLayer</Name>
+      <Name>BusinessLogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
